@@ -1,6 +1,6 @@
 package controller.player;
 
-import model.*;
+import models.*;
 
 public class GameController {
 
