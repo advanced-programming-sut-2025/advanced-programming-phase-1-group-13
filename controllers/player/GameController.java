@@ -1,42 +1,47 @@
 package controller.player;
 
 import models.*;
+import models.Tool;
 
 public class GameController {
+    User player = App.getLoggedIn();
+
 
     // === PLAYER'S STATUS === //
 
     public Result showPlayerEnergy() {
-        int playerEnergy = User.getEnergy();
+        int playerEnergy = player.getEnergy();
         return new Result(true, "Your energy is: " + playerEnergy);
     }
 
     public Result setPlayerEnergy(int energyAmount) {
-        // TODO: player.setEnergy(energyAmount)
+        player.setEnergy(energyAmount);
         return new Result(true, "Energy set to " + energyAmount);
     }
 
     public Result setUnlimitedEnergy() {
-        // TODO: player.setIsEnergyUnlimited(true)
+        player.setEnergyUnlimited(true);
         return new Result(true, "Unlimited Energy activated!");
     }
 
     public Result faint() {
-        // TODO: player.faint()
+        player.faint();
         return new Result(true, ""); // todo: appropriate message
     }
 
     public Result showCurrentTool() {
-        int playerCurrentTool = User.getCurrentTool();
+        Tool playerCurrentTool = player.getCurrentTool();
         return new Result(true, "Your tool is: " + playerCurrentTool.toString()); // todo: is message OK?
     }
 
     public Result showLearntCookingRecipes() {
-        // TODO: player.showLearntCookingRecipes()
+        String learntRecipes = player.getStringLearntCookingRecipes();
+        return new Result(true, learntRecipes);
     }
 
     public Result showLearntCraftRecipes() {
-        // TODO: player.showLearntRecipes()
+        String learntRecipes = player.getStringLearntCraftRecipes();
+        return new Result(true, learntRecipes);
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //

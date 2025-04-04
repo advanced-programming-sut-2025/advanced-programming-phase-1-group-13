@@ -10,72 +10,84 @@ public class User {
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<CookingRecipe> learntCookingRecipes;
 
-    public String showEnergy() {
+    public int getEnergy() {
+        return this.energy;
+    }
+
+    public void setEnergy(int energyAmount) {
+        if (this.isEnergyUnlimited) {
+            this.energy = Integer.MAX_VALUE;
+        } else {
+            this.energy = energyAmount;
+        }
+    }
+
+    public boolean isEnergyUnlimited() {
+        return this.isEnergyUnlimited;
+    }
+
+    public void setEnergyUnlimited(boolean unlimitedEnergy) {
+        this.isEnergyUnlimited = unlimitedEnergy;
+    }
+
+    public void faint() {
+        // TODO: well, faint!
+    }
+
+    public Tool getCurrentTool() {
+        return this.currentTool;
+    }
+
+    public void useTool(Direction direction) {
 
     }
-    
-    public void setEnergy(value: String) {
 
-    }
-    
-    public faint() {
-
-    }
-    
-    public void showCurrentTool() {
-
-    }
-    
-    public void useTool(Direction direction ) {
-
-    }
-    
     public void changePosition(int newX, int newY) {
 
     }
-    
-    public void placeItem(Object item , Direction direction) {
+
+    public void placeItem(Object item, Direction direction) {
 
     }
-    
+
     public void helpReadingMap() {
 
     }
-    
+
     public void printMap(Position position, int size) {
 
     }
-    
+
     public void printColoredMap(Position position, int size) {
 
     }
-    
-    public void showLearntCookingRecipes() {
 
+    public String getStringLearntCookingRecipes() {
+        // TODO: Use StringBuilder
     }
-    
-    public void showLearntCraftRecipes() {
 
+    public String getStringLearntCraftRecipes() {
+        // TODO: Use StringBuilder
     }
-    
+
     public void LearnNewCraftRecipe(CraftRecipe craftRecipe) {
 
     }
-    
+
     public void LearnNewCookingRecipe(CookingRecipe cookingRecipe) {
 
     }
-    
+
     public void craft(Craft craft) {
 
     }
-    
+
     public void prepareCooking() {
 
     }
-    
+
     public void eat(String foodName) {
 
     }
-    
+
 }
