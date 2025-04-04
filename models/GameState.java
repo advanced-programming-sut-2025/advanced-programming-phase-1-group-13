@@ -7,4 +7,8 @@ public class GameState {
     private boolean automaticIrrigation;
     private int energyUsageRate;
     private boolean possibilityOfThor;
+
+    public modifyState(String key, int value) {
+
+    }
 }

@@ -9,6 +9,4 @@ public class Path {
     int distanceInTiles;
     int numOfTurns;
     int energyNeeded;
-    boolean isDestinationAllowed;
-    boolean playerConfirmed;
 }

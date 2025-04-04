@@ -5,7 +5,10 @@ import views.*;
 import java.util.Scanner;
 
 public enum Menu {
-    MAIN_MENU(new MainMenu());
+    LOGIN_MENU(new LoginMenu()),
+    MAIN_MENU(new MainMenu()),
+    GAME_MENU(new GameMenu()),
+    PROFILE_MENU(new ProfileMenu());
 
     private final AppMenu menu;
 

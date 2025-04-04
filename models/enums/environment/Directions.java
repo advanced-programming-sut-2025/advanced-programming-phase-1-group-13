@@ -9,4 +9,8 @@ public enum Directions {
     UP_LEFT(),
     DOWN_RIGHT(),
     DOWN_LEFT();
+
+    public Direction getDirectionByDisplayName(String name) {
+
+    }
 }
