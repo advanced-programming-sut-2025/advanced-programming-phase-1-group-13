@@ -1,7 +1,7 @@
-package controller.user;
+package controllers.user;
 
-import model.Gender;
-import model.Result;
+import models.Result;
+import models.enums.types.Gender;
 
 
 public class RegistrationController {

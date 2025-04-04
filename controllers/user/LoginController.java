@@ -1,7 +1,7 @@
-package controller.user;
+package controllers.user;
 
-import model.Result;
-import model.User;
+import models.Result;
+import models.User;
 
 public class LoginController {
     public static User getUserByUsername(String username) {

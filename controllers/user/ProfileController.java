@@ -1,6 +1,6 @@
-package controller.user;
+package controllers.user;
 
-import model.Result;
+import models.Result;
 
 public class ProfileController {
     public Result changeUsername(String newUsername) {

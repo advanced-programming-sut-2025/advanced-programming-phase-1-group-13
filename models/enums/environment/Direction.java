@@ -1,6 +1,6 @@
 package models.enums.environment;
 
-public enum Directions {
+public enum Direction {
     UP(),
     DOWN(),
     RIGHT(),

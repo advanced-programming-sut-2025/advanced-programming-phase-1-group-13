@@ -1,5 +1,7 @@
 package models;
 
+import models.Tool;
+
 public class User {
     private int energy;
     private boolean isEnergyUnlimited;
@@ -42,8 +44,8 @@ public class User {
 
     }
 
-    public void changePosition(int newX, int newY) {
-
+    public void changePosition(Position newPosition) {
+        this.position = newPosition;
     }
 
     public void placeItem(Object item, Direction direction) {

@@ -1,7 +1,9 @@
-package controller.player;
+package controllers.player;
 
 import models.*;
+import models.Food;
 import models.Tool;
+import models.enums.environment.*;
 
 public class GameController {
     User player = App.getLoggedIn();
@@ -47,9 +49,11 @@ public class GameController {
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
 
     public Result useTool(Position position, Tool tool) {
-        if (canToolBeUsedHere(position, tool))
+        if (canToolBeUsedHere(position, tool)) {
             // TODO: use tool
-            return new Result(true, ""); // todo: write appropriate message
+            return new Result(true, ""); // todo: appropriate message
+        }
+        return new Result(false, "You can't use that tool in that direction"); // todo: appropriate message
     }
 
     public Result placeItem(Item item, Direction direction) {
@@ -57,29 +61,32 @@ public class GameController {
         if (canItemBePlacedHere(position, item)) {
             // TODO: place item
             return new Result(true, item + " placed at " + position.toString());
-
         }
+        return new Result(false, "you can't place that item at " + position.toString());
+
     }
 
     public Result craft(Item item) {
         if (!canCraft(item)) {
-            // TODO return appropriate failing Result.
+            return new Result(false, "Not possible to craft that item!");
         }
-        // TODO: craft item.
-        return new Result(true, ""); // todo: success message
+        // TODO: craft item and add it to inventory.
+        return new Result(true, "Item crafted and added to inventory.");
     }
 
     public Result cheatAddItem(Item item) {
         // TODO: add item to inventory
+        return new Result(true, "Item added to inventory.");
     }
 
-    // or name it cook()
+    // or name it cook() ?
     public Result prepareCook(Food food) {
         if (!canCook(food)) {
             return new Result(false, "You cannot cook this right now.");
-            // todo: or specify the cause of the error.
+            // todo: or specify the cause of the error...
         }
         // TODO: cook and add to inventory
+        return new Result(true, "Yummy! Your meal is ready.");
     }
 
     public Result eat(Food food) {
@@ -92,11 +99,13 @@ public class GameController {
     private boolean canCraft(Item item) {
         // TODO: check if inventory is full; if so, return false.
         // TODO: check if we know the recipe, return false if not.
+        // TODO: check if we have the ingredients, return false if not.
     }
 
     private boolean canCook(Food food) {
         // TODO: check if inventory is full; if so, return false.
         // TODO: check if we know the recipe, return false if not.
+        // TODO: check if we have the ingredients, return false if not.
     }
 
     private boolean canToolBeUsedHere(Position position, Tool tool) {
@@ -108,9 +117,8 @@ public class GameController {
     }
 
     private Position neighborTile(Direction direction) {
-        // TODO: return the neighbour tile, if within the range of our map of farms.
+        // TODO: return the position of the neighbour tile, if within the range of our map of farms.
     }
-
 
     // === WALK === //
     public Result walk(Path path, boolean playerConfirmed) {
@@ -118,6 +126,8 @@ public class GameController {
             return new Result(false, "You denied the walk.");
         }
         // TODO: Walk path! i.e. call player's inner changePosition(x,y) method.
+        Position destination = path.getPathTiles().getLast();
+        player.changePosition(destination);
         return new Result(true, "Walking...");
     }
 
@@ -141,6 +151,7 @@ public class GameController {
             return null;
         }
         // TODO: build a valid path and return it
+        return new Path();
     }
 
     private boolean isDestinationAllowed(Position destination) {
