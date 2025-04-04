@@ -49,7 +49,7 @@ public class GameController {
     public Result useTool(Position position, Tool tool) {
         if (canToolBeUsedHere(position, tool))
             // TODO: use tool
-            return new Result(true, ""); // todo: appropriate message
+            return new Result(true, ""); // todo: write appropriate message
     }
 
     public Result placeItem(Item item, Direction direction) {

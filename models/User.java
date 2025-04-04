@@ -63,11 +63,11 @@ public class User {
     }
 
     public String getStringLearntCookingRecipes() {
-        // TODO: Use StringBuilder
+        // TODO: Use StringBuilder for it
     }
 
     public String getStringLearntCraftRecipes() {
-        // TODO: Use StringBuilder
+        // TODO: Use StringBuilder for it
     }
 
     public void LearnNewCraftRecipe(CraftRecipe craftRecipe) {

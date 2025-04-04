@@ -8,7 +8,7 @@ public class App {
     private static User loggedIn = null;
 
     public static User getLoggedIn() {
-        return loggedIn;
+        return loggedIn ;
     }
 
     public static void setLoggedIn(User user) {
