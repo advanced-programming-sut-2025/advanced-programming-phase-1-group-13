@@ -5,8 +5,8 @@ public enum BackpackType {
     LARGE(24, false),
     DELUXE(null, true);
 
-    private Integer capacity;
-    private boolean isUnlimited;
+    private final Integer capacity;
+    private final boolean isUnlimited;
 
     BackpackType(Integer capacity, boolean isUnlimited) {
         this.capacity = capacity;
