@@ -1,20 +1,21 @@
 package models.tools;
+import models.enums.types.ToolMaterial;
 import models.enums.types.ToolTypes;
 
 import java.util.Map;
 
 public class Hoe extends Tool {
-    private ToolLevel level;
+    private ToolMaterial level;
 
-    private static final Map<ToolLevel, Integer> ENERGY_COSTS = Map.of(
-            ToolLevel.BASIC, 5,
-            ToolLevel.COPPER, 4,
-            ToolLevel.IRON, 3,
-            ToolLevel.GOLD, 2,
-            ToolLevel.IRIDIUM, 1
+    private static final Map<ToolMaterial, Integer> ENERGY_COSTS = Map.of(
+            ToolMaterial.BASIC, 5,
+            ToolMaterial.COPPER, 4,
+            ToolMaterial.IRON, 3,
+            ToolMaterial.GOLD, 2,
+            ToolMaterial.IRIDIUM, 1
     );
 
-    public Hoe(ToolLevel level) {
+    public Hoe(ToolMaterial level) {
         super(level.name() + " Hoe", ToolTypes.HOE, ENERGY_COSTS.get(level));
         this.level = level;
     }
