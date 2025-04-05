@@ -1,6 +1,8 @@
 package models;
 
 import models.enums.SecurityQuestion;
+import models.enums.Skill;
+import models.enums.types.Food;
 
 import javax.tools.Tool;
 import java.util.ArrayList;
@@ -11,10 +13,10 @@ public class User {
     private boolean isEnergyUnlimited;
     private Position position;
     private Tool currentTool;
-    private HashMap<Skills, SkillLevels> SkillLevels;
+    private HashMap<Skill, SkillLevels> SkillLevels;
     private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
-    private ArrayList<CookingRecipe> learntCookingRecipes;
+    private ArrayList<Food> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
 
     public int getEnergy() {
@@ -77,7 +79,7 @@ public class User {
         // TODO: Use StringBuilder for it
     }
 
-    public void LearnNewCraftRecipe(CraftRecipe craftRecipe) {
+    public void LearnNewCraftRecipe(Food craftRecipe) {
 
     }
 

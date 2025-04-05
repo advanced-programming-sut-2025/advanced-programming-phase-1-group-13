@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum ToolType {
+public enum ToolMaterial {
     BASIC,
     COPPER,
     IRON, 

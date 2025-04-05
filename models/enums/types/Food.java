@@ -1,6 +1,4 @@
-package models;
-
-import models.enums.types.IngredientType;
+package models.enums.types;
 
 import java.util.HashMap;
 
@@ -8,7 +6,7 @@ public enum Food {
     FRIED_EGG("Fried Egg", createIngredientsMap(IngredientType.EGG, 1), 50, "", "Starter", 35),
     BAKED_FISH("Baked Fish", createIngredientsMap(IngredientType.SARDINE, 1, IngredientType.SALMON, 1, IngredientType.WHEAT, 1), 75, "", "Starter", 100),
     SALAD("Salad", createIngredientsMap(IngredientType.LEEK, 1, IngredientType.DANDELION, 1), 113, "", "Starter", 110),
-    OLMELET("Omelet", createIngredientsMap(IngredientType.EGG, 1, IngredientType.MILK, 1), 100, "", "Stardrop Saloon", 125),
+    OMELET("Omelet", createIngredientsMap(IngredientType.EGG, 1, IngredientType.MILK, 1), 100, "", "Stardrop Saloon", 125),
     PUMPKIN_PIE("Pumpkin Pie", createIngredientsMap(IngredientType.PUMPKIN, 1, IngredientType.WHEAT_FLOUR, 1, IngredientType.MILK, 1, IngredientType.SUGAR, 1), 225, "", "Stardrop Saloon", 385),
     SPAGHETTI("Spaghetti", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.TOMATO, 1), 75, "", "Stardrop Saloon", 120),
     PIZZA("Pizza", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.TOMATO, 1, IngredientType.CHEESE, 1), 150, "", "Stardrop Saloon", 300),

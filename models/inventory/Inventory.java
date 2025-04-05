@@ -1,8 +1,15 @@
-package models;
+package models.inventory;
 
-public class Inventory {
-    int capacity;
-    boolean isCapacityUnlimited;
+import models.Item;
+
+public abstract class Inventory {
+    protected int capacity;
+    protected boolean isCapacityUnlimited;
+
+    public Inventory(int capacity, boolean isCapacityUnlimited) {
+        this.capacity = capacity;
+        this.isCapacityUnlimited = isCapacityUnlimited;
+    }
 
     public void addToInventory(Item item, int n) {
         
