@@ -1,7 +1,6 @@
 package models;
 
 import models.enums.types.ArtisanType;
-import models.enums.types.ItemType;
 
 import java.util.ArrayList;
 

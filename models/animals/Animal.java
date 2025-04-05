@@ -1,6 +1,6 @@
 package models.animals;
 
-import models.Product;
+import models.AnimalProduct;
 import models.enums.environment.Time;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public abstract class Animal {
     private int friendshipLevel;
     private Time LastFeedingTime;
     private Time lastProductTime;
-    private ArrayList<Product> products;
+    private ArrayList<AnimalProduct> animalProducts;
     private LivingSpace livingSpace;
 
     public void shepherdAnimal() {
@@ -28,5 +28,33 @@ public abstract class Animal {
 
     private void updateFriendship() {
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LivingSpace getLivingSpace() {
+        return livingSpace;
+    }
+
+    public ArrayList<AnimalProduct> getAnimalProducts() {
+        return animalProducts;
+    }
+
+    public Time getLastProductTime() {
+        return lastProductTime;
+    }
+
+    public Time getLastFeedingTime() {
+        return LastFeedingTime;
+    }
+
+    public int getFriendshipLevel() {
+        return friendshipLevel;
+    }
+
+    public int getPurchaseCost() {
+        return purchaseCost;
     }
 }

@@ -1,4 +1,4 @@
-package models;
+package models.farming;
 
 public class Tree extends Harvestable{
     private String fruitName;
