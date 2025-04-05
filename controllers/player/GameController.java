@@ -93,7 +93,8 @@ public class GameController {
         // TODO: check if player HAS the food, and return appropriate Result if not.
         // TODO: increase energy
         // TODO: apply buff
-        // TODO: return appropriate Result
+        player.eat(food.getName());
+        return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
     }
 
     private boolean canCraft(Item item) {

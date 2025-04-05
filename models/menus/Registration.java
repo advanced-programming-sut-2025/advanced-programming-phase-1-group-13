@@ -1,6 +1,6 @@
 package models.menus;
 
-public class Registration {
+public class    Registration {
 
     public boolean registerUser(String username, String password, String email, boolean gender) {
 

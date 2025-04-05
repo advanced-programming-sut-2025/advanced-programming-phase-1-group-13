@@ -1,14 +1,25 @@
 package models;
 
+import models.enums.Menu;
+
 import java.util.ArrayList;
 
 public class App {
     private static final ArrayList<User> users = new ArrayList<>();
     private static final ArrayList<Game> games = new ArrayList<>();
     private static User loggedIn = null;
+    private static Menu currentMenu = Menu.LOGIN_MENU;
+
+    public static Menu getCurrentMenu() {
+        return currentMenu;
+    }
+
+    public static void setCurrentMenu(Menu currentMenu) {
+        App.currentMenu = currentMenu;
+    }
 
     public static User getLoggedIn() {
-        return loggedIn ;
+        return loggedIn;
     }
 
     public static void setLoggedIn(User user) {
