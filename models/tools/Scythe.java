@@ -1,4 +1,4 @@
-package models;
+package models.tools;
 import models.enums.types.ToolTypes;
 
 public class Scythe extends Tool {

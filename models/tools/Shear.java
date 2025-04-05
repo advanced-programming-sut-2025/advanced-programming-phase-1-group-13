@@ -1,8 +1,9 @@
-package models;
+package models.tools;
+
 import models.enums.types.ToolTypes;
 
-public class Shear extends models.Tool {
-    public Shears() {
+public class Shear extends Tool {
+    public Shear() {
         super("Shears", ToolTypes.SHEARS, 4);
     }
 

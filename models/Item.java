@@ -1,14 +1,12 @@
 package models;
 
-import models.enums.types.ProcessedItemType;
-
 public abstract class Item {
     private boolean isSellable;
     private boolean isPurchasable;
     private int price;
 
     public boolean isSellable() {
-        return isSellable;
+        return this.isSellable;
     }
 
     public void setSellable(boolean sellable) {
@@ -16,7 +14,7 @@ public abstract class Item {
     }
 
     public boolean isPurchasable() {
-        return isPurchasable;
+        return this.isPurchasable;
     }
 
     public void setPurchasable(boolean purchasable) {
@@ -24,7 +22,7 @@ public abstract class Item {
     }
 
     public int getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(int price) {
