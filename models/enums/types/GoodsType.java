@@ -97,7 +97,7 @@ public enum GoodsType {
     private final int price;
     private final int dailyLimit;  // -1 for unlimited
     private final ShopType shopType;
-    private final List<Season> seasonalStocks;
+    private final List<Season> seasonalStock;
 
     GoodsType(String name,
               String description,
@@ -110,7 +110,7 @@ public enum GoodsType {
         this.price = price;
         this.dailyLimit = dailyLimit;
         this.shopType = shopType;
-        this.seasonalStocks = seasonalStocks;
+        this.seasonalStock = seasonalStocks;
     }
 }
 
