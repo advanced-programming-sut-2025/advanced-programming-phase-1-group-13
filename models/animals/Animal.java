@@ -12,7 +12,7 @@ public abstract class Animal {
     private Time LastFeedingTime;
     private Time lastProductTime;
     private ArrayList<Product> products;
-    private Building livingSpace;
+    private LivingSpace livingSpace;
 
     public void shepherdAnimal() {
 

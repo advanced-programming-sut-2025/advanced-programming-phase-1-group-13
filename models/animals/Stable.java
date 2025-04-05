@@ -1,4 +1,4 @@
 package models.animals;
 
-public class Stable extends Building{
+public class Stable extends LivingSpace{
 }

@@ -1,4 +1,4 @@
 package models.animals;
 
-public class Cage extends {
+public class Cage extends LivingSpace {
 }
