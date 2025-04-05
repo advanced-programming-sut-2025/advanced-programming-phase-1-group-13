@@ -15,7 +15,7 @@ public class LoginController {
 
     public Result askSecurityQuestion(User user) {
         if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
-            return new Result(false, "No security question set for this user!");
+            return new Result(false, "No security question set for this user.");
         }
 
         SecurityQuestion question = user.getQAndA().keySet().iterator().next();

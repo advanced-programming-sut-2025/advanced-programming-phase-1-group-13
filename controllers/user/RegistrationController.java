@@ -45,7 +45,7 @@ public class RegistrationController {
         SecurityQuestion selectedQuestion = questions[questionNumber];
         user.getQAndA().put(selectedQuestion, answer);
 
-        return new Result(true, "Security question saved: " + selectedQuestion + " - Answer: " + answer);
+        return new Result(true, "Security question saved");
     }
 
 

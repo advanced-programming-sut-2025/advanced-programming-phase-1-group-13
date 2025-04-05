@@ -15,7 +15,7 @@ public class User {
     private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<CookingRecipe> learntCookingRecipes;
-    private Map<SecurityQuestion, String> qAndA;
+    private Map<SecurityQuestion, String> qandA;
 
     public int getEnergy() {
         return this.energy;
@@ -98,10 +98,10 @@ public class User {
     }
 
     public Map<SecurityQuestion, String> getQAndA() {
-        return qAndA;
+        return qandA;
     }
 
     public void setQAndA(Map<SecurityQuestion, String> qAndA) {
-        this.qAndA = qAndA;
+        this.qandA = qAndA;
     }
 }
