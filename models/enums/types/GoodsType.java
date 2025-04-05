@@ -104,7 +104,7 @@ public enum GoodsType {
               int price,
               int dailyLimit,
               ShopType shopType ,
-              List<Season> seasonalStocks) {
+              List<Season> seasonalStocks ) {
         this.name = name;
         this.description = description;
         this.price = price;
