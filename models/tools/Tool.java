@@ -19,4 +19,6 @@ public class Tool {
     public void useTool(Ditection direction) {
 
     }
+    // TODO: define a getToolByName function
+
 }

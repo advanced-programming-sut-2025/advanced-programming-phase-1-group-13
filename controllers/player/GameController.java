@@ -51,7 +51,17 @@ public class GameController {
         // TODO
     }
 
+    public Result throwItemToTrash(Item item, int number) {
+        // command: inventory trash ...
+        // TODO
+    }
+
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
+
+    public Result equipTool(String toolName) {
+        // TODO: get Tool by its name (return appropriate failing message if null)
+        // TODO: equip tool
+    }
 
     public Result useTool(Position position, Tool tool) {
         if (canToolBeUsedHere(position, tool)) {
