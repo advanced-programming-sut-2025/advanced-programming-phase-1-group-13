@@ -1,6 +1,6 @@
 package models;
 
-public class  BasicBackpack extends Inventory {
+public class  DeluxeBackpack extends models.Inventory {
     capacity = null;
     isCapacityUnlimited = true;
 }

@@ -2,7 +2,6 @@ package controllers.player;
 
 import models.*;
 import models.Food;
-import models.Tool;
 import models.enums.environment.*;
 
 public class GameController {

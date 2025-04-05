@@ -1,6 +1,10 @@
 package models;
 
-import models.Tool;
+import models.enums.SecurityQuestion;
+
+import javax.tools.Tool;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class User {
     private int energy;
@@ -11,6 +15,7 @@ public class User {
     private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<CookingRecipe> learntCookingRecipes;
+    private Map<SecurityQuestion, String> qAndA;
 
     public int getEnergy() {
         return this.energy;
@@ -92,4 +97,11 @@ public class User {
 
     }
 
+    public Map<SecurityQuestion, String> getQAndA() {
+        return qAndA;
+    }
+
+    public void setQAndA(Map<SecurityQuestion, String> qAndA) {
+        this.qAndA = qAndA;
+    }
 }

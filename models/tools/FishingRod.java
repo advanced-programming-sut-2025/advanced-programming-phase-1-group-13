@@ -4,7 +4,7 @@ import models.enums.types.ToolTypes;
 
 import java.util.Map;
 
-public class FishingRod extends Tools {
+public class FishingRod extends Tool {
     private FishingRodType type;
 
     private static final Map<FishingRodType, Integer> ENERGY_COSTS = Map.of(

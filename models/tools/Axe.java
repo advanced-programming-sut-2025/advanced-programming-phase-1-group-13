@@ -3,7 +3,7 @@ import models.enums.types.ToolTypes;
 
 import java.util.Map;
 
-public class Axe extends Tools {
+public class Axe extends Tool {
     private ToolLevel level;
 
     private static final Map<ToolLevel, Integer> ENERGY_COSTS = Map.of(

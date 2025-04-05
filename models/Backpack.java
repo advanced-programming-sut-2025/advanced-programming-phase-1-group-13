@@ -5,7 +5,7 @@ import models.enums.types.ToolTypes;
 
 import java.util.Map;
 
-public class Backpack extends Tools {
+public class Backpack extends Tool {
     private BackpackLevel level;
 
     private static final Map<BackpackLevel, Integer> CAPACITY_MAP = Map.of(

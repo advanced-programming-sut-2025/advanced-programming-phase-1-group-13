@@ -1,5 +1,8 @@
 package models.menus;
 
+import models.User;
+import models.enums.environment.Weather;
+
 import java.util.List;
 
 public class Game {
