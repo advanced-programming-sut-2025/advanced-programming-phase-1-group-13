@@ -8,7 +8,6 @@ import models.enums.environment.*;
 public class GameController {
     User player = App.getLoggedIn();
 
-
     // === PLAYER'S STATUS === //
 
     public Result showPlayerEnergy() {

@@ -1,4 +1,7 @@
-package models;
+package models.tools;
+
+import models.enums.Skill;
+import models.enums.environment.Direction;
 
 public class Tool {
     private int energyNeeded;
@@ -16,7 +19,7 @@ public class Tool {
 
     }
 
-    public void useTool(Ditection direction) {
+    public void useTool(Direction direction) {
 
     }
 }

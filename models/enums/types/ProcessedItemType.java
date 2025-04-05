@@ -1,10 +1,8 @@
 package models.enums.types;
 
-import models.Item;
-
 import java.util.HashMap;
 
-public enum ItemType {
+public enum ProcessedItemType {
     HONEY("Honey", "It's a sweet syrup produced by bees.", 75, 4, new HashMap<>(), 350),
     CHEESE("Cheese", "It's your basic cheese.", 100, 3, createIngredientsMap(ProductType.COW_MILK, 1), 230),
     LARGE_CHEESE("Large Cheese", "It's your basic cheese.", 100, 3, createIngredientsMap(ProductType.LARGE_COW_MILK, 1), 345),
@@ -41,7 +39,7 @@ public enum ItemType {
     HashMap<ProductType, Integer> ingredients;
     int sellPrice;
 
-    ItemType(String name, String description, int energy, int processingTime, HashMap<ProductType, Integer> ingredients, int sellPrice) {
+    ProcessedItemType(String name, String description, int energy, int processingTime, HashMap<ProductType, Integer> ingredients, int sellPrice) {
         this.name = name;
         this.description = description;
         this.energy = energy;
