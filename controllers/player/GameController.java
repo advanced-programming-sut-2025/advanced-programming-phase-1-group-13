@@ -46,6 +46,11 @@ public class GameController {
         return new Result(true, learntRecipes);
     }
 
+    // === INVENTORY === //
+    public Result inventoryShow() {
+        // TODO
+    }
+
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
 
     public Result useTool(Position position, Tool tool) {
@@ -171,6 +176,46 @@ public class GameController {
 
     public Result showHelpReadingMap() {
         return new Result(true, ""); // TODO: show the "Help" / enter the Help menu / ...
+    }
+
+
+    // === GAME STATUS === //
+
+    public Result cheatAdvanceTime(int howManyHours) {
+        // TODO;
+    }
+
+    public Result cheatAdvanceDate(int howManyDays) {
+        // TODO;
+    }
+
+    public Result cheatThor(Position position) {
+        // TODO
+    }
+
+    public Result showWeather() {
+        // TODO
+    }
+
+    public Result showWeatherForecast() {
+        // TODO
+    }
+
+    public Result cheatWeatherSet(Weather newWeather) {
+        // TODO
+    }
+
+    public Result buildGreenhouse() {
+        if (!canBuildGreenhouse()) {
+            return new Result(false, "You can't build greenhouse!");
+        }
+        // TODO: build a greenhouse
+        return new Result(true, "Building greenhouse..."); // todo: show its info in detail?
+    }
+
+    private boolean canBuildGreenhouse() {
+        // TODO: check if we have the required material
+        // + is only ONE greenhouse allowed?
     }
 
 
