@@ -1,6 +1,7 @@
 package controllers.player;
 
 import models.*;
+import models.enums.types.BuildingType;
 import models.enums.types.FertilizerType;
 import models.enums.types.Seed;
 import models.tools.Tool;
@@ -280,7 +281,7 @@ public class GameController {
 
     // === BUILDINGS & ANIMALS === //
 
-    public Result build() {
-
+    public Result build(BuildingType buildingType, Position position) {
+        return new Result(true, "");
     }
 }

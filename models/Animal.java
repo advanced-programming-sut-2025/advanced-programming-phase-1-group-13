@@ -1,41 +1,42 @@
-package models.animals;
+package models;
 
-import models.AnimalProduct;
 import models.enums.environment.Time;
+import models.enums.types.AnimalType;
 
 import java.util.ArrayList;
 
 public abstract class Animal {
     private String name;
+    private AnimalType animalType;
     private int purchaseCost;
     private int friendshipLevel;
     private Time LastFeedingTime;
     private Time lastProductTime;
     private ArrayList<AnimalProduct> animalProducts;
-    private LivingSpace livingSpace;
+    private AnimalLivingSpace animalLivingSpace;
 
     public void shepherdAnimal() {
-
+        // TODO
     }
 
     public void feedHay() {
-
+        // TODO
     }
 
     public void collectProduce() {
-
+        // TODO
     }
 
     private void updateFriendship() {
-
+        // TODO
     }
 
     public String getName() {
         return name;
     }
 
-    public LivingSpace getLivingSpace() {
-        return livingSpace;
+    public AnimalLivingSpace getLivingSpace() {
+        return animalLivingSpace;
     }
 
     public ArrayList<AnimalProduct> getAnimalProducts() {

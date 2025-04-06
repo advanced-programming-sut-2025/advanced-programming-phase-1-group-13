@@ -1,6 +1,5 @@
 package models;
 
-import models.animals.Animal;
 import models.enums.Quality;
 import models.enums.types.ProductType;
 
