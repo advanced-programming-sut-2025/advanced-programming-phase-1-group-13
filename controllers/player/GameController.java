@@ -277,7 +277,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    // === BUILDINGS & ANIMALS === //
+    // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(FarmBuildingType farmBuildingType, Position position) {
         // TODO
@@ -291,5 +291,56 @@ public class GameController {
         // TODO
         return new Result(true, "");
     }
+
+    public Result pet(String animalName) {
+        Animal animal = getAnimalByName(animalName);
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result cheatSetFriendship(String animalName, int amount) {
+        Animal animal = getAnimalByName(animalName);
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result showMyAnimalsInfo() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result shepherdAnimal(String animalName, Position position) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result feedHayToAnimal(String animalName) {
+        Animal animal = getAnimalByName(animalName);
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result showProducedProducts() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result collectProducts(String animalName) {
+        Animal animal = getAnimalByName(animalName);
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result sellAnimal(String animalName) {
+        Animal animal = getAnimalByName(animalName);
+        // TODO
+        return new Result(true, "");
+    }
+
+    private Animal getAnimalByName(String name) {
+        // TODO: find animal
+        return null;
+    }
+
 
 }

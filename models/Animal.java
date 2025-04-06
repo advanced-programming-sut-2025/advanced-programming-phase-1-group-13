@@ -11,6 +11,7 @@ public class Animal {
     private int purchaseCost;
     private int friendshipLevel;
     private Time LastFeedingTime;
+    private Time LastpettingTime;
     private Time lastProductTime;
     private ArrayList<AnimalProduct> producedProducts;
     private AnimalLivingSpace animalLivingSpace;
@@ -19,10 +20,6 @@ public class Animal {
         this.name = name;
         this.animalType = animalType;
         this.friendshipLevel = 0;
-    }
-
-    public void shepherdAnimal() {
-        // TODO
     }
 
     public void feedHay() {
@@ -51,6 +48,10 @@ public class Animal {
 
     public Time getLastProductTime() {
         return this.lastProductTime;
+    }
+
+    public Time getLastpettingTime() {
+        return this.LastpettingTime;
     }
 
     public Time getLastFeedingTime() {
