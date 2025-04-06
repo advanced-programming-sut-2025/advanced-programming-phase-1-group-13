@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum Fruit {
+public enum FruitType {
     APRICOT,
     CHERRY,
     BANANA,

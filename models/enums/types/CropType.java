@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum Crop {
+public enum CropType {
     BLUE_JAZZ(false),
     CARROT(false),
     CAULIFLOWER(false),
@@ -68,7 +68,7 @@ public enum Crop {
 
     private final boolean isForaging;
 
-    Crop(Boolean isForaging) {
+    CropType(Boolean isForaging) {
         this.isForaging = isForaging;
 
     }

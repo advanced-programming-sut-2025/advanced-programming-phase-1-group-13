@@ -3,8 +3,8 @@ package models;
 import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.types.Food;
+import models.tools.Tool;
 
-import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -55,21 +55,6 @@ public class User {
         this.position = newPosition;
     }
 
-    public void placeItem(Object item, Direction direction) {
-
-    }
-
-    public void helpReadingMap() {
-
-    }
-
-    public void printMap(Position position, int size) {
-
-    }
-
-    public void printColoredMap(Position position, int size) {
-
-    }
 
     public String getStringLearntCookingRecipes() {
         // TODO: Use StringBuilder for it

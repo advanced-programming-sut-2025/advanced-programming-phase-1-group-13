@@ -1,7 +1,7 @@
 package controllers.player;
 
 import models.*;
-import models.Tool;
+import models.tools.Tool;
 import models.enums.types.Food;
 import models.enums.environment.*;
 
@@ -62,7 +62,10 @@ public class GameController {
         // TODO: equip tool
     }
 
-    public Result useTool(Position position, Tool tool) {
+    public Result useTool(String directionString) {
+        Direction direction = Direction.getDirectionByDisplayName(directionString);
+        Position position = neighborTile(direction);
+        Tool tool = player.getCurrentTool();
         if (canToolBeUsedHere(position, tool)) {
             // TODO: use tool
             return new Result(true, ""); // todo: appropriate message
@@ -134,6 +137,11 @@ public class GameController {
     private Position neighborTile(Direction direction) {
         // TODO: return the position of the neighbour tile, if within the range of our map of farms.
     }
+
+    private Tile getTileByPosition(Position position) {
+        // TODO: loop (the entire map) and return the tile whose position equals "position".
+    }
+
 
     // === WALK === //
     public Result walk(Path path, boolean playerConfirmed) {
