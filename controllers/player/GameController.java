@@ -6,6 +6,8 @@ import models.enums.types.FarmBuildingType;
 import models.tools.Tool;
 import models.enums.environment.*;
 
+import java.util.ArrayList;
+
 public class GameController {
     User player = App.getLoggedIn();
 
@@ -345,13 +347,23 @@ public class GameController {
 
     // === ARTISAN === //
 
-    public Result artisanUse(String artisanName, String itemName) {
+    public Result artisanUse(String artisanName, ArrayList<String> itemsNames) { // gets ingredients
+        ArrayList<Item> ingredientItems = new ArrayList<>();
+        for (String itemName : itemsNames) {
+            ingredientItems.add(getItemByItemName(itemName));
+        }
         Artisan artisan = getArtisanByArtisanName(artisanName);
-        Item item = getItemByItemName(itemName);
         // TODO
         return new Result(true, "");
     }
 
+    public Result artisanGet(String artisanName) { // gives product
+        // TODO: if product is not ready yet, return appropriate failing message
+
+        // TODO: get the product from artisan
+
+        return new Result(true, "");
+    }
 
     private Artisan getArtisanByArtisanName(String artisanName) {
         // TODO
@@ -362,4 +374,37 @@ public class GameController {
         // TODO
         return null;
     }
+
+    // === SHOPS === //
+
+    public Result showAllProducts() {
+        // TODO: show all available and unavailable products, with their prices
+        return new Result(true, "");
+    }
+
+    public Result showAvailableProducts() {
+        // TODO: show only available products, with their prices
+        return new Result(true, "");
+    }
+
+    public Result purchase(String productName, Integer count) {
+        // count is optional and might be null. In that case:
+        if (count == null) {
+            count = 1;
+        }
+        Item product = getItemByItemName(productName);
+        // TODO: check if we have enough money
+        // TODO: check if the product is actually a valid product (not made up / invalid)
+        // TODO: check if the product is available
+        // TODO: check if the product has already been sold up to its daily limit (counts between different players)
+        // TODO: check if the given "count" is greater than the item's daily limit
+        return new Result(true, "");
+    }
+
+    public Result cheatAddDollars(int amount) {
+        // TODO: add the money to players wallet
+        return new Result(true, "");
+    }
+
+
 }
