@@ -2,7 +2,7 @@ package controllers.player;
 
 import models.*;
 import models.enums.types.*;
-import models.enums.types.BuildingType;
+import models.enums.types.FarmBuildingType;
 import models.tools.Tool;
 import models.enums.environment.*;
 
