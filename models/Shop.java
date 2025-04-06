@@ -1,26 +1,26 @@
 package models;
 
+import models.enums.types.ShopType;
+
 import java.util.HashMap;
 
 public class Shop {
     String name;
-    HashMap<Item, Integer> inventory;
+    ShopType type;
+    HashMap<Item, Integer> shopInventory;
     int balance;
     NPC owner;
 
-    public Shop(String name, HashMap<Item, Integer> inventory, int balance, NPC owner) {
-        this.name = name;
-        this.inventory = inventory;
-        this.balance = balance;
-        this.owner = owner;
+    public Shop(ShopType type) {
+        this.type = type;
     }
 
     public String getName() {
         return name;
     }
 
-    public HashMap<Item, Integer> getInventory() {
-        return inventory;
+    public HashMap<Item, Integer> getShopInventory() {
+        return shopInventory;
     }
 
     public int getBalance() {

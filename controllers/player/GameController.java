@@ -1,6 +1,8 @@
 package controllers.player;
 
 import models.*;
+import models.enums.types.FertilizerType;
+import models.enums.types.Seed;
 import models.tools.Tool;
 import models.enums.types.Food;
 import models.enums.environment.*;
@@ -48,11 +50,13 @@ public class GameController {
     // === INVENTORY === //
     public Result inventoryShow() {
         // TODO
+        return new Result(true, "");
     }
 
     public Result throwItemToTrash(Item item, int number) {
         // command: inventory trash ...
         // TODO
+        return new Result(true, "");
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
@@ -60,6 +64,7 @@ public class GameController {
     public Result equipTool(String toolName) {
         // TODO: get Tool by its name (return appropriate failing message if null)
         // TODO: equip tool
+        return new Result(true, "");
     }
 
     public Result useTool(String directionString) {
@@ -91,6 +96,11 @@ public class GameController {
         return new Result(true, "Item crafted and added to inventory.");
     }
 
+    public Result showCraftInfo(String craftName) {
+        // TODO
+        return new Result(true, "");
+    }
+
     public Result cheatAddItem(Item item) {
         // TODO: add item to inventory
         return new Result(true, "Item added to inventory.");
@@ -118,28 +128,34 @@ public class GameController {
         // TODO: check if inventory is full; if so, return false.
         // TODO: check if we know the recipe, return false if not.
         // TODO: check if we have the ingredients, return false if not.
+        return false;
     }
 
     private boolean canCook(Food food) {
         // TODO: check if inventory is full; if so, return false.
         // TODO: check if we know the recipe, return false if not.
         // TODO: check if we have the ingredients, return false if not.
+        return false;
     }
 
     private boolean canToolBeUsedHere(Position position, Tool tool) {
         // TODO: check the tile at "position" and check if tool can be used!
+        return false;
     }
 
     private boolean canItemBePlacedHere(Position position, Item item) {
         // TODO: check the tile at "position" and check if item can be placed there!
+        return false;
     }
 
     private Position neighborTile(Direction direction) {
         // TODO: return the position of the neighbour tile, if within the range of our map of farms.
+        return null;
     }
 
     private Tile getTileByPosition(Position position) {
         // TODO: loop (the entire map) and return the tile whose position equals "position".
+        return null;
     }
 
 
@@ -179,6 +195,7 @@ public class GameController {
 
     private boolean isDestinationAllowed(Position destination) {
         // TODO: check if destination is in OUR Farm.
+        return false;
     }
 
     // === PRINT MAP === //
@@ -200,26 +217,32 @@ public class GameController {
 
     public Result cheatAdvanceTime(int howManyHours) {
         // TODO;
+        return new Result(true, "");
     }
 
     public Result cheatAdvanceDate(int howManyDays) {
         // TODO;
+        return new Result(true, "");
     }
 
     public Result cheatThor(Position position) {
         // TODO
+        return new Result(true, "");
     }
 
     public Result showWeather() {
         // TODO
+        return new Result(true, "");
     }
 
     public Result showWeatherForecast() {
         // TODO
+        return new Result(true, "");
     }
 
     public Result cheatWeatherSet(Weather newWeather) {
         // TODO
+        return new Result(true, "");
     }
 
     public Result buildGreenhouse() {
@@ -233,7 +256,31 @@ public class GameController {
     private boolean canBuildGreenhouse() {
         // TODO: check if we have the required material
         // + is only ONE greenhouse allowed?
+        return false;
     }
 
 
+    // === PLANTS === //
+
+    public Result plant(Direction direction, Seed seed) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result showPlant(Position position) {
+        Tile tile = getTileByPosition(position);
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result fertilize(FertilizerType fertilizer, Direction direction) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    // === BUILDINGS & ANIMALS === //
+
+    public Result build() {
+
+    }
 }

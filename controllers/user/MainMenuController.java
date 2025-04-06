@@ -31,6 +31,7 @@ public class MainMenuController {
 
     private boolean canSwitchMenu(Menu newMenu) {
         // TODO: check if it is allowed to switch to that menu from the current menu
+        return false;
     }
 
 

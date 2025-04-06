@@ -2,10 +2,13 @@ package models;
 
 import models.enums.SecurityQuestion;
 import models.enums.Skill;
+import models.enums.SkillLevel;
+import models.enums.environment.Direction;
 import models.enums.types.Food;
 import models.tools.Tool;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class User {
@@ -13,11 +16,12 @@ public class User {
     private boolean isEnergyUnlimited;
     private Position position;
     private Tool currentTool;
-    private HashMap<Skill, SkillLevels> SkillLevels;
+    private HashMap<Skill, SkillLevel> SkillLevels;
     private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<Food> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
+    private Farm farm;
 
     public int getEnergy() {
         return this.energy;
@@ -58,30 +62,24 @@ public class User {
 
     public String getStringLearntCookingRecipes() {
         // TODO: Use StringBuilder for it
+        return null;
     }
 
     public String getStringLearntCraftRecipes() {
         // TODO: Use StringBuilder for it
+        return null;
     }
 
     public void LearnNewCraftRecipe(Food craftRecipe) {
-
+        // TODO
     }
 
     public void LearnNewCookingRecipe(CookingRecipe cookingRecipe) {
-
-    }
-
-    public void craft(Craft craft) {
-
-    }
-
-    public void prepareCooking() {
-
+        // TODO
     }
 
     public void eat(String foodName) {
-
+        // TODO
     }
 
     public Map<SecurityQuestion, String> getQAndA() {
