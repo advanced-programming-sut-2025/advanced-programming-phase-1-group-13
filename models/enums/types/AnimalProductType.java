@@ -16,10 +16,10 @@ public enum AnimalProductType {
     TRUFFLE(625, 16000);
     
     private final int basePrice;
-    private final int buyingPrice;
+    private final int purchasePrice;
 
-    AnimalProductType(int basePrice, int buyingPrice) {
+    AnimalProductType(int basePrice, int purchasePrice) {
         this.basePrice = basePrice;
-        this.buyingPrice = buyingPrice;
+        this.purchasePrice = purchasePrice;
     }
 }
