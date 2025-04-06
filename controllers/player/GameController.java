@@ -415,10 +415,67 @@ public class GameController {
         // TODO: Check if we do not have such a product.
         // TODO: Check if we aren't neighbors with a shipping bin. (we have to be near shipping bin to sell)
 
-        // TODO: sell
+        // TODO sell (also take into account its effect on friendship level)
+
         return new Result(true, "");
     }
 
     // === FRIENDSHIPS === //
+
+    public Result showFriendshipLevels() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result talk(String username, String message) {
+        // TODO (also take into account its effect on friendship level)
+        return new Result(true, "");
+    }
+
+    public Result showTalkHistoryWithUser(String username) {
+        // TODO (also take into account its effect on friendship level)
+        return new Result(true, "");
+    }
+
+    public Result giveGift(String username, String itemName, int amount) {
+        // TODO: check the error cases (from Doc page.48)
+        return new Result(true, "");
+    }
+
+    public Result giftList() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result giftRate(int giftNumber, int rate) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result hug(String username) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result giveFlowertoUser(String username) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result askMarriage(String username, Object ring) {
+        // TODO: ring object type!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result respondToMarriageRequest(boolean accepted, String username) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    // === TRADE === //
+    // kollan (also take into account its effect on friendship level)
+
+    // === NPC === //
 
 }
