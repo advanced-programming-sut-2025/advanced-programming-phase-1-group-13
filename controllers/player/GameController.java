@@ -1,11 +1,9 @@
 package controllers.player;
 
 import models.*;
+import models.enums.types.*;
 import models.enums.types.BuildingType;
-import models.enums.types.FertilizerType;
-import models.enums.types.Seed;
 import models.tools.Tool;
-import models.enums.types.Food;
 import models.enums.environment.*;
 
 public class GameController {
@@ -281,7 +279,17 @@ public class GameController {
 
     // === BUILDINGS & ANIMALS === //
 
-    public Result build(BuildingType buildingType, Position position) {
+    public Result build(FarmBuildingType farmBuildingType, Position position) {
+        // TODO
         return new Result(true, "");
     }
+
+    public Result buyAnimal(AnimalType animalType, String name) {
+        // TODO: check if we have stable/cage
+        // todo: which stable/cage does the newly-bought animal go in?
+        Animal animal = new Animal(name, animalType);
+        // TODO
+        return new Result(true, "");
+    }
+
 }

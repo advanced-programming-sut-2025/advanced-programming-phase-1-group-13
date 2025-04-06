@@ -5,15 +5,21 @@ import models.enums.types.AnimalType;
 
 import java.util.ArrayList;
 
-public abstract class Animal {
+public class Animal {
     private String name;
     private AnimalType animalType;
     private int purchaseCost;
     private int friendshipLevel;
     private Time LastFeedingTime;
     private Time lastProductTime;
-    private ArrayList<AnimalProduct> animalProducts;
+    private ArrayList<AnimalProduct> producedProducts;
     private AnimalLivingSpace animalLivingSpace;
+
+    public Animal(String name, AnimalType animalType) {
+        this.name = name;
+        this.animalType = animalType;
+        this.friendshipLevel = 0;
+    }
 
     public void shepherdAnimal() {
         // TODO
@@ -32,30 +38,38 @@ public abstract class Animal {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public AnimalLivingSpace getLivingSpace() {
-        return animalLivingSpace;
+        return this.animalLivingSpace;
     }
 
-    public ArrayList<AnimalProduct> getAnimalProducts() {
-        return animalProducts;
+    public ArrayList<AnimalProduct> getProducedProducts() {
+        return this.producedProducts;
     }
 
     public Time getLastProductTime() {
-        return lastProductTime;
+        return this.lastProductTime;
     }
 
     public Time getLastFeedingTime() {
-        return LastFeedingTime;
+        return this.LastFeedingTime;
     }
 
     public int getFriendshipLevel() {
-        return friendshipLevel;
+        return this.friendshipLevel;
+    }
+
+    public AnimalType getAnimalType() {
+        return this.animalType;
+    }
+
+    public AnimalLivingSpace getAnimalLivingSpace() {
+        return this.animalLivingSpace;
     }
 
     public int getPurchaseCost() {
-        return purchaseCost;
+        return this.purchaseCost;
     }
 }
