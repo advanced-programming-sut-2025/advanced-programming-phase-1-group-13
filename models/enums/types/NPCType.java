@@ -6,7 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public enum NPCType {
-    CLINT(Role.BLACKSMITH),
+    CLINT(
+            Role.BLACKSMITH,
+            new HashMap<HashMap<Item, Integer>, HashMap<Item, Integer>>() {{
+                put(new HashMap<Item, Integer>() {{ put(Item.IRON_ORE, 50); }},
+                        new HashMap<Item, Integer>() {{ put(Item.DIAMOND, 2); }}
+                );
+            }},
+            new ArrayList<Item>() {{ add(Item.IRON_BAR); add(Item.GOLD_BAR); }}
+    ),
     MORRIS(Role.SHOPKEEPER),
     PIERRE(Role.SHOPKEEPER),
     ROBIN(Role.SHOPKEEPER),
@@ -22,9 +30,11 @@ public enum NPCType {
     HashMap<HashMap<Item, Integer>, // requests
             HashMap<Item, Integer> // rewards
             > quests;
-    ArrayList<Item> Favorites;
+    ArrayList<Item> favorites;
 
-    NPCType(Role role) {
+    NPCType(Role role, HashMap quests, ArrayList favorites) {
         this.role = role;
+        this.quests = quests;
+        this.favorites = favorites;
     }
 }

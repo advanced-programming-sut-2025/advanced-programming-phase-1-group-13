@@ -18,7 +18,7 @@ public class FarmBuilding {
         this.length = farmBuildingType.getLength();
         this.description = farmBuildingType.getDescription();
         this.woodCost = farmBuildingType.getWoodCost();
-        this.stoneCost = farmBuildingType.getStoneCost();
+        this.stoneCost = farmBuildingType.getStoneCount();
     }
 
 }
