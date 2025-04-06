@@ -81,6 +81,7 @@ public class GameController {
         Position position = neighborTile(direction);
         if (canItemBePlacedHere(position, item)) {
             // TODO: place item
+            // TODO: LEARN ABOUT assert position != null;
             return new Result(true, item + " placed at " + position.toString());
         }
         return new Result(false, "you can't place that item at " + position.toString());
@@ -342,5 +343,23 @@ public class GameController {
         return null;
     }
 
+    // === ARTISAN === //
 
+    public Result artisanUse(String artisanName, String itemName) {
+        Artisan artisan = getArtisanByArtisanName(artisanName);
+        Item item = getItemByItemName(itemName);
+        // TODO
+        return new Result(true, "");
+    }
+
+
+    private Artisan getArtisanByArtisanName(String artisanName) {
+        // TODO
+        return null;
+    }
+
+    private Item getItemByItemName(String itemName) {
+        // TODO
+        return null;
+    }
 }
