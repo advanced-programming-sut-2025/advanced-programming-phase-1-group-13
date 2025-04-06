@@ -406,5 +406,19 @@ public class GameController {
         return new Result(true, "");
     }
 
+    public Result sell(String productName, Integer count) {
+        // count is optional and might be null. In that case we sell the entire available in inventory
+        if (count == null) {
+            // TODO: count = total num of that product in our inventory
+        }
+        // TODO: Check if such a product cannot be sold.
+        // TODO: Check if we do not have such a product.
+        // TODO: Check if we aren't neighbors with a shipping bin. (we have to be near shipping bin to sell)
+
+        // TODO: sell
+        return new Result(true, "");
+    }
+
+    // === FRIENDSHIPS === //
 
 }
