@@ -8,8 +8,9 @@ public class FarmBuilding {
     private int width;
     private int length;
     private String description;
-    private int woodCost;
-    private int stoneCost;
+    private int woodCount;
+    private int stoneCount;
+    private int cost;
 
     public FarmBuilding(FarmBuildingType farmBuildingType, Position positionOfUpperLeftCorner) {
         this.farmBuildingType = farmBuildingType;
@@ -17,8 +18,6 @@ public class FarmBuilding {
         this.width = farmBuildingType.getWidth();
         this.length = farmBuildingType.getLength();
         this.description = farmBuildingType.getDescription();
-        this.woodCost = farmBuildingType.getWoodCost();
-        this.stoneCost = farmBuildingType.getStoneCount();
     }
 
 }

@@ -8,8 +8,8 @@ public enum FarmBuildingType {
     COOP(6, 3, "Houses 4 coop-dwelling animals.", 300, 100, 4000, false),
     BIG_COOP(6, 3, "Houses 8 coop-dwelling animals. Unlocks ducks.", 400, 150, 10000, false),
     DELUXE_COOP(6, 3, "Houses 12 coop-dwelling animals. Unlocks rabbits.", 500, 200, 20000,  false),
-    WELL(3, 3, "Provides a place for you to refill your watering can.", 0, 75, 1000, false),
-    SHIPPING_BIN(1, 1, "Items placed in it will be included in the nightly shipment.", 150, 0, 250, false);
+    WELL(3, 3, "Provides a place for you to refill your watering can.", 0, 75, 1000, null),
+    SHIPPING_BIN(1, 1, "Items placed in it will be included in the nightly shipment.", 150, 0, 250, null);
 
     private final int width;
     private final int length;
@@ -18,6 +18,11 @@ public enum FarmBuildingType {
     private final int stoneCount;
     private final int cost;
     private final Boolean isCage;
+    /* isCage:
+    true: cage
+    false: stable
+    null: neither of the two
+    */
 
     FarmBuildingType(int width, int length, String description, int woodCost, int stoneCost, int cost, Boolean isCage) {
         this.width = width;
