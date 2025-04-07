@@ -478,7 +478,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result giveFlowertoUser(String username) {
+    public Result giveFlowerToUser(String username) {
         // TODO
         return new Result(true, "");
     }
@@ -493,7 +493,6 @@ public class GameController {
         // TODO
         return new Result(true, "");
     }
-    // nokhodi
 
     // === TRADE === //
     
@@ -517,7 +516,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result showTradeHitory() { // type?
+    public Result showTradeHistory() { // type?
         // TODO
         return new Result(true, "");
     }
@@ -534,7 +533,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result showFriendshiptNPCList() {
+    public Result showFriendshipNPCList() {
         // TODO
         return new Result(true, "");
     }

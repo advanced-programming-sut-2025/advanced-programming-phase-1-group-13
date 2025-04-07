@@ -46,10 +46,12 @@ public class Friendship {
     }
 
     public int requiredXPForNextLevel() {
-
+        // TODO
+        return 0;
     }
 
     public boolean isMaxLevel() {
-
+        // TODO
+        return false;
     }
 }
