@@ -46,7 +46,7 @@ public class Friendship {
     }
 
     public int requiredXPForNextLevel() {
-        // TODO
+        // TODO:
         return 0;
     }
 

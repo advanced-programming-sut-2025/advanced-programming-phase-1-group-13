@@ -517,7 +517,7 @@ public class GameController {
     }
 
     public Result showTradeHistory() { // type?
-        // TODO
+        // TODO:
         return new Result(true, "");
     }
 
