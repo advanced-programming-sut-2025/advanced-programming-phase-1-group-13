@@ -484,8 +484,8 @@ public class GameController {
     }
 
     public Result askMarriage(String username, Object ring) {
-        // TODO: ring object type!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // TODO
+        // TODO: ring object type!!?
+        // TODO: will u marry me? :)
         return new Result(true, "");
     }
 
