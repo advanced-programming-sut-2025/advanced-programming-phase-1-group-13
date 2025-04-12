@@ -22,6 +22,7 @@ public class User {
     private ArrayList<Food> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
     private Farm farm;
+    private ArrayList<Transaction> transactions;
 
     public int getEnergy() {
         return this.energy;
@@ -52,7 +53,7 @@ public class User {
     }
 
     public void useTool(Direction direction) {
-
+        // TODO
     }
 
     public void changePosition(Position newPosition) {
