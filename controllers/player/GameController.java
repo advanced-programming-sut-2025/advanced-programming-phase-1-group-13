@@ -345,6 +345,29 @@ public class GameController {
         return null;
     }
 
+    // === FISHING === //
+
+    public Result fishing(String fishingPoleName) {
+        Tool fishingPole = getFishingPoleByName(fishingPoleName);
+        // TODO: only fish if near lake and fishingPole is not null
+        return new Result(true, "");
+    }
+
+    public int numberOfCaughtFish() {
+        // TODO
+        return 0;
+    }
+
+    public int qualityOfCaughtFish() {
+        // TODO
+        return 0;
+    }
+
+    private Tool getFishingPoleByName(String name) {
+        // TODO: find fishing pole
+        return null;
+    }
+
     // === ARTISAN === //
 
     public Result artisanUse(String artisanName, ArrayList<String> itemsNames) { // gets ingredients
@@ -414,11 +437,119 @@ public class GameController {
         // TODO: Check if such a product cannot be sold.
         // TODO: Check if we do not have such a product.
         // TODO: Check if we aren't neighbors with a shipping bin. (we have to be near shipping bin to sell)
-
-        // TODO: sell
+        // TODO: sell (also take into account its effect on friendship level)
         return new Result(true, "");
     }
 
     // === FRIENDSHIPS === //
 
+    public Result showFriendshipLevels() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result talk(String username, String message) {
+        // TODO (also take into account its effect on friendship level)
+        return new Result(true, "");
+    }
+
+    public Result showTalkHistoryWithUser(String username) {
+        // TODO (also take into account its effect on friendship level)
+        return new Result(true, "");
+    }
+
+    public Result giveGift(String username, String itemName, int amount) {
+        // TODO: check the error cases (from Doc page.48)
+        return new Result(true, "");
+    }
+
+    public Result giftList() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result giftRate(int giftNumber, int rate) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result hug(String username) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result giveFlowerToUser(String username) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result askMarriage(String username, Object ring) {
+        // TODO: ring object type!!?
+        // TODO: will u marry me? :)
+        return new Result(true, "");
+    }
+
+    public Result respondToMarriageRequest(boolean accepted, String username) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    // === TRADE === //
+    
+    public Result tradeWithMoney(String targetUsername, String type, String itemName, int amount, int price) { // type?
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result tradeWithItem(String targetUsername, String type, String itemName, int amount, String targetItemName, int targetAmount) { // type?
+        // TODO: create a Trade class; int ID, User user1, User user2, Hashmap<Item, Integer>
+        return new Result(true, "");
+    }
+
+    public Result showTradeList(String targetUsername, String type, String itemName, int amount, int price) { // type?
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result tradeResponse(int id) { // type?
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result showTradeHistory() { // type?
+        // TODO:
+        return new Result(true, "");
+    }
+
+    // === NPC === //
+
+    public Result meetNPC(String NCPName) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result giftNPC(String NCPName, String itemName) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result showFriendshipNPCList() {
+        // TODO
+        return new Result(true, "");
+    }
+    
+    public Result showQuestsList() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result finishQuest(int index) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    private NPC geNPCByName(String NPCName) {
+        // TODO
+        return null;
+    }
 }

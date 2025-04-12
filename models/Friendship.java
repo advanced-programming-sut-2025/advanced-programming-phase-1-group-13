@@ -38,18 +38,20 @@ public class Friendship {
     }
 
     public void increaseXP(int amount) {
-
+        // TODO
     }
 
     public void decreaseXP(int amount) {
-
+        // TODO
     }
 
     public int requiredXPForNextLevel() {
-
+        // TODO:
+        return 0;
     }
 
     public boolean isMaxLevel() {
-
+        // TODO
+        return false;
     }
 }
