@@ -5,6 +5,7 @@ import java.util.regex.*;
 public enum LoginCommands implements Command {
     USERNAME_REGEX("^[a-zA-Z0-9-]+$"),
     PASSWORD_REGEX("^[a-zA-Z0-9?<>,\"';:\\\\/|\\[\\] {}+=)(*&^%\\$#!]+$"),
+    SHOW_CURRENT_MENU("\\s+show\\s+current\\s+menu\\s+"),
     EMAIL_REGEX("^(?!.*\\.\\.)[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z]{2,}$");
 
 
