@@ -495,7 +495,7 @@ public class GameController {
     }
 
     // === TRADE === //
-    
+
     public Result tradeWithMoney(String targetUsername, String type, String itemName, int amount, int price) { // type?
         // TODO
         return new Result(true, "");
@@ -537,7 +537,7 @@ public class GameController {
         // TODO
         return new Result(true, "");
     }
-    
+
     public Result showQuestsList() {
         // TODO
         return new Result(true, "");
