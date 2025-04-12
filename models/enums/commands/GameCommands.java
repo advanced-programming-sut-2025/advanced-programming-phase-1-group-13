@@ -3,7 +3,7 @@ package models.enums.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum GameCommands implements Command{
+public enum GameCommands implements Command {
     GAME_NEW("^\\s+game\\s+new\\s+(?<username_1>.+)\\s+(?<username_2>.+)\\s+(?<username_3>.+)\\s+$"),
     GAME_MAP("^\\s+game\\s+map\\s+(?<map_number>\\d+)$"),
     LOAD_GAME("^\\s+load\\s+game\\s+$"),
@@ -27,7 +27,7 @@ public enum GameCommands implements Command{
     ENERGY_SHOW("^\\s+energy\\s+show\\s+$"),
     CHEAT_ENERGY_SET("^\\s+energy\\s+set\\s+-v\\s+(?<value>\\s+)$"),
     CHEAT_ENERGY_UNLIMITED("^\\s+energy\\s+unlimited\\s+$"),
-    INVENTORY_SHOW("^$\\s+energy\\s+show\\s+"),
+    INVENTORY_SHOW("^$\\s+energy\\s+show\\s+");
 
 
     private final String regex;

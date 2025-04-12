@@ -6,6 +6,7 @@ import models.Item;
 import java.util.HashMap;
 
 public enum ProcessedItemType {
+    // TODO
     HONEY("Honey", "It's a sweet syrup produced by bees.", 75, 4, new HashMap<>(), 350),
     CHEESE("Cheese", "It's your basic cheese.", 100, 3, createIngredientsMap(new AnimalProduct(models.enums.types.AnimalProductType.COW_MILK), 1), 230),
     LARGE_CHEESE("Large Cheese", "It's your basic cheese.", 100, 3, createIngredientsMap(new AnimalProduct(models.enums.types.AnimalProductType.LARGE_COW_MILK), 1), 345),
@@ -22,12 +23,12 @@ public enum ProcessedItemType {
 //    DRIED_FRUIT("Dried Fruit", "Chewy pieces of dried fruit.", 75, 24, createIngredientsMap(ProductType.ANY_FRUIT_EXCEPT_GRAPES, 5), 7.5 * FruitBasePrice + 25),
 //    RAISINS("Raisins", "It's said to be the Junimos' favorite food.", 125, 24, createIngredientsMap(ProductType.GRAPES, 5), 600),
 //    COAL("Coal", "Turns 10 pieces of wood into one piece of coal.", "Inedible", 1, createIngredientsMap(ProductType.WOOD, 10), 50),
-    CLOTH("Cloth", "A bolt of fine wool cloth.", 0, 4, createIngredientsMap(models.enums.types.AnimalProductType.WOOL, 1), 470),
+//    CLOTH("Cloth", "A bolt of fine wool cloth.", 0, 4, createIngredientsMap(models.enums.types.AnimalProductType.WOOL, 1), 470),
     //    MAYONNAISE("Mayonnaise", "It looks spreadable.", 50, 3, createIngredientsMap(ProductType.EGG, 1), 190),
 //    LARGE_MAYONNAISE("Large Mayonnaise", "It looks spreadable.", 50, 3, createIngredientsMap(ProductType.LARGE_EGG, 1), 237),
-    DUCK_MAYONNAISE("Duck Mayonnaise", "It's a rich, yellow mayonnaise.", 75, 3, createIngredientsMap(models.enums.types.AnimalProductType.DUCK_EGG, 1), 375),
-    DINOSAUR_MAYONNAISE("Dinosaur Mayonnaise", "It's thick and creamy, with a vivid green hue. It smells like grass and leather.", 125, 3, createIngredientsMap(models.enums.types.AnimalProductType.DINOSAUR_EGG, 1), 800),
-    TRUFFLE_OIL("Truffle Oil", "A gourmet cooking ingredient.", 38, 6, createIngredientsMap(models.enums.types.AnimalProductType.TRUFFLE, 1), 1065),
+//    DUCK_MAYONNAISE("Duck Mayonnaise", "It's a rich, yellow mayonnaise.", 75, 3, createIngredientsMap(models.enums.types.AnimalProductType.DUCK_EGG, 1), 375),
+//    DINOSAUR_MAYONNAISE("Dinosaur Mayonnaise", "It's thick and creamy, with a vivid green hue. It smells like grass and leather.", 125, 3, createIngredientsMap(models.enums.types.AnimalProductType.DINOSAUR_EGG, 1), 800),
+//    TRUFFLE_OIL("Truffle Oil", "A gourmet cooking ingredient.", 38, 6, createIngredientsMap(models.enums.types.AnimalProductType.TRUFFLE, 1), 1065),
 //    OIL("Oil", "All-purpose cooking oil.", 13, 6, createIngredientsMap(ProductType.CORN, 1), 100),
     // PICKLES("Pickles", "A jar of your homemade pickles.", 1.75 * BaseIngredientEnergy, 6, createIngredientsMap(ProductType.ANY_VEGETABLE, 1), 2 * BasePrice + 50),
     // JELLY("Jelly", "Gooey.", 2 * BaseFruitEnergy, 72, createIngredientsMap(ProductType.ANY_FRUIT, 1), 2 * BaseFruitPrice + 50),

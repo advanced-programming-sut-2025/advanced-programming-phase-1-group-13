@@ -1,7 +1,9 @@
 package models;
 
+import models.enums.types.FertilizerType;
 import models.farming.Crop;
 import models.farming.Harvestable;
+import models.farming.PlantSource;
 import models.farming.Tree;
 
 import java.util.ArrayList;
@@ -21,20 +23,22 @@ public class Farm {
 
     }
 
-    public void plant(models.PlantSource seed, Position position) {
+    public void plant(PlantSource seed, Position position) {
+        // TODO
 
     }
 
     public void showPlant(Position position) {
+        // TODO
 
     }
 
-    public void fertilize(Fertilizer fertilizer, Position position) {
-
+    public void fertilize(FertilizerType fertilizer, Position position) {
+        // TODO
     }
 
     public void harvest(Harvestable harvestable) {
-
+        // TODO
     }
 
     public ArrayList<Tile> getMapTiles() {

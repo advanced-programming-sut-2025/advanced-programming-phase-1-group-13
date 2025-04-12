@@ -12,15 +12,14 @@ public abstract class Inventory {
     }
 
     public void addToInventory(Item item, int n) {
-        
+        // TODO
     }
 
     public void CheatAddToInventory(Item item, int n) {
-        
+        // TODO
     }
 
     public void removeFromInventory(Item item, int n) {
-        
+        // TODO
     }
-
 }

@@ -16,10 +16,12 @@ public class Artisan {
     }
 
     public String getDescription() {
-
+        // TODO
+        return null;
     }
 
     public ArrayList<Item> getItems() {
-
+        // TODO
+        return null;
     }
 }

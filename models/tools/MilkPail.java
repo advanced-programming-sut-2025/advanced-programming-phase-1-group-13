@@ -1,14 +1,27 @@
 package models.tools;
 
-import models.enums.types.ToolTypes;
+import models.enums.Skill;
+import models.enums.environment.Direction;
 
 public class MilkPail extends Tool {
-    public MilkPail() {
-        super("Milk Pail", ToolTypes.MILK_PAIL, 4);
+
+    public MilkPail(int energyNeeded, Skill relatedSkill) {
+        super(energyNeeded, relatedSkill);
     }
 
-    public void milkCow() {
-        System.out.println("Milking a cow...");
+    @Override
+    public int calculateEnergyNeeded() {
+        return super.calculateEnergyNeeded();
+    }
+
+    @Override
+    public Skill getRelatedSkill() {
+        return super.getRelatedSkill();
+    }
+
+    @Override
+    public void useTool(Direction direction) {
+        super.useTool(direction);
     }
 }
 

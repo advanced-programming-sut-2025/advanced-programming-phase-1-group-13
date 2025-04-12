@@ -9,7 +9,8 @@ import java.util.HashMap;
 
 public class LoginController {
     public static User getUserByUsername(String username) {
-
+        // TODO
+        return null;
     }
 
     public Result registerUser(String username,

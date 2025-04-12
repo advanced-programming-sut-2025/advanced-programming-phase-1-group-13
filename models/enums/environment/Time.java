@@ -16,9 +16,11 @@ public class Time {
 
     public Time cheatAdvanceTime(int hourIncrease, Time currentTime) {
         // TODO
+        return null;
     }
 
     public Time cheatAdvanceDate(int dayIncrease, Time currentTime) {
         // TODO
+        return null;
     }
 }

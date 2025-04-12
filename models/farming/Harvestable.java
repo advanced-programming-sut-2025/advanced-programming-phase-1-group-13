@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class Harvestable {
     private String name;
-    private models.PlantSource source;
+    private PlantSource source;
     private int numOfStages;
     private ArrayList<Integer> stages;
     private int totalHarvestTime;
@@ -20,6 +20,6 @@ public abstract class Harvestable {
     private Position position;
 
     public void showInfo() {
-
+        // TODO
     }
 }

@@ -32,18 +32,18 @@ public class Shop {
     }
 
     void addProduct(Item item, int count) {
-
+        // TODO
     }
 
     void removeProduct(Item item, int count) {
-
+        // TODO
     }
 
     void sellProduct(Item item, int count) {
-
+        // TODO
     }
 
     void showAvailableProducts() {
-
+        // TODO
     }
 }

@@ -8,7 +8,7 @@ public class GameState {
     private int energyUsageRate;
     private boolean possibilityOfThor;
 
-    public modifyState(String key, int value) {
-
+    public void modifyState(String key, int value) {
+        // TODO
     }
 }

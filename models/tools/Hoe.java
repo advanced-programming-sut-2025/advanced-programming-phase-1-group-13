@@ -1,31 +1,30 @@
 package models.tools;
+import models.enums.Skill;
+import models.enums.environment.Direction;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolTypes;
 
 import java.util.Map;
 
 public class Hoe extends Tool {
-    private ToolMaterial level;
 
-    private static final Map<ToolMaterial, Integer> ENERGY_COSTS = Map.of(
-            ToolMaterial.BASIC, 5,
-            ToolMaterial.COPPER, 4,
-            ToolMaterial.IRON, 3,
-            ToolMaterial.GOLD, 2,
-            ToolMaterial.IRIDIUM, 1
-    );
-
-    public Hoe(ToolMaterial level) {
-        super(level.name() + " Hoe", ToolTypes.HOE, ENERGY_COSTS.get(level));
-        this.level = level;
+    public Hoe(int energyNeeded, Skill relatedSkill) {
+        super(energyNeeded, relatedSkill);
     }
 
-    public void tillSoil() {
-        System.out.println(getName() + " is tilling the soil.");
+    @Override
+    public int calculateEnergyNeeded() {
+        return super.calculateEnergyNeeded();
     }
 
-    public ToolLevel getLevel() {
-        return level;
+    @Override
+    public Skill getRelatedSkill() {
+        return super.getRelatedSkill();
+    }
+
+    @Override
+    public void useTool(Direction direction) {
+        super.useTool(direction);
     }
 }
 

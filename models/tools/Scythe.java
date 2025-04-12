@@ -1,12 +1,26 @@
 package models.tools;
-import models.enums.types.ToolTypes;
+
+import models.enums.Skill;
+import models.enums.environment.Direction;
+
 
 public class Scythe extends Tool {
-    public Scythe() {
-        super("Scythe", ToolTypes.SCYTHE, 2); // Fixed energy cost
+    public Scythe(int energyNeeded, Skill relatedSkill) {
+        super(energyNeeded, relatedSkill);
     }
 
-    public void cutGrass() {
-        System.out.println("Scythe is cutting grass.");
+    @Override
+    public int calculateEnergyNeeded() {
+        return super.calculateEnergyNeeded();
+    }
+
+    @Override
+    public Skill getRelatedSkill() {
+        return super.getRelatedSkill();
+    }
+
+    @Override
+    public void useTool(Direction direction) {
+        super.useTool(direction);
     }
 }

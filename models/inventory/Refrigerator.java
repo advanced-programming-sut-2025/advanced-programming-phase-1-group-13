@@ -7,6 +7,6 @@ public class Refrigerator extends Inventory {
     }
 
     private void pick(Item item) {
-
+        // TODO
     }
 }

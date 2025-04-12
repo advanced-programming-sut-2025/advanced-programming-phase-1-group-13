@@ -1,6 +1,7 @@
 package models;
 
 public class Stone {
-    private StoneType type;
+    // TODO: da hell is stone?!
+    private Mineral mineral;
     private Position position;
 }

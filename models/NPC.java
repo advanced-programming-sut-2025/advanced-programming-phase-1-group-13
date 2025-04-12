@@ -37,6 +37,6 @@ public class NPC {
     }
 
     public void addDialog(String sentence) {
-
+        // TODO
     }
 }

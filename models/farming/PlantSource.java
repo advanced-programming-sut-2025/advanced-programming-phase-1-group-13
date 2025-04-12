@@ -1,4 +1,4 @@
-package models;
+package models.farming;
 
 public class PlantSource{
     private String name;

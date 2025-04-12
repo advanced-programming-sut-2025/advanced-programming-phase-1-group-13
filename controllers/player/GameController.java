@@ -548,7 +548,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    private NPC geNPCByName(String NPCName) {
+    private NPC getNPCByName(String NPCName) {
         // TODO
         return null;
     }

@@ -1,5 +1,5 @@
-package models;
+package models.farming;
 
-public interface ForagingStuff{
+public interface ForagingStuff {
     public void generate();
 }
