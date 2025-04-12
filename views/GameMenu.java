@@ -1,6 +1,6 @@
 package views;
 
-import controllers.player.GameController;
+import controllers.GameController;
 
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
 package views;
 
-import controllers.user.ProfileController;
+import controllers.ProfileController;
 
 import java.util.Scanner;
 

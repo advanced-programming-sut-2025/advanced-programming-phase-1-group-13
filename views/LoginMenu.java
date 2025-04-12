@@ -1,6 +1,6 @@
 package views;
 
-import controllers.user.LoginController;
+import controllers.LoginController;
 
 import java.util.Scanner;
 

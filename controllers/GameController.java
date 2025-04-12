@@ -1,4 +1,4 @@
-package controllers.player;
+package controllers;
 
 import models.*;
 import models.enums.types.*;

@@ -1,6 +1,6 @@
 package views;
 
-import controllers.user.MainMenuController;
+import controllers.MainMenuController;
 
 import java.util.Scanner;
 

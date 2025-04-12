@@ -1,4 +1,4 @@
-package controllers.user;
+package controllers;
 
 import models.Result;
 import models.User;
