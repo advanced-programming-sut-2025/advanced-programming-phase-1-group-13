@@ -27,13 +27,13 @@ public class Farm {
 
         if (mapNumberToFollow == 1) {
             // TODO
-            this.cabin = new Cabin(); // with map1 properties
+            this.cabin = new Cabin(); // with map 1 properties
             this.lakes = new ArrayList<>(); // with map1 properties
             this.quarry = new Quarry(); // with map1 properties
             this.mapTiles = new ArrayList<>(); // with map1 properties
         } else if (mapNumberToFollow == 2) {
             // TODO
-            this.cabin = new Cabin(); // with map2 properties
+            this.cabin = new Cabin(); // with map 2 properties
             this.lakes = new ArrayList<>(); // with map2 properties
             this.quarry = new Quarry(); // with map2 properties
             this.mapTiles = new ArrayList<>(); // with map2 properties

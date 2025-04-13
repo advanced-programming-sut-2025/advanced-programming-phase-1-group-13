@@ -10,7 +10,7 @@ public class Game {
     private GameMap gameMap;
     private Time time;
     private Weather currentWeather;
-    // TODO: complete the class!
+    // TODO: complete the class!!
 
 
     public Game(ArrayList<User> players) {

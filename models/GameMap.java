@@ -7,7 +7,7 @@ public class GameMap {
     private ArrayList<Shop> shops;
     private int mapNumber;
 
-    // TODO
+    // TODO:
     public GameMap(int mapNumber) {
         this.farms = new ArrayList<>();
         this.shops = new ArrayList<>();
