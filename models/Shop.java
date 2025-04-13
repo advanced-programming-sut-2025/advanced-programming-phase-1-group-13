@@ -5,11 +5,11 @@ import models.enums.types.ShopType;
 import java.util.HashMap;
 
 public class Shop {
-    String name;
-    ShopType type;
-    HashMap<Item, Integer> shopInventory;
-    int balance;
-    NPC owner;
+    private String name;
+    private ShopType type;
+    private HashMap<Item, Integer> shopInventory;
+    private int balance;
+    private NPC owner;
 
     public Shop(ShopType type) {
         this.type = type;

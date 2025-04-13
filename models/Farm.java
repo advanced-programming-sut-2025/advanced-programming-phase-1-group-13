@@ -17,7 +17,28 @@ public class Farm {
     private int cropCount;
     private ArrayList<Crop> plantedCrops;
     private ArrayList<Tree> trees;
+    private int mapNumberToFollow;
 
+    public Farm(int mapNumberToFollow) {
+        this.mapNumberToFollow = mapNumberToFollow;
+        this.cropCount = 0;
+        this.plantedCrops = new ArrayList<>();
+        this.trees = new ArrayList<>();
+
+        if (mapNumberToFollow == 1) {
+            // TODO
+            this.cabin = new Cabin(); // with map1 properties
+            this.lakes = new ArrayList<>(); // with map1 properties
+            this.quarry = new Quarry(); // with map1 properties
+            this.mapTiles = new ArrayList<>(); // with map1 properties
+        } else if (mapNumberToFollow == 2) {
+            // TODO
+            this.cabin = new Cabin(); // with map2 properties
+            this.lakes = new ArrayList<>(); // with map2 properties
+            this.quarry = new Quarry(); // with map2 properties
+            this.mapTiles = new ArrayList<>(); // with map2 properties
+        }
+    }
 
     public void placeScarecrow(Position position) {
 
