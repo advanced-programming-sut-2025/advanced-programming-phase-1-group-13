@@ -42,7 +42,7 @@ public enum Seed {
     RARE_SEED,
     POWDERMELON_SEEDS,
     ANCIENT_SEEDS,
-    MIXED_SEEDS,
+    MIXED_SEEDS
     ;
 
 

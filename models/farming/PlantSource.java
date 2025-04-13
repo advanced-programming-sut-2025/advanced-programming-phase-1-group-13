@@ -1,6 +1,8 @@
 package models.farming;
 
-public class PlantSource{
-    private String name;
+import models.enums.types.Seed;
+
+public class PlantSource {
+    private Seed seed;
     private boolean isMixedSeed;
 }

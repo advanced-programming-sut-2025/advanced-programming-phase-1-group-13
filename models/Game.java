@@ -8,8 +8,7 @@ import java.util.ArrayList;
 public class Game {
     private ArrayList<User> players; // The 3 players
     private GameMap gameMap;
-    private Time time;
-    private Weather currentWeather;
+    private GameState gameState;
     // TODO: complete the class!!
 
 
