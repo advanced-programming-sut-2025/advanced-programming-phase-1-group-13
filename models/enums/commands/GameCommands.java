@@ -90,7 +90,7 @@ public enum GameCommands implements Command {
     private final Pattern pattern;
 
     GameCommands(String regex) {
-        this.regex = regex;
+        this.regex =  regex;
         this.pattern = Pattern.compile(this.regex);
     }
 
