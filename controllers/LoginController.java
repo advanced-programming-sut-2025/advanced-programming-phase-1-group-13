@@ -13,6 +13,7 @@ import models.enums.commands.LoginCommands;
 
 public class LoginController {
     public static Map<String, User> users = new HashMap<>();
+
     public static User getUserByUsername(String username) {
         return users.get(username);
     }

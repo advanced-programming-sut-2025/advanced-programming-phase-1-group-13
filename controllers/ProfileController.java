@@ -36,7 +36,6 @@ public class ProfileController {
         if (!user.getPassword().equals(currentHash)) {
             return new Result(false, "Old password does not match.");
         }
-
         if (!LoginCommands.PASSWORD_REGEX.matches(newPassword)) {
             return new Result(false, "New password does not meet requirements.");
         }
