@@ -1,7 +1,5 @@
 package views;
-
 import controllers.LoginController;
-
 import java.util.Scanner;
 
 public class LoginMenu implements AppMenu {
