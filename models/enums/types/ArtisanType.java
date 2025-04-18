@@ -9,7 +9,7 @@ public enum ArtisanType {
     CHEESE_PRESS(
             createItemsList(ProcessedItemType.CHEESE, ProcessedItemType.LARGE_CHEESE,
             ProcessedItemType.GOAT_CHEESE, ProcessedItemType.LARGE_GOAT_CHEESE)),
-    LOOM(createItemsList(ProcessedItemType.CLOTH)),
+//    LOOM(createItemsList(ProcessedItemType.CLOTH)),
 //    MAYO_MACHINE(createItemsList(ItemType.MAYONNAISE, ItemType.LARGE_MAYONNAISE, ItemType.DUCK_MAYONNAISE, ItemType.DINOSAUR_MAYONNAISE)),
 //    OIL_MAKER(createItemsList(ItemType.TRUFFLE_OIL, ItemType.OIL)),
 //    PRESERVES_JAR(createItemsList(ItemType.PICKLES, ItemType.JELLY)),

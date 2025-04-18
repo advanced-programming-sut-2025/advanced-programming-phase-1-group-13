@@ -4,7 +4,7 @@ import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.Food;
+import models.enums.types.FoodType;
 import models.tools.Tool;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class User {
     private HashMap<Skill, SkillLevel> SkillLevels;
     private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
-    private ArrayList<Food> learntCookingRecipes;
+    private ArrayList<FoodType> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
     private Farm farm;
     private ArrayList<Transaction> transactions;
@@ -71,7 +71,7 @@ public class User {
         return null;
     }
 
-    public void LearnNewCraftRecipe(Food craftRecipe) {
+    public void LearnNewCraftRecipe(FoodType craftRecipe) {
         // TODO
     }
 

@@ -2,7 +2,7 @@ package models.enums.types;
 
 import java.util.HashMap;
 
-public enum Food {
+public enum FoodType implements ItemType {
     FRIED_EGG("Fried Egg", createIngredientsMap(IngredientType.EGG, 1), 50, "", "Starter", 35),
     BAKED_FISH("Baked Fish", createIngredientsMap(IngredientType.SARDINE, 1, IngredientType.SALMON, 1, IngredientType.WHEAT, 1), 75, "", "Starter", 100),
     SALAD("Salad", createIngredientsMap(IngredientType.LEEK, 1, IngredientType.DANDELION, 1), 113, "", "Starter", 110),
@@ -34,7 +34,7 @@ public enum Food {
     private final String source;
     private final int sellPrice;
 
-    Food(String name, HashMap<IngredientType, Integer> ingredients, int energy, String buff, String source, int sellPrice) {
+    FoodType(String name, HashMap<IngredientType, Integer> ingredients, int energy, String buff, String source, int sellPrice) {
         this.name = name;
         this.ingredients = ingredients;
         this.energy = energy;
