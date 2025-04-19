@@ -1,11 +1,32 @@
 package models.farming;
 
+import models.Item;
+import models.Position;
+import models.enums.environment.Season;
 import models.enums.types.FruitType;
 import models.enums.types.Seed;
 
-public class Tree extends Harvestable {
+import java.util.ArrayList;
+
+public class Tree extends Item implements Harvestable {
+    private String name;
+    private PlantSource source;
+    private int numOfStages;
+    private ArrayList<Integer> stages;
+    private int totalHarvestTime;
+    private int baseSellPrice;
+    private boolean isEdible;
+    private int energy;
+    private ArrayList<Season> seasons;
+    private boolean canBecomeGiant;
+    private boolean isGiant;
+    private Position position;
     private FruitType fruit;
     private int fruitHarvestCycle;
     private boolean isBurnt;
     private Seed seed;
+
+    public void showInfo() {
+
+    }
 }
