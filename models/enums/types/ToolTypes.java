@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum ToolTypes {
+public enum ToolTypes implements ItemType {
     HOE,
     PICKAXE,
     AXE,

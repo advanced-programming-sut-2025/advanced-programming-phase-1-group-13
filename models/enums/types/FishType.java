@@ -2,7 +2,7 @@ package models.enums.types;
 
 import models.enums.environment.Season;
 
-public enum FishType {
+public enum FishType implements ItemType {
     SALMON("Salmon", 75, Season.FALL, false),
     SARDINE ("Sardine", 40, Season.FALL, false),
     SHAD ("Shad", 60, Season.FALL, false),

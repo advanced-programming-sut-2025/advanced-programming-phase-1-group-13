@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum CropType {
+public enum CropType implements ItemType {
     BLUE_JAZZ(false),
     CARROT(false),
     CAULIFLOWER(false),

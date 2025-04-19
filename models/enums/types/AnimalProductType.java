@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum AnimalProductType {
+public enum AnimalProductType implements ItemType {
     CHICKEN_EGG(50, 800),
     LARGE_CHICKEN_EGG(95, 800),
     DUCK_EGG(95, 1200),

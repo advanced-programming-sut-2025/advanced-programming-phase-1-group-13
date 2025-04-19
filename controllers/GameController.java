@@ -109,7 +109,7 @@ public class GameController {
     }
 
     // or name it cook() ?
-    public Result prepareCook(Food food) {
+    public Result prepareCook(FoodType food) {
         if (!canCook(food)) {
             return new Result(false, "You cannot cook this right now.");
             // todo: or specify the cause of the error...
@@ -118,7 +118,7 @@ public class GameController {
         return new Result(true, "Yummy! Your meal is ready.");
     }
 
-    public Result eat(Food food) {
+    public Result eat(FoodType food) {
         // TODO: check if player HAS the food, and return appropriate Result if not.
         // TODO: increase energy
         // TODO: apply buff
@@ -133,7 +133,7 @@ public class GameController {
         return false;
     }
 
-    private boolean canCook(Food food) {
+    private boolean canCook(FoodType food) {
         // TODO: check if inventory is full; if so, return false.
         // TODO: check if we know the recipe, return false if not.
         // TODO: check if we have the ingredients, return false if not.

@@ -2,7 +2,7 @@ package models.enums.types;
 import models.enums.environment.Season;
 import java.util.List;
 
-public enum GoodsType {
+public enum GoodsType implements ItemType {
     COPPER_ORE("Copper Ore", "A common ore that can be smelted into bars.", 75, -1, ShopType.BLACKSMITH, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
     IRON_ORE("Iron Ore", "A fairly common ore that can be smelted into bars.", 150, -1, ShopType.BLACKSMITH, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
     COAL("Coal", "A combustible rock that is useful for crafting and smelting.", 150, -1, ShopType.BLACKSMITH, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
@@ -90,7 +90,9 @@ public enum GoodsType {
     PEACH_SAPLING("Peach Sapling", "Takes 28 days to produce a mature Peach tree. Bears fruit in the summer. Only grows if the 8 surrounding tiles are empty.", 6000, -1, ShopType.PIERRE_GENERAL_STORE, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
     POMEGRANATE_SAPLING("Pomegranate Sapling", "Takes 28 days to produce a mature Pomegranate tree. Bears fruit in the fall. Only grows if the 8 surrounding tiles are empty.", 6000, -1, ShopType.PIERRE_GENERAL_STORE, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
     BASIC_RETAINING_SOIL("Basic Retaining Soil", "This soil has a chance of staying watered overnight. Mix into tilled soil.", 100, -1, ShopType.PIERRE_GENERAL_STORE, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
-    QUALITY_RETAINING_SOIL("Quality Retaining Soil", "This soil has a good chance of staying watered overnight. Mix into tilled soil.", 150, -1, ShopType.PIERRE_GENERAL_STORE, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER));
+    QUALITY_RETAINING_SOIL("Quality Retaining Soil", "This soil has a good chance of staying watered overnight. Mix into tilled soil.", 150, -1, ShopType.PIERRE_GENERAL_STORE, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+    SCARE_CROW("", "", 0, 0, null, null),
+    BEEHIVE("", "", 0, 0, null, null);
 
     private final String name;
     private final String description;
