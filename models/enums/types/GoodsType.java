@@ -114,5 +114,17 @@ public enum GoodsType implements ItemType {
         this.shopType = shopType;
         this.seasonalStock = seasonalStocks;
     }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getDailyLimit() {
+        return dailyLimit;
+    }
+
+    public ShopType getShopType() {
+        return shopType;
+    }
 }
 

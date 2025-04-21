@@ -33,7 +33,8 @@ public class LoginMenu implements AppMenu {
         } else if ((matcher = LoginCommands.FORGET_PASSWORD_REGEX.getMatcher(inputLine)) != null) {
             System.out.println(controller.forgotPassword(
                     matcher.group("username"),
-                    matcher.group("email")
+                    matcher.group("email"),
+                    scanner
             ));
         } else if ((matcher = LoginCommands.ANSWER_REGEX.getMatcher(inputLine)) != null) {
             System.out.println(controller.validateSecurityQuestion(

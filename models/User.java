@@ -18,6 +18,7 @@ public class User {
     private String nickname;
     private String email;
     private Gender gender;
+    private int money;
     private int energy;
     private boolean isEnergyUnlimited;
     private Position position;
@@ -135,5 +136,9 @@ public class User {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 }

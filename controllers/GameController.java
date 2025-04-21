@@ -74,7 +74,7 @@ public class GameController {
         Position position = neighborTile(direction);
         Tool tool = player.getCurrentTool();
         if (canToolBeUsedHere(position, tool)) {
-            // TODO: use tool
+            tool.useTool(direction);
             return new Result(true, ""); // todo: appropriate message
         }
         return new Result(false, "You can't use that tool in that direction"); // todo: appropriate message
@@ -349,8 +349,8 @@ public class GameController {
 
     // === FISHING === //
 
-    public Result fishing(String fishingPoleName) {
-        Tool fishingPole = getFishingPoleByName(fishingPoleName);
+    public Result fishing(String fishingRodName) {
+        Tool fishingRod = getFishingRodByName(fishingRodName);
         // TODO: only fish if near lake and fishingPole is not null
         return new Result(true, "");
     }
@@ -365,7 +365,7 @@ public class GameController {
         return 0;
     }
 
-    private Tool getFishingPoleByName(String name) {
+    private Tool getFishingRodByName(String name) {
         // TODO: find fishing pole
         return null;
     }
@@ -391,9 +391,14 @@ public class GameController {
     }
 
     private Artisan getArtisanByArtisanName(String artisanName) {
-        // TODO
+        for (ArtisanType type : ArtisanType.values()) {
+            if (type.name().equalsIgnoreCase(artisanName)) {
+                return new Artisan(type);
+            }
+        }
         return null;
     }
+
 
     private Item getItemByItemName(String itemName) {
         // TODO
@@ -402,15 +407,31 @@ public class GameController {
 
     // === SHOPS === //
 
-    public Result showAllProducts() {
-        // TODO: show all available and unavailable products, with their prices
-        return new Result(true, "");
+    public Result showAllProducts(ShopType shopType) {
+        StringBuilder productList = new StringBuilder("All Products in " + shopType.name() + ":\n");
+
+        for (GoodsType product : GoodsType.values()) {
+            if (product.getShopType() == shopType) {
+                String availability = (product.getDailyLimit() == 0) ? "Unavailable" : "Available";
+                productList.append(String.format("- %s: %d gold (%s)\n", product.name(), product.getPrice(), availability));
+            }
+        }
+
+        return new Result(true, productList.toString());
     }
 
-    public Result showAvailableProducts() {
-        // TODO: show only available products, with their prices
-        return new Result(true, "");
+    public Result showAvailableProducts(ShopType shopType) {
+        StringBuilder availableProducts = new StringBuilder("Available Products in " + shopType.name() + ":\n");
+
+        for (GoodsType product : GoodsType.values()) {
+            if (product.getShopType() == shopType) {
+                availableProducts.append(String.format("- %s: %d gold\n", product.name(), product.getPrice()));
+            }
+        }
+
+        return new Result(true, availableProducts.toString());
     }
+
 
     public Result purchase(String productName, Integer count) {
         // count is optional and might be null. In that case:
@@ -426,9 +447,9 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result cheatAddDollars(int amount) {
-        // TODO: add the money to players wallet
-        return new Result(true, "");
+    public Result cheatAddDollars(int amount, User currentUser) {
+        currentUser.setMoney(amount);
+        return new Result(true, "User has " + amount + "dollars now.");
     }
 
     public Result sell(String productName, Integer count) {

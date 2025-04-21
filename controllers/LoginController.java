@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import models.App;
 import models.Result;
@@ -110,20 +111,34 @@ public class LoginController {
         return new Result(true, "Login successful.");
     }
 
-    public Result forgotPassword(String username, String email) {
+    public Result forgotPassword(String username, String email, Scanner scanner) {
         User user = getUserByUsername(username);
+
         if (user == null || !user.getEmail().equalsIgnoreCase(email)) {
             return new Result(false, "Username/email mismatch.");
         }
-        if (user.getQAndA() != null && !user.getQAndA().isEmpty()) {
-            SecurityQuestion q = user.getQAndA().keySet().iterator().next();
-            return new Result(true, q.name());
+
+        Result questionResult = askSecurityQuestion(user);
+        if (!questionResult.success()) {
+            return new Result(false, "No security question set.");
         }
-        Result r = randomPasswordGenerator();
-        String newPwd = r.getMessage();
+
+        System.out.println("Security Question: " + questionResult.message());
+        System.out.print("Please enter your answer: ");
+        String userAnswer = scanner.nextLine().trim();
+
+        Result validationResult = validateSecurityQuestion(user, userAnswer);
+        if (!validationResult.success()) {
+            return new Result(false, "Incorrect answer to security question.");
+        }
+
+        Result generatedPasswordResult = randomPasswordGenerator();
+        String newPwd = generatedPasswordResult.message();
         user.setPassword(hashSha256(newPwd));
+
         return new Result(true, "New password: " + newPwd);
     }
+
 
     public Result askSecurityQuestion(User user) {
         if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
