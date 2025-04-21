@@ -11,7 +11,6 @@ public class App {
     private static Menu currentMenu = Menu.LOGIN_MENU;
     private static Game currentGame;
 
-
     public static Menu getCurrentMenu() {
         return currentMenu;
     }
