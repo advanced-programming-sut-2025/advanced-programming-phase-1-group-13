@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class GameController {
     User player = App.getLoggedIn();
+    Game game = App.getCurrentGame();
 
     // === PLAYER'S STATUS === //
 
@@ -284,6 +285,7 @@ public class GameController {
 
     public Result build(FarmBuildingType farmBuildingType, Position position) {
         // TODO
+
         return new Result(true, "");
     }
 
