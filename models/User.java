@@ -4,7 +4,9 @@ import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.Food;
+import models.enums.types.BackpackType;
+import models.enums.types.FoodType;
+import models.inventory.Backpack;
 import models.tools.Tool;
 
 import java.util.ArrayList;
@@ -19,13 +21,35 @@ public class User {
     private HashMap<Skill, SkillLevel> SkillLevels;
     private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
-    private ArrayList<Food> learntCookingRecipes;
+    private ArrayList<FoodType> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
     private Farm farm;
     private ArrayList<Transaction> transactions;
+    private Backpack backpack;
+    private double balance;
+
+    public Farm getFarm() {
+        return farm;
+    }
+
+    public Backpack getBackpack() {
+        return backpack;
+    }
 
     public int getEnergy() {
         return this.energy;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void changeBalance(double amount) {
+        this.balance += amount;
     }
 
     public void setEnergy(int energyAmount) {
@@ -71,7 +95,7 @@ public class User {
         return null;
     }
 
-    public void LearnNewCraftRecipe(Food craftRecipe) {
+    public void LearnNewCraftRecipe(FoodType craftRecipe) {
         // TODO
     }
 

@@ -37,4 +37,7 @@ public class Game {
         // TODO
     }
 
+    public GameMap getGameMap() {
+        return gameMap;
+    }
 }

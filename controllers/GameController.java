@@ -3,10 +3,12 @@ package controllers;
 import models.*;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
+import models.inventory.Backpack;
 import models.tools.Tool;
 import models.enums.environment.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameController {
     User player = App.getLoggedIn();
@@ -284,9 +286,62 @@ public class GameController {
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(FarmBuildingType farmBuildingType, Position position) {
-        // TODO
+        Farm farm = player.getFarm();
+        FarmBuilding farmBuilding = new FarmBuilding(farmBuildingType, position);
 
-        return new Result(true, "");
+        boolean canPlace = canPlaceBuilding(farm, farmBuildingType, position);
+
+        if (!canPlace) {
+            return new Result(false, "Can't build a " + farmBuildingType.getName() +
+                    " in this position, because the ground is not empty.");
+        }
+
+        HashMap<Item, Integer> items = player.getBackpack().getItems();
+        Material wood = new Material(MaterialType.WOOD);
+        Material stone = new Material(MaterialType.STONE);
+        int woodInInventory = items.get(wood);
+        int stoneInInventory = items.get(stone);
+        int woodNeeded = farmBuildingType.getWoodCount();
+        int stoneNeeded = farmBuildingType.getStoneCount();
+        boolean enoughSupplies = (woodNeeded <= woodInInventory) && (stoneNeeded <= stoneInInventory);
+
+        double cost = farmBuildingType.getCost();
+        boolean enoughMoney = player.getBalance() >= cost;
+
+        if (!enoughSupplies && !enoughMoney) {
+            return new Result(false, "You don't have enough supplies or money to build a "
+                    + farmBuildingType.getName());
+        }
+
+        String methodOfPaymentDescription;
+        if (!enoughSupplies) {
+            player.changeBalance(cost);
+            methodOfPaymentDescription = "You payed " + cost + "g to build it.";
+        } else {
+            int newWoodCount = woodInInventory - woodNeeded;
+            int newStoneCount = stoneInInventory - stoneNeeded;
+            items.put(wood, newWoodCount);
+            items.put(stone, newStoneCount);
+            methodOfPaymentDescription = "You used " + woodNeeded + " woods and " + stoneNeeded + " stones to build it";
+        }
+        farm.getFarmBuildings().add(farmBuilding);
+
+        return new Result(true, "A " + farmBuildingType.getName() + " has been built in "
+                + position.toString() + ". " + methodOfPaymentDescription);
+    }
+
+    public boolean canPlaceBuilding(Farm farm, FarmBuildingType farmBuildingType, Position position) {
+        int xTopLeft = position.getX();
+        int yTopLeft = position.getY();
+        for (int i = 0; i < farmBuildingType.getWidth(); i++) {
+            for (int j = 0; j < farmBuildingType.getLength(); j++) {
+                Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
+                if (!farm.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_GROUND)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public Result buyAnimal(AnimalType animalType, String name) {

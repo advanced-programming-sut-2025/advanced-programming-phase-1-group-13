@@ -18,6 +18,7 @@ public class Farm {
     private ArrayList<Crop> plantedCrops;
     private ArrayList<Tree> trees;
     private int mapNumberToFollow;
+    private ArrayList<FarmBuilding> farmBuildings;
 
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
@@ -92,5 +93,18 @@ public class Farm {
 
     public int getCropCount() {
         return cropCount;
+    }
+
+    public ArrayList<FarmBuilding> getFarmBuildings() {
+        return farmBuildings;
+    }
+
+    public Tile getTileByPosition(Position position) {
+        for (Tile tile : mapTiles) {
+            if (tile.getPosition().equals(position)) {
+                return tile;
+            }
+        }
+        return null;
     }
 }
