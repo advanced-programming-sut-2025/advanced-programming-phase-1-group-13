@@ -5,23 +5,43 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+
+import models.App;
 import models.Result;
 import models.User;
 import models.enums.SecurityQuestion;
 import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
 
+import models.App;
+import static models.enums.types.Gender.getGenderByString;
+
 public class LoginController {
-    public static Map<String, User> users = new HashMap<>();
 
     public static User getUserByUsername(String username) {
-        return users.get(username);
+        for (User user : App.getUsers()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static User getUserByEmail(String email) {
+        for (User user : App.getUsers()) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public Result registerUser(String username,
                                String password,
+                               String confirmedPassword,
+                               String nickname,
                                String email,
-                               Gender gender) {
+                               String genderStr) {
         if (!LoginCommands.USERNAME_REGEX.matches(username)) {
             return new Result(false, "Username invalid.");
         }
@@ -31,22 +51,26 @@ public class LoginController {
         if (!LoginCommands.EMAIL_REGEX.matches(email)) {
             return new Result(false, "Email format invalid.");
         }
-        if (users.containsKey(username)) {
+        if (getUserByUsername(username) != null) {
             return new Result(false, "Username already exists.");
         }
-        for (User u : users.values()) {
-            if (u.getEmail().equalsIgnoreCase(email)) {
-                return new Result(false, "Email already in use.");
-            }
+        if (getUserByEmail(email) != null) {
+            return new Result(false, "Email already in use.");
         }
+        if (!confirmedPassword.equals(password)) {
+            return new Result(false, "Passwords do not match.");
+        }
+
+        Gender gender = getGenderByString(genderStr);
         String hash = hashSha256(password);
         User user = new User();
         user.setUsername(username);
         user.setPassword(hash);
         user.setEmail(email);
         user.setGender(gender);
+        user.setNickname(nickname);
         user.setQAndA(new HashMap<>()); // fix this part!!!!!!!!!!
-        users.put(username, user);
+        App.getUsers().add(user);
         return new Result(true, "Registration successful.");
     }
 
@@ -82,6 +106,7 @@ public class LoginController {
         if (!hash.equals(user.getPassword())) {
             return new Result(false, "Incorrect password.");
         }
+        App.setLoggedIn(user);
         return new Result(true, "Login successful.");
     }
 
@@ -107,6 +132,15 @@ public class LoginController {
         SecurityQuestion q = user.getQAndA().keySet().iterator().next();
         return new Result(true, q.name());
     }
+
+    public Result pickSecurityQuestion(User user, SecurityQuestion question, String answer) {
+        if (user == null) {
+            return new Result(false, "User not found.");
+        }
+        user.getQAndA().put(question, answer);
+        return new Result(true, "Security question saved.");
+    }
+
 
     public Result validateSecurityQuestion(User user, String answer) {
         if (user == null || user.getQAndA() == null) {

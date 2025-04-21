@@ -5,11 +5,15 @@ import models.enums.Menu;
 import java.util.ArrayList;
 
 public class App {
-    private static final ArrayList<User> users = new ArrayList<>();
-    private static final ArrayList<Game> games = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<Game> games = new ArrayList<>();
     private static User loggedIn = null;
     private static Menu currentMenu = Menu.LOGIN_MENU;
     private static Game currentGame;
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
 
     public static Menu getCurrentMenu() {
         return currentMenu;

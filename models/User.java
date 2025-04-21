@@ -124,4 +124,16 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

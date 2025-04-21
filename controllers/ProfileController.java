@@ -3,6 +3,7 @@ package controllers;
 import models.Result;
 import models.User;
 import models.enums.commands.LoginCommands;
+import models.App;
 
 public class ProfileController {
     public Result changeUsername(User user, String newUsername) {
@@ -22,7 +23,7 @@ public class ProfileController {
         if (!LoginCommands.EMAIL_REGEX.matches(newEmail)) {
             return new Result(false, "Invalid email format.");
         }
-        for (User u : LoginController.users.values()) {
+        for (User u : App.getUsers()) {
             if (u.getEmail().equalsIgnoreCase(newEmail)) {
                 return new Result(false, "Email already in use.");
             }
