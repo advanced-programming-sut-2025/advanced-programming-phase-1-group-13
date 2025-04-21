@@ -9,6 +9,7 @@ public class App {
     private static final ArrayList<Game> games = new ArrayList<>();
     private static User loggedIn = null;
     private static Menu currentMenu = Menu.LOGIN_MENU;
+    private static Game currentGame;
 
     public static Menu getCurrentMenu() {
         return currentMenu;
@@ -24,5 +25,13 @@ public class App {
 
     public static void setLoggedIn(User user) {
         App.loggedIn = user;
+    }
+
+    public static Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public static void setCurrentGame(Game currentGame) {
+        App.currentGame = currentGame;
     }
 }
