@@ -26,7 +26,7 @@ public class ProfileMenu implements AppMenu {
         } else if ((matcher = ProfileCommands.USER_INFO.getMatcher(inputLine)) != null) {
             System.out.println(controller.showUserInfo());
         } else {
-            System.out.println("Invalid Command");
+            System.out.println("Invalid command. Please try again.");
         }
     }
 }

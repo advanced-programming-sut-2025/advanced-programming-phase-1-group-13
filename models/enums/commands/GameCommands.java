@@ -4,9 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands implements Command {
-    GAME_NEW("^\\s+game\\s+new\\s+(?<username_1>.+)\\s+(?<username_2>.+)\\s+(?<username_3>.+)\\s+$"),
-    GAME_MAP("^\\s+game\\s+map\\s+(?<map_number>\\d+)$"),
-    LOAD_GAME("^\\s+load\\s+game\\s+$"),
     EXIT_GAME("^\\s+exit\\s+game\\s+$"),
     NEXT_TURN("^\\s+next\\s+turn\\s+$"),
     TIME("^\\s+time\\s+$"),
@@ -82,7 +79,7 @@ public enum GameCommands implements Command {
     TRADE_HISTORY("^\\s+trade\\s+history\\s+$"),
     MEET_NPC("^\\s+meet\\s+NPC\\s+(?<npc_type>.+)\\s+$"),
     GIFT_NPC("^\\s+gift\\s+NPC\\s+(?<npc_name>.+)\\s+-i\\s+(?<item>.+)\\s+$"),
-    FRIENDSHIP_NPC_LIST("^\\s+friendshio\\s+NPC\\s+list\\s+$"),
+    FRIENDSHIP_NPC_LIST("^\\s+friendship\\s+NPC\\s+list\\s+$"),
     QUESTS_LIST("^\\s+quests\\s+list\\s+$"),
     QUESTS_FINISH("^\\s+quests\\s+finish\\s+-i\\s+(?<index>\\d+)\\s+$");
 
