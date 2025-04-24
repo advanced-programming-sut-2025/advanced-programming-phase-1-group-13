@@ -285,7 +285,17 @@ public class GameController {
 
     // === FARM BUILDINGS & ANIMALS === //
 
-    public Result build(FarmBuildingType farmBuildingType, Position position) {
+    public Result build(FarmBuildingType farmBuildingType, String xString, String yString) {
+        int x, y;
+        if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
+            return new Result(false, "Enter two valid numbers for x and y.");
+        } else {
+            x = Integer.parseInt(xString);
+            y = Integer.parseInt(xString);
+        }
+
+        Position position = new Position(x, y);
+
         Farm farm = player.getFarm();
         FarmBuilding farmBuilding = new FarmBuilding(farmBuildingType, position);
 
@@ -379,30 +389,77 @@ public class GameController {
         animal.changeFriendship(15);
         animal.setLastPettingTime(App.getCurrentGame().getGameState().getTime());
 
-        return new Result(true, "You pet your " + animal.getAnimalType().getName() + ", called \"" +
+        return new Result(true, "You pet your " + animal.getAnimalType().getName() + ", \"" +
                 animalName + "\". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
     }
 
     public void updateAnimalFriendships() { // TODO: call this method at the end of the day
         for (Animal animal : getAllFarmAnimals()) {
-            if (animal.getLastFeedingTime().getDayInMonth() != App.getCurrentGame().getGameState().getTime().getDayInMonth()) {
-                animal.changeFriendship(-25);
+            if (!animal.hasBeenFedToday()) {
+                animal.changeFriendship(-20);
             }
+
+            if (!animal.hasBeenPetToday()) {
+                animal.changeFriendship(-10);
+            }
+
+            // TODO: check if animal is not inside its' living space at the end of the night
         }
     }
 
-    public Result cheatSetFriendship(String animalName, int amount) {
+    public Result cheatSetFriendship(String animalName, String amountString) {
+        int amount;
+        if (!amountString.matches("\\d+")) {
+            return new Result(false, "Enter a number between 0 and 1000.");
+        } else {
+            amount = Integer.parseInt(amountString);
+        }
+
         Animal animal = getAnimalByName(animalName);
-        // TODO
-        return new Result(true, "");
+        if (animal == null) {
+            return new Result(false, "Animal not found.");
+        }
+
+        animal.setFriendshipLevel(amount);
+
+        return new Result(true, "Friendship of your " + animal.getAnimalType().getName() + ", \"" +
+                animalName + "\" has been set to " + amount + ".");
     }
 
     public Result showMyAnimalsInfo() {
-        // TODO
-        return new Result(true, "");
+        String message = "Your animals: \n";
+
+        for (Animal animal : getAllFarmAnimals()) {
+
+            message += "-------------------------------\n" +
+                    animal.getName() + " (" + animal.getAnimalType().getName() + "):\n" +
+                    "Friendship level: " + animal.getFriendshipLevel() + "\n";
+
+            if (animal.hasBeenFedToday()) {
+                message += "Has been fed today.\n";
+            } else {
+                message += "Has not been fed today.\n";
+            }
+
+            if (animal.hasBeenPetToday()) {
+                message += "Has been pet today.\n";
+            } else {
+                message += "Has not been pet today.\n";
+            }
+        }
+
+        return new Result(true, message);
     }
 
-    public Result shepherdAnimal(String animalName, Position position) {
+    public Result shepherdAnimal(String animalName, String xString, String yString) {
+        int x, y;
+        if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
+            return new Result(false, "Enter two valid numbers for x and y.");
+        } else {
+            x = Integer.parseInt(xString);
+            y = Integer.parseInt(xString);
+        }
+
         // TODO
         return new Result(true, "");
     }

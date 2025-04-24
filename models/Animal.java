@@ -88,4 +88,18 @@ public class Animal {
     public void setLastProductTime(Time lastProductTime) {
         this.lastProductTime = lastProductTime;
     }
+
+    public void setFriendshipLevel(int friendshipLevel) {
+        this.friendshipLevel = friendshipLevel;
+    }
+
+    public boolean hasBeenPetToday() {
+        Time now = App.getCurrentGame().getGameState().getTime();
+        return Time.areInSameDay(this.getLastPettingTime(), now);
+    }
+
+    public boolean hasBeenFedToday() {
+        Time now = App.getCurrentGame().getGameState().getTime();
+        return Time.areInSameDay(this.getLastFeedingTime(), now);
+    }
 }

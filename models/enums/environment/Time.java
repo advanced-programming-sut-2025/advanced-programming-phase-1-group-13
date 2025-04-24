@@ -45,4 +45,9 @@ public class Time {
         // TODO
         return null;
     }
+
+    public static boolean areInSameDay(Time time1, Time time2) {
+        // TODO
+        return true;
+    }
 }
