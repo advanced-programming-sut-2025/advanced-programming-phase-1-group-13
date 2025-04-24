@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public class Greenhouse {
     // TODO: implement / extend anything?
-    private ArrayList<Position> tiles;
+    private ArrayList<Tile> tiles;
 }

@@ -1,46 +1,46 @@
 package controllers;
 
-import models.Result;
-import models.User;
-import models.enums.commands.LoginCommands;
 import models.App;
+import models.Result;
+import models.enums.commands.LoginCommands;
+
+import static controllers.LoginController.getUserByEmail;
+import static controllers.LoginController.getUserByUsername;
 
 public class ProfileController {
-    public Result changeUsername(User user, String newUsername) {
-        if (LoginController.getUserByUsername(newUsername) != null) {
+    public Result changeUsername(String newUsername) {
+        if (getUserByUsername(newUsername) != null) {
             return new Result(false, "Username already taken.");
         }
-        LoginController.getUserByUsername(user.getUsername());
-        user.setUsername(newUsername);
+        App.getLoggedIn().setUsername(newUsername);
         return new Result(true, "Username changed successfully.");
     }
 
-    public Result changeNickname(User user, String newNickname) {
+    public Result changeNickname(String newNickname) {
+        App.getLoggedIn().setNickname(newNickname);
         return new Result(true, "Nickname changed successfully.");
     }
 
-    public Result changeEmail(User user, String newEmail) {
+    public Result changeEmail(String newEmail) {
         if (!LoginCommands.EMAIL_REGEX.matches(newEmail)) {
             return new Result(false, "Invalid email format.");
         }
-        for (User u : App.getUsers()) {
-            if (u.getEmail().equalsIgnoreCase(newEmail)) {
-                return new Result(false, "Email already in use.");
-            }
+        if (getUserByEmail(newEmail) != null) {
+            return new Result(false, "Email already taken.");
         }
-        user.setEmail(newEmail);
+        App.getLoggedIn().setEmail(newEmail);
         return new Result(true, "Email changed successfully.");
     }
 
-    public Result changePassword(User user, String oldPassword, String newPassword) {
+    public Result changePassword(String oldPassword, String newPassword) {
         String currentHash = new LoginController().hashSha256(oldPassword);
-        if (!user.getPassword().equals(currentHash)) {
+        if (!App.getLoggedIn().getPassword().equals(currentHash)) {
             return new Result(false, "Old password does not match.");
         }
         if (!LoginCommands.PASSWORD_REGEX.matches(newPassword)) {
             return new Result(false, "New password does not meet requirements.");
         }
-        user.setPassword(new LoginController().hashSha256(newPassword));
+        App.getLoggedIn().setPassword(new LoginController().hashSha256(newPassword));
         return new Result(true, "Password changed successfully.");
     }
 }

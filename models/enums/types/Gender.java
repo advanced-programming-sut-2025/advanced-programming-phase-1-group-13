@@ -5,15 +5,20 @@ public enum Gender {
     MAN,
     RATHER_NOT_SAY;
 
-    public static Gender getGenderByString(String str) {
-        if (str == null) {
-            return null;
-        }
-        try {
-            return Gender.valueOf(str.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return null;
+    public static Gender getGenderByName(String genderName) {
+        genderName = genderName.toLowerCase();
+        switch (genderName) {
+            case "man":
+            case "m":
+            case "male":
+                return MAN;
+            case "woman":
+            case "w":
+            case "female":
+            case "f":
+                return WOMAN;
+            default:
+                return RATHER_NOT_SAY;
         }
     }
 }
-

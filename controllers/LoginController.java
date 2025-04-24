@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import models.App;
 import models.Result;
@@ -13,9 +12,6 @@ import models.User;
 import models.enums.SecurityQuestion;
 import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
-
-import models.App;
-import static models.enums.types.Gender.getGenderByString;
 
 public class LoginController {
 
@@ -39,10 +35,9 @@ public class LoginController {
 
     public Result registerUser(String username,
                                String password,
-                               String confirmedPassword,
-                               String nickname,
                                String email,
-                               String genderStr) {
+                               String genderString,
+                               String nickname) {
         if (!LoginCommands.USERNAME_REGEX.matches(username)) {
             return new Result(false, "Username invalid.");
         }
@@ -58,20 +53,11 @@ public class LoginController {
         if (getUserByEmail(email) != null) {
             return new Result(false, "Email already in use.");
         }
-        if (!confirmedPassword.equals(password)) {
-            return new Result(false, "Passwords do not match.");
-        }
-
-        Gender gender = getGenderByString(genderStr);
+        Gender gender = Gender.getGenderByName(genderString);
         String hash = hashSha256(password);
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(hash);
-        user.setEmail(email);
-        user.setGender(gender);
-        user.setNickname(nickname);
-        user.setQAndA(new HashMap<>()); // fix this part!!!!!!!!!!
-        App.getUsers().add(user);
+        User user = new User(username, hash, nickname, email, gender);
+        user.setQAndA(new HashMap<>()); // todo fix this part!!!!!!!!!!
+        App.addUser(user);
         return new Result(true, "Registration successful.");
     }
 
@@ -111,34 +97,20 @@ public class LoginController {
         return new Result(true, "Login successful.");
     }
 
-    public Result forgotPassword(String username, String email, Scanner scanner) {
+    public Result forgotPassword(String username, String email) {
         User user = getUserByUsername(username);
-
         if (user == null || !user.getEmail().equalsIgnoreCase(email)) {
-            return new Result(false, "Username/email mismatch.");
+            return new Result(false, "Username/Email mismatch.");
         }
-
-        Result questionResult = askSecurityQuestion(user);
-        if (!questionResult.success()) {
-            return new Result(false, "No security question set.");
+        if (user.getQAndA() != null && !user.getQAndA().isEmpty()) {
+            SecurityQuestion q = user.getQAndA().keySet().iterator().next();
+            return new Result(true, q.name());
         }
-
-        System.out.println("Security Question: " + questionResult.message());
-        System.out.print("Please enter your answer: ");
-        String userAnswer = scanner.nextLine().trim();
-
-        Result validationResult = validateSecurityQuestion(user, userAnswer);
-        if (!validationResult.success()) {
-            return new Result(false, "Incorrect answer to security question.");
-        }
-
-        Result generatedPasswordResult = randomPasswordGenerator();
-        String newPwd = generatedPasswordResult.message();
+        Result r = randomPasswordGenerator();
+        String newPwd = r.getMessage();
         user.setPassword(hashSha256(newPwd));
-
         return new Result(true, "New password: " + newPwd);
     }
-
 
     public Result askSecurityQuestion(User user) {
         if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
@@ -147,15 +119,6 @@ public class LoginController {
         SecurityQuestion q = user.getQAndA().keySet().iterator().next();
         return new Result(true, q.name());
     }
-
-    public Result pickSecurityQuestion(User user, SecurityQuestion question, String answer) {
-        if (user == null) {
-            return new Result(false, "User not found.");
-        }
-        user.getQAndA().put(question, answer);
-        return new Result(true, "Security question saved.");
-    }
-
 
     public Result validateSecurityQuestion(User user, String answer) {
         if (user == null || user.getQAndA() == null) {
