@@ -43,4 +43,12 @@ public class ProfileController {
         App.getLoggedIn().setPassword(new LoginController().hashSha256(newPassword));
         return new Result(true, "Password changed successfully.");
     }
+
+    public Result showCurrentMenu() {
+        return new Result(true, "Current Menu: " + App.getCurrentMenu().toString());
+    }
+
+    public Result showUserInfo() {
+        return new Result(true, App.getLoggedIn().toString());
+    }
 }
