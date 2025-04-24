@@ -1,6 +1,9 @@
 package models.inventory;
 
+import models.Item;
 import models.enums.types.BackpackType;
+
+import java.util.HashMap;
 
 public class Backpack extends Inventory {
     private BackpackType type;
@@ -12,5 +15,10 @@ public class Backpack extends Inventory {
 
     public BackpackType getType() {
         return this.type;
+    }
+
+    @Override
+    public HashMap<Item, Integer> getItems() {
+        return super.getItems();
     }
 }

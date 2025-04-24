@@ -408,7 +408,7 @@ public class GameController {
         Tool fishingPole = getFishingPoleByName(fishingPoleName);
         // TODO: only fish if near lake and fishingPole is not null
         return new Result(true, "");
-    }
+    }craft
 
     public int numberOfCaughtFish() {
         // TODO

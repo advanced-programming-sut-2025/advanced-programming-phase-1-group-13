@@ -16,7 +16,7 @@ public abstract class Inventory {
     }
 
     public HashMap<Item, Integer> getItems() {
-        return items;
+        return this.items;
     }
 
     public void addToInventory(Item item, int n) {

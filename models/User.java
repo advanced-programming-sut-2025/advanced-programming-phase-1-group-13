@@ -4,8 +4,8 @@ import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.BackpackType;
 import models.enums.types.FoodType;
+import models.enums.types.Gender;
 import models.inventory.Backpack;
 import models.tools.Tool;
 
@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
+    private String username;
+    private String password;
+    private String nickname;
+    private String email;
+    private Gender gender;
     private int energy;
     private boolean isEnergyUnlimited;
     private Position position;
@@ -34,6 +39,46 @@ public class User {
 
     public Backpack getBackpack() {
         return backpack;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getEnergy() {
