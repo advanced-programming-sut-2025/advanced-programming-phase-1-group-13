@@ -570,7 +570,7 @@ public class GameController {
     }
 
     public Result cheatAddDollars(int amount, User currentUser) {
-        currentUser.setMoney(amount);
+        currentUser.setBalance(amount);
         return new Result(true, "User has " + amount + "dollars now.");
     }
 
