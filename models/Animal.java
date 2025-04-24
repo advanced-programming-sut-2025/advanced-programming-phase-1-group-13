@@ -14,6 +14,8 @@ public class Animal {
     private Time lastProductTime;
     private ArrayList<AnimalProduct> producedProducts = new ArrayList<>();
     private AnimalLivingSpace animalLivingSpace;
+    private boolean isOutside = false;
+    private Position position = null;
 
     public Animal(String name, AnimalType animalType, AnimalLivingSpace animalLivingSpace) {
         this.name = name;
@@ -77,6 +79,14 @@ public class Animal {
         return this.animalLivingSpace;
     }
 
+    public boolean isOutside() {
+        return isOutside;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
     public void setLastFeedingTime(Time lastFeedingTime) {
         this.lastFeedingTime = lastFeedingTime;
     }
@@ -91,6 +101,10 @@ public class Animal {
 
     public void setFriendshipLevel(int friendshipLevel) {
         this.friendshipLevel = friendshipLevel;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public boolean hasBeenPetToday() {

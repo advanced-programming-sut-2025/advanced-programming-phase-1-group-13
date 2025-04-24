@@ -383,13 +383,12 @@ public class GameController {
         App.getLoggedIn().changeBalance(animalType.getPrice());
         Animal animal = new Animal(name, animalType, animalLivingSpace);
         animalLivingSpace.addAnimal(animal);
-        return new Result(true, "You bought a " + animalType.getName() + " called \"" + name +
-                "\" and housed it in a " + animalLivingSpace.getFarmBuildingType().getName() + ".");
+        return new Result(true, "You bought a " + animalType.getName() + " called " + name +
+                " and housed it in a " + animalLivingSpace.getFarmBuildingType().getName() + ".");
     }
 
     public Result pet(String animalName) {
         Animal animal = getAnimalByName(animalName);
-
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
@@ -397,8 +396,8 @@ public class GameController {
         animal.changeFriendship(15);
         animal.setLastPettingTime(App.getCurrentGame().getGameState().getTime());
 
-        return new Result(true, "You pet your " + animal.getAnimalType().getName() + ", \"" +
-                animalName + "\". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
+        return new Result(true, "You pet your " + animal.getAnimalType().getName() + ", " +
+                animalName + ". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
     }
 
     public void updateAnimalFriendships() { // TODO: call this method at the end of the day
@@ -430,33 +429,33 @@ public class GameController {
 
         animal.setFriendshipLevel(amount);
 
-        return new Result(true, "Friendship of your " + animal.getAnimalType().getName() + ", \"" +
-                animalName + "\" has been set to " + amount + ".");
+        return new Result(true, "Friendship of your " + animal.getAnimalType().getName() + ", " +
+                animalName + ", has been set to " + amount + ".");
     }
 
     public Result showMyAnimalsInfo() {
-        String message = "Your animals: \n";
+        StringBuilder message = new StringBuilder("Your animals: \n");
 
         for (Animal animal : getAllFarmAnimals()) {
 
-            message += "-------------------------------\n" +
-                    animal.getName() + " (" + animal.getAnimalType().getName() + "):\n" +
-                    "Friendship level: " + animal.getFriendshipLevel() + "\n";
+            message.append("-------------------------------\n").append(animal.getName()).append(" (").
+                    append(animal.getAnimalType().getName()).append("):\n").append("Friendship level: ").
+                    append(animal.getFriendshipLevel()).append("\n");
 
             if (animal.hasBeenFedToday()) {
-                message += "Has been fed today.\n";
+                message.append("Has been fed today.\n");
             } else {
-                message += "Has not been fed today.\n";
+                message.append("Has not been fed today.\n");
             }
 
             if (animal.hasBeenPetToday()) {
-                message += "Has been pet today.\n";
+                message.append("Has been pet today.\n");
             } else {
-                message += "Has not been pet today.\n";
+                message.append("Has not been pet today.\n");
             }
         }
 
-        return new Result(true, message);
+        return new Result(true, message.toString());
     }
 
     public Result shepherdAnimal(String animalName, String xString, String yString) {
@@ -468,8 +467,49 @@ public class GameController {
             y = Integer.parseInt(xString);
         }
 
+        Position newPosition = new Position(x, y);
+
+        Animal animal = getAnimalByName(animalName);
+        if (animal == null) {
+            return new Result(false, "Animal not found.");
+        }
+
+        Farm farm = player.getFarm();
+        if (animal.isOutside()) {
+            if (animal.getPosition().equals(newPosition)) {
+                return new Result(false, "Your " + animal.getAnimalType().getName() + ", " + animalName
+                + ", is already at " + newPosition.toString());
+            }
+
+            if (!farm.getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
+                return new Result(false, "Your animal can only go on grass.");
+            }
+
+            animal.setPosition(newPosition);
+            animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
+            return new Result(true, "Your " + animal.getAnimalType().getName() + ", " + animalName
+                    + ", has been moved to " + newPosition.toString() + ".");
+        }
         // TODO
         return new Result(true, "");
+    }
+
+    public FarmBuilding getFarmBuildingByPosition(Position position) {
+        Farm farm = player.getFarm();
+        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
+            int xTopLeft = farmBuilding.getPositionOfUpperLeftCorner().getX();
+            int yTopLeft = farmBuilding.getPositionOfUpperLeftCorner().getY();
+            int length = farmBuilding.getLength();
+            int width = farmBuilding.getWidth();
+
+            int x = position.getX();
+            int y = position.getY();
+
+            if (xTopLeft < x && xTopLeft + length > x && yTopLeft < y && yTopLeft + width > y) {
+                return farmBuilding;
+            }
+        }
+        return null;
     }
 
     public Result feedHayToAnimal(String animalName) {
