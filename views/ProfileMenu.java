@@ -5,43 +5,28 @@ import models.enums.commands.ProfileCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
-import models.App;
 
 public class ProfileMenu implements AppMenu {
     private final ProfileController controller = new ProfileController();
+    Matcher matcher;
 
     @Override
     public void check(Scanner scanner) {
         String inputLine = scanner.nextLine();
-        Matcher matcher;
-
         if ((matcher = ProfileCommands.CHANGE_USERNAME.getMatcher(inputLine)) != null) {
-            System.out.println(controller.changeUsername(
-                    App.getLoggedIn(),
-                    matcher.group("username")
-            ));
+            System.out.println(controller.changeUsername(matcher.group("username")));
         } else if ((matcher = ProfileCommands.CHANGE_NICKNAME.getMatcher(inputLine)) != null) {
-            System.out.println(controller.changeNickname(
-                    App.getLoggedIn(),
-                    matcher.group("nickname")
-            ));
+            System.out.println(controller.changeNickname(matcher.group("nickname")));
         } else if ((matcher = ProfileCommands.CHANGE_EMAIL.getMatcher(inputLine)) != null) {
-            System.out.println(controller.changeEmail(
-                    App.getLoggedIn(),
-                    matcher.group("email")
-            ));
+            System.out.println(controller.changeEmail(matcher.group("email")));
         } else if ((matcher = ProfileCommands.CHANGE_PASSWORD.getMatcher(inputLine)) != null) {
-            System.out.println(controller.changePassword(
-                    App.getLoggedIn(),
-                    matcher.group("oldPass"),
-                    matcher.group("newPass")
-            ));
-        } else if ((matcher = ProfileCommands.USER_INFO.getMatcher(inputLine)) != null) {
-            System.out.println(App.getLoggedIn());
+            System.out.println(controller.changePassword(matcher.group("oldPass"), matcher.group("newPass")));
         } else if ((matcher = ProfileCommands.SHOW_CURRENT_MENU.getMatcher(inputLine)) != null) {
-            System.out.println("You are currently in the Profile Menu.");
+            System.out.println(controller.showCurrentMenu());
+        } else if ((matcher = ProfileCommands.USER_INFO.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showUserInfo());
         } else {
-            System.out.println("Invalid command. Please try again.");
+            System.out.println("Invalid Command");
         }
     }
 }
