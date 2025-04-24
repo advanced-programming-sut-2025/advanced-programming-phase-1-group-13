@@ -1,6 +1,5 @@
 package models;
 
-import models.enums.Capacity;
 import models.enums.types.FarmBuildingType;
 
 import java.util.ArrayList;
@@ -31,11 +30,11 @@ public class AnimalLivingSpace extends FarmBuilding {
         return this.animals.size() == capacity;
     }
 
-    void addAnimal(Animal animal) {
-        // TODO
+    public void addAnimal(Animal animal) {
+        this.getAnimals().add(animal);
     }
 
-    void removeAnimal(Animal animal) {
+    public void removeAnimal(Animal animal) {
         // TODO
     }
 }

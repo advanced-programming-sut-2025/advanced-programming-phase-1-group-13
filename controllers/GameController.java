@@ -9,6 +9,7 @@ import models.enums.environment.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GameController {
     User player = App.getLoggedIn();
@@ -345,52 +346,50 @@ public class GameController {
     }
 
     public Result buyAnimal(AnimalType animalType, String name) {
-        boolean livesInCage = animalType.livesInCage();
-        AnimalLivingSpace animalLivingSpace = getEmptyLivingSpace(livesInCage);
+        List<FarmBuildingType> livingSpaceTypes = animalType.getLivingSpaceTypes();
+        AnimalLivingSpace animalLivingSpace = getAvailableLivingSpace(livingSpaceTypes);
 
         if (animalLivingSpace == null) {
-            return new Result(false, "You don't have any available living spaces for a ");
-        }
-        // TODO: check if we have stable/cage
-        // todo: which stable/cage does the newly-bought animal go in?
-        Animal animal = new Animal(name, animalType);
-        // TODO
-        return new Result(true, "");
-    }
-
-    public AnimalLivingSpace getEmptyLivingSpace(boolean lookingForCage) {
-        Farm farm = player.getFarm();
-
-        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
-            if (lookingForCage) {
-                if (farmBuilding.getFarmBuildingType().getIsCage()) {
-                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
-                    if (!animalLivingSpace.isFull()) {
-                        return animalLivingSpace;
-                    }
-                }
-            } else {
-                if (!farmBuilding.getFarmBuildingType().getIsCage()) {
-                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
-                    if (!animalLivingSpace.isFull()) {
-                        return animalLivingSpace;
-                    }
-                }
-            }
-
+            return new Result(false, "You don't have any available living spaces for a "
+                    + animalType.getName() + ".");
         }
 
-        return null;
-    }
+        if (getAnimalByName(name) != null) {
+            return new Result(false, "You already have an animal called " + name + ".");
+        }
 
-    public void isFull() {
+        if (App.getLoggedIn().getBalance() < animalType.getPrice()) {
+            return new Result(false, "You do not have enough money to buy a " +
+                    animalType.getName() + ".");
+        }
 
+        App.getLoggedIn().changeBalance(animalType.getPrice());
+        Animal animal = new Animal(name, animalType, animalLivingSpace);
+        animalLivingSpace.addAnimal(animal);
+        return new Result(true, "You bought a " + animalType.getName() + " called \"" + name +
+                "\" and housed it in a " + animalLivingSpace.getFarmBuildingType().getName() + ".");
     }
 
     public Result pet(String animalName) {
         Animal animal = getAnimalByName(animalName);
-        // TODO
-        return new Result(true, "");
+
+        if (animal == null) {
+            return new Result(false, "Animal not found.");
+        }
+
+        animal.changeFriendship(15);
+        animal.setLastPettingTime(App.getCurrentGame().getGameState().getTime());
+
+        return new Result(true, "You pet your " + animal.getAnimalType().getName() + ", called \"" +
+                animalName + "\". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
+    }
+
+    public void updateAnimalFriendships() { // TODO: call this method at the end of the day
+        for (Animal animal : getAllFarmAnimals()) {
+            if (animal.getLastFeedingTime().getDayInMonth() != App.getCurrentGame().getGameState().getTime().getDayInMonth()) {
+
+            }
+        }
     }
 
     public Result cheatSetFriendship(String animalName, int amount) {
@@ -433,7 +432,40 @@ public class GameController {
     }
 
     private Animal getAnimalByName(String name) {
-        // TODO: find animal
+        for (Animal animal : getAllFarmAnimals()) {
+            if (animal.getName().equals(name)) {
+                return animal;
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Animal> getAllFarmAnimals() {
+        ArrayList<Animal> animals = new ArrayList<>();
+
+        Farm farm = player.getFarm();
+        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
+            if (farmBuilding.getFarmBuildingType().getIsCage() != null) {
+                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                animals.addAll(animalLivingSpace.getAnimals());
+            }
+        }
+
+        return animals;
+    }
+
+    public AnimalLivingSpace getAvailableLivingSpace(List<FarmBuildingType> livingSpaceTypes) {
+        Farm farm = player.getFarm();
+
+        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
+            if (livingSpaceTypes.contains(farmBuilding.getFarmBuildingType())) {
+                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                if (!animalLivingSpace.isFull()) {
+                    return animalLivingSpace;
+                }
+            }
+        }
+
         return null;
     }
 

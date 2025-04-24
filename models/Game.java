@@ -16,6 +16,14 @@ public class Game {
         this.players = players;
     }
 
+    public ArrayList<User> getPlayers() {
+        return players;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
     public void newGame(String username1, String username2, String username3) {
         // TODO
     }

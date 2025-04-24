@@ -22,4 +22,28 @@ public class GameState {
             this.possibilityOfThor = false;
         }
     }
+
+    public int getCropGrowthRate() {
+        return cropGrowthRate;
+    }
+
+    public boolean isAutomaticIrrigation() {
+        return automaticIrrigation;
+    }
+
+    public int getEnergyUsageRate() {
+        return energyUsageRate;
+    }
+
+    public boolean isPossibilityOfThor() {
+        return possibilityOfThor;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public Weather getCurrentWeather() {
+        return currentWeather;
+    }
 }

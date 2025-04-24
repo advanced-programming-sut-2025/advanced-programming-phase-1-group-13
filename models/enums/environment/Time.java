@@ -4,11 +4,33 @@ public class Time {
     private int year;
     private Season Season;
     private Month month;
+    private int dayInMonth;
     private Weekday weekday;
     private int hour;
-    private int minute;
-    private int second;
-    public static Time currentTime;
+
+    public int getYear() {
+        return year;
+    }
+
+    public Season getSeason() {
+        return Season;
+    }
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public int getDayInMonth() {
+        return dayInMonth;
+    }
+
+    public Weekday getWeekday() {
+        return weekday;
+    }
+
+    public int getHour() {
+        return hour;
+    }
 
     public void increaseTime(Time increaseTimeAmount) {
         // TODO

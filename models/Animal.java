@@ -8,18 +8,22 @@ import java.util.ArrayList;
 public class Animal {
     private String name;
     private AnimalType animalType;
-    private int purchaseCost;
-    private int friendshipLevel;
-    private Time LastFeedingTime;
-    private Time LastpettingTime;
+    private int friendshipLevel = 0;
+    private Time lastFeedingTime;
+    private Time lastPettingTime;
     private Time lastProductTime;
-    private ArrayList<AnimalProduct> producedProducts;
+    private ArrayList<AnimalProduct> producedProducts = new ArrayList<>();
     private AnimalLivingSpace animalLivingSpace;
 
-    public Animal(String name, AnimalType animalType) {
+    public Animal(String name, AnimalType animalType, AnimalLivingSpace animalLivingSpace) {
         this.name = name;
         this.animalType = animalType;
         this.friendshipLevel = 0;
+        Time now = App.getCurrentGame().getGameState().getTime();
+        this.lastPettingTime = now;
+        this.lastFeedingTime = now;
+        this.lastProductTime = now;
+        this.animalLivingSpace = animalLivingSpace;
     }
 
     public void feedHay() {
@@ -30,8 +34,11 @@ public class Animal {
         // TODO
     }
 
-    private void updateFriendship() {
-        // TODO
+    public void changeFriendship(int amount) {
+        this.friendshipLevel += amount;
+        if (this.friendshipLevel > 1000) {
+            this.friendshipLevel = 1000;
+        }
     }
 
     public String getName() {
@@ -50,12 +57,12 @@ public class Animal {
         return this.lastProductTime;
     }
 
-    public Time getLastpettingTime() {
-        return this.LastpettingTime;
+    public Time getLastPettingTime() {
+        return this.lastPettingTime;
     }
 
     public Time getLastFeedingTime() {
-        return this.LastFeedingTime;
+        return this.lastFeedingTime;
     }
 
     public int getFriendshipLevel() {
@@ -70,7 +77,15 @@ public class Animal {
         return this.animalLivingSpace;
     }
 
-    public int getPurchaseCost() {
-        return this.purchaseCost;
+    public void setLastFeedingTime(Time lastFeedingTime) {
+        this.lastFeedingTime = lastFeedingTime;
+    }
+
+    public void setLastPettingTime(Time lastPettingTime) {
+        this.lastPettingTime = lastPettingTime;
+    }
+
+    public void setLastProductTime(Time lastProductTime) {
+        this.lastProductTime = lastProductTime;
     }
 }
