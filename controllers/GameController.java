@@ -345,11 +345,46 @@ public class GameController {
     }
 
     public Result buyAnimal(AnimalType animalType, String name) {
+        boolean livesInCage = animalType.livesInCage();
+        AnimalLivingSpace animalLivingSpace = getEmptyLivingSpace(livesInCage);
+
+        if (animalLivingSpace == null) {
+            return new Result(false, "You don't have any available living spaces for a ");
+        }
         // TODO: check if we have stable/cage
         // todo: which stable/cage does the newly-bought animal go in?
         Animal animal = new Animal(name, animalType);
         // TODO
         return new Result(true, "");
+    }
+
+    public AnimalLivingSpace getEmptyLivingSpace(boolean lookingForCage) {
+        Farm farm = player.getFarm();
+
+        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
+            if (lookingForCage) {
+                if (farmBuilding.getFarmBuildingType().getIsCage()) {
+                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                    if (!animalLivingSpace.isFull()) {
+                        return animalLivingSpace;
+                    }
+                }
+            } else {
+                if (!farmBuilding.getFarmBuildingType().getIsCage()) {
+                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                    if (!animalLivingSpace.isFull()) {
+                        return animalLivingSpace;
+                    }
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+    public void isFull() {
+
     }
 
     public Result pet(String animalName) {
@@ -408,7 +443,7 @@ public class GameController {
         Tool fishingPole = getFishingPoleByName(fishingPoleName);
         // TODO: only fish if near lake and fishingPole is not null
         return new Result(true, "");
-    }craft
+    }
 
     public int numberOfCaughtFish() {
         // TODO

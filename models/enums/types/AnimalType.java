@@ -25,7 +25,7 @@ public enum AnimalType {
         return animalProducts;
     }
 
-    public boolean isLivesInCage() {
+    public boolean livesInCage() {
         return livesInCage;
     }
 }

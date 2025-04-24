@@ -20,4 +20,35 @@ public class FarmBuilding {
         this.description = farmBuildingType.getDescription();
     }
 
+    public FarmBuildingType getFarmBuildingType() {
+        return farmBuildingType;
+    }
+
+    public Position getPositionOfUpperLeftCorner() {
+        return positionOfUpperLeftCorner;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getWoodCount() {
+        return woodCount;
+    }
+
+    public int getStoneCount() {
+        return stoneCount;
+    }
+
+    public int getCost() {
+        return cost;
+    }
 }
