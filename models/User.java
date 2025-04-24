@@ -4,6 +4,7 @@ import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
+import models.enums.types.BackpackType;
 import models.enums.types.FoodType;
 import models.enums.types.Gender;
 import models.inventory.Backpack;
@@ -24,7 +25,6 @@ public class User {
     private Position position;
     private Tool currentTool;
     private HashMap<Skill, SkillLevel> SkillLevels;
-    private ArrayList<Farm> farms;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<FoodType> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
@@ -32,6 +32,27 @@ public class User {
     private ArrayList<Transaction> transactions;
     private Backpack backpack;
     private double balance;
+
+    public User(String username, String password, String nickname, String email, Gender gender) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.email = email;
+        this.gender = gender;
+        this.energy = 200; // TODO: change value if needed
+        this.isEnergyUnlimited = false;
+        this.balance = 0;
+        this.transactions = new ArrayList<>();
+        this.learntCraftRecipes = new ArrayList<>();
+        this.learntCookingRecipes = new ArrayList<>();
+        this.qAndA = new HashMap<>(); // todo
+        this.backpack = new Backpack(BackpackType.INITIAL);
+        this.SkillLevels = new HashMap<>();
+        this.SkillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ZERO);
+        this.SkillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ZERO);
+        this.SkillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
+        this.SkillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
+    }
 
     public Farm getFarm() {
         return farm;

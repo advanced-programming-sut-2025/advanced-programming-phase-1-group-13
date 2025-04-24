@@ -5,8 +5,8 @@ import models.enums.Menu;
 import java.util.ArrayList;
 
 public class App {
-    private static final ArrayList<User> users = new ArrayList<>();
-    private static final ArrayList<Game> games = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<Game> games = new ArrayList<>();
     private static User loggedIn = null;
     private static Menu currentMenu = Menu.LOGIN_MENU;
     private static Game currentGame;
@@ -33,5 +33,21 @@ public class App {
 
     public static void setCurrentGame(Game currentGame) {
         App.currentGame = currentGame;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public static void addUser(User user) {
+        App.users.add(user);
+    }
+
+    public static ArrayList<Game> getGames() {
+        return games;
+    }
+
+    public static void setGames(ArrayList<Game> games) {
+        App.games = games;
     }
 }

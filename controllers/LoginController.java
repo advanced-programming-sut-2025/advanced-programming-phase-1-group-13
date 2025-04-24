@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+
+import models.App;
 import models.Result;
 import models.User;
 import models.enums.SecurityQuestion;
@@ -12,16 +14,30 @@ import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
 
 public class LoginController {
-    public static Map<String, User> users = new HashMap<>();
 
     public static User getUserByUsername(String username) {
-        return users.get(username);
+        for (User user : App.getUsers()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static User getUserByEmail(String email) {
+        for (User user : App.getUsers()) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public Result registerUser(String username,
                                String password,
                                String email,
-                               Gender gender) {
+                               String genderString,
+                               String nickname) {
         if (!LoginCommands.USERNAME_REGEX.matches(username)) {
             return new Result(false, "Username invalid.");
         }
@@ -31,22 +47,17 @@ public class LoginController {
         if (!LoginCommands.EMAIL_REGEX.matches(email)) {
             return new Result(false, "Email format invalid.");
         }
-        if (users.containsKey(username)) {
+        if (getUserByUsername(username) != null) {
             return new Result(false, "Username already exists.");
         }
-        for (User u : users.values()) {
-            if (u.getEmail().equalsIgnoreCase(email)) {
-                return new Result(false, "Email already in use.");
-            }
+        if (getUserByEmail(email) != null) {
+            return new Result(false, "Email already in use.");
         }
+
         String hash = hashSha256(password);
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(hash);
-        user.setEmail(email);
-        user.setGender(gender);
-        user.setQAndA(new HashMap<>()); // fix this part!!!!!!!!!!
-        users.put(username, user);
+        User user = new User(username, hash, nickname, email, gender);
+        user.setQAndA(new HashMap<>()); // todo fix this part!!!!!!!!!!
+        App.addUser(user);
         return new Result(true, "Registration successful.");
     }
 
