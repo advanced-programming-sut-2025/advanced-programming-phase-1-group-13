@@ -23,9 +23,9 @@ public enum GameCommands implements Command {
     HELP_READING_MAP("^\\s+help\\s+reading\\s+map\\s+$"),
     ENERGY_SHOW("^\\s+energy\\s+show\\s+$"),
     CHEAT_ENERGY_SET("^\\s+energy\\s+set\\s+-v\\s+(?<value>\\d+)\\s+$"),
-    CHEAT_ENERGY_UNLIMITED("^\\s+energy\\s+unlimited\\s+$"),
+    CHEAT_ENERGY_UNLIMITED("^\\s*energy\\s+unlimited\\s*$"),
     INVENTORY_SHOW("^$\\s+energy\\s+show\\s+"),
-    TOOLS_EQUIP("^\\s+tools\\s+equip\\s+(?<tool_name>.+)\\s+$"),
+    TOOLS_EQUIP("^\\s*tools\\s+equip\\s+(?<tool_name>.+)\\s*$"),
     TOOLS_SHOW_CURRENT("^\\s+tools\\s+show\\s+current\\s+$"),
     TOOLS_SHOW_AVAILABLE("^\\s+tools\\s+show\\s+available\\s+$"),
     TOOLS_UPGRADE("^\\s+tools\\s+upgrade\\s+(?<tools_name>.+)\\s+$"),
@@ -81,13 +81,18 @@ public enum GameCommands implements Command {
     GIFT_NPC("^\\s+gift\\s+NPC\\s+(?<npc_name>.+)\\s+-i\\s+(?<item>.+)\\s+$"),
     FRIENDSHIP_NPC_LIST("^\\s+friendship\\s+NPC\\s+list\\s+$"),
     QUESTS_LIST("^\\s+quests\\s+list\\s+$"),
-    QUESTS_FINISH("^\\s+quests\\s+finish\\s+-i\\s+(?<index>\\d+)\\s+$");
+    QUESTS_FINISH("^\\s+quests\\s+finish\\s+-i\\s+(?<index>\\d+)\\s+$"),
 
+
+    // TODO: complete these commands below:
+    THROW_ITEM_TO_TRASH(" <itemName> <number>") // number is optional
+
+    ;
     private final String regex;
     private final Pattern pattern;
 
     GameCommands(String regex) {
-        this.regex =  regex;
+        this.regex = regex;
         this.pattern = Pattern.compile(this.regex);
     }
 

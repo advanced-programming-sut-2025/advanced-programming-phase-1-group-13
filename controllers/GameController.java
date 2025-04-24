@@ -21,7 +21,9 @@ public class GameController {
         return new Result(true, "Your energy is: " + playerEnergy);
     }
 
-    public Result setPlayerEnergy(int energyAmount) {
+    public Result setPlayerEnergy(String energyAmountStr) {
+        int energyAmount = Integer.parseInt(energyAmountStr);
+
         player.setEnergy(energyAmount);
         return new Result(true, "Energy set to " + energyAmount);
     }
@@ -57,9 +59,11 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result throwItemToTrash(Item item, int number) {
+    public Result throwItemToTrash(String itemName, String numberStr) {
         // command: inventory trash ...
-        // TODO
+        // TODO: get Item from name
+        // TODO: get number from numStr
+        // TODO: throw away
         return new Result(true, "");
     }
 
@@ -82,7 +86,10 @@ public class GameController {
         return new Result(false, "You can't use that tool in that direction"); // todo: appropriate message
     }
 
-    public Result placeItem(Item item, Direction direction) {
+    public Result placeItem(String itemName, String directionString) {
+        Item item = getItemByItemName(itemName);
+        Direction direction = Direction.getDirectionByDisplayName(directionString);
+
         Position position = neighborTile(direction);
         if (canItemBePlacedHere(position, item)) {
             // TODO: place item
@@ -93,7 +100,8 @@ public class GameController {
 
     }
 
-    public Result craft(Item item) {
+    public Result craft(String itemName) {
+        Item item = getItemByItemName(itemName);
         if (!canCraft(item)) {
             return new Result(false, "Not possible to craft that item!");
         }
