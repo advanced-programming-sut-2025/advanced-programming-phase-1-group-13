@@ -107,7 +107,7 @@ public class User {
     }
 
     public double getBalance() {
-        return this.balance;
+        return balance;
     }
 
     public void setBalance(double balance) {

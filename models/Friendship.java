@@ -37,12 +37,12 @@ public class Friendship {
         return maxXP;
     }
 
-    public void increaseXP(int amount) {
-        // TODO
+    public void increaseXP(int amount, User user) {
+        user.setXP(user.getXP() + amount);
     }
 
-    public void decreaseXP(int amount) {
-        // TODO
+    public void decreaseXP(int amount, User user) {
+        user.setXP(user.getXP() + amount);
     }
 
     public int requiredXPForNextLevel() {
