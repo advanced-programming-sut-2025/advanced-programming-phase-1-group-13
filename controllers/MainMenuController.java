@@ -29,6 +29,11 @@ public class MainMenuController {
         return new Result(true, "You are now in " + App.getCurrentMenu().toString());
     }
 
+    public Result logout() {
+        App.setLoggedIn(null);
+        return new Result(true, "Logged out");
+    }
+
     private boolean canSwitchMenu(Menu newMenu) {
         // TODO: check if it is allowed to switch to that menu from the current menu
         return false;
