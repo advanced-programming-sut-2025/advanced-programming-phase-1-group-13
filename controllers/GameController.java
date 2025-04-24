@@ -387,7 +387,7 @@ public class GameController {
     public void updateAnimalFriendships() { // TODO: call this method at the end of the day
         for (Animal animal : getAllFarmAnimals()) {
             if (animal.getLastFeedingTime().getDayInMonth() != App.getCurrentGame().getGameState().getTime().getDayInMonth()) {
-
+                animal.changeFriendship(-25);
             }
         }
     }
