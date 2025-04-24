@@ -53,7 +53,7 @@ public class LoginController {
         if (getUserByEmail(email) != null) {
             return new Result(false, "Email already in use.");
         }
-
+        Gender gender = Gender.getGenderByName(genderString);
         String hash = hashSha256(password);
         User user = new User(username, hash, nickname, email, gender);
         user.setQAndA(new HashMap<>()); // todo fix this part!!!!!!!!!!
@@ -93,13 +93,14 @@ public class LoginController {
         if (!hash.equals(user.getPassword())) {
             return new Result(false, "Incorrect password.");
         }
+        App.setLoggedIn(user);
         return new Result(true, "Login successful.");
     }
 
     public Result forgotPassword(String username, String email) {
         User user = getUserByUsername(username);
         if (user == null || !user.getEmail().equalsIgnoreCase(email)) {
-            return new Result(false, "Username/email mismatch.");
+            return new Result(false, "Username/Email mismatch.");
         }
         if (user.getQAndA() != null && !user.getQAndA().isEmpty()) {
             SecurityQuestion q = user.getQAndA().keySet().iterator().next();
