@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Map;
 
 import models.App;
 import models.Result;
@@ -35,16 +34,17 @@ public class LoginController {
 
     public Result registerUser(String username,
                                String password,
+                               String repeatPassword,
+                               String nickname,
                                String email,
-                               String genderString,
-                               String nickname) {
-        if (!LoginCommands.USERNAME_REGEX.matches(username)) {
+                               String genderString) {
+        if (!LoginCommands.VALID_USERNAME.matches(username)) {
             return new Result(false, "Username invalid.");
         }
-        if (!LoginCommands.PASSWORD_REGEX.matches(password)) {
+        if (!LoginCommands.VALID_PASSWORD.matches(password)) {
             return new Result(false, "Password invalid.");
         }
-        if (!LoginCommands.EMAIL_REGEX.matches(email)) {
+        if (!LoginCommands.VALID_EMAIL.matches(email)) {
             return new Result(false, "Email format invalid.");
         }
         if (getUserByUsername(username) != null) {
@@ -52,6 +52,9 @@ public class LoginController {
         }
         if (getUserByEmail(email) != null) {
             return new Result(false, "Email already in use.");
+        }
+        if (!password.equals(repeatPassword)) {
+            return new Result(false, "Passwords do not match.");
         }
         Gender gender = Gender.getGenderByName(genderString);
         String hash = hashSha256(password);
@@ -120,15 +123,29 @@ public class LoginController {
         return new Result(true, q.name());
     }
 
-    public Result validateSecurityQuestion(User user, String answer) {
-        if (user == null || user.getQAndA() == null) {
+    public Result validateSecurityQuestion(String answer) {
+        if (App.getLoggedIn() == null || App.getLoggedIn().getQAndA() == null) {
             return new Result(false, "No question to validate.");
         }
-        SecurityQuestion q = user.getQAndA().keySet().iterator().next();
-        String correct = user.getQAndA().get(q);
+        SecurityQuestion q = App.getLoggedIn().getQAndA().keySet().iterator().next();
+        String correct = App.getLoggedIn().getQAndA().get(q);
         if (correct.equalsIgnoreCase(answer)) {
             return new Result(true, "Security validated.");
         }
         return new Result(false, "Incorrect answer.");
     }
+
+    public Result pickSecurityQuestion(int questionNumber, String answer, String repeatAnswer) {
+        if (App.getLoggedIn() == null) {
+            return new Result(false, "User not found.");
+        }
+        SecurityQuestion question = SecurityQuestion.values()[questionNumber - 1];
+        // todo: errors regarding question number and stuff?
+        if (!answer.equals(repeatAnswer)) {
+            return new Result(false, "Answers do not match.");
+        }
+        App.getLoggedIn().getQAndA().put(question, answer);
+        return new Result(true, "Security question saved.");
+    }
+
 }

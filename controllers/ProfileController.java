@@ -22,7 +22,7 @@ public class ProfileController {
     }
 
     public Result changeEmail(String newEmail) {
-        if (!LoginCommands.EMAIL_REGEX.matches(newEmail)) {
+        if (!LoginCommands.VALID_EMAIL.matches(newEmail)) {
             return new Result(false, "Invalid email format.");
         }
         if (getUserByEmail(newEmail) != null) {
@@ -37,7 +37,7 @@ public class ProfileController {
         if (!App.getLoggedIn().getPassword().equals(currentHash)) {
             return new Result(false, "Old password does not match.");
         }
-        if (!LoginCommands.PASSWORD_REGEX.matches(newPassword)) {
+        if (!LoginCommands.VALID_PASSWORD.matches(newPassword)) {
             return new Result(false, "New password does not meet requirements.");
         }
         App.getLoggedIn().setPassword(new LoginController().hashSha256(newPassword));

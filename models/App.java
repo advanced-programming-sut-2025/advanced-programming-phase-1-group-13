@@ -10,11 +10,7 @@ public class App {
     private static User loggedIn = null;
     private static Menu currentMenu = Menu.LOGIN_MENU;
     private static Game currentGame;
-
-    public static ArrayList<User> getUsers() {
-        return users;
-    }
-
+    
     public static Menu getCurrentMenu() {
         return currentMenu;
     }

@@ -1,4 +1,5 @@
 package views;
+
 import controllers.LoginController;
 import models.enums.SecurityQuestion;
 import models.enums.commands.LoginCommands;
@@ -9,49 +10,48 @@ import java.util.regex.Matcher;
 public class LoginMenu implements AppMenu {
     private final LoginController controller = new LoginController();
     Matcher matcher;
+
     @Override
     public void check(Scanner scanner) {
         String inputLine = scanner.nextLine();
         Matcher matcher;
 
-        if ((matcher = LoginCommands.REGISTER_REGEX.getMatcher(inputLine)) != null) {
+        if ((matcher = LoginCommands.REGISTER_USER.getMatcher(inputLine)) != null) {
             System.out.println(controller.registerUser(
                     matcher.group("username"),
                     matcher.group("password"),
-                    matcher.group("password_confirm"),
+                    matcher.group("repeatPassword"),
                     matcher.group("nickname"),
                     matcher.group("email"),
                     matcher.group("gender")
             ));
         } else if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
-            SecurityQuestion question = SecurityQuestion.values()[Integer.parseInt(matcher.group("question_number")) - 1];
+            int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
+            // todo: errors regarding question number and stuff?
             System.out.println(controller.pickSecurityQuestion(
-                    controller.getUserByUsername(matcher.group("username")),
-                    question,
-                    matcher.group("answer")
+                    questionNumber,
+                    matcher.group("answer"),
+                    matcher.group("repeatAnswer")
             ));
-        } else if ((matcher = LoginCommands.FORGET_PASSWORD_REGEX.getMatcher(inputLine)) != null) {
+        } else if ((matcher = LoginCommands.FORGET_PASSWORD.getMatcher(inputLine)) != null) {
             System.out.println(controller.forgotPassword(
                     matcher.group("username"),
-                    matcher.group("email"),
-                    scanner
+                    matcher.group("email")
             ));
-        } else if ((matcher = LoginCommands.ANSWER_REGEX.getMatcher(inputLine)) != null) {
+        } else if ((matcher = LoginCommands.ANSWER_SECURITY_QUESTION.getMatcher(inputLine)) != null) {
             System.out.println(controller.validateSecurityQuestion(
-                    controller.getUserByUsername(matcher.group("username")),
                     matcher.group("answer")
             ));
-        } else if ((matcher = LoginCommands.LOGIN_REGEX.getMatcher(inputLine)) != null) {
+        } else if ((matcher = LoginCommands.LOGIN.getMatcher(inputLine)) != null) {
             System.out.println(controller.login(
                     matcher.group("username"),
                     matcher.group("password")
-            ));
-        } else if ((matcher = LoginCommands.SHOW_CURRENT_MENU.getMatcher(inputLine)) != null) {
+            )); // TODO: "stay logged in" flag !
+        } else if (LoginCommands.SHOW_CURRENT_MENU.getMatcher(inputLine) != null) {
             System.out.println("You are currently in the Login Menu.");
         } else {
             System.out.println("Invalid command. Please try again.");
         }
     }
-
 }
 
