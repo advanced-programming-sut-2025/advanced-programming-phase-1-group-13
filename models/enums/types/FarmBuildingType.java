@@ -1,12 +1,12 @@
 package models.enums.types;
 
 public enum FarmBuildingType {
-    BARN("Barn", 7, 4, "Houses 4 barn-dwelling animals.", 350,150, 6000, false, 4),
+    BARN("Barn", 7, 4, "Houses 4 barn-dwelling animals.", 350, 150, 6000, false, 4),
     BIG_BARN("Big Barn", 7, 4, "Houses 8 barn-dwelling animals. Unlocks goats.", 450, 200, 12000, false, 8),
     DELUXE_BARN("Deluxe Barn", 7, 4, "Houses 12 barn-dwelling animals. Unlocks sheep and pigs.", 550, 300, 25000, false, 12),
     COOP("Coop", 6, 3, "Houses 4 coop-dwelling animals.", 300, 100, 4000, false, 4),
     BIG_COOP("Big Coop", 6, 3, "Houses 8 coop-dwelling animals. Unlocks ducks.", 400, 150, 10000, false, 8),
-    DELUXE_COOP("Deluxe Coop", 6, 3, "Houses 12 coop-dwelling animals. Unlocks rabbits.", 500, 200, 20000,  false, 12),
+    DELUXE_COOP("Deluxe Coop", 6, 3, "Houses 12 coop-dwelling animals. Unlocks rabbits.", 500, 200, 20000, false, 12),
     WELL("Well", 3, 3, "Provides a place for you to refill your watering can.", 0, 75, 1000, null, null),
     SHIPPING_BIN("Shipping Bin", 1, 1, "Items placed in it will be included in the nightly shipment.", 150, 0, 250, null, null);
 
@@ -35,6 +35,19 @@ public enum FarmBuildingType {
         this.cost = cost;
         this.isCage = isCage;
         this.capacity = capacity;
+    }
+
+    public static FarmBuildingType getFarmBuildingTypeByName(String name) {
+        return switch (name) {
+            case "Barn" -> BARN;
+            case "Big Barn" -> BIG_BARN;
+            case "Deluxe Barn" -> DELUXE_BARN;
+            case "Coop" -> COOP;
+            case "Big Coop" -> BIG_COOP;
+            case "Well" -> WELL;
+            case "Shipping Bin" -> SHIPPING_BIN;
+            default -> null;
+        };
     }
 
     public String getName() {

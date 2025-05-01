@@ -89,7 +89,30 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.cheatWeatherSet(matcher.group("type")));
         } else if ((matcher = GameCommands.GREENHOUSE_BUILD.getMatcher(inputLine)) != null) {
             System.out.println(controller.buildGreenhouse());
-        } else {
+        } else if ((matcher = GameCommands.PLANT.getMatcher(inputLine)) != null) {
+            System.out.println(controller.plant(
+                    matcher.group("seed"),
+                    matcher.group("direction")
+            ));
+        } else if ((matcher = GameCommands.SHOW_PLANT.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showPlant(
+                    matcher.group("x"),
+                    matcher.group("y")
+            ));
+        } else if ((matcher = GameCommands.FERTILIZE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.fertilize(
+                    matcher.group("fertilizer"),
+                    matcher.group("direction")
+            ));
+        } else if ((matcher = GameCommands.BUILD.getMatcher(inputLine)) != null) {
+            System.out.println(controller.build(
+                    matcher.group("building_name"),
+                    matcher.group("x"),
+                    matcher.group("y")
+            ));
+        }
+        // continue from " buyAnimal "
+        else {
             System.out.println("Invalid Command. Please try again!");
         }
     }

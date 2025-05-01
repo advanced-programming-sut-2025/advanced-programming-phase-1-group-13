@@ -34,7 +34,7 @@ public enum GameCommands implements Command {
     TOOLS_USE("^\\s+tools\\s+-d\\s+(?<direction>.+)$"),
     CRAFT_INFO("^\\s+craftinfo\\s+-n\\s+(?<craft_name>.+)\\s+$"),
     PLANT("^\\s+plant\\s+-s(?<seed>.+)\\s+-d\\s+(?<direction>.+)\\s+$"),
-    SHOWPLANT("^\\s+showplant\\s+-l\\s+(?<x>\\d+)\\s+(?<y>\\d+)\\s+$"),
+    SHOW_PLANT("^\\s+showplant\\s+-l\\s+(?<x>\\d+)\\s+(?<y>\\d+)\\s+$"),
     FERTILIZE("^\\s+fertilize\\s+-f\\s+(?<fertilizer>.+)\\s+-d\\s+(?<direction>.+)\\s+$"),
     HOWMUCH_WATER("^\\s+howmuch\\s+water\\s+$"),
     CRAFTING_SHOW_RECIPES("^\\s+crafting\\s+show\\s+recipes\\s+$"),

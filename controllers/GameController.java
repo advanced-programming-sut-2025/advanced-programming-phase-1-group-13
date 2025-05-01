@@ -302,25 +302,30 @@ public class GameController {
 
     // === PLANTS === //
 
-    public Result plant(Direction direction, Seed seed) {
-        // TODO
+    public Result plant(String seedName, String directionName) {
+        // TODO: get Seed from its name
+        Direction direction = Direction.getDirectionByDisplayName(directionName);
         return new Result(true, "");
     }
 
-    public Result showPlant(Position position) {
+    public Result showPlant(String xString, String yString) {
+        Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
         Tile tile = getTileByPosition(position);
         // TODO
         return new Result(true, "");
     }
 
-    public Result fertilize(FertilizerType fertilizer, Direction direction) {
-        // TODO
+    public Result fertilize(String fertilizerName, String directionName) {
+        // TODO : get FertilizerType from its name
+        Direction direction = Direction.getDirectionByDisplayName(directionName);
+        // TODO: fertilize
         return new Result(true, "");
     }
 
     // === FARM BUILDINGS & ANIMALS === //
 
-    public Result build(FarmBuildingType farmBuildingType, String xString, String yString) {
+    public Result build(String farmBuildingTypeString, String xString, String yString) {
+        FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeString);
         int x, y;
         if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
             return new Result(false, "Enter two valid numbers for x and y.");
