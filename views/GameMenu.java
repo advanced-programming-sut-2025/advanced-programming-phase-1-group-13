@@ -20,7 +20,7 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.CHEAT_ENERGY_UNLIMITED.getMatcher(inputLine)) != null) {
             System.out.println(controller.setUnlimitedEnergy());
         } else if ((matcher = GameCommands.TOOLS_SHOW_CURRENT.getMatcher(inputLine)) != null) {
-            System.out.println(controller.showCurrentTool();
+            System.out.println(controller.showCurrentTool());
         } else if ((matcher = GameCommands.COOKING_SHOW_RECIPES.getMatcher(inputLine)) != null) {
             System.out.println(controller.showLearntCookingRecipes());
         } else if ((matcher = GameCommands.CRAFTING_SHOW_RECIPES.getMatcher(inputLine)) != null) {
@@ -43,10 +43,53 @@ public class GameMenu implements AppMenu {
             ));
         } else if ((matcher = GameCommands.CRAFTING_CRAFT.getMatcher(inputLine)) != null) {
             System.out.println(controller.craft(matcher.group("item_name")));
-        }
-
-
-        else {
+        } else if ((matcher = GameCommands.CRAFT_INFO.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showCraftInfo(matcher.group("craft_name")));
+        } else if ((matcher = GameCommands.CHEAT_ADD_ITEM.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatAddItem(matcher.group("item_name")));
+            // TODO: handle the optional "count" flag
+        } else if ((matcher = GameCommands.COOKING_PREPARE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.prepareCook(matcher.group("recipe_name")));
+        } else if ((matcher = GameCommands.EAT.getMatcher(inputLine)) != null) {
+            System.out.println(controller.eat(matcher.group("food_name")));
+        } else if ((matcher = GameCommands.WALK.getMatcher(inputLine)) != null) {
+            System.out.println(controller.respondForWalkRequest(
+                    matcher.group("x"),
+                    matcher.group("y")
+            ));
+        } else if ((matcher = GameCommands.WALK_CONFIRM.getMatcher(inputLine)) != null) {
+            System.out.println(controller.eat(matcher.group("y_or_n")));
+        } else if ((matcher = GameCommands.PRINT_MAP.getMatcher(inputLine)) != null) {
+            System.out.println(controller.printMap(
+                    matcher.group("x"),
+                    matcher.group("y"),
+                    matcher.group("size")
+            ));
+        } else if ((matcher = GameCommands.PRINT_COLORED_MAP.getMatcher(inputLine)) != null) {
+            System.out.println(controller.printMap(
+                    matcher.group("x"),
+                    matcher.group("y"),
+                    matcher.group("size")
+            ));
+        } else if ((matcher = GameCommands.HELP_READING_MAP.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showHelpReadingMap());
+        } else if ((matcher = GameCommands.CHEAT_ADV_TIME.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatAdvanceTime(matcher.group("hourIncrease")));
+        } else if ((matcher = GameCommands.CHEAT_ADV_DATE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatAdvanceDate(matcher.group("dayIncrease")));
+        } else if ((matcher = GameCommands.CHEAT_THOR.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatThor(
+                    matcher.group("x"),
+                    matcher.group("y")));
+        } else if ((matcher = GameCommands.WEATHER.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showWeather());
+        } else if ((matcher = GameCommands.WEATHER_FORECAST.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showWeatherForecast());
+        } else if ((matcher = GameCommands.CHEAT_WEATHER_SET.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatWeatherSet(matcher.group("type")));
+        } else if ((matcher = GameCommands.GREENHOUSE_BUILD.getMatcher(inputLine)) != null) {
+            System.out.println(controller.buildGreenhouse());
+        } else {
             System.out.println("Invalid Command. Please try again!");
         }
     }

@@ -114,13 +114,16 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result cheatAddItem(Item item) {
+    public Result cheatAddItem(String itemName) {
+        Item item = getItemByItemName(itemName);
+        // TODO: handle the optional "count" flag
         // TODO: add item to inventory
         return new Result(true, "Item added to inventory.");
     }
 
     // or name it cook() ?
-    public Result prepareCook(FoodType food) {
+    public Result prepareCook(String foodName) {
+        FoodType food = getFoodTypeByName(foodName);
         if (!canCook(food)) {
             return new Result(false, "You cannot cook this right now.");
             // todo: or specify the cause of the error...
@@ -129,7 +132,8 @@ public class GameController {
         return new Result(true, "Yummy! Your meal is ready.");
     }
 
-    public Result eat(FoodType food) {
+    public Result eat(String foodName) {
+        FoodType food = getFoodTypeByName(foodName);
         // TODO: check if player HAS the food, and return appropriate Result if not.
         // TODO: increase energy
         // TODO: apply buff
@@ -173,7 +177,16 @@ public class GameController {
 
 
     // === WALK === //
-    public Result walk(Path path, boolean playerConfirmed) {
+
+    public Result walk(Path path, String walkConfirmation) {
+        Boolean playerConfirmed = switch (walkConfirmation) {
+            case "y" -> true;
+            case "n" -> false;
+            default -> null;
+        };
+        if (playerConfirmed == null) {
+            return new Result(false, "the confirmation must be \"y\" or \"n\"");
+        }
         if (!playerConfirmed) {
             return new Result(false, "You denied the walk.");
         }
@@ -183,12 +196,20 @@ public class GameController {
         return new Result(true, "Walking...");
     }
 
-    public Result respondForWalkRequest(Position origin, Position destination) {
+    public Result respondForWalkRequest(String xString, String yString) {
+        int x = Integer.parseInt(xString);
+        int y = Integer.parseInt(yString);
+        Position destination = new Position(x, y);
+        Position origin = player.getPosition();
         Path path = findValidPath(origin, destination);
         if (path == null) {
             return new Result(false, "No valid path found!");
         }
-        return new Result(true, "Do you confirm the walk?");
+        StringBuilder walkConfirmRequest = new StringBuilder();
+        walkConfirmRequest
+                .append("Do you confirm the walk?\n")
+                .append("(respond with \"walk confirm\" followed by \"y\" or \"n\"");
+        return new Result(true, walkConfirmRequest.toString());
         // [we can also show the path and then ask for confirmation]
 
         /*
@@ -213,7 +234,10 @@ public class GameController {
 
     // === PRINT MAP === //
 
-    public Result printMap() {
+    public Result printMap(String xString, String yString, String sizeString) {
+        int x = Integer.parseInt(xString);
+        int y = Integer.parseInt(yString);
+        int size = Integer.parseInt(sizeString);
         return new Result(true, ""); // TODO: print map.
     }
 
@@ -228,17 +252,20 @@ public class GameController {
 
     // === GAME STATUS === //
 
-    public Result cheatAdvanceTime(int howManyHours) {
+    public Result cheatAdvanceTime(String howManyHoursString) {
+        int howManyHours = Integer.parseInt(howManyHoursString);
         // TODO;
         return new Result(true, "");
     }
 
-    public Result cheatAdvanceDate(int howManyDays) {
+    public Result cheatAdvanceDate(String howManyDaysString) {
+        int howManyDays = Integer.parseInt(howManyDaysString);
         // TODO;
         return new Result(true, "");
     }
 
-    public Result cheatThor(Position position) {
+    public Result cheatThor(String x, String y) {
+        Position position = new Position(Integer.parseInt(x), Integer.parseInt(y));
         // TODO
         return new Result(true, "");
     }
@@ -253,8 +280,8 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result cheatWeatherSet(Weather newWeather) {
-        // TODO
+    public Result cheatWeatherSet(String newWeatherString) {
+        // TODO : get weather type from name
         return new Result(true, "");
     }
 
@@ -478,7 +505,7 @@ public class GameController {
         if (animal.isOutside()) {
             if (animal.getPosition().equals(newPosition)) {
                 return new Result(false, "Your " + animal.getAnimalType().getName() + ", " + animalName
-                + ", is already at " + newPosition.toString());
+                        + ", is already at " + newPosition.toString());
             }
 
             if (!farm.getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
@@ -798,6 +825,11 @@ public class GameController {
     }
 
     private NPC getNPCByName(String NPCName) {
+        // TODO
+        return null;
+    }
+
+    private FoodType getFoodTypeByName(String FoodTypeName) {
         // TODO
         return null;
     }

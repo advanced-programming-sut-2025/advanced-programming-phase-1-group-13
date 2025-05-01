@@ -54,6 +54,10 @@ public class User {
         this.SkillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
     }
 
+    public Position getPosition() {
+        return this.position;
+    }
+
     public Farm getFarm() {
         return farm;
     }

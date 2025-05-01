@@ -44,7 +44,7 @@ public enum FoodType implements ItemType {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public HashMap<IngredientType, Integer> getIngredients() {
