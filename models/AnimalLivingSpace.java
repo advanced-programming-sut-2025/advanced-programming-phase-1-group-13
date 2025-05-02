@@ -35,6 +35,6 @@ public class AnimalLivingSpace extends FarmBuilding {
     }
 
     public void removeAnimal(Animal animal) {
-        // TODO
+        this.getAnimals().remove(animal);
     }
 }

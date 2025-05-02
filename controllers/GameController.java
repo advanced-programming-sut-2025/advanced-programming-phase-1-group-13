@@ -322,10 +322,10 @@ public class GameController {
         return new Result(true, "");
     }
 
+
     // === FARM BUILDINGS & ANIMALS === //
 
-    public Result build(String farmBuildingTypeString, String xString, String yString) {
-        FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeString);
+    public Result build(FarmBuildingType farmBuildingType, String xString, String yString) {
         int x, y;
         if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
             return new Result(false, "Enter two valid numbers for x and y.");
@@ -436,13 +436,17 @@ public class GameController {
         for (Animal animal : getAllFarmAnimals()) {
             if (!animal.hasBeenFedToday()) {
                 animal.changeFriendship(-20);
+            } else {
+                // TODO: produce products
             }
 
             if (!animal.hasBeenPetToday()) {
                 animal.changeFriendship(-10);
             }
 
-            // TODO: check if animal is not inside its' living space at the end of the night
+            if(animal.isOutside()) {
+                animal.changeFriendship(-20);
+            }
         }
     }
 
@@ -507,6 +511,7 @@ public class GameController {
         }
 
         Farm farm = player.getFarm();
+        FarmBuilding farmBuildingInNewPosition = getFarmBuildingByPosition(newPosition);
         if (animal.isOutside()) {
             if (animal.getPosition().equals(newPosition)) {
                 return new Result(false, "Your " + animal.getAnimalType().getName() + ", " + animalName
@@ -517,13 +522,37 @@ public class GameController {
                 return new Result(false, "Your animal can only go on grass.");
             }
 
+            if (farmBuildingInNewPosition != null) {
+                if (!farmBuildingInNewPosition.equals(animal.getAnimalLivingSpace())) {
+                    return new Result(false, "Your animal can only go on grass.");
+                }
+
+                animal.setPosition(newPosition);
+                animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
+                animal.setOutside(false);
+                return new Result(true, "Your " + animal.getAnimalType().getName() + ", " + animalName
+                        + ", has been moved to its' living space.");
+            }
+
             animal.setPosition(newPosition);
-            animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
             return new Result(true, "Your " + animal.getAnimalType().getName() + ", " + animalName
                     + ", has been moved to " + newPosition.toString() + ".");
         }
-        // TODO
-        return new Result(true, "");
+
+        if (farmBuildingInNewPosition != null) {
+            if (farmBuildingInNewPosition.equals(animal.getAnimalLivingSpace())) {
+                return new Result(false, "Your animal is already in its' living space.");
+            }
+
+            return new Result(false, "Your animal can only go on grass.");
+        }
+
+        animal.setPosition(newPosition);
+        animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
+        animal.changeFriendship(8);
+        return new Result(true, "Your " + animal.getAnimalType().getName() + ", " + animalName
+                + ", has been moved to " + newPosition.toString() + " and is now outside. Its' friendship level is now "
+                + animal.getFriendshipLevel() + ".");
     }
 
     public FarmBuilding getFarmBuildingByPosition(Position position) {
@@ -546,24 +575,64 @@ public class GameController {
 
     public Result feedHayToAnimal(String animalName) {
         Animal animal = getAnimalByName(animalName);
-        // TODO
-        return new Result(true, "");
+        if (animal == null) {
+            return new Result(false, "Animal not found.");
+        }
+
+        animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
+        return new Result(true, "You fed hay to your " + animal.getAnimalType().getName() + ", "
+                + animalName + ".");
     }
 
     public Result showProducedProducts() {
-        // TODO
-        return new Result(true, "");
+        StringBuilder message = new StringBuilder("Uncollected animal products: \n");
+
+        for (Animal animal : getAllFarmAnimals()) {
+            if (!animal.getProducedProducts().isEmpty()) {
+                message.append("-------------------------------\n").append(animal.getName()).append(" (").
+                        append(animal.getAnimalType().getName()).append("):\n");
+
+                for (AnimalProduct product : animal.getProducedProducts()) {
+                    message.append("- ").append(product.getType().getName()).append("\n");
+                }
+            }
+        }
+
+        return new Result(true, message.toString());
     }
 
-    public Result collectProducts(String animalName) {
-        Animal animal = getAnimalByName(animalName);
+    public Result collectProducts(String productName) {
         // TODO
+        AnimalType animalType = null;
+
+        if (animalType.equals(AnimalType.COW)) {
+            // TODO
+        }
+
+        if (animalType.equals(AnimalType.GOAT)) {
+            // TODO
+        }
+
+        if (animalType.equals(AnimalType.SHEEP)) {
+            // TODO
+        }
+
+        if (animalType.equals(AnimalType.PIG)) {
+            // TODO
+        }
+
         return new Result(true, "");
     }
 
     public Result sellAnimal(String animalName) {
         Animal animal = getAnimalByName(animalName);
-        // TODO
+        if (animal == null) {
+            return new Result(false, "Animal not found.");
+        }
+
+        double price = animal.getAnimalType().getPrice() * ((animal.getFriendshipLevel() / 1000) + 0.3);
+        player.changeBalance(price);
+        animal.getAnimalLivingSpace().removeAnimal(animal);
         return new Result(true, "");
     }
 

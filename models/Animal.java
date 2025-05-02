@@ -28,14 +28,6 @@ public class Animal {
         this.animalLivingSpace = animalLivingSpace;
     }
 
-    public void feedHay() {
-        // TODO
-    }
-
-    public void collectProduce() {
-        // TODO
-    }
-
     public void changeFriendship(int amount) {
         this.friendshipLevel += amount;
         if (this.friendshipLevel > 1000) {
@@ -45,10 +37,6 @@ public class Animal {
 
     public String getName() {
         return this.name;
-    }
-
-    public AnimalLivingSpace getLivingSpace() {
-        return this.animalLivingSpace;
     }
 
     public ArrayList<AnimalProduct> getProducedProducts() {
@@ -105,6 +93,10 @@ public class Animal {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public void setOutside(boolean outside) {
+        isOutside = outside;
     }
 
     public boolean hasBeenPetToday() {
