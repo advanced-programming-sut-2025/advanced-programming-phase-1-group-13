@@ -603,7 +603,12 @@ public class GameController {
 
     public Result collectProducts(String productName) {
         // TODO
-        AnimalType animalType = null;
+        AnimalProductType animalProductType = AnimalProductType.getAnimalProductTypeByName(productName);
+        if (animalProductType == null) {
+            return new Result(false, "Product doesn't exist.");
+        }
+
+        AnimalType animalType = animalProductType.getAnimal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ;
 
         if (animalType.equals(AnimalType.COW)) {
             // TODO
@@ -630,7 +635,7 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
-        double price = animal.getAnimalType().getPrice() * ((animal.getFriendshipLevel() / 1000) + 0.3);
+        double price = animal.getAnimalType().getPrice() * ((animal.getFriendshipLevel() / 1000.0) + 0.3);
         player.changeBalance(price);
         animal.getAnimalLivingSpace().removeAnimal(animal);
         return new Result(true, "");
