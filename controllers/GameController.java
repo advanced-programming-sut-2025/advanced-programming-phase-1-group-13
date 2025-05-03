@@ -1,8 +1,13 @@
 package controllers;
 
 import models.*;
+import models.enums.Quality;
+import models.enums.Skill;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
+import models.tools.FishingRod;
+import models.tools.MilkPail;
+import models.tools.Shear;
 import models.tools.Tool;
 import models.enums.environment.*;
 
@@ -326,15 +331,10 @@ public class GameController {
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(FarmBuildingType farmBuildingType, String xString, String yString) {
-        int x, y;
-        if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
+        Position position = getPositionByStrings(xString, yString);
+        if (position == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
-        } else {
-            x = Integer.parseInt(xString);
-            y = Integer.parseInt(xString);
         }
-
-        Position position = new Position(x, y);
 
         Farm farm = player.getFarm();
         FarmBuilding farmBuilding = new FarmBuilding(farmBuildingType, position);
@@ -432,12 +432,12 @@ public class GameController {
                 animalName + ". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
     }
 
-    public void updateAnimalFriendships() { // TODO: call this method at the end of the day
+    public void updateAnimals() { // TODO: call this method at the end of the day
         for (Animal animal : getAllFarmAnimals()) {
             if (!animal.hasBeenFedToday()) {
                 animal.changeFriendship(-20);
-            } else {
-                // TODO: produce products
+            } else if (animal.getFriendshipLevel() >= 100) {
+                animal.produceProduct();
             }
 
             if (!animal.hasBeenPetToday()) {
@@ -495,15 +495,10 @@ public class GameController {
     }
 
     public Result shepherdAnimal(String animalName, String xString, String yString) {
-        int x, y;
-        if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
+        Position newPosition = getPositionByStrings(xString, yString);
+        if (newPosition == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
-        } else {
-            x = Integer.parseInt(xString);
-            y = Integer.parseInt(xString);
         }
-
-        Position newPosition = new Position(x, y);
 
         Animal animal = getAnimalByName(animalName);
         if (animal == null) {
@@ -555,6 +550,17 @@ public class GameController {
                 + animal.getFriendshipLevel() + ".");
     }
 
+    public Position getPositionByStrings(String xString, String yString) {
+        if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
+            return null;
+        }
+
+        int x, y;
+        x = Integer.parseInt(xString);
+        y = Integer.parseInt(xString);
+        return new Position(x, y);
+    }
+
     public FarmBuilding getFarmBuildingByPosition(Position position) {
         Farm farm = player.getFarm();
         for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
@@ -601,32 +607,70 @@ public class GameController {
         return new Result(true, message.toString());
     }
 
-    public Result collectProducts(String productName) {
-        // TODO
-        AnimalProductType animalProductType = AnimalProductType.getAnimalProductTypeByName(productName);
-        if (animalProductType == null) {
-            return new Result(false, "Product doesn't exist.");
+    public Result collectProducts(String animalName) {
+        Animal animal = getAnimalByName(animalName);
+        if (animal == null) {
+            return new Result(false, "Animal not found.");
         }
 
-        AnimalType animalType = animalProductType.getAnimal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ;
+        AnimalType animalType = animal.getAnimalType();                                                                                                                                                                                                                                                                                                                                                                                                                                    ;
+        ArrayList<Item> items = new ArrayList<>(player.getBackpack().getItems().keySet());
+        HashMap<AnimalProduct, Integer> collectedProducts = new HashMap<>();
 
         if (animalType.equals(AnimalType.COW)) {
-            // TODO
+            MilkPail milkPail = null;
+            for (Item item : items) {
+                if (item instanceof MilkPail) {
+                    milkPail = (MilkPail) item;
+                    break;
+                }
+            }
+            if (milkPail == null) {
+                return new Result(false, "You need a milk pail to collect the cow's products.");
+            }
+            milkPail.useTool(animal);
+        } else if (animalType.equals(AnimalType.GOAT)) {
+            MilkPail milkPail = null;
+            for (Item item : items) {
+                if (item instanceof MilkPail) {
+                    milkPail = (MilkPail) item;
+                    break;
+                }
+            }
+            if (milkPail == null) {
+                return new Result(false, "You need a milk pail to collect the goat's products.");
+            } else {
+                milkPail.useTool(animal);
+            }
+        } else if (animalType.equals(AnimalType.SHEEP)) {
+            Shear shear = null;
+            for (Item item : items) {
+                if (item instanceof Shear) {
+                    shear = (Shear) item;
+                    break;
+                }
+            }
+            if (shear == null) {
+                return new Result(false, "You need a shear to collect the sheep's products.");
+            } else {
+                shear.useTool(animal);
+            }
+        } else if (animalType.equals(AnimalType.PIG) && !animal.isOutside()) {
+                return new Result(false, "Take the pig outside to collect its' products.");
+        } else {
+            HashMap<Item, Integer> itemsHashMap = player.getBackpack().getItems();
+            for (AnimalProduct item : animal.getProducedProducts()) {
+                player.getBackpack().getItems().put(item, itemsHashMap.getOrDefault(item, 0) + 1);
+                collectedProducts.put(item, collectedProducts.getOrDefault(item, 0) + 1);
+            }
+            animal.setProducedProducts(new ArrayList<>());
         }
 
-        if (animalType.equals(AnimalType.GOAT)) {
-            // TODO
+        StringBuilder message = new StringBuilder("You collected ");
+        for (AnimalProduct item : collectedProducts.keySet()) {
+            message.append(item.getType().getName()).append(" (x").append(collectedProducts.get(item)).append("), ");
         }
-
-        if (animalType.equals(AnimalType.SHEEP)) {
-            // TODO
-        }
-
-        if (animalType.equals(AnimalType.PIG)) {
-            // TODO
-        }
-
-        return new Result(true, "");
+        return new Result(true, message.toString().replaceFirst(", $", "\n"));
     }
 
     public Result sellAnimal(String animalName) {
@@ -635,10 +679,11 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
-        double price = animal.getAnimalType().getPrice() * ((animal.getFriendshipLevel() / 1000.0) + 0.3);
+        double price = animal.calculatePrice();
         player.changeBalance(price);
         animal.getAnimalLivingSpace().removeAnimal(animal);
-        return new Result(true, "");
+        return new Result(true, "You sold your " + animal.getAnimalType().getName() + ", " +
+                                animalName + ", for " + price + "g.");
     }
 
     private Animal getAnimalByName(String name) {
@@ -682,23 +727,58 @@ public class GameController {
     // === FISHING === //
 
     public Result fishing(String fishingRodName) {
-        Tool fishingRod = getFishingRodByName(fishingRodName);
-        // TODO: only fish if near lake and fishingPole is not null
-        return new Result(true, "");
+        FishingRod fishingRod = getFishingRodByName(fishingRodName);
+        if (fishingRod == null) {
+            return new Result(false, "You do not have a " + fishingRodName + " fishing rod.");
+        }
+
+        double M;
+        Weather currentWeather = App.getCurrentGame().getGameState().getCurrentWeather();
+        if (currentWeather.equals(Weather.SUNNY)) {
+            M = 1.5;
+        } else if (currentWeather.equals(Weather.RAINY)) {
+            M = 1.2;
+        } else {
+            M = 0.5;
+        }
+
+        Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
+
+        int fishingSkillLevel = player.getSkillLevels().get(Skill.FISHING).getNumber();
+        boolean canCatchLegendary = fishingSkillLevel == 4;
+
+        int numberOfCaughtFish = (int) Math.ceil(Math.random() * M * (fishingSkillLevel + 2));
+
+        HashMap<Item, Integer> itemsHashMap = player.getBackpack().getItems();
+        HashMap<Fish, Integer> caughtFish = new HashMap<>();
+        for (int i = 0; i < numberOfCaughtFish; i++) {
+            FishType fishType = FishType.getRandomFishType(currentSeason, canCatchLegendary);
+
+            double poleNumber = fishingRod.getRodType().getQualityNumber();
+            double qualityNumber = (Math.random() * (fishingSkillLevel + 2) * poleNumber) / (7 - M);
+            Quality quality = Quality.getQualityByNumber(qualityNumber);
+
+            Fish fish = new Fish(fishType, quality);
+            itemsHashMap.put(fish, itemsHashMap.getOrDefault(fish, 0) + 1);
+            caughtFish.put(fish, caughtFish.getOrDefault(fish, 0) + 1);
+        }
+
+        StringBuilder message = new StringBuilder("You caught ");
+        for (Fish fish : caughtFish.keySet()) {
+            message.append(fish.getType().getName()).append(" (x").append(caughtFish.get(fish)).append("), ");
+        }
+        return new Result(true, message.toString().replaceFirst(", $", "\n"));
     }
 
-    public int numberOfCaughtFish() {
-        // TODO
-        return 0;
-    }
-
-    public int qualityOfCaughtFish() {
-        // TODO
-        return 0;
-    }
-
-    private Tool getFishingRodByName(String name) {
-        // TODO: find fishing pole
+    private FishingRod getFishingRodByName(String name) {
+        ArrayList<Item> items = new ArrayList<>(player.getBackpack().getItems().keySet());
+        for (Item item : items) {
+            if (item instanceof FishingRod fishingRod) {
+                if (fishingRod.getRodType().getName().equals(name)) {
+                    return fishingRod;
+                }
+            }
+        }
         return null;
     }
 
@@ -730,7 +810,6 @@ public class GameController {
         }
         return null;
     }
-
 
     private Item getItemByItemName(String itemName) {
         // TODO

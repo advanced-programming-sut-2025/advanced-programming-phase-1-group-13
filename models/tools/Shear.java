@@ -1,8 +1,15 @@
 package models.tools;
 
+import models.Animal;
+import models.App;
+import models.Item;
+import models.User;
 import models.enums.Skill;
 import models.enums.environment.Direction;
 import models.enums.types.ToolTypes;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Shear extends Tool {
     public Shear(int energyNeeded, Skill relatedSkill) {
@@ -19,9 +26,14 @@ public class Shear extends Tool {
         return super.getRelatedSkill();
     }
 
-    @Override
-    public void useTool(Direction direction) {
-        super.useTool(direction);
+    public void useTool(Animal animal) {
+        User player = App.getLoggedIn();
+        HashMap<Item, Integer> items = player.getBackpack().getItems();
+        for (Item item : animal.getProducedProducts()) {
+            items.put(item, items.getOrDefault(item, 0) + 1);
+        }
+        animal.setProducedProducts(new ArrayList<>());
+        player.setEnergy(player.getEnergy() - 4);
     }
 }
 

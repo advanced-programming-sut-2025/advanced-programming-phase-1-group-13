@@ -24,7 +24,7 @@ public class User {
     private boolean isEnergyUnlimited;
     private Position position;
     private Tool currentTool;
-    private HashMap<Skill, SkillLevel> SkillLevels;
+    private HashMap<Skill, SkillLevel> skillLevels;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<FoodType> learntCookingRecipes;
     private Map<SecurityQuestion, String> qAndA;
@@ -47,11 +47,11 @@ public class User {
         this.learntCookingRecipes = new ArrayList<>();
         this.qAndA = new HashMap<>(); // todo
         this.backpack = new Backpack(BackpackType.INITIAL);
-        this.SkillLevels = new HashMap<>();
-        this.SkillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ZERO);
-        this.SkillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ZERO);
-        this.SkillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
-        this.SkillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
+        this.skillLevels = new HashMap<>();
+        this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ZERO);
+        this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ZERO);
+        this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
+        this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
     }
 
     public Position getPosition() {
@@ -112,6 +112,26 @@ public class User {
 
     public double getBalance() {
         return balance;
+    }
+
+    public HashMap<Skill, SkillLevel> getSkillLevels() {
+        return skillLevels;
+    }
+
+    public ArrayList<CraftRecipe> getLearntCraftRecipes() {
+        return learntCraftRecipes;
+    }
+
+    public ArrayList<FoodType> getLearntCookingRecipes() {
+        return learntCookingRecipes;
+    }
+
+    public Map<SecurityQuestion, String> getqAndA() {
+        return qAndA;
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
 
     public void setBalance(double balance) {

@@ -15,4 +15,16 @@ public enum Quality {
     public double getPriceCoefficient() {
         return priceCoefficient;
     }
+
+    public static Quality getQualityByNumber(double number) {
+        if (number <= 0.5) {
+            return Quality.NORMAL;
+        } else if (number <= 0.7) {
+            return Quality.SILVER;
+        } else if (number <= 0.9) {
+            return Quality.GOLD;
+        }
+        return Quality.IRIDIUM;
+
+    }
 }

@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.Quality;
 import models.enums.environment.Time;
 import models.enums.types.AnimalType;
 
@@ -107,5 +108,31 @@ public class Animal {
     public boolean hasBeenFedToday() {
         Time now = App.getCurrentGame().getGameState().getTime();
         return Time.areInSameDay(this.getLastFeedingTime(), now);
+    }
+
+    public void setProducedProducts(ArrayList<AnimalProduct> producedProducts) {
+        this.producedProducts = producedProducts;
+    }
+
+    public void produceProduct() {
+        int productIndex = 0;
+        if (!(this.animalType.equals(AnimalType.DINOSAUR) || this.animalType.equals(AnimalType.SHEEP) ||
+                this.animalType.equals(AnimalType.PIG))) {
+            double secondTypeProbability = (this.friendshipLevel + (150 * (0.5 + Math.random())) / 1500);
+            if (Math.random() > secondTypeProbability) {
+                productIndex = 1;
+            }
+        }
+
+        double qualityNumber = (this.friendshipLevel / 1000.0) * (0.5 + 0.5 * Math.random());
+        Quality quality = Quality.getQualityByNumber(qualityNumber);
+
+
+        AnimalProduct product = new AnimalProduct(this.animalType.getAnimalProducts().get(productIndex), quality, this);
+        this.producedProducts.add(product);
+    }
+
+    public int calculatePrice() {
+        return (int) (this.getAnimalType().getPrice() * ((double) this.getFriendshipLevel() / 1000 + 0.3));
     }
 }
