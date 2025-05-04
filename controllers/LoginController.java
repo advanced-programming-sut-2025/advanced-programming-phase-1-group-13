@@ -38,13 +38,13 @@ public class LoginController {
                                String email,
                                String genderString,
                                String nickname) {
-        if (!LoginCommands.USERNAME_REGEX.matches(username)) {
+        if (!LoginCommands.VALID_USERNAME.matches(username)) {
             return new Result(false, "Username invalid.");
         }
-        if (!LoginCommands.PASSWORD_REGEX.matches(password)) {
+        if (!LoginCommands.VALID_PASSWORD.matches(password)) {
             return new Result(false, "Password invalid.");
         }
-        if (!LoginCommands.EMAIL_REGEX.matches(email)) {
+        if (!LoginCommands.VALID_EMAIL.matches(email)) {
             return new Result(false, "Email format invalid.");
         }
         if (getUserByUsername(username) != null) {

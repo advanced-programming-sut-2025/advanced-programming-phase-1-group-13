@@ -10,8 +10,8 @@ public enum LoginCommands implements Command {
     REGISTER_USER("^\\s*register\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>.+)\\s+(?<repeatPassword>.+)\\s+-n\\s+(?<nickname>.+)\\s+-e\\s+(?<email>.+)\\s+-g\\s+(?<gender>.+)\\s*$"),
     PICK_QUESTION_REGEX("^\\s+pick\\s+question\\s+-q\\s+(?<questionNumber>\\d+)\\s+-a\\s+(?<answer>.+)\\s+-c\\s+(?<repeatAnswer>.+)\\s*$"),
     LOGIN("^\\s*login\\s+-u\\s+(?<username>.+)\\s+(?<password>.+)\\s+(?<stayLoggedIn>-stay-logged-in)?$"),
-    FORGET_PASSWORD("^\\s+forget\\s+password\\s+-u\\s+(?<username>.+)\\s*$"),
-    ANSWER_SECURITY_QUESTION("^\\s*answer\\s+-a\\s+(?<answer>.+)$"),
+    FORGET_PASSWORD("^\\s*forget\\s+password\\s+-u\\s+(?<username>.+)\\s*$"),
+    ANSWER_SECURITY_QUESTION("^\\s*answer\\s+-a\\s+(?<answer>.+)\\s*$"),
     SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$"),
 
     ;
