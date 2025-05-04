@@ -12,6 +12,7 @@ import models.tools.Tool;
 import models.enums.environment.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -786,16 +787,26 @@ public class GameController {
 
     // === ARTISAN === //
 
-    public Result artisanUse(String artisanName, String itemNamesString) { // gets ingredients
-        ArrayList<String> itemsNames = new ArrayList<>(); //  TODO
-        ArrayList<Item> ingredientItems = new ArrayList<>();
-        for (String itemName : itemsNames) {
-            ingredientItems.add(getItemByItemName(itemName));
+    public Result artisanUse(String artisanNamesString, String itemNamesString) {
+
+        ArrayList<ItemType> itemTypes = new ArrayList<>();
+        StringBuilder currentName = new StringBuilder();
+
+        for (char c : itemNamesString.toCharArray()) {
+            currentName.append(c);
+
+            for (ItemType  item : ItemType.values()) {
+                if (item.name().equalsIgnoreCase(currentName.toString())) {
+                    itemTypes.add(item);
+                    currentName.setLength(0);
+                    break;
+                }
+            }
         }
-        Artisan artisan = getArtisanByArtisanName(artisanName);
-        // TODO
+
         return new Result(true, "");
     }
+
 
     public Result artisanGet(String artisanName) { // gives product
         // TODO: if product is not ready yet, return appropriate failing message

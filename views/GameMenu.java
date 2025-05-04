@@ -143,7 +143,7 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.FISHING.getMatcher(inputLine)) != null) {
             System.out.println(controller.fishing(matcher.group("fishing_pole")));
         } else if ((matcher = GameCommands.ARTISAN_USE.getMatcher(inputLine)) != null) {
-            System.out.println(controller.artisanUse(
+            System.out.println(controller.artisanUse (
                     matcher.group("artisan_name"),
                     matcher.group("items_names")
             ));
