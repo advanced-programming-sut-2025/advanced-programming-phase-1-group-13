@@ -1,21 +1,27 @@
 package models;
 
+import models.enums.environment.Time;
 import models.enums.types.ShopType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Shop {
-    private String name;
-    private ShopType type;
-    private HashMap<Item, Integer> shopInventory;
+    private final String name;
+    private final ShopType type;
+    private final ArrayList<Item> shopInventory;
     private int balance = 0;
-    private NPC owner;
+    private final NPC owner;
+    private final int startHour;
+    private final int endHour;
 
     public Shop(ShopType type) {
         this.type = type;
+        this.shopInventory = new ArrayList<>(); // TODO
         this.name = type.getName();
-        this.owner = owner;
-
+        this.owner = type.getOwner();
+        this.startHour = type.getStartHour();
+        this.endHour = type.getEndHour();
     }
 
     public String getName() {
@@ -26,7 +32,7 @@ public class Shop {
         return type;
     }
 
-    public HashMap<Item, Integer> getShopInventory() {
+    public ArrayList<Item> getShopInventory() {
         return shopInventory;
     }
 
@@ -36,6 +42,18 @@ public class Shop {
 
     public NPC getOwner() {
         return owner;
+    }
+
+    public boolean isOpen() {
+        int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
+        if (currentHour >= startHour && currentHour <= endHour) {
+            return true;
+        }
+        return false;
+    }
+
+    public void changeBalance(int amount) {
+        this.balance += amount;
     }
 
     void addProduct(Item item, int count) {

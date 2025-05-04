@@ -22,7 +22,7 @@ public class GameController {
     User player = App.getLoggedIn();
     Game game = App.getCurrentGame();
     Shop shop = App.getCurrentShop();
-    GameState gameState = game.getGameState();
+    ;
 
     // === PLAYER'S STATUS === //
 
@@ -61,6 +61,19 @@ public class GameController {
     public Result showLearntCraftRecipes() {
         String learntRecipes = player.getStringLearntCraftRecipes();
         return new Result(true, learntRecipes);
+    }
+
+    // === TIME === //
+    public Result cheatAdvanceTime(String hourIncreaseStr) {
+        int hourIncrease = Integer.parseInt(hourIncreaseStr);
+        Time.cheatAdvanceTime(hourIncrease, App.getCurrentGame().getGameState().getTime());
+        return new Result(true, "");
+    }
+
+    public Result cheatAdvanceDate(String dayIncreaseStr) {
+        int hourIncrease = Integer.parseInt(dayIncreaseStr);
+        Time.cheatAdvanceDate(hourIncrease, App.getCurrentGame().getGameState().getTime());
+        return new Result(true, "");
     }
 
     // === INVENTORY === //
@@ -133,7 +146,7 @@ public class GameController {
 
     // or name it cook() ?
     public Result prepareCook(String foodName) {
-        FoodType food = getFoodTypeByName(foodName);
+        FoodType food = FoodType.getFoodTypeByName(foodName);
         if (!canCook(food)) {
             return new Result(false, "You cannot cook this right now.");
             // todo: or specify the cause of the error...
@@ -143,7 +156,7 @@ public class GameController {
     }
 
     public Result eat(String foodName) {
-        FoodType food = getFoodTypeByName(foodName);
+        FoodType food = FoodType.getFoodTypeByName(foodName);
         // TODO: check if player HAS the food, and return appropriate Result if not.
         // TODO: increase energy
         // TODO: apply buff
@@ -795,13 +808,7 @@ public class GameController {
         for (char c : itemNamesString.toCharArray()) {
             currentName.append(c);
 
-            for (ItemType item : ItemType.values()) {
-                if (item.name().equalsIgnoreCase(currentName.toString())) {
-                    itemTypes.add(item);
-                    currentName.setLength(0);
-                    break;
-                }
-            }
+
         }
 
         return new Result(true, "");
@@ -835,7 +842,7 @@ public class GameController {
         if (shop == null) {
             return new Result(false, "Enter a shop first!");
         }
-        StringBuilder productList = new StringBuilder("All Products in " + shopType.name() + ":\n");
+        StringBuilder productList = new StringBuilder("All Products in " + shop.getName() + ":\n");
 
         for (GoodsType product : GoodsType.values()) {
             if (product.getShopType() == shop.getType()) {

@@ -1,7 +1,5 @@
 package models.enums.types;
 
-import models.AnimalProduct;
-
 public enum AnimalProductType implements ItemType {
     CHICKEN_EGG("Chicken Egg", AnimalType.CHICKEN, 50, 800),
     LARGE_CHICKEN_EGG("Large Chicken Egg", AnimalType.CHICKEN, 95, 800),

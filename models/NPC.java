@@ -37,10 +37,6 @@ public class NPC {
         return dialog;
     }
 
-    public HashMap<Time, Position> getSchedule() {
-        return schedule;
-    }
-
     public void addDialog(String sentence) {
         // TODO
     }

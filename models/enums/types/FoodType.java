@@ -44,11 +44,12 @@ public enum FoodType implements ItemType {
     }
 
     public static FoodType getFoodTypeByName(String foodTypeName) {
-        return switch (foodTypeName) {
-            case "Fried Egg" -> FRIED_EGG;
-            case
-                    // TODO: complete
-        };
+        for (FoodType foodType : FoodType.values()) {
+            if (foodType.name().equals(foodTypeName)) {
+                return foodType;
+            }
+        }
+        return null;
     }
 
     public String getName() {

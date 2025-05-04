@@ -26,17 +26,14 @@ public class LoginMenu implements AppMenu {
                     matcher.group("gender")
             ));
         } else if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
-            int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
-            // todo: errors regarding question number and stuff?
             System.out.println(controller.pickSecurityQuestion(
-                    questionNumber,
+                    matcher.group("questionNumber"),
                     matcher.group("answer"),
                     matcher.group("repeatAnswer")
             ));
         } else if ((matcher = LoginCommands.FORGET_PASSWORD.getMatcher(inputLine)) != null) {
             System.out.println(controller.forgotPassword(
-                    matcher.group("username"),
-                    matcher.group("email")
+                    matcher.group("username")
             ));
         } else if ((matcher = LoginCommands.ANSWER_SECURITY_QUESTION.getMatcher(inputLine)) != null) {
             System.out.println(controller.validateSecurityQuestion(

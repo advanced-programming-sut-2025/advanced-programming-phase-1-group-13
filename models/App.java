@@ -9,7 +9,7 @@ public class App {
     private static ArrayList<Game> games = new ArrayList<>();
     private static User loggedIn = null;
     private static Menu currentMenu = Menu.LOGIN_MENU;
-    private static Game currentGame;
+    private static Game currentGame = null;
     private static Shop currentShop = null;
 
     public static Menu getCurrentMenu() {
@@ -52,7 +52,7 @@ public class App {
         return games;
     }
 
-    public static void setGames(ArrayList<Game> games) {
-        App.games = games;
+    public static void addGame(Game game) {
+        App.games.add(game);
     }
 }

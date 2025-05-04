@@ -4,16 +4,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Map;
 
 import models.App;
 import models.Result;
 import models.User;
+import models.enums.Menu;
 import models.enums.SecurityQuestion;
 import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
 
 public class LoginController {
+    User user = App.getLoggedIn();
 
     public static User getUserByUsername(String username) {
         for (User user : App.getUsers()) {
@@ -35,9 +36,10 @@ public class LoginController {
 
     public Result registerUser(String username,
                                String password,
+                               String repeatPassword,
+                               String nickname,
                                String email,
-                               String genderString,
-                               String nickname) {
+                               String genderString) {
         if (!LoginCommands.VALID_USERNAME.matches(username)) {
             return new Result(false, "Username invalid.");
         }
@@ -94,13 +96,14 @@ public class LoginController {
             return new Result(false, "Incorrect password.");
         }
         App.setLoggedIn(user);
+        App.setCurrentMenu(Menu.MAIN_MENU);
         return new Result(true, "Login successful.");
     }
 
-    public Result forgotPassword(String username, String email) {
+    public Result forgotPassword(String username) {
         User user = getUserByUsername(username);
-        if (user == null || !user.getEmail().equalsIgnoreCase(email)) {
-            return new Result(false, "Username/Email mismatch.");
+        if (user == null) {
+            return new Result(false, "Username not found");
         }
         if (user.getQAndA() != null && !user.getQAndA().isEmpty()) {
             SecurityQuestion q = user.getQAndA().keySet().iterator().next();
@@ -112,7 +115,7 @@ public class LoginController {
         return new Result(true, "New password: " + newPwd);
     }
 
-    public Result askSecurityQuestion(User user) {
+    public Result askSecurityQuestion() {
         if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
             return new Result(false, "No security question set.");
         }
@@ -120,7 +123,12 @@ public class LoginController {
         return new Result(true, q.name());
     }
 
-    public Result validateSecurityQuestion(User user, String answer) {
+    public Result pickSecurityQuestion(String questionNumber, String answer, String repeatAnswer) {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result validateSecurityQuestion(String answer) {
         if (user == null || user.getQAndA() == null) {
             return new Result(false, "No question to validate.");
         }

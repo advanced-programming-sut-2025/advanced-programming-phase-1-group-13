@@ -2,7 +2,7 @@ package models.enums.environment;
 
 public class Time {
     private int year;
-    private Season Season;
+    private Season season;
     private Month month;
     private int dayInMonth;
     private Weekday weekday;
@@ -13,7 +13,7 @@ public class Time {
     }
 
     public Season getSeason() {
-        return Season;
+        return season;
     }
 
     public Month getMonth() {
@@ -37,14 +37,14 @@ public class Time {
 
     }
 
-    public Time cheatAdvanceTime(int hourIncrease, Time currentTime) {
+    public static Time cheatAdvanceTime(int hourIncrease, Time currentTime) {
         if (hourIncrease < 0) {
             throw new IllegalArgumentException("Cannot advance time by negative hours");
         }
 
         Time newTime = new Time();
         newTime.year = currentTime.year;
-        newTime.Season = currentTime.Season;
+        newTime.season = currentTime.season;
         newTime.month = currentTime.month;
         newTime.dayInMonth = currentTime.dayInMonth;
         newTime.weekday = currentTime.weekday;
@@ -66,47 +66,38 @@ public class Time {
         return newTime;
     }
 
-    public Time cheatAdvanceDate(int dayIncrease, Time currentTime) {
+    public static Time cheatAdvanceDate(int dayIncrease, Time currentTime) {
         if (dayIncrease < 0) {
             throw new IllegalArgumentException("Cannot advance date by negative days");
         }
 
-        Time newTime = new Time();
-        // Copy all fields from current time
-        newTime.year = currentTime.year;
-        newTime.Season = currentTime.Season;
-        newTime.month = currentTime.month;
-        newTime.dayInMonth = currentTime.dayInMonth;
-        newTime.weekday = currentTime.weekday;
-        newTime.hour = currentTime.hour;  // Keep the same hour
-
         int remainingDays = dayIncrease;
 
         while (remainingDays > 0) {
-            newTime.dayInMonth++;
-            newTime.weekday = newTime.weekday.next();
+            currentTime.dayInMonth++;
+            currentTime.weekday = currentTime.weekday.next();
 
-            if (newTime.dayInMonth > newTime.month.getDaysInSeason()) {
-                newTime.dayInMonth = 1;
-                newTime.month = newTime.month.next();
+            if (currentTime.dayInMonth > currentTime.month.getDaysInSeason()) {
+                currentTime.dayInMonth = 1;
+                currentTime.month = currentTime.month.next();
 
-                if (newTime.month == Month.getFirstMonthOfSeason(currentTime.Season)) {
-                    newTime.Season = newTime.Season.next();
+                if (currentTime.month == Month.getFirstMonthOfSeason(currentTime.season)) {
+                    currentTime.season = currentTime.season.next();
 
-                    if (newTime.Season == Season.SPRING) {
-                        newTime.year++;
+                    if (currentTime.getSeason() == Season.SPRING) {
+                        currentTime.year++;
                     }
                 }
             }
             remainingDays--;
         }
 
-        return newTime;
+        return currentTime;
     }
 
     public static boolean areInSameDay(Time time1, Time time2) {
         return time1.year == time2.year &&
-                time1.Season == time2.Season &&
+                time1.season == time2.season &&
                 time1.month == time2.month &&
                 time1.dayInMonth == time2.dayInMonth;
     }
