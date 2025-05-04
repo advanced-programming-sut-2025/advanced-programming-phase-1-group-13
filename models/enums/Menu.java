@@ -10,6 +10,7 @@ public enum Menu {
     GAME_MENU(new GameMenu(), "Game Menu"),
     PRE_GAME_MENU(new PreGameMenu(), "Pre-Game Menu"),
     PROFILE_MENU(new ProfileMenu(), "Profile Menu"),
+    TARDE_MENU(new TradeMenu(), "Trade Menu"),
     EXIT(new ExitMenu(), "Exit");
 
     private final AppMenu menu;
@@ -35,7 +36,8 @@ public enum Menu {
             case "Main Menu" -> MAIN_MENU;
             case "Profile Menu" -> PROFILE_MENU;
             case "Game Menu" -> GAME_MENU;
-            case "Pre-Game Menu" -> GAME_MENU;
+            case "Pre-Game Menu" -> PRE_GAME_MENU;
+            case "Trade Menu" -> TARDE_MENU;
             case "Exit" -> EXIT;
             default -> null;
         };

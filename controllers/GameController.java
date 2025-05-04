@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import models.enums.Menu;
 import models.enums.Quality;
 import models.enums.Skill;
 import models.enums.types.*;
@@ -859,7 +860,6 @@ public class GameController {
         return new Result(true, availableProducts.toString());
     }
 
-
     public Result purchase(String productName, String countStr) {
         // count is optional and might be null. In that case:
         int count;
@@ -965,29 +965,9 @@ public class GameController {
 
     // === TRADE === //
 
-    public Result tradeWithMoney(String targetUsername, String type, String itemName, int amount, int price) { // type?
-        // TODO
-        return new Result(true, "");
-    }
-
-    public Result tradeWithItem(String targetUsername, String type, String itemName, int amount, String targetItemName, int targetAmount) { // type?
-        // TODO: create a Trade class; int ID, User user1, User user2, Hashmap<Item, Integer>
-        return new Result(true, "");
-    }
-
-    public Result showTradeList(String targetUsername, String type, String itemName, int amount, int price) { // type?
-        // TODO
-        return new Result(true, "");
-    }
-
-    public Result tradeResponse(int id) { // type?
-        // TODO
-        return new Result(true, "");
-    }
-
-    public Result showTradeHistory() { // type?
-        // TODO:
-        return new Result(true, "");
+    public Result startTrade() {
+        App.setCurrentMenu(Menu.TARDE_MENU);
+        return new Result(true, "You are now in Trade Menu.");
     }
 
     // === NPC === //
@@ -1012,7 +992,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result finishQuest(int index) {
+    public Result finishQuest(String indexStr) {
         // TODO
         return new Result(true, "");
     }

@@ -201,11 +201,19 @@ public class GameMenu implements AppMenu {
                     matcher.group("response"),
                     matcher.group("username")
             ));
-        }
-        else if ((matcher = GameCommands.TRADE.getMatcher(inputLine)) != null) {
-            System.out.println(controller.trade);
-        }
-        else {
+        } else if ((matcher = GameCommands.TRADE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.startTrade());
+        } else if ((matcher = GameCommands.MEET_NPC.getMatcher(inputLine)) != null) {
+            System.out.println(controller.meetNPC(matcher.group("npc_name")));
+        } else if ((matcher = GameCommands.GIFT_NPC.getMatcher(inputLine)) != null) {
+            System.out.println(controller.giftNPC(matcher.group("npc_name"), matcher.group("item")));
+        } else if ((matcher = GameCommands.FRIENDSHIP_NPC_LIST.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showFriendshipNPCList());
+        } else if ((matcher = GameCommands.QUESTS_LIST.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showQuestsList());
+        } else if ((matcher = GameCommands.QUESTS_FINISH.getMatcher(inputLine)) != null) {
+            System.out.println(controller.finishQuest(matcher.group("index")));
+        } else {
             System.out.println("Invalid Command. Please try again!");
         }
     }

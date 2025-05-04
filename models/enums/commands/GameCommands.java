@@ -75,10 +75,12 @@ public enum GameCommands implements Command {
     ASK_MARRIAGE("^\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+)\\s+-r\\s+(?<ring>.+)\\s*$"),
     RESPONSE_MARRIAGE("^\\s*respond\\s+-(?<response>accept|reject)\\s+-u\\s+(?<username>.+)\\s*$"),
     START_TRADE("^\\s*start\\s+trade\\s*$"),
-    TRADE("^\\s*trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>\\d+)\\s*(?<type_of_trade>(-p\\s+(?<price>\\d+))|-ti\\s+(?<targetItem>.+)\\s+-ta\\s+(?<targetAmount>\\d+))\\s*$"),
+    TRADE("^\\s*trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>\\d+)" +
+            "\\s*(?<type_of_trade>(-p\\s+(?<price>\\d+))|-ti\\s+(?<targetItem>.+)\\s+-ta\\s+(?<targetAmount>\\d+))\\s*$"),
     TRADE_LIST("^\\s*trade\\s+list\\s*$"),
     TRADE_RESPONSE("^\\s*trade\\s+response\\s+(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
     TRADE_HISTORY("^\\s*trade\\s+history\\s*$"),
+    EXIT_TRADE_MENU("^\\s*exit\\s+trade\\s+menu\\s*$"),
     MEET_NPC("^\\s*meet\\s+NPC\\s+(?<npc_type>.+)\\s*$"),
     GIFT_NPC("^\\s*gift\\s+NPC\\s+(?<npc_name>.+)\\s+-i\\s+(?<item>.+)\\s*$"),
     FRIENDSHIP_NPC_LIST("^\\s*friendship\\s+NPC\\s+list\\s*$"),
