@@ -748,7 +748,6 @@ public class GameController {
         boolean canCatchLegendary = fishingSkillLevel == 4;
 
         int numberOfCaughtFish = (int) Math.ceil(Math.random() * M * (fishingSkillLevel + 2));
-
         HashMap<Item, Integer> itemsHashMap = player.getBackpack().getItems();
         HashMap<Fish, Integer> caughtFish = new HashMap<>();
         for (int i = 0; i < numberOfCaughtFish; i++) {
