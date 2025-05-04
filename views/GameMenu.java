@@ -112,6 +112,40 @@ public class GameMenu implements AppMenu {
             ));
         }
         // continue from " buyAnimal "
+        else if ((matcher = GameCommands.BUY_ANIMAL.getMatcher(inputLine)) != null) {
+            System.out.println(controller.buyAnimal(
+                    matcher.group("animal"),
+                    matcher.group("animal_name")
+            ));
+        } else if ((matcher = GameCommands.PET.getMatcher(inputLine)) != null) {
+            System.out.println(controller.pet(matcher.group("name")));
+        } else if ((matcher = GameCommands.CHEAT_SET_FRIENDSHIP.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatSetFriendship(
+                    matcher.group("animal_name"),
+                    matcher.group("amount")
+            ));
+        } else if ((matcher = GameCommands.ANIMALS.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showMyAnimalsInfo());
+        } else if ((matcher = GameCommands.SHEPHERD_ANIMALS.getMatcher(inputLine)) != null) {
+            System.out.println(controller.shepherdAnimal(
+                    matcher.group("animal_name"),
+                    matcher.group("x"),
+                    matcher.group("y")
+            ));
+        } else if ((matcher = GameCommands.FEED_HAY.getMatcher(inputLine)) != null) {
+            System.out.println(controller.feedHayToAnimal(matcher.group("animal_name")));
+        } else if ((matcher = GameCommands.PRODUCES.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showProducedProducts());
+        } else if ((matcher = GameCommands.COLLECT_PRODUCE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.collectProducts(matcher.group("name")));
+        } else if ((matcher = GameCommands.SELL_ANIMAL.getMatcher(inputLine)) != null) {
+            System.out.println(controller.sellAnimal(matcher.group("name")));
+        } else if ((matcher = GameCommands.FISHING.getMatcher(inputLine)) != null) {
+            System.out.println(controller.fishing(matcher.group("fishing_pole")));
+        }
+//        else if ((matcher= GameCommands.ARTISAN_USE.getMatcher(inputLine)) != null) {
+//            System.out.println(controller.artisanUse(matcher.group("artisan_name")));
+//        }
         else {
             System.out.println("Invalid Command. Please try again!");
         }

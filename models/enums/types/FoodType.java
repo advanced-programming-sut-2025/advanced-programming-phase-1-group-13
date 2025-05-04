@@ -43,6 +43,14 @@ public enum FoodType implements ItemType {
         this.sellPrice = sellPrice;
     }
 
+    public static FoodType getFoodTypeByName(String foodTypeName) {
+        return switch (foodTypeName) {
+            case "Fried Egg" -> FRIED_EGG;
+            case
+                    // TODO: complete
+        };
+    }
+
     public String getName() {
         return this.name;
     }

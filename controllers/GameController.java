@@ -330,7 +330,8 @@ public class GameController {
 
     // === FARM BUILDINGS & ANIMALS === //
 
-    public Result build(FarmBuildingType farmBuildingType, String xString, String yString) {
+    public Result build(String farmBuildingTypeStr, String xString, String yString) {
+        FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
         Position position = getPositionByStrings(xString, yString);
         if (position == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
@@ -394,7 +395,8 @@ public class GameController {
         return true;
     }
 
-    public Result buyAnimal(AnimalType animalType, String name) {
+    public Result buyAnimal(String animalTypeStr, String name) {
+        AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
         List<FarmBuildingType> livingSpaceTypes = animalType.getLivingSpaceTypes();
         AnimalLivingSpace animalLivingSpace = getAvailableLivingSpace(livingSpaceTypes);
 
@@ -444,7 +446,7 @@ public class GameController {
                 animal.changeFriendship(-10);
             }
 
-            if(animal.isOutside()) {
+            if (animal.isOutside()) {
                 animal.changeFriendship(-20);
             }
         }
@@ -613,7 +615,8 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
-        AnimalType animalType = animal.getAnimalType();                                                                                                                                                                                                                                                                                                                                                                                                                                    ;
+        AnimalType animalType = animal.getAnimalType();
+        ;
         ArrayList<Item> items = new ArrayList<>(player.getBackpack().getItems().keySet());
         HashMap<AnimalProduct, Integer> collectedProducts = new HashMap<>();
 
@@ -656,7 +659,7 @@ public class GameController {
                 shear.useTool(animal);
             }
         } else if (animalType.equals(AnimalType.PIG) && !animal.isOutside()) {
-                return new Result(false, "Take the pig outside to collect its' products.");
+            return new Result(false, "Take the pig outside to collect its' products.");
         } else {
             HashMap<Item, Integer> itemsHashMap = player.getBackpack().getItems();
             for (AnimalProduct item : animal.getProducedProducts()) {
@@ -683,7 +686,7 @@ public class GameController {
         player.changeBalance(price);
         animal.getAnimalLivingSpace().removeAnimal(animal);
         return new Result(true, "You sold your " + animal.getAnimalType().getName() + ", " +
-                                animalName + ", for " + price + "g.");
+                animalName + ", for " + price + "g.");
     }
 
     private Animal getAnimalByName(String name) {
@@ -986,8 +989,5 @@ public class GameController {
         return null;
     }
 
-    private FoodType getFoodTypeByName(String FoodTypeName) {
-        // TODO
-        return null;
-    }
+    FoodType
 }

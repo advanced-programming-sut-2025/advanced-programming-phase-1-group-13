@@ -35,8 +35,22 @@ public enum AnimalType {
         this.price = price;
     }
 
+    public static AnimalType getAnimalTypeByName(String name) {
+        return switch (name) {
+            case "Chicken" -> CHICKEN;
+            case "Duck" -> DUCK;
+            case "Rabbit" -> RABBIT;
+            case "Dinosaur" -> DINOSAUR;
+            case "Cow" -> COW;
+            case "Goat" -> GOAT;
+            case "Sheep" -> SHEEP;
+            case "Pig" -> PIG;
+            default -> null;
+        };
+    }
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public List<AnimalProductType> getAnimalProducts() {
