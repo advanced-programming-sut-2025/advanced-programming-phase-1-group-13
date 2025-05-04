@@ -14,6 +14,26 @@ public class GameState {
     private Time time;
     private Weather currentWeather;
 
+    public void setCropGrowthRate(int cropGrowthRate) {
+        this.cropGrowthRate = cropGrowthRate;
+    }
+
+    public void setAutomaticIrrigation(boolean automaticIrrigation) {
+        this.automaticIrrigation = automaticIrrigation;
+    }
+
+    public void setPossibilityOfThor(boolean possibilityOfThor) {
+        this.possibilityOfThor = possibilityOfThor;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public void setCurrentWeather(Weather currentWeather) {
+        this.currentWeather = currentWeather;
+    }
+
     public void modifyState(String key, int value) {
         // TODO
         if (this.currentWeather == Weather.STORM) {

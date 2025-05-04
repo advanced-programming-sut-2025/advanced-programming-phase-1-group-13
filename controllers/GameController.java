@@ -10,6 +10,7 @@ import models.tools.MilkPail;
 import models.tools.Shear;
 import models.tools.Tool;
 import models.enums.environment.*;
+import models.GameState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class GameController {
     User player = App.getLoggedIn();
     Game game = App.getCurrentGame();
     Shop shop = App.getCurrentShop();
-
+    GameState gameState = game.getGameState();
 
     // === PLAYER'S STATUS === //
 
@@ -260,17 +261,13 @@ public class GameController {
 
     // === GAME STATUS === //
 
-    public Result cheatAdvanceTime(String howManyHoursString) {
-        int howManyHours = Integer.parseInt(howManyHoursString);
-        // TODO;
-        return new Result(true, "");
-    }
 
-    public Result cheatAdvanceDate(String howManyDaysString) {
-        int howManyDays = Integer.parseInt(howManyDaysString);
-        // TODO;
-        return new Result(true, "");
-    }
+
+//    public Result cheatAdvanceDate(String howManyDaysString) {
+//        int howManyDays = Integer.parseInt(howManyDaysString);
+//        // TODO;
+//        return new Result(true, "");
+//    }
 
     public Result cheatThor(String x, String y) {
         Position position = new Position(Integer.parseInt(x), Integer.parseInt(y));
