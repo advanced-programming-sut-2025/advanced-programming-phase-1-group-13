@@ -290,7 +290,7 @@ public class GameController {
     }
 
     public Result showWeather() {
-        return new Result(true, "Current weather: " + gameState.getCurrentWeather().name());
+        return new Result(true, "Current weather: " + App.getCurrentGame().getGameState().getCurrentWeather().name());
     }
 
     public Result showWeatherForecast() {
@@ -302,7 +302,7 @@ public class GameController {
         try {
             String normalizedWeather = newWeatherString.trim().toUpperCase();
             Weather newWeather = Weather.valueOf(normalizedWeather);
-            gameState.setCurrentWeather(newWeather);
+            App.getCurrentGame().getGameState().setCurrentWeather(newWeather);
             return new Result(true, "Weather set to: " + newWeather.name());
         } catch (IllegalArgumentException e) {
             StringBuilder validOptions = new StringBuilder("Invalid weather type. Valid options are: ");
@@ -335,10 +335,10 @@ public class GameController {
     public Result plant(String seedName, String directionName) {
         Seed seed = Seed.getSeedByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
-        Position position = player.getPosition()
-        Tile tile = getTileByPosition();
+        Position position = player.getPosition();
+        Tile tile = getTileByPosition(position);
         if (tile.getType().equals(TileType.NOT_PLOWED_GROUND)){
-            return new Result(false , "You must plow the ground first! Use hoe.")
+            return new Result(false , "You must plow the ground first! Use hoe.");
         }
 
         return new Result(true, "");

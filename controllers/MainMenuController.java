@@ -18,11 +18,8 @@ public class MainMenuController {
     }
 
     public Result exitMenu() {
-        if (App.getCurrentMenu() == Menu.LOGIN_MENU) {
-            App.setCurrentMenu(Menu.EXIT);
-        }
-        App.setCurrentMenu(Menu.MAIN_MENU);
-        return new Result(true, "You are now in Main Menu");
+        App.setCurrentMenu(Menu.LOGIN_MENU);
+        return new Result(true, "You are now in Login Menu");
     }
 
     public Result showCurrentMenu() {

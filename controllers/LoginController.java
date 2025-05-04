@@ -69,6 +69,9 @@ public class LoginController {
         for (SecurityQuestion question : SecurityQuestion.values()) {
             stringBuilder.append(question.toString()).append("\n");
         }
+        stringBuilder
+                .append("Answer in this format: ")
+                .append("\"pick question -q <question number> -a <answer> -c <repeated answer>\"");
         System.out.println(stringBuilder);
         return new Result(true, username);
     }
@@ -116,7 +119,7 @@ public class LoginController {
             return new Result(false, "User not found.");
         }
         String hash = hashSha256(password);
-        if (!hash.equals(user.getPassword())) {
+        if (!hash.equals(hashSha256(user.getPassword()))) {
             return new Result(false, "Incorrect password.");
         }
         App.setLoggedIn(user);
@@ -129,17 +132,13 @@ public class LoginController {
         if (user == null) {
             return new Result(false, "Username not found");
         }
-        if (user.getQAndA() != null && !user.getQAndA().isEmpty()) {
-            SecurityQuestion q = user.getQAndA().keySet().iterator().next();
-            return new Result(true, q.name());
-        }
-        if (loggedInUser == null || loggedInUser.getQAndA() == null || loggedInUser.getQAndA().isEmpty()) {
+        if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
             return new Result(false, "You haven't picked any security questions! Regret it ...");
         }
         Random random = new Random();
         int index = random.nextInt(user.getQAndA().size());
         String securityQuestion = (new ArrayList<>(user.getQAndA().keySet())).get(index).getQuestion();//
-        System.out.println("Answer this security question:\n");
+        System.out.println("Answer this security question:");
         return new Result(true, securityQuestion);
     }
 
@@ -150,8 +149,13 @@ public class LoginController {
         String newPassword = randomPasswordGenerator().message();
         if (correctAnswer.equals(answer)) {
             user.setPassword(newPassword);
-            return new Result(true, "Correct answer your new password is: " + newPassword);
+            return new Result(true, "Correct answer! Your new password is: " + newPassword);
         }
         return new Result(false, "Incorrect answer.");
+    }
+
+    public Result exit() {
+        App.setCurrentMenu(Menu.EXIT);
+        return new Result(true, "Exiting ... Bye Bye!");
     }
 }

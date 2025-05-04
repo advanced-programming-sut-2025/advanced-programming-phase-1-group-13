@@ -16,8 +16,9 @@ public class LoginMenu implements AppMenu {
     public void check(Scanner scanner) {
         String inputLine = scanner.nextLine();
         Matcher matcher;
-
-        if ((matcher = LoginCommands.REGISTER_USER.getMatcher(inputLine)) != null) {
+        if (LoginCommands.MENU_EXIT.getMatcher(inputLine) != null) {
+            System.out.println(controller.exit());
+        } else if ((matcher = LoginCommands.REGISTER_USER.getMatcher(inputLine)) != null) {
             Result result = controller.registerUser(
                     matcher.group("username"),
                     matcher.group("password"),

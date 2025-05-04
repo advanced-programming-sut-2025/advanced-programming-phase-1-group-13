@@ -13,7 +13,7 @@ public enum LoginCommands implements Command {
     FORGET_PASSWORD("^\\s*forget\\s+password\\s+-u\\s+(?<username>.+)\\s*$"),
     ANSWER_SECURITY_QUESTION("^\\s*answer\\s+-a\\s+(?<answer>.+)\\s*$"),
     SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$"),
-
+    MENU_EXIT("^\\s*(menu\\s+)?exit\\s*$"),
     ;
 
     private final String regex;
