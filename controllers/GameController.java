@@ -19,6 +19,8 @@ import java.util.List;
 public class GameController {
     User player = App.getLoggedIn();
     Game game = App.getCurrentGame();
+    Shop shop = App.getCurrentShop();
+
 
     // === PLAYER'S STATUS === //
 
@@ -795,7 +797,7 @@ public class GameController {
         for (char c : itemNamesString.toCharArray()) {
             currentName.append(c);
 
-            for (ItemType  item : ItemType.values()) {
+            for (ItemType item : ItemType.values()) {
                 if (item.name().equalsIgnoreCase(currentName.toString())) {
                     itemTypes.add(item);
                     currentName.setLength(0);
@@ -832,7 +834,6 @@ public class GameController {
     // === SHOPS === //
 
     public Result showAllProducts() {
-        Shop shop = App.getCurrentShop();
         if (shop == null) {
             return new Result(false, "Enter a shop first!");
         }
@@ -848,11 +849,12 @@ public class GameController {
         return new Result(true, productList.toString());
     }
 
-    public Result showAvailableProducts(ShopType shopType) {
-        StringBuilder availableProducts = new StringBuilder("Available Products in " + shopType.name() + ":\n");
+    public Result showAvailableProducts() {
+
+        StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
 
         for (GoodsType product : GoodsType.values()) {
-            if (product.getShopType() == shopType) {
+            if (product.getShopType() == shop.getType()) {
                 availableProducts.append(String.format("- %s: %d gold\n", product.name(), product.getPrice()));
             }
         }
@@ -861,11 +863,15 @@ public class GameController {
     }
 
 
-    public Result purchase(String productName, Integer count) {
+    public Result purchase(String productName, String countStr) {
         // count is optional and might be null. In that case:
-        if (count == null) {
+        int count;
+        if (countStr == null) {
             count = 1;
+        } else {
+            count = Integer.parseInt(countStr);
         }
+
         Item product = getItemByItemName(productName);
         // TODO: check if we have enough money
         // TODO: check if the product is actually a valid product (not made up / invalid)
@@ -875,16 +881,21 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result cheatAddDollars(int amount, User currentUser) {
-        currentUser.setBalance(amount);
-        return new Result(true, "User has " + amount + "dollars now.");
+    public Result cheatAddDollars(String countStr) {
+        int count = Integer.parseInt(countStr);
+        player.changeBalance(count);
+        return new Result(true, "You have " + player.getBalance() + "g now.");
     }
 
-    public Result sell(String productName, Integer count) {
+    public Result sell(String productName, String countStr) {
         // count is optional and might be null. In that case we sell the entire available in inventory
-        if (count == null) {
-            // TODO: count = total num of that product in our inventory
+        int count;
+        if (countStr == null) {
+            count = 0; // TODO: total num
+        } else {
+            count = Integer.parseInt(countStr);
         }
+
         // TODO: Check if such a product cannot be sold.
         // TODO: Check if we do not have such a product.
         // TODO: Check if we aren't neighbors with a shipping bin. (we have to be near shipping bin to sell)
@@ -1004,5 +1015,5 @@ public class GameController {
         return null;
     }
 
-    FoodType
+
 }

@@ -1,6 +1,7 @@
 package models;
 
 import models.enums.environment.Time;
+import models.enums.types.ItemType;
 import models.enums.types.NPCType;
 import models.enums.types.Role;
 
@@ -8,14 +9,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class NPC {
-    NPCType type;
-    Role role;
-    ArrayList<String> dialog;
+    private NPCType type;
+    private Role role;
+    private ArrayList<String> dialog;
+    private HashMap<HashMap<ItemType, Integer>, // requests
+            HashMap<ItemType, Integer> // rewards
+            > quests;
+    private ArrayList<ItemType> favorites;
 
     public NPC(NPCType type) {
         this.type = type;
         this.role = type.getRole();
         this.dialog = new ArrayList<>();
+        this.quests = type.getQuests();
+        this.favorites = type.getFavorites();
     }
 
     public NPCType getType() {

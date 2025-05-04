@@ -143,17 +143,30 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.FISHING.getMatcher(inputLine)) != null) {
             System.out.println(controller.fishing(matcher.group("fishing_pole")));
         } else if ((matcher = GameCommands.ARTISAN_USE.getMatcher(inputLine)) != null) {
-            System.out.println(controller.artisanUse (
+            System.out.println(controller.artisanUse(
                     matcher.group("artisan_name"),
                     matcher.group("items_names")
             ));
         } else if ((matcher = GameCommands.ARTISAN_GET.getMatcher(inputLine)) != null) {
             System.out.println(controller.artisanGet(matcher.group("artisan_name")));
-        }
-        else if ((matcher = GameCommands.SHOW_ALL_PRODUCTS.getMatcher(inputLine)) != null) {
+        } else if ((matcher = GameCommands.SHOW_ALL_PRODUCTS.getMatcher(inputLine)) != null) {
             System.out.println(controller.showAllProducts());
-        }
-        else {
+        } else if ((matcher = GameCommands.SHOW_ALL_AVAILABLE_PRODUCTS.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showAvailableProducts());
+        } else if ((matcher = GameCommands.PURCHASE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.purchase(
+                    matcher.group("product_name"),
+                    matcher.group("count")
+            ));
+        } else if ((matcher = GameCommands.CHEAT_ADD_DOLLARS.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatAddDollars(matcher.group("count")));
+
+        } else if ((matcher = GameCommands.SELL.getMatcher(inputLine)) != null) {
+            System.out.println(controller.sell(
+                    matcher.group("product_name"),
+                    matcher.group("count")
+            ));
+        } else {
             System.out.println("Invalid Command. Please try again!");
         }
     }

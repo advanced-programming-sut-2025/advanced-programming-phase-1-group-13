@@ -14,6 +14,7 @@ public class Shop {
     public Shop(ShopType type) {
         this.type = type;
         this.name = type.getName();
+        this.owner = owner;
 
     }
 
