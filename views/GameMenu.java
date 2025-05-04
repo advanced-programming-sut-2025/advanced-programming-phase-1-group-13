@@ -166,7 +166,46 @@ public class GameMenu implements AppMenu {
                     matcher.group("product_name"),
                     matcher.group("count")
             ));
-        } else {
+        } else if ((matcher = GameCommands.FRIENDSHIPS.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showFriendshipLevels());
+        } else if ((matcher = GameCommands.TALK.getMatcher(inputLine)) != null) {
+            System.out.println(controller.talk(
+                    matcher.group("username"),
+                    matcher.group("message")
+            ));
+        } else if ((matcher = GameCommands.TALK_HISTORY.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showTalkHistoryWithUser(matcher.group("username")));
+        } else if ((matcher = GameCommands.GIFT.getMatcher(inputLine)) != null) {
+            System.out.println(controller.giveGift(
+                    matcher.group("username"),
+                    matcher.group("item"),
+                    matcher.group("amount")
+            ));
+        } else if ((matcher = GameCommands.GIFT_LIST.getMatcher(inputLine)) != null) {
+            System.out.println(controller.giftList());
+        } else if ((matcher = GameCommands.GIFT_RATE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.giftRate(
+                    matcher.group("gift_number"),
+                    matcher.group("rate")
+            ));
+        } else if ((matcher = GameCommands.HUG.getMatcher(inputLine)) != null) {
+            System.out.println(controller.hug(matcher.group("username")));
+        } else if ((matcher = GameCommands.FLOWER.getMatcher(inputLine)) != null) {
+            System.out.println(controller.giveFlowerToUser(matcher.group("username")));
+        } else if ((matcher = GameCommands.ASK_MARRIAGE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.askMarriage(
+                    matcher.group("username"),
+                    matcher.group("ring")));
+        } else if ((matcher = GameCommands.RESPONSE_MARRIAGE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.respondToMarriageRequest(
+                    matcher.group("response"),
+                    matcher.group("username")
+            ));
+        }
+        else if ((matcher = GameCommands.TRADE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.trade);
+        }
+        else {
             System.out.println("Invalid Command. Please try again!");
         }
     }
