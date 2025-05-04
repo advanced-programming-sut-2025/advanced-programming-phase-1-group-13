@@ -917,7 +917,8 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result giveGift(String username, String itemName, int amount) {
+    public Result giveGift(String username, String itemName, String amountStr) {
+        int amount = Integer.parseInt(amountStr);
         // TODO: check the error cases (from Doc page.48)
         return new Result(true, "");
     }
@@ -927,7 +928,9 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result giftRate(int giftNumber, int rate) {
+    public Result giftRate(String giftNumberStr, String rateStr) {
+        int giftNumber = Integer.parseInt(giftNumberStr);
+        int rate = Integer.parseInt(rateStr);
         // TODO
         return new Result(true, "");
     }
@@ -942,13 +945,20 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result askMarriage(String username, Object ring) {
-        // TODO: ring object type!!?
+    public Result askMarriage(String username, String ringStr) {
+        // TODO: ring object type!!? wtf
         // TODO: will u marry me? :)
         return new Result(true, "");
     }
 
-    public Result respondToMarriageRequest(boolean accepted, String username) {
+    public Result respondToMarriageRequest(String acceptanceStr, String username) {
+        Boolean hasAccepted = null;
+        if (acceptanceStr.equalsIgnoreCase("accept")) {
+            hasAccepted = true;
+        } else if (acceptanceStr.equalsIgnoreCase("reject")) {
+            hasAccepted = false;
+        }
+
         // TODO
         return new Result(true, "");
     }
