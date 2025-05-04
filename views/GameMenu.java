@@ -151,7 +151,7 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.artisanGet(matcher.group("artisan_name")));
         }
         else if ((matcher = GameCommands.SHOW_ALL_PRODUCTS.getMatcher(inputLine)) != null) {
-//            System.out.println(controller.showAllProducts());
+            System.out.println(controller.showAllProducts());
         }
         else {
             System.out.println("Invalid Command. Please try again!");

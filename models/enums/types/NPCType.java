@@ -150,4 +150,18 @@ public enum NPCType {
         this.quests = quests;
         this.favorites = favorites;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public HashMap<HashMap<ItemType, Integer>, // requests
+            HashMap<ItemType, Integer> // rewards
+            > getQuests() {
+        return quests;
+    }
+
+    public ArrayList<ItemType> getFavorites() {
+        return favorites;
+    }
 }

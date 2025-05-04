@@ -831,12 +831,15 @@ public class GameController {
 
     // === SHOPS === //
 
-    public Result showAllProducts(String shopName) {
-        ShopType shopType;
+    public Result showAllProducts() {
+        Shop shop = App.getCurrentShop();
+        if (shop == null) {
+            return new Result(false, "Enter a shop first!");
+        }
         StringBuilder productList = new StringBuilder("All Products in " + shopType.name() + ":\n");
 
         for (GoodsType product : GoodsType.values()) {
-            if (product.getShopType() == shopType) {
+            if (product.getShopType() == shop.getType()) {
                 String availability = (product.getDailyLimit() == 0) ? "Unavailable" : "Available";
                 productList.append(String.format("- %s: %d gold (%s)\n", product.name(), product.getPrice(), availability));
             }

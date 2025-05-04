@@ -8,20 +8,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class NPC {
-    NPCType name;
+    NPCType type;
     Role role;
     ArrayList<String> dialog;
-    HashMap<Time, Position> schedule;
 
-    public NPC(NPCType name, Role role, ArrayList<String> dialog, HashMap<Time, Position> schedule) {
-        this.name = name;
-        this.role = role;
-        this.dialog = dialog;
-        this.schedule = schedule;
+    public NPC(NPCType type) {
+        this.type = type;
+        this.role = type.getRole();
+        this.dialog = new ArrayList<>();
     }
 
-    public NPCType getName() {
-        return name;
+    public NPCType getType() {
+        return type;
     }
 
     public Role getRole() {

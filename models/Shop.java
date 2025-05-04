@@ -8,15 +8,21 @@ public class Shop {
     private String name;
     private ShopType type;
     private HashMap<Item, Integer> shopInventory;
-    private int balance;
+    private int balance = 0;
     private NPC owner;
 
     public Shop(ShopType type) {
         this.type = type;
+        this.name = type.getName();
+
     }
 
     public String getName() {
         return name;
+    }
+
+    public ShopType getType() {
+        return type;
     }
 
     public HashMap<Item, Integer> getShopInventory() {

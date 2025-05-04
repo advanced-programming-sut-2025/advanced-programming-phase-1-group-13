@@ -10,7 +10,8 @@ public class App {
     private static User loggedIn = null;
     private static Menu currentMenu = Menu.LOGIN_MENU;
     private static Game currentGame;
-    
+    private static Shop currentShop = null;
+
     public static Menu getCurrentMenu() {
         return currentMenu;
     }
@@ -37,6 +38,10 @@ public class App {
 
     public static ArrayList<User> getUsers() {
         return users;
+    }
+
+    public static Shop getCurrentShop() {
+        return currentShop;
     }
 
     public static void addUser(User user) {
