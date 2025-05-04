@@ -13,4 +13,32 @@ public enum SecurityQuestion {
         this.question = question;
         this.assignedNumber = assignedNumber;
     }
+
+    public String getQuestion() {
+        return this.question;
+    }
+
+    @Override
+    public String toString() {
+        return assignedNumber + ". " + question;
+    }
+
+    public static SecurityQuestion getSecurityQuestionByNumber(int number) {
+        for (SecurityQuestion question : SecurityQuestion.values()) {
+            if (question.assignedNumber == number) {
+                return question;
+            }
+        }
+        return null;
+    }
+
+    public static SecurityQuestion getSecurityQuestionByQuestion(String question) {
+        for (SecurityQuestion question1 : SecurityQuestion.values()) {
+            if (question.equals(question1.question)) {
+                return question1;
+            }
+        }
+        return null;
+    }
+
 }

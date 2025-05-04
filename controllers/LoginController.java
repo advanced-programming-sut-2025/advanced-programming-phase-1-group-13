@@ -3,7 +3,8 @@ package controllers;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Random;
 
 import models.App;
 import models.Result;
@@ -14,7 +15,7 @@ import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
 
 public class LoginController {
-    User user = App.getLoggedIn();
+    User loggedInUser = App.getLoggedIn();
 
     public static User getUserByUsername(String username) {
         for (User user : App.getUsers()) {
@@ -55,12 +56,35 @@ public class LoginController {
         if (getUserByEmail(email) != null) {
             return new Result(false, "Email already in use.");
         }
+        if (!password.equals(repeatPassword)) {
+            return new Result(false, "Passwords do not match.");
+        }
         Gender gender = Gender.getGenderByName(genderString);
         String hash = hashSha256(password);
         User user = new User(username, hash, nickname, email, gender);
-        user.setQAndA(new HashMap<>()); // todo fix this part!!!!!!!!!!
         App.addUser(user);
-        return new Result(true, "Registration successful.");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Registration successful.\nPick a Security question: \n");
+        for (SecurityQuestion question : SecurityQuestion.values()) {
+            stringBuilder.append(question.toString()).append("\n");
+        }
+        System.out.println(stringBuilder);
+        return new Result(true, username);
+    }
+
+    public Result pickSecurityQuestion(String username, String questionNumberStr, String answer, String repeatAnswer) {
+        int questionNumber = Integer.parseInt(questionNumberStr);
+        SecurityQuestion question = SecurityQuestion.getSecurityQuestionByNumber(questionNumber);
+        if (question == null) {
+            return new Result(false, "Invalid question number.");
+        }
+        if (!answer.equals(repeatAnswer)) {
+            return new Result(false, "Answers do not match.");
+        }
+        User user = getUserByUsername(username);
+        user.addQAndA(question, answer);
+        return new Result(true, "Security question and answer added successfully.");
     }
 
     public Result randomPasswordGenerator() {
@@ -97,7 +121,7 @@ public class LoginController {
         }
         App.setLoggedIn(user);
         App.setCurrentMenu(Menu.MAIN_MENU);
-        return new Result(true, "Login successful.");
+        return new Result(true, "Login successful. You are now in Main Menu.");
     }
 
     public Result forgotPassword(String username) {
@@ -109,33 +133,24 @@ public class LoginController {
             SecurityQuestion q = user.getQAndA().keySet().iterator().next();
             return new Result(true, q.name());
         }
-        Result r = randomPasswordGenerator();
-        String newPwd = r.getMessage();
-        user.setPassword(hashSha256(newPwd));
-        return new Result(true, "New password: " + newPwd);
-    }
-
-    public Result askSecurityQuestion() {
-        if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
-            return new Result(false, "No security question set.");
+        if (loggedInUser == null || loggedInUser.getQAndA() == null || loggedInUser.getQAndA().isEmpty()) {
+            return new Result(false, "You haven't picked any security questions! Regret it ...");
         }
-        SecurityQuestion q = user.getQAndA().keySet().iterator().next();
-        return new Result(true, q.name());
+        Random random = new Random();
+        int index = random.nextInt(user.getQAndA().size());
+        String securityQuestion = (new ArrayList<>(user.getQAndA().keySet())).get(index).getQuestion();//
+        System.out.println("Answer this security question:\n");
+        return new Result(true, securityQuestion);
     }
 
-    public Result pickSecurityQuestion(String questionNumber, String answer, String repeatAnswer) {
-        // TODO
-        return new Result(true, "");
-    }
-
-    public Result validateSecurityQuestion(String answer) {
-        if (user == null || user.getQAndA() == null) {
-            return new Result(false, "No question to validate.");
-        }
-        SecurityQuestion q = user.getQAndA().keySet().iterator().next();
-        String correct = user.getQAndA().get(q);
-        if (correct.equalsIgnoreCase(answer)) {
-            return new Result(true, "Security validated.");
+    public Result validateSecurityQuestion(String username, String question, String answer) {
+        SecurityQuestion securityQuestion = SecurityQuestion.getSecurityQuestionByQuestion(question);
+        User user = getUserByUsername(username);
+        String correctAnswer = user.getQAndA().get(securityQuestion);
+        String newPassword = randomPasswordGenerator().message();
+        if (correctAnswer.equals(answer)) {
+            user.setPassword(newPassword);
+            return new Result(true, "Correct answer your new password is: " + newPassword);
         }
         return new Result(false, "Incorrect answer.");
     }

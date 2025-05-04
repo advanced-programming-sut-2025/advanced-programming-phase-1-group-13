@@ -27,7 +27,7 @@ public class User {
     private HashMap<Skill, SkillLevel> skillLevels;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<FoodType> learntCookingRecipes;
-    private Map<SecurityQuestion, String> qAndA;
+    private HashMap<SecurityQuestion, String> qAndA;
     private Farm farm;
     private ArrayList<Transaction> transactions;
     private Backpack backpack;
@@ -45,7 +45,7 @@ public class User {
         this.transactions = new ArrayList<>();
         this.learntCraftRecipes = new ArrayList<>();
         this.learntCookingRecipes = new ArrayList<>();
-        this.qAndA = new HashMap<>(); // todo
+        this.qAndA = new HashMap<>();
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ZERO);
@@ -126,10 +126,6 @@ public class User {
         return learntCookingRecipes;
     }
 
-    public Map<SecurityQuestion, String> getqAndA() {
-        return qAndA;
-    }
-
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
@@ -201,7 +197,7 @@ public class User {
         return qAndA;
     }
 
-    public void setQAndA(Map<SecurityQuestion, String> qAndA) {
-        this.qAndA = qAndA;
+    public void addQAndA(SecurityQuestion securityQuestion, String answer) {
+        this.qAndA.put(securityQuestion, answer);
     }
 }
