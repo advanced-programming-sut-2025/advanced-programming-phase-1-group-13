@@ -1,19 +1,25 @@
 package models.enums.environment;
 
+import models.Position;
+
 public enum Direction {
-    UP("up"),
-    DOWN("down"),
-    RIGHT("right"),
-    LEFT("left"),
-    UP_RIGHT("up-right"),
-    UP_LEFT("up-left"),
-    DOWN_RIGHT("down-right"),
-    DOWN_LEFT("down-left");
+    UP("up", 0, 1),
+    DOWN("down", 0, -1),
+    RIGHT("right", 1, 0),
+    LEFT("left", -1, 0),
+    UP_RIGHT("up-right", 1, 1),
+    UP_LEFT("up-left", -1, 1),
+    DOWN_RIGHT("down-right", 1, -1),
+    DOWN_LEFT("down-left", -1, -1);
 
     private final String displayName;
+    private final int deltaX;
+    private final int deltaY;
 
-    Direction(String displayName) {
+    Direction(String displayName, int deltaX, int deltaY) {
         this.displayName = displayName;
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
     }
 
     public static Direction getDirectionByDisplayName(String name) {
@@ -32,4 +38,12 @@ public enum Direction {
             default -> null;
         };
     }
+
+    public Position getNewPosition(Position currentPosition, Direction direction) {
+        Position newPosition = currentPosition;
+        newPosition.addToX(direction.deltaX);
+        newPosition.addToY(direction.deltaY);
+        return newPosition;
+    }
+
 }

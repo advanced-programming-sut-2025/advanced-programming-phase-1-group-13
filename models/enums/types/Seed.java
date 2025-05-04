@@ -1,50 +1,91 @@
 package models.enums.types;
 
 public enum Seed {
-    JAZZ_SEEDS,
-    CARROT_SEEDS,
-    CAULIFLOWER_SEEDS,
-    COFFEE_BEAN,
-    GARLIC_SEEDS,
-    BEAN_STARTER,
-    KALE_SEEDS,
-    PARSNIP_SEEDS,
-    POTATO_SEEDS,
-    RHUBARB_SEEDS,
-    STRAWBERRY_SEEDS,
-    TULIP_BULB,
-    RICE_SHOOT,
-    BLUEBERRY_SEEDS,
-    CORN_SEEDS,
-    HOPS_STARTER,
-    PEPPER_SEEDS,
-    MELON_SEEDS,
-    POPPY_SEEDS,
-    RADISH_SEEDS,
-    RED_CABBAGE_SEEDS,
-    STARFRUIT_SEEDS,
-    SPANGLE_SEEDS,
-    SUMMER_SQUASH_SEEDS,
-    SUNFLOWER_SEEDS,
-    TOMATO_SEEDS,
-    WHEAT_SEEDS,
-    AMARANTH_SEEDS,
-    ARTICHOKE_SEEDS,
-    BEET_SEEDS,
-    BOK_CHOY_SEEDS,
-    BROCCOLI_SEEDS,
-    CRANBERRY_SEEDS,
-    EGGPLANT_SEEDS,
-    FAIRY_SEEDS,
-    GRAPE_STARTER,
-    PUMPKIN_SEEDS,
-    YAM_SEEDS,
-    RARE_SEED,
-    POWDERMELON_SEEDS,
-    ANCIENT_SEEDS,
-    MIXED_SEEDS
-    ;
+    JAZZ_SEEDS("Jazz Seeds"),
+    CARROT_SEEDS("Carrot Seeds"),
+    CAULIFLOWER_SEEDS("Cauliflower Seeds"),
+    COFFEE_BEAN("Coffee Bean"),
+    GARLIC_SEEDS("Garlic Seeds"),
+    BEAN_STARTER("Bean Starter"),
+    KALE_SEEDS("Kale Seeds"),
+    PARSNIP_SEEDS("Parsnip Seeds"),
+    POTATO_SEEDS("Potato Seeds"),
+    RHUBARB_SEEDS("Rhubarb Seeds"),
+    STRAWBERRY_SEEDS("Strawberry Seeds"),
+    TULIP_BULB("Tulip Bulb"),
+    RICE_SHOOT("Rice Shoot"),
+    BLUEBERRY_SEEDS("Blueberry Seeds"),
+    CORN_SEEDS("Corn Seeds"),
+    HOPS_STARTER("Hops Starter"),
+    PEPPER_SEEDS("Pepper Seeds"),
+    MELON_SEEDS("Melon Seeds"),
+    POPPY_SEEDS("Poppy Seeds"),
+    RADISH_SEEDS("Radish Seeds"),
+    RED_CABBAGE_SEEDS("Red Cabbage Seeds"),
+    STARFRUIT_SEEDS("Starfruit Seeds"),
+    SPANGLE_SEEDS("Spangle Seeds"),
+    SUMMER_SQUASH_SEEDS("Summer Squash Seeds"),
+    SUNFLOWER_SEEDS("Sunflower Seeds"),
+    TOMATO_SEEDS("Tomato Seeds"),
+    WHEAT_SEEDS("Wheat Seeds"),
+    AMARANTH_SEEDS("Amaranth Seeds"),
+    ARTICHOKE_SEEDS("Artichoke Seeds"),
+    BEET_SEEDS("Beet Seeds"),
+    BOK_CHOY_SEEDS("Bok Choy Seeds"),
+    BROCCOLI_SEEDS("Broccoli Seeds"),
+    CRANBERRY_SEEDS("Cranberry Seeds"),
+    EGGPLANT_SEEDS("Eggplant Seeds"),
+    FAIRY_SEEDS("Fairy Seeds"),
+    GRAPE_STARTER("Grape Starter"),
+    PUMPKIN_SEEDS("Pumpkin Seeds"),
+    YAM_SEEDS("Yam Seeds"),
+    RARE_SEED("Rare Seed"),
+    POWDERMELON_SEEDS("Powdermelon Seeds"),
+    ANCIENT_SEEDS("Ancient Seeds"),
+    MIXED_SEEDS("Mixed Seeds");
 
+    private final String displayName;
 
+    Seed(String displayName) {
+        this.displayName = displayName;
+    }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static Seed getSeedByName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return null;
+        }
+
+        String normalized = name.trim().toUpperCase().replace(" ", "_");
+
+        try {
+            return Seed.valueOf(normalized);
+        } catch (IllegalArgumentException e) {
+            for (Seed seed : values()) {
+                if (seed.displayName.equalsIgnoreCase(name.trim())) {
+                    return seed;
+                }
+            }
+            return null;
+        }
+    }
+
+    public static String getAvailableSeedNames() {
+        StringBuilder sb = new StringBuilder();
+        for (Seed seed : values()) {
+            sb.append(seed.displayName).append(", ");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 2);
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
+    }
 }

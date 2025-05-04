@@ -290,8 +290,7 @@ public class GameController {
     }
 
     public Result showWeather() {
-        // TODO
-        return new Result(true, "");
+        return new Result(true, "Current weather: " + gameState.getCurrentWeather().name());
     }
 
     public Result showWeatherForecast() {
@@ -300,8 +299,20 @@ public class GameController {
     }
 
     public Result cheatWeatherSet(String newWeatherString) {
-        // TODO : get weather type from name
-        return new Result(true, "");
+        try {
+            String normalizedWeather = newWeatherString.trim().toUpperCase();
+            Weather newWeather = Weather.valueOf(normalizedWeather);
+            gameState.setCurrentWeather(newWeather);
+            return new Result(true, "Weather set to: " + newWeather.name());
+        } catch (IllegalArgumentException e) {
+            StringBuilder validOptions = new StringBuilder("Invalid weather type. Valid options are: ");
+            for (Weather weather : Weather.values()) {
+                validOptions.append(weather.name()).append(", ");
+            }
+            validOptions.setLength(validOptions.length() - 2);
+
+            return new Result(false, validOptions.toString());
+        }
     }
 
     public Result buildGreenhouse() {
@@ -322,8 +333,14 @@ public class GameController {
     // === PLANTS === //
 
     public Result plant(String seedName, String directionName) {
-        // TODO: get Seed from its name
+        Seed seed = Seed.getSeedByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
+        Position position = player.getPosition()
+        Tile tile = getTileByPosition();
+        if (tile.getType().equals(TileType.NOT_PLOWED_GROUND)){
+            return new Result(false , "You must plow the ground first! Use hoe.")
+        }
+
         return new Result(true, "");
     }
 
