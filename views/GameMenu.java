@@ -142,10 +142,17 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.sellAnimal(matcher.group("name")));
         } else if ((matcher = GameCommands.FISHING.getMatcher(inputLine)) != null) {
             System.out.println(controller.fishing(matcher.group("fishing_pole")));
+        } else if ((matcher = GameCommands.ARTISAN_USE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.artisanUse(
+                    matcher.group("artisan_name"),
+                    matcher.group("items_names")
+            ));
+        } else if ((matcher = GameCommands.ARTISAN_GET.getMatcher(inputLine)) != null) {
+            System.out.println(controller.artisanGet(matcher.group("artisan_name")));
         }
-//        else if ((matcher= GameCommands.ARTISAN_USE.getMatcher(inputLine)) != null) {
-//            System.out.println(controller.artisanUse(matcher.group("artisan_name")));
-//        }
+        else if ((matcher = GameCommands.SHOW_ALL_PRODUCTS.getMatcher(inputLine)) != null) {
+//            System.out.println(controller.showAllProducts());
+        }
         else {
             System.out.println("Invalid Command. Please try again!");
         }

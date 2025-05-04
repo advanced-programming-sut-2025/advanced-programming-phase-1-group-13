@@ -56,7 +56,7 @@ public enum GameCommands implements Command {
     COLLECT_PRODUCE("^\\s+collect\\s+produce\\s+-n\\s+(?<name>.+)\\s+$"),
     SELL_ANIMAL("^\\s+sell\\s+animal\\s+-n\\s+(?<name>.+)$"),
     FISHING("^\\s+fishing\\s+-p\\s+(?<fishing_pole>.+)\\s+$"),
-    ARTISAN_USE("^\\s+artisan\\s+use\\s+(?<artisan_name>.+)\\s+(?<item1_name>.+)\\s+$"),
+    ARTISAN_USE("^\\s+artisan\\s+use\\s+(?<artisan_name>.+)\\s+(?<items_names>.+)\\s*$"),
     ARTISAN_GET("^\\s+artisan\\s+get\\s+(?<artisan_name>.+)\\s+$"),
     SHOW_ALL_PRODUCTS("^\\s+show\\s+all\\s+products\\s+$"),
     SHOW_ALL_AVAILABLE_PRODUCTS("^\\s+show\\s+all\\s+available\\s+products\\s+$"),

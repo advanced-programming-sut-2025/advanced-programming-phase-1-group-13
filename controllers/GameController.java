@@ -786,7 +786,8 @@ public class GameController {
 
     // === ARTISAN === //
 
-    public Result artisanUse(String artisanName, ArrayList<String> itemsNames) { // gets ingredients
+    public Result artisanUse(String artisanName, String itemNamesString) { // gets ingredients
+        ArrayList<String> itemsNames = new ArrayList<>(); //  TODO
         ArrayList<Item> ingredientItems = new ArrayList<>();
         for (String itemName : itemsNames) {
             ingredientItems.add(getItemByItemName(itemName));
@@ -800,7 +801,6 @@ public class GameController {
         // TODO: if product is not ready yet, return appropriate failing message
 
         // TODO: get the product from artisan
-
         return new Result(true, "");
     }
 
@@ -820,7 +820,8 @@ public class GameController {
 
     // === SHOPS === //
 
-    public Result showAllProducts(ShopType shopType) {
+    public Result showAllProducts(String shopName) {
+        ShopType shopType;
         StringBuilder productList = new StringBuilder("All Products in " + shopType.name() + ":\n");
 
         for (GoodsType product : GoodsType.values()) {
