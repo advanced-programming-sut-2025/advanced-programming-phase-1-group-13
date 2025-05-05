@@ -22,7 +22,6 @@ public class GameController {
     User player = App.getLoggedIn();
     Game game = App.getCurrentGame();
     Shop shop = App.getCurrentShop();
-    ;
 
     // === PLAYER'S STATUS === //
 
@@ -274,8 +273,6 @@ public class GameController {
 
 
     // === GAME STATUS === //
-
-
 
 //    public Result cheatAdvanceDate(String howManyDaysString) {
 //        int howManyDays = Integer.parseInt(howManyDaysString);
@@ -818,14 +815,11 @@ public class GameController {
     // === ARTISAN === //
 
     public Result artisanUse(String artisanNamesString, String itemNamesString) {
-
         ArrayList<ItemType> itemTypes = new ArrayList<>();
         StringBuilder currentName = new StringBuilder();
 
         for (char c : itemNamesString.toCharArray()) {
             currentName.append(c);
-
-
         }
 
         return new Result(true, "");
@@ -872,7 +866,6 @@ public class GameController {
     }
 
     public Result showAvailableProducts() {
-
         StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
 
         for (GoodsType product : GoodsType.values()) {
@@ -927,8 +920,13 @@ public class GameController {
     // === FRIENDSHIPS === //
 
     public Result showFriendshipLevels() {
-        // TODO
-        return new Result(true, "");
+        String message = "Your frienships with other players:\n";
+        for (User otherPlayer : game.getPlayers()) {
+            if (!player.equals(otherPlayer)) {
+                message += otherPlayer.getuserName();
+            }
+        }
+        return new Result(true, message);
     }
 
     public Result talk(String username, String message) {
