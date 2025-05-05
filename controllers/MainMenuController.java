@@ -14,22 +14,22 @@ public class MainMenuController {
             return new Result(false, "You can't switch to " + menuName + " from here!");
         }
         App.setCurrentMenu(newMenu);
-        return new Result(true, "Menu switched to " + menuName);
+        return new Result(true, "Menu switched to " + menuName + ".");
     }
 
     public Result exitMenu() {
         App.setCurrentMenu(Menu.LOGIN_MENU);
-        return new Result(true, "You are now in Login Menu");
+        return new Result(true, "You are now in Login Menu.");
     }
 
     public Result showCurrentMenu() {
-        return new Result(true, "You are now in " + App.getCurrentMenu().toString());
+        return new Result(true, "You are now in " + App.getCurrentMenu().toString() + ".");
     }
 
     public Result logout() {
         App.setLoggedIn(null);
         App.setCurrentMenu(Menu.LOGIN_MENU);
-        return new Result(true, "Logged out. You are now in Login Menu");
+        return new Result(true, "Logged out. You are now in Login Menu.");
     }
 
     private boolean canSwitchMenu(Menu newMenu) {

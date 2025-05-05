@@ -132,13 +132,13 @@ public class LoginController {
         if (user == null) {
             return new Result(false, "Username not found");
         }
-        if (user == null || user.getQAndA() == null || user.getQAndA().isEmpty()) {
+        if (user.getQAndA() == null || user.getQAndA().isEmpty()) {
             return new Result(false, "You haven't picked any security questions! Regret it ...");
         }
         Random random = new Random();
         int index = random.nextInt(user.getQAndA().size());
         String securityQuestion = (new ArrayList<>(user.getQAndA().keySet())).get(index).getQuestion();//
-        System.out.println("Answer this security question:");
+        System.out.println("Answer the following security question. \nUse this format: \"answer -a <your answer>\"");
         return new Result(true, securityQuestion);
     }
 
