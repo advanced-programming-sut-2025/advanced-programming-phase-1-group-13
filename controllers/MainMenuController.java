@@ -32,8 +32,7 @@ public class MainMenuController {
     }
 
     private boolean canSwitchMenu(Menu newMenu) {
-        // TODO: check if it is allowed to switch to that menu from the current menu
-        return false;
+        return !newMenu.equals(Menu.TARDE_MENU) && !newMenu.equals(Menu.GAME_MENU);
     }
 
 }
