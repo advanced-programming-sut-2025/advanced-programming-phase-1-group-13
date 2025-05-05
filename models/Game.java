@@ -2,9 +2,11 @@ package models;
 
 import models.enums.environment.Time;
 import models.enums.environment.Weather;
+import models.enums.types.NPCType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Game {
     private ArrayList<User> players; // The 3 players
@@ -20,7 +22,7 @@ public class Game {
         this.npcs = new ArrayList<>(List.of(
                 new NPC(NPCType.CLINT), new NPC(NPCType.MORRIS), new NPC(NPCType.PIERRE),
                 new NPC(NPCType.ROBIN), new NPC(NPCType.WILLY), new NPC(NPCType.MARNIE),
-                new NPC(NPCType.GUS), new NPC(NPCType.SEBASTAIN), new NPC(NPCType.ABIGAIL),
+                new NPC(NPCType.GUS), new NPC(NPCType.SEBASTIAN), new NPC(NPCType.ABIGAIL),
                 new NPC(NPCType.HARVEY), new NPC(NPCType.LEA)
         ));
 
@@ -93,17 +95,17 @@ public class Game {
         return null;
     }
 
-    public void increaseFriendship(User player, NPC npc, int amount) {
-        Friendship friendship = getNpcFriendship(player, npc);
-        if (friendship != null) {
-            friendship.increase(amount);
-        }
-    }
-
-    public void increaseFriendship(User user1, User user2, int amount) {
-        Friendship friendship = getUserFriendship(a, b);
-        if (friendship != null) {
-            friendship.increase(amount);
-        }
-    }
+//    public void increaseFriendship(User player, NPC npc, int amount) {
+//        Friendship friendship = getNpcFriendship(player, npc);
+//        if (friendship != null) {
+//            friendship.increase(amount);
+//        }
+//    }
+//
+//    public void increaseFriendship(User user1, User user2, int amount) {
+//        Friendship friendship = getUserFriendship(a, b);
+//        if (friendship != null) {
+//            friendship.increase(amount);
+//        }
+//    }
 }

@@ -15,8 +15,6 @@ import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
 
 public class LoginController {
-    User loggedInUser = App.getLoggedIn();
-
     public static User getUserByUsername(String username) {
         for (User user : App.getUsers()) {
             if (user.getUsername().equals(username)) {
@@ -118,6 +116,7 @@ public class LoginController {
         if (user == null) {
             return new Result(false, "User not found.");
         }
+        // TODO: check below
         String hash = hashSha256(password);
         if (!hash.equals(hashSha256(user.getPassword()))) {
             return new Result(false, "Incorrect password.");

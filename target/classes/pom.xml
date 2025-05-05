@@ -26,7 +26,6 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <!-- Optionally add excludes to be extra safe -->
                 <excludes>
                     <exclude>**/.idea/**</exclude>
                 </excludes>

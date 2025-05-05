@@ -920,10 +920,10 @@ public class GameController {
     // === FRIENDSHIPS === //
 
     public Result showFriendshipLevels() {
-        String message = "Your frienships with other players:\n";
+        String message = "Your friendships with other players:\n";
         for (User otherPlayer : game.getPlayers()) {
             if (!player.equals(otherPlayer)) {
-                message += otherPlayer.getuserName();
+                message += otherPlayer.getUsername();
             }
         }
         return new Result(true, message);
