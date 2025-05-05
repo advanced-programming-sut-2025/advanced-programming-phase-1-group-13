@@ -28,7 +28,8 @@ public class MainMenuController {
 
     public Result logout() {
         App.setLoggedIn(null);
-        return new Result(true, "Logged out");
+        App.setCurrentMenu(Menu.LOGIN_MENU);
+        return new Result(true, "Logged out. You are now in Login Menu");
     }
 
     private boolean canSwitchMenu(Menu newMenu) {
