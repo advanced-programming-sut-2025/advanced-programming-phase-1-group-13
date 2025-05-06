@@ -1,30 +1,27 @@
 package models;
 
-import models.enums.environment.Time;
-import models.enums.environment.Weather;
 import models.enums.types.NPCType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Game {
-    private ArrayList<User> players; // The 3 players
+    private final ArrayList<User> players; // The 3 players
     private GameMap gameMap;
     private GameState gameState;
-    private ArrayList<NPC> npcs;
+    private final ArrayList<NPC> npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
     private HashMap<User, HashMap<NPC, Friendship>> npcFriendships;
+    private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
+    // Each inner HashMap stores the messages and boolean of have they been read by the reciever
 
     public Game(ArrayList<User> players) {
         this.players = players;
 
-        this.npcs = new ArrayList<>(List.of(
-                new NPC(NPCType.CLINT), new NPC(NPCType.MORRIS), new NPC(NPCType.PIERRE),
-                new NPC(NPCType.ROBIN), new NPC(NPCType.WILLY), new NPC(NPCType.MARNIE),
-                new NPC(NPCType.GUS), new NPC(NPCType.SEBASTIAN), new NPC(NPCType.ABIGAIL),
-                new NPC(NPCType.HARVEY), new NPC(NPCType.LEA)
-        ));
+        this.npcs = new ArrayList<>();
+        for (NPCType npcType : NPCType.values()){
+            this.npcs.add(new NPC(npcType));
+        }
 
         this.userFriendships = new HashMap<>();
         this.npcFriendships = new HashMap<>();
@@ -43,6 +40,18 @@ public class Game {
                 npcFriendMap.put(npc, new Friendship());
             }
             npcFriendships.put(player, npcFriendMap);
+
+            this.talkHistory = new HashMap<>();
+            for (User sender : this.players) {
+                HashMap<User, HashMap<String, Boolean>> talkMap = new HashMap<>();
+                for (User receiver : this.players) {
+                    if (!sender.equals(receiver)) {
+                        talkMap.put(receiver, new HashMap<>());
+                    }
+                }
+                talkHistory.put(sender, talkMap);
+            }
+
         }
     }
 
@@ -56,6 +65,22 @@ public class Game {
 
     public GameMap getGameMap() {
         return gameMap;
+    }
+
+    public ArrayList<NPC> getNpcs() {
+        return npcs;
+    }
+
+    public HashMap<User, HashMap<User, Friendship>> getUserFriendships() {
+        return userFriendships;
+    }
+
+    public HashMap<User, HashMap<NPC, Friendship>> getNpcFriendships() {
+        return npcFriendships;
+    }
+
+    public HashMap<User, HashMap<User, HashMap<String, Boolean>>> getTalkHistory() {
+        return talkHistory;
     }
 
     public void newGame(String username1, String username2, String username3) {
@@ -76,7 +101,25 @@ public class Game {
     }
 
     public void nextTurn(String callerUsername) {
-        // TODO
+        // TODO: show unread messages when starting new turn
+    }
+
+    public User getPlayerByUsername(String username) {
+        for (User user : this.getPlayers()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public NPC getNPCByName(String name) {
+        for (NPC npc : this.getNpcs()) {
+            if (npc.getName().equals(name)) {
+                return npc;
+            }
+        }
+        return null;
     }
 
     public Friendship getUserFriendship(User user1, User user2) {
@@ -108,4 +151,11 @@ public class Game {
             friendship.updateFriendship(amount);
         }
     }
+
+    public void sendMessage(User sender, User receiver, String message) {
+        if (talkHistory.containsKey(sender) && talkHistory.get(sender).containsKey(receiver)) {
+            talkHistory.get(sender).get(receiver).put(message, false);
+        }
+    }
+
 }

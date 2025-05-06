@@ -24,12 +24,21 @@ public class Friendship {
         if (this.currentXP < 0) {
             int levelNumber = this.getLevel().getNumber() - 1;
             this.level = FriendshipLevel.getFriendshipLevelByNumber(levelNumber);
-            this.currentXP += this.level.requiredXPForNextLevel();
+            if (this.level == null) {
+                this.level = FriendshipLevel.STRANGER;
+            } else {
+                this.currentXP += this.level.requiredXPForNextLevel();
+            }
         }
         if (this.currentXP > this.level.requiredXPForNextLevel()) {
             int levelNumber = this.getLevel().getNumber() + 1;
             this.currentXP += this.level.requiredXPForNextLevel();
             this.level = FriendshipLevel.getFriendshipLevelByNumber(levelNumber);
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.level + " (" + this.currentXP + " XP).";
     }
 }

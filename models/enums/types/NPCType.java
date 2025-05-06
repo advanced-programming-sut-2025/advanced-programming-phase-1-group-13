@@ -8,19 +8,26 @@ import java.util.HashMap;
 
 public enum NPCType {
     CLINT(
+            "Clint",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>()
     ),
-    MORRIS(Role.SHOPKEEPER,
+    MORRIS(
+            "Morris",
+            Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>()
     ),
-    PIERRE(Role.SHOPKEEPER,
+    PIERRE(
+            "Pierre",
+            Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>()
     ),
-    ROBIN(Role.SHOPKEEPER,
+    ROBIN(
+            "Robin",
+            Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
                         new HashMap<ItemType, Integer>() {{
@@ -41,19 +48,27 @@ public enum NPCType {
                 add(MineralType.IRON_BAR);
             }}
     ),
-    WILLY(Role.SHOPKEEPER,
+    WILLY(
+            "Willy",
+            Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>()
     ),
-    MARNIE(Role.SHOPKEEPER,
+    MARNIE(
+            "Marnie",
+            Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>()
     ),
-    GUS(Role.SHOPKEEPER,
+    GUS(
+            "Gus",
+            Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>()
     ),
-    SEBASTIAN(Role.VILLAGER,
+    SEBASTIAN(
+            "Sebastian",
+            Role.VILLAGER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
                         new HashMap<ItemType, Integer>() {{
@@ -74,7 +89,9 @@ public enum NPCType {
                 add(FoodType.PIZZA);
             }}
     ),
-    ABIGAIL(Role.VILLAGER,
+    ABIGAIL(
+            "Abigail",
+            Role.VILLAGER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
                         new HashMap<ItemType, Integer>() {{
@@ -95,7 +112,9 @@ public enum NPCType {
                 add(GoodsType.COFFEE);
             }}
     ),
-    HARVEY(Role.VILLAGER,
+    HARVEY(
+            "Harvey",
+            Role.VILLAGER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
                         new HashMap<ItemType, Integer>() {{
@@ -116,7 +135,9 @@ public enum NPCType {
                 add(ProcessedItemType.WINE);
             }}
     ),
-    LEA(Role.VILLAGER,
+    LEA(
+            "Lea",
+            Role.VILLAGER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
                         new HashMap<ItemType, Integer>() {{
@@ -139,16 +160,22 @@ public enum NPCType {
     )
     ;
 
+    private final String name;
     private final Role role;
     private final HashMap<HashMap<ItemType, Integer>, // requests
             HashMap<ItemType, Integer> // rewards
             > quests;
     private final ArrayList<ItemType> favorites;
 
-    NPCType(Role role, HashMap quests, ArrayList favorites) {
+    NPCType(String name, Role role, HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests, ArrayList<ItemType> favorites) {
+        this.name = name;
         this.role = role;
         this.quests = quests;
         this.favorites = favorites;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Role getRole() {

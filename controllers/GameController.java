@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import models.enums.FriendshipLevel;
 import models.enums.Menu;
 import models.enums.Quality;
 import models.enums.Skill;
@@ -11,14 +12,10 @@ import models.tools.MilkPail;
 import models.tools.Shear;
 import models.tools.Tool;
 import models.enums.environment.*;
-import models.GameState;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import static controllers.LoginController.getUserByUsername;
 
 public class GameController {
     User player = App.getLoggedIn();
@@ -935,18 +932,17 @@ public class GameController {
     }
 
     public Result talk(String username, String message) {
-        User targetPlayer = getUserByUsername(username);
+        User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
 
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
-            // TODO: send message
+            game.sendMessage(player, targetPlayer, message);
             game.changeFriendship(player, targetPlayer, 20);
             return new Result(true, "You sent a message to " + username +
                     ". Your friendship level with them is now " +
-                    game.getUserFriendship(player, targetPlayer).getLevel() + " (" +
-                    game.getUserFriendship(player, targetPlayer).getCurrentXP() + " XP).");
+                    game.getUserFriendship(player, targetPlayer).toString());
         }
         return new Result(false, "You must stand next to " + username + " to talk to them.");
     }
@@ -963,8 +959,28 @@ public class GameController {
     }
 
     public Result showTalkHistoryWithUser(String username) {
-        // TODO (also take into account its effect on friendship level)
-        return new Result(true, "");
+        User targetPlayer = game.getPlayerByUsername(username);
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        StringBuilder history = new StringBuilder("Talk history with " + username + ":\n");
+
+        HashMap<String, Boolean> sentMessages = game.getTalkHistory().get(player).get(targetPlayer);
+        if (sentMessages != null) {
+            for (String message : sentMessages.keySet()) {
+                history.append("You: ").append(message).append("\n");
+            }
+        }
+
+        HashMap<String, Boolean> receivedMessages = game.getTalkHistory().get(targetPlayer).get(player);
+        if (receivedMessages != null) {
+            for (String message : receivedMessages.keySet()) {
+                history.append(username).append(": ").append(message).append("\n");
+            }
+        }
+
+        return new Result(true, history.toString().trim());
     }
 
     public Result giveGift(String username, String itemName, String amountStr) {
@@ -986,8 +1002,17 @@ public class GameController {
     }
 
     public Result hug(String username) {
-        // TODO
-        return new Result(true, "");
+        User targetPlayer = game.getPlayerByUsername(username);
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        if (game.getUserFriendship(player, targetPlayer).getLevel().getNumber() >= 2) {
+            return new Result(true, "You hugged " + username + ". Your friendship level is now " +
+                    game.getUserFriendship(player, targetPlayer).toString());
+        }
+        return new Result(false, "Your friendship level with " + username +
+                " must be at least 2 to hug them.");
     }
 
     public Result giveFlowerToUser(String username) {
@@ -996,9 +1021,20 @@ public class GameController {
     }
 
     public Result askMarriage(String username, String ringStr) {
-        // TODO: ring object type!!? wtf
-        // TODO: will u marry me? :)
-        return new Result(true, "");
+        User targetPlayer = game.getPlayerByUsername(username);
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        if (areClose(player.getPosition(), targetPlayer.getPosition())) {
+            if (!player.getGender().equals(targetPlayer.getGender())) {
+                // TODO
+                return new Result(true, "You proposed to " + username + ". Wait for their response.");
+            }
+            return new Result(false,
+                    "You are not allowed to marry a person of the same gender in this game.");
+        }
+        return new Result(false, "You must stand next to " + username + " to propose to them.");
     }
 
     public Result respondToMarriageRequest(String acceptanceStr, String username) {
@@ -1023,8 +1059,27 @@ public class GameController {
     // === NPC === //
 
     public Result meetNPC(String NCPName) {
-        // TODO
-        return new Result(true, "");
+        NPC npc = game.getNPCByName(NCPName);
+        if (npc == null) {
+            return new Result(false, "NPC not found.");
+        }
+
+        if (areClose(player.getPosition(), npc.getPosition())) {
+            int timeOfDay = game.getGameState().getTime().getHour();
+            Season season = game.getGameState().getTime().getSeason();
+            Weather weather = game.getGameState().getCurrentWeather();
+            FriendshipLevel friendshipLevel = game.getNpcFriendship(player, npc).getLevel();
+            Dialog dialog =
+                    Dialog.getDialogBySituation(npc.getType(), timeOfDay, season, weather, friendshipLevel);
+            if (dialog == null) {
+                return new Result(false, NCPName + " doesn't have anything to say right now.");
+            }
+
+            // TODO: Check if it's the first time talking today and add XP if so
+            // game.changeFriendship(player, npc, 20);
+            return new Result(true, NCPName + ": \"" + dialog.getMessage() + "\"");
+        }
+        return new Result(false, "You must stand next to " + NCPName + " to talk to them.");
     }
 
     public Result giftNPC(String NCPName, String itemName) {
@@ -1046,11 +1101,4 @@ public class GameController {
         // TODO
         return new Result(true, "");
     }
-
-    private NPC getNPCByName(String NPCName) {
-        // TODO
-        return null;
-    }
-
-
 }
