@@ -1,7 +1,6 @@
 package controllers;
 
 import models.*;
-import models.enums.FriendshipLevel;
 import models.enums.Menu;
 import models.enums.Quality;
 import models.enums.Skill;
@@ -333,8 +332,8 @@ public class GameController {
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         Position position = player.getPosition();
         Tile tile = getTileByPosition(position);
-        if (tile.getType().equals(TileType.NOT_PLOWED_GROUND)){
-            return new Result(false , "You must plow the ground first! Use hoe.");
+        if (tile.getType().equals(TileType.NOT_PLOWED_GROUND)) {
+            return new Result(false, "You must plow the ground first! Use hoe.");
         }
 
         return new Result(true, "");
@@ -1068,7 +1067,7 @@ public class GameController {
             int timeOfDay = game.getGameState().getTime().getHour();
             Season season = game.getGameState().getTime().getSeason();
             Weather weather = game.getGameState().getCurrentWeather();
-            FriendshipLevel friendshipLevel = game.getNpcFriendship(player, npc).getLevel();
+            int friendshipLevel = game.getNpcFriendshipPoints(player, npc);
             Dialog dialog =
                     Dialog.getDialogBySituation(npc.getType(), timeOfDay, season, weather, friendshipLevel);
             if (dialog == null) {
@@ -1088,8 +1087,15 @@ public class GameController {
     }
 
     public Result showFriendshipNPCList() {
-        // TODO
-        return new Result(true, "");
+        StringBuilder message = new StringBuilder("Your friendships with NPCs:\n");
+        for (NPC npc : game.getNpcs()) {
+            int friendshipPoints = game.getNpcFriendshipPoints(player, npc);
+            message.append(npc.getName()).append(": \n" +
+                    "   Friendship level: ").append((int) friendshipPoints / 200).append("\n" +
+                    "   Friendship points: ").append(friendshipPoints).append("\n" +
+                    "-------------------------------\n");
+        }
+        return new Result(true, message.toString());
     }
 
     public Result showQuestsList() {

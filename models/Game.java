@@ -11,7 +11,7 @@ public class Game {
     private GameState gameState;
     private final ArrayList<NPC> npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
-    private HashMap<User, HashMap<NPC, Friendship>> npcFriendships;
+    private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
     // Each inner HashMap stores the messages and boolean of have they been read by the reciever
 
@@ -35,9 +35,9 @@ public class Game {
             }
             userFriendships.put(player, playerFriendMap);
 
-            HashMap<NPC, Friendship> npcFriendMap = new HashMap<>();
+            HashMap<NPC, Integer> npcFriendMap = new HashMap<>();
             for (NPC npc : this.npcs) {
-                npcFriendMap.put(npc, new Friendship());
+                npcFriendMap.put(npc, 0);
             }
             npcFriendships.put(player, npcFriendMap);
 
@@ -75,7 +75,7 @@ public class Game {
         return userFriendships;
     }
 
-    public HashMap<User, HashMap<NPC, Friendship>> getNpcFriendships() {
+    public HashMap<User, HashMap<NPC, Integer>> getNpcFriendships() {
         return npcFriendships;
     }
 
@@ -130,18 +130,22 @@ public class Game {
         return null;
     }
 
-    public Friendship getNpcFriendship(User player, NPC npc) {
-        HashMap<NPC, Friendship> friendshipHashMap = npcFriendships.get(player);
+    public int getNpcFriendshipPoints(User player, NPC npc) {
+        HashMap<NPC, Integer> friendshipHashMap = npcFriendships.get(player);
         if (friendshipHashMap != null) {
-            return friendshipHashMap.get(npc);
+            return friendshipHashMap.getOrDefault(npc, -1);
         }
-        return null;
+        return -1;
     }
 
     public void changeFriendship(User player, NPC npc, int amount) {
-        Friendship friendship = getNpcFriendship(player, npc);
-        if (friendship != null) {
-            friendship.updateFriendship(amount);
+        int friendshipPoints = getNpcFriendshipPoints(player, npc);
+        if (friendshipPoints != -1) {
+            friendshipPoints += amount;
+            if (friendshipPoints > 799) {
+                friendshipPoints = 799;
+            }
+            npcFriendships.get(player).put(npc, friendshipPoints); // Update the friendship points back in the map
         }
     }
 
