@@ -95,17 +95,17 @@ public class Game {
         return null;
     }
 
-//    public void increaseFriendship(User player, NPC npc, int amount) {
-//        Friendship friendship = getNpcFriendship(player, npc);
-//        if (friendship != null) {
-//            friendship.increase(amount);
-//        }
-//    }
-//
-//    public void increaseFriendship(User user1, User user2, int amount) {
-//        Friendship friendship = getUserFriendship(a, b);
-//        if (friendship != null) {
-//            friendship.increase(amount);
-//        }
-//    }
+    public void changeFriendship(User player, NPC npc, int amount) {
+        Friendship friendship = getNpcFriendship(player, npc);
+        if (friendship != null) {
+            friendship.updateFriendship(amount);
+        }
+    }
+
+    public void changeFriendship(User user1, User user2, int amount) {
+        Friendship friendship = getUserFriendship(user1, user2);
+        if (friendship != null) {
+            friendship.updateFriendship(amount);
+        }
+    }
 }

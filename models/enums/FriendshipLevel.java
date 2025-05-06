@@ -21,8 +21,8 @@ public enum FriendshipLevel {
         return (this.number + 1) * 100;
     }
 
-    public FriendshipLevel getFriendshipLevelByNumber(int number) {
-        for (FriendshipLevel friendshipLevel : this.values()) {
+    public static FriendshipLevel getFriendshipLevelByNumber(int number) {
+        for (FriendshipLevel friendshipLevel : FriendshipLevel.values()) {
             if (friendshipLevel.getNumber() == number) {
                 return friendshipLevel;
             }

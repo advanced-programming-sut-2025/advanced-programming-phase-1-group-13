@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static controllers.LoginController.getUserByUsername;
+
 public class GameController {
     User player = App.getLoggedIn();
     Game game = App.getCurrentGame();
@@ -920,21 +922,44 @@ public class GameController {
     // === FRIENDSHIPS === //
 
     public Result showFriendshipLevels() {
-        String message = "Your friendships with other players:\n";
+        StringBuilder message = new StringBuilder("Your friendships with other players:\n");
         for (User otherPlayer : game.getPlayers()) {
             if (!player.equals(otherPlayer)) {
                 Friendship friendship = game.getUserFriendship(player, otherPlayer);
-                message += otherPlayer.getuserName() + ": \n" +
-                "   Friendship level: " + friendship.getFriendshipLevel().getNumber() + "\n" +
-                "   Xp: " + friendship.getCurrentXP();
+                message.append(otherPlayer.getUsername()).append(": \n").append("   Friendship level: ")
+                        .append(friendship.getLevel().getNumber()).append("\n").append("   Xp: ")
+                        .append(friendship.getCurrentXP());
             }
         }
-        return new Result(true, message);
+        return new Result(true, message.toString());
     }
 
     public Result talk(String username, String message) {
-        // TODO (also take into account its effect on friendship level)
-        return new Result(true, "");
+        User targetPlayer = getUserByUsername(username);
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        if (areClose(player.getPosition(), targetPlayer.getPosition())) {
+            // TODO: send message
+            game.changeFriendship(player, targetPlayer, 20);
+            return new Result(true, "You sent a message to " + username +
+                    ". Your friendship level with them is now " +
+                    game.getUserFriendship(player, targetPlayer).getLevel() + " (" +
+                    game.getUserFriendship(player, targetPlayer).getCurrentXP() + " XP).");
+        }
+        return new Result(false, "You must stand next to " + username + " to talk to them.");
+    }
+
+    public boolean areClose(Position position1, Position position2) {
+        int x1 = position1.getX();
+        int y1 = position1.getY();
+        int x2 = position1.getX();
+        int y2 = position1.getY();
+        if (Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1 && !(x1 == x2 && y1 == y2)) {
+            return true;
+        }
+        return false;
     }
 
     public Result showTalkHistoryWithUser(String username) {
