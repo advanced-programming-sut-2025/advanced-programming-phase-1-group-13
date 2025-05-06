@@ -1,6 +1,5 @@
 package models.enums.types;
 
-import models.enums.FriendshipLevel;
 import models.enums.environment.Season;
 import models.enums.environment.Weather;
 

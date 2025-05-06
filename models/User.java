@@ -20,6 +20,7 @@ public class User {
     private String nickname;
     private String email;
     private Gender gender;
+    private ArrayList<Game> games = new ArrayList<>();
     private int energy;
     private boolean isEnergyUnlimited;
     private Position position;
@@ -32,6 +33,7 @@ public class User {
     private ArrayList<Transaction> transactions;
     private Backpack backpack;
     private double balance;
+    private int mostEarnedMoney;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -199,5 +201,13 @@ public class User {
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {
         this.qAndA.put(securityQuestion, answer);
+    }
+
+    @Override
+    public String toString() {
+        return "Username: " + this.username + "\n" +
+                "Nickname: " + this.nickname + "\n" +
+                "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
+                "Number of games: " + this.games.size();
     }
 }

@@ -13,4 +13,10 @@ forget password -u arvin
 answer -a Earth
 login -u arvin -p LeoLeo1
 login -u arvin -p
+show current menu
+menu enter Profile Menu
+show current menu
+change username -u newUsername
+user info
+menu exit
 */
