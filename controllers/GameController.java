@@ -857,7 +857,7 @@ public class GameController {
 
         for (GoodsType product : GoodsType.values()) {
             if (product.getShopType() == shop.getType()) {
-                String availability = (product.getDailyLimit() == 0) ? "Unavailable" : "Available";
+                String availability = (product.getDailyLimit() == 0) ? "Unavailable" : "Available"; // TODO
                 productList.append(String.format("- %s: %d gold (%s)\n", product.name(), product.getPrice(), availability));
             }
         }
@@ -923,7 +923,10 @@ public class GameController {
         String message = "Your friendships with other players:\n";
         for (User otherPlayer : game.getPlayers()) {
             if (!player.equals(otherPlayer)) {
-                message += otherPlayer.getUsername();
+                Friendship friendship = game.getUserFriendship(player, otherPlayer);
+                message += otherPlayer.getuserName() + ": \n" +
+                "   Friendship level: " + friendship.getFriendshipLevel().getNumber() + "\n" +
+                "   Xp: " + friendship.getCurrentXP();
             }
         }
         return new Result(true, message);

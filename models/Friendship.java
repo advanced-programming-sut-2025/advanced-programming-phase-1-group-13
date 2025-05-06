@@ -19,21 +19,17 @@ public class Friendship {
         return currentXP;
     }
 
-    public void increaseXP(int amount, User user) {
-        // TODO
-    }
-
-    public void decreaseXP(int amount, User user) {
-        // TODO
-    }
-
-    public int requiredXPForNextLevel() {
-        // TODO
-        return 0;
-    }
-
-    public boolean isMaxLevel() {
-        // TODO
-        return false;
+    public void updateFriendship(int amount) {
+        this.currentXP += amount;
+        if (this.currentXP < 0) {
+            int levelNumber = this.getLevel().getNumber() - 1;
+            this.level = FriendshipLevel.getFriendshipLevelByNumber(levelNumber);
+            this.currentXP += this.level.requiredXPForNextLevel();
+        }
+        if (this.currentXP > this.level.requiredXPForNextLevel()) {
+            int levelNumber = this.getLevel().getNumber() + 1;
+            this.currentXP += this.level.requiredXPForNextLevel();
+            this.level = FriendshipLevel.getFriendshipLevelByNumber(levelNumber);
+        }
     }
 }

@@ -7,9 +7,26 @@ public enum FriendshipLevel {
     BEST_FRIEND(3),
     MARRIED(4);
 
-    int level;
+    int number;
 
-    FriendshipLevel(int level) {
-        this.level = level;
+    FriendshipLevel(int number) {
+        this.number = number;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int requiredXPForNextLevel() {
+        return (this.number + 1) * 100;
+    }
+
+    public FriendshipLevel getFriendshipLevelByNumber(int number) {
+        for (FriendshipLevel friendshipLevel : this.values()) {
+            if (friendshipLevel.getNumber() == number) {
+                return friendshipLevel;
+            }
+        }
+        return null;
     }
 }
