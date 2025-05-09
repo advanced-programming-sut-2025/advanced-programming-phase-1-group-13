@@ -2,16 +2,14 @@ package models.tools;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.ToolMaterial;
-import models.enums.types.ToolTypes;
+import models.enums.types.ToolType;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Hoe extends Tool {
 
     public Hoe() {
-        super(ToolTypes.HOE);
+        super(ToolType.HOE);
     }
 
     @Override

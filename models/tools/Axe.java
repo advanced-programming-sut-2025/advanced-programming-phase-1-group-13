@@ -3,7 +3,7 @@ package models.tools;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.ToolTypes;
+import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class Axe extends Tool {
 
     public Axe() {
-        super(ToolTypes.AXE);
+        super(ToolType.AXE);
     }
 
     @Override

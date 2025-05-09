@@ -1,8 +1,5 @@
 package models.enums.types;
 
-import models.farming.Crop;
-import models.tools.Tool;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,7 +108,7 @@ public enum NPCType {
                         new HashMap<ItemType, Integer>() {{
                             put(null, 0); // Friendship XP
                             put(MineralType.GOLD_COIN, 500);
-                            put(ToolTypes.WATERING_CAN, 1);
+                            put(ToolType.WATERING_CAN, 1);
                         }}
                 );
             }},

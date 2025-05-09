@@ -6,15 +6,14 @@ import models.Item;
 import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
-import models.enums.environment.Direction;
-import models.enums.types.ToolTypes;
+import models.enums.types.ToolType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Shear extends Tool {
     public Shear() {
-        super(ToolTypes.SHEARS);
+        super(ToolType.SHEARS);
     }
 
     @Override

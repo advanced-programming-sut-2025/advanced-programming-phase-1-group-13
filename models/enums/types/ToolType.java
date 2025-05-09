@@ -2,7 +2,7 @@ package models.enums.types;
 
 import models.enums.Skill;
 
-public enum ToolTypes implements ItemType {
+public enum ToolType implements ItemType {
     HOE("Hoe", Skill.FARMING),
     PICKAXE("Pickaxe", Skill.MINING),
     AXE("Axe", Skill.FORAGING),
@@ -18,13 +18,13 @@ public enum ToolTypes implements ItemType {
     private final Skill relatedSkill;
 
 
-    ToolTypes(String name, Skill relatedSkill) {
+    ToolType(String name, Skill relatedSkill) {
         this.name = name;
         this.relatedSkill = relatedSkill;
     }
 
-    public static ToolTypes getToolTypeByName(String name) {
-        for (ToolTypes toolType : ToolTypes.values()) {
+    public static ToolType getToolTypeByName(String name) {
+        for (ToolType toolType : ToolType.values()) {
             if (toolType.name.equals(name)) {
                 return toolType;
             }
@@ -43,7 +43,7 @@ public enum ToolTypes implements ItemType {
 
     public static String getFullList() {
         StringBuilder sb = new StringBuilder();
-        for (ToolTypes t : ToolTypes.values()) {
+        for (ToolType t : ToolType.values()) {
             sb.append(t.getName()).append("\n");
         }
         return sb.toString();

@@ -94,10 +94,10 @@ public class GameController {
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
 
     public Result equipTool(String toolName) {
-        ToolTypes toolType = ToolTypes.getToolTypeByName(toolName);
+        ToolType toolType = ToolType.getToolTypeByName(toolName);
         if (toolType == null) {
             String notFoundMessage = "Tool not found" + "\n" +
-                    ToolTypes.getFullList();
+                    ToolType.getFullList();
             return new Result(false, notFoundMessage);
         }
         player.setCurrentTool();

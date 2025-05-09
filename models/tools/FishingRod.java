@@ -4,16 +4,15 @@ import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
 import models.enums.types.FishingRodType;
-import models.enums.types.ToolTypes;
+import models.enums.types.ToolType;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class FishingRod extends Tool {
     private FishingRodType type;
 
     public FishingRod(int energyNeeded, Skill relatedSkill) {
-        super(ToolTypes.FISHING_ROD);
+        super(ToolType.FISHING_ROD);
     }
 
     public FishingRodType getRodType() {

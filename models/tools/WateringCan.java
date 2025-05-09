@@ -3,14 +3,14 @@ package models.tools;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.ToolTypes;
+import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
 
 public class WateringCan extends Tool {
     public WateringCan() {
-        super(ToolTypes.WATERING_CAN);
+        super(ToolType.WATERING_CAN);
     }
 
     @Override
