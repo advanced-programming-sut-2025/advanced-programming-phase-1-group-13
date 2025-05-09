@@ -6,6 +6,7 @@ import models.enums.Quality;
 import models.enums.Skill;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
+import models.inventory.Backpack;
 import models.tools.FishingRod;
 import models.tools.MilkPail;
 import models.tools.Shear;
@@ -96,12 +97,15 @@ public class GameController {
     public Result equipTool(String toolName) {
         ToolType toolType = ToolType.getToolTypeByName(toolName);
         if (toolType == null) {
-            String notFoundMessage = "Tool not found" + "\n" +
-                    ToolType.getFullList();
+            String notFoundMessage = "Tool not found.\n" + "Enter a valid tool name: \n" + ToolType.getFullList();
             return new Result(false, notFoundMessage);
         }
-        player.setCurrentTool();
-        return new Result(true, "");
+        HashMap<Item, Integer> backpackItems = player.getBackpack().getItems();
+        if (!backpackItems.containsKey(new Tool(toolType))) {
+            return new Result(false, "Tool not found in inventory.");
+        }
+        player.setCurrentTool(new Tool(toolType)); //  todo: khode class e oon tool, ya tooooool?
+        return new Result(true, toolName + " equipped.");
     }
 
     public Result useTool(String directionString) {
