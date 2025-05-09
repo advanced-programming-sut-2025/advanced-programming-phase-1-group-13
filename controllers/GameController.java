@@ -104,6 +104,7 @@ public class GameController {
         if (!backpackItems.containsKey(new Tool(toolType))) {
             return new Result(false, "Tool not found in inventory.");
         }
+        // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         player.setCurrentTool(new Tool(toolType)); //  todo: khode class e oon tool, ya tooooool?
         return new Result(true, toolName + " equipped.");
     }
@@ -114,9 +115,9 @@ public class GameController {
         Tool tool = player.getCurrentTool();
         if (canToolBeUsedHere(position, tool)) {
             tool.useTool(direction);
-            return new Result(true, ""); // todo: appropriate message
+            return new Result(true, "");
         }
-        return new Result(false, "You can't use that tool in that direction"); // todo: appropriate message
+        return new Result(false, "You can't use" + tool.toString() + " in that direction");
     }
 
     public Result placeItem(String itemName, String directionString) {
