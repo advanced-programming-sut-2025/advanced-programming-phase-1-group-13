@@ -18,6 +18,15 @@ public enum ToolTypes implements ItemType {
         this.name = name;
     }
 
+    public static ToolTypes getToolTypeByName(String name) {
+        for (ToolTypes toolType : ToolTypes.values()) {
+            if (toolType.name.equals(name)) {
+                return toolType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return this.name;

@@ -56,6 +56,14 @@ public class User {
         this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
     }
 
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
+
+    public Tool getCurrentTool() {
+        return this.currentTool;
+    }
+
     public Position getPosition() {
         return this.position;
     }
@@ -170,10 +178,6 @@ public class User {
 
     public void faint() {
         // TODO: well, faint!
-    }
-
-    public Tool getCurrentTool() {
-        return this.currentTool;
     }
 
     public void useTool(Direction direction) {

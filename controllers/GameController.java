@@ -47,7 +47,7 @@ public class GameController {
 
     public Result showCurrentTool() {
         Tool playerCurrentTool = player.getCurrentTool();
-        return new Result(true, "Your tool is: " + playerCurrentTool.toString()); // todo: is message OK?
+        return new Result(true, "Your tool is: " + playerCurrentTool.toString());
     }
 
     public Result showLearntCookingRecipes() {
@@ -92,7 +92,12 @@ public class GameController {
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
 
     public Result equipTool(String toolName) {
-        // TODO: get Tool by its name (return appropriate failing message if null)
+        ToolTypes toolType = ToolTypes.getToolTypeByName(toolName);
+        if (toolType == null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Tool not found"); // todo: list the correct names
+            return new Result(false, sb.toString());
+        }
         // TODO: equip tool
         return new Result(true, "");
     }

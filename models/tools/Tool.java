@@ -24,9 +24,6 @@ public class Tool extends Item {
         return relatedSkill;
     }
 
-    public void equipTool() {
-        // TODO
-    }
 
     public void upgradeTool() {
         // TODO
@@ -34,5 +31,10 @@ public class Tool extends Item {
 
     public void useTool(Direction direction) {
         // TODO
+    }
+
+    @Override
+    public String toString() {
+        return this.toolType.getName();
     }
 }
