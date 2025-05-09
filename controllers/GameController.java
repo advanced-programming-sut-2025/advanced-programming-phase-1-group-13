@@ -1138,4 +1138,12 @@ public class GameController {
         // TODO
         return new Result(true, "");
     }
+
+    public Result exitGame() {
+        if (!game.getPlayers().getFirst().equals(player)) {
+            return new Result(false, "Only the creator of the game can exit it.");
+        }
+        App.setCurrentMenu(Menu.PRE_GAME_MENU);
+        return new Result(true, "Exiting Game ... Heading to Pre-Game Menu");
+    }
 }

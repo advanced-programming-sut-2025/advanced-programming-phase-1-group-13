@@ -11,11 +11,10 @@ import java.util.Arrays;
 
 import static models.App.getUserByUsername;
 
-
 public class PreGameMenuController {
     public Result gameNew(String usernamesStr) {
         if (usernamesStr == null) {
-            return new Result(false, "");
+            return new Result(false, "Enter usernames.");
         }
 
         ArrayList<String> usernames = new ArrayList<>(Arrays.asList(usernamesStr.split("\\s+")));
@@ -48,7 +47,7 @@ public class PreGameMenuController {
         }
         App.addGame(game);
         return new Result(true, "New game made with you, " + usernames.get(1) +
-                " and " + usernames.get(2));
+                " and " + usernames.get(2) + " as players.");
     }
 
     public Result chooseGameMap(String mapNumberString) {
@@ -60,10 +59,5 @@ public class PreGameMenuController {
     public Result loadGame() {
         // TODO
         return new Result(true, "");
-    }
-
-    public Result exitGame() {
-        App.setCurrentMenu(Menu.PRE_GAME_MENU);
-        return new Result(true, "Exiting Game ... Heading to Pre-Game Menu");
     }
 }

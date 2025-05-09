@@ -2,6 +2,7 @@ package views;
 
 import controllers.GameController;
 import models.enums.commands.GameCommands;
+import models.enums.commands.PreGameMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -213,6 +214,8 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.showQuestsList());
         } else if ((matcher = GameCommands.QUESTS_FINISH.getMatcher(inputLine)) != null) {
             System.out.println(controller.finishQuest(matcher.group("index")));
+        } else if ((matcher = GameCommands.EXIT_GAME.getMatcher(inputLine)) != null) {
+            System.out.println(controller.exitGame());
         } else {
             System.out.println("Invalid Command. Please try again!");
         }

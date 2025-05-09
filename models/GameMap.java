@@ -1,11 +1,15 @@
 package models;
 
+import models.farming.ForagingCrop;
+import models.farming.Tree;
+import models.enums.types.TileType;
+
 import java.util.ArrayList;
 import java.util.Random;
-private static final int MAP_SIZE = 80;
-private static final int CABIN_SIZE = 10;
 
 public final class GameMap {
+    private static final int MAP_SIZE = 80;
+    private static final int CABIN_SIZE = 10;
     private ArrayList<Farm> farms;
     private ArrayList<Shop> shops;
     private int mapNumber;
@@ -15,7 +19,7 @@ public final class GameMap {
     private Quarry quarry;
     private ArrayList<Tree> trees;
     private ArrayList<Stone> stones;
-    private ArrayList<Foraging> foragings;
+    private ArrayList<ForagingCrop> foragings;
     private Random random;
 
     public GameMap(int mapNumber) {
@@ -64,7 +68,7 @@ public final class GameMap {
         int foragingCount = 3 + random.nextInt(6);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = getRandomPosition();
-            foragings.add(new Foraging(pos));
+            foragings.add(new ForagingCrop(pos));
         }
     }
 
@@ -169,14 +173,47 @@ public final class GameMap {
         return quarry;
     }
 
-    public ArrayList<Farm> getFarms() { return farms; }
-    public ArrayList<Shop> getShops() { return shops; }
-    public int getMapNumber() { return mapNumber; }
-    public Lake getLake() { return lake; }
-    public Greenhouse getGreenhouse() { return greenhouse; }
-    public Cabin getCabin() { return cabin; }
-    public Quarry getQuarry() { return quarry; }
-    public ArrayList<Tree> getTrees() { return trees; }
-    public ArrayList<Stone> getStones() { return stones; }
-    public ArrayList<Foraging> getForagings() { return foragings; }
+    public ArrayList<Farm> getFarms() {
+        return farms;
+    }
+
+    public ArrayList<Shop> getShops() {
+        return shops;
+    }
+
+    public int getMapNumber() {
+        return mapNumber;
+    }
+
+    public Lake getLake() {
+        return lake;
+    }
+
+    public Greenhouse getGreenhouse() {
+        return greenhouse;
+    }
+
+    public Cabin getCabin() {
+        return cabin;
+    }
+
+    public Quarry getQuarry() {
+        return quarry;
+    }
+
+    public ArrayList<Tree> getTrees() {
+        return trees;
+    }
+
+    public ArrayList<Stone> getStones() {
+        return stones;
+    }
+
+    public ArrayList<ForagingCrop> getForagings() {
+        return foragings;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
 }

@@ -7,6 +7,9 @@ public class Mineral implements ForagingStuff {
     private int sellPrice;
     private MineralType mineralType;
 
+    public Mineral(Position position) {
+    }
+
     @Override
     public void generate() {
 
