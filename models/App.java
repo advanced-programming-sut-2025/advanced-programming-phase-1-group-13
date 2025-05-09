@@ -55,4 +55,22 @@ public class App {
     public static void addGame(Game game) {
         App.games.add(game);
     }
+
+    public static User getUserByUsername(String username) {
+        for (User user : App.getUsers()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static User getUserByEmail(String email) {
+        for (User user : App.getUsers()) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
+    }
 }

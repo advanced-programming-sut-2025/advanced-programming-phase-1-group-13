@@ -4,8 +4,8 @@ import models.App;
 import models.Result;
 import models.enums.commands.LoginCommands;
 
-import static controllers.LoginController.getUserByEmail;
-import static controllers.LoginController.getUserByUsername;
+import static models.App.getUserByEmail;
+import static models.App.getUserByUsername;
 
 public class ProfileController {
     public Result changeUsername(String newUsername) {
@@ -45,7 +45,8 @@ public class ProfileController {
     }
 
     public Result showCurrentMenu() {
-        return new Result(true, "Current Menu: " + App.getCurrentMenu().toString());
+        return new Result(true, "Current Menu: " +
+                App.getCurrentMenu().toString());
     }
 
     public Result showUserInfo() {

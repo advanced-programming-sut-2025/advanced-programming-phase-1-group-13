@@ -116,6 +116,18 @@ public class User {
         return balance;
     }
 
+    public ArrayList<Game> getGames() {
+        return games;
+    }
+
+    public HashMap<SecurityQuestion, String> getqAndA() {
+        return qAndA;
+    }
+
+    public int getMostEarnedMoney() {
+        return mostEarnedMoney;
+    }
+
     public HashMap<Skill, SkillLevel> getSkillLevels() {
         return skillLevels;
     }

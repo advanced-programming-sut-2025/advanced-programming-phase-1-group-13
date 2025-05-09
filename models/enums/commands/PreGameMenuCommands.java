@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum PreGameMenuCommands implements Command {
-    GAME_NEW("^\\s*game\\s+new\\s+(?<username_1>.+)\\s+(?<username_2>.+)\\s+(?<username_3>.+)\\s*$"),
+    GAME_NEW("^\\s*game\\s+new\\s+(?<usernames>.+)*\\s*$"),
     GAME_MAP("^\\s*game\\s+map\\s+(?<map_number>\\d+)$"),
     LOAD_GAME("^\\s*load\\s+game\\s*$"),
     EXIT_GAME("^\\s*exit\\s+game\\s*$");

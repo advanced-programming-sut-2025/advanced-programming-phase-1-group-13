@@ -14,25 +14,10 @@ import models.enums.SecurityQuestion;
 import models.enums.types.Gender;
 import models.enums.commands.LoginCommands;
 
+import static models.App.getUserByEmail;
+import static models.App.getUserByUsername;
+
 public class LoginController {
-    public static User getUserByUsername(String username) {
-        for (User user : App.getUsers()) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public static User getUserByEmail(String email) {
-        for (User user : App.getUsers()) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
     public Result registerUser(String username,
                                String password,
                                String repeatPassword,
