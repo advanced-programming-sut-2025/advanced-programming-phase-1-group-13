@@ -1,17 +1,21 @@
 package models.tools;
 
 import models.enums.Skill;
+import models.enums.SkillLevel;
 import models.enums.environment.Direction;
+import models.enums.types.ToolTypes;
+
+import java.util.HashMap;
 
 
 public class WateringCan extends Tool {
-    public WateringCan(int energyNeeded, Skill relatedSkill) {
-        super(energyNeeded, relatedSkill);
+    public WateringCan() {
+        super(ToolTypes.WATERING_CAN);
     }
 
     @Override
-    public int calculateEnergyNeeded() {
-        return super.calculateEnergyNeeded();
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
+        return super.calculateEnergyNeeded(playerSkills);
     }
 
     @Override

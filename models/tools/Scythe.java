@@ -1,17 +1,21 @@
 package models.tools;
 
 import models.enums.Skill;
+import models.enums.SkillLevel;
 import models.enums.environment.Direction;
+import models.enums.types.ToolTypes;
+
+import java.util.HashMap;
 
 
 public class Scythe extends Tool {
-    public Scythe(int energyNeeded, Skill relatedSkill) {
-        super(energyNeeded, relatedSkill);
+    public Scythe() {
+        super(ToolTypes.SCYTHE);
     }
 
     @Override
-    public int calculateEnergyNeeded() {
-        return super.calculateEnergyNeeded();
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
+        return super.calculateEnergyNeeded(playerSkills);
     }
 
     @Override

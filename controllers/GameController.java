@@ -61,10 +61,11 @@ public class GameController {
     }
 
     // === TIME === //
+
     public Result cheatAdvanceTime(String hourIncreaseStr) {
         int hourIncrease = Integer.parseInt(hourIncreaseStr);
         Time.cheatAdvanceTime(hourIncrease, App.getCurrentGame().getGameState().getTime());
-        return new Result(true, "");
+        return new Result(true, "Time increased by " + hourIncrease + " hours.");
     }
 
     public Result cheatAdvanceDate(String dayIncreaseStr) {
@@ -74,6 +75,7 @@ public class GameController {
     }
 
     // === INVENTORY === //
+
     public Result inventoryShow() {
         return new Result(true, player.getBackpack().showItemsInInventory());
     }
@@ -94,11 +96,11 @@ public class GameController {
     public Result equipTool(String toolName) {
         ToolTypes toolType = ToolTypes.getToolTypeByName(toolName);
         if (toolType == null) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Tool not found"); // todo: list the correct names
-            return new Result(false, sb.toString());
+            String notFoundMessage = "Tool not found" + "\n" +
+                    ToolTypes.getFullList();
+            return new Result(false, notFoundMessage);
         }
-        // TODO: equip tool
+        player.setCurrentTool();
         return new Result(true, "");
     }
 

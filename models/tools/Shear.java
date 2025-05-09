@@ -5,6 +5,7 @@ import models.App;
 import models.Item;
 import models.User;
 import models.enums.Skill;
+import models.enums.SkillLevel;
 import models.enums.environment.Direction;
 import models.enums.types.ToolTypes;
 
@@ -12,13 +13,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Shear extends Tool {
-    public Shear(int energyNeeded, Skill relatedSkill) {
-        super(energyNeeded, relatedSkill);
+    public Shear() {
+        super(ToolTypes.SHEARS);
     }
 
     @Override
-    public int calculateEnergyNeeded() {
-        return super.calculateEnergyNeeded();
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
+        return super.calculateEnergyNeeded(playerSkills);
     }
 
     @Override

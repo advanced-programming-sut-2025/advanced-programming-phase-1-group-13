@@ -2,28 +2,29 @@ package models.tools;
 
 import models.Item;
 import models.enums.Skill;
+import models.enums.SkillLevel;
 import models.enums.environment.Direction;
 import models.enums.types.ToolTypes;
 
-public class Tool extends Item {
-    private int energyNeeded;
-    private Skill relatedSkill;
-    private ToolTypes toolType;
+import java.util.HashMap;
 
-    public Tool(int energyNeeded, Skill relatedSkill) {
-        this.energyNeeded = energyNeeded;
-        this.relatedSkill = relatedSkill;
+public class Tool extends Item {
+    private ToolTypes toolType;
+    private final Skill relatedSkill;
+
+    public Tool(ToolTypes toolType) {
+        this.toolType = toolType;
+        this.relatedSkill = toolType.getRelatedSkill();
     }
 
-    public int calculateEnergyNeeded() {
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
         // TODO: calculate energy needed based on related skill
-        return energyNeeded;
+        return 0;
     }
 
     public Skill getRelatedSkill() {
         return relatedSkill;
     }
-
 
     public void upgradeTool() {
         // TODO

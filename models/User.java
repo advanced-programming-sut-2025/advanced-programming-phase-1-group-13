@@ -188,7 +188,6 @@ public class User {
         this.position = newPosition;
     }
 
-
     public String getStringLearntCookingRecipes() {
         // TODO: Use StringBuilder for it
         return null;

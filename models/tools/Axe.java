@@ -1,18 +1,22 @@
 package models.tools;
 
 import models.enums.Skill;
+import models.enums.SkillLevel;
 import models.enums.environment.Direction;
+import models.enums.types.ToolTypes;
+
+import java.util.HashMap;
 
 
 public class Axe extends Tool {
 
-    public Axe(int energyNeeded, Skill relatedSkill) {
-        super(energyNeeded, relatedSkill);
+    public Axe() {
+        super(ToolTypes.AXE);
     }
 
     @Override
-    public int calculateEnergyNeeded() {
-        return super.calculateEnergyNeeded();
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
+        return super.calculateEnergyNeeded(playerSkills);
     }
 
     @Override
