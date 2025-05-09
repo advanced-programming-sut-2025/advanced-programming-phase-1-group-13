@@ -6,7 +6,6 @@ import models.farming.Crop;
 import java.util.HashMap;
 
 public enum ProcessedItemType implements ItemType {
-    // TODO: write with ItemType instead of Item (similar to NPCType)
     HONEY("Honey", "It's a sweet syrup produced by bees.", 75, 4,
             new HashMap<>(), 350),
     CHEESE("Cheese", "It's your basic cheese.", 100, 3,
@@ -72,6 +71,11 @@ public enum ProcessedItemType implements ItemType {
         this.processingTime = processingTime;
         this.ingredients = ingredients;
         this.sellPrice = sellPrice;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     private static HashMap<ItemType, Integer> createIngredientsMap(ItemType item, int quantity) {

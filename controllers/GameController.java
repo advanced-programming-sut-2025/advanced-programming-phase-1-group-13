@@ -423,6 +423,9 @@ public class GameController {
 
     public Result buyAnimal(String animalTypeStr, String name) {
         AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
+        if (animalType == null) {
+            return new Result(false, "Animal not found.");
+        }
         List<FarmBuildingType> livingSpaceTypes = animalType.getLivingSpaceTypes();
         AnimalLivingSpace animalLivingSpace = getAvailableLivingSpace(livingSpaceTypes);
 

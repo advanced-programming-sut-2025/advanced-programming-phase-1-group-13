@@ -126,6 +126,11 @@ public enum GoodsType implements ItemType {
         this.seasonalStock = seasonalStocks;
     }
 
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
     public int getPrice() {
         return price;
     }
