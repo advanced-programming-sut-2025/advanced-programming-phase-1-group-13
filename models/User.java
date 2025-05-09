@@ -7,6 +7,7 @@ import models.enums.environment.Direction;
 import models.enums.types.BackpackType;
 import models.enums.types.FoodType;
 import models.enums.types.Gender;
+import models.enums.types.ItemType;
 import models.inventory.Backpack;
 import models.tools.Tool;
 
@@ -235,5 +236,10 @@ public class User {
                 "Nickname: " + this.nickname + "\n" +
                 "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
                 "Number of games: " + this.games.size();
+    }
+
+    public boolean hasInInventory(ItemType itemType) {
+        // TODO
+        return false;
     }
 }

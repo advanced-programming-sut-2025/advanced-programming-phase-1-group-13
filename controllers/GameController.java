@@ -829,17 +829,37 @@ public class GameController {
 
     // === ARTISAN === //
 
-    public Result artisanUse(String artisanNamesString, String itemNamesString) {
-        ArrayList<ItemType> itemTypes = new ArrayList<>();
-        StringBuilder currentName = new StringBuilder();
+    // TODO: build artisan
 
-        for (char c : itemNamesString.toCharArray()) {
-            currentName.append(c);
+    public Result artisanUse(String artisanNameString, String itemNamesString) {
+        ArtisanType artisanType = getArtisanTypeByArtisanName(artisanNameString);
+
+        if (artisanType == null) {
+            return new Result(false, "Artisan not found.");
         }
+
+        ArrayList<String> itemNames = new ArrayList<>(Arrays.asList(itemNamesString.split("\\s+")));
+        ArrayList<ItemType> itemTypes = new ArrayList<>();
+        for (String itemName : itemNames) {
+            ItemType itemType = getItemTypeByItemName(itemName);
+            if (itemType == null) {
+                return new Result(false, itemName + " is not a valid item.");
+            }
+
+            itemTypes.add(itemType);
+        }
+
+        for (ItemType itemType : itemTypes) {
+            if (!player.hasInInventory(itemType)) {
+                return new Result(false, "You don't have enough " + itemType.getName());
+            }
+            // TODO
+        }
+
+        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
 
         return new Result(true, "");
     }
-
 
     public Result artisanGet(String artisanName) { // gives product
         // TODO: if product is not ready yet, return appropriate failing message
@@ -848,12 +868,17 @@ public class GameController {
         return new Result(true, "");
     }
 
-    private Artisan getArtisanByArtisanName(String artisanName) {
+    private ArtisanType getArtisanTypeByArtisanName(String artisanName) {
         for (ArtisanType type : ArtisanType.values()) {
             if (type.name().equalsIgnoreCase(artisanName)) {
-                return new Artisan(type);
+                return type;
             }
         }
+        return null;
+    }
+
+    private ItemType getItemTypeByItemName(String itemName) {
+        // TODO
         return null;
     }
 

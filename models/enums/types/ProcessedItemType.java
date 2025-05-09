@@ -3,6 +3,7 @@ package models.enums.types;
 import models.*;
 import models.farming.Crop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public enum ProcessedItemType implements ItemType {
@@ -102,5 +103,19 @@ public enum ProcessedItemType implements ItemType {
 
     private double calculatePicklePrice(VegetableType vegetableType) {
         return 7.5 * vegetableType.getPrice() + 25;
+    }
+
+    public static ProcessedItemType getProcessedItemTypeByIngredients(ArrayList<ItemType> ingredients) {
+        for (ProcessedItemType processedItemType : ProcessedItemType.values()) {
+            if (processedItemType.areIngredientsEqual(ingredients)) {
+                return processedItemType;
+            }
+        }
+        return null;
+    }
+
+    public boolean areIngredientsEqual(ArrayList<ItemType> items) {
+        // TODO
+        return true;
     }
 }
