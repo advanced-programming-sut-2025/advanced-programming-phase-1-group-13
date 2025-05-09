@@ -5,25 +5,29 @@ import models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public enum NPCType {
     CLINT(
             "Clint",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>()
+            new ArrayList<ItemType>(),
+            0
     ),
     MORRIS(
             "Morris",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>()
+            new ArrayList<ItemType>(),
+            0
     ),
     PIERRE(
             "Pierre",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>()
+            new ArrayList<ItemType>(),
+            0
     ),
     ROBIN(
             "Robin",
@@ -46,25 +50,29 @@ public enum NPCType {
                 add(FoodType.SPAGHETTI);
                 add(MaterialType.WOOD);
                 add(MineralType.IRON_BAR);
-            }}
+            }},
+            18
     ),
     WILLY(
             "Willy",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>()
+            new ArrayList<ItemType>(),
+            0
     ),
     MARNIE(
             "Marnie",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>()
+            new ArrayList<ItemType>(),
+            0
     ),
     GUS(
             "Gus",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>()
+            new ArrayList<ItemType>(),
+            0
     ),
     SEBASTIAN(
             "Sebastian",
@@ -87,7 +95,8 @@ public enum NPCType {
                 add(AnimalProductType.WOOL);
                 add(FoodType.PUMPKIN_PIE);
                 add(FoodType.PIZZA);
-            }}
+            }},
+            42
     ),
     ABIGAIL(
             "Abigail",
@@ -110,7 +119,8 @@ public enum NPCType {
                 add(MineralType.STONE);
                 add(MineralType.IRON_ORE);
                 add(GoodsType.COFFEE);
-            }}
+            }},
+            29
     ),
     HARVEY(
             "Harvey",
@@ -133,10 +143,11 @@ public enum NPCType {
                 add(GoodsType.COFFEE);
                 add(FoodType.VEGETABLE_MEDLEY);
                 add(ProcessedItemType.WINE);
-            }}
+            }},
+            61
     ),
-    LEA(
-            "Lea",
+    LEAH(
+            "Leah",
             Role.VILLAGER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
@@ -156,7 +167,8 @@ public enum NPCType {
                 add(FoodType.SALAD);
                 add(CropType.GRAPE);
                 add(ProcessedItemType.WINE);
-            }}
+            }},
+            14
     )
     ;
 
@@ -166,12 +178,14 @@ public enum NPCType {
             HashMap<ItemType, Integer> // rewards
             > quests;
     private final ArrayList<ItemType> favorites;
+    private final int daysToUnlockThirdQuest;
 
-    NPCType(String name, Role role, HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests, ArrayList<ItemType> favorites) {
+    NPCType(String name, Role role, HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests, ArrayList<ItemType> favorites, int daysToUnlockThirdQuest) {
         this.name = name;
         this.role = role;
         this.quests = quests;
         this.favorites = favorites;
+        this.daysToUnlockThirdQuest = daysToUnlockThirdQuest;
     }
 
     public String getName() {
@@ -191,4 +205,35 @@ public enum NPCType {
     public ArrayList<ItemType> getFavorites() {
         return favorites;
     }
+
+    public static String questString(int index, NPCType npcType, int friendshipLevel) {
+        HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests = npcType.getQuests();
+        int questIndex = 0;
+
+        for (Map.Entry<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> entry : quests.entrySet()) {
+            if (questIndex == index) {
+                StringBuilder message = new StringBuilder();
+                message.append(index + 1).append(". Request:");
+
+                for (Map.Entry<ItemType, Integer> request : entry.getKey().entrySet()) {
+                    message.append(" ").append(request.getValue()).append(" ").append(request.getKey().getName()).append("\n   ");
+                }
+
+                message.append("Reward:");
+                for (Map.Entry<ItemType, Integer> reward : entry.getValue().entrySet()) {
+                    int rewardAmount = reward.getValue();
+                    if (friendshipLevel == 2) {
+                        rewardAmount *= 2;
+                    }
+                    message.append(" ").append(rewardAmount).append(" ").append(reward.getKey().getName());
+                }
+
+                return message.toString();
+            }
+            questIndex++;
+        }
+
+        return "";
+    }
+
 }

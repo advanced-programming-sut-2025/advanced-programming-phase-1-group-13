@@ -1091,7 +1091,7 @@ public class GameController {
         for (NPC npc : game.getNpcs()) {
             int friendshipPoints = game.getNpcFriendshipPoints(player, npc);
             message.append(npc.getName()).append(": \n" +
-                    "   Friendship level: ").append((int) friendshipPoints / 200).append("\n" +
+                    "   Friendship level: ").append(friendshipPoints / 200).append("\n" +
                     "   Friendship points: ").append(friendshipPoints).append("\n" +
                     "-------------------------------\n");
         }
@@ -1099,8 +1099,22 @@ public class GameController {
     }
 
     public Result showQuestsList() {
-        // TODO
-        return new Result(true, "");
+        StringBuilder message = new StringBuilder("NPC quests:\n");
+        for (NPC npc : game.getNpcs()) {
+            int friendshipLevel = game.getNpcFriendshipPoints(player, npc) / 200;
+            message.append("-----------------------\n")
+                    .append(npc.getName()).append(" (").append(friendshipLevel).append("):\n");
+            if (npc.getQuests().isEmpty()) {
+                message.append("No quests.\n");
+            } else {
+                message.append(NPCType.questString(0, npc.getType(), friendshipLevel));
+                if (friendshipLevel >= 1) {
+                    message.append("\n\n").append(NPCType.questString(1, npc.getType(), friendshipLevel));
+                }
+                // TODO: check if third quest is unlocked
+            }
+        }
+        return new Result(true, message.toString());
     }
 
     public Result finishQuest(String indexStr) {
