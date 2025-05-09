@@ -79,11 +79,14 @@ public class GameController {
     }
 
     public Result throwItemToTrash(String itemName, String numberStr) {
-        // command: inventory trash ...
-        // TODO: get Item from name
-        // TODO: get number from numStr
-        // TODO: throw away
-        return new Result(true, "");
+        Item item = getItemByItemName(itemName);
+        Integer number;
+        if (numberStr == null) {
+            number = null;
+        } else {
+            number = Integer.parseInt(numberStr);
+        }
+        return player.getBackpack().removeFromInventory(item, number);
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //

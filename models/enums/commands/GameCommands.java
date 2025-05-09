@@ -89,7 +89,7 @@ public enum GameCommands implements Command {
 
 
     // TODO: complete these commands below:
-    THROW_ITEM_TO_TRASH(" <itemName> <number>") // number is optional
+    THROW_ITEM_TO_TRASH(" <itemName> <number>") // number is optional (it's ok to get nothing (null). check controller.
 
     ;
     private final String regex;
