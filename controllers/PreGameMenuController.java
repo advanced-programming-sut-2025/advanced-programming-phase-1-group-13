@@ -35,11 +35,16 @@ public class PreGameMenuController {
             return new Result(false, "Enter your username as the first player.");
         }
 
-        //TODO: return new Result(true, "You are already in a game.");
+        for (User player : players) {
+            if (player.getActiveGame() == null) {
+                return new Result(false, player.getUsername() + " is already in a game.");
+            }
+        }
 
         Game game = new Game(players);
         for (User user : players) {
             user.getGames().add(game);
+            user.setActiveGame(game);
         }
         App.addGame(game);
         return new Result(true, "New game made with you, " + usernames.get(1) +

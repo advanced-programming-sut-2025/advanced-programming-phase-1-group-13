@@ -20,7 +20,8 @@ public class User {
     private String nickname;
     private String email;
     private Gender gender;
-    private ArrayList<Game> games = new ArrayList<>();
+    private ArrayList<Game> games;
+    private Game activeGame;
     private int energy;
     private boolean isEnergyUnlimited;
     private Position position;
@@ -41,6 +42,8 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.games = new ArrayList<>();
+        this.activeGame = null;
         this.energy = 200; // TODO: change value if needed
         this.isEnergyUnlimited = false;
         this.balance = 0;
@@ -122,6 +125,14 @@ public class User {
 
     public double getBalance() {
         return balance;
+    }
+
+    public Game getActiveGame() {
+        return activeGame;
+    }
+
+    public void setActiveGame(Game activeGame) {
+        this.activeGame = activeGame;
     }
 
     public ArrayList<Game> getGames() {
