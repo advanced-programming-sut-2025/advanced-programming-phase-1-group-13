@@ -75,8 +75,7 @@ public class GameController {
 
     // === INVENTORY === //
     public Result inventoryShow() {
-        // TODO
-        return new Result(true, "");
+        return new Result(true, player.getBackpack().showItemsInInventory());
     }
 
     public Result throwItemToTrash(String itemName, String numberStr) {

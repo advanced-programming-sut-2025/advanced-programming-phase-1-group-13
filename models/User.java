@@ -65,7 +65,7 @@ public class User {
     }
 
     public Backpack getBackpack() {
-        return backpack;
+        return this.backpack;
     }
 
     public String getUsername() {

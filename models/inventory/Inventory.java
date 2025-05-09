@@ -30,4 +30,20 @@ public abstract class Inventory {
     public void removeFromInventory(Item item, int n) {
         // TODO
     }
+
+    public String showItemsInInventory() {
+        StringBuilder sb = new StringBuilder();
+        for (Item item : items.keySet()) {
+            sb.append(item.toString());
+            sb.append("\n");
+        }
+        if (!isCapacityUnlimited) {
+            int emptyLeft = capacity - items.size();
+            sb.append("capacity: ").append(capacity).append("\n")
+                    .append("empty spots left: ").append(emptyLeft);
+        } else {
+            sb.append("your inventory has unlimited capacity!");
+        }
+        return sb.toString();
+    }
 }
