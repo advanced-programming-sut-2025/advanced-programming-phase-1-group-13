@@ -30,6 +30,14 @@ public abstract class Inventory {
         // TODO
     }
 
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+    public boolean isCapacityUnlimited() {
+        return this.isCapacityUnlimited;
+    }
+
     public Result removeFromInventory(Item item, Integer n, User player) {
         if (!items.containsKey(item)) {
             return new Result(false, "Item does not exist.");

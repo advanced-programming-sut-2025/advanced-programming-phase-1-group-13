@@ -147,15 +147,18 @@ public class GameController {
 
     public Result craft(String itemName) {
         Item item = getItemByItemName(itemName);
-        if (!canCraft(item)) {
-            return new Result(false, "Not possible to craft that item!");
+        if (!canCraftResult(item).success()) {
+            return canCraftResult(item);
         }
-        // TODO: craft item and add it to inventory.
-        return new Result(true, "Item crafted and added to inventory.");
+        // TODO:
+        //  remove ingredients from inventory
+        //  craft the thing
+        //  add it to inventory.
+        return new Result(true, itemName + " crafted and added to inventory.");
     }
 
     public Result showCraftInfo(String craftName) {
-        // TODO
+        // TODO: tf is it? page 33 ... vegetables?
         return new Result(true, "");
     }
 
@@ -186,11 +189,17 @@ public class GameController {
         return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
     }
 
-    private boolean canCraft(Item item) {
-        // TODO: check if inventory is full; if so, return false.
-        // TODO: check if we know the recipe, return false if not.
-        // TODO: check if we have the ingredients, return false if not.
-        return false;
+    private Result canCraftResult(Item item) {
+        if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
+            return new Result(false, "Your backpack is full.");
+        } else if () {
+            // TODO: check if we know the recipe, return false if not.
+            return new Result(false, "You should learn the recipe first.");
+        } else if () {
+            // TODO: check if we have the ingredients, return false if not.
+            return new Result(false, "You don't have the necessary ingredients.");
+        }
+        return new Result(true, "");
     }
 
     private boolean canCook(FoodType food) {
@@ -385,12 +394,11 @@ public class GameController {
     public Result plant(String seedName, String directionName) {
         Seed seed = Seed.getSeedByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
-        Position position = player.getPosition();
-        Tile tile = getTileByPosition(position);
+        Tile tile = neighborTile(direction);
         if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-
+        // TODO
         return new Result(true, "");
     }
 
