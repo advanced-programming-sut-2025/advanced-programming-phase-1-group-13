@@ -1,6 +1,8 @@
 package models.enums.types;
 
 import models.enums.Skill;
+import models.inventory.Backpack;
+import models.tools.*;
 
 public enum ToolType implements ItemType {
     HOE("Hoe", Skill.FARMING),
@@ -11,7 +13,6 @@ public enum ToolType implements ItemType {
     SCYTHE("Scythe", null),
     MILK_PAIL("Milk pail", null),
     SHEARS("Shears", null),
-    BACKPACK("Backpack", null),
     TRASH_CAN("Trash can", null);
 
     private final String name;
@@ -30,6 +31,20 @@ public enum ToolType implements ItemType {
             }
         }
         return null;
+    }
+
+    public static Tool getToolByToolTypeAndMaterial(ToolType toolType, ToolMaterial material) {
+        return switch (toolType) {
+            case HOE -> new Hoe(material);
+            case PICKAXE -> new Pickaxe(material);
+            case AXE -> new Axe(material);
+            case WATERING_CAN -> new WateringCan(material);
+            case FISHING_ROD -> new FishingRod(material);
+            case SCYTHE -> new Scythe(material);
+            case MILK_PAIL -> new MilkPail(material);
+            case SHEARS -> new Shear(material);
+            case TRASH_CAN -> new TrashCan(material);
+        };
     }
 
     @Override

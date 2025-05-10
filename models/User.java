@@ -4,12 +4,10 @@ import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
-import models.enums.types.BackpackType;
-import models.enums.types.FoodType;
-import models.enums.types.Gender;
-import models.enums.types.ItemType;
+import models.enums.types.*;
 import models.inventory.Backpack;
 import models.tools.Tool;
+import models.tools.TrashCan;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +34,7 @@ public class User {
     private Backpack backpack;
     private double balance;
     private int mostEarnedMoney;
+    private TrashCan trashCan;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -58,6 +57,15 @@ public class User {
         this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ZERO);
         this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
         this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
+        this.trashCan = new TrashCan(ToolMaterial.BASIC);
+    }
+
+    public TrashCan getTrashCan() {
+        return this.trashCan;
+    }
+
+    public void setTrashCan(TrashCan trashCan) {
+        this.trashCan = trashCan;
     }
 
     public void setCurrentTool(Tool currentTool) {
@@ -162,10 +170,6 @@ public class User {
 
     public ArrayList<Transaction> getTransactions() {
         return transactions;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public void changeBalance(double amount) {

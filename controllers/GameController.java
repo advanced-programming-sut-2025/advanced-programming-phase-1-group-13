@@ -14,6 +14,7 @@ import models.tools.Tool;
 import models.enums.environment.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class GameController {
     public Result cheatAdvanceDate(String dayIncreaseStr) {
         int hourIncrease = Integer.parseInt(dayIncreaseStr);
         Time.cheatAdvanceDate(hourIncrease, App.getCurrentGame().getGameState().getTime());
-        return new Result(true, "");
+        return new Result(true, ""); // todo: message
     }
 
     // === INVENTORY === //
@@ -89,7 +90,7 @@ public class GameController {
         } else {
             number = Integer.parseInt(numberStr);
         }
-        return player.getBackpack().removeFromInventory(item, number);
+        return player.getBackpack().removeFromInventory(item, number , player);
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //

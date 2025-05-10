@@ -6,6 +6,7 @@ import models.Item;
 import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
+import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
 
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ public class MilkPail extends Tool {
 
     public MilkPail() {
         super(ToolType.MILK_PAIL);
+    }
+
+    public MilkPail(ToolMaterial material) {
+        super(ToolType.MILK_PAIL, material);
     }
 
     @Override

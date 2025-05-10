@@ -2,8 +2,10 @@ package models.inventory;
 
 import models.Item;
 import models.Result;
+import models.User;
+import models.enums.types.ToolMaterial;
+import models.tools.TrashCan;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Inventory {
@@ -28,30 +30,44 @@ public abstract class Inventory {
         // TODO
     }
 
-    public Result removeFromInventory(Item item, Integer n) {
+    public Result removeFromInventory(Item item, Integer n, User player) {
         if (!items.containsKey(item)) {
             return new Result(false, "Item does not exist.");
         }
-        if (n == null) {
-            items.remove(item);
-            return new Result(true, "Item removed from inventory.");
-        }
         int currentQuantity = items.get(item);
-        if (currentQuantity < n) {
-            String message = "The provided number is larger than the quantity in inventory." + "\n" +
+        if (n != null && currentQuantity < n) {
+            String message = "The provided number is larger than the quantity in inventory.\n" +
                     "You have " + currentQuantity + " " + item + " in your inventory.";
             return new Result(false, message);
         }
+        ToolMaterial trashCanMaterial = player.getTrashCan().getToolMaterial();
+        if (n == null) {
+            return removeAllOfThatItem(item, player, trashCanMaterial);
+        }
         int newQuantity = currentQuantity - n;
         if (newQuantity == 0) {
-            items.remove(item);
-            return new Result(true, "Item removed from inventory.");
+            return removeAllOfThatItem(item, player, trashCanMaterial);
         } else {
             items.put(item, newQuantity);
-            String message = n + " of item <" + item + "> has been removed from inventory." + "\n" +
-                    "You now have " + newQuantity + " of that item in your inventory.";
+            double moneyToEarn = TrashCan.calculateMoneyToEarnViaTrashCan(trashCanMaterial, n, item.getPrice());
+            player.changeBalance(moneyToEarn);
+            String message = n + " of item <" + item + "> has been removed from inventory.\n" +
+                    "You now have " + newQuantity + " of that item in your inventory.\n" +
+                    "You earned " + moneyToEarn + ".";
             return new Result(true, message);
         }
+    }
+
+    private Result removeAllOfThatItem(Item item, User player, ToolMaterial trashCanMaterial) {
+        items.remove(item);
+        Integer numOfItem = items.get(item);
+        Integer itemPrice = item.getPrice();
+        double moneyToEarn = TrashCan.calculateMoneyToEarnViaTrashCan(trashCanMaterial, numOfItem, itemPrice);
+        player.changeBalance(moneyToEarn);
+
+        String message = "Item removed from inventory.\n" +
+                "You earned " + moneyToEarn + ".";
+        return new Result(true, message);
     }
 
     public String showItemsInInventory() {

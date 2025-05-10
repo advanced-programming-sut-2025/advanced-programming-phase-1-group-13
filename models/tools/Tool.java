@@ -9,14 +9,20 @@ import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
-public class Tool extends Item {
-    private ToolType toolType;
+public abstract class Tool extends Item {
+    private final ToolType toolType;
     private final Skill relatedSkill;
     private ToolMaterial toolMaterial;
 
     public Tool(ToolType toolType) {
         this.toolType = toolType;
         this.relatedSkill = toolType.getRelatedSkill();
+    }
+
+    public Tool(ToolType toolType, ToolMaterial toolMaterial) {
+        this.toolType = toolType;
+        this.relatedSkill = toolType.getRelatedSkill();
+        this.toolMaterial = toolMaterial;
     }
 
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
@@ -29,7 +35,18 @@ public class Tool extends Item {
     }
 
     public void upgradeTool() {
-        // TODO
+        this.toolMaterial = switch (toolMaterial) {
+            case BASIC:
+                yield ToolMaterial.COPPER;
+            case COPPER:
+                yield ToolMaterial.IRON;
+            case IRON:
+                yield ToolMaterial.GOLD;
+            case GOLD:
+                yield ToolMaterial.IRIDIUM;
+            case IRIDIUM:
+                yield null;
+        };
     }
 
     public void useTool(Direction direction) {
@@ -39,5 +56,13 @@ public class Tool extends Item {
     @Override
     public String toString() {
         return this.toolType.getName();
+    }
+
+    public ToolType getToolType() {
+        return this.toolType;
+    }
+
+    public ToolMaterial getToolMaterial() {
+        return this.toolMaterial;
     }
 }
