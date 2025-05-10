@@ -460,8 +460,8 @@ public class GameController {
         } else {
             int newWoodCount = woodInInventory - woodNeeded;
             int newStoneCount = stoneInInventory - stoneNeeded;
-            items.put(wood, newWoodCount);
-            items.put(stone, newStoneCount);
+            player.getBackpack().removeFromInventory(wood, newWoodCount);
+            player.getBackpack().removeFromInventory(stone, newStoneCount);
             methodOfPaymentDescription = "You used " + woodNeeded + " woods and " + stoneNeeded + " stones to build it";
         }
         farm.getFarmBuildings().add(farmBuilding);

@@ -101,7 +101,35 @@ public abstract class Inventory {
         return sb.toString();
     }
 
-    public Item getItemFromInventory(String itemName) {
+    public Result removeFromInventory(Item item, int amount) {
+        if (!items.containsKey(item)) {
+            return new Result(false, "Item does not exist.");
+        }
+        int currentQuantity = items.get(item);
+        if (n != null && currentQuantity < n) {
+            String message = "The provided number is larger than the quantity in inventory.\n" +
+                    "You have " + currentQuantity + " " + item + " in your inventory.";
+            return new Result(false, message);
+        }
+        if (n == null) {
+            items.remove(item);
+            String message = "Item removed from inventory.";
+            return new Result(true, message);
+        }
+        int newQuantity = currentQuantity - n;
+        if (newQuantity == 0) {
+            items.remove(item);
+            String message = "Item removed from inventory.";
+            return new Result(true, message);
+        } else {
+            items.put(item, newQuantity);
+            String message = n + " of item <" + item + "> has been removed from inventory.\n" +
+                    "You now have " + newQuantity + " of that item in your inventory.\n";
+            return new Result(true, message);
+        }
+    }
+
+    public Item getItemFromInventoryByName(String itemName) {
         for (Item item : items.keySet()) {
             if (item.getName().equals(itemName)) {
                 return item;
