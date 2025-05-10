@@ -10,7 +10,7 @@ public class Tile {
     public TileType getType() {
         return this.type;
     }
-//
+
     public void setType(TileType type) {
         this.type = type;
     }
@@ -29,5 +29,6 @@ public class Tile {
 
     public void pLaceItemOnTile(Item itemPLacedOnTile) {
         this.itemPLacedOnTile = itemPLacedOnTile;
+        this.setType(TileType.UNDER_AN_ITEM);
     }
 }
