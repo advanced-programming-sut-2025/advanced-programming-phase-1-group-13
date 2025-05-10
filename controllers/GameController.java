@@ -115,9 +115,10 @@ public class GameController {
         Tool tool = player.getCurrentTool();
         if (canToolBeUsedHere(position, tool)) {
             tool.useTool(direction);
-            return new Result(true, "");
+            return new Result(true, "Done!");
         }
-        return new Result(false, "You can't use" + tool.toString() + " in that direction");
+        String message = "You can't use" + tool.toString() + " here on your " + directionString + ".";
+        return new Result(false, message);
     }
 
     public Result placeItem(String itemName, String directionString) {

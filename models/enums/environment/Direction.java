@@ -28,13 +28,21 @@ public enum Direction {
         }
         return switch (name.toLowerCase()) {
             case "up" -> UP;
+            case "u" -> UP;
             case "down" -> DOWN;
+            case "d" -> DOWN;
             case "right" -> RIGHT;
+            case "r" -> RIGHT;
             case "left" -> LEFT;
+            case "l" -> LEFT;
             case "up-right" -> UP_RIGHT;
+            case "ur" -> UP_RIGHT;
             case "up-left" -> UP_LEFT;
+            case "ul" -> UP_LEFT;
             case "down-right" -> DOWN_RIGHT;
+            case "dr" -> DOWN_RIGHT;
             case "down-left" -> DOWN_LEFT;
+            case "dl" -> DOWN_LEFT;
             default -> null;
         };
     }
