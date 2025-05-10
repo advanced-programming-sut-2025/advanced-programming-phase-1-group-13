@@ -112,8 +112,7 @@ public class User {
     public Backpack getBackpack() {
         return this.backpack;
     }
-
-    //
+//
     public String getUsername() {
         return username;
     }

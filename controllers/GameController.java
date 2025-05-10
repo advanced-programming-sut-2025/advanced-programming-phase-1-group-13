@@ -89,7 +89,7 @@ public class GameController {
         } else {
             number = Integer.parseInt(numberStr);
         }
-        return player.getBackpack().removeFromInventory(item, number, player);
+        return player.getBackpack().removeFromInventoryToTrash(item, number, player);
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
@@ -100,7 +100,7 @@ public class GameController {
             String notFoundMessage = "Tool not found.\n" + "Enter a valid tool name: \n" + ToolType.getFullList();
             return new Result(false, notFoundMessage);
         }
-        Item itemFromInventory = player.getBackpack().getItemFromInventory(toolName);
+        Item itemFromInventory = player.getBackpack().getItemFromInventoryByName(toolName);
         if (itemFromInventory == null) {
             return new Result(false, "Tool not found in inventory.");
         }
@@ -127,7 +127,7 @@ public class GameController {
     }
 
     public Result placeItem(String itemName, String directionString) {
-        Item item = player.getBackpack().getItemFromInventory(itemName);
+        Item item = player.getBackpack().getItemFromInventoryByName(itemName);
         if (item == null) {
             return new Result(false, "Item not found in inventory.");
         }
@@ -461,8 +461,8 @@ public class GameController {
         } else {
             int newWoodCount = woodInInventory - woodNeeded;
             int newStoneCount = stoneInInventory - stoneNeeded;
-            items.put(wood, newWoodCount);
-            items.put(stone, newStoneCount);
+            player.getBackpack().removeFromInventory(wood, newWoodCount);
+            player.getBackpack().removeFromInventory(stone, newStoneCount);
             methodOfPaymentDescription = "You used " + woodNeeded + " woods and " + stoneNeeded + " stones to build it";
         }
         farm.getFarmBuildings().add(farmBuilding);
@@ -906,7 +906,7 @@ public class GameController {
             // TODO
         }
 
-        //ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
+        // TODO ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
 
         return new Result(true, "");
     }
@@ -1146,7 +1146,8 @@ public class GameController {
         }
 
         if (!hasAccepted) {
-            targetUser.setDepressed(true); // TODO: change after 7 days
+            targetUser.setDepressed(true);
+            // TODO: change after 7 days, and check in the beginning of the day for energy
             return new Result(false, "Marriage request denied. Your friendship level with " + username +
                     " is now 0. " + username + " is now depressed.");
         }

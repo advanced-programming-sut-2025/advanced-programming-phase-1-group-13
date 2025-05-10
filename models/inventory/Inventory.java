@@ -22,8 +22,12 @@ public abstract class Inventory {
         return this.items;
     }
 
-    public void addToInventory(Item item, int n) {
-        items.put(item, n);
+    public Result addToInventory(Item item, int n) {
+        if (isCapacityUnlimited || this.getItems().size() < this.capacity) {
+            items.put(item, n);
+            return new Result(true, "Successfully added " + n + " of " + item.getName() + " to the inventory.");
+        }
+        return new Result(false, "Capacity limit exceeded.");
     }
 
     public void CheatAddToInventory(Item item, int n) {
@@ -38,7 +42,7 @@ public abstract class Inventory {
         return this.isCapacityUnlimited;
     }
 
-    public Result removeFromInventory(Item item, Integer n, User player) {
+    public Result removeFromInventoryToTrash(Item item, Integer n, User player) {
         if (!items.containsKey(item)) {
             return new Result(false, "Item does not exist.");
         }
@@ -50,11 +54,11 @@ public abstract class Inventory {
         }
         ToolMaterial trashCanMaterial = player.getTrashCan().getToolMaterial();
         if (n == null) {
-            return removeAllOfThatItem(item, player, trashCanMaterial);
+            return removeAllOfThatItemToTrash(item, player, trashCanMaterial);
         }
         int newQuantity = currentQuantity - n;
         if (newQuantity == 0) {
-            return removeAllOfThatItem(item, player, trashCanMaterial);
+            return removeAllOfThatItemToTrash(item, player, trashCanMaterial);
         } else {
             items.put(item, newQuantity);
             double moneyToEarn = TrashCan.calculateMoneyToEarnViaTrashCan(trashCanMaterial, n, item.getPrice());
@@ -66,7 +70,7 @@ public abstract class Inventory {
         }
     }
 
-    private Result removeAllOfThatItem(Item item, User player, ToolMaterial trashCanMaterial) {
+    private Result removeAllOfThatItemToTrash(Item item, User player, ToolMaterial trashCanMaterial) {
         items.remove(item);
         Integer numOfItem = items.get(item);
         Integer itemPrice = item.getPrice();
@@ -97,7 +101,35 @@ public abstract class Inventory {
         return sb.toString();
     }
 
-    public Item getItemFromInventory(String itemName) {
+    public Result removeFromInventory(Item item, Integer n) {
+        if (!items.containsKey(item)) {
+            return new Result(false, "Item does not exist.");
+        }
+        int currentQuantity = items.get(item);
+        if (n != null && currentQuantity < n) {
+            String message = "The provided number is larger than the quantity in inventory.\n" +
+                    "You have " + currentQuantity + " " + item + " in your inventory.";
+            return new Result(false, message);
+        }
+        if (n == null) {
+            items.remove(item);
+            String message = "Item removed from inventory.";
+            return new Result(true, message);
+        }
+        int newQuantity = currentQuantity - n;
+        if (newQuantity == 0) {
+            items.remove(item);
+            String message = "Item removed from inventory.";
+            return new Result(true, message);
+        } else {
+            items.put(item, newQuantity);
+            String message = n + " of item <" + item + "> has been removed from inventory.\n" +
+                    "You now have " + newQuantity + " of that item in your inventory.\n";
+            return new Result(true, message);
+        }
+    }
+
+    public Item getItemFromInventoryByName(String itemName) {
         for (Item item : items.keySet()) {
             if (item.getName().equals(itemName)) {
                 return item;
