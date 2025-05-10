@@ -43,8 +43,7 @@ public class LoginController {
             return new Result(false, "Passwords do not match.");
         }
         Gender gender = Gender.getGenderByName(genderString);
-        String hash = hashSha256(password);
-        User user = new User(username, hash, nickname, email, gender);
+        User user = new User(username, password, hashSha256(password), nickname, email, gender);
         App.addUser(user);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -57,6 +56,20 @@ public class LoginController {
                 .append("\"pick question -q <question number> -a <answer> -c <repeated answer>\"");
         System.out.println(stringBuilder);
         return new Result(true, username);
+    }
+
+    String hashSha256(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Result pickSecurityQuestion(String username, String questionNumberStr, String answer, String repeatAnswer) {
@@ -82,30 +95,17 @@ public class LoginController {
         return new Result(true, sb.toString());
     }
 
-    String hashSha256(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = md.digest(input.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : bytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public Result login(String username, String password) {
         User user = getUserByUsername(username);
         if (user == null) {
             return new Result(false, "User not found.");
         }
-        // TODO: check below
-        String hash = hashSha256(password);
-        if (!hash.equals(hashSha256(user.getPassword()))) {
+
+        if (!password.equals(user.getPassword())) {
+            System.out.println("LOOOOKKK: " + user.getPassword());
             return new Result(false, "Incorrect password.");
         }
+
         App.setLoggedIn(user);
         App.setCurrentMenu(Menu.MAIN_MENU);
         return new Result(true, "Login successful. You are now in Main Menu.");

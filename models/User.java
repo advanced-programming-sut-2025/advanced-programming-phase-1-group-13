@@ -9,6 +9,8 @@ import models.inventory.Backpack;
 import models.tools.Tool;
 import models.tools.TrashCan;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +27,7 @@ public class User {
     private boolean isEnergyUnlimited;
     private Position position;
     private Tool currentTool;
+    private String hashedPass;
     private HashMap<Skill, SkillLevel> skillLevels;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<FoodType> learntCookingRecipes;
@@ -39,11 +42,12 @@ public class User {
     private User spouse;
     private boolean isDepressed;
 
-    public User(String username, String password, String nickname, String email, Gender gender) {
+    public User(String username, String password, String hashPass, String nickname, String email, Gender gender) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
+        this.hashedPass = hashPass;
         this.gender = gender;
         this.games = new ArrayList<>();
         this.activeGame = null;
@@ -61,9 +65,24 @@ public class User {
         this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
         this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
         this.trashCan = new TrashCan(ToolMaterial.BASIC);
+        this.currentTool = null;
         this.marriageRequests = new ArrayList<>();
         this.spouse = null;
         this.isDepressed = false;
+    }
+
+    private String hashSha256(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public TrashCan getTrashCan() {
@@ -93,7 +112,8 @@ public class User {
     public Backpack getBackpack() {
         return this.backpack;
     }
-//
+
+    //
     public String getUsername() {
         return username;
     }
@@ -103,7 +123,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public String getEmail() {
@@ -132,6 +152,11 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        this.hashedPass = hashSha256(password);
+    }
+
+    public boolean checkPassword(String inputPassword) {
+        return this.password.equals(hashSha256(inputPassword));
     }
 
     public int getEnergy() {

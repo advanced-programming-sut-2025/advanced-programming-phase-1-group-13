@@ -192,13 +192,14 @@ public class GameController {
     private Result canCraftResult(Item item) {
         if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
             return new Result(false, "Your backpack is full.");
-        } else if () {
-            // TODO: check if we know the recipe, return false if not.
-            return new Result(false, "You should learn the recipe first.");
-        } else if () {
-            // TODO: check if we have the ingredients, return false if not.
-            return new Result(false, "You don't have the necessary ingredients.");
         }
+//        else if () {
+//            // TODO: check if we know the recipe, return false if not.
+//            return new Result(false, "You should learn the recipe first.");
+//        } else if () {
+//            // TODO: check if we have the ingredients, return false if not.
+//            return new Result(false, "You don't have the necessary ingredients.");
+//        }
         return new Result(true, "");
     }
 
@@ -905,7 +906,7 @@ public class GameController {
             // TODO
         }
 
-        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
+        //ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
 
         return new Result(true, "");
     }
@@ -1119,9 +1120,9 @@ public class GameController {
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             if (!player.getGender().equals(targetPlayer.getGender())) {
                 HashMap<Item, Integer> items = player.getBackpack().getItems();
-                if (items.get(new Item(GoodsType.WEDDING_RING)) == 0) {
-                    return new Result(false, "You don't have a ring to propose with.");
-                }
+//                if (items.get(new Item(GoodsType.WEDDING_RING)) == 0) {
+//                    return new Result(false, "You don't have a ring to propose with.");
+//                }
                 targetPlayer.addMarriageRequests(player);
                 return new Result(true, "You proposed to " + username + ". Wait for their response.");
             }
