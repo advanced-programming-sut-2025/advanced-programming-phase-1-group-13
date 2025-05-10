@@ -5,9 +5,10 @@ import models.enums.types.TileType;
 public class Tile {
     private TileType type;
     private Position position;
+    private Item itemPLacedOnTile;
 
     public TileType getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(TileType type) {
@@ -15,10 +16,18 @@ public class Tile {
     }
 
     public Position getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public Item getItemPLacedOnTile() {
+        return this.itemPLacedOnTile;
+    }
+
+    public void pLaceItemOnTile(Item itemPLacedOnTile) {
+        this.itemPLacedOnTile = itemPLacedOnTile;
     }
 }

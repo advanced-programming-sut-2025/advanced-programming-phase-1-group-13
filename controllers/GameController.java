@@ -110,28 +110,39 @@ public class GameController {
 
     public Result useTool(String directionString) {
         Direction direction = Direction.getDirectionByDisplayName(directionString);
-        Position position = neighborTile(direction);
+        Tile tile = neighborTile(direction);
         Tool tool = player.getCurrentTool();
-        if (canToolBeUsedHere(position, tool)) {
+        String failingMessage = "You can't use" + tool.toString() + " here on your " + directionString + ".";
+        if (tile == null) {
+            return new Result(false, failingMessage);
+        }
+        if (tool == null) {
+            return new Result(false, "You should equip tool first.");
+        }
+        if (canToolBeUsedHere(tile, tool.getToolType())) {
             tool.useTool(direction);
             return new Result(true, "Done!");
         }
-        String message = "You can't use" + tool.toString() + " here on your " + directionString + ".";
-        return new Result(false, message);
+        return new Result(false, failingMessage);
     }
 
     public Result placeItem(String itemName, String directionString) {
-        Item item = getItemByItemName(itemName);
-        Direction direction = Direction.getDirectionByDisplayName(directionString);
-
-        Position position = neighborTile(direction);
-        if (canItemBePlacedHere(position, item)) {
-            // TODO: place item
-            // TODO: LEARN ABOUT assert position != null;
-            return new Result(true, item + " placed at " + position.toString());
+        Item item = player.getBackpack().getItemFromInventory(itemName);
+        if (item == null) {
+            return new Result(false, "Item not found in inventory.");
         }
-        return new Result(false, "you can't place that item at " + position.toString());
+        Direction direction = Direction.getDirectionByDisplayName(directionString);
+        Tile tile = neighborTile(direction);
+        if (tile == null) {
+            return new Result(false, "No available tile in that direction.");
+        }
 
+        String atPosOnTile = "at " + tile.getPosition().toString() + " on " + tile.getType().getDisplayName();
+
+        if (canItemBePlacedHere(tile.getType())) {
+            return new Result(true, item + " placed " + atPosOnTile);
+        }
+        return new Result(false, "Cannot place item " + atPosOnTile);
     }
 
     public Result craft(String itemName) {
@@ -189,17 +200,47 @@ public class GameController {
         return false;
     }
 
-    private boolean canToolBeUsedHere(Position position, Tool tool) {
-        // TODO: check the tile at "position" and check if tool can be used!
-        return false;
+    private boolean canToolBeUsedHere(Tile tile, ToolType toolType) { // todo: check greenhouse options.
+        TileType tileType = tile.getType();
+        if (toolType == ToolType.HOE) {
+            return tileType == TileType.PLOWED_SOIL ||
+                    tileType == TileType.NOT_PLOWED_SOIL;
+        } else if (toolType == ToolType.PICKAXE) {
+            return tileType == TileType.PLOWED_SOIL ||
+                    tileType == TileType.NOT_PLOWED_SOIL ||
+                    tileType == TileType.PLANTED_SEED ||
+                    tileType == TileType.GROWING_CROP ||
+                    tileType == TileType.QUARRY ||
+                    tileType == TileType.STONE ||
+                    tileType == TileType.UNDER_AN_ITEM;
+        } else if (toolType == ToolType.AXE) {
+            return tileType == TileType.TREE ||
+                    tileType == TileType.WOOD_LOG;
+        } else if (toolType == ToolType.WATERING_CAN) {
+            return tileType != TileType.CABIN;
+        } else if (toolType == ToolType.FISHING_ROD) {
+            return tileType == TileType.WATER;
+        } else if (toolType == ToolType.SCYTHE) {
+            return tileType == TileType.GRASS ||
+                    tileType == TileType.TREE ||
+                    tileType == TileType.GROWING_CROP ||
+                    tileType == TileType.GREENHOUSE;
+        } else if (toolType == ToolType.MILK_PAIL) {
+            return tileType == TileType.ANIMAL;
+        } else if (toolType == ToolType.SHEARS) {
+            return tileType == TileType.ANIMAL;
+        } else return toolType == ToolType.TRASH_CAN; // directs to appropriate message.
     }
 
-    private boolean canItemBePlacedHere(Position position, Item item) {
-        // TODO: check the tile at "position" and check if item can be placed there!
-        return false;
+    private boolean canItemBePlacedHere(TileType tileType) {
+        return tileType == TileType.PLOWED_SOIL ||
+                tileType == TileType.NOT_PLOWED_SOIL ||
+                tileType == TileType.CABIN ||
+                tileType == TileType.GRASS ||
+                tileType == TileType.QUARRY;
     }
 
-    private Position neighborTile(Direction direction) {
+    private Tile neighborTile(Direction direction) {
         // TODO: return the position of the neighbour tile, if within the range of our map of farms.
         return null;
     }

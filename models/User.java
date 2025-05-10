@@ -58,6 +58,7 @@ public class User {
         this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
         this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
         this.trashCan = new TrashCan(ToolMaterial.BASIC);
+        this.currentTool = null;
     }
 
     public TrashCan getTrashCan() {
