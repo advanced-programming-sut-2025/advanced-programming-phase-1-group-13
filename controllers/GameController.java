@@ -1075,9 +1075,31 @@ public class GameController {
     }
 
     public Result giveGift(String username, String itemName, String amountStr) {
+        User targetPlayer = game.getPlayerByUsername(username);
+
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
+            return new Result(false, "You must be close to " + username + " to give them a gift.");
+        }
+
+        Item gift = player.getBackpack().getItemFromInventoryByName(itemName);
+        if (gift == null) {
+            return new Result(false, "Item not found.");
+        }
+
         int amount = Integer.parseInt(amountStr);
-        // TODO: check the error cases (from Doc page.48)
-        return new Result(true, "");
+        Result result = player.getBackpack().removeFromInventory(gift, amount);
+        if (!result.success()) {
+            return result;
+        }
+
+        targetPlayer.getBackpack().addToInventory(gift, amount);
+        // TODO
+        return new Result(true, "You gave " + itemName + " (x" + amount + ") to " + username + ". " +
+                "Your friendship level will change after they rate it.");
     }
 
     public Result giftList() {
