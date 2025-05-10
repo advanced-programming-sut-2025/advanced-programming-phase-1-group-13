@@ -164,10 +164,13 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result cheatAddItem(String itemName) {
+    public Result cheatAddItem(String itemName, String numberStr) {
         Item item = getItemByItemName(itemName);
-        // TODO: handle the optional "count" flag
-        // TODO: add item to inventory
+        int number = 1;
+        if (numberStr != null) {
+            number = Integer.parseInt(numberStr);
+        }
+        player.getBackpack().addToInventory(item, number);
         return new Result(true, "Item added to inventory.");
     }
 

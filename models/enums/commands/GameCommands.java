@@ -40,7 +40,7 @@ public enum GameCommands implements Command {
     CRAFTING_SHOW_RECIPES("^\\s*crafting\\s+show\\s+recipes\\s*$"),
     CRAFTING_CRAFT("^\\s*crafting\\s+craft\\s+(?<item_name>.+)\\s*$"),
     PLACE_ITEM("^\\s*place\\s+item\\s+-n\\s+(?<item_name>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),
-    CHEAT_ADD_ITEM("^\\s*cheat\\s+add\\s+item\\s+-n\\s+(?<item_name>.+)\\s+-c\\s+(?<count>\\d+)\\s*$"),
+    CHEAT_ADD_ITEM("^\\s*cheat\\s+add\\s+item\\s+-n\\s+(?<item_name>.+)\\s*(-c\\s+(?<count>\\d+))?\\s*$"),
     COOKING_REFRIGERATOR("^\\s*cooking\\s+refrigerator\\s+(?<put_or_pick>put|pick)\\s+(?<item>.+)\\s*$"),
     COOKING_SHOW_RECIPES("^\\s*cooking\\s+show\\s+recipes\\s*$"),
     COOKING_PREPARE("^\\s*cooking\\s+prepare\\s+(?<recipe_name>.+)\\s*$"),
