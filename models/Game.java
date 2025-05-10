@@ -13,13 +13,13 @@ public class Game {
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
     private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
-    // Each inner HashMap stores the messages and boolean of have they been read by the reciever
+    // Each inner HashMap stores the messages and boolean of have they been read by the receiver
 
     public Game(ArrayList<User> players) {
         this.players = players;
 
         this.npcs = new ArrayList<>();
-        for (NPCType npcType : NPCType.values()){
+        for (NPCType npcType : NPCType.values()) {
             this.npcs.add(new NPC(npcType));
         }
 
