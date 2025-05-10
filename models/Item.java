@@ -1,13 +1,16 @@
 package models;
 
-public abstract class Item {
+import models.enums.types.ItemType;
+
+public class Item {
+    private ItemType type;
     private boolean isSellable;
     private boolean isPurchasable;
     private int price;
     private String name;
 
-    public Item() {
-        // TODO: constructor
+    public Item(ItemType type) {
+        this.type = type;
     }
 
     public String getName() {

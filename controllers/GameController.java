@@ -110,55 +110,41 @@ public class GameController {
 
     public Result useTool(String directionString) {
         Direction direction = Direction.getDirectionByDisplayName(directionString);
-        Tile tile = neighborTile(direction);
+        Position position = neighborTile(direction);
         Tool tool = player.getCurrentTool();
-        String failingMessage = "You can't use" + tool.toString() + " here on your " + directionString + ".";
-        if (tile == null) {
-            return new Result(false, failingMessage);
-        }
-        if (tool == null) {
-            return new Result(false, "You should equip tool first.");
-        }
-        if (canToolBeUsedHere(tile, tool.getToolType())) {
+        if (canToolBeUsedHere(position, tool)) {
             tool.useTool(direction);
             return new Result(true, "Done!");
         }
-        return new Result(false, failingMessage);
+        String message = "You can't use" + tool.toString() + " here on your " + directionString + ".";
+        return new Result(false, message);
     }
 
     public Result placeItem(String itemName, String directionString) {
-        Item item = player.getBackpack().getItemFromInventory(itemName);
-        if (item == null) {
-            return new Result(false, "Item not found in inventory.");
-        }
+        Item item = getItemByItemName(itemName);
         Direction direction = Direction.getDirectionByDisplayName(directionString);
-        Tile tile = neighborTile(direction);
-        if (tile == null) {
-            return new Result(false, "No available tile in that direction.");
-        }
 
-        String atPosOnTile = "at " + tile.getPosition().toString() + " on " + tile.getType().getDisplayName();
-
-        if (canItemBePlacedHere(tile.getType())) {
-            return new Result(true, item + " placed " + atPosOnTile);
+        Position position = neighborTile(direction);
+        if (canItemBePlacedHere(position, item)) {
+            // TODO: place item
+            // TODO: LEARN ABOUT assert position != null;
+            return new Result(true, item + " placed at " + position.toString());
         }
-        return new Result(false, "Cannot place item " + atPosOnTile);
+        return new Result(false, "you can't place that item at " + position.toString());
+
     }
 
     public Result craft(String itemName) {
         Item item = getItemByItemName(itemName);
-        if (!canCraftResult(item).success()) {
-            return canCraftResult(item);
+        if (!canCraft(item)) {
+            return new Result(false, "Not possible to craft that item!");
         }
-        // TODO:
-        //  remove ingredients from inventory
-        //  craft the thing
-        //  add it to inventory.
-        return new Result(true, itemName + " crafted and added to inventory.");
+        // TODO: craft item and add it to inventory.
+        return new Result(true, "Item crafted and added to inventory.");
     }
 
     public Result showCraftInfo(String craftName) {
-        // TODO: tf is it? page 33 ... vegetables?
+        // TODO
         return new Result(true, "");
     }
 
@@ -189,17 +175,11 @@ public class GameController {
         return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
     }
 
-    private Result canCraftResult(Item item) {
-        if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
-            return new Result(false, "Your backpack is full.");
-        } else if () {
-            // TODO: check if we know the recipe, return false if not.
-            return new Result(false, "You should learn the recipe first.");
-        } else if () {
-            // TODO: check if we have the ingredients, return false if not.
-            return new Result(false, "You don't have the necessary ingredients.");
-        }
-        return new Result(true, "");
+    private boolean canCraft(Item item) {
+        // TODO: check if inventory is full; if so, return false.
+        // TODO: check if we know the recipe, return false if not.
+        // TODO: check if we have the ingredients, return false if not.
+        return false;
     }
 
     private boolean canCook(FoodType food) {
@@ -209,47 +189,17 @@ public class GameController {
         return false;
     }
 
-    private boolean canToolBeUsedHere(Tile tile, ToolType toolType) { // todo: check greenhouse options.
-        TileType tileType = tile.getType();
-        if (toolType == ToolType.HOE) {
-            return tileType == TileType.PLOWED_SOIL ||
-                    tileType == TileType.NOT_PLOWED_SOIL;
-        } else if (toolType == ToolType.PICKAXE) {
-            return tileType == TileType.PLOWED_SOIL ||
-                    tileType == TileType.NOT_PLOWED_SOIL ||
-                    tileType == TileType.PLANTED_SEED ||
-                    tileType == TileType.GROWING_CROP ||
-                    tileType == TileType.QUARRY ||
-                    tileType == TileType.STONE ||
-                    tileType == TileType.UNDER_AN_ITEM;
-        } else if (toolType == ToolType.AXE) {
-            return tileType == TileType.TREE ||
-                    tileType == TileType.WOOD_LOG;
-        } else if (toolType == ToolType.WATERING_CAN) {
-            return tileType != TileType.CABIN;
-        } else if (toolType == ToolType.FISHING_ROD) {
-            return tileType == TileType.WATER;
-        } else if (toolType == ToolType.SCYTHE) {
-            return tileType == TileType.GRASS ||
-                    tileType == TileType.TREE ||
-                    tileType == TileType.GROWING_CROP ||
-                    tileType == TileType.GREENHOUSE;
-        } else if (toolType == ToolType.MILK_PAIL) {
-            return tileType == TileType.ANIMAL;
-        } else if (toolType == ToolType.SHEARS) {
-            return tileType == TileType.ANIMAL;
-        } else return toolType == ToolType.TRASH_CAN; // directs to appropriate message.
+    private boolean canToolBeUsedHere(Position position, Tool tool) {
+        // TODO: check the tile at "position" and check if tool can be used!
+        return false;
     }
 
-    private boolean canItemBePlacedHere(TileType tileType) {
-        return tileType == TileType.PLOWED_SOIL ||
-                tileType == TileType.NOT_PLOWED_SOIL ||
-                tileType == TileType.CABIN ||
-                tileType == TileType.GRASS ||
-                tileType == TileType.QUARRY;
+    private boolean canItemBePlacedHere(Position position, Item item) {
+        // TODO: check the tile at "position" and check if item can be placed there!
+        return false;
     }
 
-    private Tile neighborTile(Direction direction) {
+    private Position neighborTile(Direction direction) {
         // TODO: return the position of the neighbour tile, if within the range of our map of farms.
         return null;
     }
@@ -394,11 +344,12 @@ public class GameController {
     public Result plant(String seedName, String directionName) {
         Seed seed = Seed.getSeedByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
-        Tile tile = neighborTile(direction);
-        if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
+        Position position = player.getPosition();
+        Tile tile = getTileByPosition(position);
+        if (tile.getType().equals(TileType.NOT_PLOWED_GROUND)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-        // TODO
+
         return new Result(true, "");
     }
 
@@ -476,7 +427,7 @@ public class GameController {
         for (int i = 0; i < farmBuildingType.getWidth(); i++) {
             for (int j = 0; j < farmBuildingType.getLength(); j++) {
                 Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
-                if (!farm.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
+                if (!farm.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_GROUND)) {
                     return false;
                 }
             }
@@ -905,7 +856,7 @@ public class GameController {
             // TODO
         }
 
-        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
+        // ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
 
         return new Result(true, "");
     }
@@ -1118,7 +1069,11 @@ public class GameController {
 
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             if (!player.getGender().equals(targetPlayer.getGender())) {
-                // TODO
+                HashMap<Item, Integer> items = player.getBackpack().getItems();
+                if (items.get(new Item(GoodsType.WEDDING_RING)) == 0) {
+                    return new Result(false, "You don't have a ring to propose with.");
+                }
+                targetPlayer.addMarriageRequests(player);
                 return new Result(true, "You proposed to " + username + ". Wait for their response.");
             }
             return new Result(false,
@@ -1128,15 +1083,27 @@ public class GameController {
     }
 
     public Result respondToMarriageRequest(String acceptanceStr, String username) {
-        Boolean hasAccepted = null;
-        if (acceptanceStr.equalsIgnoreCase("accept")) {
-            hasAccepted = true;
-        } else if (acceptanceStr.equalsIgnoreCase("reject")) {
-            hasAccepted = false;
+        boolean hasAccepted = acceptanceStr.equalsIgnoreCase("accept");
+
+        User targetUser = game.getPlayerByUsername(username);
+        if (targetUser == null) {
+            return new Result(false, "User not found.");
         }
 
-        // TODO
-        return new Result(true, "");
+        if (!player.getMarriageRequests().contains(targetUser)) {
+            return new Result(false, username + " has not proposed to you. If you want to marry them, "
+                    + "enter this command: \"ask marriage -u " + username + " -r Wedding ring\"");
+        }
+
+        if (!hasAccepted) {
+            targetUser.setDepressed(true); // TODO: change after 7 days
+            return new Result(false, "Marriage request denied. Your friendship level with " + username +
+                    " is now 0. " + username + " is now depressed.");
+        }
+
+        player.setSpouse(targetUser);
+        targetUser.setSpouse(player);
+        return new Result(true, "Congratulations! You are now married to " + username);
     }
 
     // === TRADE === //
