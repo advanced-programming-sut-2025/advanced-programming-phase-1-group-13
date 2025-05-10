@@ -101,7 +101,7 @@ public abstract class Inventory {
         return sb.toString();
     }
 
-    public Result removeFromInventory(Item item, int amount) {
+    public Result removeFromInventory(Item item, Integer n) {
         if (!items.containsKey(item)) {
             return new Result(false, "Item does not exist.");
         }

@@ -100,7 +100,7 @@ public class GameController {
             String notFoundMessage = "Tool not found.\n" + "Enter a valid tool name: \n" + ToolType.getFullList();
             return new Result(false, notFoundMessage);
         }
-        Item itemFromInventory = player.getBackpack().getItemFromInventory(toolName);
+        Item itemFromInventory = player.getBackpack().getItemFromInventoryByName(toolName);
         if (itemFromInventory == null) {
             return new Result(false, "Tool not found in inventory.");
         }
@@ -127,7 +127,7 @@ public class GameController {
     }
 
     public Result placeItem(String itemName, String directionString) {
-        Item item = player.getBackpack().getItemFromInventory(itemName);
+        Item item = player.getBackpack().getItemFromInventoryByName(itemName);
         if (item == null) {
             return new Result(false, "Item not found in inventory.");
         }
@@ -192,10 +192,10 @@ public class GameController {
     private Result canCraftResult(Item item) {
         if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
             return new Result(false, "Your backpack is full.");
-        } else if () {
+        } else if (true) { // TODO
             // TODO: check if we know the recipe, return false if not.
             return new Result(false, "You should learn the recipe first.");
-        } else if () {
+        } else if (true) { // TODO
             // TODO: check if we have the ingredients, return false if not.
             return new Result(false, "You don't have the necessary ingredients.");
         }
@@ -905,7 +905,7 @@ public class GameController {
             // TODO
         }
 
-        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
+        // TODO ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
 
         return new Result(true, "");
     }
@@ -1119,7 +1119,7 @@ public class GameController {
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             if (!player.getGender().equals(targetPlayer.getGender())) {
                 HashMap<Item, Integer> items = player.getBackpack().getItems();
-                if (items.get(new Item(GoodsType.WEDDING_RING)) == 0) {
+                if (items.get(player.getBackpack().getItemFromInventoryByName(ringStr)) == 0) {
                     return new Result(false, "You don't have a ring to propose with.");
                 }
                 targetPlayer.addMarriageRequests(player);
@@ -1145,7 +1145,8 @@ public class GameController {
         }
 
         if (!hasAccepted) {
-            targetUser.setDepressed(true); // TODO: change after 7 days
+            targetUser.setDepressed(true);
+            // TODO: change after 7 days, and check in the beginning of the day for energy
             return new Result(false, "Marriage request denied. Your friendship level with " + username +
                     " is now 0. " + username + " is now depressed.");
         }
