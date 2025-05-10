@@ -140,6 +140,8 @@ public class GameController {
         String atPosOnTile = "at " + tile.getPosition().toString() + " on " + tile.getType().getDisplayName();
 
         if (canItemBePlacedHere(tile.getType())) {
+            neighborTile(direction).pLaceItemOnTile(item);
+            neighborTile(direction).setType(TileType.UNDER_AN_ITEM);
             return new Result(true, item + " placed " + atPosOnTile);
         }
         return new Result(false, "Cannot place item " + atPosOnTile);
@@ -905,7 +907,6 @@ public class GameController {
             }
             // TODO
         }
-
         // TODO ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
 
         return new Result(true, "");

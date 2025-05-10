@@ -25,6 +25,7 @@ public class User {
     private boolean isEnergyUnlimited;
     private Position position;
     private Tool currentTool;
+    private String hashedPassword;
     private HashMap<Skill, SkillLevel> skillLevels;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<FoodType> learntCookingRecipes;
@@ -40,9 +41,10 @@ public class User {
     private User spouse;
     private boolean isDepressed;
 
-    public User(String username, String password, String nickname, String email, Gender gender) {
+    public User(String username, String password, String hashPass, String nickname, String email, Gender gender) {
         this.username = username;
         this.password = password;
+        this.hashedPassword = hashPass;
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
