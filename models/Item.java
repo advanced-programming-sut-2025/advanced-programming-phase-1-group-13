@@ -4,6 +4,15 @@ public abstract class Item {
     private boolean isSellable;
     private boolean isPurchasable;
     private int price;
+    private String name;
+
+    public Item() {
+        // TODO: constructor
+    }
+
+    public String getName() {
+        return this.name;
+    }
 
     public boolean isSellable() {
         return this.isSellable;
@@ -27,5 +36,10 @@ public abstract class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

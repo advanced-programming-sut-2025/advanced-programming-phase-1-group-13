@@ -90,7 +90,7 @@ public class GameController {
         } else {
             number = Integer.parseInt(numberStr);
         }
-        return player.getBackpack().removeFromInventory(item, number , player);
+        return player.getBackpack().removeFromInventory(item, number, player);
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
@@ -101,12 +101,11 @@ public class GameController {
             String notFoundMessage = "Tool not found.\n" + "Enter a valid tool name: \n" + ToolType.getFullList();
             return new Result(false, notFoundMessage);
         }
-        HashMap<Item, Integer> backpackItems = player.getBackpack().getItems();
-        if (!backpackItems.containsKey(new Tool(toolType))) {
+        Item itemFromInventory = player.getBackpack().getItemFromInventory(toolName);
+        if (itemFromInventory == null) {
             return new Result(false, "Tool not found in inventory.");
         }
-        // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        player.setCurrentTool(new Tool(toolType)); //  todo: khode class e oon tool, ya tooooool?
+        player.setCurrentTool((Tool) itemFromInventory);
         return new Result(true, toolName + " equipped.");
     }
 
@@ -857,7 +856,7 @@ public class GameController {
             // TODO
         }
 
-        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
+        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(); // todo
 
         return new Result(true, "");
     }

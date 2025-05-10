@@ -88,4 +88,13 @@ public abstract class Inventory {
         }
         return sb.toString();
     }
+
+    public Item getItemFromInventory(String itemName) {
+        for (Item item : items.keySet()) {
+            if (item.getName().equals(itemName)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }
