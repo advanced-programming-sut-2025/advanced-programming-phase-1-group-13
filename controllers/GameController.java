@@ -6,7 +6,6 @@ import models.enums.Quality;
 import models.enums.Skill;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
-import models.inventory.Backpack;
 import models.tools.FishingRod;
 import models.tools.MilkPail;
 import models.tools.Shear;
@@ -347,7 +346,7 @@ public class GameController {
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         Position position = player.getPosition();
         Tile tile = getTileByPosition(position);
-        if (tile.getType().equals(TileType.NOT_PLOWED_GROUND)) {
+        if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
 
@@ -428,7 +427,7 @@ public class GameController {
         for (int i = 0; i < farmBuildingType.getWidth(); i++) {
             for (int j = 0; j < farmBuildingType.getLength(); j++) {
                 Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
-                if (!farm.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_GROUND)) {
+                if (!farm.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
                     return false;
                 }
             }
