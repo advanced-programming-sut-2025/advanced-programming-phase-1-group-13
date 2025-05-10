@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="advanced-programming-phase-1-group-13" />
+        <module name="AP-Project-13" />
       </profile>
     </annotationProcessing>
   </component>

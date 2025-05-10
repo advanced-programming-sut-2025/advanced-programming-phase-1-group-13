@@ -7,7 +7,7 @@ public abstract class Item {
     private String name;
 
     public Item() {
-        // TODO: constructor
+        // TODO: constructor //
     }
 
     public String getName() {

@@ -13,7 +13,7 @@ public class Scythe extends Tool {
     public Scythe() {
         super(ToolType.SCYTHE);
     }
-
+//
     public Scythe(ToolMaterial material) {
         super(ToolType.SCYTHE, material);
     }

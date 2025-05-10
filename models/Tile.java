@@ -10,7 +10,7 @@ public class Tile {
     public TileType getType() {
         return this.type;
     }
-
+//
     public void setType(TileType type) {
         this.type = type;
     }

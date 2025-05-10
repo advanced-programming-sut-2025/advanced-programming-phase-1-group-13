@@ -17,7 +17,7 @@ public class Hoe extends Tool {
     public Hoe(ToolMaterial material) {
         super(ToolType.HOE, material);
     }
-
+//
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
         return super.calculateEnergyNeeded(playerSkills);

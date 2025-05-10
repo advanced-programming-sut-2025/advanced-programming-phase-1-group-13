@@ -46,7 +46,7 @@ public enum ToolType implements ItemType {
             case TRASH_CAN -> new TrashCan(material);
         };
     }
-
+//
     @Override
     public String getName() {
         return this.name;

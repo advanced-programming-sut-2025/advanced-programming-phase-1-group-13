@@ -17,7 +17,7 @@ public abstract class Inventory {
         this.capacity = capacity;
         this.isCapacityUnlimited = isCapacityUnlimited;
     }
-
+//
     public HashMap<Item, Integer> getItems() {
         return this.items;
     }
