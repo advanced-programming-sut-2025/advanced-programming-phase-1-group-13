@@ -89,7 +89,7 @@ public class GameController {
         } else {
             number = Integer.parseInt(numberStr);
         }
-        return player.getBackpack().removeFromInventory(item, number, player);
+        return player.getBackpack().removeFromInventoryToTrash(item, number, player);
     }
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
