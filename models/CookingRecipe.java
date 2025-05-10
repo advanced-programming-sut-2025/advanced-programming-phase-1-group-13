@@ -44,4 +44,12 @@ public class CookingRecipe {
     public FoodType getFoodType() {
         return foodType;
     }
+
+    public static CookingRecipe getCookingRecipe(String foodName) {
+        FoodType foodType = FoodType.getFoodTypeByName(foodName);
+        if (foodType == null) {
+            return null;
+        }
+        return new CookingRecipe(foodType);
+    }
 }

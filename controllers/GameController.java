@@ -174,17 +174,20 @@ public class GameController {
         return new Result(true, "Item added to inventory.");
     }
 
-    // or name it cook() ?
     public Result prepareCook(String foodName) {
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
         }
 
-        FoodType food = FoodType.getFoodTypeByName(foodName);
-        if (!canCook(food)) {
-            return new Result(false, "You cannot cook this right now.");
-            // todo: or specify the cause of the error...
+        CookingRecipe cookingRecipe = CookingRecipe.getCookingRecipe(foodName);
+        if (cookingRecipe == null) {
+            return new Result(false, "Food not found.");
         }
+
+        if (!canCookResult(cookingRecipe).success()) {
+            return new Result(false, canCookResult(cookingRecipe).message());
+        }
+
         // TODO: cook and add to inventory
         return new Result(true, "Yummy! Your meal is ready.");
     }
@@ -212,11 +215,11 @@ public class GameController {
         return new Result(true, "");
     }
 
-    private boolean canCook(FoodType food) {
+    private Result canCookResult(CookingRecipe cookingRecipe) {
         // TODO: check if inventory is full; if so, return false.
         // TODO: check if we know the recipe, return false if not.
         // TODO: check if we have the ingredients, return false if not.
-        return false;
+        return new Result(true, "");
     }
 
     private boolean canToolBeUsedHere(Tile tile, ToolType toolType) { // todo: check greenhouse options.
