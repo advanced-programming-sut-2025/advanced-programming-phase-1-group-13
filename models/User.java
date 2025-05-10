@@ -35,6 +35,9 @@ public class User {
     private double balance;
     private int mostEarnedMoney;
     private TrashCan trashCan;
+    private ArrayList<User> marriageRequests;
+    private User spouse;
+    private boolean isDepressed;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -58,7 +61,9 @@ public class User {
         this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
         this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
         this.trashCan = new TrashCan(ToolMaterial.BASIC);
-        this.currentTool = null;
+        this.marriageRequests = new ArrayList<>();
+        this.spouse = null;
+        this.isDepressed = false;
     }
 
     public TrashCan getTrashCan() {
@@ -191,6 +196,26 @@ public class User {
 
     public void setEnergyUnlimited(boolean unlimitedEnergy) {
         this.isEnergyUnlimited = unlimitedEnergy;
+    }
+
+    public void setSpouse(User spouse) {
+        this.spouse = spouse;
+    }
+
+    public ArrayList<User> getMarriageRequests() {
+        return marriageRequests;
+    }
+
+    public void addMarriageRequests(User user) {
+        this.marriageRequests.add(user);
+    }
+
+    public boolean isDepressed() {
+        return isDepressed;
+    }
+
+    public void setDepressed(boolean depressed) {
+        isDepressed = depressed;
     }
 
     public void faint() {
