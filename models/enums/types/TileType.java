@@ -16,7 +16,7 @@ public enum TileType {
     TREE("Tree"),
     WOOD_LOG("Wood Log"),
     UNDER_AN_ITEM("An Item");
- //
+
     private final String displayName;
 
     TileType(String displayName) {

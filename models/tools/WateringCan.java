@@ -8,7 +8,6 @@ import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
-//
 public class WateringCan extends Tool {
     public WateringCan() {
         super(ToolType.WATERING_CAN);

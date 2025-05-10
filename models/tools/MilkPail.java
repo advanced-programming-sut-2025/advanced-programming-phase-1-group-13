@@ -21,7 +21,7 @@ public class MilkPail extends Tool {
     public MilkPail(ToolMaterial material) {
         super(ToolType.MILK_PAIL, material);
     }
-//
+
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
         return super.calculateEnergyNeeded(playerSkills);

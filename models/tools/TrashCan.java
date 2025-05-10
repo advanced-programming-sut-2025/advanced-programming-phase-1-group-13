@@ -17,7 +17,7 @@ public class TrashCan extends Tool {
     public TrashCan(ToolMaterial material) {
         super(ToolType.TRASH_CAN, material);
     }
-//
+
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
         return 0;

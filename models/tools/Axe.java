@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 
 public class Axe extends Tool {
-    //
     public Axe() {
         super(ToolType.AXE);
     }

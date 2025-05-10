@@ -13,7 +13,7 @@ public class Pickaxe extends Tool {
     public Pickaxe() {
         super(ToolType.PICKAXE);
     }
-//
+
     public Pickaxe(ToolMaterial material) {
         super(ToolType.PICKAXE, material);
     }

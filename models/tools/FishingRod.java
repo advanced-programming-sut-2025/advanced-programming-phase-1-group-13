@@ -19,7 +19,7 @@ public class FishingRod extends Tool {
     public FishingRod(ToolMaterial material) {
         super(ToolType.FISHING_ROD, material);
     }
-//
+
     public FishingRodType getRodType() {
         return type;
     }

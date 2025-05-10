@@ -13,7 +13,7 @@ public abstract class Tool extends Item {
     private final ToolType toolType;
     private final Skill relatedSkill;
     private ToolMaterial toolMaterial;
-//
+
     public Tool(ToolType toolType) {
         this.toolType = toolType;
         this.relatedSkill = toolType.getRelatedSkill();

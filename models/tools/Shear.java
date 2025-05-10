@@ -11,7 +11,7 @@ import models.enums.types.ToolType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-//
+
 public class Shear extends Tool {
     public Shear() {
         super(ToolType.SHEARS);
