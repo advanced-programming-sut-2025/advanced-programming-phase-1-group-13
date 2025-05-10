@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum IngredientType {
+public enum IngredientType implements ItemType {
     EGG("Egg"),
     SARDINE("Sardine"),
     SALMON("Salmon"),
@@ -35,7 +35,28 @@ public enum IngredientType {
     CARROT("Carrot"),
     EGGPLANT("Eggplant"),
     FLOUNDER("Flounder"),
-    MIDNIGHT_CARP("Midnight Carp");
+    MIDNIGHT_CARP("Midnight Carp"),
+
+    /*
+    (below) recently added from:
+    (https://docs.google.com/spreadsheets/d/1f9TNkQJ_rIDPWR33TeHrxzIzmzNIhkKtVLPU6921JSg/edit?gid=0#gid=0)
+    */
+    COAL("Coal"),
+    COPPER_ORE("Copper Ore"),
+    IRON_ORE("Iron Ore"),
+    GOLD_ORE("Gold Ore"),
+    IRIDIUM_ORE("Iridium Ore"),
+    COPPER_BAR("Copper Bar"),
+    IRON_BAR("Iron Bar"),
+    GOLD_BAR("Gold Bar"),
+    IRIDIUM_BAR("Iridium Bar"),
+    WOOD("Wood"),
+    STONE("Stone"),
+    ACORN("Acorn"),
+    MAPLE_SEED("Maple Seed"),
+    PINE_CONE("Pine Cone"),
+    MAHOGANY_SEED("Mahogany Seed"),
+    ;
 
     private final String name;
 
