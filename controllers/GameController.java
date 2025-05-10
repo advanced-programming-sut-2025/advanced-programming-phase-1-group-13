@@ -176,6 +176,10 @@ public class GameController {
 
     // or name it cook() ?
     public Result prepareCook(String foodName) {
+        if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
+            return new Result(false, "You can cook inside your cabin only.");
+        }
+
         FoodType food = FoodType.getFoodTypeByName(foodName);
         if (!canCook(food)) {
             return new Result(false, "You cannot cook this right now.");
