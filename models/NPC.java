@@ -19,6 +19,8 @@ public class NPC {
     private ArrayList<ItemType> favorites;
     private ArrayList<Dialog> dialogs;
     private Position position;
+    private HashMap<User, Boolean> giftReceivedToday; // TODO: reset every day
+    private HashMap<User, Boolean> talkedToToday; // TODO: reset every day
 
     public NPC(NPCType type) {
         this.type = type;
@@ -27,6 +29,8 @@ public class NPC {
         this.dialog = new ArrayList<>();
         this.quests = type.getQuests();
         this.favorites = type.getFavorites();
+        this.giftReceivedToday = new HashMap<>();
+        this.talkedToToday = new HashMap<>();
     }
 
     public NPCType getType() {
@@ -63,7 +67,27 @@ public class NPC {
         return position;
     }
 
-    public void addDialog(String sentence) {
-        // TODO
+    public HashMap<User, Boolean> getGiftReceivedToday() {
+        return giftReceivedToday;
+    }
+
+    public boolean hasReceivedGiftToday(User user) {
+        return this.getGiftReceivedToday().get(user);
+    }
+
+    public void setReceivedGiftToday(User user, boolean hasReceived) {
+        this.getGiftReceivedToday().put(user, hasReceived);
+    }
+
+    public HashMap<User, Boolean> getTalkedToToday() {
+        return talkedToToday;
+    }
+
+    public boolean hasTalkedToToday(User user) {
+        return this.getTalkedToToday().get(user);
+    }
+
+    public void setTalkedToToday(User user, boolean hasReceived) {
+        this.getTalkedToToday().put(user, hasReceived);
     }
 }

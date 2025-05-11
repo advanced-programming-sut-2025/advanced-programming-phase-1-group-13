@@ -39,6 +39,8 @@ public class Game {
             HashMap<NPC, Integer> npcFriendMap = new HashMap<>();
             for (NPC npc : this.npcs) {
                 npcFriendMap.put(npc, 0);
+                npc.setReceivedGiftToday(player, false);
+                npc.setTalkedToToday(player, false);
             }
             npcFriendships.put(player, npcFriendMap);
 
@@ -103,6 +105,11 @@ public class Game {
 
     public void nextTurn(String callerUsername) {
         // TODO: show unread messages when starting new turn
+        // TODO: call changeDay() here
+    }
+
+    public void changeDay() { // TODO: call when changing day
+        // TODO
     }
 
     public User getPlayerByUsername(String username) {
@@ -146,7 +153,7 @@ public class Game {
             if (friendshipPoints > 799) {
                 friendshipPoints = 799;
             }
-            npcFriendships.get(player).put(npc, friendshipPoints); // Update the friendship points back in the map
+            npcFriendships.get(player).put(npc, friendshipPoints);
         }
     }
 
@@ -169,5 +176,4 @@ public class Game {
             talkHistory.get(sender).get(receiver).put(message, false);
         }
     }
-
 }

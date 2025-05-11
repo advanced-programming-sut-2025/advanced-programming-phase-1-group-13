@@ -1056,10 +1056,7 @@ public class GameController {
         int y1 = position1.getY();
         int x2 = position1.getX();
         int y2 = position1.getY();
-        if (Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1 && !(x1 == x2 && y1 == y2)) {
-            return true;
-        }
-        return false;
+        return Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1 && !(x1 == x2 && y1 == y2);
     }
 
     public Result showTalkHistoryWithUser(String username) {
@@ -1307,16 +1304,41 @@ public class GameController {
                 return new Result(false, NCPName + " doesn't have anything to say right now.");
             }
 
-            // TODO: Check if it's the first time talking today and add XP if so
-            // game.changeFriendship(player, npc, 20);
+            if (!npc.hasTalkedToToday(player)) {
+                game.changeFriendship(player, npc, 20);
+            }
             return new Result(true, NCPName + ": \"" + dialog.getMessage() + "\"");
         }
         return new Result(false, "You must stand next to " + NCPName + " to talk to them.");
     }
 
     public Result giftNPC(String NCPName, String itemName) {
-        // TODO
-        return new Result(true, "");
+        NPC npc = game.getNPCByName(NCPName);
+        if (npc == null) {
+            return new Result(false, "Npc not found.");
+        }
+
+        if (ToolType.getToolTypeByName(itemName) != null) {
+            return new Result(false, "You can't gift a tool to a NPC.");
+        }
+
+        Item item = player.getBackpack().getItemFromInventoryByName(itemName);
+        if (item == null) {
+            return new Result(false, "Item not found.");
+        }
+
+        Result result = player.getBackpack().removeFromInventory(item, 1);
+        if (!result.success()) {
+            return result;
+        }
+
+        if (!npc.hasReceivedGiftToday(player)) {
+            // TODO: check if the gift is NPC's favorite
+            game.changeFriendship(player, npc, 50);
+        }
+        npc.setReceivedGiftToday(player, true);
+        return new Result(true, "You gave a " + itemName + " to " + NCPName +
+                ". Your friendship points with them is now " + game.getNpcFriendshipPoints(player, npc) + ".");
     }
 
     public Result showFriendshipNPCList() {
@@ -1325,8 +1347,10 @@ public class GameController {
             int friendshipPoints = game.getNpcFriendshipPoints(player, npc);
             message.append(npc.getName()).append(": \n" +
                     "   Friendship level: ").append(friendshipPoints / 200).append("\n" +
-                    "   Friendship points: ").append(friendshipPoints).append("\n" +
-                    "-------------------------------\n");
+                    "   Friendship points: ").append(friendshipPoints).append("""
+                    
+                    -------------------------------
+                    """);
         }
         return new Result(true, message.toString());
     }
