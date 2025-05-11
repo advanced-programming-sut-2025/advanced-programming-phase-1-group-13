@@ -1,11 +1,13 @@
 package controllers;
 
 import models.*;
+import models.enums.FriendshipLevel;
 import models.enums.Menu;
 import models.enums.Quality;
 import models.enums.Skill;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
+import models.farming.Crop;
 import models.tools.FishingRod;
 import models.tools.MilkPail;
 import models.tools.Shear;
@@ -1197,9 +1199,39 @@ public class GameController {
                 " must be at least 2 to hug them.");
     }
 
-    public Result giveFlowerToUser(String username) {
-        // TODO
-        return new Result(true, "");
+    public Result giveFlowerToUser(String username, String flowerName) {
+        User targetPlayer = game.getPlayerByUsername(username);
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        FlowerType flowerType = FlowerType.getFlowerTypeByName(flowerName);
+        if (flowerType == null) {
+            return new Result(false, "Flower not found.");
+        }
+
+        if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
+            return new Result(false, "You must be standing next to " + username +
+                    " to give them a flower");
+        }
+
+        CropType cropType = CropType.getCropTypeByName(flowerName);
+        Crop flower = new Crop(cropType);
+        Result result = player.getBackpack().removeFromInventory(flower, 1);
+        if (!result.success()) {
+            return result;
+        }
+
+        result = targetPlayer.getBackpack().addToInventory(flower, 1);
+        if (!result.success()) {
+            return result;
+        }
+
+        if (game.getUserFriendship(player, targetPlayer).getLevel().equals(FriendshipLevel.CLOSE_FRIEND)) {
+            game.changeFriendshipLevel(player, targetPlayer, FriendshipLevel.BEST_FRIEND);
+        }
+        return new Result(true, "You gave " + username + " a " + flowerName +
+                ". Your friendship level is now " + game.getUserFriendship(player, targetPlayer).toString() + ".");
     }
 
     public Result askMarriage(String username, String ringStr) {
@@ -1211,9 +1243,9 @@ public class GameController {
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             if (!player.getGender().equals(targetPlayer.getGender())) {
                 HashMap<Item, Integer> items = player.getBackpack().getItems();
-//                if (items.get(new Item(GoodsType.WEDDING_RING)) == 0) {
-//                    return new Result(false, "You don't have a ring to propose with.");
-//                }
+                if (items.get(new Good(GoodsType.WEDDING_RING)) == 0) {
+                    return new Result(false, "You don't have a ring to propose with.");
+                }
                 targetPlayer.addMarriageRequests(player);
                 return new Result(true, "You proposed to " + username + ". Wait for their response.");
             }
@@ -1238,6 +1270,7 @@ public class GameController {
 
         if (!hasAccepted) {
             targetUser.setDepressed(true);
+            game.changeFriendshipLevel(player, targetUser, FriendshipLevel.STRANGER);
             // TODO: change after 7 days, and check in the beginning of the day for energy
             return new Result(false, "Marriage request denied. Your friendship level with " + username +
                     " is now 0. " + username + " is now depressed.");

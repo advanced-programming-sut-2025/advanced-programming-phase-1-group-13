@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.FriendshipLevel;
 import models.enums.types.NPCType;
 
 import java.util.ArrayList;
@@ -153,6 +154,13 @@ public class Game {
         Friendship friendship = getUserFriendship(user1, user2);
         if (friendship != null) {
             friendship.updateFriendship(amount);
+        }
+    }
+
+    public void changeFriendshipLevel(User user1, User user2, FriendshipLevel friendshipLevel) {
+        Friendship friendship = getUserFriendship(user1, user2);
+        if (friendship != null) {
+            friendship.setLevel(friendshipLevel);
         }
     }
 

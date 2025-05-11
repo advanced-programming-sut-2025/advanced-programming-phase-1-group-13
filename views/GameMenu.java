@@ -196,7 +196,10 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.HUG.getMatcher(inputLine)) != null) {
             System.out.println(controller.hug(matcher.group("username")));
         } else if ((matcher = GameCommands.FLOWER.getMatcher(inputLine)) != null) {
-            System.out.println(controller.giveFlowerToUser(matcher.group("username")));
+            System.out.println(controller.giveFlowerToUser(
+                    matcher.group("username"),
+                    matcher.group("flowerName")
+            ));
         } else if ((matcher = GameCommands.ASK_MARRIAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.askMarriage(
                     matcher.group("username"),

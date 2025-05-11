@@ -73,6 +73,15 @@ public enum CropType implements ItemType {
         this.isForaging = isForaging;
     }
 
+    public static CropType getCropTypeByName(String name) {
+        for (CropType cropType : CropType.values()) {
+            if (cropType.getName().equals(name)) {
+                return cropType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return this.name;

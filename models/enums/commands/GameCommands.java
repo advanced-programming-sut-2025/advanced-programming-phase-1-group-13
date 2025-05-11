@@ -71,7 +71,7 @@ public enum GameCommands implements Command {
     GIFT_RATE("^\\s*gift\\s+rate\\s+-i\\s+(?<gift_number>\\d+)\\s+-r\\s+(?<rate>\\d+)\\s*$"),
     GIFT_HISTORY("^\\s*gift\\s+history\\s+-u\\s+(?<username>.+)\\s*$"),
     HUG("^\\s*hug\\s+(?<username>.+)\\s*$"),
-    FLOWER("^\\s*flower\\s+-u\\s+(?<username>.+)\\s*$"),
+    FLOWER("^\\s*flower\\s+-u\\s+(?<username>.+)\\s+-f\\s+(?<flowerName>.+>)\\s*$"),
     ASK_MARRIAGE("^\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+)\\s+-r\\s+(?<ring>.+)\\s*$"),
     RESPONSE_MARRIAGE("^\\s*respond\\s+-(?<response>accept|reject)\\s+-u\\s+(?<username>.+)\\s*$"),
     START_TRADE("^\\s*start\\s+trade\\s*$"),

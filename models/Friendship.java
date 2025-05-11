@@ -19,6 +19,11 @@ public class Friendship {
         return currentXP;
     }
 
+    public void setLevel(FriendshipLevel level) {
+        this.level = level;
+        this.currentXP = 0;
+    }
+
     public void updateFriendship(int amount) {
         this.currentXP += amount;
         if (this.currentXP < 0) {
@@ -32,8 +37,12 @@ public class Friendship {
         }
         if (this.currentXP > this.level.requiredXPForNextLevel()) {
             int levelNumber = this.getLevel().getNumber() + 1;
-            this.currentXP += this.level.requiredXPForNextLevel();
-            this.level = FriendshipLevel.getFriendshipLevelByNumber(levelNumber);
+            if (levelNumber < 3) {
+                this.currentXP += this.level.requiredXPForNextLevel();
+                this.level = FriendshipLevel.getFriendshipLevelByNumber(levelNumber);
+            } else {
+                this.currentXP = FriendshipLevel.CLOSE_FRIEND.requiredXPForNextLevel();
+            }
         }
     }
 
