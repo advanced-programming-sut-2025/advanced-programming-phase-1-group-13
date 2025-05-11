@@ -105,6 +105,15 @@ public enum ProcessedItemType implements ItemType {
         return 7.5 * vegetableType.getPrice() + 25;
     }
 
+    public static ProcessedItemType getProcessedItemTypeByName(String name) {
+        for (ProcessedItemType processedItemType : ProcessedItemType.values()) {
+            if (processedItemType.getName().equals(name)) {
+                return processedItemType;
+            }
+        }
+        return null;
+    }
+
     public static ProcessedItemType getProcessedItemTypeByIngredients(ArrayList<ItemType> ingredients) {
         for (ProcessedItemType processedItemType : ProcessedItemType.values()) {
             if (processedItemType.areIngredientsEqual(ingredients)) {

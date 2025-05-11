@@ -17,6 +17,15 @@ public enum MineralType implements ItemType {
         this.name = name;
     }
 
+    public static MineralType getMineralTypeByName(String name) {
+        for (MineralType mineralType : MineralType.values()) {
+            if (mineralType.getName().equals(name)) {
+                return mineralType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return this.name;

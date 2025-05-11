@@ -11,6 +11,15 @@ public enum MaterialType implements ItemType {
         this.name = name;
     }
 
+    public static MaterialType getMaterialTypeByName(String name) {
+        for (MaterialType materialType : MaterialType.values()) {
+            if (materialType.getName().equals(name)) {
+                return materialType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return this.name;

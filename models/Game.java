@@ -136,7 +136,7 @@ public class Game {
                 }
             }
         }
-        // TODO
+        // TODO: NPCs give gifts randomly
     }
 
     public User getPlayerByUsername(String username) {

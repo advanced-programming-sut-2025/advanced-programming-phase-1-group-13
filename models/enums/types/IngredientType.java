@@ -64,6 +64,15 @@ public enum IngredientType implements ItemType {
         this.name = name;
     }
 
+    public static IngredientType getIngredientTypeByName(String name) {
+        for (IngredientType ingredientType : IngredientType.values()) {
+            if (ingredientType.name().equals(name)) {
+                return ingredientType;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }

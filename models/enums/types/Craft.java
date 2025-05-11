@@ -78,6 +78,15 @@ public enum Craft implements ItemType {
         this.ingredients = ingredients;
     }
 
+    public static Craft getCraftByName(String name) {
+        for (Craft craft : Craft.values()) {
+            if (craft.getName().equals(name)) {
+                return craft;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return name;

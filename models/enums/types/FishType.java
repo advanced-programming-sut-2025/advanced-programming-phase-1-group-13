@@ -38,6 +38,15 @@ public enum FishType implements ItemType {
         this.isLegendary = isLegendary;
     }
 
+    public static FishType getFishTypeByName(String name) {
+        for (FishType fishType : FishType.values()) {
+            if (fishType.getName().equals(name)) {
+                return fishType;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }

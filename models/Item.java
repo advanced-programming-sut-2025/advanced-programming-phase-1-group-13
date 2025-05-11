@@ -1,17 +1,12 @@
 package models;
 
-import models.enums.types.ItemType;
+import models.enums.types.*;
 
 public abstract class Item {
-    //    private ItemType type;
     private boolean isSellable;
     private boolean isPurchasable;
     private int price;
     private String name;
-
-    public Item() {
-        // TODO: constructor
-    }
 
     public String getName() {
         return this.name;
@@ -42,8 +37,57 @@ public abstract class Item {
     }
 
     public static ItemType getItemTypeByItemName(String itemName) {
-        // TODO
-        return null;
+        AnimalProductType animalProductType = AnimalProductType.getAnimalProductTypeByName(itemName);
+        if (animalProductType != null) {
+            return animalProductType;
+        }
+
+        Craft craft = Craft.getCraftByName(itemName);
+        if (craft != null) {
+            return craft;
+        }
+
+        CropType cropType = CropType.getCropTypeByName(itemName);
+        if (cropType != null) {
+            return cropType;
+        }
+
+        FishType fishType = FishType.getFishTypeByName(itemName);
+        if (fishType != null) {
+            return fishType;
+        }
+
+        FoodType foodType = FoodType.getFoodTypeByName(itemName);
+        if (foodType != null) {
+            return foodType;
+        }
+
+        GoodsType goodsType = GoodsType.getGoodsTypeByName(itemName);
+        if (goodsType != null) {
+            return goodsType;
+        }
+
+        IngredientType ingredientType = IngredientType.getIngredientTypeByName(itemName);
+        if (ingredientType != null) {
+            return ingredientType;
+        }
+
+        MaterialType materialType = MaterialType.getMaterialTypeByName(itemName);
+        if (materialType != null) {
+            return materialType;
+        }
+
+        MineralType mineralType = MineralType.getMineralTypeByName(itemName);
+        if (mineralType != null) {
+            return mineralType;
+        }
+
+        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByName(itemName);
+        if (processedItemType != null) {
+            return processedItemType;
+        }
+
+        return ToolType.getToolTypeByName(itemName);
     }
 
     public static Item getItemByItemName(String itemName) {

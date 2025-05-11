@@ -126,6 +126,15 @@ public enum GoodsType implements ItemType {
         this.seasonalStock = seasonalStocks;
     }
 
+    public static GoodsType getGoodsTypeByName(String goodsTypeName) {
+        for (GoodsType goodsType : GoodsType.values()) {
+            if (goodsType.name().equals(goodsTypeName)) {
+                return goodsType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return this.name;
