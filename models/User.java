@@ -4,6 +4,7 @@ import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.environment.Direction;
+import models.enums.environment.Time;
 import models.enums.types.*;
 import models.inventory.Backpack;
 import models.tools.FishingRod;
@@ -38,9 +39,14 @@ public class User {
     private double balance;
     private int mostEarnedMoney;
     private TrashCan trashCan;
+    private HashMap<User, Boolean> hasTalkedToToday;
+    private HashMap<User, Boolean> exchangedGiftToday;
+    private HashMap<User, Boolean> hasHuggedToday;
+    private HashMap<User, Boolean> exchangedFlowerToday;
     private ArrayList<User> marriageRequests;
     private User spouse;
     private boolean isDepressed;
+    private Time rejectionTime;
 
     public User(String username, String password, String hashPass, String nickname, String email, Gender gender) {
         this.username = username;
@@ -69,6 +75,10 @@ public class User {
         this.spouse = null;
         this.isDepressed = false;
         this.gifts = new ArrayList<>();
+        this.hasTalkedToToday = new HashMap<>();
+        this.exchangedGiftToday = new HashMap<>();
+        this.hasHuggedToday = new HashMap<>();
+        this.exchangedFlowerToday = new HashMap<>();
     }
 
     public TrashCan getTrashCan() {
@@ -203,6 +213,69 @@ public class User {
         this.isEnergyUnlimited = unlimitedEnergy;
     }
 
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public HashMap<User, Boolean> getHasTalkedToToday() {
+        return hasTalkedToToday;
+    }
+
+    public boolean hasTalkedToToday(User user) {
+        return this.getHasTalkedToToday().get(user);
+    }
+
+    public void setTalkedToToday(User user, boolean hasReceived) {
+        this.getHasTalkedToToday().put(user, hasReceived);
+    }
+
+    public HashMap<User, Boolean> getExchangedGiftToday() {
+        return exchangedGiftToday;
+    }
+
+    public boolean exchangedGiftToday(User user) {
+        return this.getExchangedGiftToday().get(user);
+    }
+
+    public void setExchangedGiftToday(User user, boolean hasReceived) {
+        this.getExchangedGiftToday().put(user, hasReceived);
+    }
+
+    public HashMap<User, Boolean> getHasHuggedToday() {
+        return hasHuggedToday;
+    }
+
+    public boolean hasHuggedToday(User user) {
+        return this.getHasHuggedToday().get(user);
+    }
+
+    public void setHasHuggedToday(User user, boolean hasReceived) {
+        this.getHasHuggedToday().put(user, hasReceived);
+    }
+
+    public HashMap<User, Boolean> getExchangedFlowerToday() {
+        return exchangedFlowerToday;
+    }
+
+    public boolean hasExchangedFlowerToday(User user) {
+        return this.getExchangedFlowerToday().get(user);
+    }
+
+    public void setExchangedFlowerToday(User user, boolean hasReceived) {
+        this.getExchangedFlowerToday().put(user, hasReceived);
+    }
+
+    public boolean hasInteractedToday(User user){
+        return this.hasExchangedFlowerToday(user) ||
+                this.hasHuggedToday(user) ||
+                this.exchangedGiftToday(user) ||
+                this.hasTalkedToToday(user);
+    }
+
+    public User getSpouse() {
+        return spouse;
+    }
+
     public void setSpouse(User spouse) {
         this.spouse = spouse;
     }
@@ -230,6 +303,10 @@ public class User {
     public void addGift(Item item, int amount, User giver) {
         Gift gift = new Gift(this.gifts.size() + 1, item, amount, giver);
         this.gifts.add(gift);
+    }
+
+    public Time getRejectionTime() {
+        return rejectionTime;
     }
 
     public void faint() {

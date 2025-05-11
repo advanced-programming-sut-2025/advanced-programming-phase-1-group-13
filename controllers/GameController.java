@@ -920,7 +920,13 @@ public class GameController {
 
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             game.sendMessage(player, targetPlayer, message);
-            game.changeFriendship(player, targetPlayer, 20);
+
+            if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
+                game.changeFriendship(player, targetPlayer, 50);
+            }
+            if (!player.getHasTalkedToToday().get(targetPlayer)) {
+                game.changeFriendship(player, targetPlayer, 20);
+            }
             return new Result(true, "You sent a message to " + username +
                     ". Your friendship level with them is now " +
                     game.getUserFriendship(player, targetPlayer).toString());
@@ -1011,7 +1017,14 @@ public class GameController {
         gift.setRating(rate);
         int xp = gift.calculateFriendshipXP();
         User giver = gift.getGiver();
-        game.changeFriendship(player, giver, xp);
+        if (player.getSpouse().equals(giver)) {
+            game.changeFriendship(player, giver, 50);
+        }
+        if (!player.exchangedGiftToday(giver)) {
+            game.changeFriendship(player, giver, xp);
+        }
+        player.setExchangedGiftToday(giver, true);
+        giver.setExchangedGiftToday(player, true);
         return new Result(true, "You rated the gift " + rate + "/5. Your friendship level with " +
                 giver.getUsername() + " has changed by " + xp + " Xp and it is now " +
                 game.getUserFriendship(player, giver).toString());
@@ -1058,6 +1071,14 @@ public class GameController {
         }
 
         if (game.getUserFriendship(player, targetPlayer).getLevel().getNumber() >= 2) {
+            if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
+                game.changeFriendship(player, targetPlayer, 50);
+            }
+            if (!player.getHasTalkedToToday().get(targetPlayer)) {
+                game.changeFriendship(player, targetPlayer, 60);
+            }
+            player.setHasHuggedToday(targetPlayer, true);
+            targetPlayer.setHasHuggedToday(player, true);
             return new Result(true, "You hugged " + username + ". Your friendship level is now " +
                     game.getUserFriendship(player, targetPlayer).toString());
         }
@@ -1093,9 +1114,15 @@ public class GameController {
             return result;
         }
 
-        if (game.getUserFriendship(player, targetPlayer).getLevel().equals(FriendshipLevel.CLOSE_FRIEND)) {
+        if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
+            game.changeFriendship(player, targetPlayer, 50);
+        }
+        if (game.getUserFriendship(player, targetPlayer).getLevel().equals(FriendshipLevel.CLOSE_FRIEND)
+                && !player.hasHuggedToday(targetPlayer)) {
             game.changeFriendshipLevel(player, targetPlayer, FriendshipLevel.BEST_FRIEND);
         }
+        player.setHasHuggedToday(targetPlayer, true);
+        targetPlayer.setHasHuggedToday(player, true);
         return new Result(true, "You gave " + username + " a " + flowerName +
                 ". Your friendship level is now " + game.getUserFriendship(player, targetPlayer).toString() + ".");
     }
@@ -1137,7 +1164,6 @@ public class GameController {
         if (!hasAccepted) {
             targetUser.setDepressed(true);
             game.changeFriendshipLevel(player, targetUser, FriendshipLevel.STRANGER);
-            // TODO: change after 7 days, and check in the beginning of the day for energy
             return new Result(false, "Marriage request denied. Your friendship level with " + username +
                     " is now 0. " + username + " is now depressed.");
         }
@@ -1202,8 +1228,11 @@ public class GameController {
         }
 
         if (!npc.hasReceivedGiftToday(player)) {
-            // TODO: check if the gift is NPC's favorite
-            game.changeFriendship(player, npc, 50);
+            if (npc.isFavourite(item.getName())) {
+                game.changeFriendship(player, npc, 200);
+            } else {
+                game.changeFriendship(player, npc, 50);
+            }
         }
         npc.setReceivedGiftToday(player, true);
         return new Result(true, "You gave a " + itemName + " to " + NCPName +

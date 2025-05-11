@@ -2,6 +2,7 @@ package models;
 
 import controllers.GameController;
 import models.enums.FriendshipLevel;
+import models.enums.environment.Time;
 import models.enums.types.NPCType;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class Game {
             for (User other : this.players) {
                 if (!player.equals(other)) {
                     playerFriendMap.put(other, new Friendship());
+                    player.setTalkedToToday(other, false);
+                    player.setExchangedGiftToday(other, false);
+                    player.setHasHuggedToday(other, false);
+                    player.setExchangedFlowerToday(other, false);
                 }
             }
             userFriendships.put(player, playerFriendMap);
@@ -113,6 +118,23 @@ public class Game {
     public void changeDay() {
         for (Farm farm : this.getGameMap().getFarms()) {
             farm.updateAnimals();
+        }
+        for (User player : this.players) {
+            if (player.isDepressed()) {
+                if (Time.differenceInDays(player.getRejectionTime(), this.getGameState().getTime()) > 7) {
+                    player.setDepressed(false);
+                }
+                player.setEnergy(100);
+            } else {
+                player.setEnergy(200);
+            }
+
+            for (int i = this.players.indexOf(player); i < this.players.size(); i++) {
+                User otherPlayer = this.players.get(i);
+                if (!player.hasInteractedToday(otherPlayer)) {
+                    this.changeFriendship(player, otherPlayer, -10);
+                }
+            }
         }
         // TODO
     }

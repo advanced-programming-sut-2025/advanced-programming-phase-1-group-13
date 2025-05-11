@@ -101,4 +101,9 @@ public class Time {
                 time1.month == time2.month &&
                 time1.dayInMonth == time2.dayInMonth;
     }
+
+    public static int differenceInDays(Time time1, Time time2) {
+        // TODO
+        return -1;
+    }
 }

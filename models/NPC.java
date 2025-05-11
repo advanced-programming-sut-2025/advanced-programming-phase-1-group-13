@@ -8,6 +8,8 @@ import models.enums.types.Role;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static models.Item.getItemTypeByItemName;
+
 public class NPC {
     private NPCType type;
     private final String name;
@@ -89,5 +91,9 @@ public class NPC {
 
     public void setTalkedToToday(User user, boolean hasReceived) {
         this.getTalkedToToday().put(user, hasReceived);
+    }
+
+    public boolean isFavourite(String itemName) {
+        return this.getType().getFavorites().contains(getItemTypeByItemName(itemName));
     }
 }
