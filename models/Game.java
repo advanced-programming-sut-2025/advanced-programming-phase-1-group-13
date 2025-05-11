@@ -17,8 +17,9 @@ public class Game {
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
     // Each inner HashMap stores the messages and boolean of have they been read by the receiver
 
-    public Game(ArrayList<User> players) {
+    public Game(ArrayList<User> players, int mapNumber) {
         this.players = players;
+        this.gameMap = new GameMap(mapNumber);
 
         this.npcs = new ArrayList<>();
         for (NPCType npcType : NPCType.values()) {
@@ -110,7 +111,9 @@ public class Game {
     }
 
     public void changeDay() {
-        GameController.updateAnimals();
+        for (Farm farm : this.getGameMap().getFarms()) {
+            farm.updateAnimals();
+        }
         // TODO
     }
 

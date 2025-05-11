@@ -431,12 +431,19 @@ public class GameController {
         return new Result(true, "");
     }
 
-
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(String farmBuildingTypeStr, String xString, String yString) {
+        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+            return new Result(false, "You Must first enter Marnie's Ranch.");
+        }
+
         FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
-        Position position = getPositionByStrings(xString, yString);
+        if (farmBuildingType == null) {
+            return new Result(false, "Enter a valid building name.");
+        }
+
+        Position position = Position.getPositionByStrings(xString, yString);
         if (position == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
         }
@@ -444,7 +451,7 @@ public class GameController {
         Farm farm = player.getFarm();
         FarmBuilding farmBuilding = new FarmBuilding(farmBuildingType, position);
 
-        boolean canPlace = canPlaceBuilding(farm, farmBuildingType, position);
+        boolean canPlace = farm.canPlaceBuilding(farmBuildingType, position);
 
         if (!canPlace) {
             return new Result(false, "Can't build a " + farmBuildingType.getName() +
@@ -485,34 +492,26 @@ public class GameController {
                 + position.toString() + ". " + methodOfPaymentDescription);
     }
 
-    public boolean canPlaceBuilding(Farm farm, FarmBuildingType farmBuildingType, Position position) {
-        int xTopLeft = position.getX();
-        int yTopLeft = position.getY();
-        for (int i = 0; i < farmBuildingType.getWidth(); i++) {
-            for (int j = 0; j < farmBuildingType.getLength(); j++) {
-                Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
-                if (!farm.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public Result buyAnimal(String animalTypeStr, String name) {
+        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+            return new Result(false, "You Must first enter Marnie's Ranch.");
+        }
+
         AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
         if (animalType == null) {
             return new Result(false, "Animal not found.");
         }
+
+        Farm farm = player.getFarm();
         List<FarmBuildingType> livingSpaceTypes = animalType.getLivingSpaceTypes();
-        AnimalLivingSpace animalLivingSpace = getAvailableLivingSpace(livingSpaceTypes);
+        AnimalLivingSpace animalLivingSpace = farm.getAvailableLivingSpace(livingSpaceTypes);
 
         if (animalLivingSpace == null) {
             return new Result(false, "You don't have any available living spaces for a "
                     + animalType.getName() + ".");
         }
 
-        if (getAnimalByName(name) != null) {
+        if (farm.getAnimalByName(name) != null) {
             return new Result(false, "You already have an animal called " + name + ".");
         }
 
@@ -529,7 +528,8 @@ public class GameController {
     }
 
     public Result pet(String animalName) {
-        Animal animal = getAnimalByName(animalName);
+        Farm farm = player.getFarm();
+        Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
@@ -541,24 +541,6 @@ public class GameController {
                 animalName + ". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
     }
 
-    public static void updateAnimals() {
-        for (Animal animal : getAllFarmAnimals()) {
-            if (!animal.hasBeenFedToday()) {
-                animal.changeFriendship(-20);
-            } else if (animal.getFriendshipLevel() >= 100) {
-                animal.produceProduct();
-            }
-
-            if (!animal.hasBeenPetToday()) {
-                animal.changeFriendship(-10);
-            }
-
-            if (animal.isOutside()) {
-                animal.changeFriendship(-20);
-            }
-        }
-    }
-
     public Result cheatSetFriendship(String animalName, String amountString) {
         int amount;
         if (!amountString.matches("\\d+")) {
@@ -567,7 +549,8 @@ public class GameController {
             amount = Integer.parseInt(amountString);
         }
 
-        Animal animal = getAnimalByName(animalName);
+        Farm farm = player.getFarm();
+        Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
@@ -581,7 +564,8 @@ public class GameController {
     public Result showMyAnimalsInfo() {
         StringBuilder message = new StringBuilder("Your animals: \n");
 
-        for (Animal animal : getAllFarmAnimals()) {
+        Farm farm = player.getFarm();
+        for (Animal animal : farm.getAllFarmAnimals()) {
 
             message.append("-------------------------------\n").append(animal.getName()).append(" (").
                     append(animal.getAnimalType().getName()).append("):\n").append("Friendship level: ").
@@ -604,18 +588,18 @@ public class GameController {
     }
 
     public Result shepherdAnimal(String animalName, String xString, String yString) {
-        Position newPosition = getPositionByStrings(xString, yString);
+        Position newPosition = Position.getPositionByStrings(xString, yString);
         if (newPosition == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
         }
 
-        Animal animal = getAnimalByName(animalName);
+        Farm farm = player.getFarm();
+        Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
 
-        Farm farm = player.getFarm();
-        FarmBuilding farmBuildingInNewPosition = getFarmBuildingByPosition(newPosition);
+        FarmBuilding farmBuildingInNewPosition = farm.getFarmBuildingByPosition(newPosition);
         if (animal.isOutside()) {
             if (animal.getPosition().equals(newPosition)) {
                 return new Result(false, "Your " + animal.getAnimalType().getName() + ", " + animalName
@@ -659,37 +643,9 @@ public class GameController {
                 + animal.getFriendshipLevel() + ".");
     }
 
-    public Position getPositionByStrings(String xString, String yString) {
-        if (!xString.matches("\\d+") || !yString.matches("\\d+")) {
-            return null;
-        }
-
-        int x, y;
-        x = Integer.parseInt(xString);
-        y = Integer.parseInt(xString);
-        return new Position(x, y);
-    }
-
-    public FarmBuilding getFarmBuildingByPosition(Position position) {
-        Farm farm = player.getFarm();
-        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
-            int xTopLeft = farmBuilding.getPositionOfUpperLeftCorner().getX();
-            int yTopLeft = farmBuilding.getPositionOfUpperLeftCorner().getY();
-            int length = farmBuilding.getLength();
-            int width = farmBuilding.getWidth();
-
-            int x = position.getX();
-            int y = position.getY();
-
-            if (xTopLeft < x && xTopLeft + length > x && yTopLeft < y && yTopLeft + width > y) {
-                return farmBuilding;
-            }
-        }
-        return null;
-    }
-
     public Result feedHayToAnimal(String animalName) {
-        Animal animal = getAnimalByName(animalName);
+        Farm farm = player.getFarm();
+        Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
@@ -701,8 +657,8 @@ public class GameController {
 
     public Result showProducedProducts() {
         StringBuilder message = new StringBuilder("Uncollected animal products: \n");
-
-        for (Animal animal : getAllFarmAnimals()) {
+        Farm farm = player.getFarm();
+        for (Animal animal : farm.getAllFarmAnimals()) {
             if (!animal.getProducedProducts().isEmpty()) {
                 message.append("-------------------------------\n").append(animal.getName()).append(" (").
                         append(animal.getAnimalType().getName()).append("):\n");
@@ -717,13 +673,14 @@ public class GameController {
     }
 
     public Result collectProducts(String animalName) {
-        Animal animal = getAnimalByName(animalName);
+        Farm farm = player.getFarm();
+        Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
 
         AnimalType animalType = animal.getAnimalType();
-        ;
+
         ArrayList<Item> items = new ArrayList<>(player.getBackpack().getItems().keySet());
         HashMap<AnimalProduct, Integer> collectedProducts = new HashMap<>();
 
@@ -784,7 +741,8 @@ public class GameController {
     }
 
     public Result sellAnimal(String animalName) {
-        Animal animal = getAnimalByName(animalName);
+        Farm farm = player.getFarm();
+        Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
@@ -796,48 +754,10 @@ public class GameController {
                 animalName + ", for " + price + "g.");
     }
 
-    private Animal getAnimalByName(String name) {
-        for (Animal animal : getAllFarmAnimals()) {
-            if (animal.getName().equals(name)) {
-                return animal;
-            }
-        }
-        return null;
-    }
-
-    private static ArrayList<Animal> getAllFarmAnimals() {
-        ArrayList<Animal> animals = new ArrayList<>();
-
-        Farm farm = App.getLoggedIn().getFarm();
-        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
-            if (farmBuilding.getFarmBuildingType().getIsCage() != null) {
-                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
-                animals.addAll(animalLivingSpace.getAnimals());
-            }
-        }
-
-        return animals;
-    }
-
-    public AnimalLivingSpace getAvailableLivingSpace(List<FarmBuildingType> livingSpaceTypes) {
-        Farm farm = player.getFarm();
-
-        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
-            if (livingSpaceTypes.contains(farmBuilding.getFarmBuildingType())) {
-                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
-                if (!animalLivingSpace.isFull()) {
-                    return animalLivingSpace;
-                }
-            }
-        }
-
-        return null;
-    }
-
     // === FISHING === //
 
     public Result fishing(String fishingRodName) {
-        FishingRod fishingRod = getFishingRodByName(fishingRodName);
+        FishingRod fishingRod = player.getFishingRodByName(fishingRodName);
         if (fishingRod == null) {
             return new Result(false, "You do not have a " + fishingRodName + " fishing rod.");
         }
@@ -879,24 +799,12 @@ public class GameController {
         return new Result(true, message.toString().replaceFirst(", $", "\n"));
     }
 
-    private FishingRod getFishingRodByName(String name) {
-        ArrayList<Item> items = new ArrayList<>(player.getBackpack().getItems().keySet());
-        for (Item item : items) {
-            if (item instanceof FishingRod fishingRod) {
-                if (fishingRod.getRodType().getName().equals(name)) {
-                    return fishingRod;
-                }
-            }
-        }
-        return null;
-    }
-
     // === ARTISAN === //
 
     // TODO: build artisan
 
     public Result artisanUse(String artisanNameString, String itemNamesString) {
-        ArtisanType artisanType = getArtisanTypeByArtisanName(artisanNameString);
+        ArtisanType artisanType = ArtisanType.getArtisanTypeByArtisanName(artisanNameString);
 
         if (artisanType == null) {
             return new Result(false, "Artisan not found.");
@@ -929,15 +837,6 @@ public class GameController {
 
         // TODO: get the product from artisan
         return new Result(true, "");
-    }
-
-    private ArtisanType getArtisanTypeByArtisanName(String artisanName) {
-        for (ArtisanType type : ArtisanType.values()) {
-            if (type.name().equalsIgnoreCase(artisanName)) {
-                return type;
-            }
-        }
-        return null;
     }
 
     private ItemType getItemTypeByItemName(String itemName) {
