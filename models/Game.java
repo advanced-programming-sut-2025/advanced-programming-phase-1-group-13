@@ -3,6 +3,7 @@ package models;
 import controllers.GameController;
 import models.enums.FriendshipLevel;
 import models.enums.environment.Time;
+import models.enums.types.ItemType;
 import models.enums.types.NPCType;
 
 import java.util.ArrayList;
@@ -115,13 +116,20 @@ public class Game {
         // TODO: call changeDay() here
     }
 
-    public void changeDay() {
+    public Result changeDay() {
+        StringBuilder message = new StringBuilder("A new day has begun. Here are the updates for today:\n");
+
         for (Farm farm : this.getGameMap().getFarms()) {
-            farm.updateAnimals();
+            message.append(farm.updateAnimals());
         }
+
         for (User player : this.players) {
+
             if (player.isDepressed()) {
-                if (Time.differenceInDays(player.getRejectionTime(), this.getGameState().getTime()) > 7) {
+                int days = Time.differenceInDays(player.getRejectionTime(), this.getGameState().getTime());
+                message.append(player.getUsername()).append("'s marriage proposal was rejected ").append(days)
+                        .append(" ago. Their energy for today is half the usual.");
+                if (days > 7) {
                     player.setDepressed(false);
                 }
                 player.setEnergy(100);
@@ -133,10 +141,29 @@ public class Game {
                 User otherPlayer = this.players.get(i);
                 if (!player.hasInteractedToday(otherPlayer)) {
                     this.changeFriendship(player, otherPlayer, -10);
+                    message.append(player).append(" did not interact with ").append(otherPlayer.getUsername())
+                            .append(". Their friendship decreased and is now ")
+                            .append(this.getUserFriendship(player, otherPlayer).toString()).append(".\n");
+                }
+            }
+
+            for (NPC npc : this.npcs) {
+                if (this.getNpcFriendshipPoints(player, npc) / 200 >= 3) {
+                    if (Math.random() < 0.5) {
+                        ItemType itemType = npc.getType().getRandomGift();
+                        Item item = Item.getItemByItemType(itemType);
+                        Result result = player.getBackpack().addToInventory(item, 1);
+                        if (result.success()) {
+                            assert item != null;
+                            message.append(npc.getName()).append(" has given you a ").append(item.getName() +
+                                    " as a gift!");
+                        }
+                    }
                 }
             }
         }
-        // TODO: NPCs give gifts randomly
+
+        return new Result(true, message.toString());
     }
 
     public User getPlayerByUsername(String username) {

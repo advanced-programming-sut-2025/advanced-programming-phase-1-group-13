@@ -151,22 +151,33 @@ public class Farm {
         return null;
     }
 
-    public void updateAnimals() {
+    public String updateAnimals() {
+        StringBuilder message = new StringBuilder();
+
         for (Animal animal : this.getAllFarmAnimals()) {
             if (!animal.hasBeenFedToday()) {
                 animal.changeFriendship(-20);
+                message.append(animal.getName()).append(" was not fed today.\n");
             } else if (animal.getFriendshipLevel() >= 100) {
                 animal.produceProduct();
+                message.append(animal.getName()).append(" produced some products today.\n");
             }
 
             if (!animal.hasBeenPetToday()) {
                 animal.changeFriendship(-10);
+                message.append(animal.getName()).append(" was not pet today.\n");
             }
 
             if (animal.isOutside()) {
                 animal.changeFriendship(-20);
+                message.append(animal.getName()).append(" slept outside last night.\n");
             }
+
+            message.append("Your friendship level with ").append(animal.getName()).append("is now ")
+                    .append(animal.getFriendshipLevel()).append(".\n");
         }
+
+        return message.toString();
     }
 
     public FarmBuilding getFarmBuildingByPosition(Position position) {

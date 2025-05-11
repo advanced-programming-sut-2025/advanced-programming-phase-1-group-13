@@ -1,28 +1,35 @@
 package models.enums.types;
 
-public enum FruitType {
-    APRICOT(59),
-    CHERRY(80),
-    BANANA(150),
-    MANGO(130),
-    ORANGE(100),
-    PEACH(140),
-    APPLE(100),
-    POMEGRANATE(140),
-    OAK_RESIN(150),
-    MAPLE_SYRUP(200),
-    PINE_TAR(100),
-    SAP(2),
-    COMMON_MUSHROOM(40),
-    MYSTIC_SYRUP(1000);
+public enum FruitType implements ItemType {
+    APRICOT("Apricot", 59),
+    CHERRY("Cherry", 80),
+    BANANA("Banana", 150),
+    MANGO("Mango", 130),
+    ORANGE("Orange", 100),
+    PEACH("Peach", 140),
+    APPLE("Apple", 100),
+    POMEGRANATE("Pomegranate", 140),
+    OAK_RESIN("Oak Resin", 150),
+    MAPLE_SYRUP("Maple Syrup", 200),
+    PINE_TAR("Pine Tar", 100),
+    SAP("Sap", 2),
+    COMMON_MUSHROOM("Common Mushroom", 40),
+    MYSTIC_SYRUP("Mystic Syrup", 1000);
 
-    private int price;
+    private final String name;
+    private final int price;
 
-    FruitType(int price) {
+    FruitType(String name, int price) {
+        this.name = name;
         this.price = price;
     }
 
     public int getPrice() {
         return price;
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }

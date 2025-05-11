@@ -90,9 +90,14 @@ public abstract class Item {
         return ToolType.getToolTypeByName(itemName);
     }
 
-    public static Item getItemByItemName(String itemName) {
+    public static Item getItemByItemType(ItemType itemType) {
         // TODO
         return null;
+    }
+
+    public static Item getItemByItemName(String itemName) {
+        ItemType itemType = getItemTypeByItemName(itemName);
+        return getItemByItemType(itemType);
     }
 
     @Override

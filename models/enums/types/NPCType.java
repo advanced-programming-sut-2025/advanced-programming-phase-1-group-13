@@ -1,8 +1,11 @@
 package models.enums.types;
 
+import models.farming.Crop;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public enum NPCType {
     CLINT(
@@ -10,21 +13,36 @@ public enum NPCType {
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>(),
-            0
+            14,
+            new ArrayList<ItemType>() {{
+                add(GoodsType.IRON_ORE);
+                add(GoodsType.COPPER_ORE);
+                add(GoodsType.GOLD_ORE);
+            }}
     ),
     MORRIS(
             "Morris",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>(),
-            0
+            10,
+            new ArrayList<ItemType>() {{
+                add(GoodsType.COFFEE);
+                add(FoodType.VEGETABLE_MEDLEY);
+                add(ProcessedItemType.WINE);
+            }}
     ),
     PIERRE(
             "Pierre",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>(),
-            0
+            20,
+            new ArrayList<ItemType>() {{
+                add(GoodsType.STARFRUIT_SEEDS);
+                add(GoodsType.JOJA_COLA);
+                add(GoodsType.COFFEE);
+            }}
     ),
     ROBIN(
             "Robin",
@@ -48,28 +66,47 @@ public enum NPCType {
                 add(MaterialType.WOOD);
                 add(MineralType.IRON_BAR);
             }},
-            18
+            18,
+            new ArrayList<ItemType>() {{
+                add(MaterialType.HARD_WOOD);
+                add(MaterialType.WOOD);
+            }}
     ),
     WILLY(
             "Willy",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>(),
-            0
+            25,
+            new ArrayList<ItemType>() {{
+                add(FishType.GLACIERFISH);
+                add(FishType.SALMON);
+                add(FishType.LEGEND);
+            }}
     ),
     MARNIE(
             "Marnie",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>(),
-            0
+            15,
+            new ArrayList<ItemType>() {{
+                add(AnimalProductType.CHICKEN_EGG);
+                add(AnimalProductType.WOOL);
+                add(AnimalProductType.COW_MILK);
+            }}
     ),
     GUS(
             "Gus",
             Role.SHOPKEEPER,
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
             new ArrayList<ItemType>(),
-            0
+            20,
+            new ArrayList<ItemType>() {{
+                add(FoodType.DISH_O_THE_SEA);
+                add(FoodType.PIZZA);
+                add(ProcessedItemType.WINE);
+            }}
     ),
     SEBASTIAN(
             "Sebastian",
@@ -93,7 +130,12 @@ public enum NPCType {
                 add(FoodType.PUMPKIN_PIE);
                 add(FoodType.PIZZA);
             }},
-            42
+            42,
+            new ArrayList<ItemType>() {{
+                add(CropType.POPPY);
+                add(FoodType.PUMPKIN_PIE);
+                add(ProcessedItemType.BEER);
+            }}
     ),
     ABIGAIL(
             "Abigail",
@@ -117,7 +159,12 @@ public enum NPCType {
                 add(MineralType.IRON_ORE);
                 add(GoodsType.COFFEE);
             }},
-            29
+            29,
+            new ArrayList<ItemType>() {{
+                add(MineralType.QUARTZ);
+                add(FoodType.VEGETABLE_MEDLEY);
+                add(ProcessedItemType.MAYONNAISE);
+            }}
     ),
     HARVEY(
             "Harvey",
@@ -141,7 +188,12 @@ public enum NPCType {
                 add(FoodType.VEGETABLE_MEDLEY);
                 add(ProcessedItemType.WINE);
             }},
-            61
+            61,
+            new ArrayList<ItemType>() {{
+                add(FruitType.APPLE);
+                add(ProcessedItemType.TRUFFLE_OIL);
+                add(ProcessedItemType.COFFEE);
+            }}
     ),
     LEAH(
             "Leah",
@@ -165,7 +217,12 @@ public enum NPCType {
                 add(CropType.GRAPE);
                 add(ProcessedItemType.WINE);
             }},
-            14
+            14,
+            new ArrayList<ItemType>() {{
+                add(CropType.BLACKBERRY);
+                add(FoodType.SALAD);
+                add(ProcessedItemType.MEAD);
+            }}
     )
     ;
 
@@ -176,13 +233,16 @@ public enum NPCType {
             > quests;
     private final ArrayList<ItemType> favorites;
     private final int daysToUnlockThirdQuest;
+    public final ArrayList<ItemType> gifts;
 
-    NPCType(String name, Role role, HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests, ArrayList<ItemType> favorites, int daysToUnlockThirdQuest) {
+    NPCType(String name, Role role, HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests,
+            ArrayList<ItemType> favorites, int daysToUnlockThirdQuest, ArrayList<ItemType> gifts) {
         this.name = name;
         this.role = role;
         this.quests = quests;
         this.favorites = favorites;
         this.daysToUnlockThirdQuest = daysToUnlockThirdQuest;
+        this.gifts = gifts;
     }
 
     public String getName() {
@@ -231,6 +291,11 @@ public enum NPCType {
         }
 
         return "";
+    }
+
+    public ItemType getRandomGift() {
+        int index = (new Random()).nextInt(3);
+        return this.gifts.get(index);
     }
 
 }
