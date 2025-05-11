@@ -33,7 +33,7 @@ public class User {
     private Farm farm;
     private ArrayList<Transaction> transactions;
     private Backpack backpack;
-    private HashMap<User, HashMap<Item, Integer>> gifts;
+    private ArrayList<Gift> gifts;
     private double balance;
     private int mostEarnedMoney;
     private TrashCan trashCan;
@@ -67,7 +67,7 @@ public class User {
         this.marriageRequests = new ArrayList<>();
         this.spouse = null;
         this.isDepressed = false;
-        this.gifts = new HashMap<>();
+        this.gifts = new ArrayList<>();
     }
 
     public TrashCan getTrashCan() {
@@ -222,6 +222,15 @@ public class User {
         isDepressed = depressed;
     }
 
+    public ArrayList<Gift> getGifts() {
+        return gifts;
+    }
+
+    public void addGift(Item item, int amount, User giver) {
+        Gift gift = new Gift(this.gifts.size() + 1, item, amount, giver);
+        this.gifts.add(gift);
+    }
+
     public void faint() {
         // TODO: well, faint!
     }
@@ -262,6 +271,15 @@ public class User {
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {
         this.qAndA.put(securityQuestion, answer);
+    }
+
+    public Gift getGiftById(int id) {
+        for (Gift gift : this.getGifts()) {
+            if (gift.getId() == id) {
+                return gift;
+            }
+        }
+        return null;
     }
 
     @Override

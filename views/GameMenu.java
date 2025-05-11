@@ -191,6 +191,8 @@ public class GameMenu implements AppMenu {
                     matcher.group("gift_number"),
                     matcher.group("rate")
             ));
+        } else if ((matcher = GameCommands.GIFT_HISTORY.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showGiftHistory(matcher.group("username")));
         } else if ((matcher = GameCommands.HUG.getMatcher(inputLine)) != null) {
             System.out.println(controller.hug(matcher.group("username")));
         } else if ((matcher = GameCommands.FLOWER.getMatcher(inputLine)) != null) {

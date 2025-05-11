@@ -1096,33 +1096,91 @@ public class GameController {
             return new Result(false, "You must be close to " + username + " to give them a gift.");
         }
 
-        Item gift = player.getBackpack().getItemFromInventoryByName(itemName);
-        if (gift == null) {
+        Item item = player.getBackpack().getItemFromInventoryByName(itemName);
+        if (item == null) {
             return new Result(false, "Item not found.");
         }
 
         int amount = Integer.parseInt(amountStr);
-        Result result = player.getBackpack().removeFromInventory(gift, amount);
+        Result result = player.getBackpack().removeFromInventory(item, amount);
         if (!result.success()) {
             return result;
         }
 
-        targetPlayer.getBackpack().addToInventory(gift, amount);
-        // TODO
+        targetPlayer.getBackpack().addToInventory(item, amount);
+        targetPlayer.addGift(item, amount, player);
         return new Result(true, "You gave " + itemName + " (x" + amount + ") to " + username + ". " +
                 "Your friendship level will change after they rate it.");
     }
 
     public Result giftList() {
-        // TODO
-        return new Result(true, "");
+        StringBuilder message = new StringBuilder("Your gifts:\n");
+        for (Gift gift : player.getGifts()) {
+            message.append("-----------------------\n").append(gift.getId()).append(". ")
+                    .append(gift.getItem().getName()).append(" (x").append(gift.getAmount()).append(") given by ")
+                    .append(gift.getGiver().getUsername()).append("\n");
+            if (gift.getRating() == 0) {
+                message.append("You have not rated this gift yet.");
+            } else {
+                message.append("Your rating: ").append(gift.getRating());
+            }
+        }
+        return new Result(true, message.toString());
     }
 
     public Result giftRate(String giftNumberStr, String rateStr) {
         int giftNumber = Integer.parseInt(giftNumberStr);
+        Gift gift = player.getGiftById(giftNumber);
+        if (gift == null) {
+            return new Result(false, "Invalid gift number.");
+        }
+
         int rate = Integer.parseInt(rateStr);
-        // TODO
-        return new Result(true, "");
+        if (rate < 1 || rate > 5) {
+            return new Result(false, "Rating must be between 1 and 5.");
+        }
+
+        gift.setRating(rate);
+        int xp = gift.calculateFriendshipXP();
+        User giver = gift.getGiver();
+        game.changeFriendship(player, giver, xp);
+        return new Result(true, "You rated the gift " + rate + "/5. Your friendship level with " +
+                giver.getUsername() + " has changed by " + xp + " Xp and it is now " +
+                game.getUserFriendship(player, giver).toString());
+    }
+
+    public Result showGiftHistory(String username) {
+        User targetPlayer = game.getPlayerByUsername(username);
+        if (targetPlayer == null) {
+            return new Result(false, "User not found.");
+        }
+
+        String message = "Gift history of you and " + username + "\n";
+
+        message += "    Gifts from you to " + username + ":\n";
+        message += getGiftHistoryString(targetPlayer, player);
+
+        message += "------------------------------------------\n\n    Gifts from " + username + " to you:\n";
+        message += getGiftHistoryString(player, targetPlayer);
+
+        return new Result(true, message);
+    }
+
+    private String getGiftHistoryString(User receiver, User giver) {
+        StringBuilder message = new StringBuilder();
+        for (Gift gift : receiver.getGifts()) {
+            if (gift.getGiver().equals(giver)) {
+                message.append("    ----------------------\n" + "   Gift number: ").append(gift.getId()).append("\n")
+                        .append("   ").append(gift.getItem().getName()).append(" (x").append(gift.getAmount())
+                        .append(") \n    ");
+                if (gift.getRating() == 0) {
+                    message.append("Not rated yet");
+                } else {
+                    message.append("Rating: ").append(gift.getRating()).append("/5");
+                }
+            }
+        }
+        return message.toString();
     }
 
     public Result hug(String username) {
