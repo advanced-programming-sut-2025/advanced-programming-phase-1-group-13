@@ -89,10 +89,14 @@ public enum Craft implements ItemType {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
+    }
+
+    public HashMap<IngredientType, Integer> getIngredients() {
+        return this.ingredients;
     }
 }
