@@ -2,6 +2,7 @@ package controllers;
 
 import models.App;
 import models.Result;
+import models.enums.Menu;
 import models.enums.commands.LoginCommands;
 
 import static models.App.getUserByEmail;
@@ -51,5 +52,10 @@ public class ProfileController {
 
     public Result showUserInfo() {
         return new Result(true, App.getLoggedIn().toString());
+    }
+
+    public Result goToMainMenu() {
+        App.setCurrentMenu(Menu.MAIN_MENU);
+        return new Result(true, "Heading to Main Menu");
     }
 }

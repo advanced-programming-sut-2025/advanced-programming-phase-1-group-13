@@ -34,7 +34,7 @@ public class PreGameMenuController {
         }
 
         for (User player : players) {
-            if (player.getActiveGame() == null) {
+            if (player.getActiveGame() != null) {
                 return new Result(false, player.getUsername() + " is already in a game.");
             }
         }

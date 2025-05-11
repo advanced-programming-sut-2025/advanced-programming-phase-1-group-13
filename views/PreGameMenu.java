@@ -16,7 +16,7 @@ public class PreGameMenu implements AppMenu {
         if ((matcher = PreGameMenuCommands.GAME_NEW.getMatcher(inputLine)) != null) {
             System.out.println(controller.gameNew(matcher.group("usernames")));
         } else if ((matcher = PreGameMenuCommands.GAME_MAP.getMatcher(inputLine)) != null) {
-            System.out.println(controller.chooseGameMap(matcher.group("map_number")));
+            System.out.println(controller.chooseGameMap(matcher.group("mapNumber")));
         } else if ((matcher = PreGameMenuCommands.LOAD_GAME.getMatcher(inputLine)) != null) {
             System.out.println(controller.loadGame());
         } else {

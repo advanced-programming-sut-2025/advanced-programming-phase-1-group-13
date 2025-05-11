@@ -102,7 +102,6 @@ public class LoginController {
         }
 
         if (!password.equals(user.getPassword())) {
-            System.out.println("LOOOOKKK: " + user.getPassword());
             return new Result(false, "Incorrect password.");
         }
 

@@ -9,7 +9,8 @@ public enum ProfileCommands implements Command {
     CHANGE_EMAIL("^\\s*change\\s+email\\s+(?<email>(?!.*\\\\.\\\\.)[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\\\.)+[A-Za-z]{2,})$"),
     CHANGE_PASSWORD("^\\s*change\\s+password\\s+-p\\s+(?<oldPass>.+)\\s+-o\\s+(?<newPass>[a-zA-Z0-9?<>,\"';:\\\\/|\\[\\] {}+=)(*&^%\\$#!]+)$"),
     SHOW_CURRENT_MENU("\\s*show\\s+current\\s+menu\\s*"),
-    USER_INFO("^\\s*user\\s+info\\s*$");
+    USER_INFO("^\\s*user\\s+info\\s*$"),
+    MENU_EXIT("^\\s*menu\\s+exit\\s*$");
 
     private final String regex;
     private final Pattern pattern;
