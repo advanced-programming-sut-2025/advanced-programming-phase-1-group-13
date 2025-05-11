@@ -3,7 +3,7 @@ package models;
 import models.enums.types.ItemType;
 
 public abstract class Item {
-//    private ItemType type;
+    //    private ItemType type;
     private boolean isSellable;
     private boolean isPurchasable;
     private int price;
@@ -39,6 +39,16 @@ public abstract class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public static ItemType getItemTypeByItemName(String itemName) {
+        // TODO
+        return null;
+    }
+
+    public static Item getItemByItemName(String itemName) {
+        // TODO
+        return null;
     }
 
     @Override

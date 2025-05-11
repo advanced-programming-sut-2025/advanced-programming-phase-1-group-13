@@ -39,7 +39,7 @@ public class PreGameMenuController {
             }
         }
 
-        Game game = new Game(players, 0); // TODO: choose map
+        Game game = new Game(players, 0); // TODO: Choose map
         for (User user : players) {
             user.getGames().add(game);
             user.setActiveGame(game);

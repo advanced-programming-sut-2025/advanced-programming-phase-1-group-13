@@ -19,6 +19,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static models.Greenhouse.canBuildGreenhouse;
+import static models.Position.areClose;
+
 public class GameController {
     User player = App.getLoggedIn();
     Game game = App.getCurrentGame();
@@ -84,7 +87,7 @@ public class GameController {
     }
 
     public Result throwItemToTrash(String itemName, String numberStr) {
-        Item item = getItemByItemName(itemName);
+        Item item = Item.getItemByItemName(itemName);
         Integer number;
         if (numberStr == null) {
             number = null;
@@ -150,7 +153,7 @@ public class GameController {
     }
 
     public Result craft(String itemName) {
-        Item item = getItemByItemName(itemName);
+        Item item = Item.getItemByItemName(itemName);
         if (!canCraftResult(item).success()) {
             return canCraftResult(item);
         }
@@ -167,7 +170,7 @@ public class GameController {
     }
 
     public Result cheatAddItem(String itemName, String numberStr) {
-        Item item = getItemByItemName(itemName);
+        Item item = Item.getItemByItemName(itemName);
         int number = 1;
         if (numberStr != null) {
             number = Integer.parseInt(numberStr);
@@ -351,12 +354,6 @@ public class GameController {
 
     // === GAME STATUS === //
 
-//    public Result cheatAdvanceDate(String howManyDaysString) {
-//        int howManyDays = Integer.parseInt(howManyDaysString);
-//        // TODO;
-//        return new Result(true, "");
-//    }
-
     public Result cheatThor(String x, String y) {
         Position position = new Position(Integer.parseInt(x), Integer.parseInt(y));
         // TODO
@@ -396,13 +393,6 @@ public class GameController {
         // TODO: build a greenhouse
         return new Result(true, "Building greenhouse..."); // todo: show its info in detail?
     }
-
-    private boolean canBuildGreenhouse() {
-        // TODO: check if we have the required material
-        // + is only ONE greenhouse allowed?
-        return false;
-    }
-
 
     // === PLANTS === //
 
@@ -801,8 +791,6 @@ public class GameController {
 
     // === ARTISAN === //
 
-    // TODO: build artisan
-
     public Result artisanUse(String artisanNameString, String itemNamesString) {
         ArtisanType artisanType = ArtisanType.getArtisanTypeByArtisanName(artisanNameString);
 
@@ -813,7 +801,7 @@ public class GameController {
         ArrayList<String> itemNames = new ArrayList<>(Arrays.asList(itemNamesString.split("\\s+")));
         ArrayList<ItemType> itemTypes = new ArrayList<>();
         for (String itemName : itemNames) {
-            ItemType itemType = getItemTypeByItemName(itemName);
+            ItemType itemType = Item.getItemTypeByItemName(itemName);
             if (itemType == null) {
                 return new Result(false, itemName + " is not a valid item.");
             }
@@ -837,16 +825,6 @@ public class GameController {
 
         // TODO: get the product from artisan
         return new Result(true, "");
-    }
-
-    private ItemType getItemTypeByItemName(String itemName) {
-        // TODO
-        return null;
-    }
-
-    private Item getItemByItemName(String itemName) {
-        // TODO
-        return null;
     }
 
     // === SHOPS === //
@@ -888,7 +866,7 @@ public class GameController {
             count = Integer.parseInt(countStr);
         }
 
-        Item product = getItemByItemName(productName);
+        Item product = Item.getItemByItemName(productName);
         // TODO: check if we have enough money
         // TODO: check if the product is actually a valid product (not made up / invalid)
         // TODO: check if the product is available
@@ -948,14 +926,6 @@ public class GameController {
                     game.getUserFriendship(player, targetPlayer).toString());
         }
         return new Result(false, "You must stand next to " + username + " to talk to them.");
-    }
-
-    public boolean areClose(Position position1, Position position2) {
-        int x1 = position1.getX();
-        int y1 = position1.getY();
-        int x2 = position1.getX();
-        int y2 = position1.getY();
-        return Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1 && !(x1 == x2 && y1 == y2);
     }
 
     public Result showTalkHistoryWithUser(String username) {

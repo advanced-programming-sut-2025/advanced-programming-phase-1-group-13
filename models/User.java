@@ -6,6 +6,7 @@ import models.enums.SkillLevel;
 import models.enums.environment.Direction;
 import models.enums.types.*;
 import models.inventory.Backpack;
+import models.tools.FishingRod;
 import models.tools.Tool;
 import models.tools.TrashCan;
 
@@ -277,6 +278,18 @@ public class User {
         for (Gift gift : this.getGifts()) {
             if (gift.getId() == id) {
                 return gift;
+            }
+        }
+        return null;
+    }
+
+    public FishingRod getFishingRodByName(String name) {
+        ArrayList<Item> items = new ArrayList<>(this.getBackpack().getItems().keySet());
+        for (Item item : items) {
+            if (item instanceof FishingRod fishingRod) {
+                if (fishingRod.getRodType().getName().equals(name)) {
+                    return fishingRod;
+                }
             }
         }
         return null;
