@@ -541,7 +541,7 @@ public class GameController {
                 animalName + ". Its' friendship level is now " + animal.getFriendshipLevel() + ".");
     }
 
-    public void updateAnimals() { // TODO: call this method at the end of the day
+    public static void updateAnimals() {
         for (Animal animal : getAllFarmAnimals()) {
             if (!animal.hasBeenFedToday()) {
                 animal.changeFriendship(-20);
@@ -805,10 +805,10 @@ public class GameController {
         return null;
     }
 
-    private ArrayList<Animal> getAllFarmAnimals() {
+    private static ArrayList<Animal> getAllFarmAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
 
-        Farm farm = player.getFarm();
+        Farm farm = App.getLoggedIn().getFarm();
         for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
             if (farmBuilding.getFarmBuildingType().getIsCage() != null) {
                 AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;

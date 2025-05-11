@@ -1,5 +1,6 @@
 package models;
 
+import controllers.GameController;
 import models.enums.FriendshipLevel;
 import models.enums.types.NPCType;
 
@@ -108,7 +109,8 @@ public class Game {
         // TODO: call changeDay() here
     }
 
-    public void changeDay() { // TODO: call when changing day
+    public void changeDay() {
+        GameController.updateAnimals();
         // TODO
     }
 
