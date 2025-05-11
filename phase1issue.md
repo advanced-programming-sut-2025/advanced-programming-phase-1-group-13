@@ -22,7 +22,7 @@ assignees: Arshia Izadyari
   <div  dir="ltr" align='right'>
   
   1. [ ] شروع نشده
-  2. [ ] در حال انجام
+  2. [x] در حال انجام
   3. [ ] تمام شده
      </div>
 </details>
@@ -31,105 +31,121 @@ assignees: Arshia Izadyari
 
   **نام و نام خانوادگی: یاسمن فرخی**
 <details>
-  <summary>Animals</summary>
+  <summary>منوی پروفایل</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Fishing</summary>
+  <summary>حیوانات</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Artisan</summary>
+  <summary>ماهی</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Shop</summary>
+  <summary>فرآوری</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Friendship</summary>
+  <summary>فروشگاه</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>NPC</summary>
+  <summary>خرید و فروش</summary>
 
   <div dir="ltr" align='right'>
 
-1. [ ] شروع نشده
+1. [x] شروع نشده
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Trade</summary>
+  <summary>تعاملات بازیکنان</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
+</details>
 
+<details>
+  <summary>npc</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
 </details>
 
 ## تسک‌های نفر دوم
 
   **نام و نام خانوادگی: سلما رضاوند**
+
 <details>
-  <summary>Map</summary>
+  <summary>ثبت نام</summary>
 
   <div dir="ltr" align='right'>
 
-  1. [ ] شروع نشده
-  2. [ ] در حال انجام
-  3. [ ] تمام شده
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
   </div>
 </details>
 
 <details>
-  <summary>Save Game</summary>
+  <summary>ورود</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>منوی بازی</summary>
 
   <div dir="ltr" align='right'>
 
@@ -137,11 +153,10 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Weather and Time</summary>
+  <summary>زمان</summary>
 
   <div dir="ltr" align='right'>
 
@@ -149,25 +164,57 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
+</details>
 
+<details>
+  <summary>آب و هوا</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [ ] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>نقشه</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [ ] تمام شده
+  </div>
 </details>
 
 ## تسک‌های نفر سوم
 
   **نام و نام خانوادگی: آروین رسول زاده**
 <details>
-  <summary>Energy</summary>
+  <summary>منوی اصلی</summary>
 
   <div dir="ltr" align='right'>
 
-  1. [ ] شروع نشده
-  2. [ ] در حال انجام
-  3. [ ] تمام شده
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
   </div>
 </details>
 
 <details>
-  <summary>Inventory</summary>
+  <summary>انرژی</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>توانایی</summary>
 
   <div dir="ltr" align='right'>
 
@@ -175,11 +222,10 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Tools</summary>
+  <summary>ابزار</summary>
 
   <div dir="ltr" align='right'>
 
@@ -187,11 +233,10 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
 
 <details>
-  <summary>Crafting</summary>
+  <summary>کشاورزی</summary>
 
   <div dir="ltr" align='right'>
 
@@ -199,10 +244,10 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
+
 <details>
-  <summary>Cooking</summary>
+  <summary>ساخت و ساز</summary>
 
   <div dir="ltr" align='right'>
 
@@ -210,10 +255,10 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
+
 <details>
-  <summary>Farming</summary>
+  <summary>آشپزی</summary>
 
   <div dir="ltr" align='right'>
 
@@ -221,6 +266,6 @@ assignees: Arshia Izadyari
 2. [ ] در حال انجام
 3. [ ] تمام شده
   </div>
-
 </details>
+
 </div>
