@@ -1,12 +1,15 @@
 package models;
 
+import models.enums.types.FarmBuildingType;
 import models.enums.types.FertilizerType;
+import models.enums.types.TileType;
 import models.farming.Crop;
 import models.farming.Harvestable;
 import models.farming.PlantSource;
 import models.farming.Tree;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Farm {
     private ArrayList<Tile> mapTiles;
@@ -97,6 +100,90 @@ public class Farm {
 
     public ArrayList<FarmBuilding> getFarmBuildings() {
         return farmBuildings;
+    }
+
+    public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {
+        int xTopLeft = position.getX();
+        int yTopLeft = position.getY();
+        for (int i = 0; i < farmBuildingType.getWidth(); i++) {
+            for (int j = 0; j < farmBuildingType.getLength(); j++) {
+                Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
+                if (!this.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Animal> getAllFarmAnimals() {
+        ArrayList<Animal> animals = new ArrayList<>();
+
+        for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
+            if (farmBuilding.getFarmBuildingType().getIsCage() != null) {
+                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                animals.addAll(animalLivingSpace.getAnimals());
+            }
+        }
+
+        return animals;
+    }
+
+    public Animal getAnimalByName(String name) {
+        for (Animal animal : getAllFarmAnimals()) {
+            if (animal.getName().equals(name)) {
+                return animal;
+            }
+        }
+        return null;
+    }
+
+    public AnimalLivingSpace getAvailableLivingSpace(List<FarmBuildingType> livingSpaceTypes) {
+        for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
+            if (livingSpaceTypes.contains(farmBuilding.getFarmBuildingType())) {
+                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                if (!animalLivingSpace.isFull()) {
+                    return animalLivingSpace;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public void updateAnimals() {
+        for (Animal animal : this.getAllFarmAnimals()) {
+            if (!animal.hasBeenFedToday()) {
+                animal.changeFriendship(-20);
+            } else if (animal.getFriendshipLevel() >= 100) {
+                animal.produceProduct();
+            }
+
+            if (!animal.hasBeenPetToday()) {
+                animal.changeFriendship(-10);
+            }
+
+            if (animal.isOutside()) {
+                animal.changeFriendship(-20);
+            }
+        }
+    }
+
+    public FarmBuilding getFarmBuildingByPosition(Position position) {
+        for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
+            int xTopLeft = farmBuilding.getPositionOfUpperLeftCorner().getX();
+            int yTopLeft = farmBuilding.getPositionOfUpperLeftCorner().getY();
+            int length = farmBuilding.getLength();
+            int width = farmBuilding.getWidth();
+
+            int x = position.getX();
+            int y = position.getY();
+
+            if (xTopLeft < x && xTopLeft + length > x && yTopLeft < y && yTopLeft + width > y) {
+                return farmBuilding;
+            }
+        }
+        return null;
     }
 
     public Tile getTileByPosition(Position position) {
