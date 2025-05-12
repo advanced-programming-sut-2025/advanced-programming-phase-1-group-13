@@ -42,9 +42,9 @@ public abstract class Item {
             return animalProductType;
         }
 
-        Craft craft = Craft.getCraftByName(itemName);
-        if (craft != null) {
-            return craft;
+        CraftType craftType = CraftType.getCraftByName(itemName);
+        if (craftType != null) {
+            return craftType;
         }
 
         CropType cropType = CropType.getCropTypeByName(itemName);

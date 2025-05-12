@@ -2,7 +2,7 @@ package models.enums.types;
 
 import java.util.HashMap;
 
-public enum Craft implements ItemType {
+public enum CraftType implements ItemType { // TODO: complete ingredients
     CHERRY_BOMB(
             "Cherry Bomb",
             "Destroys everything within a 3-tile radius.", null),
@@ -72,16 +72,16 @@ public enum Craft implements ItemType {
 
     private final HashMap<IngredientType, Integer> ingredients;
 
-    Craft(String name, String description, HashMap<IngredientType, Integer> ingredients) {
+    CraftType(String name, String description, HashMap<IngredientType, Integer> ingredients) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
     }
 
-    public static Craft getCraftByName(String name) {
-        for (Craft craft : Craft.values()) {
-            if (craft.getName().equals(name)) {
-                return craft;
+    public static CraftType getCraftByName(String name) {
+        for (CraftType craftType : CraftType.values()) {
+            if (craftType.getName().equals(name)) {
+                return craftType;
             }
         }
         return null;

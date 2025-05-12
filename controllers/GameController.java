@@ -155,21 +155,20 @@ public class GameController {
     public Result craft(String itemName) {
         ItemType itemType = Item.getItemTypeByItemName(itemName);
         Item item = Item.getItemByItemType(itemType);
-        if (!canCraftResult((Craft) itemType).success()) {
-            return canCraftResult((Craft) itemType);
+        if (!canCraftResult((CraftType) itemType).success()) {
+            return canCraftResult((CraftType) itemType);
         }
-        Craft craft = Craft.getCraftByName(itemName);
-        if (craft == null) {
+        CraftType craftType = CraftType.getCraftByName(itemName);
+        if (craftType == null) {
             return new Result(false, "Item not found.");
         }
 
-        HashMap<IngredientType, Integer> ingredients = craft.getIngredients();
+        HashMap<IngredientType, Integer> ingredients = craftType.getIngredients();
         for (IngredientType ingredientType : ingredients.keySet()) {
             int quantity = ingredients.get(ingredientType);
             player.getBackpack().removeFromInventory(item, quantity);
         }
-        // TODO:
-        //  craft and add it to inventory: instance of craft?
+        player.getBackpack().addToInventory(new Craft(craftType), 1);
         return new Result(true, itemName + " crafted and added to inventory.");
     }
 
@@ -215,7 +214,7 @@ public class GameController {
         return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
     }
 
-    private Result canCraftResult(Craft craft) {
+    private Result canCraftResult(CraftType craftType) {
         if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
             return new Result(false, "Your backpack is full.");
         }

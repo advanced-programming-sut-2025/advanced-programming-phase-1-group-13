@@ -1,16 +1,16 @@
 package models;
 
-import models.enums.types.Craft;
+import models.enums.types.CraftType;
 
 public class CraftRecipe {
-    private String nameOfCraft;
+    private final String nameOfCraft;
     private int sellPrice;
-    private Craft craft;
+    private final CraftType craftType;
 
-    public CraftRecipe(Craft craft) {
-        this.craft = craft;
-        this.nameOfCraft = craft.getName();
-        this.sellPrice = switch (craft) {
+    public CraftRecipe(CraftType craftType) {
+        this.craftType = craftType;
+        this.nameOfCraft = craftType.getName();
+        this.sellPrice = switch (craftType) {
             case BOMB, MEGA_BOMB, CHERRY_BOMB -> 50;
             case MYSTIC_TREE_SEED -> 100;
             default -> 0;
