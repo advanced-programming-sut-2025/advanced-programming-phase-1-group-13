@@ -5,71 +5,188 @@ import java.util.HashMap;
 public enum CraftType implements ItemType { // TODO: complete ingredients
     CHERRY_BOMB(
             "Cherry Bomb",
-            "Destroys everything within a 3-tile radius.", null),
+            "Destroys everything within a 3-tile radius.",
+            createIngredientsMap(
+                    IngredientType.COPPER_ORE, 4,
+                    IngredientType.COAL, 1
+            )
+    ),
     BOMB(
             "Bomb",
-            "Destroys everything within a 5-tile radius.", null),
+            "Destroys everything within a 5-tile radius.",
+            createIngredientsMap(
+                    IngredientType.IRON_ORE, 4,
+                    IngredientType.COAL, 1
+            )
+    ),
     MEGA_BOMB(
             "Mega Bomb",
-            "Destroys everything within a 7-tile radius.", null),
+            "Destroys everything within a 7-tile radius.",
+            createIngredientsMap(
+                    IngredientType.GOLD_ORE, 4,
+                    IngredientType.COAL, 1
+            )
+    ),
     SPRINKLER(
             "Sprinkler",
-            "Waters 4 adjacent tiles.", null),
+            "Waters 4 adjacent tiles.",
+            createIngredientsMap(
+                    IngredientType.COPPER_BAR, 1,
+                    IngredientType.IRON_BAR, 1
+            )
+    ),
     QUALITY_SPRINKLER(
             "Quality Sprinkler",
-            "Waters 8 adjacent tiles.", null),
+            "Waters 8 adjacent tiles.",
+            createIngredientsMap(
+                    IngredientType.IRON_BAR, 1,
+                    IngredientType.GOLD_BAR, 1
+            )
+    ),
     IRIDIUM_SPRINKLER(
             "Iridium Sprinkler",
-            "Waters 24 adjacent tiles.", null),
+            "Waters 24 adjacent tiles.",
+            createIngredientsMap(
+                    IngredientType.GOLD_BAR, 1,
+                    IngredientType.IRIDIUM_BAR, 1
+            )
+    ),
     CHARCOAL_KILN(
             "Charcoal Kiln",
-            "Converts 10 wood into 1 charcoal.", null),
+            "Converts 10 wood into 1 charcoal.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 20,
+                    IngredientType.COPPER_BAR, 2
+            )
+    ),
     FURNACE(
             "Furnace",
-            "Converts ores and coal into bars.", null),
+            "Converts ores and coal into bars.",
+            createIngredientsMap(
+                    IngredientType.COPPER_ORE, 20,
+                    IngredientType.STONE, 25
+            )
+    ),
     SCARECROW(
             "Scarecrow",
-            "Prevents crow attacks within an 8-tile radius.", null),
+            "Prevents crow attacks within an 8-tile radius.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 50,
+                    IngredientType.COAL, 1,
+                    IngredientType.FIBER, 20
+            )
+    ),
     DELUXE_SCARECROW(
             "Deluxe Scarecrow",
-            "Prevents crow attacks within a 12-tile radius.", null),
+            "Prevents crow attacks within a 12-tile radius.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 50,
+                    IngredientType.COAL, 1,
+                    IngredientType.FIBER, 20,
+                    IngredientType.IRIDIUM_ORE, 1
+            )
+    ),
     BEE_HOUSE(
             "Bee House",
-            "Produces honey when placed on the farm.", null),
+            "Produces honey when placed on the farm.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 40,
+                    IngredientType.COAL, 8,
+                    IngredientType.IRON_BAR, 1
+            )
+    ),
     CHEESE_PRESS(
             "Cheese Press",
-            "Converts milk into cheese.", null),
+            "Converts milk into cheese.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 45,
+                    IngredientType.STONE, 45,
+                    IngredientType.COPPER_BAR, 1
+            )
+    ),
     KEG(
             "Keg",
-            "Converts fruits and vegetables into beverages.", null),
+            "Converts fruits and vegetables into beverages.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 30,
+                    IngredientType.COPPER_BAR, 1,
+                    IngredientType.IRON_BAR, 1
+            )
+    ),
     LOOM(
             "Loom",
-            "Converts wool into cloth.", null),
+            "Converts wool into cloth.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 60,
+                    IngredientType.FIBER, 30
+            )
+    ),
     MAYONNAISE_MACHINE(
             "Mayonnaise Machine",
-            "Converts eggs into mayonnaise.", null),
+            "Converts eggs into mayonnaise.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 15,
+                    IngredientType.STONE, 15,
+                    IngredientType.COPPER_BAR, 1
+            )
+    ),
     OIL_MAKER(
             "Oil Maker",
-            "Converts truffle into oil.", null),
+            "Converts truffle into oil.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 100,
+                    IngredientType.GOLD_BAR, 1,
+                    IngredientType.IRON_BAR, 1
+            )
+    ),
     PRESERVES_JAR(
             "Preserves Jar",
-            "Converts vegetables into pickles and fruits into jam.", null),
+            "Converts vegetables into pickles and fruits into jam.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 50,
+                    IngredientType.STONE, 40,
+                    IngredientType.COAL, 8
+            )
+    ),
     DEHYDRATOR(
             "Dehydrator",
-            "Dries fruits or mushrooms.", null),
+            "Dries fruits or mushrooms.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 30,
+                    IngredientType.STONE, 20,
+                    IngredientType.FIBER, 30
+            )
+    ),
     GRASS_STARTER(
             "Grass Starter",
-            "When placed on the ground, grass grows in that spot.", null),
+            "When placed on the ground, grass grows in that spot.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 1,
+                    IngredientType.FIBER, 1
+            )
+    ),
     FISH_SMOKER(
             "Fish Smoker",
-            "Converts any fish into smoked fish using one charcoal while maintaining its quality.", null),
+            "Converts any fish into smoked fish using one charcoal while maintaining its quality.",
+            createIngredientsMap(
+                    IngredientType.WOOD, 50,
+                    IngredientType.IRON_BAR, 3,
+                    IngredientType.COAL, 10
+            )
+    ),
     MYSTIC_TREE_SEED(
             "Mystic Tree Seed",
-            "Can be planted to grow a mystic tree.", null);
+            "Can be planted to grow a mystic tree.",
+            createIngredientsMap(
+                    IngredientType.ACORN, 5,
+                    IngredientType.MAPLE_SEED, 5,
+                    IngredientType.PINE_CONE, 5,
+                    IngredientType.MAHOGANY_SEED, 5
+            )
+    );
 
     private final String name;
     private final String description;
-
     private final HashMap<IngredientType, Integer> ingredients;
 
     CraftType(String name, String description, HashMap<IngredientType, Integer> ingredients) {
@@ -78,25 +195,14 @@ public enum CraftType implements ItemType { // TODO: complete ingredients
         this.ingredients = ingredients;
     }
 
-    public static CraftType getCraftByName(String name) {
-        for (CraftType craftType : CraftType.values()) {
-            if (craftType.getName().equals(name)) {
-                return craftType;
-            }
+    // Assuming createIngredientsMap is a method that takes a varargs list of IngredientType and quantity pairs
+    private static HashMap<IngredientType, Integer> createIngredientsMap(Object... entries) {
+        HashMap<IngredientType, Integer> map = new HashMap<>();
+        for (int i = 0; i < entries.length; i += 2) {
+            IngredientType ingredient = (IngredientType) entries[i];
+            int amount = (Integer) entries[i + 1];
+            map.put(ingredient, amount);
         }
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public HashMap<IngredientType, Integer> getIngredients() {
-        return this.ingredients;
+        return map;
     }
 }

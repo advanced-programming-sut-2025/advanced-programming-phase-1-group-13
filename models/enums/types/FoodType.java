@@ -81,7 +81,7 @@ public enum FoodType implements ItemType {
         return sellPrice;
     }
 
-    private static HashMap<IngredientType, Integer> createIngredientsMap(Object... items) {
+    public static HashMap<IngredientType, Integer> createIngredientsMap(Object... items) {
         HashMap<IngredientType, Integer> map = new HashMap<>();
         for (int i = 0; i < items.length; i += 2) {
             if (items[i] instanceof IngredientType && items[i + 1] instanceof Integer) {
