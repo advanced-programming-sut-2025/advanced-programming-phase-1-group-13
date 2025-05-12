@@ -85,7 +85,7 @@ public enum GameCommands implements Command {
     GIFT_NPC("^\\s*gift\\s+NPC\\s+(?<npc_name>.+)\\s+-i\\s+(?<item>.+)\\s*$"),
     FRIENDSHIP_NPC_LIST("^\\s*friendship\\s+NPC\\s+list\\s*$"),
     QUESTS_LIST("^\\s*quests\\s+list\\s*$"),
-    QUESTS_FINISH("^\\s*quests\\s+finish\\s+-i\\s+(?<index>\\d+)\\s*$"),
+    QUESTS_FINISH("^\\s*quests\\s+finish\\s+-n\\s+(?<npcName>.+)\\s+-i\\s+(?<index>\\d+)\\s*$"),
 
 
     // TODO: complete these commands below:

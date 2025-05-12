@@ -1271,18 +1271,31 @@ public class GameController {
             if (npc.getQuests().isEmpty()) {
                 message.append("No quests.\n");
             } else {
-                message.append(NPCType.questString(0, npc.getType(), friendshipLevel));
-                if (friendshipLevel >= 1) {
-                    message.append("\n\n").append(NPCType.questString(1, npc.getType(), friendshipLevel));
+                for (int i = 0; i < npc.getQuests().size(); i++) {
+                    if (game.isQuestUnlocked(npc, player, i)) {
+                        message.append(NPCType.questString(i, npc.getType(), friendshipLevel)).append("\n\n");
+                    }
                 }
-                // TODO: check if third quest is unlocked
             }
         }
         return new Result(true, message.toString());
     }
 
-    public Result finishQuest(String indexStr) {
-        // TODO
+    public Result finishQuest(String npcName, String indexStr) {
+        NPC npc = game.getNPCByName(npcName);
+        if (npc == null) {
+            return new Result(false, "Npc not found.");
+        }
+
+        int index = Integer.parseInt(indexStr) - 1;
+        if (index > npc.getQuests().size()) {
+            return new Result(false, "Quest not found");
+        }
+
+        if (index == 1) {
+            // TODO: if quest finished successfully:
+            npc.startThirdQuestCountdown(player);
+        }
         return new Result(true, "");
     }
 

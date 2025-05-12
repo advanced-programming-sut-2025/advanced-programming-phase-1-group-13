@@ -263,6 +263,10 @@ public enum NPCType {
         return favorites;
     }
 
+    public int getDaysToUnlockThirdQuest() {
+        return daysToUnlockThirdQuest;
+    }
+
     public static String questString(int index, NPCType npcType, int friendshipLevel) {
         HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> quests = npcType.getQuests();
         int questIndex = 0;

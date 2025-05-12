@@ -220,7 +220,10 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.QUESTS_LIST.getMatcher(inputLine)) != null) {
             System.out.println(controller.showQuestsList());
         } else if ((matcher = GameCommands.QUESTS_FINISH.getMatcher(inputLine)) != null) {
-            System.out.println(controller.finishQuest(matcher.group("index")));
+            System.out.println(controller.finishQuest(
+                    matcher.group("npcName"),
+                    matcher.group("index")
+            ));
         } else if ((matcher = GameCommands.EXIT_GAME.getMatcher(inputLine)) != null) {
             System.out.println(controller.exitGame());
         } else {

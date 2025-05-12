@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.environment.Time;
 import models.enums.types.Dialog;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
@@ -23,6 +24,8 @@ public class NPC {
     private Position position;
     private HashMap<User, Boolean> giftReceivedToday; // TODO: reset every day
     private HashMap<User, Boolean> talkedToToday; // TODO: reset every day
+    private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
+    private HashMap<User, Boolean> thirdQuestUnlocked;
 
     public NPC(NPCType type) {
         this.type = type;
@@ -33,6 +36,8 @@ public class NPC {
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();
+        this.daysLeftToUnlockThirdQuest = new HashMap<>();
+        this.thirdQuestUnlocked = new HashMap<>();
     }
 
     public NPCType getType() {
@@ -95,5 +100,34 @@ public class NPC {
 
     public boolean isFavourite(String itemName) {
         return this.getType().getFavorites().contains(getItemTypeByItemName(itemName));
+    }
+
+    public HashMap<User, Integer> getDaysLeftToUnlockThirdQuest() {
+        return daysLeftToUnlockThirdQuest;
+    }
+
+    public void setDaysLeftToUnlockThirdQuest(HashMap<User, Integer> daysLeftToUnlockThirdQuest) {
+        this.daysLeftToUnlockThirdQuest = daysLeftToUnlockThirdQuest;
+    }
+
+    public void startThirdQuestCountdown(User user) {
+        this.daysLeftToUnlockThirdQuest.put(user, this.type.getDaysToUnlockThirdQuest());
+    }
+
+    public void changeThirdQuestTime(User user, int amount) {
+        int currentAmount = this.daysLeftToUnlockThirdQuest.get(user);
+        this.daysLeftToUnlockThirdQuest.put(user, currentAmount + amount);
+    }
+
+    public HashMap<User, Boolean> getThirdQuestUnlocked() {
+        return thirdQuestUnlocked;
+    }
+
+    public void setThirdQuestUnlocked(HashMap<User, Boolean> thirdQuestUnlocked) {
+        this.thirdQuestUnlocked = thirdQuestUnlocked;
+    }
+
+    public void unlockThirdQuest(User user) {
+        this.thirdQuestUnlocked.put(user, true);
     }
 }

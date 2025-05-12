@@ -62,7 +62,17 @@ public class Game {
                 }
                 talkHistory.put(sender, talkMap);
             }
+        }
 
+        for (NPC npc : this.npcs) {
+            HashMap<User, Integer> thirdQuestTimeMap = new HashMap<>();
+            HashMap<User, Boolean> thirdQuestBooleanMap = new HashMap<>();
+            for (User player : this.players) {
+                thirdQuestTimeMap.put(player, null);
+                thirdQuestBooleanMap.put(player, false);
+            }
+            npc.setDaysLeftToUnlockThirdQuest(thirdQuestTimeMap);
+            npc.setThirdQuestUnlocked(thirdQuestBooleanMap);
         }
     }
 
@@ -160,6 +170,15 @@ public class Game {
                         }
                     }
                 }
+
+                if (npc.getDaysLeftToUnlockThirdQuest().get(player) != null) {
+                    npc.changeThirdQuestTime(player, -1);
+                    if (npc.getDaysLeftToUnlockThirdQuest().get(player) == 0) {
+                        npc.unlockThirdQuest(player);
+                        message.append(npc.getName()).append("'s third quest unlocked for ")
+                                .append(player.getUsername()).append(".\n");
+                    }
+                }
             }
         }
 
@@ -229,5 +248,21 @@ public class Game {
         if (talkHistory.containsKey(sender) && talkHistory.get(sender).containsKey(receiver)) {
             talkHistory.get(sender).get(receiver).put(message, false);
         }
+    }
+
+    public boolean isQuestUnlocked(NPC npc, User user, int index) {
+        if (index == 0) {
+            return true;
+        }
+
+        if (index == 1) {
+            return this.getNpcFriendshipPoints(user, npc) / 200 >= 1;
+        }
+
+        if (index == 2) {
+            return npc.getThirdQuestUnlocked().get(user);
+        }
+
+        return false;
     }
 }
