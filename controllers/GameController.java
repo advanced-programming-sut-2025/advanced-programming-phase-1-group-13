@@ -153,11 +153,16 @@ public class GameController {
     }
 
     public Result craft(String itemName) {
-        Item item = Item.getItemByItemName(itemName);
-        if (!canCraftResult(item).success()) {
-            return canCraftResult(item);
+        ItemType itemType = Item.getItemTypeByItemName(itemName);
+        Item item = Item.getItemByItemType(itemType);
+        if (!canCraftResult((Craft) itemType).success()) {
+            return canCraftResult((Craft) itemType);
         }
         Craft craft = Craft.getCraftByName(itemName);
+        if (craft == null) {
+            return new Result(false, "Item not found.");
+        }
+
         HashMap<IngredientType, Integer> ingredients = craft.getIngredients();
         for (IngredientType ingredientType : ingredients.keySet()) {
             int quantity = ingredients.get(ingredientType);
