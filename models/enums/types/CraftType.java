@@ -2,7 +2,7 @@ package models.enums.types;
 
 import java.util.HashMap;
 
-public enum CraftType implements ItemType { // TODO: complete ingredients
+public enum CraftType implements ItemType {
     CHERRY_BOMB(
             "Cherry Bomb",
             "Destroys everything within a 3-tile radius.",
@@ -184,9 +184,9 @@ public enum CraftType implements ItemType { // TODO: complete ingredients
                     IngredientType.MAHOGANY_SEED, 5
             )
     );
-
     private final String name;
     private final String description;
+
     private final HashMap<IngredientType, Integer> ingredients;
 
     CraftType(String name, String description, HashMap<IngredientType, Integer> ingredients) {
@@ -195,14 +195,29 @@ public enum CraftType implements ItemType { // TODO: complete ingredients
         this.ingredients = ingredients;
     }
 
-    // Assuming createIngredientsMap is a method that takes a varargs list of IngredientType and quantity pairs
-    private static HashMap<IngredientType, Integer> createIngredientsMap(Object... entries) {
-        HashMap<IngredientType, Integer> map = new HashMap<>();
-        for (int i = 0; i < entries.length; i += 2) {
-            IngredientType ingredient = (IngredientType) entries[i];
-            int amount = (Integer) entries[i + 1];
-            map.put(ingredient, amount);
+    public static CraftType getCraftByName(String name) {
+        for (CraftType craftType : CraftType.values()) {
+            if (craftType.getName().equals(name)) {
+                return craftType;
+            }
         }
-        return map;
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public HashMap<IngredientType, Integer> getIngredients() {
+        return this.ingredients;
+    }
+
+    private static HashMap<IngredientType, Integer> createIngredientsMap(Object... items) {
+        return FoodType.createIngredientsMap(items); // same functionality
     }
 }
