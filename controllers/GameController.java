@@ -125,7 +125,7 @@ public class GameController {
             return new Result(false, "You should equip tool first.");
         }
         if (canToolBeUsedHere(tile, tool.getToolType())) {
-            tool.useTool(direction);
+            tool.useTool(tile, player);
             return new Result(true, "Done!");
         }
         return new Result(false, failingMessage);
@@ -275,7 +275,7 @@ public class GameController {
                 tileType == TileType.QUARRY;
     }
 
-    private Tile neighborTile(Direction direction) {
+    public static Tile neighborTile(Direction direction) {
         // TODO: return the position of the neighbour tile, if within the range of our map of farms.
         return null;
     }
@@ -1291,7 +1291,7 @@ public class GameController {
             return new Result(false, "Quest not found");
         }
 
-        ItemType itemType  = npc.getType().getRequestItemType(index);
+        ItemType itemType = npc.getType().getRequestItemType(index);
         Item item = Item.getItemByItemType(itemType);
         int requestQuantity = npc.getType().getRequestQuantity(index);
 

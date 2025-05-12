@@ -1,9 +1,10 @@
 package models.tools;
 
 import models.Item;
+import models.Tile;
+import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
-import models.enums.environment.Direction;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
 
@@ -49,7 +50,7 @@ public abstract class Tool extends Item {
         };
     }
 
-    public void useTool(Direction direction) {
+    public void useTool(Tile tile, User player) {
         // TODO
     }
 

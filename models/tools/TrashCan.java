@@ -1,8 +1,9 @@
 package models.tools;
 
+import models.Tile;
+import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
-import models.enums.environment.Direction;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
 
@@ -29,7 +30,7 @@ public class TrashCan extends Tool {
     }
 
     @Override
-    public void useTool(Direction direction) {
+    public void useTool(Tile tile, User player) {
         System.out.println("To use the trash can, type this command:\n" +
                 "inventory trash -i <item’s name> -n <number>");
     }

@@ -1,8 +1,8 @@
 package models.tools;
 
+import models.Tile;
 import models.enums.Skill;
 import models.enums.SkillLevel;
-import models.enums.environment.Direction;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
 
@@ -29,7 +29,7 @@ public class Pickaxe extends Tool {
     }
 
     @Override
-    public void useTool(Direction direction) {
-        super.useTool(direction);
+    public void useTool(Tile tile, User player) {
+        super.useTool(tile, player);
     }
 }

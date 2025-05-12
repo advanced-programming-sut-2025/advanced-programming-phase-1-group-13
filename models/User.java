@@ -108,6 +108,7 @@ public class User {
     public Backpack getBackpack() {
         return this.backpack;
     }
+
     //
     public String getUsername() {
         return username;
@@ -205,6 +206,10 @@ public class User {
         }
     }
 
+    public void decreaseEnergyBy(int amount) {
+        this.energy -= amount;
+    }
+
     public boolean isEnergyUnlimited() {
         return this.isEnergyUnlimited;
     }
@@ -265,7 +270,7 @@ public class User {
         this.getExchangedFlowerToday().put(user, hasReceived);
     }
 
-    public boolean hasInteractedToday(User user){
+    public boolean hasInteractedToday(User user) {
         return this.hasExchangedFlowerToday(user) ||
                 this.hasHuggedToday(user) ||
                 this.exchangedGiftToday(user) ||
