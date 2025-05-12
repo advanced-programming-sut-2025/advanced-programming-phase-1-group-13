@@ -302,4 +302,56 @@ public enum NPCType {
         return this.gifts.get(index);
     }
 
+    public ItemType getRequestItemType(int i) {
+        int index = 0;
+        for (HashMap<ItemType, Integer> requestMap : quests.keySet()) {
+            for (ItemType itemType : requestMap.keySet()) {
+                if (index == i) {
+                    return itemType;
+                }
+                index++;
+            }
+        }
+        return null;
+    }
+
+    public int getRequestQuantity(int i) {
+        int index = 0;
+        for (HashMap<ItemType, Integer> requestMap : quests.keySet()) {
+            for (Integer quantity : requestMap.values()) {
+                if (index == i) {
+                    return quantity;
+                }
+                index++;
+            }
+        }
+        return -1;
+    }
+
+    public ItemType getRewardItemType(int i) {
+        int index = 0;
+        for (HashMap<ItemType, Integer> rewardMap : quests.values()) {
+            for (ItemType itemType : rewardMap.keySet()) {
+                if (index == i) {
+                    return itemType;
+                }
+                index++;
+            }
+        }
+        return null;
+    }
+
+    public Integer getRewardQuantity(int i) {
+        int index = 0;
+        for (HashMap<ItemType, Integer> rewardMap : quests.values()) {
+            for (Integer quantity : rewardMap.values()) {
+                if (index == i) {
+                    return quantity;
+                }
+                index++;
+            }
+        }
+        return null;
+    }
+
 }

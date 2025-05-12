@@ -1291,11 +1291,37 @@ public class GameController {
             return new Result(false, "Quest not found");
         }
 
+        ItemType itemType  = npc.getType().getRequestItemType(index);
+        Item item = Item.getItemByItemType(itemType);
+        int requestQuantity = npc.getType().getRequestQuantity(index);
+
+        if (npc.isQuestFinished(index)) {
+            return new Result(false, "This quest is already finished.");
+        }
+
+        Item rewardItem = Item.getItemByItemType(npc.getType().getRewardItemType(index));
+        int rewardQuantity = npc.getType().getRewardQuantity(index);
+        Result rewardResult = player.getBackpack().addToInventory(rewardItem, rewardQuantity);
+        if (!rewardResult.success()) {
+            return new Result(false,
+                    "You do not have enough space in your inventory for this quest's reward.");
+        }
+
+        Result requestResult = player.getBackpack().removeFromInventory(item, requestQuantity);
+        if (!requestResult.success()) {
+            assert itemType != null;
+            return new Result(false, "You don't have enough of " + itemType.getName() +
+                    " to finish quest.");
+        }
+
         if (index == 1) {
-            // TODO: if quest finished successfully:
             npc.startThirdQuestCountdown(player);
         }
-        return new Result(true, "");
+
+
+        assert rewardItem != null;
+        return new Result(true, "You finished quest number " + index + " of " + npcName +
+                ". They gave you " + rewardQuantity + " of " + rewardItem.getName() + " as reward.");
     }
 
     public Result exitGame() {
