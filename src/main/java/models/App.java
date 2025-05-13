@@ -46,7 +46,8 @@ public class App {
     public static ArrayList<User> getUsers() {
         try (FileReader reader = new FileReader("users.json")) {
             Gson gson = new Gson();
-            users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+            users = gson.fromJson(reader, new TypeToken<List<User>>() {
+            }.getType());
         } catch (IOException e) {
             users = new ArrayList<>(); // If file doesn't exist, start fresh
         }
@@ -78,7 +79,8 @@ public class App {
 
     public static ArrayList<Game> getGames() {
         try (FileReader reader = new FileReader("games.json")) {
-            games = new Gson().fromJson(reader, new TypeToken<List<Game>>() {}.getType());
+            games = new Gson().fromJson(reader, new TypeToken<List<Game>>() {
+            }.getType());
         } catch (IOException e) {
             games = new ArrayList<>();
         }
@@ -98,6 +100,9 @@ public class App {
 
 
     public static User getUserByUsername(String username) {
+        if (App.users.isEmpty()) {
+            return null;
+        }
         for (User user : App.getUsers()) {
             if (user.getUsername().equals(username)) {
                 return user;
@@ -107,6 +112,10 @@ public class App {
     }
 
     public static User getUserByEmail(String email) {
+        if (App.users.isEmpty()) {
+            return null;
+        }
+
         for (User user : App.getUsers()) {
             if (user.getEmail().equals(email)) {
                 return user;
