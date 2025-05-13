@@ -3,7 +3,7 @@ package models;
 import models.enums.types.FoodBuff;
 import models.enums.types.FoodType;
 
-public class CookingRecipe {
+public class CookingRecipe extends Item {
     private int energyOfFood;
     private final FoodType foodType;
     private final String nameOfFood;

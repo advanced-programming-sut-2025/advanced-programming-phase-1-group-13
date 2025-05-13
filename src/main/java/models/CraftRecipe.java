@@ -2,7 +2,7 @@ package models;
 
 import models.enums.types.CraftType;
 
-public class CraftRecipe {
+public class CraftRecipe extends Item {
     private final String nameOfCraft;
     private int sellPrice;
     private final CraftType craftType;
