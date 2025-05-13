@@ -9,6 +9,7 @@ import models.enums.types.MineralType;
 import models.enums.types.TileType;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
+import models.inventory.Backpack;
 
 import java.util.HashMap;
 
@@ -45,21 +46,31 @@ public class Pickaxe extends Tool {
             return;
         }
         player.decreaseEnergyBy(energyNeeded);
-        if (
-                tile.getType() == TileType.PLOWED_SOIL ||
-                        tile.getType() == TileType.NOT_PLOWED_SOIL ||
-                        tile.getType() == TileType.PLANTED_SEED ||
-                        tile.getType() == TileType.GROWING_CROP ||
-                        tile.getType() == TileType.UNDER_AN_ITEM) {
+
+        if (tile.getType() == TileType.PLOWED_SOIL ||
+                tile.getType() == TileType.NOT_PLOWED_SOIL ||
+                tile.getType() == TileType.PLANTED_SEED ||
+                tile.getType() == TileType.GROWING_CROP ||
+                tile.getType() == TileType.UNDER_AN_ITEM) {
             tile.setType(TileType.NOT_PLOWED_SOIL);
         } else if (tile.getType() == TileType.STONE) {
             Mineral mineral = (Mineral) tile.getItemPLacedOnTile();
             if (canMineMineral(mineral, player.getCurrentTool())) {
-
+                System.out.println("Mineral " + mineral.getName() + " has been mined.");
+                Backpack backpack = player.getBackpack();
+                if (backpack == null ||
+                        (backpack.getCapacity() <= backpack.getItems().size() && !backpack.isCapacityUnlimited())) {
+                    tile.setType(TileType.UNDER_AN_ITEM);
+                    tile.pLaceItemOnTile(mineral);
+                    System.out.println("Not able to add mineral to inventory.");
+                } else {
+                    backpack.addToInventory(mineral, null);
+                    System.out.println("One " + mineral.getName() + " has been added to the inventory.");
+                }
+            } else {
+                System.out.println("You can't mine " + mineral.getName() + " with your current pickaxe.");
             }
         }
-
-
     }
 
     private boolean canMineMineral(Mineral mineral, Tool tool) {

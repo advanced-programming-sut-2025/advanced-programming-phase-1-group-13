@@ -21,6 +21,10 @@ public class Mineral extends Item implements ForagingStuff {
         this.mineralType = mineralType;
     }
 
+    public MineralType getMineralType() {
+        return mineralType;
+    }
+
     public Position getPosition() {
         return position;
     }

@@ -45,7 +45,7 @@ public class GameController {
 
     public Result faint() {
         player.faint();
-        return new Result(true, ""); // todo: appropriate message
+        return new Result(true, ""); // todo: appropriate message (next turn? or wake up in cabin?)
     }
 
     public Result showCurrentTool() {

@@ -22,9 +22,14 @@ public abstract class Inventory {
         return this.items;
     }
 
-    public Result addToInventory(Item item, int n) {
+    public Result addToInventory(Item item, Integer n) {
+        if (n == null) n = 1;
         if (isCapacityUnlimited || this.getItems().size() < this.capacity) {
-            items.put(item, n);
+            if (this.getItems().containsKey(item)) {
+                items.put(item, this.getItems().get(item) + n);
+            } else {
+                items.put(item, n);
+            }
             return new Result(true, "Successfully added " + n + " of " + item.getName() + " to the inventory.");
         }
         return new Result(false, "Capacity limit exceeded.");
