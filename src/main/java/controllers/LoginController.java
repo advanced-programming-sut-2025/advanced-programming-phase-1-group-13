@@ -82,6 +82,9 @@ public class LoginController {
             return new Result(false, "Answers do not match.");
         }
         User user = getUserByUsername(username);
+        if (user == null) {
+            return new Result(false, "User not found.");
+        }
         user.addQAndA(question, answer);
         return new Result(true, "Security question and answer added successfully.");
     }
@@ -128,6 +131,9 @@ public class LoginController {
     public Result validateSecurityQuestion(String username, String question, String answer) {
         SecurityQuestion securityQuestion = SecurityQuestion.getSecurityQuestionByQuestion(question);
         User user = getUserByUsername(username);
+        if (user == null) {
+            return new Result(false, "User not found.");
+        }
         String correctAnswer = user.getQAndA().get(securityQuestion);
         String newPassword = randomPasswordGenerator().message();
         if (correctAnswer.equals(answer)) {

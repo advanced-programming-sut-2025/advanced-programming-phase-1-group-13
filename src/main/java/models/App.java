@@ -57,6 +57,10 @@ public class App {
         return currentShop;
     }
 
+    public static void setCurrentShop(Shop currentShop) {
+        App.currentShop = currentShop;
+    }
+
     public static void addUser(User user) {
         App.users.add(user);
 

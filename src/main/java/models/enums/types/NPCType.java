@@ -343,15 +343,18 @@ public enum NPCType {
 
     public Integer getRewardQuantity(int i) {
         int index = 0;
+        if (quests.isEmpty()) {
+            return 0;
+        }
         for (HashMap<ItemType, Integer> rewardMap : quests.values()) {
-            for (Integer quantity : rewardMap.values()) {
+            for (int quantity : rewardMap.values()) {
                 if (index == i) {
                     return quantity;
                 }
                 index++;
             }
         }
-        return null;
+        return 0;
     }
 
 }
