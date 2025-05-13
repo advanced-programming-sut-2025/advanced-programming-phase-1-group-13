@@ -88,6 +88,10 @@ public class Game {
         return gameMap;
     }
 
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
+    }
+
     public ArrayList<NPC> getNpcs() {
         return npcs;
     }
