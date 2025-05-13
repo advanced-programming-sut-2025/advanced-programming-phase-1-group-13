@@ -31,6 +31,21 @@ public abstract class Tool extends Item {
         return 0;
     }
 
+    static int the54321EnergyPattern(Tool tool, SkillLevel skillLevel) {
+        ToolMaterial toolMaterial = tool.getToolMaterial();
+        int energy = switch (toolMaterial) {
+            case BASIC -> 5;
+            case COPPER -> 4;
+            case IRON -> 3;
+            case GOLD -> 2;
+            case IRIDIUM -> 1;
+        };
+        if (skillLevel == SkillLevel.LEVEL_THREE) {
+            energy--;
+        }
+        return energy;
+    }
+
     public Skill getRelatedSkill() {
         return relatedSkill;
     }

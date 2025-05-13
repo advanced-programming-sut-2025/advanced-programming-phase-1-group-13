@@ -21,7 +21,7 @@ public class Scythe extends Tool {
 
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
-        return super.calculateEnergyNeeded(playerSkills, tool);
+        return 2;
     }
 
     @Override

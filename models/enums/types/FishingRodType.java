@@ -4,7 +4,7 @@ public enum FishingRodType {
     TRAINING("Training", 8, 0.1),
     BAMBOO("Bamboo", 8, 0.5),
     FIBERGLASS("Fiberglass", 6, 0.9),
-    IRIDIUM("Iridium", 4, 1.2),;
+    IRIDIUM("Iridium", 4, 1.2);
 
     private final String name;
     private final int energy;
@@ -17,15 +17,15 @@ public enum FishingRodType {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getEnergy() {
-        return energy;
+        return this.energy;
     }
 
     public double getQualityNumber() {
-        return qualityNumber;
+        return this.qualityNumber;
     }
 
     public FishingRodType getFishingRodTypeByName(String name) {

@@ -10,6 +10,8 @@ import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
+import static models.tools.Pickaxe.the54321EnergyPattern;
+
 public class Hoe extends Tool {
 
     public Hoe() {
@@ -23,19 +25,7 @@ public class Hoe extends Tool {
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
         SkillLevel skillLevel = playerSkills.get(Skill.FARMING);
-        ToolMaterial toolMaterial = tool.getToolMaterial();
-
-        int energy = switch (toolMaterial) {
-            case BASIC -> 5;
-            case COPPER -> 4;
-            case IRON -> 3;
-            case GOLD -> 2;
-            case IRIDIUM -> 1;
-        };
-        if (skillLevel == SkillLevel.LEVEL_THREE) {
-            energy--;
-        }
-        return energy;
+        return the54321EnergyPattern(tool, skillLevel);
     }
 
     @Override

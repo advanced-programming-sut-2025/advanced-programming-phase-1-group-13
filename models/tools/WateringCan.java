@@ -20,7 +20,8 @@ public class WateringCan extends Tool {
 
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
-        return super.calculateEnergyNeeded(playerSkills, tool);
+        SkillLevel skillLevel = playerSkills.get(Skill.FARMING);
+        return the54321EnergyPattern(tool, skillLevel);
     }
 
     @Override
