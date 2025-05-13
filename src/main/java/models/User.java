@@ -429,7 +429,7 @@ public class User {
         // TODO
     }
 
-    public void eat(String foodName) {
+    public void eat(Food food) {
         // TODO
     }
 
@@ -463,7 +463,7 @@ public class User {
         return null;
     }
 
-    public boolean isCloseToTileType (TileType tileType) {
+    public boolean isCloseToTileType(TileType tileType) {
         int x = this.getPosition().getX();
         int y = this.getPosition().getY();
         Position position;

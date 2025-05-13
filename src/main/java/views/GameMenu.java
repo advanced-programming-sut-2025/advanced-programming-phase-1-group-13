@@ -61,7 +61,7 @@ public class GameMenu implements AppMenu {
                     matcher.group("y")
             ));
         } else if ((matcher = GameCommands.WALK_CONFIRM.getMatcher(inputLine)) != null) {
-            System.out.println(controller.eat(matcher.group("yOrN")));
+            System.out.println(controller.eat(matcher.group("yOrN"))); // todo: eat?!
         } else if ((matcher = GameCommands.PRINT_MAP.getMatcher(inputLine)) != null) {
             System.out.println(controller.printMap(
                     matcher.group("x"),

@@ -201,7 +201,7 @@ public class GameController {
         return new Result(true, "Item added to inventory.");
     }
 
-    public Result prepareCook(String foodName) {
+    public Result prepareCook(String foodName) { // todo: check refrigerator or backpack?
         User player = App.getLoggedIn();
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
@@ -216,17 +216,19 @@ public class GameController {
             return new Result(false, canCookResult(cookingRecipe).message());
         }
 
-        // TODO: cook and add to inventory
+        Food food = new Food(cookingRecipe);
+        // todo: add to refrigerator or backpack?
         return new Result(true, "Yummy! Your meal is ready.");
     }
 
     public Result eat(String foodName) {
-        FoodType food = FoodType.getFoodTypeByName(foodName);
+        FoodType foodType = FoodType.getFoodTypeByName(foodName);
+        Food food = new Food(foodType);
         // TODO: check if player HAS the food, and return appropriate Result if not.
         // TODO: increase energy
         // TODO: apply buff
         User player = App.getLoggedIn();
-        player.eat(food.getName());
+        player.eat(food);
         return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
     }
 
