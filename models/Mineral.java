@@ -6,6 +6,7 @@ import models.farming.ForagingStuff;
 public class Mineral implements ForagingStuff {
     private int sellPrice;
     private MineralType mineralType;
+    private Position position;
 
     public Mineral(Position position) {
     }
@@ -13,5 +14,13 @@ public class Mineral implements ForagingStuff {
     @Override
     public void generate() {
 
+    }
+
+    public void setMineralType(MineralType mineralType) {
+        this.mineralType = mineralType;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

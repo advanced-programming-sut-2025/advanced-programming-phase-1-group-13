@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.types.MineralType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
 import models.enums.types.TileType;
@@ -18,7 +19,7 @@ public final class GameMap {
     private Cabin cabin;
     private Quarry quarry;
     private ArrayList<Tree> trees;
-    private ArrayList<Stone> stones;
+    private ArrayList<Mineral> stones;
     private ArrayList<Tile> woodLogs;
     private ArrayList<ForagingCrop> foragings;
     private Random random;
@@ -69,7 +70,7 @@ public final class GameMap {
         int stoneCount = 10 + random.nextInt(11);
         for (int i = 0; i < stoneCount; i++) {
             Position pos = getRandomPosition();
-            stones.add(new Stone(pos));
+            stones.add(new Mineral(pos));
         }
 
         // TODO: CHECK!!!
@@ -221,7 +222,7 @@ public final class GameMap {
         return trees;
     }
 
-    public ArrayList<Stone> getStones() {
+    public ArrayList<Mineral> getStones() {
         return stones;
     }
 
@@ -281,7 +282,7 @@ public final class GameMap {
             allTiles.add(tile);
         }
 
-        for (Stone stone : stones) {
+        for (Mineral stone : stones) {
             Tile tile = new Tile();
             tile.setPosition(stone.getPosition());
             tile.setType(TileType.STONE);
