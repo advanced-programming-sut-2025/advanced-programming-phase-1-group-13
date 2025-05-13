@@ -1,6 +1,5 @@
 package models;
 
-import controllers.GameController;
 import models.enums.FriendshipLevel;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
@@ -24,6 +23,7 @@ public class Game {
         this.gameMap = new GameMap(mapNumber);
 
         this.npcs = new ArrayList<>();
+
         for (NPCType npcType : NPCType.values()) {
             this.npcs.add(new NPC(npcType));
         }
