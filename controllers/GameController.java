@@ -242,7 +242,7 @@ public class GameController {
                     tileType == TileType.NOT_PLOWED_SOIL ||
                     tileType == TileType.PLANTED_SEED ||
                     tileType == TileType.GROWING_CROP ||
-                    tileType == TileType.QUARRY ||
+                    tileType == TileType.QUARRY_GROUND ||
                     tileType == TileType.STONE ||
                     tileType == TileType.UNDER_AN_ITEM;
         } else if (toolType == ToolType.AXE) {
@@ -269,7 +269,7 @@ public class GameController {
                 tileType == TileType.NOT_PLOWED_SOIL ||
                 tileType == TileType.CABIN ||
                 tileType == TileType.GRASS ||
-                tileType == TileType.QUARRY;
+                tileType == TileType.QUARRY_GROUND;
     }
 
     public static Tile neighborTile(Direction direction) {

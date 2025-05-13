@@ -172,7 +172,7 @@ public final class GameMap {
             for (int j = y; j < y + height; j++) {
                 Tile tile = new Tile();
                 tile.setPosition(new Position(i, j));
-                tile.setType(TileType.QUARRY);
+                tile.setType(TileType.QUARRY_GROUND);
                 tiles.add(tile);
             }
         }
