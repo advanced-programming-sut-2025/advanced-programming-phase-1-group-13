@@ -1,6 +1,5 @@
 package models;
 
-import controllers.GameController;
 import models.enums.FriendshipLevel;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
@@ -24,6 +23,7 @@ public class Game {
         this.gameMap = new GameMap(mapNumber);
 
         this.npcs = new ArrayList<>();
+
         for (NPCType npcType : NPCType.values()) {
             this.npcs.add(new NPC(npcType));
         }
@@ -123,7 +123,14 @@ public class Game {
 
     public void nextTurn(String callerUsername) {
         // TODO: show unread messages when starting new turn
-        // TODO: call changeDay() here
+        // TODO: call changeDay() here if day has changed
+        for (User player : this.players) {
+            for (Artisan artisan : player.getFarm().getArtisans()) {
+                if (artisan.getItemPending() != null) {
+                    artisan.setTimeLeft(Math.max(artisan.getTimeLeft() - 1, 0));
+                }
+            }
+        }
     }
 
     public Result changeDay() {

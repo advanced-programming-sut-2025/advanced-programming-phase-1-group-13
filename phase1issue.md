@@ -1,9 +1,5 @@
 ---
-name: تمپلیت فاز یک
-about: برای ساخت ایشوی فاز یک از این تمپلیت استفاده کنید
-title: Phase 1 Report
-labels: progress
-assignees: Arshia Izadyari
+https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mRSuc/edit?gid=0#gid=0
 
 ---
 

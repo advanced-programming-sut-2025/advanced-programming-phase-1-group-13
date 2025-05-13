@@ -807,22 +807,66 @@ public class GameController {
             itemTypes.add(itemType);
         }
 
+        Artisan artisan = player.getFarm().getEmptyArtisanByArtisanType(artisanType);
+        if (artisan.getItemPending() != null) {
+            return new Result(false, "You either have no " + artisanNameString + "s or all of your " +
+                    artisanNameString + "s are already making another product.");
+        }
+
+        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes,
+                artisanType);
+        if (processedItemType == null) {
+            return new Result(false,
+                    artisanNameString + " does not produce any items with these ingredients.");
+        }
+
         for (ItemType itemType : itemTypes) {
-            if (!player.hasInInventory(itemType)) {
+            int quantity = processedItemType.getIngredients().get(itemType);
+            Item item = Item.getItemByItemType(itemType);
+            Result result = player.getBackpack().removeFromInventory(item, quantity);
+            if (!result.success()) {
+                for (int i = 0; i < itemTypes.indexOf(itemType); i++) {
+                    Item itemToRemove = Item.getItemByItemType(itemTypes.get(i));
+                    player.getBackpack().addToInventory(itemToRemove,
+                            processedItemType.getIngredients().get(itemTypes.get(i)));
+                }
                 return new Result(false, "You don't have enough " + itemType.getName());
             }
-            // TODO
         }
-        // TODO ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
 
-        return new Result(true, "");
+        int processingTime = processedItemType.getProcessingTime();
+        artisan.setItemPending(Item.getItemByItemType(processedItemType));
+        artisan.setTimeLeft(processingTime);
+
+        return new Result(true, artisanNameString + " is making " + processedItemType.getName() + ". " +
+                "Come back in " + processingTime + " hours to collect it.");
     }
 
-    public Result artisanGet(String artisanName) { // gives product
-        // TODO: if product is not ready yet, return appropriate failing message
+    public Result artisanGet(String artisanName) {
+        ArtisanType artisanType = ArtisanType.getArtisanTypeByArtisanName(artisanName);
+        if (artisanType == null) {
+            return new Result(false, "Artisan not found.");
+        }
 
-        // TODO: get the product from artisan
-        return new Result(true, "");
+        Artisan artisan = player.getFarm().getFullArtisanByArtisanType(artisanType);
+        if (artisan == null) {
+            return new Result(false, "You don't have a " + artisanName +
+                    " producing an item right now.");
+        }
+
+        Item item = artisan.getItemPending();
+        if (artisan.getTimeLeft() > 0) {
+            return new Result(false, item.getName() + " is not ready to collect yet. Come back in " +
+                    artisan.getTimeLeft() + " hours to collect it.");
+        }
+
+        Result result = player.getBackpack().addToInventory(item, 1);
+        if (!result.success()) {
+            return new Result(false, "You don't have enough space in your backpack.");
+        }
+        artisan.setItemPending(null);
+        artisan.setTimeLeft(-1);
+        return new Result(true, "You collected a " + item.getName() + " from the " + artisanName + ".");
     }
 
     // === SHOPS === //

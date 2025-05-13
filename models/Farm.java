@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.types.ArtisanType;
 import models.enums.types.FarmBuildingType;
 import models.enums.types.FertilizerType;
 import models.enums.types.TileType;
@@ -7,6 +8,7 @@ import models.farming.Crop;
 import models.farming.Harvestable;
 import models.farming.PlantSource;
 import models.farming.Tree;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +25,15 @@ public class Farm {
     private ArrayList<FarmBuilding> farmBuildings;
     private int height;
     private int width;
+    private ArrayList<Artisan> artisans;
 
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
+        this.farmBuildings = new ArrayList<>();
+        this.artisans = new ArrayList<>();
         this.height = GameMap.getMAP_SIZE() / 10;
         this.width = GameMap.getMAP_SIZE() / 10;
 
@@ -37,6 +42,11 @@ public class Farm {
             this.lakes = new ArrayList<>();
             this.quarry = new Quarry();
             this.farmTiles = new ArrayList<>();
+            // TODO
+            this.cabin = new Cabin(); // with map1 properties
+            this.lakes = new ArrayList<>(); // with map1 properties
+            this.quarry = new Quarry(); // with map1 properties
+            this.farmTiles = new ArrayList<>(); // with map1 properties
         } else if (mapNumberToFollow == 2) {
             this.cabin = new Cabin();
             this.lakes = new ArrayList<>();
@@ -121,6 +131,14 @@ public class Farm {
 
     public ArrayList<FarmBuilding> getFarmBuildings() {
         return farmBuildings;
+    }
+
+    public ArrayList<Artisan> getArtisans() {
+        return artisans;
+    }
+
+    public void addArtisans(Artisan artisan) {
+        this.artisans.add(artisan);
     }
 
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {
@@ -222,6 +240,24 @@ public class Farm {
         for (Tile tile : farmTiles) {
             if (tile.getPosition().equals(position)) {
                 return tile;
+            }
+        }
+        return null;
+    }
+
+    public Artisan getFullArtisanByArtisanType(ArtisanType artisanType) {
+        for (Artisan artisan : this.artisans) {
+            if (artisan.getType().equals(artisanType) && artisan.getItemPending() != null) {
+                return artisan;
+            }
+        }
+        return null;
+    }
+
+    public Artisan getEmptyArtisanByArtisanType(ArtisanType artisanType) {
+        for (Artisan artisan : this.artisans) {
+            if (artisan.getType().equals(artisanType) && artisan.getItemPending() == null) {
+                return artisan;
             }
         }
         return null;

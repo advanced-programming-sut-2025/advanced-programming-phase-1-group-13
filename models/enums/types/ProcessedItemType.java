@@ -57,21 +57,40 @@ public enum ProcessedItemType implements ItemType {
     METAL_BAR("Any metal bar", "Turns ore and coal into metal bars.", 0, 4,
             null, 10 * 0); // TODO
 
-    String name;
-    String description;
-    int energy;
-    int processingTime; // in hours
-    HashMap<ItemType, Integer> ingredients;
-    double sellPrice;
+    final String name;
+    final String description;
+    final int energy;
+    final int processingTime; // in hours
+    final HashMap<ItemType, Integer> ingredients;
+    final double sellPrice;
 
-    ProcessedItemType(String name, String description, int energy, int processingTime, HashMap<ItemType,
-            Integer> ingredients, double sellPrice) {
+    ProcessedItemType(String name, String description, int energy, int processingTime, HashMap<ItemType, Integer> ingredients, double sellPrice) {
         this.name = name;
         this.description = description;
         this.energy = energy;
         this.processingTime = processingTime;
         this.ingredients = ingredients;
         this.sellPrice = sellPrice;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getProcessingTime() {
+        return processingTime;
+    }
+
+    public HashMap<ItemType, Integer> getIngredients() {
+        return ingredients;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
     }
 
     @Override
@@ -114,17 +133,28 @@ public enum ProcessedItemType implements ItemType {
         return null;
     }
 
-    public static ProcessedItemType getProcessedItemTypeByIngredients(ArrayList<ItemType> ingredients) {
+    public static ProcessedItemType getProcessedItemTypeByIngredients(ArrayList<ItemType> ingredients,
+                                                                      ArtisanType artisanType1) {
         for (ProcessedItemType processedItemType : ProcessedItemType.values()) {
-            if (processedItemType.areIngredientsEqual(ingredients)) {
-                return processedItemType;
+            ArtisanType artisanType2 = processedItemType.getArtisanType();
+            if (artisanType2 == null) {
+                return null;
+            }
+            if (artisanType2.equals(artisanType1)) {
+                if ((new ArrayList<>(processedItemType.ingredients.keySet())).equals(ingredients)) {
+                    return processedItemType;
+                }
             }
         }
         return null;
     }
 
-    public boolean areIngredientsEqual(ArrayList<ItemType> items) {
-        // TODO
-        return true;
+    public ArtisanType getArtisanType() {
+        for (ArtisanType artisanType : ArtisanType.values()) {
+            if (artisanType.getItemsTheArtisanProduces().contains(this)) {
+                return artisanType;
+            }
+        }
+        return null;
     }
 }
