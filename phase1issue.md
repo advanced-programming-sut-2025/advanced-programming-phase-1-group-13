@@ -1,8 +1,3 @@
----
-https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mRSuc/edit?gid=0#gid=0
-
----
-
 <div dir="rtl" align='right'>
 
 # فاز 1
@@ -14,18 +9,18 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <summary>فاز 1</summary>
 
 - موارد پیاده سازی فاز اول پروژه
-  
+
   <div  dir="ltr" align='right'>
-  
-  1. [ ] شروع نشده
-  2. [x] در حال انجام
-  3. [ ] تمام شده
-     </div>
+
+    1. [ ] شروع نشده
+    2. [x] در حال انجام
+    3. [ ] تمام شده
+       </div>
 </details>
 
 ## تسک‌های نفر اول
 
-  **نام و نام خانوادگی: یاسمن فرخی**
+**نام و نام خانوادگی: یاسمن فرخی**
 <details>
   <summary>منوی پروفایل</summary>
 
@@ -65,8 +60,8 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [x] در حال انجام
-3. [ ] تمام شده
+2. [ ] در حال انجام
+3. [x] تمام شده
   </div>
 </details>
 
@@ -86,8 +81,8 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
 
   <div dir="ltr" align='right'>
 
-1. [x] شروع نشده
-2. [ ] در حال انجام
+1. [ ] شروع نشده
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
 </details>
@@ -116,7 +111,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
 
 ## تسک‌های نفر دوم
 
-  **نام و نام خانوادگی: سلما رضاوند**
+**نام و نام خانوادگی: سلما رضاوند**
 
 <details>
   <summary>ثبت نام</summary>
@@ -186,7 +181,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
 
 ## تسک‌های نفر سوم
 
-  **نام و نام خانوادگی: آروین رسول زاده**
+**نام و نام خانوادگی: آروین رسول زاده**
 <details>
   <summary>منوی اصلی</summary>
 
