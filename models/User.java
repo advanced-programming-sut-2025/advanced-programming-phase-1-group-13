@@ -1,5 +1,8 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
@@ -10,7 +13,6 @@ import models.inventory.Backpack;
 import models.tools.FishingRod;
 import models.tools.Tool;
 import models.tools.TrashCan;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -382,5 +384,15 @@ public class User {
     public boolean hasInInventory(ItemType itemType) {
         // TODO
         return false;
+    }
+
+    public String toJson() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
+    }
+
+    public static User fromJson(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, User.class);
     }
 }
