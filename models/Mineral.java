@@ -3,29 +3,25 @@ package models;
 import models.enums.types.MineralType;
 import models.farming.ForagingStuff;
 
-public class Mineral extends Item implements ForagingStuff {
+public class Mineral implements ForagingStuff {
     private int sellPrice;
     private MineralType mineralType;
-    private String name;
+    private Position position;
 
     public Mineral(Position position) {
     }
 
-    public Mineral(MineralType mineralType) {
-        this.mineralType = mineralType;
-        this.name = mineralType.getName();
-    }
-
-    public int getSellPrice() {
-        return sellPrice;
-    }
-
-    public MineralType getMineralType() {
-        return mineralType;
-    }
 
     @Override
     public void generate() {
 
+    }
+
+    public void setMineralType(MineralType mineralType) {
+        this.mineralType = mineralType;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }
