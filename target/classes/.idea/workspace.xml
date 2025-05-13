@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2db738a2-fcde-4212-af39-df7e8a396d45" name="Changes" comment="Mineral extends Item!">
+      <change beforePath="$PROJECT_DIR$/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Mineral.java" beforeDir="false" afterPath="$PROJECT_DIR$/models/Mineral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/enums/types/MineralType.java" beforeDir="false" afterPath="$PROJECT_DIR$/models/enums/types/MineralType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/models/inventory/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tools/Axe.java" beforeDir="false" afterPath="$PROJECT_DIR$/models/tools/Axe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tools/Pickaxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/models/tools/Pickaxe.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Arvin-Rsl&quot;
+  }
+}</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="5f39ab69-c70d-4da4-80c6-ce19810f21cf" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/advanced-programming-sut-2025/advanced-programming-phase-1-group-13&quot;,
+    &quot;accountId&quot;: &quot;5f39ab69-c70d-4da4-80c6-ce19810f21cf&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/models/enums/types/FoodType.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2vLTqgF5ukbi79PkuMLUG32x6MB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/arvin/IdeaProjects/advanced-programming-phase-1-group-13&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="advanced-programming-phase-1-group-13" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2db738a2-fcde-4212-af39-df7e8a396d45" name="Changes" comment="" />
+      <created>1743923547033</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743923547033</updated>
+      <workItem from="1743923548452" duration="1124000" />
+      <workItem from="1743930855059" duration="15305000" />
+      <workItem from="1744454825771" duration="4390000" />
+      <workItem from="1744459290167" duration="967000" />
+      <workItem from="1744538225633" duration="3425000" />
+      <workItem from="1744542007966" duration="3552000" />
+      <workItem from="1745485673236" duration="13294000" />
+      <workItem from="1746082556127" duration="3924000" />
+      <workItem from="1746349906991" duration="20650000" />
+      <workItem from="1746436030805" duration="2523000" />
+      <workItem from="1746767639908" duration="1301000" />
+      <workItem from="1746773350965" duration="5746000" />
+      <workItem from="1746852304831" duration="6778000" />
+      <workItem from="1746875607878" duration="4390000" />
+      <workItem from="1746885112494" duration="9339000" />
+      <workItem from="1746896971250" duration="4256000" />
+      <workItem from="1746907929100" duration="2093000" />
+      <workItem from="1746947397387" duration="375000" />
+      <workItem from="1747001967431" duration="103000" />
+      <workItem from="1747002078091" duration="729000" />
+      <workItem from="1747027513725" duration="1302000" />
+      <workItem from="1747059606625" duration="7961000" />
+      <workItem from="1747118586641" duration="13623000" />
+    </task>
+    <task id="LOCAL-00040" summary="GameMenu view finished">
+      <option name="closed" value="true" />
+      <created>1746359538298</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1746359538298</updated>
+    </task>
+    <task id="LOCAL-00041" summary="view finished (errors fixed)">
+      <option name="closed" value="true" />
+      <created>1746363056134</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1746363056134</updated>
+    </task>
+    <task id="LOCAL-00042" summary="add pom.xml">
+      <option name="closed" value="true" />
+      <created>1746364286182</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1746364286182</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Maven">
+      <option name="closed" value="true" />
+      <created>1746364921202</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1746364921203</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Security questions">
+      <option name="closed" value="true" />
+      <created>1746369328197</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1746369328197</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Login Menu Finished!">
+      <option name="closed" value="true" />
+      <created>1746370664584</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1746370664584</updated>
+    </task>
+    <task id="LOCAL-00046" summary="canSwitchMenu() method in MainMenuController">
+      <option name="closed" value="true" />
+      <created>1746436273913</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1746436273913</updated>
+    </task>
+    <task id="LOCAL-00047" summary="logout() method in MainMenuController">
+      <option name="closed" value="true" />
+      <created>1746436350473</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1746436350473</updated>
+    </task>
+    <task id="LOCAL-00048" summary="minor fixes in LoginController and MainMenuController">
+      <option name="closed" value="true" />
+      <created>1746437160243</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1746437160243</updated>
+    </task>
+    <task id="LOCAL-00049" summary="add TODO in login() of LoginController">
+      <option name="closed" value="true" />
+      <created>1746437829802</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1746437829802</updated>
+    </task>
+    <task id="LOCAL-00050" summary="inventoryShow()">
+      <option name="closed" value="true" />
+      <created>1746768871873</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1746768871874</updated>
+    </task>
+    <task id="LOCAL-00051" summary="removeFromInventory() in Inventory Class">
+      <option name="closed" value="true" />
+      <created>1746775184872</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1746775184872</updated>
+    </task>
+    <task id="LOCAL-00052" summary="throw item to trash">
+      <option name="closed" value="true" />
+      <created>1746775424458</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1746775424458</updated>
+    </task>
+    <task id="LOCAL-00053" summary="tools">
+      <option name="closed" value="true" />
+      <created>1746776365805</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1746776365805</updated>
+    </task>
+    <task id="LOCAL-00054" summary="tools (incomplete)">
+      <option name="closed" value="true" />
+      <created>1746781751182</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1746781751182</updated>
+    </task>
+    <task id="LOCAL-00055" summary="tools (incomplete)">
+      <option name="closed" value="true" />
+      <created>1746782130852</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1746782130852</updated>
+    </task>
+    <task id="LOCAL-00056" summary="tools (incomplete)">
+      <option name="closed" value="true" />
+      <created>1746782613993</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1746782613993</updated>
+    </task>
+    <task id="LOCAL-00057" summary="tools (incomplete)">
+      <option name="closed" value="true" />
+      <created>1746782776319</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1746782776319</updated>
+    </task>
+    <task id="LOCAL-00058" summary="proceed w tools &amp; trash">
+      <option name="closed" value="true" />
+      <created>1746856284265</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1746856284265</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Item and equipTool()">
+      <option name="closed" value="true" />
+      <created>1746857483494</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1746857483494</updated>
+    </task>
+    <task id="LOCAL-00060" summary="minor addition (Direction)">
+      <option name="closed" value="true" />
+      <created>1746870410779</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1746870410779</updated>
+    </task>
+    <task id="LOCAL-00061" summary="spelling fixed">
+      <option name="closed" value="true" />
+      <created>1746871233128</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1746871233128</updated>
+    </task>
+    <task id="LOCAL-00062" summary="minor name edition">
+      <option name="closed" value="true" />
+      <created>1746871717859</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1746871717859</updated>
+    </task>
+    <task id="LOCAL-00063" summary="minor name edition">
+      <option name="closed" value="true" />
+      <created>1746875625589</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1746875625589</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Tile, canPlaceItem(), canToolBeUsed()">
+      <option name="closed" value="true" />
+      <created>1746878888978</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1746878888978</updated>
+    </task>
+    <task id="LOCAL-00065" summary="craft (incomplete)">
+      <option name="closed" value="true" />
+      <created>1746880019455</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1746880019455</updated>
+    </task>
+    <task id="LOCAL-00066" summary="update it fellows!">
+      <option name="closed" value="true" />
+      <created>1746885947884</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1746885947884</updated>
+    </task>
+    <task id="LOCAL-00067" summary="renamed inventory remove">
+      <option name="closed" value="true" />
+      <created>1746887537540</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1746887537540</updated>
+    </task>
+    <task id="LOCAL-00068" summary="fixed errors">
+      <option name="closed" value="true" />
+      <created>1746888728491</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1746888728492</updated>
+    </task>
+    <task id="LOCAL-00069" summary=".">
+      <option name="closed" value="true" />
+      <created>1746894563884</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1746894563884</updated>
+    </task>
+    <task id="LOCAL-00070" summary="cheat Add Item">
+      <option name="closed" value="true" />
+      <created>1746897521627</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1746897521627</updated>
+    </task>
+    <task id="LOCAL-00071" summary="place Item">
+      <option name="closed" value="true" />
+      <created>1746897620989</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1746897620989</updated>
+    </task>
+    <task id="LOCAL-00072" summary="FoodBuff and FoodType and CookingRecipe relations">
+      <option name="closed" value="true" />
+      <created>1746899684738</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1746899684738</updated>
+    </task>
+    <task id="LOCAL-00073" summary="CookingRecipe and canCook()">
+      <option name="closed" value="true" />
+      <created>1746901345506</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1746901345506</updated>
+    </task>
+    <task id="LOCAL-00074" summary="craft and ingredients enums">
+      <option name="closed" value="true" />
+      <created>1746909245620</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1746909245620</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Craft and CraftRecipe">
+      <option name="closed" value="true" />
+      <created>1746910028400</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1746910028400</updated>
+    </task>
+    <task id="LOCAL-00076" summary="ingredients in Craft (incomplete)">
+      <option name="closed" value="true" />
+      <created>1746947676871</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1746947676871</updated>
+    </task>
+    <task id="LOCAL-00077" summary="craft (a bit)">
+      <option name="closed" value="true" />
+      <created>1747002779079</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1747002779079</updated>
+    </task>
+    <task id="LOCAL-00078" summary="add Craft class and completed craft() method">
+      <option name="closed" value="true" />
+      <created>1747028546363</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1747028546363</updated>
+    </task>
+    <task id="LOCAL-00079" summary="CraftType">
+      <option name="closed" value="true" />
+      <created>1747080142653</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1747080142653</updated>
+    </task>
+    <task id="LOCAL-00080" summary="CraftType">
+      <option name="closed" value="true" />
+      <created>1747080252627</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1747080252627</updated>
+    </task>
+    <task id="LOCAL-00081" summary="useTool override (incomplete)">
+      <option name="closed" value="true" />
+      <created>1747082482194</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1747082482194</updated>
+    </task>
+    <task id="LOCAL-00082" summary="calculate energy (tool use) updated. Hoe useTool() completed">
+      <option name="closed" value="true" />
+      <created>1747119341152</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1747119341152</updated>
+    </task>
+    <task id="LOCAL-00083" summary="calculate energy (tool use) for Pickaxe">
+      <option name="closed" value="true" />
+      <created>1747119698371</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1747119698371</updated>
+    </task>
+    <task id="LOCAL-00084" summary="calculate energy for all tools.">
+      <option name="closed" value="true" />
+      <created>1747121566687</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1747121566687</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Pickaxe useTool() (incomplete) and Mineral">
+      <option name="closed" value="true" />
+      <created>1747125244418</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1747125244418</updated>
+    </task>
+    <task id="LOCAL-00086" summary="TileType: QUARRY -&gt; QUARRY_GROUND (i.e. no mineral on it)">
+      <option name="closed" value="true" />
+      <created>1747125554231</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1747125554231</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Pickaxe's useTool() + add to MineralType">
+      <option name="closed" value="true" />
+      <created>1747128160044</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1747128160044</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Mineral extends Item!">
+      <option name="closed" value="true" />
+      <created>1747128487145</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1747128487145</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="minor name edition" />
+    <MESSAGE value="Tile, canPlaceItem(), canToolBeUsed()" />
+    <MESSAGE value="craft (incomplete)" />
+    <MESSAGE value="update it fellows!" />
+    <MESSAGE value="renamed inventory remove" />
+    <MESSAGE value="fixed errors" />
+    <MESSAGE value="." />
+    <MESSAGE value="cheat Add Item" />
+    <MESSAGE value="place Item" />
+    <MESSAGE value="FoodBuff and FoodType and CookingRecipe relations" />
+    <MESSAGE value="CookingRecipe and canCook()" />
+    <MESSAGE value="craft and ingredients enums" />
+    <MESSAGE value="Craft and CraftRecipe" />
+    <MESSAGE value="ingredients in Craft (incomplete)" />
+    <MESSAGE value="craft (a bit)" />
+    <MESSAGE value="add Craft class and completed craft() method" />
+    <MESSAGE value="CraftType" />
+    <MESSAGE value="useTool override (incomplete)" />
+    <MESSAGE value="calculate energy (tool use) updated. Hoe useTool() completed" />
+    <MESSAGE value="calculate energy (tool use) for Pickaxe" />
+    <MESSAGE value="calculate energy for all tools." />
+    <MESSAGE value="Pickaxe useTool() (incomplete) and Mineral" />
+    <MESSAGE value="TileType: QUARRY -&gt; QUARRY_GROUND (i.e. no mineral on it)" />
+    <MESSAGE value="Pickaxe's useTool() + add to MineralType" />
+    <MESSAGE value="Mineral extends Item!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mineral extends Item!" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
