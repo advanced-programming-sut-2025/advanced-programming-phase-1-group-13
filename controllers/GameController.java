@@ -272,13 +272,14 @@ public class GameController {
                 tileType == TileType.QUARRY_GROUND;
     }
 
-    public static Tile neighborTile(Direction direction) {
-        // TODO: return the position of the neighbour tile, if within the range of our map of farms.
-        return null;
+    public Tile neighborTile(Direction direction) {
+        Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
+        return getTileByPosition(newPosition);
     }
 
     private Tile getTileByPosition(Position position) {
         // TODO: loop (the entire map) and return the tile whose position equals "position".
+
         return null;
     }
 

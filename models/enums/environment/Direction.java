@@ -47,7 +47,7 @@ public enum Direction {
         };
     }
 
-    public Position getNewPosition(Position currentPosition, Direction direction) {
+    public static Position getNewPosition(Position currentPosition, Direction direction) {
         Position newPosition = currentPosition;
         newPosition.addToX(direction.deltaX);
         newPosition.addToY(direction.deltaY);
