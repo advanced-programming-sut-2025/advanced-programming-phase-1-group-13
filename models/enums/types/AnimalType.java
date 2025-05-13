@@ -16,9 +16,9 @@ public enum AnimalType {
             Arrays.asList(FarmBuildingType.BARN, FarmBuildingType.BIG_BARN, FarmBuildingType.DELUXE_BARN), 1500),
     GOAT("Goat", Arrays.asList(AnimalProductType.GOAT_MILK, AnimalProductType.LARGE_GOAT_MILK), false,
             Arrays.asList(FarmBuildingType.BIG_BARN, FarmBuildingType.DELUXE_BARN), 4000),
-    SHEEP("Sheep", Arrays.asList(AnimalProductType.WOOL), false,
+    SHEEP("Sheep", List.of(AnimalProductType.WOOL), false,
             List.of(FarmBuildingType.DELUXE_BARN), 8000),
-    PIG("Pig", Arrays.asList(AnimalProductType.TRUFFLE), false,
+    PIG("Pig", List.of(AnimalProductType.TRUFFLE), false,
             List.of(FarmBuildingType.DELUXE_BARN), 16000);
 
     private final String name;

@@ -209,7 +209,7 @@ public class GameMenu implements AppMenu {
                     matcher.group("response"),
                     matcher.group("username")
             ));
-        } else if ((matcher = GameCommands.TRADE.getMatcher(inputLine)) != null) {
+        } else if ((matcher = GameCommands.START_TRADE.getMatcher(inputLine)) != null) {
             System.out.println(controller.startTrade());
         } else if ((matcher = GameCommands.MEETNPC.getMatcher(inputLine)) != null) {
             System.out.println(controller.meetNPC(matcher.group("npcName")));

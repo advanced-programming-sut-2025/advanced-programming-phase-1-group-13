@@ -14,6 +14,7 @@ public abstract class Inventory {
     protected HashMap<Item, Integer> items;
 
     public Inventory(int capacity, boolean isCapacityUnlimited) {
+        this.items = new HashMap<>();
         this.capacity = capacity;
         this.isCapacityUnlimited = isCapacityUnlimited;
     }

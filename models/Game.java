@@ -24,6 +24,7 @@ public class Game {
 
     public Game(ArrayList<User> players, int mapNumber) {
         this.players = players;
+        this.gameState = new GameState();
         this.gameMap = new GameMap(mapNumber);
 
         this.npcs = new ArrayList<>();

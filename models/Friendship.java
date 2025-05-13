@@ -48,6 +48,6 @@ public class Friendship {
 
     @Override
     public String toString() {
-        return this.level + " (" + this.currentXP + " XP).";
+        return this.level.getNumber() + " (" + this.currentXP + " XP).";
     }
 }
