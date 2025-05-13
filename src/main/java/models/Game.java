@@ -218,11 +218,11 @@ public class Game {
 
         for (Shop shop : this.getGameMap().getShops()) {
             for (Good good : shop.getShopInventory()) {
-                for (User player : this.players) {
-                    good.getNumberSoldToUsersToday().put(player, 0);
-                }
+                good.setNumberSoldToUsersToday(0);
             }
         }
+
+        // TODO: Empty shipping bins
 
         return new Result(true, message.toString());
     }

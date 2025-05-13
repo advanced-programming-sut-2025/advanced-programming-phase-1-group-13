@@ -788,6 +788,10 @@ public class GameController {
             return new Result(false, "You do not have a " + fishingRodName + " fishing rod.");
         }
 
+        if (player.isCloseToTileType(TileType.WATER)) {
+            return new Result(false, "You must be near water to fish.");
+        }
+
         double M;
         Weather currentWeather = App.getCurrentGame().getGameState().getCurrentWeather();
         if (currentWeather.equals(Weather.SUNNY)) {
@@ -1009,10 +1013,10 @@ public class GameController {
         }
 
         Good shopGood = shop.getGoodByType(good.getType());
-        int numberOfBought = shopGood.getNumberSoldToUsersToday().get(player);
+        int numberOfBought = shopGood.getNumberSoldToUsersToday();
         if (numberOfBought >= dailyLimit) {
             return new Result(false, "You have already bought " + numberOfBought + " of " + productName
-            + " and can not buy any more.");
+                    + " and can not buy any more.");
         }
 
         result = player.getBackpack().addToInventory(product, count);
@@ -1021,7 +1025,7 @@ public class GameController {
         }
 
         player.changeBalance(-product.getPrice());
-        shopGood.setNumberSoldToUsersToday(player, numberOfBought + count);
+        shopGood.setNumberSoldToUsersToday(numberOfBought + count);
         return new Result(true, "You bought " + count + " of " + productName + ".");
     }
 
@@ -1033,18 +1037,31 @@ public class GameController {
     }
 
     public Result sell(String productName, String countStr) {
-        // count is optional and might be null. In that case we sell the entire available in inventory
+        Item item = Item.getItemByItemName(productName);
+        if (item == null) {
+            return new Result(false, "Product not found.");
+        }
+
+        User player = App.getLoggedIn();
+        int numberInInventory = player.getBackpack().getItems().get(item);
+
         int count;
         if (countStr == null) {
-            count = 0; // TODO: total num
+            count = numberInInventory;
         } else {
             count = Integer.parseInt(countStr);
         }
 
+        if (count == 0) {
+            return new Result(false, "You don't have enough " + productName + " to sell.");
+        }
+
         // TODO: Check if such a product cannot be sold.
-        // TODO: Check if we do not have such a product.
-        // TODO: Check if we aren't neighbors with a shipping bin. (we have to be near shipping bin to sell)
-        // TODO: sell (also take into account its effect on friendship level)
+
+        if (!player.isCloseToTileType(TileType.SHIPPING_BIN)) {
+            return new Result(false, "You must be near a shipping bin to sell.");
+        }
+        // TODO
         return new Result(true, "");
     }
 
