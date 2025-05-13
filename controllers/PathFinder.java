@@ -55,25 +55,62 @@ public class PathFinder {
         return false;
     }
 
-    private Path buildPath(Position o, Position d) {
-        List<Position> ps = new ArrayList<>();
-        Position cur = d;
-        while(cur!=null && !cur.equals(o)) {
-            ps.add(cur);
-            cur = parent[cur.getX()][cur.getY()];
+    private Path buildPath(Position origin, Position destination) {
+        List<Position> positions = new ArrayList<>();
+        Position current = destination;
+
+        while(current != null && !current.equals(origin)) {
+            positions.add(current);
+            current = parent[current.getX()][current.getY()];
         }
-        ps.add(o);
-        Collections.reverse(ps);
+        positions.add(origin);
+        Collections.reverse(positions);
 
-        List<Tile> tiles=new ArrayList<>();
-        for(Position p:ps) tiles.add(farmMap[p.getX()][p.getY()]);
+        List<Tile> pathTiles = new ArrayList<>();
+        for(Position p : positions) {
+            pathTiles.add(farmMap[p.getX()][p.getY()]);
+        }
 
-        Path p = new Path();
-        p.setPathTiles((ArrayList<Tile>)tiles);
-        p.setDistanceInTiles(tiles.size()-1);
-        p.setNumOfTurns((tiles.size()-1+9)/10);
-        p.setEnergyNeeded(tiles.size()-1);
-        return p;
+        int turns = calculateTurns(positions);
+
+        Path path = new Path();
+        path.setPathTiles((ArrayList<Tile>)pathTiles);
+        path.setDistanceInTiles(pathTiles.size() - 1);
+        path.setNumOfTurns(turns);
+        path.setEnergyNeeded(pathTiles.size() - 1); // Assuming 1 energy per tile
+
+        return path;
+    }
+
+    private int calculateTurns(List<Position> path) {
+        if(path.size() < 3) return 0; // No turns possible with less than 3 positions
+
+        int turns = 0;
+        int prevDirX = 0, prevDirY = 0;
+
+        // Initialize previous direction
+        Position first = path.get(0);
+        Position second = path.get(1);
+        prevDirX = second.getX() - first.getX();
+        prevDirY = second.getY() - first.getY();
+
+        for(int i = 2; i < path.size(); i++) {
+            Position current = path.get(i);
+            Position previous = path.get(i-1);
+
+            int currentDirX = current.getX() - previous.getX();
+            int currentDirY = current.getY() - previous.getY();
+
+            // If direction changed, increment turn count
+            if(currentDirX != prevDirX || currentDirY != prevDirY) {
+                turns++;
+            }
+
+            prevDirX = currentDirX;
+            prevDirY = currentDirY;
+        }
+
+        return turns;
     }
 
     private boolean inBounds(Position p){ return inBounds(p.getX(), p.getY()); }
