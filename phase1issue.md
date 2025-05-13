@@ -215,7 +215,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
 </details>
@@ -226,7 +226,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
 </details>
@@ -237,7 +237,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
 </details>
@@ -248,7 +248,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
 </details>
@@ -259,7 +259,7 @@ https://docs.google.com/spreadsheets/d/1e-2CJ9vVrq2bB6jwlHnPTfwycBm31UKrftZHD4mR
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
-2. [ ] در حال انجام
+2. [x] در حال انجام
 3. [ ] تمام شده
   </div>
 </details>
