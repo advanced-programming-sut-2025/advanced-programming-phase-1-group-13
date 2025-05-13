@@ -218,6 +218,15 @@ public class Farm {
         return null;
     }
 
+    public Artisan getFullArtisanByArtisanType(ArtisanType artisanType) {
+        for (Artisan artisan : this.artisans) {
+            if (artisan.getType().equals(artisanType) && artisan.getItemPending() != null) {
+                return artisan;
+            }
+        }
+        return null;
+    }
+
     public Artisan getEmptyArtisanByArtisanType(ArtisanType artisanType) {
         for (Artisan artisan : this.artisans) {
             if (artisan.getType().equals(artisanType) && artisan.getItemPending() == null) {

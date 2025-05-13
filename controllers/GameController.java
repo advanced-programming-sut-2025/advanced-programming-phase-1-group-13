@@ -819,8 +819,8 @@ public class GameController {
 
         Artisan artisan = player.getFarm().getEmptyArtisanByArtisanType(artisanType);
         if (artisan.getItemPending() != null) {
-            return new Result(false, "All of your " + artisanNameString +
-                    "s are already making another product.");
+            return new Result(false, "You either have no " + artisanNameString + "s or all of your " +
+                    artisanNameString + "s are already making another product.");
         }
 
         ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes,
@@ -852,11 +852,31 @@ public class GameController {
                 "Come back in " + processingTime + " hours to collect it.");
     }
 
-    public Result artisanGet(String artisanName) { // gives product
-        // TODO: if product is not ready yet, return appropriate failing message
+    public Result artisanGet(String artisanName) {
+        ArtisanType artisanType = ArtisanType.getArtisanTypeByArtisanName(artisanName);
+        if (artisanType == null) {
+            return new Result(false, "Artisan not found.");
+        }
 
-        // TODO: get the product from artisan
-        return new Result(true, "");
+        Artisan artisan = player.getFarm().getFullArtisanByArtisanType(artisanType);
+        if (artisan == null) {
+            return new Result(false, "You don't have a " + artisanName +
+                    " producing an item right now.");
+        }
+
+        Item item = artisan.getItemPending();
+        if (artisan.getTimeLeft() > 0) {
+            return new Result(false, item.getName() + " is not ready to collect yet. Come back in " +
+                    artisan.getTimeLeft() + " hours to collect it.");
+        }
+
+        Result result = player.getBackpack().addToInventory(item, 1);
+        if (!result.success()) {
+            return new Result(false, "You don't have enough space in your backpack.");
+        }
+        artisan.setItemPending(null);
+        artisan.setTimeLeft(-1);
+        return new Result(true, "You collected a " + item.getName() + " from the " + artisanName + ".");
     }
 
     // === SHOPS === //
