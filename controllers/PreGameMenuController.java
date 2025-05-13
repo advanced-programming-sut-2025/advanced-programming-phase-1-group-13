@@ -4,6 +4,7 @@ import models.App;
 import models.Game;
 import models.Result;
 import models.User;
+import models.enums.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,9 @@ public class PreGameMenuController {
 
     public Result loadGame() {
         // TODO
-        return new Result(true, "");
+        User player = App.getLoggedIn();
+        App.setCurrentGame(player.getActiveGame());
+        App.setCurrentMenu(Menu.GAME_MENU);
+        return new Result(true, "Starting game...");
     }
 }
