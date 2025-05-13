@@ -147,6 +147,7 @@ public final class GameMap {
         return cabin;
     }
 
+
     private Greenhouse generateGreenhouse(int x, int y, int width, int height) {
         Greenhouse greenhouse = new Greenhouse();
         ArrayList<Tile> tiles = new ArrayList<>();

@@ -11,6 +11,7 @@ public class Mineral implements ForagingStuff {
     public Mineral(Position position) {
     }
 
+
     @Override
     public void generate() {
 
