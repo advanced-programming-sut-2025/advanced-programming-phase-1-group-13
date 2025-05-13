@@ -82,6 +82,7 @@ public class PathFinder {
         return path;
     }
 
+
     private int calculateTurns(List<Position> path) {
         if(path.size() < 3) return 0;
 
