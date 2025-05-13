@@ -260,7 +260,7 @@ public enum GoodsType implements ItemType {
     public boolean isAvailable() {
         Shop shop = App.getCurrentGame().getShopByShopType(this.shopType);
         Good shopGood = shop.getGoodByType(this);
-        int numberOfBought = shopGood.getNumberSoldToUsersToday().get(App.getLoggedIn());
+        int numberOfBought = shopGood.getNumberSoldToUsersToday();
 
         Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
 
