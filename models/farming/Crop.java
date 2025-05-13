@@ -8,7 +8,6 @@ import models.enums.types.CropType;
 import java.util.ArrayList;
 
 public class Crop extends Item implements Harvestable {
-    private String name;
     private PlantSource source;
     private int numOfStages;
     private ArrayList<Integer> stages;

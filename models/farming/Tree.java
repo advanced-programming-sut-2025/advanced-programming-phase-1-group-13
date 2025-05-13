@@ -9,7 +9,6 @@ import models.enums.types.Seed;
 import java.util.ArrayList;
 
 public class Tree extends Item implements Harvestable {
-    private String name;
     private PlantSource source;
     private int numOfStages;
     private ArrayList<Integer> stages;

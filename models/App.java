@@ -1,8 +1,15 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import models.enums.Menu;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     private static ArrayList<User> users = new ArrayList<>();
@@ -37,6 +44,12 @@ public class App {
     }
 
     public static ArrayList<User> getUsers() {
+        try (FileReader reader = new FileReader("users.json")) {
+            Gson gson = new Gson();
+            users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+        } catch (IOException e) {
+            users = new ArrayList<>(); // If file doesn't exist, start fresh
+        }
         return users;
     }
 
@@ -46,15 +59,39 @@ public class App {
 
     public static void addUser(User user) {
         App.users.add(user);
+
+        // Convert the updated user list to JSON
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(users);
+
+        // Save to a JSON file
+        try (FileWriter writer = new FileWriter("users.json")) {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle errors
+        }
     }
 
     public static ArrayList<Game> getGames() {
+        try (FileReader reader = new FileReader("games.json")) {
+            games = new Gson().fromJson(reader, new TypeToken<List<Game>>() {}.getType());
+        } catch (IOException e) {
+            games = new ArrayList<>();
+        }
         return games;
     }
 
     public static void addGame(Game game) {
-        App.games.add(game);
+        games.add(game);
+
+        // Save updated game list to JSON
+        try (FileWriter writer = new FileWriter("games.json")) {
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(games));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public static User getUserByUsername(String username) {
         for (User user : App.getUsers()) {

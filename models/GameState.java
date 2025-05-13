@@ -1,9 +1,12 @@
 package models;
 
+import com.google.gson.GsonBuilder;
 import models.enums.environment.Season;
 import models.enums.environment.Time;
 import models.enums.environment.Weather;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class GameState {
@@ -28,10 +31,20 @@ public class GameState {
 
     public void setTime(Time time) {
         this.time = time;
+        saveGameState();
     }
 
     public void setCurrentWeather(Weather currentWeather) {
         this.currentWeather = currentWeather;
+        saveGameState();
+    }
+
+    private void saveGameState() {
+        try (FileWriter writer = new FileWriter("gameState.json")) {
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void modifyState(String key, int value) {

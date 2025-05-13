@@ -1,10 +1,14 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import models.enums.types.MineralType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
 import models.enums.types.TileType;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,7 +26,7 @@ public final class GameMap {
     private ArrayList<Mineral> stones;
     private ArrayList<Tile> woodLogs;
     private ArrayList<ForagingCrop> foragings;
-    private Random random;
+    private transient Random random = new Random();
     private static ArrayList<Tile> allTiles;
 
     public GameMap(int mapNumber) {
@@ -48,7 +52,7 @@ public final class GameMap {
 
     private void generateFixedElements() {
         if (mapNumber == 1) {
-            this.lake = generateLake(10, 15, 5, 8); // x,y,width,height
+            this.lake = generateLake(10, 15, 5, 8);
             this.cabin = generateCabin(70, 70);
             this.greenhouse = generateGreenhouse(60, 60, 3, 4);
             this.quarry = generateQuarry(20, 50, 10, 15);
@@ -58,7 +62,17 @@ public final class GameMap {
             this.greenhouse = generateGreenhouse(70, 10, 4, 3);
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
+        saveGameMap();
     }
+
+    private void saveGameMap() {
+        try (FileWriter writer = new FileWriter("gameMap.json")) {
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(this));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void generateRandomElements() {
         int treeCount = 40 + random.nextInt(11);

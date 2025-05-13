@@ -13,6 +13,9 @@ import models.inventory.Backpack;
 import models.tools.FishingRod;
 import models.tools.Tool;
 import models.tools.TrashCan;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,6 +120,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+        saveUsersToJson();
     }
 
     public String getPassword() {
@@ -193,6 +197,7 @@ public class User {
 
     public void changeBalance(double amount) {
         this.balance += amount;
+        saveUsersToJson();
     }
 
     public void setEnergy(int energyAmount) {
@@ -201,7 +206,17 @@ public class User {
         } else {
             this.energy = energyAmount;
         }
+        saveUsersToJson();
     }
+
+    private void saveUsersToJson() {
+        try (FileWriter writer = new FileWriter("users.json")) {
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void decreaseEnergyBy(int amount) {
         this.energy -= amount;
@@ -351,6 +366,7 @@ public class User {
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {
         this.qAndA.put(securityQuestion, answer);
+        saveUsersToJson();
     }
 
     public Gift getGiftById(int id) {
@@ -384,15 +400,5 @@ public class User {
     public boolean hasInInventory(ItemType itemType) {
         // TODO
         return false;
-    }
-
-    public String toJson() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(this);
-    }
-
-    public static User fromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, User.class);
     }
 }

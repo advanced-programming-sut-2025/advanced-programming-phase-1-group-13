@@ -1,10 +1,14 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import models.enums.FriendshipLevel;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -135,7 +139,9 @@ public class Game {
                 }
             }
         }
+        saveGameState();
     }
+
 
     public Result changeDay() {
         StringBuilder message = new StringBuilder("A new day has begun. Here are the updates for today:\n");
@@ -238,6 +244,7 @@ public class Game {
                 friendshipPoints = 799;
             }
             npcFriendships.get(player).put(npc, friendshipPoints);
+            saveGameState();
         }
     }
 
@@ -248,12 +255,23 @@ public class Game {
         }
     }
 
+
     public void changeFriendshipLevel(User user1, User user2, FriendshipLevel friendshipLevel) {
         Friendship friendship = getUserFriendship(user1, user2);
         if (friendship != null) {
             friendship.setLevel(friendshipLevel);
+            saveGameState();
         }
     }
+
+    private void saveGameState() {
+        try (FileWriter writer = new FileWriter("games.json")) {
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getGames()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void sendMessage(User sender, User receiver, String message) {
         if (talkHistory.containsKey(sender) && talkHistory.get(sender).containsKey(receiver)) {
