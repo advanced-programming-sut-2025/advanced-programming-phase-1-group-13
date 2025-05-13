@@ -817,15 +817,39 @@ public class GameController {
             itemTypes.add(itemType);
         }
 
+        Artisan artisan = player.getFarm().getEmptyArtisanByArtisanType(artisanType);
+        if (artisan.getItemPending() != null) {
+            return new Result(false, "All of your " + artisanNameString +
+                    "s are already making another product.");
+        }
+
+        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes,
+                artisanType);
+        if (processedItemType == null) {
+            return new Result(false,
+                    artisanNameString + " does not produce any items with these ingredients.");
+        }
+
         for (ItemType itemType : itemTypes) {
-            if (!player.hasInInventory(itemType)) {
+            int quantity = processedItemType.getIngredients().get(itemType);
+            Item item = Item.getItemByItemType(itemType);
+            Result result = player.getBackpack().removeFromInventory(item, quantity);
+            if (!result.success()) {
+                for (int i = 0; i < itemTypes.indexOf(itemType); i++) {
+                    Item itemToRemove = Item.getItemByItemType(itemTypes.get(i));
+                    player.getBackpack().addToInventory(itemToRemove,
+                            processedItemType.getIngredients().get(itemTypes.get(i)));
+                }
                 return new Result(false, "You don't have enough " + itemType.getName());
             }
-            // TODO
         }
-        // TODO ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients();
 
-        return new Result(true, "");
+        int processingTime = processedItemType.getProcessingTime();
+        artisan.setItemPending(Item.getItemByItemType(processedItemType));
+        artisan.setTimeLeft(processingTime);
+
+        return new Result(true, artisanNameString + " is making " + processedItemType.getName() + ". " +
+                "Come back in " + processingTime + " hours to collect it.");
     }
 
     public Result artisanGet(String artisanName) { // gives product

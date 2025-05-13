@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.types.ArtisanType;
 import models.enums.types.FarmBuildingType;
 import models.enums.types.FertilizerType;
 import models.enums.types.TileType;
@@ -22,16 +23,19 @@ public class Farm {
     private ArrayList<Tree> trees;
     private int mapNumberToFollow;
     private ArrayList<FarmBuilding> farmBuildings;
+    private ArrayList<Artisan> artisans;
 
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
+        this.farmBuildings = new ArrayList<>();
+        this.artisans = new ArrayList<>();
 
         if (mapNumberToFollow == 1) {
             // TODO
-            this.cabin = new Cabin(); // with map 1 properties
+            this.cabin = new Cabin(); // with map1 properties
             this.lakes = new ArrayList<>(); // with map1 properties
             this.quarry = new Quarry(); // with map1 properties
             this.mapTiles = new ArrayList<>(); // with map1 properties
@@ -100,6 +104,14 @@ public class Farm {
 
     public ArrayList<FarmBuilding> getFarmBuildings() {
         return farmBuildings;
+    }
+
+    public ArrayList<Artisan> getArtisans() {
+        return artisans;
+    }
+
+    public void addArtisans(Artisan artisan) {
+        this.artisans.add(artisan);
     }
 
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {
@@ -201,6 +213,15 @@ public class Farm {
         for (Tile tile : mapTiles) {
             if (tile.getPosition().equals(position)) {
                 return tile;
+            }
+        }
+        return null;
+    }
+
+    public Artisan getEmptyArtisanByArtisanType(ArtisanType artisanType) {
+        for (Artisan artisan : this.artisans) {
+            if (artisan.getType().equals(artisanType) && artisan.getItemPending() == null) {
+                return artisan;
             }
         }
         return null;

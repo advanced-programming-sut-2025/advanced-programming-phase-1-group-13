@@ -123,7 +123,14 @@ public class Game {
 
     public void nextTurn(String callerUsername) {
         // TODO: show unread messages when starting new turn
-        // TODO: call changeDay() here
+        // TODO: call changeDay() here if day has changed
+        for (User player : this.players) {
+            for (Artisan artisan : player.getFarm().getArtisans()) {
+                if (artisan.getItemPending() != null) {
+                    artisan.setTimeLeft(Math.max(artisan.getTimeLeft() - 1, 0));
+                }
+            }
+        }
     }
 
     public Result changeDay() {

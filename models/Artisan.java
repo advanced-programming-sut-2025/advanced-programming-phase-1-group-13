@@ -5,23 +5,32 @@ import models.enums.types.ArtisanType;
 import java.util.ArrayList;
 
 public class Artisan {
-    ArtisanType type;
+    private final ArtisanType type;
+    private Item itemPending;
+    private int timeLeft; // in hours
 
     public Artisan(ArtisanType type) {
         this.type = type;
+        this.itemPending = null;
     }
 
     public ArtisanType getType() {
         return type;
     }
 
-    public String getDescription() {
-        // TODO
-        return null;
+    public Item getItemPending() {
+        return itemPending;
     }
 
-    public ArrayList<Item> getItems() {
-        // TODO
-        return null;
+    public void setItemPending(Item itemPending) {
+        this.itemPending = itemPending;
+    }
+
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 }
