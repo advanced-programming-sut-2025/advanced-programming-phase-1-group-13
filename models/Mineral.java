@@ -3,7 +3,7 @@ package models;
 import models.enums.types.MineralType;
 import models.farming.ForagingStuff;
 
-public class Mineral implements ForagingStuff {
+public class Mineral extends Item implements ForagingStuff {
     private int sellPrice;
     private MineralType mineralType;
     private Position position;
