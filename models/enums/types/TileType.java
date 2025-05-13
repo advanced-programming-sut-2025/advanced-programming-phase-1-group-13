@@ -4,7 +4,7 @@ public enum TileType {
     // TODO: complete this enum the right way...
     GREENHOUSE("Greenhouse"),
     CABIN("Cabin"),
-    QUARRY("Quarry"),
+    QUARRY_GROUND("Quarry's Ground"),
     ANIMAL("Animal"),
     PLOWED_SOIL("Plowed Soil"),
     NOT_PLOWED_SOIL("Not Plowed Soil"),
