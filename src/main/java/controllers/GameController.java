@@ -43,6 +43,12 @@ public class GameController {
         return new Result(true, "Unlimited Energy activated!");
     }
 
+    public Result deactivateUnlimitedEnergy() {
+        User player = App.getLoggedIn();
+        player.setEnergyUnlimited(false);
+        return new Result(true, "Unlimited Energy deactivated!");
+    }
+
     public Result faint() {
         User player = App.getLoggedIn();
         player.faint();
@@ -78,7 +84,7 @@ public class GameController {
     public Result cheatAdvanceDate(String dayIncreaseStr) {
         int hourIncrease = Integer.parseInt(dayIncreaseStr);
         Time.cheatAdvanceDate(hourIncrease, App.getCurrentGame().getGameState().getTime());
-        return new Result(true, ""); // todo: message
+        return new Result(true, "Time increased by " + dayIncreaseStr + " days.");
     }
 
     // === INVENTORY === //
