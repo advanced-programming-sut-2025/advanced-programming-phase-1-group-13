@@ -66,7 +66,8 @@ public abstract class Tool extends Item {
     }
 
     public void useTool(Tile tile, User player) {
-        // TODO
+        int energy;
+
     }
 
     @Override
