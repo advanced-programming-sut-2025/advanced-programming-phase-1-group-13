@@ -56,7 +56,7 @@ public enum NPCType {
                         }},
                         new HashMap<ItemType, Integer>() {{
                             put(MineralType.GOLD_COIN, 1000);
-                            put(GoodsType.BEEHIVE, 3);
+                            put(CraftType.BEE_HOUSE, 3);
                             put(MineralType.COIN, 25000);
                         }}
                 );
@@ -208,7 +208,7 @@ public enum NPCType {
                         new HashMap<ItemType, Integer>() {{
                             put(MineralType.GOLD_COIN, 500);
                             put(FoodType.SALMON_DINNER, 1);
-                            put(GoodsType.SCARE_CROW, 3);
+                            put(CraftType.SCARECROW, 3);
                         }}
                 );
             }},

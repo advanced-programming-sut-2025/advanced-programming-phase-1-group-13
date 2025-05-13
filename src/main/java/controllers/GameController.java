@@ -925,8 +925,7 @@ public class GameController {
         StringBuilder productList = new StringBuilder("All Products in " + shop.getName() + ":\n");
         for (GoodsType product : GoodsType.values()) {
             if (product.getShopType() == shop.getType()) {
-                String availability = (product.getDailyLimit() == 0) ? "Unavailable" : "Available"; // TODO
-                productList.append(String.format("- %s: %d gold (%s)\n", product.name(), product.getPrice(), availability));
+                productList.append(String.format("  " + product.getName() + ": %.2fg\n", product.getPrice()));
             }
         }
 
@@ -943,7 +942,9 @@ public class GameController {
         StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
         for (GoodsType product : GoodsType.values()) {
             if (product.getShopType() == shop.getType()) {
-                availableProducts.append(String.format("- %s: %d gold\n", product.name(), product.getPrice()));
+                if (product.isAvailable()) {
+                    availableProducts.append(String.format("- %s: %d gold\n", product.name(), product.getPrice()));
+                }
             }
         }
 
@@ -964,7 +965,12 @@ public class GameController {
     }
 
     public Result purchase(String productName, String countStr) {
-        // count is optional and might be null. In that case:
+        Shop shop = App.getCurrentShop();
+        Result result = checkShopStatus(shop);
+        if (!result.success()) {
+            return result;
+        }
+
         int count;
         if (countStr == null) {
             count = 1;
@@ -973,12 +979,50 @@ public class GameController {
         }
 
         Item product = Item.getItemByItemName(productName);
-        // TODO: check if we have enough money
-        // TODO: check if the product is actually a valid product (not made up / invalid)
-        // TODO: check if the product is available
-        // TODO: check if the product has already been sold up to its daily limit (counts between different players)
-        // TODO: check if the given "count" is greater than the item's daily limit
-        return new Result(true, "");
+        if (product == null) {
+            return new Result(false, "Product not found.");
+        }
+
+        if (!(product instanceof Good good)) {
+            return new Result(false, "Product not found.");
+        }
+
+        if (!good.getType().getShopType().equals(shop.getType())) {
+            return new Result(false, shop.getName() + " does not sell this product.");
+        }
+
+        if (!good.getType().isAvailable()) {
+            return new Result(false, good.getName() + " is not available to purchase right now.");
+        }
+
+        int price = product.getPrice() * count;
+
+        User player = App.getLoggedIn();
+        if (player.getBalance() < price) {
+            return new Result(false, "You don't have enough money.");
+        }
+
+        int dailyLimit = good.getType().getDailyLimit();
+        if (count > dailyLimit) {
+            return new Result(false, "You can only buy " + good.getType().getDailyLimit() + " of " +
+                    productName + " in a day.");
+        }
+
+        Good shopGood = shop.getGoodByType(good.getType());
+        int numberOfBought = shopGood.getNumberSoldToUsersToday().get(player);
+        if (numberOfBought >= dailyLimit) {
+            return new Result(false, "You have already bought " + numberOfBought + " of " + productName
+            + " and can not buy any more.");
+        }
+
+        result = player.getBackpack().addToInventory(product, count);
+        if (!result.success()) {
+            return new Result(false, "You don't have enough space in your backpack.");
+        }
+
+        player.changeBalance(-product.getPrice());
+        shopGood.setNumberSoldToUsersToday(player, numberOfBought + count);
+        return new Result(true, "You bought " + count + " of " + productName + ".");
     }
 
     public Result cheatAddDollars(String countStr) {

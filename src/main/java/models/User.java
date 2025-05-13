@@ -1,6 +1,5 @@
 package models;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import models.enums.SecurityQuestion;
@@ -42,6 +41,7 @@ public class User {
     private ArrayList<Gift> gifts;
     private double balance;
     private int mostEarnedMoney;
+    private int numberOfGames;
     private TrashCan trashCan;
     private HashMap<User, Boolean> hasTalkedToToday;
     private HashMap<User, Boolean> exchangedGiftToday;
@@ -59,6 +59,7 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.numberOfGames = 0;
         this.activeGame = null;
         this.energy = 200; // TODO: change value if needed
         this.farm = new Farm(0); // TODO
@@ -85,6 +86,86 @@ public class User {
         this.exchangedGiftToday = new HashMap<>();
         this.hasHuggedToday = new HashMap<>();
         this.exchangedFlowerToday = new HashMap<>();
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public void setSkillLevels(HashMap<Skill, SkillLevel> skillLevels) {
+        this.skillLevels = skillLevels;
+    }
+
+    public void setLearntCraftRecipes(ArrayList<CraftRecipe> learntCraftRecipes) {
+        this.learntCraftRecipes = learntCraftRecipes;
+    }
+
+    public void setLearntCookingRecipes(ArrayList<FoodType> learntCookingRecipes) {
+        this.learntCookingRecipes = learntCookingRecipes;
+    }
+
+    public void setqAndA(HashMap<SecurityQuestion, String> qAndA) {
+        this.qAndA = qAndA;
+    }
+
+    public void setFarm(Farm farm) {
+        this.farm = farm;
+    }
+
+    public void setTransactions(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
+    }
+
+    public void setGifts(ArrayList<Gift> gifts) {
+        this.gifts = gifts;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setMostEarnedMoney(int mostEarnedMoney) {
+        this.mostEarnedMoney = mostEarnedMoney;
+    }
+
+    public int getNumberOfGames() {
+        return numberOfGames;
+    }
+
+    public void setNumberOfGames(int numberOfGames) {
+        this.numberOfGames = numberOfGames;
+    }
+
+    public void setHasTalkedToToday(HashMap<User, Boolean> hasTalkedToToday) {
+        this.hasTalkedToToday = hasTalkedToToday;
+    }
+
+    public void setExchangedGiftToday(HashMap<User, Boolean> exchangedGiftToday) {
+        this.exchangedGiftToday = exchangedGiftToday;
+    }
+
+    public void setHasHuggedToday(HashMap<User, Boolean> hasHuggedToday) {
+        this.hasHuggedToday = hasHuggedToday;
+    }
+
+    public void setExchangedFlowerToday(HashMap<User, Boolean> exchangedFlowerToday) {
+        this.exchangedFlowerToday = exchangedFlowerToday;
+    }
+
+    public void setMarriageRequests(ArrayList<User> marriageRequests) {
+        this.marriageRequests = marriageRequests;
+    }
+
+    public void setRejectionTime(Time rejectionTime) {
+        this.rejectionTime = rejectionTime;
     }
 
     public TrashCan getTrashCan() {
@@ -396,11 +477,7 @@ public class User {
     public String toString() {
         return "Username: " + this.username + "\n" +
                 "Nickname: " + this.nickname + "\n" +
-                "Most earned money in a game: " + this.mostEarnedMoney + "\n";
-    }
-
-    public boolean hasInInventory(ItemType itemType) {
-        // TODO
-        return false;
+                "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
+                "Number of games: " + this.numberOfGames;
     }
 }

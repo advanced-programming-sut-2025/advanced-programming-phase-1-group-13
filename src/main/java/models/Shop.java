@@ -1,6 +1,7 @@
 package models;
 
 import models.enums.environment.Time;
+import models.enums.types.GoodsType;
 import models.enums.types.ShopType;
 import models.enums.types.TileType;
 
@@ -10,7 +11,7 @@ import java.util.HashMap;
 public class Shop {
     private final String name;
     private final ShopType type;
-    private final ArrayList<Item> shopInventory;
+    private final ArrayList<Good> shopInventory;
     private int balance = 0;
     private final NPC owner;
     private final int startHour;
@@ -21,6 +22,9 @@ public class Shop {
     public Shop(ShopType type, Position position, int width, int height) {
         this.type = type;
         this.shopInventory = new ArrayList<>();
+        for (GoodsType goodType : GoodsType.values()) {
+            this.shopInventory.add(new Good(goodType));
+        }
         this.name = type.getName();
         this.owner = type.getOwner();
         this.startHour = type.getStartHour();
@@ -67,8 +71,17 @@ public class Shop {
         return type;
     }
 
-    public ArrayList<Item> getShopInventory() {
+    public ArrayList<Good> getShopInventory() {
         return shopInventory;
+    }
+
+    public Good getGoodByType(GoodsType type) {
+        for (Good good : shopInventory) {
+            if (good.getType().equals(type)) {
+                return good;
+            }
+        }
+        return null;
     }
 
     public int getBalance() {

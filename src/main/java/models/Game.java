@@ -1,11 +1,11 @@
 package models;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import models.enums.FriendshipLevel;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
+import models.enums.types.ShopType;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -79,6 +79,22 @@ public class Game {
             npc.setDaysLeftToUnlockThirdQuest(thirdQuestTimeMap);
             npc.setThirdQuestUnlocked(thirdQuestBooleanMap);
         }
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public void setUserFriendships(HashMap<User, HashMap<User, Friendship>> userFriendships) {
+        this.userFriendships = userFriendships;
+    }
+
+    public void setNpcFriendships(HashMap<User, HashMap<NPC, Integer>> npcFriendships) {
+        this.npcFriendships = npcFriendships;
+    }
+
+    public void setTalkHistory(HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory) {
+        this.talkHistory = talkHistory;
     }
 
     public ArrayList<User> getPlayers() {
@@ -200,6 +216,14 @@ public class Game {
             }
         }
 
+        for (Shop shop : this.getGameMap().getShops()) {
+            for (Good good : shop.getShopInventory()) {
+                for (User player : this.players) {
+                    good.getNumberSoldToUsersToday().put(player, 0);
+                }
+            }
+        }
+
         return new Result(true, message.toString());
     }
 
@@ -216,6 +240,15 @@ public class Game {
         for (NPC npc : this.getNpcs()) {
             if (npc.getName().equals(name)) {
                 return npc;
+            }
+        }
+        return null;
+    }
+
+    public Shop getShopByShopType(ShopType shopType) {
+        for (Shop shop : this.gameMap.getShops()) {
+            if (shop.getType().equals(shopType)) {
+                return shop;
             }
         }
         return null;
