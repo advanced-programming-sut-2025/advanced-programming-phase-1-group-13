@@ -77,18 +77,17 @@ public class PathFinder {
         path.setPathTiles((ArrayList<Tile>)pathTiles);
         path.setDistanceInTiles(pathTiles.size() - 1);
         path.setNumOfTurns(turns);
-        path.setEnergyNeeded(pathTiles.size() - 1); // Assuming 1 energy per tile
+        path.setEnergyNeeded((pathTiles.size() + 10 * turns) / 20);
 
         return path;
     }
 
     private int calculateTurns(List<Position> path) {
-        if(path.size() < 3) return 0; // No turns possible with less than 3 positions
+        if(path.size() < 3) return 0;
 
         int turns = 0;
         int prevDirX = 0, prevDirY = 0;
 
-        // Initialize previous direction
         Position first = path.get(0);
         Position second = path.get(1);
         prevDirX = second.getX() - first.getX();
@@ -101,7 +100,6 @@ public class PathFinder {
             int currentDirX = current.getX() - previous.getX();
             int currentDirY = current.getY() - previous.getY();
 
-            // If direction changed, increment turn count
             if(currentDirX != prevDirX || currentDirY != prevDirY) {
                 turns++;
             }
