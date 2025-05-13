@@ -481,6 +481,10 @@ public class GameController {
     }
 
     public Result buyAnimal(String animalTypeStr, String name) {
+        if (shop == null) {
+            return new Result(false, "You Must first enter Marnie's Ranch.");
+        }
+
         if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
             return new Result(false, "You Must first enter Marnie's Ranch.");
         }

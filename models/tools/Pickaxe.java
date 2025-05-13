@@ -1,6 +1,7 @@
 package models.tools;
 
 import models.Tile;
+import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.types.ToolMaterial;
@@ -20,7 +21,19 @@ public class Pickaxe extends Tool {
 
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
-        return super.calculateEnergyNeeded(playerSkills, tool);
+        SkillLevel skillLevel = playerSkills.get(Skill.MINING);
+        ToolMaterial toolMaterial = tool.getToolMaterial();
+        int energy = switch (toolMaterial) {
+            case BASIC -> 5;
+            case COPPER -> 4;
+            case IRON -> 3;
+            case GOLD -> 2;
+            case IRIDIUM -> 1;
+        };
+        if (skillLevel == SkillLevel.LEVEL_THREE) {
+            energy--;
+        }
+        return energy;
     }
 
     @Override
