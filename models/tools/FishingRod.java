@@ -26,8 +26,8 @@ public class FishingRod extends Tool {
     }
 
     @Override
-    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
-        return super.calculateEnergyNeeded(playerSkills);
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
+        return super.calculateEnergyNeeded(playerSkills, tool);
     }
 
     @Override
