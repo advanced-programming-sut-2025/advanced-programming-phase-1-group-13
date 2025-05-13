@@ -20,19 +20,12 @@ import static models.Greenhouse.canBuildGreenhouse;
 import static models.Position.areClose;
 
 public class GameController {
-    User player;
-    Game game;
     Shop shop;
-
-    public GameController() {
-        this.player = App.getLoggedIn();
-        this.game = App.getCurrentGame();
-        this.shop = App.getCurrentShop();
-    }
 
     // === PLAYER'S STATUS === //
 
     public Result showPlayerEnergy() {
+        User player = App.getLoggedIn();
         int playerEnergy = player.getEnergy();
         return new Result(true, "Your energy is: " + playerEnergy);
     }
@@ -40,31 +33,37 @@ public class GameController {
     public Result setPlayerEnergy(String energyAmountStr) {
         int energyAmount = Integer.parseInt(energyAmountStr);
 
+        User player = App.getLoggedIn();
         player.setEnergy(energyAmount);
         return new Result(true, "Energy set to " + energyAmount);
     }
 
     public Result setUnlimitedEnergy() {
+        User player = App.getLoggedIn();
         player.setEnergyUnlimited(true);
         return new Result(true, "Unlimited Energy activated!");
     }
 
     public Result faint() {
+        User player = App.getLoggedIn();
         player.faint();
         return new Result(true, ""); // todo: appropriate message (next turn? or wake up in cabin?)
     }
 
     public Result showCurrentTool() {
+        User player = App.getLoggedIn();
         Tool playerCurrentTool = player.getCurrentTool();
         return new Result(true, "Your tool is: " + playerCurrentTool.toString());
     }
 
     public Result showLearntCookingRecipes() {
+        User player = App.getLoggedIn();
         String learntRecipes = player.getStringLearntCookingRecipes();
         return new Result(true, learntRecipes);
     }
 
     public Result showLearntCraftRecipes() {
+        User player = App.getLoggedIn();
         String learntRecipes = player.getStringLearntCraftRecipes();
         return new Result(true, learntRecipes);
     }
@@ -86,10 +85,12 @@ public class GameController {
     // === INVENTORY === //
 
     public Result inventoryShow() {
+        User player = App.getLoggedIn();
         return new Result(true, player.getBackpack().showItemsInInventory());
     }
 
     public Result throwItemToTrash(String itemName, String numberStr) {
+        User player = App.getLoggedIn();
         Item item = Item.getItemByItemName(itemName);
         Integer number;
         if (numberStr == null) {
@@ -103,6 +104,7 @@ public class GameController {
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
 
     public Result equipTool(String toolName) {
+        User player = App.getLoggedIn();
         ToolType toolType = ToolType.getToolTypeByName(toolName);
         if (toolType == null) {
             String notFoundMessage = "Tool not found.\n" + "Enter a valid tool name: \n" + ToolType.getFullList();
@@ -117,6 +119,7 @@ public class GameController {
     }
 
     public Result useTool(String directionString) {
+        User player = App.getLoggedIn();
         Direction direction = Direction.getDirectionByDisplayName(directionString);
         Tile tile = neighborTile(direction);
         Tool tool = player.getCurrentTool();
@@ -135,6 +138,7 @@ public class GameController {
     }
 
     public Result placeItem(String itemName, String directionString) {
+        User player = App.getLoggedIn();
         Item item = player.getBackpack().getItemFromInventoryByName(itemName);
         if (item == null) {
             return new Result(false, "Item not found in inventory.");
@@ -156,6 +160,7 @@ public class GameController {
     }
 
     public Result craft(String itemName) {
+        User player = App.getLoggedIn();
         ItemType itemType = Item.getItemTypeByItemName(itemName);
         Item item = Item.getItemByItemType(itemType);
         if (!canCraftResult((CraftType) itemType).success()) {
@@ -181,6 +186,7 @@ public class GameController {
     }
 
     public Result cheatAddItem(String itemName, String numberStr) {
+        User player = App.getLoggedIn();
         Item item = Item.getItemByItemName(itemName);
         int number = 1;
         if (numberStr != null) {
@@ -191,6 +197,7 @@ public class GameController {
     }
 
     public Result prepareCook(String foodName) {
+        User player = App.getLoggedIn();
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
         }
@@ -213,11 +220,13 @@ public class GameController {
         // TODO: check if player HAS the food, and return appropriate Result if not.
         // TODO: increase energy
         // TODO: apply buff
+        User player = App.getLoggedIn();
         player.eat(food.getName());
         return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
     }
 
     private Result canCraftResult(CraftType craftType) {
+        User player = App.getLoggedIn();
         if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
             return new Result(false, "Your backpack is full.");
         }
@@ -279,6 +288,7 @@ public class GameController {
     }
 
     public Tile neighborTile(Direction direction) {
+        User player = App.getLoggedIn();
         Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
         return getTileByPosition(newPosition);
     }
@@ -293,6 +303,7 @@ public class GameController {
     // === WALK === //
 
     public Result respondForWalkRequest(String targetXStr, String targetYStr) {
+        User player = App.getLoggedIn();
         try {
             int targetX = Integer.parseInt(targetXStr);
             int targetY = Integer.parseInt(targetYStr);
@@ -443,6 +454,7 @@ public class GameController {
             return new Result(false, "Enter two valid numbers for x and y.");
         }
 
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         FarmBuilding farmBuilding = new FarmBuilding(farmBuildingType, position);
 
@@ -501,6 +513,7 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         List<FarmBuildingType> livingSpaceTypes = animalType.getLivingSpaceTypes();
         AnimalLivingSpace animalLivingSpace = farm.getAvailableLivingSpace(livingSpaceTypes);
@@ -527,6 +540,7 @@ public class GameController {
     }
 
     public Result pet(String animalName) {
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
@@ -548,6 +562,7 @@ public class GameController {
             amount = Integer.parseInt(amountString);
         }
 
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
@@ -563,6 +578,7 @@ public class GameController {
     public Result showMyAnimalsInfo() {
         StringBuilder message = new StringBuilder("Your animals: \n");
 
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         for (Animal animal : farm.getAllFarmAnimals()) {
 
@@ -592,6 +608,7 @@ public class GameController {
             return new Result(false, "Enter two valid numbers for x and y.");
         }
 
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
@@ -643,6 +660,7 @@ public class GameController {
     }
 
     public Result feedHayToAnimal(String animalName) {
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
@@ -656,6 +674,7 @@ public class GameController {
 
     public Result showProducedProducts() {
         StringBuilder message = new StringBuilder("Uncollected animal products: \n");
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         for (Animal animal : farm.getAllFarmAnimals()) {
             if (!animal.getProducedProducts().isEmpty()) {
@@ -672,6 +691,7 @@ public class GameController {
     }
 
     public Result collectProducts(String animalName) {
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
@@ -740,6 +760,7 @@ public class GameController {
     }
 
     public Result sellAnimal(String animalName) {
+        User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
@@ -756,6 +777,7 @@ public class GameController {
     // === FISHING === //
 
     public Result fishing(String fishingRodName) {
+        User player = App.getLoggedIn();
         FishingRod fishingRod = player.getFishingRodByName(fishingRodName);
         if (fishingRod == null) {
             return new Result(false, "You do not have a " + fishingRodName + " fishing rod.");
@@ -818,6 +840,7 @@ public class GameController {
             itemTypes.add(itemType);
         }
 
+        User player = App.getLoggedIn();
         Artisan artisan = player.getFarm().getEmptyArtisanByArtisanType(artisanType);
         if (artisan.getItemPending() != null) {
             return new Result(false, "You either have no " + artisanNameString + "s or all of your " +
@@ -859,6 +882,7 @@ public class GameController {
             return new Result(false, "Artisan not found.");
         }
 
+        User player = App.getLoggedIn();
         Artisan artisan = player.getFarm().getFullArtisanByArtisanType(artisanType);
         if (artisan == null) {
             return new Result(false, "You don't have a " + artisanName +
@@ -930,6 +954,7 @@ public class GameController {
 
     public Result cheatAddDollars(String countStr) {
         int count = Integer.parseInt(countStr);
+        User player = App.getLoggedIn();
         player.changeBalance(count);
         return new Result(true, "You have " + player.getBalance() + "g now.");
     }
@@ -954,23 +979,27 @@ public class GameController {
 
     public Result showFriendshipLevels() {
         StringBuilder message = new StringBuilder("Your friendships with other players:\n");
+        User player = App.getLoggedIn();
+        Game game = App.getCurrentGame();
         for (User otherPlayer : game.getPlayers()) {
             if (!player.equals(otherPlayer)) {
                 Friendship friendship = game.getUserFriendship(player, otherPlayer);
                 message.append(otherPlayer.getUsername()).append(": \n").append("   Friendship level: ")
                         .append(friendship.getLevel().getNumber()).append("\n").append("   Xp: ")
-                        .append(friendship.getCurrentXP());
+                        .append(friendship.getCurrentXP()).append("\n");
             }
         }
         return new Result(true, message.toString());
     }
 
     public Result talk(String username, String message) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
 
+        User player = App.getLoggedIn();
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             game.sendMessage(player, targetPlayer, message);
 
@@ -988,6 +1017,7 @@ public class GameController {
     }
 
     public Result showTalkHistoryWithUser(String username) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
@@ -995,6 +1025,7 @@ public class GameController {
 
         StringBuilder history = new StringBuilder("Talk history with " + username + ":\n");
 
+        User player = App.getLoggedIn();
         HashMap<String, Boolean> sentMessages = game.getTalkHistory().get(player).get(targetPlayer);
         if (sentMessages != null) {
             for (String message : sentMessages.keySet()) {
@@ -1013,12 +1044,14 @@ public class GameController {
     }
 
     public Result giveGift(String username, String itemName, String amountStr) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
 
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
 
+        User player = App.getLoggedIn();
         if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
             return new Result(false, "You must be close to " + username + " to give them a gift.");
         }
@@ -1041,6 +1074,7 @@ public class GameController {
     }
 
     public Result giftList() {
+        User player = App.getLoggedIn();
         StringBuilder message = new StringBuilder("Your gifts:\n");
         for (Gift gift : player.getGifts()) {
             message.append("-----------------------\n").append(gift.getId()).append(". ")
@@ -1056,6 +1090,7 @@ public class GameController {
     }
 
     public Result giftRate(String giftNumberStr, String rateStr) {
+        User player = App.getLoggedIn();
         int giftNumber = Integer.parseInt(giftNumberStr);
         Gift gift = player.getGiftById(giftNumber);
         if (gift == null) {
@@ -1070,6 +1105,7 @@ public class GameController {
         gift.setRating(rate);
         int xp = gift.calculateFriendshipXP();
         User giver = gift.getGiver();
+        Game game = App.getCurrentGame();
         if (player.getSpouse().equals(giver)) {
             game.changeFriendship(player, giver, 50);
         }
@@ -1084,11 +1120,13 @@ public class GameController {
     }
 
     public Result showGiftHistory(String username) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
 
+        User player = App.getLoggedIn();
         String message = "Gift history of you and " + username + "\n";
 
         message += "    Gifts from you to " + username + ":\n";
@@ -1118,11 +1156,13 @@ public class GameController {
     }
 
     public Result hug(String username) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
 
+        User player = App.getLoggedIn();
         if (game.getUserFriendship(player, targetPlayer).getLevel().getNumber() >= 2) {
             if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
                 game.changeFriendship(player, targetPlayer, 50);
@@ -1140,6 +1180,7 @@ public class GameController {
     }
 
     public Result giveFlowerToUser(String username, String flowerName) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
@@ -1150,6 +1191,7 @@ public class GameController {
             return new Result(false, "Flower not found.");
         }
 
+        User player = App.getLoggedIn();
         if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
             return new Result(false, "You must be standing next to " + username +
                     " to give them a flower");
@@ -1181,11 +1223,13 @@ public class GameController {
     }
 
     public Result askMarriage(String username, String ringStr) {
+        Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
 
+        User player = App.getLoggedIn();
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             if (!player.getGender().equals(targetPlayer.getGender())) {
                 HashMap<Item, Integer> items = player.getBackpack().getItems();
@@ -1202,6 +1246,7 @@ public class GameController {
     }
 
     public Result respondToMarriageRequest(String acceptanceStr, String username) {
+        Game game = App.getCurrentGame();
         boolean hasAccepted = acceptanceStr.equalsIgnoreCase("accept");
 
         User targetUser = game.getPlayerByUsername(username);
@@ -1209,6 +1254,7 @@ public class GameController {
             return new Result(false, "User not found.");
         }
 
+        User player = App.getLoggedIn();
         if (!player.getMarriageRequests().contains(targetUser)) {
             return new Result(false, username + " has not proposed to you. If you want to marry them, "
                     + "enter this command: \"ask marriage -u " + username + " -r Wedding ring\"");
@@ -1236,11 +1282,13 @@ public class GameController {
     // === NPC === //
 
     public Result meetNPC(String NCPName) {
+        Game game = App.getCurrentGame();
         NPC npc = game.getNPCByName(NCPName);
         if (npc == null) {
             return new Result(false, "NPC not found.");
         }
 
+        User player = App.getLoggedIn();
         if (areClose(player.getPosition(), npc.getPosition())) {
             int timeOfDay = game.getGameState().getTime().getHour();
             Season season = game.getGameState().getTime().getSeason();
@@ -1261,6 +1309,7 @@ public class GameController {
     }
 
     public Result giftNPC(String NCPName, String itemName) {
+        Game game = App.getCurrentGame();
         NPC npc = game.getNPCByName(NCPName);
         if (npc == null) {
             return new Result(false, "Npc not found.");
@@ -1270,6 +1319,7 @@ public class GameController {
             return new Result(false, "You can't gift a tool to a NPC.");
         }
 
+        User player = App.getLoggedIn();
         Item item = player.getBackpack().getItemFromInventoryByName(itemName);
         if (item == null) {
             return new Result(false, "Item not found.");
@@ -1293,6 +1343,7 @@ public class GameController {
     }
 
     public Result showFriendshipNPCList() {
+        User player = App.getLoggedIn();
         StringBuilder message = new StringBuilder("Your friendships with NPCs:\n");
         for (NPC npc : App.getCurrentGame().getNpcs()) {
             int friendshipPoints = App.getCurrentGame().getNpcFriendshipPoints(player, npc);
@@ -1309,6 +1360,8 @@ public class GameController {
     }
 
     public Result showQuestsList() {
+        Game game = App.getCurrentGame();
+        User player = App.getLoggedIn();
         StringBuilder message = new StringBuilder("NPC quests:\n");
         for (NPC npc : game.getNpcs()) {
             int friendshipLevel = game.getNpcFriendshipPoints(player, npc) / 200;
@@ -1328,6 +1381,7 @@ public class GameController {
     }
 
     public Result finishQuest(String npcName, String indexStr) {
+        Game game = App.getCurrentGame();
         NPC npc = game.getNPCByName(npcName);
         if (npc == null) {
             return new Result(false, "Npc not found.");
@@ -1346,6 +1400,7 @@ public class GameController {
             return new Result(false, "This quest is already finished.");
         }
 
+        User player = App.getLoggedIn();
         Item rewardItem = Item.getItemByItemType(npc.getType().getRewardItemType(index));
         int rewardQuantity = npc.getType().getRewardQuantity(index);
         Result rewardResult = player.getBackpack().addToInventory(rewardItem, rewardQuantity);
@@ -1372,6 +1427,8 @@ public class GameController {
     }
 
     public Result exitGame() {
+        Game game = App.getCurrentGame();
+        User player = App.getLoggedIn();
         if (!game.getPlayers().getFirst().equals(player)) {
             return new Result(false, "Only the creator of the game can exit it.");
         }
