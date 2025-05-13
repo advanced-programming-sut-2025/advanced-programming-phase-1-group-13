@@ -21,7 +21,6 @@ public class User {
     private String nickname;
     private String email;
     private Gender gender;
-    private ArrayList<Game> games;
     private Game activeGame;
     private int energy;
     private boolean isEnergyUnlimited;
@@ -55,7 +54,6 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
-        this.games = new ArrayList<>();
         this.activeGame = null;
         this.energy = 200; // TODO: change value if needed
         this.isEnergyUnlimited = false;
@@ -164,10 +162,6 @@ public class User {
 
     public void setActiveGame(Game activeGame) {
         this.activeGame = activeGame;
-    }
-
-    public ArrayList<Game> getGames() {
-        return games;
     }
 
     public HashMap<SecurityQuestion, String> getqAndA() {
@@ -381,8 +375,7 @@ public class User {
     public String toString() {
         return "Username: " + this.username + "\n" +
                 "Nickname: " + this.nickname + "\n" +
-                "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
-                "Number of games: " + this.games.size();
+                "Most earned money in a game: " + this.mostEarnedMoney + "\n";
     }
 
     public boolean hasInInventory(ItemType itemType) {

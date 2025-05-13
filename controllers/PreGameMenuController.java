@@ -1,9 +1,6 @@
 package controllers;
 
-import models.App;
-import models.Game;
-import models.Result;
-import models.User;
+import models.*;
 import models.enums.Menu;
 
 import java.util.ArrayList;
@@ -42,7 +39,6 @@ public class PreGameMenuController {
 
         Game game = new Game(players, 0); // TODO: Choose map
         for (User user : players) {
-            user.getGames().add(game);
             user.setActiveGame(game);
         }
         App.addGame(game);
@@ -51,9 +47,13 @@ public class PreGameMenuController {
     }
 
     public Result chooseGameMap(String mapNumberString) {
-        int mapNumber = Integer.parseInt(mapNumberString); // TODO : ERRORS
-        // TODO
-        return new Result(true, "");
+        int mapNumber = Integer.parseInt(mapNumberString);
+        if (mapNumber != 1 & mapNumber != 2) {
+            return new Result(false, "Map number out of bounds. Chose either 1 or 2.");
+        }
+        User player = App.getLoggedIn();
+        player.getActiveGame().setGameMap(new GameMap(mapNumber));
+        return new Result(true, "Game");
     }
 
     public Result loadGame() {
