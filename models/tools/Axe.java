@@ -21,7 +21,8 @@ public class Axe extends Tool {
 
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
-        return super.calculateEnergyNeeded(playerSkills, tool);
+        SkillLevel skillLevel = playerSkills.get(Skill.FORAGING);
+        return the54321EnergyPattern(tool, skillLevel);
     }
 
     @Override
