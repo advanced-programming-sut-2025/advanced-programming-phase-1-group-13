@@ -36,7 +36,6 @@ public class User {
     private ArrayList<FoodType> learntCookingRecipes;
     private HashMap<SecurityQuestion, String> qAndA;
     private Farm farm;
-    private ArrayList<Transaction> transactions;
     private Backpack backpack;
     private ArrayList<Gift> gifts;
     private double balance;
@@ -67,7 +66,6 @@ public class User {
         this.position = new Position(0, 0); // TODO
         this.isEnergyUnlimited = false;
         this.balance = 0;
-        this.transactions = new ArrayList<>();
         this.learntCraftRecipes = new ArrayList<>();
         this.learntCookingRecipes = new ArrayList<>();
         this.qAndA = new HashMap<>();
@@ -114,10 +112,6 @@ public class User {
 
     public void setFarm(Farm farm) {
         this.farm = farm;
-    }
-
-    public void setTransactions(ArrayList<Transaction> transactions) {
-        this.transactions = transactions;
     }
 
     public void setBackpack(Backpack backpack) {
@@ -272,10 +266,6 @@ public class User {
 
     public ArrayList<FoodType> getLearntCookingRecipes() {
         return learntCookingRecipes;
-    }
-
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
     }
 
     public void changeBalance(double amount) {
