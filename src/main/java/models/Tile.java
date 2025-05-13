@@ -23,14 +23,13 @@ public class Tile {
         this.position = position;
     }
 
-    public Item getItemPLacedOnTile() {
-        return this.itemPLacedOnTile;
-    }
-
     public void pLaceItemOnTile(Item itemPLacedOnTile) {
         this.itemPLacedOnTile = itemPLacedOnTile;
         this.setType(TileType.UNDER_AN_ITEM);
     }
-    public Object getItemPlaced() { return itemPLacedOnTile; }
+
+    public Object getItemPlacedOnTile() {
+        return this.itemPLacedOnTile;
+    }
 
 }

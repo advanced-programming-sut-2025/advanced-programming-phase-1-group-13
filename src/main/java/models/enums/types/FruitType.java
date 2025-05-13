@@ -9,6 +9,7 @@ public enum FruitType implements ItemType {
     PEACH("Peach", 140),
     APPLE("Apple", 100),
     POMEGRANATE("Pomegranate", 140),
+
     OAK_RESIN("Oak Resin", 150),
     MAPLE_SYRUP("Maple Syrup", 200),
     PINE_TAR("Pine Tar", 100),

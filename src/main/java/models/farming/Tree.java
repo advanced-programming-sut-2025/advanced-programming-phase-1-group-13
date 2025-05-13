@@ -34,6 +34,62 @@ public class Tree extends Item implements Harvestable {
 
     }
 
+    public PlantSource getSource() {
+        return source;
+    }
+
+    public int getNumOfStages() {
+        return numOfStages;
+    }
+
+    public ArrayList<Integer> getStages() {
+        return stages;
+    }
+
+    public int getTotalHarvestTime() {
+        return totalHarvestTime;
+    }
+
+    public int getBaseSellPrice() {
+        return baseSellPrice;
+    }
+
+    public boolean isEdible() {
+        return isEdible;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public ArrayList<Season> getSeasons() {
+        return seasons;
+    }
+
+    public boolean isCanBecomeGiant() {
+        return canBecomeGiant;
+    }
+
+    public boolean isGiant() {
+        return isGiant;
+    }
+
+    public FruitType getFruit() {
+        return fruit;
+    }
+
+    public int getFruitHarvestCycle() {
+        return fruitHarvestCycle;
+    }
+
+    public boolean isBurnt() {
+        return isBurnt;
+    }
+
+    public Seed getSeed() {
+        return seed;
+    }
+
     public Position getPosition() {
         return position;
     }

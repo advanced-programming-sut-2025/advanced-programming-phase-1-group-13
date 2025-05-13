@@ -20,6 +20,8 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.setPlayerEnergy(matcher.group("value")));
         } else if ((matcher = GameCommands.CHEAT_ENERGY_UNLIMITED.getMatcher(inputLine)) != null) {
             System.out.println(controller.setUnlimitedEnergy());
+        } else if ((matcher = GameCommands.CHEAT_ENERGY_LIMITED.getMatcher(inputLine)) != null) {
+            System.out.println(controller.deactivateUnlimitedEnergy());
         } else if ((matcher = GameCommands.TOOLS_SHOW_CURRENT.getMatcher(inputLine)) != null) {
             System.out.println(controller.showCurrentTool());
         } else if ((matcher = GameCommands.COOKING_SHOW_RECIPES.getMatcher(inputLine)) != null) {
@@ -50,7 +52,6 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.cheatAddItem(
                     matcher.group("itemName"),
                     matcher.group("count")));
-            // TODO: handle the optional "count" flag
         } else if ((matcher = GameCommands.COOKING_PREPARE.getMatcher(inputLine)) != null) {
             System.out.println(controller.prepareCook(matcher.group("recipeName")));
         } else if ((matcher = GameCommands.EAT.getMatcher(inputLine)) != null) {

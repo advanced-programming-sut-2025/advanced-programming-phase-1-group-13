@@ -31,6 +31,7 @@ public class Scythe extends Tool {
 
     @Override
     public void useTool(Tile tile, User player) {
+
         super.useTool(tile, player);
     }
 }

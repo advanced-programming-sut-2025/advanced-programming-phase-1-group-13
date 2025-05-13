@@ -12,12 +12,14 @@ public enum TileType {
     GROWING_CROP("Growing Crop"),
     STONE("Stone"),
     WATER("Water"),
+    WATERED_NOT_PLOWED_SOIL("Watered Not Plowed Soil"),
+    WATERED_PLOWED_SOIL("Watered Plowed Soil"),
     GRASS("Grass"),
     TREE("Tree"),
     WOOD_LOG("Wood Log"),
     UNDER_AN_ITEM("An Item"),
     SHOP("Shop"),
-    SHIPPING_BIN("Shipping Bin"),;
+    SHIPPING_BIN("Shipping Bin");
 
 
     private final String displayName;

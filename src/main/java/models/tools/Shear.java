@@ -33,12 +33,17 @@ public class Shear extends Tool {
 
     public void useTool(Animal animal) {
         User player = App.getLoggedIn();
+        int energyNeeded = calculateEnergyNeeded(player.getSkillLevels(), player.getCurrentTool());
+        if (!player.isEnergyUnlimited() && energyNeeded >= player.getEnergy()) {
+            player.faint();
+            return;
+        }
         HashMap<Item, Integer> items = player.getBackpack().getItems();
         for (Item item : animal.getProducedProducts()) {
             items.put(item, items.getOrDefault(item, 0) + 1);
         }
         animal.setProducedProducts(new ArrayList<>());
-        player.setEnergy(player.getEnergy() - 4);
+        player.decreaseEnergyBy(4);
     }
 }
 

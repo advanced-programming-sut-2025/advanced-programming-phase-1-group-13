@@ -292,7 +292,7 @@ public class User {
 
 
     public void decreaseEnergyBy(int amount) {
-        this.energy -= amount;
+        if (!this.isEnergyUnlimited) this.energy -= amount;
     }
 
     public boolean isEnergyUnlimited() {

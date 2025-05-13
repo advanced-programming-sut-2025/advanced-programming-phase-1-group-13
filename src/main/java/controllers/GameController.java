@@ -271,7 +271,7 @@ public class GameController {
             return tileType == TileType.TREE ||
                     tileType == TileType.WOOD_LOG;
         } else if (toolType == ToolType.WATERING_CAN) {
-            return tileType != TileType.CABIN;
+            return tileType != TileType.CABIN && tileType != TileType.SHOP;
         } else if (toolType == ToolType.FISHING_ROD) {
             return tileType == TileType.WATER;
         } else if (toolType == ToolType.SCYTHE) {

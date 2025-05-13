@@ -54,7 +54,7 @@ public class Pickaxe extends Tool {
                 tile.getType() == TileType.UNDER_AN_ITEM) {
             tile.setType(TileType.NOT_PLOWED_SOIL);
         } else if (tile.getType() == TileType.STONE) {
-            Mineral mineral = (Mineral) tile.getItemPLacedOnTile();
+            Mineral mineral = (Mineral) tile.getItemPlacedOnTile();
             if (canMineMineral(mineral, player.getCurrentTool())) {
                 System.out.println("Mineral " + mineral.getName() + " has been mined.");
                 Backpack backpack = player.getBackpack();

@@ -116,7 +116,7 @@ public class PathFinder {
     private boolean inBounds(int x,int y){ return x>=0&&x<width&&y>=0&&y<height; }
 
     private boolean isAllowed(Tile t) {
-        if(t.getItemPlaced()!=null) return false;
+        if(t.getItemPlacedOnTile()!=null) return false;
         TileType tp = t.getType();
         return tp!=TileType.WATER && tp!=TileType.STONE
                 && tp!=TileType.TREE && tp!=TileType.WOOD_LOG;
