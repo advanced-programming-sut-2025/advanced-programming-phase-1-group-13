@@ -56,6 +56,7 @@ public class User {
         this.gender = gender;
         this.activeGame = null;
         this.energy = 200; // TODO: change value if needed
+        this.farm = new Farm(0); // TODO
         this.isEnergyUnlimited = false;
         this.balance = 0;
         this.transactions = new ArrayList<>();

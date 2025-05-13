@@ -42,8 +42,8 @@ public class PreGameMenuController {
             user.setActiveGame(game);
         }
         App.addGame(game);
-        return new Result(true, "New game made with you, " + usernames.get(1) +
-                " and " + usernames.get(2) + " as players.");
+        return new Result(true, "New game made with you, " + players.get(1).getUsername() +
+                " and " + players.get(2).getUsername() + " as players.");
     }
 
     public Result chooseGameMap(String mapNumberString) {

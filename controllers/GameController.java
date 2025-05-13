@@ -20,9 +20,15 @@ import static models.Greenhouse.canBuildGreenhouse;
 import static models.Position.areClose;
 
 public class GameController {
-    User player = App.getLoggedIn();
-    Game game = App.getCurrentGame();
-    Shop shop = App.getCurrentShop();
+    User player;
+    Game game;
+    Shop shop;
+
+    public GameController() {
+        this.player = App.getLoggedIn();
+        this.game = App.getCurrentGame();
+        this.shop = App.getCurrentShop();
+    }
 
     // === PLAYER'S STATUS === //
 
@@ -1288,14 +1294,16 @@ public class GameController {
 
     public Result showFriendshipNPCList() {
         StringBuilder message = new StringBuilder("Your friendships with NPCs:\n");
-        for (NPC npc : game.getNpcs()) {
-            int friendshipPoints = game.getNpcFriendshipPoints(player, npc);
-            message.append(npc.getName()).append(": \n" +
-                    "   Friendship level: ").append(friendshipPoints / 200).append("\n" +
-                    "   Friendship points: ").append(friendshipPoints).append("""
-                    
-                    -------------------------------
-                    """);
+        for (NPC npc : App.getCurrentGame().getNpcs()) {
+            int friendshipPoints = App.getCurrentGame().getNpcFriendshipPoints(player, npc);
+            if (friendshipPoints > 0) {
+                message.append(npc.getName()).append(": \n" +
+                        "   Friendship level: ").append(friendshipPoints / 200).append("\n" +
+                        "   Friendship points: ").append(friendshipPoints).append("""
+                        
+                        -------------------------------
+                        """);
+            }
         }
         return new Result(true, message.toString());
     }
