@@ -21,17 +21,21 @@ public class Hoe extends Tool {
     }
 
     @Override
-    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
         SkillLevel skillLevel = playerSkills.get(Skill.FARMING);
-        return switch (skillLevel) {
-            case LEVEL_ZERO -> 5;
-            case LEVEL_ONE -> 1;
-            case LEVEL_TWO -> 2;
-            case LEVEL_THREE -> 3;
-            default -> 0;
-        };
-        // todo: ... take into account the toolMaterial
+        ToolMaterial toolMaterial = tool.getToolMaterial();
 
+        int energy = switch (toolMaterial) {
+            case BASIC -> 5;
+            case COPPER -> 4;
+            case IRON -> 3;
+            case GOLD -> 2;
+            case IRIDIUM -> 1;
+        };
+        if (skillLevel == SkillLevel.LEVEL_THREE) {
+            energy--;
+        }
+        return energy;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class Hoe extends Tool {
 
     @Override
     public void useTool(Tile tile, User player) {
-        int energyNeeded = calculateEnergyNeeded(player.getSkillLevels());
+        int energyNeeded = calculateEnergyNeeded(player.getSkillLevels(), player.getCurrentTool());
         if (energyNeeded >= player.getEnergy()) {
             player.faint();
             return;

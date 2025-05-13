@@ -20,7 +20,7 @@ public class TrashCan extends Tool {
     }
 
     @Override
-    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills) {
+    public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
         return 0;
     }
 
