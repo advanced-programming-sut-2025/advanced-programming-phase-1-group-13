@@ -7,12 +7,11 @@ import models.farming.Crop;
 import models.farming.Harvestable;
 import models.farming.PlantSource;
 import models.farming.Tree;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Farm {
-    private ArrayList<Tile> mapTiles;
+    private ArrayList<Tile> farmTiles;
     private Cabin cabin;
     private Greenhouse greenhouse;
     private Quarry quarry;
@@ -22,26 +21,48 @@ public class Farm {
     private ArrayList<Tree> trees;
     private int mapNumberToFollow;
     private ArrayList<FarmBuilding> farmBuildings;
+    private int height;
+    private int width;
 
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
+        this.height = GameMap.getMAP_SIZE() / 10;
+        this.width = GameMap.getMAP_SIZE() / 10;
 
         if (mapNumberToFollow == 1) {
-            // TODO
-            this.cabin = new Cabin(); // with map 1 properties
-            this.lakes = new ArrayList<>(); // with map1 properties
-            this.quarry = new Quarry(); // with map1 properties
-            this.mapTiles = new ArrayList<>(); // with map1 properties
+            this.cabin = new Cabin();
+            this.lakes = new ArrayList<>();
+            this.quarry = new Quarry();
+            this.farmTiles = new ArrayList<>();
         } else if (mapNumberToFollow == 2) {
-            // TODO
-            this.cabin = new Cabin(); // with map 2 properties
-            this.lakes = new ArrayList<>(); // with map2 properties
-            this.quarry = new Quarry(); // with map2 properties
-            this.mapTiles = new ArrayList<>(); // with map2 properties
+            this.cabin = new Cabin();
+            this.lakes = new ArrayList<>();
+            this.quarry = new Quarry();
+            this.farmTiles = new ArrayList<>();
         }
+    }
+
+    public Tile getTileAt(int x, int y) {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            return null;
+        }
+        // Convert 2D coordinates to 1D index (row-major order)
+        int index = y * width + x;
+        if (index >= 0 && index < farmTiles.size()) {
+            return farmTiles.get(index);
+        }
+        return null;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public void placeScarecrow(Position position) {
@@ -66,8 +87,8 @@ public class Farm {
         // TODO
     }
 
-    public ArrayList<Tile> getMapTiles() {
-        return this.mapTiles;
+    public ArrayList<Tile> getFarmTiles() {
+        return this.farmTiles;
     }
 
     public Cabin getCabin() {
@@ -198,7 +219,7 @@ public class Farm {
     }
 
     public Tile getTileByPosition(Position position) {
-        for (Tile tile : mapTiles) {
+        for (Tile tile : farmTiles) {
             if (tile.getPosition().equals(position)) {
                 return tile;
             }

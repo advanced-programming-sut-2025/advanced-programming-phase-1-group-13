@@ -33,4 +33,8 @@ public class Tree extends Item implements Harvestable {
     public void showInfo() {
 
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }

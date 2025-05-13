@@ -2,6 +2,7 @@ package models;
 
 import models.enums.environment.Time;
 import models.enums.types.ShopType;
+import models.enums.types.TileType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,14 +15,48 @@ public class Shop {
     private final NPC owner;
     private final int startHour;
     private final int endHour;
+    private ArrayList<Tile> shopTiles;
+    private Position position;  // Add position field to track shop location
 
-    public Shop(ShopType type) {
+    public Shop(ShopType type, Position position, int width, int height) {
         this.type = type;
-        this.shopInventory = new ArrayList<>(); // TODO
+        this.shopInventory = new ArrayList<>();
         this.name = type.getName();
         this.owner = type.getOwner();
         this.startHour = type.getStartHour();
         this.endHour = type.getEndHour();
+        this.position = position;
+        this.shopTiles = new ArrayList<>();
+
+        initializeShopTiles(width, height);
+    }
+
+    private void initializeShopTiles(int width, int height) {
+        for (int x = position.getX(); x < position.getX() + width; x++) {
+            for (int y = position.getY(); y < position.getY() + height; y++) {
+                Tile tile = new Tile();
+                tile.setPosition(new Position(x, y));
+                tile.setType(TileType.SHOP);
+                shopTiles.add(tile);
+            }
+        }
+    }
+
+    public ArrayList<Tile> getShopTiles() {
+        return this.shopTiles;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean containsPosition(Position position) {
+        for (Tile tile : shopTiles) {
+            if (tile.getPosition().equals(position)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getName() {
@@ -46,10 +81,7 @@ public class Shop {
 
     public boolean isOpen() {
         int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
-        if (currentHour >= startHour && currentHour <= endHour) {
-            return true;
-        }
-        return false;
+        return currentHour >= startHour && currentHour <= endHour;
     }
 
     public void changeBalance(int amount) {
@@ -57,18 +89,18 @@ public class Shop {
     }
 
     void addProduct(Item item, int count) {
-        // TODO!
+        // TODO: Implement
     }
 
     void removeProduct(Item item, int count) {
-        // TODO
+        // TODO: Implement
     }
 
     void sellProduct(Item item, int count) {
-        // TODO
+        // TODO: Implement
     }
 
     void showAvailableProducts() {
-        // TODO
+        // TODO: Implement
     }
 }

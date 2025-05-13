@@ -4,6 +4,7 @@ import models.Position;
 
 public class ForagingCrop extends PlantSource implements ForagingStuff {
     private boolean isAlsoStandardCrop;
+    private Position position;
 
     public ForagingCrop(Position pos) {
         super();
@@ -12,5 +13,9 @@ public class ForagingCrop extends PlantSource implements ForagingStuff {
     @Override
     public void generate() {
 
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

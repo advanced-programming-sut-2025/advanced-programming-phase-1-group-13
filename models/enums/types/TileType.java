@@ -15,7 +15,8 @@ public enum TileType {
     GRASS("Grass"),
     TREE("Tree"),
     WOOD_LOG("Wood Log"),
-    UNDER_AN_ITEM("An Item");
+    UNDER_AN_ITEM("An Item"),
+    SHOP("Shop");
 
     private final String displayName;
 

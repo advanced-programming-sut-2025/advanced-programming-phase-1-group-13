@@ -19,8 +19,10 @@ public final class GameMap {
     private Quarry quarry;
     private ArrayList<Tree> trees;
     private ArrayList<Stone> stones;
+    private ArrayList<Tile> woodLogs;
     private ArrayList<ForagingCrop> foragings;
     private Random random;
+    private ArrayList<Tile> allTiles;
 
     public GameMap(int mapNumber) {
         this.mapNumber = mapNumber;
@@ -31,10 +33,16 @@ public final class GameMap {
         this.stones = new ArrayList<>();
         this.foragings = new ArrayList<>();
 
-        // Generate fixed position elements based on map number
         generateFixedElements();
-        // Generate random elements
         generateRandomElements();
+    }
+
+    public static int getMAP_SIZE() {
+        return MAP_SIZE;
+    }
+
+    public int getCABIN_SIZE() {
+        return CABIN_SIZE;
     }
 
     private void generateFixedElements() {
@@ -64,11 +72,20 @@ public final class GameMap {
             stones.add(new Stone(pos));
         }
 
-        // CHECK!!!
+        // TODO: CHECK!!!
         int foragingCount = 3 + random.nextInt(6);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = getRandomPosition();
             foragings.add(new ForagingCrop(pos));
+        }
+
+        int woodCount = 10 + random.nextInt(11);
+        for (int i = 0; i < woodCount; i++) {
+            Position pos = getRandomPosition();
+            Tile woodLog = new Tile();
+            woodLog.setPosition(pos);
+            woodLog.setType(TileType.WOOD_LOG);
+            woodLogs.add(woodLog);
         }
     }
 
@@ -160,7 +177,6 @@ public final class GameMap {
             }
         }
 
-        // Generate random minerals in the quarry (3-8 minerals)
         int mineralCount = 3 + random.nextInt(6);
         for (int i = 0; i < mineralCount; i++) {
             int mineralX = x + random.nextInt(width);
@@ -215,5 +231,68 @@ public final class GameMap {
 
     public Random getRandom() {
         return random;
+    }
+
+    public static ArrayList<Tile> getAllTiles() {
+        return allTiles;
+    }
+
+    public void consolidateAllTiles() {
+        allTiles = new ArrayList<>();
+
+        if (cabin != null) {
+            for (Position pos : cabin.getTiles()) {
+                Tile tile = new Tile();
+                tile.setPosition(pos);
+                tile.setType(TileType.CABIN);
+                allTiles.add(tile);
+            }
+        }
+
+        if (greenhouse != null) {
+            allTiles.addAll(greenhouse.getTiles());
+        }
+
+        if (quarry != null) {
+            allTiles.addAll(quarry.getTiles());
+        }
+
+        if (lake != null) {
+            for (Position pos : lake.getTiles()) {
+                Tile tile = new Tile();
+                tile.setPosition(pos);
+                tile.setType(TileType.WATER);
+                allTiles.add(tile);
+            }
+        }
+
+        for (Farm farm : farms) {
+            allTiles.addAll(farm.getFarmTiles());
+        }
+
+        for (Shop shop : shops) {
+            allTiles.addAll(shop.getShopTiles());
+        }
+
+        for (Tree tree : trees) {
+            Tile tile = new Tile();
+            tile.setPosition(tree.getPosition());
+            tile.setType(TileType.TREE);
+            allTiles.add(tile);
+        }
+
+        for (Stone stone : stones) {
+            Tile tile = new Tile();
+            tile.setPosition(stone.getPosition());
+            tile.setType(TileType.STONE);
+            allTiles.add(tile);
+        }
+
+        for (ForagingCrop crop : foragings) {
+            Tile tile = new Tile();
+            tile.setPosition(crop.getPosition());
+            tile.setType(TileType.GROWING_CROP);
+            allTiles.add(tile);
+        }
     }
 }

@@ -14,10 +14,7 @@ import models.tools.Shear;
 import models.tools.Tool;
 import models.enums.environment.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static models.Greenhouse.canBuildGreenhouse;
 import static models.Position.areClose;
@@ -288,58 +285,51 @@ public class GameController {
 
     // === WALK === //
 
-    public Result walk(Path path, String walkConfirmation) {
-        Boolean playerConfirmed = switch (walkConfirmation) {
-            case "y" -> true;
-            case "n" -> false;
-            default -> null;
-        };
-        if (playerConfirmed == null) {
-            return new Result(false, "the confirmation must be \"y\" or \"n\"");
+    public Result respondForWalkRequest(String targetXStr, String targetYStr) {
+        try {
+            int targetX = Integer.parseInt(targetXStr);
+            int targetY = Integer.parseInt(targetYStr);
+
+            Position playerPos = player.getPosition();
+            Position destination = new Position(targetX, targetY);
+
+            // are coordinates within map bounds?
+            if (!isPositionValid(destination)) {
+                return new Result(false, "Coordinates (" + targetX + "," + targetY + ") are out of bounds");
+            }
+
+            PathFinder pf = new PathFinder(player);
+            Path path = pf.findValidPath(playerPos, destination);
+
+            if (path == null) {
+                return new Result(false, "No valid path found to (" + targetX + "," + targetY + ")");
+            }
+
+            String message = String.format(
+                    "Found path to (%d,%d):\nDistance: %d tiles\nTurns: %d\nEnergy needed: %d",
+                    targetX, targetY,
+                    path.getDistanceInTiles(),
+                    path.getNumOfTurns(),
+                    path.getEnergyNeeded()
+            );
+
+            return new Result(true, message);
+        } catch (NumberFormatException e) {
+            return new Result(false, "Invalid coordinates - must be numbers");
+        } catch (Exception e) {
+            return new Result(false, "Error: " + e.getMessage());
         }
-        if (!playerConfirmed) {
-            return new Result(false, "You denied the walk.");
-        }
-        // TODO: Walk path! i.e. call player's inner changePosition(x,y) method.
-        Position destination = path.getPathTiles().getLast();
-        player.changePosition(destination);
-        return new Result(true, "Walking...");
     }
 
-    public Result respondForWalkRequest(String xString, String yString) {
-        int x = Integer.parseInt(xString);
-        int y = Integer.parseInt(yString);
-        Position destination = new Position(x, y);
-        Position origin = player.getPosition();
-        Path path = findValidPath(origin, destination);
-        if (path == null) {
-            return new Result(false, "No valid path found!");
-        }
-        StringBuilder walkConfirmRequest = new StringBuilder();
-        walkConfirmRequest
-                .append("Do you confirm the walk?\n")
-                .append("(respond with \"walk confirm\" followed by \"y\" or \"n\"");
-        return new Result(true, walkConfirmRequest.toString());
-        // [we can also show the path and then ask for confirmation]
+    private boolean isPositionValid(Position pos) {
+        List<Tile> allTiles = GameMap.getAllTiles();
+        if (allTiles.isEmpty()) return false;
 
-        /*
-        In View: after calling this method, we expect the player to confirm/deny
-        Then, we call the walk() method.
-        */
-    }
+        int maxX = allTiles.stream().mapToInt(t -> t.getPosition().getX()).max().orElse(0);
+        int maxY = allTiles.stream().mapToInt(t -> t.getPosition().getY()).max().orElse(0);
 
-    private Path findValidPath(Position origin, Position destination) {
-        // give FarmsMap as argument?
-        if (!isDestinationAllowed(destination)) {
-            return null;
-        }
-        // TODO: build a valid path and return it
-        return new Path();
-    }
-
-    private boolean isDestinationAllowed(Position destination) {
-        // TODO: check if destination is in OUR Farm.
-        return false;
+        return pos.getX() >= 0 && pos.getX() <= maxX &&
+                pos.getY() >= 0 && pos.getY() <= maxY;
     }
 
     // === PRINT MAP === //
