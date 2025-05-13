@@ -24,13 +24,24 @@ public class Tile {
     }
 
     public Item getItemPLacedOnTile() {
+//        todo: is below necessary?
+//        if (this.getType() == TileType.STONE) {
+//            return (Mineral) this.getItemPLacedOnTile();
+//        }
         return this.itemPLacedOnTile;
     }
 
-    public void pLaceItemOnTile(Item itemPLacedOnTile) {
-        this.itemPLacedOnTile = itemPLacedOnTile;
+    public void pLaceItemOnTile(Item item) {
+        this.itemPLacedOnTile = item;
+        if (item instanceof Mineral) {
+            this.setType(TileType.STONE);
+            return;
+        }
         this.setType(TileType.UNDER_AN_ITEM);
     }
-    public Object getItemPlaced() { return itemPLacedOnTile; }
+
+    public Object getItemPlaced() {
+        return itemPLacedOnTile;
+    }
 
 }

@@ -1,15 +1,20 @@
 package models.enums.types;
 
 public enum MineralType implements ItemType {
-    DIAMOND("Diamond"),
+    STONE("Stone"),
+    COPPER("Copper"),
     IRON("Iron"),
+    GOLD("Gold"),
+    IRIDIUM("Iridium"),
+
+    DIAMOND("Diamond"),
+    QUARTZ("Quartz"),
+
     IRON_ORE("Iron ore"),
     IRON_BAR("Iron bar"),
     COIN("Coin"),
     GOLD_COIN("Gold coin"),
-    GOLD_BAR("Gold bar"),
-    STONE("Stone"),
-    QUARTZ("Quartz");
+    GOLD_BAR("Gold bar");
 
     private final String name;
 

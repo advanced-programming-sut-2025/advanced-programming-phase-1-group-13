@@ -1,9 +1,11 @@
 package models.tools;
 
+import models.Mineral;
 import models.Tile;
 import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
+import models.enums.types.MineralType;
 import models.enums.types.TileType;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
@@ -33,7 +35,11 @@ public class Pickaxe extends Tool {
 
     @Override
     public void useTool(Tile tile, User player) {
+        boolean successfulUsage = tile.getType() != TileType.QUARRY_GROUND && tile.getType() != TileType.NOT_PLOWED_SOIL;
         int energyNeeded = this.calculateEnergyNeeded(player.getSkillLevels(), player.getCurrentTool());
+        if (!successfulUsage) {
+            energyNeeded = Math.max(0, energyNeeded - 1);
+        }
         if (energyNeeded >= player.getEnergy()) {
             player.faint();
             return;
@@ -46,12 +52,29 @@ public class Pickaxe extends Tool {
                         tile.getType() == TileType.GROWING_CROP ||
                         tile.getType() == TileType.UNDER_AN_ITEM) {
             tile.setType(TileType.NOT_PLOWED_SOIL);
+        } else if (tile.getType() == TileType.STONE) {
+            Mineral mineral = (Mineral) tile.getItemPLacedOnTile();
+            if (canMineMineral(mineral, player.getCurrentTool())) {
+
+            }
         }
-//        else if (tile.getType() == TileType.QUARRY ||
-//                tile.getType() == TileType.STONE) {
-//
-//        }
 
 
+    }
+
+    private boolean canMineMineral(Mineral mineral, Tool tool) {
+        MineralType mineralType = mineral.getMineralType();
+        return switch (tool.getToolMaterial()) {
+            case BASIC -> switch (mineralType) {
+                case STONE, COPPER -> true;
+                default -> false;
+            };
+            case COPPER -> switch (mineralType) {
+                case STONE, COPPER, IRON -> true;
+                default -> false;
+            };
+            case IRON -> mineralType != MineralType.IRIDIUM;
+            case GOLD, IRIDIUM -> true;
+        };
     }
 }
