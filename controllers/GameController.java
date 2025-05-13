@@ -20,7 +20,6 @@ import static models.Greenhouse.canBuildGreenhouse;
 import static models.Position.areClose;
 
 public class GameController {
-    Shop shop;
 
     // === PLAYER'S STATUS === //
 
@@ -440,6 +439,11 @@ public class GameController {
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(String farmBuildingTypeStr, String xString, String yString) {
+        Shop shop = App.getCurrentShop();
+        if (shop == null) {
+            return new Result(false, "You Must first enter Marnie's Ranch.");
+        }
+
         if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
             return new Result(false, "You Must first enter Marnie's Ranch.");
         }
@@ -500,6 +504,7 @@ public class GameController {
     }
 
     public Result buyAnimal(String animalTypeStr, String name) {
+        Shop shop = App.getCurrentShop();
         if (shop == null) {
             return new Result(false, "You Must first enter Marnie's Ranch.");
         }
@@ -842,6 +847,10 @@ public class GameController {
 
         User player = App.getLoggedIn();
         Artisan artisan = player.getFarm().getEmptyArtisanByArtisanType(artisanType);
+        if (artisan == null) {
+            return new Result(false, "Artisan not found.");
+        }
+
         if (artisan.getItemPending() != null) {
             return new Result(false, "You either have no " + artisanNameString + "s or all of your " +
                     artisanNameString + "s are already making another product.");
@@ -907,6 +916,7 @@ public class GameController {
     // === SHOPS === //
 
     public Result showAllProducts() {
+        Shop shop = App.getCurrentShop();
         if (shop == null) {
             return new Result(false, "Enter a shop first!");
         }
@@ -923,6 +933,10 @@ public class GameController {
     }
 
     public Result showAvailableProducts() {
+        Shop shop = App.getCurrentShop();
+        if (shop == null) {
+            return new Result(false, "Enter a shop first!");
+        }
         StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
 
         for (GoodsType product : GoodsType.values()) {
@@ -1003,9 +1017,12 @@ public class GameController {
         if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             game.sendMessage(player, targetPlayer, message);
 
-            if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
-                game.changeFriendship(player, targetPlayer, 50);
+            if (player.getSpouse() != null) {
+                if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
+                    game.changeFriendship(player, targetPlayer, 50);
+                }
             }
+
             if (!player.getHasTalkedToToday().get(targetPlayer)) {
                 game.changeFriendship(player, targetPlayer, 20);
             }
@@ -1129,10 +1146,10 @@ public class GameController {
         User player = App.getLoggedIn();
         String message = "Gift history of you and " + username + "\n";
 
-        message += "    Gifts from you to " + username + ":\n";
+        message += "    Gifts from you to " + username + ":\n\n";
         message += getGiftHistoryString(targetPlayer, player);
 
-        message += "------------------------------------------\n\n    Gifts from " + username + " to you:\n";
+        message += "------------------------------------------\n    Gifts from " + username + " to you:\n";
         message += getGiftHistoryString(player, targetPlayer);
 
         return new Result(true, message);

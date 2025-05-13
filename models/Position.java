@@ -40,7 +40,7 @@ public class Position {
 
         int x, y;
         x = Integer.parseInt(xString);
-        y = Integer.parseInt(xString);
+        y = Integer.parseInt(yString);
         return new Position(x, y);
     }
 

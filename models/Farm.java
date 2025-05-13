@@ -27,7 +27,6 @@ public class Farm {
     private int width;
     private ArrayList<Artisan> artisans;
 
-
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
         this.cropCount = 0;
@@ -181,9 +180,10 @@ public class Farm {
     public AnimalLivingSpace getAvailableLivingSpace(List<FarmBuildingType> livingSpaceTypes) {
         for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
             if (livingSpaceTypes.contains(farmBuilding.getFarmBuildingType())) {
-                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
-                if (!animalLivingSpace.isFull()) {
-                    return animalLivingSpace;
+                if (farmBuilding instanceof AnimalLivingSpace animalLivingSpace) {
+                    if (!animalLivingSpace.isFull()) {
+                        return animalLivingSpace;
+                    }
                 }
             }
         }

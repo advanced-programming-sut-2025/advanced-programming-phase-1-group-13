@@ -1,6 +1,8 @@
 package controllers;
 
+import models.App;
 import models.Result;
+import models.enums.Menu;
 
 public class TradeController {
     public Result trade(String username, String typeStr, String itemName, String amountStr, String priceStr,
@@ -34,4 +36,8 @@ public class TradeController {
         return new Result(true, "");
     }
 
+    public Result exitTradeMenu() {
+        App.setCurrentMenu(Menu.GAME_MENU);
+        return new Result(true, "Exiting Trade Menu...");
+    }
 }
