@@ -51,20 +51,20 @@ public enum NPCType {
                 put(
                         new HashMap<ItemType, Integer>() {{
                             put(MaterialType.WOOD, 80);
-                            put(MineralType.IRON_BAR, 10);
+                            put(IngredientType.IRON_BAR, 10);
                             put(MaterialType.WOOD, 1000);
                         }},
                         new HashMap<ItemType, Integer>() {{
-                            put(MineralType.GOLD_COIN, 1000);
+                            put(MoneyType.GOLD_COIN, 1000);
                             put(CraftType.BEE_HOUSE, 3);
-                            put(MineralType.COIN, 25000);
+                            put(MoneyType.COIN, 25000);
                         }}
                 );
             }},
             new ArrayList<ItemType>() {{
                 add(FoodType.SPAGHETTI);
                 add(MaterialType.WOOD);
-                add(MineralType.IRON_BAR);
+                add(IngredientType.IRON_BAR);
             }},
             18,
             new ArrayList<ItemType>() {{
@@ -120,7 +120,7 @@ public enum NPCType {
                         }},
                         new HashMap<ItemType, Integer>() {{
                             put(MineralType.DIAMOND, 2);
-                            put(MineralType.GOLD_COIN, 5000);
+                            put(MoneyType.GOLD_COIN, 5000);
                             put(MineralType.QUARTZ, 50);
                         }}
                 );
@@ -143,20 +143,20 @@ public enum NPCType {
             new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>() {{
                 put(
                         new HashMap<ItemType, Integer>() {{
-                            put(MineralType.GOLD_BAR, 1);
+                            put(IngredientType.GOLD_BAR, 1);
                             put(CropType.PUMPKIN, 1);
                             put(CropType.WHEAT, 50);
                         }},
                         new HashMap<ItemType, Integer>() {{
                             put(null, 0); // Friendship XP
-                            put(MineralType.GOLD_COIN, 500);
+                            put(MoneyType.GOLD_COIN, 500);
                             put(ToolType.WATERING_CAN, 1);
                         }}
                 );
             }},
             new ArrayList<ItemType>() {{
                 add(MineralType.STONE);
-                add(MineralType.IRON_ORE);
+                add(GoodsType.IRON_ORE);
                 add(GoodsType.COFFEE);
             }},
             29,
@@ -177,7 +177,7 @@ public enum NPCType {
                             put(ProcessedItemType.WINE, 1);
                         }},
                         new HashMap<ItemType, Integer>() {{
-                            put(MineralType.GOLD_COIN, 750);
+                            put(MoneyType.GOLD_COIN, 750);
                             put(null, 1); // Friendship XP
                             put(FoodType.SALAD, 5);
                         }}
@@ -206,7 +206,7 @@ public enum NPCType {
                             put(MaterialType.WOOD, 200);
                         }},
                         new HashMap<ItemType, Integer>() {{
-                            put(MineralType.GOLD_COIN, 500);
+                            put(MoneyType.GOLD_COIN, 500);
                             put(FoodType.SALMON_DINNER, 1);
                             put(CraftType.SCARECROW, 3);
                         }}
@@ -223,8 +223,7 @@ public enum NPCType {
                 add(FoodType.SALAD);
                 add(ProcessedItemType.MEAD);
             }}
-    )
-    ;
+    );
 
     private final String name;
     private final Role role;

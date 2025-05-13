@@ -55,15 +55,8 @@ public enum MineralType implements ItemType {
             15),
 
     STONE("Stone",
-            "Used in crafting recipes and required as a form of payment when purchasing certain buildings.",
-            0), // or ROCK
-
-    // todo: do sth about these:
-    IRON_ORE("Iron ore", "", 0),
-    IRON_BAR("Iron bar", "", 0),
-    COIN("Coin", "", 0),
-    GOLD_COIN("Gold coin", "", 0),
-    GOLD_BAR("Gold bar", "", 0);
+            "A common material with many uses in crafting and building.",
+            0); // or ROCK
 
     private final String name;
     private final String description;

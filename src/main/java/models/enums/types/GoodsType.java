@@ -117,7 +117,7 @@ public enum GoodsType implements ItemType {
     EGGPLANT_SEEDS("Eggplant Seeds", "Plant these in the fall. Takes 5 days to mature, and continues " +
             "to produce after first harvest.", 25, 5, ShopType.JOJAMART, List.of(Season.FALL)),
     PUMPKIN_SEEDS("Pumpkin Seeds", "Plant these in the fall. Takes 13 days to mature.", 125,
-            5, ShopType.JOJAMART,List.of(Season.FALL)),
+            5, ShopType.JOJAMART, List.of(Season.FALL)),
     BROCCOLI_SEEDS("Broccoli Seeds", "Plant in the fall. Takes 8 days to mature, and continues to " +
             "produce after first harvest.", 15, 5, ShopType.JOJAMART, List.of(Season.FALL)),
     AMARANTH_SEEDS("Amaranth Seeds", "Plant these in the fall. Takes 7 days to grow. Harvest with " +
@@ -213,8 +213,8 @@ public enum GoodsType implements ItemType {
               String description,
               int price,
               int dailyLimit,
-              ShopType shopType ,
-              List<Season> seasonalStocks ) {
+              ShopType shopType,
+              List<Season> seasonalStocks) {
         this.name = name;
         this.description = description;
         this.price = price;
