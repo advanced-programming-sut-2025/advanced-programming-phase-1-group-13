@@ -11,6 +11,7 @@ public class PathFinder {
     private Tile[][] farmMap;
     private int width, height;
 
+
     public PathFinder(User player) { this.player = player; }
 
     public Result walk(Path p, String conf) {

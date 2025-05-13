@@ -22,7 +22,7 @@ public final class GameMap {
     private ArrayList<Tile> woodLogs;
     private ArrayList<ForagingCrop> foragings;
     private Random random;
-    private ArrayList<Tile> allTiles;
+    private static ArrayList<Tile> allTiles;
 
     public GameMap(int mapNumber) {
         this.mapNumber = mapNumber;

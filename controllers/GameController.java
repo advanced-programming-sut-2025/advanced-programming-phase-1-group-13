@@ -312,8 +312,8 @@ public class GameController {
                     path.getNumOfTurns(),
                     path.getEnergyNeeded()
             );
-
             return new Result(true, message);
+
         } catch (NumberFormatException e) {
             return new Result(false, "Invalid coordinates - must be numbers");
         } catch (Exception e) {

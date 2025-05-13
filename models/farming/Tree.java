@@ -26,6 +26,7 @@ public class Tree extends Item implements Harvestable {
     private boolean isBurnt;
     private Seed seed;
 
+
     public Tree(Position pos) {
         super();
     }
