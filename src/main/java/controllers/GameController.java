@@ -917,11 +917,12 @@ public class GameController {
 
     public Result showAllProducts() {
         Shop shop = App.getCurrentShop();
-        if (shop == null) {
-            return new Result(false, "Enter a shop first!");
+        Result result = checkShopStatus(shop);
+        if (!result.success()) {
+            return result;
         }
-        StringBuilder productList = new StringBuilder("All Products in " + shop.getName() + ":\n");
 
+        StringBuilder productList = new StringBuilder("All Products in " + shop.getName() + ":\n");
         for (GoodsType product : GoodsType.values()) {
             if (product.getShopType() == shop.getType()) {
                 String availability = (product.getDailyLimit() == 0) ? "Unavailable" : "Available"; // TODO
@@ -934,11 +935,12 @@ public class GameController {
 
     public Result showAvailableProducts() {
         Shop shop = App.getCurrentShop();
-        if (shop == null) {
-            return new Result(false, "Enter a shop first!");
+        Result result = checkShopStatus(shop);
+        if (!result.success()) {
+            return result;
         }
-        StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
 
+        StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
         for (GoodsType product : GoodsType.values()) {
             if (product.getShopType() == shop.getType()) {
                 availableProducts.append(String.format("- %s: %d gold\n", product.name(), product.getPrice()));
@@ -946,6 +948,19 @@ public class GameController {
         }
 
         return new Result(true, availableProducts.toString());
+    }
+
+    public Result checkShopStatus(Shop shop) {
+        if (shop == null) {
+            return new Result(false, "Enter a shop first!");
+        }
+
+        if (!shop.isOpen()) {
+            return new Result(false, shop.getName() + " is not open right now. Come back between " +
+                    shop.getType().getStartHour() + " and " + shop.getType().getEndHour() + " to browse the goods.");
+        }
+
+        return new Result(true, "");
     }
 
     public Result purchase(String productName, String countStr) {
