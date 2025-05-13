@@ -27,7 +27,6 @@ public class Farm {
     private int width;
     private ArrayList<Artisan> artisans;
 
-
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
         this.cropCount = 0;

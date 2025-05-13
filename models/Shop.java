@@ -88,7 +88,6 @@ public class Shop {
         this.balance += amount;
     }
 
-
     void addProduct(Item item, int count) {
         // TODO: Implement
     }

@@ -18,7 +18,6 @@ public enum TileType {
     UNDER_AN_ITEM("An Item"),
     SHOP("Shop");
 
-
     private final String displayName;
 
     TileType(String displayName) {

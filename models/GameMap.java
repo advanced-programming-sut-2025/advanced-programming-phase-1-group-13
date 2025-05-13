@@ -59,6 +59,7 @@ public final class GameMap {
         }
     }
 
+
     private void generateRandomElements() {
         int treeCount = 40 + random.nextInt(11);
         for (int i = 0; i < treeCount; i++) {
