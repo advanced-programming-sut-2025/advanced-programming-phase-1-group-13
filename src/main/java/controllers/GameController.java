@@ -1045,12 +1045,12 @@ public class GameController {
     }
 
     public Result sell(String productName, String countStr) {
-        Item item = Item.getItemByItemName(productName);
+        User player = App.getLoggedIn();
+        Item item = player.getBackpack().getItemFromInventoryByName(productName);
         if (item == null) {
             return new Result(false, "Product not found.");
         }
 
-        User player = App.getLoggedIn();
         int numberInInventory = player.getBackpack().getItems().get(item);
 
         int count;
@@ -1060,17 +1060,34 @@ public class GameController {
             count = Integer.parseInt(countStr);
         }
 
-        if (count == 0) {
+        if (!item.isSellable()) {
+            return new Result(false, "This product can not be sold.");
+        }
+
+        ShippingBin shippingBin = player.getCloseShippingBin();
+        if (shippingBin == null) {
+            return new Result(false, "You must be near a shipping bin to sell.");
+        }
+
+        Result result = player.getBackpack().addToInventory(item, count);
+        if (!result.success()) {
             return new Result(false, "You don't have enough " + productName + " to sell.");
         }
 
-        // TODO: Check if such a product cannot be sold.
-
-        if (!player.isCloseToTileType(TileType.SHIPPING_BIN)) {
-            return new Result(false, "You must be near a shipping bin to sell.");
+        for (int i = 0; i < count; i++) {
+            shippingBin.addItemToShip(item);
         }
-        // TODO
-        return new Result(true, "");
+
+        Quality quality = Item.getItemQuality(item);
+        int price;
+        if (quality == null) {
+            price = count * item.getPrice();
+        } else {
+            price = count * (int) (quality.getPriceCoefficient() * quality.getPriceCoefficient());
+        }
+
+        return new Result(true, "You put " + count + " of " + productName + " in the shipping bin. " +
+                "You will get " + price + "g tomorrow.");
     }
 
     // === FRIENDSHIPS === //

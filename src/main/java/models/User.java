@@ -478,6 +478,17 @@ public class User {
         return false;
     }
 
+    public ShippingBin getCloseShippingBin() {
+        int x = this.getPosition().getX();
+        int y = this.getPosition().getY();
+        for (ShippingBin shippingBin : this.farm.getShippingBins()) {
+            if (Position.areClose(shippingBin.getPosition(), this.getPosition())) {
+                return shippingBin;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Username: " + this.username + "\n" +

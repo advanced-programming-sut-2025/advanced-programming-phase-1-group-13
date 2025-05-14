@@ -26,6 +26,7 @@ public class Farm {
     private int height;
     private int width;
     private ArrayList<Artisan> artisans;
+    private ArrayList<ShippingBin> shippingBins;
 
     public Farm(int mapNumberToFollow) {
         this.mapNumberToFollow = mapNumberToFollow;
@@ -95,6 +96,10 @@ public class Farm {
 
     public void harvest(Harvestable harvestable) {
         // TODO
+    }
+
+    public ArrayList<ShippingBin> getShippingBins() {
+        return shippingBins;
     }
 
     public ArrayList<Tile> getFarmTiles() {

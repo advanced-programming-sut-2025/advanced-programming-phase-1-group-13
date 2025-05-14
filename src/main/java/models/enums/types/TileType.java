@@ -18,8 +18,7 @@ public enum TileType {
     TREE("Tree"),
     WOOD_LOG("Wood Log"),
     UNDER_AN_ITEM("An Item"),
-    SHOP("Shop"),
-    SHIPPING_BIN("Shipping Bin");
+    SHOP("Shop");
 
 
     private final String displayName;

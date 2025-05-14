@@ -5,6 +5,7 @@ import models.enums.types.FarmBuildingType;
 import java.util.ArrayList;
 public class ShippingBin extends FarmBuilding {
     private ArrayList<Item> itemsToShip;
+    private Position position;
 
     public ShippingBin(FarmBuildingType farmBuildingType, Position positionOfUpperLeftCorner) {
         super(farmBuildingType, positionOfUpperLeftCorner);
@@ -15,7 +16,15 @@ public class ShippingBin extends FarmBuilding {
         return itemsToShip;
     }
 
-    public void setItemsToShip(ArrayList<Item> itemsToShip) {
-        this.itemsToShip = itemsToShip;
+    public void addItemToShip(Item item) {
+        this.itemsToShip.add(item);
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

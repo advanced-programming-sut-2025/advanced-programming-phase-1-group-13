@@ -1,5 +1,6 @@
 package models;
 
+import models.enums.Quality;
 import models.enums.types.*;
 
 public abstract class Item {
@@ -98,6 +99,18 @@ public abstract class Item {
     public static Item getItemByItemName(String itemName) {
         ItemType itemType = getItemTypeByItemName(itemName);
         return getItemByItemType(itemType);
+    }
+
+    public static Quality getItemQuality(Item item) {
+        if (item instanceof Fish) {
+            return ((Fish) item).getQuality();
+        }
+
+        if (item instanceof AnimalProduct) {
+            return ((AnimalProduct) item).getQuality();
+        }
+
+        return null;
     }
 
     @Override
