@@ -2,6 +2,7 @@ package models;
 
 import com.google.gson.GsonBuilder;
 import models.enums.FriendshipLevel;
+import models.enums.Quality;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
@@ -235,8 +236,17 @@ public class Game {
             }
         }
 
-        // TODO: Empty shipping bins
-
+        for (User player : this.players) {
+            int income = 0;
+            for (ShippingBin shippingBin : player.getFarm().getShippingBins()) {
+                for (Item item : shippingBin.getItemsToShip()) {
+                    income += item.getSellPrice();
+                }
+            }
+            player.changeBalance(income);
+            message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
+                    .append(income).append("g.\n");
+        }
 
         return new Result(true, message.toString());
     }

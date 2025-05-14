@@ -152,6 +152,15 @@ public abstract class Item {
         return null;
     }
 
+    public int getSellPrice() {
+        Quality quality = Item.getItemQuality(this);
+        if (quality == null) {
+            return this.getPrice();
+        }
+
+        return  (int) (quality.getPriceCoefficient() * quality.getPriceCoefficient());
+    }
+
     @Override
     public String toString() {
         return this.name;

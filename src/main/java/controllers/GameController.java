@@ -1079,13 +1079,7 @@ public class GameController {
             shippingBin.addItemToShip(item);
         }
 
-        Quality quality = Item.getItemQuality(item);
-        int price;
-        if (quality == null) {
-            price = count * item.getPrice();
-        } else {
-            price = count * (int) (quality.getPriceCoefficient() * quality.getPriceCoefficient());
-        }
+        int price = item.getPrice() * count;
 
         return new Result(true, "You put " + count + " of " + productName + " in the shipping bin. " +
                 "You will get " + price + "g tomorrow.");
@@ -1549,7 +1543,8 @@ public class GameController {
             npc.startThirdQuestCountdown(player);
         }
 
-        npc.
+        npc.setQuestFinished(true, index);
+        assert rewardItem != null;
         return new Result(true, "You finished quest number " + index + " of " + npcName +
                 ". They gave you " + rewardQuantity + " of " + rewardItem.getName() + " as reward.");
     }
