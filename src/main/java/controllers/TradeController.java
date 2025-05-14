@@ -110,7 +110,56 @@ public class TradeController {
         trade.setAccepted(accepted);
 
         if (accepted) {
-            // TODO: check if both players have the items
+            if (trade instanceof TradeWithMoney) {
+                int price = ((TradeWithMoney) trade).getPrice();
+                if (trade.getRequester().getBalance() >= price) {
+                    Result result = trade.getOfferer().getBackpack()
+                            .removeFromInventory(trade.getItem(), trade.getAmount());
+                    if (!result.success()) {
+                        if (trade.getRequester().equals(player)) {
+                            return new Result(false,
+                                    trade.getRequester().getUsername() + " doesn't have enough of " +
+                                            trade.getItem().getName() + ".");
+                        } else {
+                            return new Result(false, "You don't have enough of " +
+                                    trade.getItem().getName() + ".");
+                        }
+                    }
+                } else {
+                    if (trade.getRequester().equals(player)) {
+                        return new Result(false, "You don't have enough money.");
+                    }
+                    return new Result(false,
+                            trade.getRequester().getUsername() + " doesn't have enough money.");
+                }
+            } else {
+                TradeWithItem tradeWithItem = (TradeWithItem) trade;
+                Result result = trade.getRequester().getBackpack()
+                        .removeFromInventory(tradeWithItem.getTargetItem(), tradeWithItem.getTargetAmount());
+                if (!result.success()) {
+                    if (trade.getRequester().equals(player)) {
+                        return new Result(false, "You don't have enough of " +
+                                        trade.getItem().getName() + ".");
+                    } else {
+                        return new Result(false, trade.getRequester().getUsername() +
+                                "doesn't have enough of " + trade.getItem().getName() + ".");
+                    }
+                }
+
+                result = trade.getOfferer().getBackpack().removeFromInventory(trade.getItem(), trade.getAmount());
+                if (!result.success()) {
+                    trade.getRequester().getBackpack()
+                            .addToInventory(tradeWithItem.getTargetItem(), tradeWithItem.getTargetAmount());
+                    if (trade.getRequester().equals(player)) {
+                        return new Result(false, trade.getRequester().getUsername() +
+                                "doesn't have enough of " + trade.getItem().getName() + ".");
+                    } else {
+                        return new Result(false, "You don't have enough of " +
+                                trade.getItem().getName() + ".");
+                    }
+                }
+            }
+
             game.changeFriendship(player, targetUser, 50);
             return new Result(true, "You have accepted this trade. Your friendship with them is now " +
                     game.getUserFriendship(player, targetUser).toString() + ".");

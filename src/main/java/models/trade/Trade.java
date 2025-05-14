@@ -4,7 +4,7 @@ import models.Game;
 import models.Item;
 import models.User;
 
-public class Trade {
+public abstract class Trade {
     private final int id;
     private final User creator;
     private final User offerer;
