@@ -6,6 +6,7 @@ import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
 import models.enums.types.ShopType;
+import models.trade.Trade;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class Game {
     private final ArrayList<NPC> npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
     private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
+    private ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
     // Each inner HashMap stores the messages and boolean of have they been read by the receiver
 
@@ -35,6 +37,7 @@ public class Game {
 
         this.userFriendships = new HashMap<>();
         this.npcFriendships = new HashMap<>();
+        this.trades = new ArrayList<>();
 
         for (User player : this.players) {
             HashMap<User, Friendship> playerFriendMap = new HashMap<>();
@@ -129,6 +132,14 @@ public class Game {
         return talkHistory;
     }
 
+    public ArrayList<Trade> getTrades() {
+        return trades;
+    }
+
+    public void addTrade(Trade trade) {
+        this.trades.add(trade);
+    }
+
     public void newGame(String username1, String username2, String username3) {
         // TODO
     }
@@ -158,7 +169,6 @@ public class Game {
         }
         saveGameState();
     }
-
 
     public Result changeDay() {
         StringBuilder message = new StringBuilder("A new day has begun. Here are the updates for today:\n");
@@ -199,8 +209,8 @@ public class Game {
                         Result result = player.getBackpack().addToInventory(item, 1);
                         if (result.success()) {
                             assert item != null;
-                            message.append(npc.getName()).append(" has given you a ").append(item.getName() +
-                                    " as a gift!");
+                            message.append(npc.getName()).append(" has given you a ").append(item.getName())
+                                    .append(" as a gift!");
                         }
                     }
                 }
@@ -327,5 +337,14 @@ public class Game {
         }
 
         return false;
+    }
+
+    public Trade getTradeById(int id) {
+        for (Trade trade : this.getTrades()) {
+            if (trade.getId() == id) {
+                return trade;
+            }
+        }
+        return null;
     }
 }

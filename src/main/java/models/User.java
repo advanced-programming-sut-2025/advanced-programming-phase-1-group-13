@@ -12,6 +12,9 @@ import models.inventory.Backpack;
 import models.tools.FishingRod;
 import models.tools.Tool;
 import models.tools.TrashCan;
+import models.trade.Trade;
+import models.trade.TradeWithItem;
+import models.trade.TradeWithMoney;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -60,7 +63,7 @@ public class User {
         this.gender = gender;
         this.numberOfGames = 0;
         this.activeGame = null;
-        this.energy = 200; // TODO: change value if needed
+        this.energy = 200;
         this.farm = new Farm(0); // TODO
         this.backpack = new Backpack(BackpackType.INITIAL); // TODO
         this.position = new Position(0, 0); // TODO
@@ -489,15 +492,33 @@ public class User {
         return null;
     }
 
-    public Result tradeWithMoney(User targetUser, boolean isOffer, Item item, int amount, int price){
-        // TODO
-        return new Result(true, "");
+    public Result tradeWithMoney(User targetUser, boolean isOffer, Item item, int amount, int price) {
+        Trade trade;
+        if (isOffer) {
+            trade = new TradeWithMoney(this.activeGame, this, this, targetUser, item, amount, price);
+        } else {
+            trade = new TradeWithMoney(this.activeGame, this, targetUser, this, item, amount, price);
+        }
+        App.getCurrentGame().addTrade(trade);
+        return new Result(true, "Trade offer created: " + (isOffer ? "Offering" : "Requesting") + " " +
+                item.getName() + "(x" + amount + ") for " + price + "g with " + targetUser.getUsername() + ". " +
+                "Wait for their respond.");
     }
 
     public Result tradeWithItem(User targetUser, boolean isOffer, Item item, int amount,
-                                Item targetItem, int targetAmount){
-        // TODO
-        return new Result(true, "");
+                                Item targetItem, int targetAmount) {
+        Trade trade;
+        if (isOffer) {
+            trade = new TradeWithItem(this.activeGame, this, this, targetUser, item, amount,
+                    targetItem, targetAmount);
+        } else {
+            trade = new TradeWithItem(this.activeGame, this, targetUser, this, item, amount,
+                    targetItem, targetAmount);
+        }
+        App.getCurrentGame().addTrade(trade);
+        return new Result(true, "Trade offer created: " + (isOffer ? "Offering" : "Requesting") + " " +
+                item.getName() + "(x" + amount + ") for " + targetItem.getName() + "(x" + targetAmount + ") with " +
+                targetUser.getUsername() + ". Wait for their respond.");
     }
 
     @Override

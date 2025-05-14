@@ -1,27 +1,34 @@
 package models.trade;
 
+import models.Game;
 import models.Item;
 import models.User;
 
 public class Trade {
     private final int id;
+    private final User creator;
     private final User offerer;
     private final User requester;
     private final Item item;
     private final int amount;
-    private boolean accepted;
+    private Boolean accepted; // null if not answered
 
-    public Trade(User offerer, User requester, Item item, int amount) {
-        this.id = 0; // TODO
+    public Trade(Game game, User creator, User offerer, User requester, Item item, int amount) {
+        this.id = game.getTrades().size() + 1;
+        this.creator = creator;
         this.offerer = offerer;
         this.requester = requester;
         this.item = item;
         this.amount = amount;
-        this.accepted = false;
+        this.accepted = null;
     }
 
     public int getId() {
         return id;
+    }
+
+    public User getCreator() {
+        return creator;
     }
 
     public User getOfferer() {
@@ -40,11 +47,11 @@ public class Trade {
         return amount;
     }
 
-    public boolean isAccepted() {
+    public Boolean isAccepted() {
         return accepted;
     }
 
-    public void setAccepted(boolean accepted) {
+    public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
     }
 }

@@ -1395,6 +1395,7 @@ public class GameController {
     public Result startTrade() {
         App.setCurrentMenu(Menu.TARDE_MENU);
         return new Result(true, "You are now in Trade Menu.");
+        // TODO: show new trade messages
     }
 
     // === NPC === //

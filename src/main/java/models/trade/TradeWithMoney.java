@@ -1,13 +1,14 @@
 package models.trade;
 
+import models.Game;
 import models.Item;
 import models.User;
 
 public class TradeWithMoney extends Trade {
     private final int price;
 
-    public TradeWithMoney(User offerer, User requester, Item item, int amount, int price) {
-        super(offerer, requester, item, amount);
+    public TradeWithMoney(Game game, User creator, User offerer, User requester, Item item, int amount, int price) {
+        super(game, creator, offerer, requester, item, amount);
         this.price = price;
     }
 
