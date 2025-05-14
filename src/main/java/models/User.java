@@ -489,6 +489,17 @@ public class User {
         return null;
     }
 
+    public Result tradeWithMoney(User targetUser, boolean isOffer, Item item, int amount, int price){
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result tradeWithItem(User targetUser, boolean isOffer, Item item, int amount,
+                                Item targetItem, int targetAmount){
+        // TODO
+        return new Result(true, "");
+    }
+
     @Override
     public String toString() {
         return "Username: " + this.username + "\n" +

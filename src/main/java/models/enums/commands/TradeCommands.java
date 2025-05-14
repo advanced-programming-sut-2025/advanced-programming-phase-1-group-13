@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum TradeCommands implements Command {
-    TRADE("^\\s*trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>\\d+)" +
-            "\\s*(?<typeOfTrade>(-p\\s+(?<price>\\d+))|-ti\\s+(?<targetItem>.+)\\s+-ta\\s+(?<targetAmount>\\d+))\\s*$"),
+    TRADE("^\\s*trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>.+)" +
+            "\\s*((-p\\s+(?<price>\\d+))|-ti\\s+(?<targetItem>.+)\\s+-ta\\s+(?<targetAmount>.+))\\s*$"),
     TRADE_LIST("^\\s*trade\\s+list\\s*$"),
     TRADE_RESPONSE("^\\s*trade\\s+response\\s+(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
     TRADE_HISTORY("^\\s*trade\\s+history\\s*$"),
