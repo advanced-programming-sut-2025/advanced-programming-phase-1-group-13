@@ -44,4 +44,3 @@ public class FishingRod extends Tool {
         super.useTool(tile, player);
     }
 }
-

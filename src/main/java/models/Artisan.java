@@ -2,8 +2,6 @@ package models;
 
 import models.enums.types.ArtisanType;
 
-import java.util.ArrayList;
-
 public class Artisan {
     private final ArtisanType type;
     private Item itemPending;

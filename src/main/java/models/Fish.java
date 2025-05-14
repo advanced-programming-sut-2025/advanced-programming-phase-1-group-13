@@ -1,7 +1,6 @@
 package models;
 
 import models.enums.Quality;
-import models.enums.environment.Season;
 import models.enums.types.FishType;
 
 public class Fish extends Item {

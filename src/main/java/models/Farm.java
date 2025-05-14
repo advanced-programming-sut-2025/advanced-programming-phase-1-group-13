@@ -19,17 +19,15 @@ public class Farm {
     private Quarry quarry;
     private ArrayList<Lake> lakes;
     private int cropCount;
-    private ArrayList<Crop> plantedCrops;
-    private ArrayList<Tree> trees;
-    private int mapNumberToFollow;
-    private ArrayList<FarmBuilding> farmBuildings;
-    private int height;
-    private int width;
-    private ArrayList<Artisan> artisans;
+    private final ArrayList<Crop> plantedCrops;
+    private final ArrayList<Tree> trees;
+    private final ArrayList<FarmBuilding> farmBuildings;
+    private final int height;
+    private final int width;
+    private final ArrayList<Artisan> artisans;
     private ArrayList<ShippingBin> shippingBins;
 
     public Farm(int mapNumberToFollow) {
-        this.mapNumberToFollow = mapNumberToFollow;
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
@@ -68,6 +66,10 @@ public class Farm {
         return null;
     }
 
+    public void setCropCount(int cropCount) {
+        this.cropCount = cropCount;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -82,12 +84,10 @@ public class Farm {
 
     public void plant(PlantSource seed, Position position) {
         // TODO
-
     }
 
     public void showPlant(Position position) {
         // TODO
-
     }
 
     public void fertilize(FertilizerType fertilizer, Position position) {

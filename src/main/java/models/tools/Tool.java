@@ -52,22 +52,16 @@ public abstract class Tool extends Item {
 
     public void upgradeTool() {
         this.toolMaterial = switch (toolMaterial) {
-            case BASIC:
-                yield ToolMaterial.COPPER;
-            case COPPER:
-                yield ToolMaterial.IRON;
-            case IRON:
-                yield ToolMaterial.GOLD;
-            case GOLD:
-                yield ToolMaterial.IRIDIUM;
-            case IRIDIUM:
-                yield null;
+            case BASIC -> ToolMaterial.COPPER;
+            case COPPER -> ToolMaterial.IRON;
+            case IRON -> ToolMaterial.GOLD;
+            case GOLD -> ToolMaterial.IRIDIUM;
+            case IRIDIUM -> null;
         };
     }
 
     public void useTool(Tile tile, User player) {
         int energy;
-
     }
 
     @Override

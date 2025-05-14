@@ -9,7 +9,6 @@ import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
-
 public class Scythe extends Tool {
     public Scythe() {
         super(ToolType.SCYTHE);

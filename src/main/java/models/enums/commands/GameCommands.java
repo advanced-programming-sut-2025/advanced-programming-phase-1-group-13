@@ -21,7 +21,8 @@ public enum GameCommands implements Command {
     WALK("^\\s*walk\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
     WALK_CONFIRM("^\\s*walk confirm\\s+(?<yOrN>\\w)\\s*$"),
     PRINT_MAP("^\\s*print\\s+map\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+size\\s+(?<size>\\d+)\\s*$"),
-    PRINT_COLORED_MAP("^\\s*print\\s+colored\\s+map\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+size\\s+(?<size>\\d+)\\s*$"),
+    PRINT_COLORED_MAP("^\\s*print\\s+colored\\s+map\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+size\\s+" +
+            "(?<size>\\d+)\\s*$"),
     HELP_READING_MAP("^\\s*help\\s+reading\\s+map\\s*$"),
     ENERGY_SHOW("^\\s*energy\\s+show\\s*$"),
     CHEAT_ENERGY_SET("^\\s*energy\\s+set\\s+-v\\s+(?<value>\\d+)\\s*$"),
@@ -51,7 +52,8 @@ public enum GameCommands implements Command {
     PET("^\\s*pet\\s+-n\\s+(?<name>.+)\\s*$"),
     CHEAT_SET_FRIENDSHIP("^\\s*cheat\\s+set\\s+friendship\\s+-n\\s+(?<name>.+)\\s+-c\\s+(?<amount>\\d+)\\s*$"),
     ANIMALS("^\\s*animals\\s*$"),
-    SHEPHERD_ANIMALS("^\\s*shepherd\\s+animals\\s+-n\\s+(?<animalName>.+)\\s+-l\\s+(?<x>\\d+)\\s+(?<y>\\d+)\\s*$"),
+    SHEPHERD_ANIMALS("^\\s*shepherd\\s+animals\\s+-n\\s+(?<animalName>.+)\\s+-l\\s+(?<x>\\d+)\\s+" +
+            "(?<y>\\d+)\\s*$"),
     FEED_HAY("^\\s*feed\\s+hay\\s+-n\\s+(?<animalName>.+)\\s*$"),
     PRODUCES("^\\s*produces\\s*$"),
     COLLECT_PRODUCE("^\\s*collect\\s+produce\\s+-n\\s+(?<name>.+)\\s*$"),

@@ -1,23 +1,20 @@
 package models;
 
-import models.enums.environment.Time;
 import models.enums.types.GoodsType;
 import models.enums.types.ShopType;
 import models.enums.types.TileType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Shop {
     private final String name;
     private final ShopType type;
     private final ArrayList<Good> shopInventory;
-    private int balance = 0;
     private final NPC owner;
     private final int startHour;
     private final int endHour;
-    private ArrayList<Tile> shopTiles;
-    private Position position;  // Add position field to track shop location
+    private final ArrayList<Tile> shopTiles;
+    private final Position position;  // Add position field to track shop location
 
     public Shop(ShopType type, Position position, int width, int height) {
         this.type = type;
@@ -84,10 +81,6 @@ public class Shop {
         return null;
     }
 
-    public int getBalance() {
-        return balance;
-    }
-
     public NPC getOwner() {
         return owner;
     }
@@ -95,26 +88,5 @@ public class Shop {
     public boolean isOpen() {
         int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
         return currentHour >= startHour && currentHour <= endHour;
-    }
-
-    public void changeBalance(int amount) {
-        this.balance += amount;
-    }
-
-
-    void addProduct(Item item, int count) {
-        // TODO: Implement
-    }
-
-    void removeProduct(Item item, int count) {
-        // TODO: Implement
-    }
-
-    void sellProduct(Item item, int count) {
-        // TODO: Implement
-    }
-
-    void showAvailableProducts() {
-        // TODO: Implement
     }
 }

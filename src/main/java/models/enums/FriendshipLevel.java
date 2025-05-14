@@ -7,7 +7,7 @@ public enum FriendshipLevel {
     BEST_FRIEND(3),
     MARRIED(4);
 
-    int number;
+    private final int number;
 
     FriendshipLevel(int number) {
         this.number = number;

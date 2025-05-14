@@ -4,7 +4,7 @@ import models.enums.types.FarmBuildingType;
 
 import java.util.ArrayList;
 public class ShippingBin extends FarmBuilding {
-    private ArrayList<Item> itemsToShip;
+    private final ArrayList<Item> itemsToShip;
     private Position position;
 
     public ShippingBin(FarmBuildingType farmBuildingType, Position positionOfUpperLeftCorner) {

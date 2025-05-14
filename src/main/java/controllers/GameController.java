@@ -1549,8 +1549,7 @@ public class GameController {
             npc.startThirdQuestCountdown(player);
         }
 
-
-        assert rewardItem != null;
+        npc.
         return new Result(true, "You finished quest number " + index + " of " + npcName +
                 ". They gave you " + rewardQuantity + " of " + rewardItem.getName() + " as reward.");
     }

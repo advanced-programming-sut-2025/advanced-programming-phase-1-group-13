@@ -4,10 +4,10 @@ import models.enums.Quality;
 import models.enums.types.AnimalProductType;
 
 public class AnimalProduct extends Item {
-    private AnimalProductType type;
-    private int basePrice;
-    private Quality quality;
-    private Animal producerAnimal;
+    private final AnimalProductType type;
+    private final int basePrice;
+    private final Quality quality;
+    private final Animal producerAnimal;
 
     public AnimalProduct(AnimalProductType type, Quality quality, Animal producerAnimal) {
         this.type = type;

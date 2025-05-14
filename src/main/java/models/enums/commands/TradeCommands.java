@@ -9,8 +9,8 @@ public enum TradeCommands implements Command {
     TRADE_LIST("^\\s*trade\\s+list\\s*$"),
     TRADE_RESPONSE("^\\s*trade\\s+response\\s+(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
     TRADE_HISTORY("^\\s*trade\\s+history\\s*$"),
-    EXIT_TRADE_MENU("^\\s*exit\\s+trade\\s+menu\\s*$"),
-    ;
+    EXIT_TRADE_MENU("^\\s*exit\\s+trade\\s+menu\\s*$");
+
     private final String regex;
     private final Pattern pattern;
 

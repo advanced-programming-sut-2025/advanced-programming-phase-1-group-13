@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Craft extends Item {
     private final CraftType craftType;
-    private String name;
+    private final String name;
 
     public Craft(CraftType craftType) {
         this.craftType = craftType;

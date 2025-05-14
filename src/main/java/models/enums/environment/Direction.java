@@ -22,6 +22,18 @@ public enum Direction {
         this.deltaY = deltaY;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public int getDeltaX() {
+        return deltaX;
+    }
+
+    public int getDeltaY() {
+        return deltaY;
+    }
+
     public static Direction getDirectionByDisplayName(String name) {
         if (name == null) {
             return null;
@@ -48,10 +60,9 @@ public enum Direction {
     }
 
     public static Position getNewPosition(Position currentPosition, Direction direction) {
-        Position newPosition = currentPosition;
-        newPosition.addToX(direction.deltaX);
-        newPosition.addToY(direction.deltaY);
-        return newPosition;
+        currentPosition.addToX(direction.deltaX);
+        currentPosition.addToY(direction.deltaY);
+        return currentPosition;
     }
 
 }

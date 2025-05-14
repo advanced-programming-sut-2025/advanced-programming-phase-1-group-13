@@ -2,6 +2,8 @@ package models;
 
 import models.enums.Quality;
 import models.enums.types.*;
+import models.farming.Crop;
+import models.tools.Tool;
 
 public abstract class Item {
     private boolean isSellable;
@@ -92,7 +94,44 @@ public abstract class Item {
     }
 
     public static Item getItemByItemType(ItemType itemType) {
-        // TODO
+        if (itemType instanceof AnimalProductType) {
+            return new AnimalProduct((AnimalProductType) itemType, Quality.NORMAL,
+                    new Animal("", ((AnimalProductType) itemType).getAnimal(), null));
+        }
+
+
+        if (itemType instanceof CraftType) {
+            return new Craft((CraftType) itemType);
+        }
+
+        if (itemType instanceof CropType) {
+            return new Crop((CropType) itemType);
+        }
+
+        if (itemType instanceof FishType) {
+            return new Fish((FishType) itemType, Quality.NORMAL);
+        }
+
+        if (itemType instanceof FoodType) {
+            return new Food((FoodType) itemType);
+        }
+
+        if (itemType instanceof GoodsType) {
+            return new Good((GoodsType) itemType);
+        }
+
+        if (itemType instanceof MaterialType) {
+            return new Material((MaterialType) itemType);
+        }
+
+        if (itemType instanceof MineralType) {
+            return new Mineral(null);
+        }
+
+        if (itemType instanceof ProcessedItemType) {
+            return new ProcessedItem((ProcessedItemType) itemType);
+        }
+
         return null;
     }
 

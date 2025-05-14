@@ -7,14 +7,14 @@ import models.enums.types.AnimalType;
 import java.util.ArrayList;
 
 public class Animal {
-    private String name;
-    private AnimalType animalType;
+    private final String name;
+    private final AnimalType animalType;
     private int friendshipLevel = 0;
     private Time lastFeedingTime;
     private Time lastPettingTime;
     private Time lastProductTime;
     private ArrayList<AnimalProduct> producedProducts = new ArrayList<>();
-    private AnimalLivingSpace animalLivingSpace;
+    private final AnimalLivingSpace animalLivingSpace;
     private boolean isOutside = false;
     private Position position = null;
 

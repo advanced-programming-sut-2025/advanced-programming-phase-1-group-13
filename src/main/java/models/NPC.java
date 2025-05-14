@@ -1,6 +1,5 @@
 package models;
 
-import models.enums.environment.Time;
 import models.enums.types.Dialog;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
@@ -12,21 +11,21 @@ import java.util.HashMap;
 import static models.Item.getItemTypeByItemName;
 
 public class NPC {
-    private NPCType type;
+    private final NPCType type;
     private final String name;
-    private Role role;
-    private ArrayList<String> dialog;
-    private HashMap<HashMap<ItemType, Integer>, // requests
+    private final Role role;
+    private final ArrayList<String> dialog;
+    private final HashMap<HashMap<ItemType, Integer>, // requests
             HashMap<ItemType, Integer> // rewards
             > quests;
-    private ArrayList<ItemType> favorites;
+    private final ArrayList<ItemType> favorites;
     private ArrayList<Dialog> dialogs;
     private Position position;
-    private HashMap<User, Boolean> giftReceivedToday; // TODO: reset every day
-    private HashMap<User, Boolean> talkedToToday; // TODO: reset every day
+    private final HashMap<User, Boolean> giftReceivedToday;
+    private final HashMap<User, Boolean> talkedToToday;
     private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
     private HashMap<User, Boolean> thirdQuestUnlocked;
-    private ArrayList<Boolean> questsFinished;
+    private final ArrayList<Boolean> questsFinished;
 
     public NPC(NPCType type) {
         this.type = type;
@@ -39,6 +38,11 @@ public class NPC {
         this.talkedToToday = new HashMap<>();
         this.daysLeftToUnlockThirdQuest = new HashMap<>();
         this.thirdQuestUnlocked = new HashMap<>();
+        this.questsFinished = new ArrayList<>();
+    }
+
+    public void setQuestFinished(Boolean value, int index) {
+        this.questsFinished.set(index, value);
     }
 
     public NPCType getType() {

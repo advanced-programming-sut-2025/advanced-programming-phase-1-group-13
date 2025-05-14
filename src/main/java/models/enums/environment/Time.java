@@ -37,7 +37,7 @@ public class Time {
 
     }
 
-    public static Time cheatAdvanceTime(int hourIncrease, Time currentTime) {
+    public static void cheatAdvanceTime(int hourIncrease, Time currentTime) {
         if (hourIncrease < 0) {
             throw new IllegalArgumentException("Cannot advance time by negative hours");
         }
@@ -60,13 +60,12 @@ public class Time {
         newTime.hour = Math.max(9, totalHours);  // Ensure minimum 9 AM
 
         if (daysToAdvance > 0) {
-            return cheatAdvanceDate(daysToAdvance, newTime);
+            cheatAdvanceDate(daysToAdvance, newTime);
         }
 
-        return newTime;
     }
 
-    public static Time cheatAdvanceDate(int dayIncrease, Time currentTime) {
+    public static void cheatAdvanceDate(int dayIncrease, Time currentTime) {
         if (dayIncrease < 0) {
             throw new IllegalArgumentException("Cannot advance date by negative days");
         }
@@ -92,7 +91,6 @@ public class Time {
             remainingDays--;
         }
 
-        return currentTime;
     }
 
     public static boolean areInSameDay(Time time1, Time time2) {
@@ -103,7 +101,37 @@ public class Time {
     }
 
     public static int differenceInDays(Time time1, Time time2) {
-        // TODO
-        return -1;
+        if (time1.year > time2.year ||
+                (time1.year == time2.year && time1.season.ordinal() > time2.season.ordinal()) ||
+                (time1.year == time2.year && time1.season == time2.season &&
+                        time1.month.ordinal() > time2.month.ordinal()) ||
+                (time1.year == time2.year && time1.season == time2.season && time1.month == time2.month &&
+                        time1.dayInMonth > time2.dayInMonth)) {
+            Time temp = time1;
+            time1 = time2;
+            time2 = temp;
+        }
+
+        int daysDifference = 0;
+
+        while (!areInSameDay(time1, time2)) {
+            time1.dayInMonth++;
+            daysDifference++;
+
+            if (time1.dayInMonth > time1.month.getDaysInSeason()) {
+                time1.dayInMonth = 1;
+                time1.month = time1.month.next();
+
+                if (time1.month == Month.getFirstMonthOfSeason(time1.season)) {
+                    time1.season = time1.season.next();
+
+                    if (time1.season == Season.SPRING) {
+                        time1.year++;
+                    }
+                }
+            }
+        }
+
+        return daysDifference;
     }
 }

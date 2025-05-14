@@ -10,8 +10,6 @@ import models.enums.types.ToolType;
 
 import java.util.HashMap;
 
-import static models.tools.Pickaxe.the54321EnergyPattern;
-
 public class Hoe extends Tool {
 
     public Hoe() {

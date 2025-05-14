@@ -20,7 +20,7 @@ public class Game {
     private final ArrayList<NPC> npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
     private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
-    private ArrayList<Trade> trades;
+    private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
     // Each inner HashMap stores the messages and boolean of have they been read by the receiver
 
@@ -158,9 +158,12 @@ public class Game {
     }
 
     public void nextTurn(String callerUsername) {
-        // TODO: show unread messages when starting new turn
         // TODO: call changeDay() here if day has changed
         for (User player : this.players) {
+            // TODO: show unread messages when starting new turn
+
+
+
             for (Artisan artisan : player.getFarm().getArtisans()) {
                 if (artisan.getItemPending() != null) {
                     artisan.setTimeLeft(Math.max(artisan.getTimeLeft() - 1, 0));
@@ -233,6 +236,7 @@ public class Game {
         }
 
         // TODO: Empty shipping bins
+
 
         return new Result(true, message.toString());
     }

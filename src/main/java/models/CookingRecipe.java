@@ -20,7 +20,6 @@ public class CookingRecipe extends Item {
         this.buffDurationInHours = foodType.getBuff().getBuffDurationInHours();
     }
 
-
     public int getEnergyOfFood() {
         return energyOfFood;
     }
@@ -43,6 +42,18 @@ public class CookingRecipe extends Item {
 
     public FoodType getFoodType() {
         return foodType;
+    }
+
+    public void setEnergyOfFood(int energyOfFood) {
+        this.energyOfFood = energyOfFood;
+    }
+
+    public void setSellPrice(int sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public void setBuffDurationInHours(int buffDurationInHours) {
+        this.buffDurationInHours = buffDurationInHours;
     }
 
     public static CookingRecipe getCookingRecipe(String foodName) {

@@ -2,8 +2,6 @@ package models;
 
 import models.enums.types.GoodsType;
 
-import java.util.HashMap;
-
 public class Good extends Item {
     private final GoodsType type;
     private int numberSoldToUsersToday;

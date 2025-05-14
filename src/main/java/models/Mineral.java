@@ -11,7 +11,6 @@ public class Mineral extends Item implements ForagingStuff {
     public Mineral(Position position) {
     }
 
-
     @Override
     public void generate() {
 

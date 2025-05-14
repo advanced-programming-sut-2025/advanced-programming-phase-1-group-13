@@ -17,6 +17,10 @@ public class Backpack extends Inventory {
         return this.type;
     }
 
+    public void setType(BackpackType type) {
+        this.type = type;
+    }
+
     @Override
     public HashMap<Item, Integer> getItems() {
         return super.getItems();

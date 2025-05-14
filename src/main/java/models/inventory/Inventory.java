@@ -37,7 +37,7 @@ public abstract class Inventory {
     }
 
     public void CheatAddToInventory(Item item, int n) {
-        // TODO
+        this.addToInventory(item, n);
     }
 
     public int getCapacity() {

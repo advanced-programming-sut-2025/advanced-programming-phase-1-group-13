@@ -16,4 +16,20 @@ public class CraftRecipe extends Item {
             default -> 0;
         };
     }
+
+    public String getNameOfCraft() {
+        return nameOfCraft;
+    }
+
+    public int getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(int sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public CraftType getCraftType() {
+        return craftType;
+    }
 }

@@ -124,7 +124,7 @@ public class TradeController {
                 if (!result.success()) {
                     if (trade.getRequester().equals(player)) {
                         return new Result(false, "You don't have enough of " +
-                                        trade.getItem().getName() + ".");
+                                trade.getItem().getName() + ".");
                     } else {
                         return new Result(false, trade.getRequester().getUsername() +
                                 "doesn't have enough of " + trade.getItem().getName() + ".");

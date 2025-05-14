@@ -1,8 +1,6 @@
 package models;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import models.enums.types.MineralType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
 import models.enums.types.TileType;
@@ -15,17 +13,17 @@ import java.util.Random;
 public final class GameMap {
     private static final int MAP_SIZE = 80;
     private static final int CABIN_SIZE = 10;
-    private ArrayList<Farm> farms;
-    private ArrayList<Shop> shops;
-    private int mapNumber;
+    private final ArrayList<Farm> farms;
+    private final ArrayList<Shop> shops;
+    private final int mapNumber;
     private Lake lake;
     private Greenhouse greenhouse;
     private Cabin cabin;
     private Quarry quarry;
-    private ArrayList<Tree> trees;
-    private ArrayList<Mineral> stones;
-    private ArrayList<Tile> woodLogs;
-    private ArrayList<ForagingCrop> foragings;
+    private final ArrayList<Tree> trees;
+    private final ArrayList<Mineral> stones;
+    private final ArrayList<Tile> woodLogs;
+    private final ArrayList<ForagingCrop> foragings;
     private transient Random random = new Random();
     private static ArrayList<Tile> allTiles;
 
@@ -37,6 +35,7 @@ public final class GameMap {
         this.trees = new ArrayList<>();
         this.stones = new ArrayList<>();
         this.foragings = new ArrayList<>();
+        this.woodLogs = new ArrayList<>();
 
         generateFixedElements();
         generateRandomElements();
@@ -58,7 +57,7 @@ public final class GameMap {
             this.quarry = generateQuarry(20, 50, 10, 15);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 8, 5);
-            this.cabin = generateCabin(10, 70);
+            this.cabin = generateCabin(10, 71);
             this.greenhouse = generateGreenhouse(70, 10, 4, 3);
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
@@ -73,6 +72,9 @@ public final class GameMap {
         }
     }
 
+    public ArrayList<Tile> getWoodLogs() {
+        return woodLogs;
+    }
 
     private void generateRandomElements() {
         int treeCount = 40 + random.nextInt(11);
@@ -135,6 +137,17 @@ public final class GameMap {
 
     private Lake generateLake(int x, int y, int width, int height) {
         Lake lake = new Lake();
+        lake.setTiles(generateTilePositions(x, y, width, height));
+        return lake;
+    }
+
+    private Cabin generateCabin(int x, int y) {
+        Cabin cabin = new Cabin();
+        cabin.setTiles(generateTilePositions(x, y, CABIN_SIZE, CABIN_SIZE));
+        return cabin;
+    }
+
+    private ArrayList<Position> generateTilePositions(int x, int y, int width, int height) {
         ArrayList<Position> tiles = new ArrayList<>();
 
         for (int i = x; i < x + width; i++) {
@@ -143,24 +156,8 @@ public final class GameMap {
             }
         }
 
-        lake.setTiles(tiles);
-        return lake;
+        return tiles;
     }
-
-    private Cabin generateCabin(int x, int y) {
-        Cabin cabin = new Cabin();
-        ArrayList<Position> tiles = new ArrayList<>();
-
-        for (int i = x; i < x + CABIN_SIZE; i++) {
-            for (int j = y; j < y + CABIN_SIZE; j++) {
-                tiles.add(new Position(i, j));
-            }
-        }
-
-        cabin.setTiles(tiles);
-        return cabin;
-    }
-
 
     private Greenhouse generateGreenhouse(int x, int y, int width, int height) {
         Greenhouse greenhouse = new Greenhouse();

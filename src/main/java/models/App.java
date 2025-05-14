@@ -98,7 +98,6 @@ public class App {
         }
     }
 
-
     public static User getUserByUsername(String username) {
         if (App.users.isEmpty()) {
             return null;
