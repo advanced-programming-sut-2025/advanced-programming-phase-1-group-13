@@ -1,7 +1,6 @@
 package views;
 
 import controllers.TradeController;
-import models.enums.commands.GameCommands;
 import models.enums.commands.TradeCommands;
 
 import java.util.Scanner;

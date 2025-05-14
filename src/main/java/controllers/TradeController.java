@@ -1,13 +1,31 @@
 package controllers;
 
 import models.App;
+import models.Game;
 import models.Result;
+import models.User;
 import models.enums.Menu;
 
 public class TradeController {
     public Result trade(String username, String typeStr, String itemName, String amountStr, String priceStr,
                         String targetItemName, String targetAmountStr) {
-        // TODO
+        Game game = App.getCurrentGame();
+        User player = App.getLoggedIn();
+        User targetUser = game.getPlayerByUsername(username);
+        if (targetUser == null) {
+            return new Result(false, "User not found.");
+        }
+
+        if (targetUser.equals(player)) {
+            return new Result(false, "You can't trade with yourself.");
+        }
+
+        if (!amountStr.matches("\\d+")) {
+            return new Result(false, "Invalid amount.");
+        }
+
+        int amount = Integer.parseInt(amountStr);
+
         return new Result(true, "");
     }
 
