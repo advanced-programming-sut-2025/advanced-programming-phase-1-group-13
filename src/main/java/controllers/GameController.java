@@ -13,6 +13,7 @@ import models.tools.MilkPail;
 import models.tools.Shear;
 import models.tools.Tool;
 import models.enums.environment.*;
+import models.trade.Trade;
 
 import java.util.*;
 
@@ -1394,8 +1395,17 @@ public class GameController {
 
     public Result startTrade() {
         App.setCurrentMenu(Menu.TARDE_MENU);
-        return new Result(true, "You are now in Trade Menu.");
-        // TODO: show new trade messages
+
+        User player = App.getLoggedIn();
+        StringBuilder message = new StringBuilder("You are now in Trade Menu.\n\nNew Trade requests and offers:");
+        for (Trade trade : App.getCurrentGame().getTrades()) {
+            if (!trade.getCreator().equals(player) &&
+                    (trade.getRequester().equals(player) || trade.getOfferer().equals(player))) {
+                message.append(trade.toString());
+                trade.setSeen(true);
+            }
+        }
+        return new Result(true, message.toString());
     }
 
     // === NPC === //

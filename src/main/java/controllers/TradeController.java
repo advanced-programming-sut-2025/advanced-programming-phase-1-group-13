@@ -160,17 +160,21 @@ public class TradeController {
     public Result showTradeHistory() {
         User player = App.getLoggedIn();
 
-        StringBuilder message = new StringBuilder("Trade History:\n" +
-                "---------------------------------------------------------------------\n" +
-                "    Trades Submitted by You:\n");
+        StringBuilder message = new StringBuilder("""
+                Trade History:
+                ---------------------------------------------------------------------
+                    Trades Submitted by You:
+                """);
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (trade.getCreator().equals(player)) {
                 message.append("    ").append(trade.toString());
             }
         }
 
-        message.append("---------------------------------------------------------------------\n" +
-                "    Trades accepted by You:\n");
+        message.append("""
+                ---------------------------------------------------------------------
+                    Trades accepted by You:
+                """);
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (!trade.getCreator().equals(player) && trade.isAccepted()) {
                 message.append("    ").append(trade.toString());

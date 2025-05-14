@@ -13,6 +13,7 @@ public abstract class Trade {
     private final Item item;
     private final int amount;
     private Boolean accepted; // null if not answered
+    private boolean seen;
 
     public Trade(Game game, User creator, User offerer, User requester, Item item, int amount) {
         this.id = game.getTrades().size() + 1;
@@ -22,6 +23,7 @@ public abstract class Trade {
         this.item = item;
         this.amount = amount;
         this.accepted = null;
+        this.seen = false;
     }
 
     public int getId() {
@@ -54,6 +56,14 @@ public abstract class Trade {
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
     }
 
     @Override
