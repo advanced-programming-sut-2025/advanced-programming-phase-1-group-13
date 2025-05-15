@@ -8,6 +8,9 @@ import models.enums.Skill;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
 import models.farming.Crop;
+import models.inventory.Backpack;
+import models.inventory.Inventory;
+import models.inventory.Refrigerator;
 import models.tools.FishingRod;
 import models.tools.MilkPail;
 import models.tools.Shear;
@@ -208,12 +211,12 @@ public class GameController {
         User player = App.getLoggedIn();
         ItemType itemType = Item.getItemTypeByItemName(itemName);
         Item item = Item.getItemByItemType(itemType);
-        if (!canCraftResult((CraftType) itemType).success()) {
-            return canCraftResult((CraftType) itemType);
-        }
         CraftType craftType = CraftType.getCraftByName(itemName);
         if (craftType == null) {
             return new Result(false, "Item not found.");
+        }
+        if (!canCraftResult((CraftType) itemType).success()) {
+            return canCraftResult((CraftType) itemType);
         }
 
         HashMap<IngredientType, Integer> ingredients = craftType.getIngredients();
@@ -248,7 +251,6 @@ public class GameController {
 
     public Result prepareCook(String foodName) { // todo: check refrigerator or backpack?
         User player = App.getLoggedIn();
-        assert getTileByPosition(player.getPosition()) != null;
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
         }
@@ -262,9 +264,91 @@ public class GameController {
             return new Result(false, canCookResult(cookingRecipe).message());
         }
 
-        Food food = new Food(cookingRecipe);
-        // todo: add to refrigerator or backpack?
-        return new Result(true, "Yummy! Your meal is ready.");
+        Backpack backpack = player.getBackpack();
+        Refrigerator homeRefrigerator = player.getFarm().getCabin().getRefrigerator();
+        Result result = removeIngredientsFromInventories(
+                homeRefrigerator,
+                backpack,
+                cookingRecipe.getFoodType().getIngredients());
+        homeRefrigerator.addToInventory(new Food(cookingRecipe), 1);
+        return new Result(true, "Yummy! Your fresh " + foodName + " added to the refrigerator.");
+    }
+
+    private Result canCookResult(CookingRecipe givenRecipe) {
+        User player = App.getLoggedIn();
+        Backpack backpack = player.getBackpack();
+        Refrigerator homeRefrigerator = player.getFarm().getCabin().getRefrigerator();
+        Refrigerator combinedInventory = new Refrigerator();
+
+        backpack.getItems().forEach(combinedInventory::addToInventory);
+        homeRefrigerator.getItems().forEach(combinedInventory::addToInventory);
+
+        if (
+//                !backpack.isCapacityUnlimited() &&
+//                backpack.getCapacity() <= backpack.getItems().size() &&
+                !homeRefrigerator.isCapacityUnlimited() &&
+                        homeRefrigerator.getCapacity() <= backpack.getItems().size()
+        ) {
+            return new Result(false, "Your refrigerator is full.");
+        }
+        boolean hasLearntRecipe = false;
+        for (CookingRecipe recipe : player.getLearntCookingRecipes()) {
+            if (recipe.getFoodType() == givenRecipe.getFoodType()) {
+                hasLearntRecipe = true;
+                break;
+            }
+        }
+        if (!hasLearntRecipe) {
+            return new Result(false, "You haven't learnt the recipe for this food.");
+        }
+
+        for (Map.Entry<IngredientType, Integer> entry : givenRecipe.getFoodType().getIngredients().entrySet()) {
+            IngredientType ingredientType = entry.getKey();
+            int requiredAmount = entry.getValue();
+
+            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, combinedInventory)) {
+                return new Result(false, "You don't have enough " + ingredientType.getName());
+            }
+        }
+        return new Result(true, "");
+    }
+
+    private Result removeIngredientsFromInventories(
+            Refrigerator refrigerator,
+            Backpack backpack,
+            HashMap<IngredientType, Integer> neededIngredients
+    ) {
+        HashMap<Item, Boolean> enoughItemInRefrigerator = new HashMap<>();
+        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
+            Item ingredientItem = Item.getItemByItemType(entry.getKey());
+            int requiredAmount = entry.getValue();
+            if (!refrigerator.getItems().containsKey(ingredientItem) && !backpack.getItems().containsKey(ingredientItem)) {
+                return new Result(false, "You don't have " + ingredientItem.getName() + " at all.");
+            }
+            if (refrigerator.getItems().get(ingredientItem) + backpack.getItems().get(ingredientItem) < requiredAmount) {
+                return new Result(false, "You don't have enough " + ingredientItem.getName() + ".");
+            }
+            enoughItemInRefrigerator.put(ingredientItem, refrigerator.getItems().get(ingredientItem) >= requiredAmount);
+        }
+        for (ItemType itemType : neededIngredients.keySet()) {
+            Item ingredientItem = Item.getItemByItemType(itemType);
+            int requiredAmount = neededIngredients.get(itemType);
+            if (enoughItemInRefrigerator.get(ingredientItem)) {
+                refrigerator.removeFromInventory(ingredientItem, requiredAmount);
+            } else {
+                int neededAmountFromBackpack = requiredAmount - refrigerator.getItems().get(ingredientItem);
+                refrigerator.removeFromInventory(ingredientItem, null);
+                backpack.removeFromInventory(ingredientItem, neededAmountFromBackpack);
+            }
+        }
+        return new Result(true, "");
+    }
+
+    private boolean hasEnoughOfThatItem(Item specificItem, int requiredAmount, Inventory inventory) {
+        if (!inventory.getItems().containsKey(specificItem)) {
+            return false;
+        }
+        return inventory.getItems().get(specificItem) >= requiredAmount;
     }
 
     public Result eat(String foodName) {
@@ -279,29 +363,24 @@ public class GameController {
     }
 
     private Result canCraftResult(CraftType craftType) {
+        CraftRecipe recipe = new CraftRecipe(craftType);
         User player = App.getLoggedIn();
         if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
             return new Result(false, "Your backpack is full.");
+        } else if (player.getLearntCraftRecipes() == null ||
+                player.getLearntCraftRecipes().isEmpty() ||
+                !player.getLearntCraftRecipes().contains(recipe)) {
+            return new Result(false, "You should learn the recipe first.");
         }
-//        else if () {
-//            // TODO: check if we know the recipe, return false if not.
-//            return new Result(false, "You should learn the recipe first.");
-//        } else if () {
-//            // TODO: check if we have the ingredients, return false if not.
-//            return new Result(false, "You don't have the necessary ingredients.");
-//        }
-        return new Result(true, "");
-    }
+        HashMap<IngredientType, Integer> neededIngredients = craftType.getIngredients();
+        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
+            IngredientType ingredientType = entry.getKey();
+            int requiredAmount = entry.getValue();
 
-    private Result canCookResult(CookingRecipe cookingRecipe) {
-        // TODO: check if inventory is full; if so, return false.
-        User player = App.getLoggedIn();
-        if (!player.getBackpack().isCapacityUnlimited() &&
-                player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
-            return new Result(false, "Your refrigerator is full.");
+            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
+                return new Result(false, "You don't have enough " + ingredientType.getName());
+            }
         }
-        // TODO: check if we know the recipe, return false if not.
-        // TODO: check if we have the ingredients, return false if not.
         return new Result(true, "");
     }
 
@@ -353,7 +432,6 @@ public class GameController {
 
     private Tile getTileByPosition(Position position) {
         // TODO: loop (the entire map) and return the tile whose position equals "position".
-
         return null;
     }
 
