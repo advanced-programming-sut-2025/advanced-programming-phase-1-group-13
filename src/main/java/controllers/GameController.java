@@ -8,6 +8,7 @@ import models.enums.Skill;
 import models.enums.types.*;
 import models.enums.types.FarmBuildingType;
 import models.farming.Crop;
+import models.farming.PlantSource;
 import models.inventory.Backpack;
 import models.inventory.Inventory;
 import models.inventory.Refrigerator;
@@ -249,7 +250,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result prepareCook(String foodName) { // todo: check refrigerator or backpack?
+    public Result prepareCook(String foodName) {
         User player = App.getLoggedIn();
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
@@ -507,7 +508,7 @@ public class GameController {
 
     public Result cheatThor(String x, String y) {
         Position position = new Position(Integer.parseInt(x), Integer.parseInt(y));
-        // TODO
+        // TODO: cheat Thor
         return new Result(true, "");
     }
 
@@ -517,7 +518,7 @@ public class GameController {
     }
 
     public Result showWeatherForecast() {
-        // TODO
+        // TODO: show weather forecast
         return new Result(true, "");
     }
 
@@ -549,20 +550,21 @@ public class GameController {
     // === PLANTS === //
 
     public Result plant(String seedName, String directionName) {
-        Seed seed = Seed.getSeedByName(seedName);
+        SeedType seedType = SeedType.getSeedByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         Tile tile = neighborTile(direction);
         if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-        // TODO
-        return new Result(true, "");
+        tile.setType(TileType.PLANTED_SEED);
+        tile.pLaceItemOnTile(new PlantSource(seedType));
+        return new Result(true, seedName + " planted in position: " + tile.getPosition().toString());
     }
 
     public Result showPlant(String xString, String yString) {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
         Tile tile = getTileByPosition(position);
-        // TODO
+        // TODO: show plant
         return new Result(true, "");
     }
 
