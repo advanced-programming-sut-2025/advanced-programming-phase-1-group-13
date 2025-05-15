@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands implements Command {
-    EXIT_GAME("^\\s*exit\\s+game\\s*$"),
     NEXT_TURN("^\\s*next\\s+turn\\s*$"),
     TIME("^\\s*time\\s*$"),
     DATE("^\\s*date\\s*$"),
@@ -86,8 +85,8 @@ public enum GameCommands implements Command {
 
 
     // TODO: complete these commands below:
-    THROW_ITEM_TO_TRASH(" <itemName> <number>") // number is optional (it's ok to get nothing (null). check controller.
-
+    THROW_ITEM_TO_TRASH(" <itemName> <number>"), // number is optional (it's ok to get nothing (null). check controller.
+    EXIT_GAME("^\\s*exit\\s+game\\s*$")
     ;
     private final String regex;
     private final Pattern pattern;

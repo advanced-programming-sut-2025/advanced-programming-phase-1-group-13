@@ -52,18 +52,95 @@
           "price": 0
         },
         "hasTalkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "exchangedGiftToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "hasHuggedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "exchangedFlowerToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "marriageRequests": [],
+        "isDepressed": false
+      },
+      {
+        "username": "farrokhi",
+        "password": "AbanAban3",
+        "nickname": "far",
+        "email": "farrokhi@gmail.com",
+        "gender": "RATHER_NOT_SAY",
+        "energy": 200,
+        "isEnergyUnlimited": false,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "hashedPassword": "3634b05fbaf899d0097479b296f7eeb26236ddc65434e94723848176f9a1501b",
+        "skillLevels": {
+          "FARMING": "LEVEL_ZERO",
+          "FORAGING": "LEVEL_ZERO",
+          "MINING": "LEVEL_ZERO",
+          "FISHING": "LEVEL_ZERO"
+        },
+        "learntCraftRecipes": [],
+        "learntCookingRecipes": [],
+        "qAndA": {
+          "null": "Earth"
+        },
+        "farm": {
+          "cropCount": 0,
+          "plantedCrops": [],
+          "trees": [],
+          "farmBuildings": [],
+          "height": 8,
+          "width": 8,
+          "artisans": []
+        },
+        "backpack": {
+          "type": "INITIAL",
+          "capacity": 12,
+          "isCapacityUnlimited": false,
+          "items": {}
+        },
+        "gifts": [],
+        "balance": 0.0,
+        "mostEarnedMoney": 0,
+        "numberOfGames": 0,
+        "trashCan": {
+          "toolType": "TRASH_CAN",
+          "toolMaterial": "BASIC",
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        "hasTalkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedGiftToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "hasHuggedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedFlowerToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
@@ -121,20 +198,24 @@
           "price": 0
         },
         "hasTalkedToToday": {
-          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "exchangedGiftToday": {
-          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "hasHuggedToday": {
-          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "exchangedFlowerToday": {
-          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "marriageRequests": [],
         "isDepressed": false
@@ -190,20 +271,24 @@
           "price": 0
         },
         "hasTalkedToToday": {
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "exchangedGiftToday": {
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "hasHuggedToday": {
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "exchangedFlowerToday": {
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "marriageRequests": [],
         "isDepressed": false
@@ -214,48 +299,6 @@
       "shops": [],
       "mapNumber": 0,
       "trees": [
-        {
-          "numOfStages": 0,
-          "totalHarvestTime": 0,
-          "baseSellPrice": 0,
-          "isEdible": false,
-          "energy": 0,
-          "canBecomeGiant": false,
-          "isGiant": false,
-          "fruitHarvestCycle": 0,
-          "isBurnt": false,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "numOfStages": 0,
-          "totalHarvestTime": 0,
-          "baseSellPrice": 0,
-          "isEdible": false,
-          "energy": 0,
-          "canBecomeGiant": false,
-          "isGiant": false,
-          "fruitHarvestCycle": 0,
-          "isBurnt": false,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "numOfStages": 0,
-          "totalHarvestTime": 0,
-          "baseSellPrice": 0,
-          "isEdible": false,
-          "energy": 0,
-          "canBecomeGiant": false,
-          "isGiant": false,
-          "fruitHarvestCycle": 0,
-          "isBurnt": false,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
         {
           "numOfStages": 0,
           "totalHarvestTime": 0,
@@ -889,129 +932,113 @@
           "isSellable": false,
           "isPurchasable": false,
           "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
-        },
-        {
-          "sellPrice": 0,
-          "isSellable": false,
-          "isPurchasable": false,
-          "price": 0
         }
       ],
       "woodLogs": [
         {
           "type": "WOOD_LOG",
           "position": {
-            "x": 43,
-            "y": 58
+            "x": 41,
+            "y": 8
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
-            "x": 43,
-            "y": 22
-          }
-        },
-        {
-          "type": "WOOD_LOG",
-          "position": {
-            "x": 23,
-            "y": 20
+            "x": 17,
+            "y": 0
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
             "x": 64,
-            "y": 28
-          }
-        },
-        {
-          "type": "WOOD_LOG",
-          "position": {
-            "x": 39,
             "y": 33
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
-            "x": 39,
-            "y": 31
+            "x": 29,
+            "y": 54
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
-            "x": 42,
-            "y": 55
+            "x": 28,
+            "y": 74
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 38,
+            "y": 2
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 62,
+            "y": 78
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 59,
+            "y": 57
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 26,
+            "y": 63
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 65,
+            "y": 26
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 26,
+            "y": 10
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
             "x": 43,
-            "y": 56
+            "y": 16
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
-            "x": 24,
-            "y": 35
+            "x": 64,
+            "y": 57
           }
         },
         {
           "type": "WOOD_LOG",
           "position": {
-            "x": 4,
-            "y": 43
+            "x": 38,
+            "y": 16
           }
         }
       ],
       "foragings": [
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        },
         {
           "isAlsoStandardCrop": false,
           "isMixedSeed": false
@@ -1053,20 +1080,23 @@
         "quests": {},
         "favorites": [],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1078,20 +1108,23 @@
         "quests": {},
         "favorites": [],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1103,20 +1136,23 @@
         "quests": {},
         "favorites": [],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1126,7 +1162,7 @@
         "role": "SHOPKEEPER",
         "dialog": [],
         "quests": {
-          "{IRON_BAR\u003d10, WOOD\u003d1000}": {
+          "{WOOD\u003d1000, IRON_BAR\u003d10}": {
             "COIN": 25000,
             "GOLD_COIN": 1000,
             "BEE_HOUSE": 3
@@ -1138,20 +1174,23 @@
           "IRON_BAR"
         ],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1163,20 +1202,23 @@
         "quests": {},
         "favorites": [],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1188,20 +1230,23 @@
         "quests": {},
         "favorites": [],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1213,20 +1258,23 @@
         "quests": {},
         "favorites": [],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1237,8 +1285,8 @@
         "dialog": [],
         "quests": {
           "{PUMPKIN_PIE\u003d1, IRON\u003d50, STONE\u003d150}": {
-            "DIAMOND": 2,
             "QUARTZ": 50,
+            "DIAMOND": 2,
             "GOLD_COIN": 5000
           }
         },
@@ -1248,20 +1296,23 @@
           "PIZZA"
         ],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1271,7 +1322,7 @@
         "role": "VILLAGER",
         "dialog": [],
         "quests": {
-          "{GOLD_BAR\u003d1, WHEAT\u003d50, PUMPKIN\u003d1}": {
+          "{WHEAT\u003d50, PUMPKIN\u003d1, GOLD_BAR\u003d1}": {
             "null": 0,
             "WATERING_CAN": 1,
             "GOLD_COIN": 500
@@ -1283,20 +1334,23 @@
           "COFFEE"
         ],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1308,8 +1362,8 @@
         "quests": {
           "{null\u003d1, SALMON\u003d1, WINE\u003d1}": {
             "null": 1,
-            "GOLD_COIN": 750,
-            "SALAD": 5
+            "SALAD": 5,
+            "GOLD_COIN": 750
           }
         },
         "favorites": [
@@ -1318,20 +1372,23 @@
           "WINE"
         ],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       },
@@ -1353,110 +1410,160 @@
           "WINE"
         ],
         "giftReceivedToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "talkedToToday": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "daysLeftToUnlockThirdQuest": {},
         "thirdQuestUnlocked": {
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false,
           "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
-          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
         },
         "questsFinished": []
       }
     ],
     "userFriendships": {
-      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
-        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
-          "level": "STRANGER",
-          "currentXP": 0
-        },
+      "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
         "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
           "level": "STRANGER",
           "currentXP": 0
-        }
-      },
-      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        },
         "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
           "level": "STRANGER",
           "currentXP": 0
         },
-        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
           "level": "STRANGER",
           "currentXP": 0
         }
       },
       "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
         "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
           "level": "STRANGER",
           "currentXP": 0
         },
         "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        }
+      },
+      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        }
+      },
+      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
           "level": "STRANGER",
           "currentXP": 0
         }
       }
     },
     "npcFriendships": {
-      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
-        "models.NPC@57e1b0c": 0,
-        "models.NPC@305fd85d": 0,
-        "models.NPC@2781e022": 0,
-        "models.NPC@704a52ec": 0,
-        "models.NPC@4493d195": 0,
-        "models.NPC@1877ab81": 0,
-        "models.NPC@6ee52dcd": 0,
-        "models.NPC@4232c52b": 0,
-        "models.NPC@e320068": 0,
-        "models.NPC@1f57539": 0,
-        "models.NPC@76f2b07d": 0
-      },
-      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
-        "models.NPC@57e1b0c": 0,
-        "models.NPC@305fd85d": 0,
-        "models.NPC@2781e022": 0,
-        "models.NPC@704a52ec": 0,
-        "models.NPC@4493d195": 0,
-        "models.NPC@1877ab81": 0,
-        "models.NPC@6ee52dcd": 0,
-        "models.NPC@4232c52b": 0,
-        "models.NPC@e320068": 0,
-        "models.NPC@1f57539": 0,
-        "models.NPC@76f2b07d": 0
+      "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "models.NPC@34cd072c": 0,
+        "models.NPC@1563da5": 0,
+        "models.NPC@ea1a8d5": 0,
+        "models.NPC@2bbf4b8b": 0,
+        "models.NPC@11438d26": 0,
+        "models.NPC@7a1ebcd8": 0,
+        "models.NPC@528931cf": 0,
+        "models.NPC@30a3107a": 0,
+        "models.NPC@33c7e1bb": 0,
+        "models.NPC@458c1321": 0,
+        "models.NPC@5faeada1": 0
       },
       "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
-        "models.NPC@57e1b0c": 0,
-        "models.NPC@305fd85d": 0,
-        "models.NPC@2781e022": 0,
-        "models.NPC@704a52ec": 0,
-        "models.NPC@4493d195": 0,
-        "models.NPC@1877ab81": 0,
-        "models.NPC@6ee52dcd": 0,
-        "models.NPC@4232c52b": 0,
-        "models.NPC@e320068": 0,
-        "models.NPC@1f57539": 0,
-        "models.NPC@76f2b07d": 0
+        "models.NPC@34cd072c": 0,
+        "models.NPC@1563da5": 0,
+        "models.NPC@ea1a8d5": 0,
+        "models.NPC@2bbf4b8b": 0,
+        "models.NPC@11438d26": 0,
+        "models.NPC@7a1ebcd8": 0,
+        "models.NPC@528931cf": 0,
+        "models.NPC@30a3107a": 0,
+        "models.NPC@33c7e1bb": 0,
+        "models.NPC@458c1321": 0,
+        "models.NPC@5faeada1": 0
+      },
+      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+        "models.NPC@34cd072c": 0,
+        "models.NPC@1563da5": 0,
+        "models.NPC@ea1a8d5": 0,
+        "models.NPC@2bbf4b8b": 0,
+        "models.NPC@11438d26": 0,
+        "models.NPC@7a1ebcd8": 0,
+        "models.NPC@528931cf": 0,
+        "models.NPC@30a3107a": 0,
+        "models.NPC@33c7e1bb": 0,
+        "models.NPC@458c1321": 0,
+        "models.NPC@5faeada1": 0
+      },
+      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        "models.NPC@34cd072c": 0,
+        "models.NPC@1563da5": 0,
+        "models.NPC@ea1a8d5": 0,
+        "models.NPC@2bbf4b8b": 0,
+        "models.NPC@11438d26": 0,
+        "models.NPC@7a1ebcd8": 0,
+        "models.NPC@528931cf": 0,
+        "models.NPC@30a3107a": 0,
+        "models.NPC@33c7e1bb": 0,
+        "models.NPC@458c1321": 0,
+        "models.NPC@5faeada1": 0
       }
     },
     "trades": [],
     "talkHistory": {
-      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
-        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {},
-        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {}
-      },
-      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
-        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {},
-        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {}
-      },
       "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {},
         "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {},
         "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {}
+      },
+      "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {}
+      },
+      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {}
+      },
+      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {}
       }
     }
   }

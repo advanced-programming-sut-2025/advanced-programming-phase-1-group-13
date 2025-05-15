@@ -24,6 +24,11 @@ public class GameController {
 
     // === PLAYER'S STATUS === //
 
+    public Result nextTurn() {
+        // TODO
+        return new Result(true, "");
+    }
+
     public Result showPlayerEnergy() {
         User player = App.getLoggedIn();
         int playerEnergy = player.getEnergy();
@@ -62,6 +67,16 @@ public class GameController {
         return new Result(true, "Your tool is: " + playerCurrentTool.toString());
     }
 
+    public Result showAvailableTools() {
+        // TODO
+        return new Result(true, "");
+    }
+
+    public Result upgradeTools(String toolsName) {
+        // TODO
+        return new Result(true, "");
+    }
+
     public Result showLearntCookingRecipes() {
         User player = App.getLoggedIn();
         String learntRecipes = player.getStringLearntCookingRecipes();
@@ -76,6 +91,25 @@ public class GameController {
 
     // === TIME === //
 
+    public Result showTime() {
+        return new Result(true,
+                "Time: " + App.getCurrentGame().getGameState().getTime().getHour() + ":00");
+    }
+
+    public Result showDate() {
+        Time time = App.getCurrentGame().getGameState().getTime();
+        return new Result(true, "Date: " + time.getDayInMonth() + " of " + time.getSeason().getName());
+    }
+
+    public Result showDateAndTime() {
+        return new Result(true, showTime().message() + "\n" + showDate().message());
+    }
+
+    public Result showDayOfTheWeek() {
+        return new Result(true,
+                "Day of the week: " + App.getCurrentGame().getGameState().getTime().getWeekday().getName());
+    }
+
     public Result cheatAdvanceTime(String hourIncreaseStr) {
         int hourIncrease = Integer.parseInt(hourIncreaseStr);
         Time.cheatAdvanceTime(hourIncrease, App.getCurrentGame().getGameState().getTime());
@@ -86,6 +120,11 @@ public class GameController {
         int hourIncrease = Integer.parseInt(dayIncreaseStr);
         Time.cheatAdvanceDate(hourIncrease, App.getCurrentGame().getGameState().getTime());
         return new Result(true, "Time increased by " + dayIncreaseStr + " days.");
+    }
+
+    public Result showSeason() {
+        return new Result(true,
+                "Season: " + App.getCurrentGame().getGameState().getTime().getSeason().getName());
     }
 
     // === INVENTORY === //
@@ -202,8 +241,14 @@ public class GameController {
         return new Result(true, "Item added to inventory.");
     }
 
+    public Result cookingRefrigerator(String putOrPick, String item) {
+        // TODO
+        return new Result(true, "");
+    }
+
     public Result prepareCook(String foodName) { // todo: check refrigerator or backpack?
         User player = App.getLoggedIn();
+        assert getTileByPosition(player.getPosition()) != null;
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
         }
@@ -312,7 +357,6 @@ public class GameController {
         return null;
     }
 
-
     // === WALK === //
 
     public Result respondForWalkRequest(String targetXStr, String targetYStr) {
@@ -390,7 +434,8 @@ public class GameController {
     }
 
     public Result showWeather() {
-        return new Result(true, "Current weather: " + App.getCurrentGame().getGameState().getCurrentWeather().name());
+        return new Result(true, "Current weather: " +
+                App.getCurrentGame().getGameState().getCurrentWeather().name());
     }
 
     public Result showWeatherForecast() {
@@ -447,6 +492,11 @@ public class GameController {
         // TODO : get FertilizerType from its name
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         // TODO: fertilize
+        return new Result(true, "");
+    }
+
+    public Result howMuchWater() {
+        // TODO
         return new Result(true, "");
     }
 

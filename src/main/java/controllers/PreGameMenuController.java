@@ -10,25 +10,28 @@ import static models.App.getUserByUsername;
 
 public class PreGameMenuController {
     public Result gameNew(String usernamesStr) {
-        if (usernamesStr == null) {
+        if (usernamesStr == null || usernamesStr.trim().isEmpty()) {
             return new Result(false, "Enter usernames.");
         }
 
-        ArrayList<String> usernames = new ArrayList<>(Arrays.asList(usernamesStr.split("\\s+")));
-        if (usernames.size() != 3) {
-            return new Result(false, "Enter three valid usernames");
+        ArrayList<String> usernames = new ArrayList<>(Arrays.asList(usernamesStr.trim().split("\\s+")));
+        if (usernames.isEmpty() || usernames.size() > 3) {
+            return new Result(false, "Enter 1-3 usernames.");
         }
 
-        ArrayList<User> players = new ArrayList<>(Arrays.asList(getUserByUsername(usernames.get(0)),
-                getUserByUsername(usernames.get(1)),
-                getUserByUsername(usernames.get(2))));
+        User loggedInUser = App.getLoggedIn();
+        ArrayList<User> players = new ArrayList<>();
+        players.add(loggedInUser);
 
-        if (players.get(0) == null || players.get(1) == null || players.get(2) == null) {
-            return new Result(false, "Please enter valid usernames.");
-        }
-
-        if (!players.get(0).getUsername().equals(App.getLoggedIn().getUsername())) {
-            return new Result(false, "Enter your username as the first player.");
+        for (String username : usernames) {
+            User user = getUserByUsername(username);
+            if (user == null) {
+                return new Result(false, "Please enter valid usernames.");
+            }
+            if (user.equals(loggedInUser)) {
+                return new Result(false, "Don't enter your own username.");
+            }
+            players.add(user);
         }
 
         for (User player : players) {
@@ -42,8 +45,7 @@ public class PreGameMenuController {
             user.setActiveGame(game);
         }
         App.addGame(game);
-        return new Result(true, "New game made with you, " + players.get(1).getUsername() +
-                " and " + players.get(2).getUsername() + " as players.");
+        return new Result(true, "New game made.");
     }
 
     public Result chooseGameMap(String mapNumberString) {
