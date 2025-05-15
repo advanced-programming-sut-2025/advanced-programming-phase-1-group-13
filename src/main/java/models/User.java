@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
-import models.enums.environment.Direction;
 import models.enums.environment.Time;
 import models.enums.types.*;
 import models.inventory.Backpack;
@@ -36,7 +35,7 @@ public class User {
     private String hashedPassword;
     private HashMap<Skill, SkillLevel> skillLevels;
     private ArrayList<CraftRecipe> learntCraftRecipes;
-    private ArrayList<FoodType> learntCookingRecipes;
+    private ArrayList<CookingRecipe> learntCookingRecipes;
     private HashMap<SecurityQuestion, String> qAndA;
     private Farm farm;
     private Backpack backpack;
@@ -105,11 +104,15 @@ public class User {
         this.learntCraftRecipes = learntCraftRecipes;
     }
 
-    public void setLearntCookingRecipes(ArrayList<FoodType> learntCookingRecipes) {
+    public void setLearntCookingRecipes(ArrayList<CookingRecipe> learntCookingRecipes) {
         this.learntCookingRecipes = learntCookingRecipes;
     }
 
-    public void setqAndA(HashMap<SecurityQuestion, String> qAndA) {
+    public void learnCookingRecipe(CookingRecipe cookingRecipe) {
+        this.learntCookingRecipes.add(cookingRecipe);
+    }
+
+    public void setQAndA(HashMap<SecurityQuestion, String> qAndA) {
         this.qAndA = qAndA;
     }
 
@@ -267,7 +270,7 @@ public class User {
         return learntCraftRecipes;
     }
 
-    public ArrayList<FoodType> getLearntCookingRecipes() {
+    public ArrayList<CookingRecipe> getLearntCookingRecipes() {
         return learntCookingRecipes;
     }
 
@@ -405,22 +408,32 @@ public class User {
         // TODO: well, faint!
     }
 
-    public void useTool(Direction direction) {
-        // TODO
-    }
-
     public void changePosition(Position newPosition) {
         this.position = newPosition;
     }
 
     public String getStringLearntCookingRecipes() {
-        // TODO: Use StringBuilder for it
-        return null;
+        StringBuilder sb = new StringBuilder();
+        if (this.learntCookingRecipes.isEmpty()) {
+            return null;
+        }
+        sb.append("\nLearnt cooking recipes:\n\n");
+        for (CookingRecipe recipe : learntCookingRecipes) {
+            sb.append(recipe.toString()).append("\n");
+        }
+        return sb.toString();
     }
 
     public String getStringLearntCraftRecipes() {
-        // TODO: Use StringBuilder for it
-        return null;
+        StringBuilder sb = new StringBuilder();
+        if (this.learntCraftRecipes.isEmpty()) {
+            return null;
+        }
+        sb.append("\nLearnt craft recipes:\n\n");
+        for (CraftRecipe recipe : learntCraftRecipes) {
+            sb.append(recipe.toString()).append("\n");
+        }
+        return sb.toString();
     }
 
     public void LearnNewCraftRecipe(FoodType craftRecipe) {

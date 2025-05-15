@@ -250,6 +250,11 @@ public class GameController {
 
     private Result canCookResult(CookingRecipe cookingRecipe) {
         // TODO: check if inventory is full; if so, return false.
+        User player = App.getLoggedIn();
+        if (!player.getBackpack().isCapacityUnlimited() &&
+                player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
+            return new Result(false, "Your refrigerator is full.");
+        }
         // TODO: check if we know the recipe, return false if not.
         // TODO: check if we have the ingredients, return false if not.
         return new Result(true, "");

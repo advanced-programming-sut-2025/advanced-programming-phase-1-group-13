@@ -63,4 +63,9 @@ public class CookingRecipe extends Item {
         }
         return new CookingRecipe(foodType);
     }
+
+    @Override
+    public String toString() {
+        return nameOfFood;
+    }
 }

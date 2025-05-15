@@ -6,6 +6,7 @@ public class CraftRecipe extends Item {
     private final String nameOfCraft;
     private int sellPrice;
     private final CraftType craftType;
+    private final String description;
 
     public CraftRecipe(CraftType craftType) {
         this.craftType = craftType;
@@ -15,6 +16,7 @@ public class CraftRecipe extends Item {
             case MYSTIC_TREE_SEED -> 100;
             default -> 0;
         };
+        this.description = craftType.getDescription();
     }
 
     public String getNameOfCraft() {
@@ -31,5 +33,10 @@ public class CraftRecipe extends Item {
 
     public CraftType getCraftType() {
         return craftType;
+    }
+
+    @Override
+    public String toString() {
+        return nameOfCraft + "\n\t(" + description + ")";
     }
 }
