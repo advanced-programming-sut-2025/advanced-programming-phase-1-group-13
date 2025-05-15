@@ -7,7 +7,7 @@ public class ForagingCrop extends PlantSource implements ForagingStuff {
     private Position position;
 
     public ForagingCrop(Position pos) {
-        super();
+        super(null);
     }
 
     @Override

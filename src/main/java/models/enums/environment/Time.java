@@ -1,5 +1,9 @@
 package models.enums.environment;
 
+import models.Artisan;
+import models.Game;
+import models.User;
+
 public class Time {
     private int year;
     private Season season;
@@ -27,46 +31,32 @@ public class Time {
         return hour;
     }
 
-    public static void cheatAdvanceTime(int hourIncrease, Time currentTime) {
-        if (hourIncrease < 0) {
-            throw new IllegalArgumentException("Cannot advance time by negative hours");
-        }
+    public static void advanceOneHour(Game game) {
+        // TODO: change game time
+        Time time = game.getGameState().getTime();
 
-        int totalHours = currentTime.hour + hourIncrease;
-        int daysToAdvance = 0;
+        // =========================================================
 
-        while (totalHours > 22) {  // 10 PM is max hour
-            totalHours -= 14;      // 14 hours in a game day (9AM-10PM)
-            daysToAdvance++;
-        }
-
-        currentTime.hour = Math.max(9, totalHours);  // Ensure minimum 9 AM
-
-        if (daysToAdvance > 0) {
-            cheatAdvanceDate(daysToAdvance, currentTime); // Handles season transitions
+        // TODO: call game.changeDay() here if day has changed
+        for (User player : game.getPlayers()) {
+            // TODO: show unread messages when starting new turn
+            for (Artisan artisan : player.getFarm().getArtisans()) {
+                if (artisan.getItemPending() != null) {
+                    artisan.setTimeLeft(Math.max(artisan.getTimeLeft() - 1, 0));
+                }
+            }
         }
     }
 
-    public static void cheatAdvanceDate(int dayIncrease, Time currentTime) {
-        if (dayIncrease < 0) {
-            throw new IllegalArgumentException("Cannot advance date by negative days");
+    public static void cheatAdvanceTime(int hourIncrease, Game game) {
+        for (int i = 0; i < hourIncrease; i++) {
+            advanceOneHour(game);
         }
+    }
 
-        int remainingDays = dayIncrease;
-
-        while (remainingDays > 0) {
-            currentTime.dayInSeason++;
-            currentTime.weekday = currentTime.weekday.next();
-
-            if (currentTime.dayInSeason > 28) { // Each season has 28 days
-                currentTime.dayInSeason = 1;
-                currentTime.season = currentTime.season.next();
-
-                if (currentTime.season == Season.SPRING) {
-                    currentTime.year++;
-                }
-            }
-            remainingDays--;
+    public static void cheatAdvanceDate(int dayIncrease, Game game) {
+        for (int i = 0; i < dayIncrease * 14; i++) {
+            advanceOneHour(game);
         }
     }
 

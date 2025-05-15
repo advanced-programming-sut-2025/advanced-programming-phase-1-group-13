@@ -1,23 +1,13 @@
 package controllers;
 
 import models.*;
-import models.enums.FriendshipLevel;
-import models.enums.Menu;
-import models.enums.Quality;
-import models.enums.Skill;
+import models.enums.*;
 import models.enums.types.*;
-import models.enums.types.FarmBuildingType;
-import models.farming.Crop;
-import models.farming.PlantSource;
-import models.inventory.Backpack;
-import models.inventory.Inventory;
-import models.inventory.Refrigerator;
-import models.tools.FishingRod;
-import models.tools.MilkPail;
-import models.tools.Shear;
-import models.tools.Tool;
+import models.farming.*;
+import models.inventory.*;
+import models.tools.*;
 import models.enums.environment.*;
-import models.trade.Trade;
+import models.trade.*;
 
 import java.util.*;
 
@@ -116,13 +106,13 @@ public class GameController {
 
     public Result cheatAdvanceTime(String hourIncreaseStr) {
         int hourIncrease = Integer.parseInt(hourIncreaseStr);
-        Time.cheatAdvanceTime(hourIncrease, App.getCurrentGame().getGameState().getTime());
+        Time.cheatAdvanceTime(hourIncrease, App.getCurrentGame());
         return new Result(true, "Time increased by " + hourIncrease + " hours.");
     }
 
     public Result cheatAdvanceDate(String dayIncreaseStr) {
         int hourIncrease = Integer.parseInt(dayIncreaseStr);
-        Time.cheatAdvanceDate(hourIncrease, App.getCurrentGame().getGameState().getTime());
+        Time.cheatAdvanceDate(hourIncrease, App.getCurrentGame());
         return new Result(true, "Time increased by " + dayIncreaseStr + " days.");
     }
 

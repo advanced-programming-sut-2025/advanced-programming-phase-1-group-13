@@ -162,18 +162,7 @@ public class Game {
     }
 
     public void nextTurn(String callerUsername) {
-        // TODO: call changeDay() here if day has changed
-        for (User player : this.players) {
-            // TODO: show unread messages when starting new turn
-
-
-
-            for (Artisan artisan : player.getFarm().getArtisans()) {
-                if (artisan.getItemPending() != null) {
-                    artisan.setTimeLeft(Math.max(artisan.getTimeLeft() - 1, 0));
-                }
-            }
-        }
+        Time.advanceOneHour(this);
         saveGameState();
     }
 
