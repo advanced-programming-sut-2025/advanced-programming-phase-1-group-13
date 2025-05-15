@@ -665,6 +665,12 @@ public class GameController {
             return new Result(false, "Your animal can only go on grass.");
         }
 
+        Weather currentWeather = App.getCurrentGame().getGameState().getCurrentWeather();
+        if (!currentWeather.equals(Weather.SUNNY)) {
+            return new Result(false, "You can't take your animals out in " + currentWeather.toString() +
+                    " weather.");
+        }
+
         animal.setPosition(newPosition);
         animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
         animal.changeFriendship(8);

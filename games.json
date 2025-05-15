@@ -1,0 +1,1463 @@
+[
+  {
+    "players": [
+      {
+        "username": "farrokhi",
+        "password": "AbanAban3",
+        "nickname": "far",
+        "email": "farrokhi@gmail.com",
+        "gender": "RATHER_NOT_SAY",
+        "energy": 200,
+        "isEnergyUnlimited": false,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "hashedPassword": "3634b05fbaf899d0097479b296f7eeb26236ddc65434e94723848176f9a1501b",
+        "skillLevels": {
+          "FARMING": "LEVEL_ZERO",
+          "FORAGING": "LEVEL_ZERO",
+          "MINING": "LEVEL_ZERO",
+          "FISHING": "LEVEL_ZERO"
+        },
+        "learntCraftRecipes": [],
+        "learntCookingRecipes": [],
+        "qAndA": {
+          "null": "Earth"
+        },
+        "farm": {
+          "cropCount": 0,
+          "plantedCrops": [],
+          "trees": [],
+          "farmBuildings": [],
+          "height": 8,
+          "width": 8,
+          "artisans": []
+        },
+        "backpack": {
+          "type": "INITIAL",
+          "capacity": 12,
+          "isCapacityUnlimited": false,
+          "items": {}
+        },
+        "gifts": [],
+        "balance": 0.0,
+        "mostEarnedMoney": 0,
+        "numberOfGames": 0,
+        "trashCan": {
+          "toolType": "TRASH_CAN",
+          "toolMaterial": "BASIC",
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        "hasTalkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedGiftToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "hasHuggedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedFlowerToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "marriageRequests": [],
+        "isDepressed": false
+      },
+      {
+        "username": "selma",
+        "password": "NoCat2",
+        "nickname": "sel",
+        "email": "selma@gmail.com",
+        "gender": "WOMAN",
+        "energy": 200,
+        "isEnergyUnlimited": false,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "hashedPassword": "20332ce1eb415cb29d27df4482736176cce84bf7e3d61a275627e03c1b327b01",
+        "skillLevels": {
+          "FARMING": "LEVEL_ZERO",
+          "FORAGING": "LEVEL_ZERO",
+          "MINING": "LEVEL_ZERO",
+          "FISHING": "LEVEL_ZERO"
+        },
+        "learntCraftRecipes": [],
+        "learntCookingRecipes": [],
+        "qAndA": {
+          "null": "Earth"
+        },
+        "farm": {
+          "cropCount": 0,
+          "plantedCrops": [],
+          "trees": [],
+          "farmBuildings": [],
+          "height": 8,
+          "width": 8,
+          "artisans": []
+        },
+        "backpack": {
+          "type": "INITIAL",
+          "capacity": 12,
+          "isCapacityUnlimited": false,
+          "items": {}
+        },
+        "gifts": [],
+        "balance": 0.0,
+        "mostEarnedMoney": 0,
+        "numberOfGames": 0,
+        "trashCan": {
+          "toolType": "TRASH_CAN",
+          "toolMaterial": "BASIC",
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        "hasTalkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedGiftToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "hasHuggedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedFlowerToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "marriageRequests": [],
+        "isDepressed": false
+      },
+      {
+        "username": "arvin",
+        "password": "LeoLeo1",
+        "nickname": "arv",
+        "email": "arvin@gmail.com",
+        "gender": "MAN",
+        "energy": 200,
+        "isEnergyUnlimited": false,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "hashedPassword": "f4340e977ca7014b8abc94727c379b795ae8cb0e58e32ceb6ef953d8ed7d7121",
+        "skillLevels": {
+          "FARMING": "LEVEL_ZERO",
+          "FORAGING": "LEVEL_ZERO",
+          "MINING": "LEVEL_ZERO",
+          "FISHING": "LEVEL_ZERO"
+        },
+        "learntCraftRecipes": [],
+        "learntCookingRecipes": [],
+        "qAndA": {
+          "null": "Earth"
+        },
+        "farm": {
+          "cropCount": 0,
+          "plantedCrops": [],
+          "trees": [],
+          "farmBuildings": [],
+          "height": 8,
+          "width": 8,
+          "artisans": []
+        },
+        "backpack": {
+          "type": "INITIAL",
+          "capacity": 12,
+          "isCapacityUnlimited": false,
+          "items": {}
+        },
+        "gifts": [],
+        "balance": 0.0,
+        "mostEarnedMoney": 0,
+        "numberOfGames": 0,
+        "trashCan": {
+          "toolType": "TRASH_CAN",
+          "toolMaterial": "BASIC",
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        "hasTalkedToToday": {
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedGiftToday": {
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "hasHuggedToday": {
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "exchangedFlowerToday": {
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "marriageRequests": [],
+        "isDepressed": false
+      }
+    ],
+    "gameMap": {
+      "farms": [],
+      "shops": [],
+      "mapNumber": 0,
+      "trees": [
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "numOfStages": 0,
+          "totalHarvestTime": 0,
+          "baseSellPrice": 0,
+          "isEdible": false,
+          "energy": 0,
+          "canBecomeGiant": false,
+          "isGiant": false,
+          "fruitHarvestCycle": 0,
+          "isBurnt": false,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        }
+      ],
+      "stones": [
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        },
+        {
+          "sellPrice": 0,
+          "isSellable": false,
+          "isPurchasable": false,
+          "price": 0
+        }
+      ],
+      "woodLogs": [
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 43,
+            "y": 58
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 43,
+            "y": 22
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 23,
+            "y": 20
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 64,
+            "y": 28
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 39,
+            "y": 33
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 39,
+            "y": 31
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 42,
+            "y": 55
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 43,
+            "y": 56
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 24,
+            "y": 35
+          }
+        },
+        {
+          "type": "WOOD_LOG",
+          "position": {
+            "x": 4,
+            "y": 43
+          }
+        }
+      ],
+      "foragings": [
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        },
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        },
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        },
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        },
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        },
+        {
+          "isAlsoStandardCrop": false,
+          "isMixedSeed": false
+        }
+      ]
+    },
+    "gameState": {
+      "cropGrowthRate": 0,
+      "automaticIrrigation": false,
+      "energyUsageRate": 0,
+      "possibilityOfThor": false
+    },
+    "npcs": [
+      {
+        "type": "CLINT",
+        "name": "Clint",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {},
+        "favorites": [],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "MORRIS",
+        "name": "Morris",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {},
+        "favorites": [],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "PIERRE",
+        "name": "Pierre",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {},
+        "favorites": [],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "ROBIN",
+        "name": "Robin",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {
+          "{IRON_BAR\u003d10, WOOD\u003d1000}": {
+            "COIN": 25000,
+            "GOLD_COIN": 1000,
+            "BEE_HOUSE": 3
+          }
+        },
+        "favorites": [
+          "SPAGHETTI",
+          "WOOD",
+          "IRON_BAR"
+        ],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "WILLY",
+        "name": "Willy",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {},
+        "favorites": [],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "MARNIE",
+        "name": "Marnie",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {},
+        "favorites": [],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "GUS",
+        "name": "Gus",
+        "role": "SHOPKEEPER",
+        "dialog": [],
+        "quests": {},
+        "favorites": [],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "SEBASTIAN",
+        "name": "Sebastian",
+        "role": "VILLAGER",
+        "dialog": [],
+        "quests": {
+          "{PUMPKIN_PIE\u003d1, IRON\u003d50, STONE\u003d150}": {
+            "DIAMOND": 2,
+            "QUARTZ": 50,
+            "GOLD_COIN": 5000
+          }
+        },
+        "favorites": [
+          "WOOL",
+          "PUMPKIN_PIE",
+          "PIZZA"
+        ],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "ABIGAIL",
+        "name": "Abigail",
+        "role": "VILLAGER",
+        "dialog": [],
+        "quests": {
+          "{GOLD_BAR\u003d1, WHEAT\u003d50, PUMPKIN\u003d1}": {
+            "null": 0,
+            "WATERING_CAN": 1,
+            "GOLD_COIN": 500
+          }
+        },
+        "favorites": [
+          "STONE",
+          "IRON_ORE",
+          "COFFEE"
+        ],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "HARVEY",
+        "name": "Harvey",
+        "role": "VILLAGER",
+        "dialog": [],
+        "quests": {
+          "{null\u003d1, SALMON\u003d1, WINE\u003d1}": {
+            "null": 1,
+            "GOLD_COIN": 750,
+            "SALAD": 5
+          }
+        },
+        "favorites": [
+          "COFFEE",
+          "VEGETABLE_MEDLEY",
+          "WINE"
+        ],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      },
+      {
+        "type": "LEAH",
+        "name": "Leah",
+        "role": "VILLAGER",
+        "dialog": [],
+        "quests": {
+          "{SALMON\u003d1, HARD_WOOD\u003d10, WOOD\u003d200}": {
+            "SALMON_DINNER": 1,
+            "SCARECROW": 3,
+            "GOLD_COIN": 500
+          }
+        },
+        "favorites": [
+          "SALAD",
+          "GRAPE",
+          "WINE"
+        ],
+        "giftReceivedToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "talkedToToday": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "daysLeftToUnlockThirdQuest": {},
+        "thirdQuestUnlocked": {
+          "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": false,
+          "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": false
+        },
+        "questsFinished": []
+      }
+    ],
+    "userFriendships": {
+      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        }
+      },
+      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        }
+      },
+      "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        },
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+          "level": "STRANGER",
+          "currentXP": 0
+        }
+      }
+    },
+    "npcFriendships": {
+      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+        "models.NPC@57e1b0c": 0,
+        "models.NPC@305fd85d": 0,
+        "models.NPC@2781e022": 0,
+        "models.NPC@704a52ec": 0,
+        "models.NPC@4493d195": 0,
+        "models.NPC@1877ab81": 0,
+        "models.NPC@6ee52dcd": 0,
+        "models.NPC@4232c52b": 0,
+        "models.NPC@e320068": 0,
+        "models.NPC@1f57539": 0,
+        "models.NPC@76f2b07d": 0
+      },
+      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        "models.NPC@57e1b0c": 0,
+        "models.NPC@305fd85d": 0,
+        "models.NPC@2781e022": 0,
+        "models.NPC@704a52ec": 0,
+        "models.NPC@4493d195": 0,
+        "models.NPC@1877ab81": 0,
+        "models.NPC@6ee52dcd": 0,
+        "models.NPC@4232c52b": 0,
+        "models.NPC@e320068": 0,
+        "models.NPC@1f57539": 0,
+        "models.NPC@76f2b07d": 0
+      },
+      "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "models.NPC@57e1b0c": 0,
+        "models.NPC@305fd85d": 0,
+        "models.NPC@2781e022": 0,
+        "models.NPC@704a52ec": 0,
+        "models.NPC@4493d195": 0,
+        "models.NPC@1877ab81": 0,
+        "models.NPC@6ee52dcd": 0,
+        "models.NPC@4232c52b": 0,
+        "models.NPC@e320068": 0,
+        "models.NPC@1f57539": 0,
+        "models.NPC@76f2b07d": 0
+      }
+    },
+    "trades": [],
+    "talkHistory": {
+      "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {}
+      },
+      "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {}
+      },
+      "Username: farrokhi\nNickname: far\nMost earned money in a game: 0\nNumber of games: 0": {
+        "Username: arvin\nNickname: arv\nMost earned money in a game: 0\nNumber of games: 0": {},
+        "Username: selma\nNickname: sel\nMost earned money in a game: 0\nNumber of games: 0": {}
+      }
+    }
+  }
+]
