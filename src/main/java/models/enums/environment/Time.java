@@ -32,14 +32,27 @@ public class Time {
     }
 
     public static void advanceOneHour(Game game) {
-        // TODO: change game time
         Time time = game.getGameState().getTime();
+        time.hour++;
 
-        // =========================================================
+        if (time.hour > 22) {
+            time.hour = 9;
+            time.dayInSeason++;
+            time.weekday = time.weekday.next();
 
-        // TODO: call game.changeDay() here if day has changed
+            if (time.dayInSeason > 28) {
+                time.dayInSeason = 1;
+                time.season = time.season.next();
+
+                if (time.season == Season.SPRING) {
+                    time.year++;
+                }
+            }
+
+            game.changeDay();
+        }
+
         for (User player : game.getPlayers()) {
-            // TODO: show unread messages when starting new turn
             for (Artisan artisan : player.getFarm().getArtisans()) {
                 if (artisan.getItemPending() != null) {
                     artisan.setTimeLeft(Math.max(artisan.getTimeLeft() - 1, 0));
