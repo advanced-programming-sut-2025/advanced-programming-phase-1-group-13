@@ -38,7 +38,7 @@ public class Axe extends Tool {
             player.faint();
             return;
         }
-        //todo: calc energy needed (successful vs. not)
+        // todo: calc energy needed (successful vs. not)
         player.decreaseEnergyBy(energyNeeded);
         if (tile.getType() == TileType.TREE) {
             Tree tree = (Tree) tile.getItemPlacedOnTile();

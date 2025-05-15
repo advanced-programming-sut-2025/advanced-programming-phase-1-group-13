@@ -41,6 +41,7 @@ public class FishingRod extends Tool {
 
     @Override
     public void useTool(Tile tile, User player) {
+        // todo: relate to fishing command?
         super.useTool(tile, player);
     }
 }
