@@ -42,7 +42,8 @@ public enum SeedType {
     RARE_SEED("Rare Seed"),
     POWDERMELON_SEEDS("Powdermelon Seeds"),
     ANCIENT_SEEDS("Ancient Seeds"),
-    MIXED_SEEDS("Mixed Seeds");
+    MIXED_SEEDS("Mixed Seeds"),
+    SUMMER_SQUASH_SEEDS("Summer Squash Seeds"),;
 
     private final String displayName;
 

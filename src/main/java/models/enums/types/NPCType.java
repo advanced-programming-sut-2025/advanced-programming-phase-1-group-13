@@ -219,7 +219,7 @@ public enum NPCType {
             }},
             14,
             new ArrayList<ItemType>() {{
-                add(CropType.BLACKBERRY);
+                add(ForagingCropType.BLACKBERRY);
                 add(FoodType.SALAD);
                 add(ProcessedItemType.MEAD);
             }}
