@@ -101,7 +101,7 @@ public class GameController {
 
     public Result showDate() {
         Time time = App.getCurrentGame().getGameState().getTime();
-        return new Result(true, "Date: " + time.getDayInMonth() + " of " + time.getSeason().getName());
+        return new Result(true, "Date: " + time.getDayInSeason() + " of " + time.getSeason().getName());
     }
 
     public Result showDateAndTime() {
