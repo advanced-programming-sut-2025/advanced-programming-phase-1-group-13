@@ -172,12 +172,12 @@ public class GameController {
         User player = App.getLoggedIn();
         ItemType itemType = Item.getItemTypeByItemName(itemName);
         Item item = Item.getItemByItemType(itemType);
-        if (!canCraftResult((CraftType) itemType).success()) {
-            return canCraftResult((CraftType) itemType);
-        }
         CraftType craftType = CraftType.getCraftByName(itemName);
         if (craftType == null) {
             return new Result(false, "Item not found.");
+        }
+        if (!canCraftResult((CraftType) itemType).success()) {
+            return canCraftResult((CraftType) itemType);
         }
 
         HashMap<IngredientType, Integer> ingredients = craftType.getIngredients();
@@ -319,17 +319,24 @@ public class GameController {
     }
 
     private Result canCraftResult(CraftType craftType) {
+        CraftRecipe recipe = new CraftRecipe(craftType);
         User player = App.getLoggedIn();
         if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
             return new Result(false, "Your backpack is full.");
+        } else if (player.getLearntCraftRecipes() == null ||
+                player.getLearntCraftRecipes().isEmpty() ||
+                !player.getLearntCraftRecipes().contains(recipe)) {
+            return new Result(false, "You should learn the recipe first.");
         }
-//        else if (player) {
-//            // TODO: check if we know the recipe, return false if not.
-//            return new Result(false, "You should learn the recipe first.");
-//        } else if () {
-//            // TODO: check if we have the ingredients, return false if not.
-//            return new Result(false, "You don't have the necessary ingredients.");
-//        }
+        HashMap<IngredientType, Integer> neededIngredients = craftType.getIngredients();
+        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
+            IngredientType ingredientType = entry.getKey();
+            int requiredAmount = entry.getValue();
+
+            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
+                return new Result(false, "You don't have enough " + ingredientType.getName());
+            }
+        }
         return new Result(true, "");
     }
 
