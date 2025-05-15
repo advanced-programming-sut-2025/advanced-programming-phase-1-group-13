@@ -21,7 +21,6 @@ public enum TreeType implements ItemType {
     MUSHROOM_TREE("Mushroom Tree", TreeSourceType.MUSHROOM_TREE_SEEDS, FruitType.COMMON_MUSHROOM, 1, 40, true, 38, new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
     MYSTIC_TREE("Mystic Tree", TreeSourceType.MYSTIC_TREE_SEEDS, FruitType.MYSTIC_SYRUP, 7, 1000, true, 500, new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)));
 
-
     private final String name;
     private final TreeSourceType source;
     private final FruitType fruit;

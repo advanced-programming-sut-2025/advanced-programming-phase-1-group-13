@@ -1,6 +1,7 @@
 package models.enums.types;
 
 public enum FlowerType implements ItemType {
+    DANDELION("Dandelion", true),
     SWEET_PEA("Sweet pea", true),
     CROCUS("Crocus", true),
     TULIP("Tulip", false),
