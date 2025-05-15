@@ -44,15 +44,22 @@ public class App {
     }
 
     public static ArrayList<User> getUsers() {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+
         try (FileReader reader = new FileReader("users.json")) {
             Gson gson = new Gson();
-            users = gson.fromJson(reader, new TypeToken<List<User>>() {
-            }.getType());
+            ArrayList<User> loadedUsers = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+            if (loadedUsers != null) {
+                users = loadedUsers;
+            }
         } catch (IOException e) {
-            users = new ArrayList<>(); // If file doesn't exist, start fresh
+            users = new ArrayList<>();
         }
         return users;
     }
+
 
     public static Shop getCurrentShop() {
         return currentShop;
@@ -99,10 +106,11 @@ public class App {
     }
 
     public static User getUserByUsername(String username) {
-        if (App.users.isEmpty()) {
+        ArrayList<User> usersList = getUsers();
+        if (usersList.isEmpty()) {
             return null;
         }
-        for (User user : App.getUsers()) {
+        for (User user : usersList) {
             if (user.getUsername().equals(username)) {
                 return user;
             }
@@ -110,12 +118,14 @@ public class App {
         return null;
     }
 
+
     public static User getUserByEmail(String email) {
-        if (App.users.isEmpty()) {
+        ArrayList<User> usersList = getUsers();
+
+        if (usersList.isEmpty()) {
             return null;
         }
-
-        for (User user : App.getUsers()) {
+        for (User user : usersList) {
             if (user.getEmail().equals(email)) {
                 return user;
             }
