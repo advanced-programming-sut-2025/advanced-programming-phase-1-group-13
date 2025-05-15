@@ -1,9 +1,10 @@
 package models.inventory;
+
 import models.Item;
 
 public class Refrigerator extends Inventory {
-    public Refrigerator(int capacity, boolean isCapacityUnlimited) {
-        super(capacity, isCapacityUnlimited);
+    public Refrigerator() {
+        super(Integer.MAX_VALUE, true);
     }
 
     private void pick(Item item) {
