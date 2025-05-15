@@ -826,7 +826,7 @@ public class GameController {
         HashMap<Item, Integer> itemsHashMap = player.getBackpack().getItems();
         HashMap<Fish, Integer> caughtFish = new HashMap<>();
         for (int i = 0; i < numberOfCaughtFish; i++) {
-            FishType fishType = FishType.getRandomFishType(currentSeason, canCatchLegendary);
+            FishType fishType = FishType.getRandomFishType(currentSeason, canCatchLegendary, fishingRod.getRodType());
 
             double poleNumber = fishingRod.getRodType().getQualityNumber();
             double qualityNumber = (Math.random() * (fishingSkillLevel + 2) * poleNumber) / (7 - M);
@@ -837,6 +837,7 @@ public class GameController {
             caughtFish.put(fish, caughtFish.getOrDefault(fish, 0) + 1);
         }
 
+        // TODO: change skill level
         StringBuilder message = new StringBuilder("You caught ");
         for (Fish fish : caughtFish.keySet()) {
             message.append(fish.getType().getName()).append(" (x").append(caughtFish.get(fish)).append("), ");

@@ -63,8 +63,24 @@ public enum FishType implements ItemType {
         return isLegendary;
     }
 
-    public static FishType getRandomFishType(Season season, boolean canBeLegendary) {
+    public static FishType getRandomFishType(Season season, boolean canBeLegendary, FishingRodType rodType) {
         FishType[] fishTypes = FishType.values();
+
+        if (rodType.equals(FishingRodType.TRAINING)) {
+            if (season.equals(Season.SPRING)) {
+                return FishType.HERRING;
+            }
+            if (season.equals(Season.SUMMER)) {
+                return FishType.SUNFISH;
+            }
+            if (season.equals(Season.FALL)) {
+                return FishType.SARDINE;
+            }
+            if (season.equals(Season.WINTER)) {
+                return FishType.PERCH;
+            }
+        }
+
         while (true) {
             int index = (new Random()).nextInt(20);
             if (fishTypes[index].season.equals(season)) {
