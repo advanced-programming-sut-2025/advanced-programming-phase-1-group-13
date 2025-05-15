@@ -222,7 +222,6 @@ public class User {
         return this.backpack;
     }
 
-    //
     public String getUsername() {
         return username;
     }

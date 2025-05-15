@@ -572,8 +572,10 @@ public class GameController {
     }
 
     public Result howMuchWater() {
-        // TODO
-        return new Result(true, "");
+        Backpack backpack = App.getLoggedIn().getBackpack();
+        WateringCan w = (WateringCan) backpack.getItemFromInventoryByName(ToolType.WATERING_CAN.getName());
+        String message = "Water left in Watering Can: " + w.getRemainingWater() + " / " + w.getWaterCapacity();
+        return new Result(true, message);
     }
 
     // === FARM BUILDINGS & ANIMALS === //
