@@ -907,6 +907,7 @@ public class GameController {
             animal.setProducedProducts(new ArrayList<>());
         }
 
+        player.updateSkillPoints(Skill.FARMING, 5);
         StringBuilder message = new StringBuilder("You collected ");
         for (AnimalProduct item : collectedProducts.keySet()) {
             message.append(item.getType().getName()).append(" (x").append(collectedProducts.get(item)).append("), ");
@@ -972,7 +973,7 @@ public class GameController {
             caughtFish.put(fish, caughtFish.getOrDefault(fish, 0) + 1);
         }
 
-        // TODO: change skill level
+        fishingRod.useTool(null, player);
         StringBuilder message = new StringBuilder("You caught ");
         for (Fish fish : caughtFish.keySet()) {
             message.append(fish.getType().getName()).append(" (x").append(caughtFish.get(fish)).append("), ");

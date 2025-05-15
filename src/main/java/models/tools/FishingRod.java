@@ -27,6 +27,7 @@ public class FishingRod extends Tool {
         if (playerSkills.get(Skill.FISHING) == SkillLevel.LEVEL_THREE) {
             energy--;
         }
+        // TODO: Weather's effect
         return energy;
     }
 
@@ -42,6 +43,8 @@ public class FishingRod extends Tool {
             player.faint();
             return;
         }
+
+        player.updateSkillPoints(Skill.FISHING, 5);
 
         player.setEnergy(player.getEnergy() - energyNeeded);
 

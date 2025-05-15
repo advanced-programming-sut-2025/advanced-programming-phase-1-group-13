@@ -34,6 +34,7 @@ public class User {
     private Tool currentTool;
     private String hashedPassword;
     private HashMap<Skill, SkillLevel> skillLevels;
+    private HashMap<Skill, Integer> skillPoints;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<CookingRecipe> learntCookingRecipes;
     private HashMap<SecurityQuestion, String> qAndA;
@@ -73,10 +74,15 @@ public class User {
         this.qAndA = new HashMap<>();
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.skillLevels = new HashMap<>();
-        this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ZERO);
-        this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ZERO);
-        this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ZERO);
-        this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ZERO);
+        this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
+        this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
+        this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ONE);
+        this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ONE);
+        this.skillPoints = new HashMap<>();
+        this.skillPoints.put(Skill.FARMING, 0);
+        this.skillPoints.put(Skill.FISHING, 0);
+        this.skillPoints.put(Skill.MINING, 0);
+        this.skillPoints.put(Skill.FORAGING, 0);
         this.trashCan = new TrashCan(ToolMaterial.BASIC);
         this.marriageRequests = new ArrayList<>();
         this.spouse = null;
@@ -96,8 +102,28 @@ public class User {
         this.hashedPassword = hashedPassword;
     }
 
-    public void setSkillLevels(HashMap<Skill, SkillLevel> skillLevels) {
-        this.skillLevels = skillLevels;
+    public void updateSkillPoints(Skill skill, int points) {
+        int previousPoints = skillPoints.get(skill);
+        SkillLevel previousLevel = skillLevels.get(skill);
+        int newPoints;
+        SkillLevel newLevel = skillLevels.get(skill);
+        if (previousPoints + points > previousLevel.calculateMaxPoints()) {
+            if (previousLevel.equals(SkillLevel.LEVEL_FOUR)) {
+                newPoints = SkillLevel.LEVEL_FOUR.calculateMaxPoints();
+            } else {
+                newPoints = previousPoints + points - previousLevel.calculateMaxPoints();
+            }
+
+            if (previousLevel.equals(SkillLevel.LEVEL_FOUR)) {
+                newLevel = SkillLevel.LEVEL_FOUR;
+            } else {
+                newLevel = SkillLevel.getSkillLevelByNumber(previousLevel.getNumber() + 1);
+            }
+        } else {
+            newPoints = previousPoints + points;
+        }
+        skillPoints.put(skill, newPoints);
+        skillLevels.put(skill, newLevel);
     }
 
     public void setLearntCraftRecipes(ArrayList<CraftRecipe> learntCraftRecipes) {
