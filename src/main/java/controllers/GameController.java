@@ -250,7 +250,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    public Result prepareCook(String foodName) { // todo: check refrigerator or backpack?
+    public Result prepareCook(String foodName) {
         User player = App.getLoggedIn();
         if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
