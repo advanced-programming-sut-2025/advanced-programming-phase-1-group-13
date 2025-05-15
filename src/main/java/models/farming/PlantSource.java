@@ -1,8 +1,15 @@
 package models.farming;
 
-import models.enums.types.Seed;
+import models.Item;
+import models.enums.types.SeedType;
 
-public class PlantSource {
-    private Seed seed;
+public class PlantSource extends Item {
+    private SeedType seedType;
     private boolean isMixedSeed;
+
+    public PlantSource(SeedType seedType) {
+        this.seedType = seedType;
+        this.isMixedSeed = seedType == SeedType.MIXED_SEEDS;
+    }
 }
+

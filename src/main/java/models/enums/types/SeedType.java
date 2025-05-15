@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum Seed {
+public enum SeedType {
     JAZZ_SEEDS("Jazz Seeds"),
     CARROT_SEEDS("Carrot Seeds"),
     CAULIFLOWER_SEEDS("Cauliflower Seeds"),
@@ -46,7 +46,7 @@ public enum Seed {
 
     private final String displayName;
 
-    Seed(String displayName) {
+    SeedType(String displayName) {
         this.displayName = displayName;
     }
 
@@ -54,7 +54,7 @@ public enum Seed {
         return displayName;
     }
 
-    public static Seed getSeedByName(String name) {
+    public static SeedType getSeedByName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return null;
         }
@@ -62,11 +62,11 @@ public enum Seed {
         String normalized = name.trim().toUpperCase().replace(" ", "_");
 
         try {
-            return Seed.valueOf(normalized);
+            return SeedType.valueOf(normalized);
         } catch (IllegalArgumentException e) {
-            for (Seed seed : values()) {
-                if (seed.displayName.equalsIgnoreCase(name.trim())) {
-                    return seed;
+            for (SeedType seedType : values()) {
+                if (seedType.displayName.equalsIgnoreCase(name.trim())) {
+                    return seedType;
                 }
             }
             return null;
@@ -75,8 +75,8 @@ public enum Seed {
 
     public static String getAvailableSeedNames() {
         StringBuilder sb = new StringBuilder();
-        for (Seed seed : values()) {
-            sb.append(seed.displayName).append(", ");
+        for (SeedType seedType : values()) {
+            sb.append(seedType.displayName).append(", ");
         }
         if (sb.length() > 0) {
             sb.setLength(sb.length() - 2);

@@ -4,7 +4,7 @@ import models.Item;
 import models.Position;
 import models.enums.environment.Season;
 import models.enums.types.FruitType;
-import models.enums.types.Seed;
+import models.enums.types.SeedType;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class Tree extends Item implements Harvestable {
     private FruitType fruit;
     private int fruitHarvestCycle;
     private boolean isBurnt;
-    private Seed seed;
+    private SeedType seedType;
 
 
     public Tree(Position pos) {
@@ -86,8 +86,8 @@ public class Tree extends Item implements Harvestable {
         return isBurnt;
     }
 
-    public Seed getSeed() {
-        return seed;
+    public SeedType getSeed() {
+        return seedType;
     }
 
     public Position getPosition() {
