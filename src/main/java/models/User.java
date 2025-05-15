@@ -28,7 +28,7 @@ public class User {
     private String nickname;
     private String email;
     private Gender gender;
-    private Game activeGame;
+    private transient Game activeGame;
     private int energy;
     private boolean isEnergyUnlimited;
     private Position position;
@@ -292,7 +292,6 @@ public class User {
             e.printStackTrace();
         }
     }
-
 
     public void decreaseEnergyBy(int amount) {
         if (!this.isEnergyUnlimited) this.energy -= amount;

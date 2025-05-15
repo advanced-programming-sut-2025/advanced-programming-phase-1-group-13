@@ -1,8 +1,11 @@
 package models;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import models.enums.FriendshipLevel;
-import models.enums.Quality;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
@@ -323,13 +326,26 @@ public class Game {
     }
 
     private void saveGameState() {
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        return f.getName().equals("activeGame");
+                    }
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .setPrettyPrinting()
+                .create();
+
         try (FileWriter writer = new FileWriter("games.json")) {
-            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getGames()));
+            writer.write(gson.toJson(App.getGames()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     public void sendMessage(User sender, User receiver, String message) {
         if (talkHistory.containsKey(sender) && talkHistory.get(sender).containsKey(receiver)) {
