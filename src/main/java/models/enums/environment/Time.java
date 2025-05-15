@@ -4,7 +4,7 @@ public class Time {
     private int year;
     private Season season;
     private Month month;
-    private int dayInMonth;
+    private int dayInMonth; // TODO: season, not month
     private Weekday weekday;
     private int hour;
 
