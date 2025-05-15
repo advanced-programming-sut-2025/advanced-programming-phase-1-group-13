@@ -554,7 +554,13 @@ public class GameController {
     public Result showPlant(String xString, String yString) {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
         Tile tile = getTileByPosition(position);
-        // TODO: show plant
+        if (tile.getType() != TileType.PLANTED_SEED &&
+                tile.getType() != TileType.GROWING_CROP &&
+                tile.getType() != TileType.GREENHOUSE) {
+            return new Result(false, "No plants in this tile.");
+        }
+        // Todo: plant's info, including:
+        //  name, time left till being harvestable, current stage, wateredTodayOrNot, Quality, FertilizedOrNot
         return new Result(true, "");
     }
 
