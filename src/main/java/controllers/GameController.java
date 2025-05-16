@@ -647,11 +647,11 @@ public class GameController {
     public Result build(String farmBuildingTypeStr, String xString, String yString) {
         Shop shop = App.getCurrentShop();
         if (shop == null) {
-            return new Result(false, "You Must first enter Marnie's Ranch.");
+            return new Result(false, "You must first enter Marnie's Ranch.");
         }
 
         if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-            return new Result(false, "You Must first enter Marnie's Ranch.");
+            return new Result(false, "You must first enter Marnie's Ranch.");
         }
 
         FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
