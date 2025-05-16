@@ -484,9 +484,14 @@ public class GameController {
     }
 
     public static Tile getTileByPosition(Position position) {
-        // TODO: loop (the entire map) and return the tile whose position equals "position".
+        for (Tile tile : GameMap.getAllTiles()) {
+            if (tile.getPosition().equals(position)) {
+                return tile;
+            }
+        }
         return null;
     }
+
 
     // === WALK === //
 
@@ -595,9 +600,13 @@ public class GameController {
     }
 
     public Result showWeatherForecast() {
-        // TODO: show weather forecast
-        return new Result(true, "");
+        Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
+        List<Weather> availableWeathers = currentSeason.getAvailableWeathers();
+        Weather forecast = availableWeathers.get(new Random().nextInt(availableWeathers.size()));
+
+        return new Result(true, "The forecast for " + currentSeason.getName() + " is " + forecast.getName());
     }
+
 
     public Result cheatWeatherSet(String newWeatherString) {
         try {
