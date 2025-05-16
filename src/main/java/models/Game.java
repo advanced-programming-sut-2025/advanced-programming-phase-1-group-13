@@ -161,7 +161,7 @@ public class Game {
         return false;
     }
 
-    public void nextTurn(String callerUsername) {
+    public void nextTurn() {
         Time.advanceOneHour(this);
 
         // TODO: show unread messages when starting new turn

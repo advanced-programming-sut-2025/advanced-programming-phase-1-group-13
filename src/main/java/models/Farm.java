@@ -209,7 +209,8 @@ public class Farm {
             }
 
             if (!animal.hasBeenPetToday()) {
-                animal.changeFriendship(-10);
+                int amount = (animal.getFriendshipLevel() / 200) - 10;
+                animal.changeFriendship(amount);
                 message.append(animal.getName()).append(" was not pet today.\n");
             }
 

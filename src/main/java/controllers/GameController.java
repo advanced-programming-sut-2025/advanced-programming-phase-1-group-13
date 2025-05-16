@@ -19,7 +19,7 @@ public class GameController {
     // === PLAYER'S STATUS === //
 
     public Result nextTurn() {
-        // TODO
+        App.getCurrentGame().nextTurn();
         return new Result(true, "");
     }
 
