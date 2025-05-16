@@ -627,7 +627,11 @@ public class GameController {
     public Result fertilize(String fertilizerName, String directionName) {
         // TODO : get FertilizerType from its name
         Direction direction = Direction.getDirectionByDisplayName(directionName);
-        // TODO: fertilize
+        // TODO: fertilize (should we have another tileType ??
+        //  FERTILIZED_GROWING_CROP,
+        //  FERTILIZED_PLANTED_SEED,
+        //  FERTILIZED_TREE,
+        //  FERTILIZED_PLOWED_SOIL, ... ?
         return new Result(true, "");
     }
 

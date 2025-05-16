@@ -59,7 +59,7 @@ public class PreGameMenuController {
     }
 
     public Result loadGame() {
-        // TODO
+        // TODO: Load Game
         User player = App.getLoggedIn();
         App.setCurrentGame(player.getActiveGame());
         App.setCurrentMenu(Menu.GAME_MENU);
