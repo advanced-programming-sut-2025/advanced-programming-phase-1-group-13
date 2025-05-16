@@ -466,12 +466,12 @@ public class User {
         return sb.toString();
     }
 
-    public void LearnNewCraftRecipe(FoodType craftRecipe) {
-        // TODO
+    public void LearnNewCraftRecipe(CraftRecipe craftRecipe) {
+        this.learntCraftRecipes.add(craftRecipe);
     }
 
     public void LearnNewCookingRecipe(CookingRecipe cookingRecipe) {
-        // TODO
+        this.learntCookingRecipes.add(cookingRecipe);
     }
 
     public Map<SecurityQuestion, String> getQAndA() {
