@@ -41,7 +41,7 @@ public class Farm {
             this.lakes = new ArrayList<>();
             this.quarry = new Quarry();
             this.farmTiles = new ArrayList<>();
-            // TODO
+            // TODO: complete Constructor
             this.cabin = new Cabin(); // with map1 properties
             this.lakes = new ArrayList<>(); // with map1 properties
             this.quarry = new Quarry(); // with map1 properties
@@ -79,23 +79,11 @@ public class Farm {
     }
 
     public void placeScarecrow(Position position) {
-
-    }
-
-    public void plant(PlantSource seed, Position position) {
-        // TODO
-    }
-
-    public void showPlant(Position position) {
-        // TODO
-    }
-
-    public void fertilize(FertilizerType fertilizer, Position position) {
-        // TODO
+        // TODO: scarecrow
     }
 
     public void harvest(Harvestable harvestable) {
-        // TODO
+        // TODO: harvest() method in Farm class?
     }
 
     public ArrayList<ShippingBin> getShippingBins() {
