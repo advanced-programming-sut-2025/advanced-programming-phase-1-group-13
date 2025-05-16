@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import models.enums.FriendshipLevel;
+import models.enums.Menu;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
@@ -144,27 +145,31 @@ public class Game {
         this.trades.add(trade);
     }
 
-    public void newGame(String username1, String username2, String username3) {
-        // TODO
-    }
-
     public void setGameMap(int mapNumber) {
         // TODO
     }
 
-    public void loadGame(String callerUsername) {
-        // TODO
-    }
-
-    public boolean forceTerminateGame(boolean vote1, boolean vote2, boolean vote3) {
-        // TODO
-        return false;
+    public void forceTerminateGame(boolean vote1, boolean vote2, boolean vote3) {
+        if (vote1 && vote2 && vote3) {
+            for (User player : this.players) {
+                player.setActiveGame(null);
+                if (player.getMostEarnedMoney() < player.getBalance()) {
+                    player.setMostEarnedMoney((int) player.getBalance());
+                    // TODO: reset player fields
+                }
+            }
+        }
+        App.setCurrentMenu(Menu.PRE_GAME_MENU);
     }
 
     public void nextTurn(User previousUser) {
-        Time.advanceOneHour(this);
         int previousPlayerIndex = players.indexOf(previousUser);
         App.setLoggedIn(players.get((previousPlayerIndex + 1) % players.size()));
+
+        if (previousPlayerIndex == players.size() - 1) {
+            Time.advanceOneHour(this);
+        }
+
         // TODO: show unread messages when starting new turn
 
         saveGameState();

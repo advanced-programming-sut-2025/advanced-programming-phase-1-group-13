@@ -1,5 +1,7 @@
 package models.enums.environment;
 
+import java.util.Random;
+
 public enum Weather {
     SUNNY("Sunny"),
     RAINY("Rainy"),
@@ -14,5 +16,9 @@ public enum Weather {
 
     public String getName() {
         return name;
+    }
+
+    public static Weather getRandomWeather() {
+        return Weather.values()[(new Random()).nextInt(Weather.values().length)];
     }
 }
