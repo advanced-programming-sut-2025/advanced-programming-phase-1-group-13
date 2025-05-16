@@ -1,6 +1,7 @@
 package models;
 
 import com.google.gson.GsonBuilder;
+import models.enums.types.TreeType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
 import models.enums.types.TileType;
@@ -80,7 +81,7 @@ public final class GameMap {
         int treeCount = 40 + random.nextInt(11);
         for (int i = 0; i < treeCount; i++) {
             Position pos = getRandomPosition();
-            trees.add(new Tree(pos));
+            trees.add(new Tree(TreeType.getRandomTreeType(), pos));
         }
 
         int stoneCount = 10 + random.nextInt(11);
