@@ -1,6 +1,7 @@
 package models.enums.types;
 
 import models.enums.environment.Season;
+import models.farming.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,5 +82,9 @@ public enum TreeType implements ItemType {
 
     public ArrayList<Season> getSeasons() {
         return seasons;
+    }
+
+    public static TreeType getRandomTreeType() {
+        return TreeType.values()[(int) (Math.random() * TreeType.values().length)];
     }
 }

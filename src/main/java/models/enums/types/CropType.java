@@ -76,6 +76,10 @@ public enum CropType implements ItemType {
         this.canBecomeGiant = canBecomeGiant;
     }
 
+    public int getNumberOfStages() {
+        return stages.size();
+    }
+
     public SeedType getSource() {
         return source;
     }
@@ -112,7 +116,7 @@ public enum CropType implements ItemType {
         return seasons;
     }
 
-    public boolean isCanBecomeGiant() {
+    public boolean canBecomeGiant() {
         return canBecomeGiant;
     }
 
