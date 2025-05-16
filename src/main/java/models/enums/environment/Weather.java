@@ -8,6 +8,7 @@ public enum Weather {
     STORM("Stormy"),
     SNOW("Snowy"),;
 
+
     private final String name;
 
     Weather(String name) {

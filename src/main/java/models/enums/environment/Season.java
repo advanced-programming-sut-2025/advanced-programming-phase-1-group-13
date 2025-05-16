@@ -9,6 +9,7 @@ public enum Season {
     FALL("Fall", List.of(Weather.SUNNY, Weather.RAINY, Weather.STORM)),
     WINTER("Winter", List.of(Weather.SUNNY, Weather.SNOW));
 
+
     private final String name;
     private final List<Weather> availableWeathers;
 

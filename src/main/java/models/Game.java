@@ -22,7 +22,7 @@ public class Game {
     private final ArrayList<User> players; // The 3 players
     private GameMap gameMap;
     private GameState gameState;
-    private final ArrayList<NPC> npcs;
+    private final ArrayList<NPC>  npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
     private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
@@ -91,18 +91,22 @@ public class Game {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+        saveGameState();
     }
 
     public void setUserFriendships(HashMap<User, HashMap<User, Friendship>> userFriendships) {
         this.userFriendships = userFriendships;
+        saveGameState();
     }
 
     public void setNpcFriendships(HashMap<User, HashMap<NPC, Integer>> npcFriendships) {
         this.npcFriendships = npcFriendships;
+        saveGameState();
     }
 
     public void setTalkHistory(HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory) {
         this.talkHistory = talkHistory;
+        saveGameState();
     }
 
     public ArrayList<User> getPlayers() {
@@ -119,6 +123,7 @@ public class Game {
 
     public void setGameMap(GameMap gameMap) {
         this.gameMap = gameMap;
+        saveGameState();
     }
 
     public ArrayList<NPC> getNpcs() {
@@ -248,7 +253,7 @@ public class Game {
             message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
                     .append(income).append("g.\n");
         }
-
+        saveGameState();
         return new Result(true, message.toString());
     }
 

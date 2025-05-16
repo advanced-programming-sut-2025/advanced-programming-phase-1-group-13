@@ -571,10 +571,37 @@ public class GameController {
         int x = Integer.parseInt(xString);
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
+
         if (!isPositionValid(new Position(x, y))) {
             return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
         }
-        return new Result(true, ""); // TODO: print map.
+
+        StringBuilder mapRepresentation = new StringBuilder();
+
+        for (int i = x; i < x + size; i++) {
+            for (int j = y; j < y + size; j++) {
+                Tile tile = getTileByPosition(new Position(i, j));
+                mapRepresentation.append(getTileSymbol(tile)).append(" ");
+            }
+            mapRepresentation.append("\n");
+        }
+
+        return new Result(true, mapRepresentation.toString());
+    }
+
+    private String getTileSymbol(Tile tile) {
+        if (tile == null) return ".";
+        switch (tile.getType()) {
+            case TREE: return "T";
+            case WATER: return "~";
+            case CABIN: return "C";
+            case STONE: return "S";
+            case GREENHOUSE: return "G";
+            case QUARRY_GROUND: return "Q";
+            case WOOD_LOG: return "W";
+            case GROWING_CROP: return "F";
+            default: return "?";
+        }
     }
 
     public Result printColoredMap() {
