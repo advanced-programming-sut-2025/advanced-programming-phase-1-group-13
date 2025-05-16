@@ -11,6 +11,14 @@ public class Time {
     private Weekday weekday;
     private int hour;
 
+    public Time() {
+        this.year = 0;
+        this.season = Season.SPRING;
+        this.dayInSeason = 1;
+        this.weekday = Weekday.MERCDAY;
+        this.hour = 9;
+    }
+
     public int getYear() {
         return year;
     }
