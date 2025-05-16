@@ -590,28 +590,54 @@ public class GameController {
     }
 
     private String getTileSymbol(Tile tile) {
-        if (tile == null) return ".";
+        if (tile == null) return "⬜";
+
         switch (tile.getType()) {
-            case TREE: return "T";
-            case WATER: return "~";
-            case CABIN: return "C";
-            case STONE: return "S";
-            case GREENHOUSE: return "G";
-            case QUARRY_GROUND: return "Q";
-            case WOOD_LOG: return "W";
-            case GROWING_CROP: return "F";
-            default: return "?";
+            case TREE: return "🌳";
+            case WATER: return "🌊";
+            case CABIN: return "🏠";
+            case STONE: return "🪨";
+            case GREENHOUSE: return "🪟";
+            case QUARRY_GROUND: return "⛰️";
+            case WOOD_LOG: return "🪵";
+            case GROWING_CROP: return "🌱";
+            case ANIMAL: return "🐄";
+            case PLOWED_SOIL: return "🟤";
+            case NOT_PLOWED_SOIL: return "🟫";
+            case PLANTED_SEED: return "🌾";
+            case WATERED_NOT_PLOWED_SOIL: return "💧";
+            case WATERED_PLOWED_SOIL: return "💦";
+            case GRASS: return "⸙";
+            case UNDER_AN_ITEM: return "📦";
+            case SHOP: return "🏪";
+            default: return "❓";
         }
     }
 
-    public Result printColoredMap() {
-        return new Result(true, ""); // TODO: print a colored map.
-    }
-
     public Result showHelpReadingMap() {
-        return new Result(true, ""); // TODO: show the "Help" / enter the Help menu / ...
+        String helpText = """
+        === Map Symbols Legend ===
+        🌳 - Tree
+        🌊 - Water
+        🏠 - Cabin
+        🪨 - Stone
+        🪟 - Greenhouse
+        ⛰️ - Quarry Ground
+        🪵 - Wood Log
+        🌱 - Growing Crop
+        🐄 - Animal
+        🟤 - Plowed Soil
+        🟫 - Not Plowed Soil
+        🌾 - Planted Seed
+        💧 - Watered Not Plowed Soil
+        💦 - Watered Plowed Soil
+        ⸙ - Grass
+        📦 - Item
+        🏪 - Shop
+        ⬜ - Empty Space
+        """;
+        return new Result(true, helpText);
     }
-
 
     // === GAME STATUS === //
 
