@@ -1,6 +1,7 @@
 package views;
 
 import controllers.GameController;
+import models.Result;
 import models.enums.commands.GameCommands;
 
 import java.util.Scanner;
@@ -42,12 +43,24 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.GREENHOUSE_BUILD.getMatcher(inputLine)) != null) {
             System.out.println(controller.buildGreenhouse());
         } else if ((matcher = GameCommands.WALK.getMatcher(inputLine)) != null) {
-            System.out.println(controller.respondForWalkRequest(
+            Result result = controller.respondForWalkRequest(
                     matcher.group("x"),
                     matcher.group("y")
-            ));
+            );
+            System.out.println(result);
+            if (result.success()) {
+                String newInputLine = scanner.nextLine();
+                if ((matcher = GameCommands.WALK_CONFIRM.getMatcher(newInputLine)) != null) {
+                    System.out.println(controller.applyTheWalk(
+                            matcher.group("yOrN"),
+                            result.message()
+                    ));
+                } else {
+                    System.out.println("Invalid command.");
+                }
+            }
         } else if ((matcher = GameCommands.WALK_CONFIRM.getMatcher(inputLine)) != null) {
-            System.out.println(controller.eat(matcher.group("yOrN"))); // todo: eat?!
+            System.out.println("First enter this command: \"walk -l x,y\" for a valid destination.");
         } else if ((matcher = GameCommands.PRINT_MAP.getMatcher(inputLine)) != null) {
             System.out.println(controller.printMap(
                     matcher.group("x"),

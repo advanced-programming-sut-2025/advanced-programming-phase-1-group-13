@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import models.enums.*;
+import models.enums.commands.GameCommands;
 import models.enums.types.*;
 import models.farming.*;
 import models.inventory.*;
@@ -10,6 +11,7 @@ import models.enums.environment.*;
 import models.trade.*;
 
 import java.util.*;
+import java.util.regex.Matcher;
 
 import static models.Greenhouse.canBuildGreenhouse;
 import static models.Position.areClose;
@@ -499,7 +501,7 @@ public class GameController {
 
             // are coordinates within map bounds?
             if (!isPositionValid(destination)) {
-                return new Result(false, "Coordinates (" + targetX + "," + targetY + ") are out of bounds");
+                return new Result(false, "Coordinates (" + targetX + "," + targetY + ") are out of bounds.");
             }
 
             PathFinder pf = new PathFinder(player);
@@ -516,13 +518,35 @@ public class GameController {
                     path.getNumOfTurns(),
                     path.getEnergyNeeded()
             );
-            return new Result(true, message);
+            System.out.println(message);
+            return new Result(true, targetXStr + " " + targetYStr);
 
         } catch (NumberFormatException e) {
             return new Result(false, "Invalid coordinates - must be numbers");
         } catch (Exception e) {
             return new Result(false, "Error: " + e.getMessage());
         }
+    }
+
+    public Result applyTheWalk(String yOrN, String xAndYValues) {
+        Boolean confirmed = switch (yOrN.toLowerCase()) {
+            case "y", "yes" -> true;
+            case "n", "no" -> false;
+            default -> null;
+        };
+        if (confirmed == null) {
+            return new Result(false, "Invalid confirmation. Use \"y\" or \"n\".");
+        }
+        if (!confirmed) {
+            return new Result(false, "You denied the walk.");
+        }
+
+        String[] parts = xAndYValues.split(" ");
+        int x = Integer.parseInt(parts[0]);
+        int y = Integer.parseInt(parts[1]);
+        User player = App.getLoggedIn();
+        player.changePosition(new Position(x, y));
+        return new Result(true, "You are now at " + player.getPosition());
     }
 
     private boolean isPositionValid(Position pos) {
@@ -542,6 +566,9 @@ public class GameController {
         int x = Integer.parseInt(xString);
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
+        if (!isPositionValid(new Position(x, y))) {
+            return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
+        }
         return new Result(true, ""); // TODO: print map.
     }
 
