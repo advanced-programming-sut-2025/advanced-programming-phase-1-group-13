@@ -37,10 +37,6 @@ public class Farm {
         this.width = GameMap.getMAP_SIZE() / 10;
 
         if (mapNumberToFollow == 1) {
-            this.cabin = new Cabin();
-            this.lakes = new ArrayList<>();
-            this.quarry = new Quarry();
-            this.farmTiles = new ArrayList<>();
             // TODO: complete Constructor
             this.cabin = new Cabin(); // with map1 properties
             this.lakes = new ArrayList<>(); // with map1 properties
