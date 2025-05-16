@@ -1,9 +1,11 @@
 package models.tools;
 
+import models.Item;
 import models.Tile;
 import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
+import models.enums.types.GoodsType;
 import models.enums.types.TileType;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
@@ -38,12 +40,13 @@ public class Axe extends Tool {
             player.faint();
             return;
         }
-        // todo: calc energy needed (successful vs. not)
+        // todo: energy needed BASED ON successful vs. not?
         player.decreaseEnergyBy(energyNeeded);
         if (tile.getType() == TileType.TREE) {
             Tree tree = (Tree) tile.getItemPlacedOnTile();
             if (tree.isBurnt()) {
-                // todo : coal (add to inventory)
+                Item coal = getItemByItemType(GoodsType.COAL);
+                player.getBackpack().addToInventory(coal, 1);
                 return;
             }
             boolean canHarvestWithAxe = switch (tree.getFruit()) {
@@ -53,14 +56,12 @@ public class Axe extends Tool {
             };
             if (canHarvestWithAxe) {
                 // todo: harvest and add to inventory
-                return;
             } else {
                 tile.setType(TileType.WOOD_LOG);
-                return;
             }
         } else if (tile.getType() == TileType.WOOD_LOG) {
-            // todo: add wood to inventory
-            return;
+            Item woodLog = getItemByItemType(GoodsType.WOOD);
+            player.getBackpack().addToInventory(woodLog, 1);
         }
     }
 }

@@ -27,7 +27,6 @@ public abstract class Tool extends Item {
     }
 
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
-        // TODO: calculate energy needed based on related skill
         return 0;
     }
 
