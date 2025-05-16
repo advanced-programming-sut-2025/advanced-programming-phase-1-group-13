@@ -63,8 +63,17 @@ public class GameController {
     }
 
     public Result showAvailableTools() {
-        // TODO
-        return new Result(true, "");
+        User player = App.getLoggedIn();
+        StringBuilder sb = new StringBuilder();
+        for (Item item : player.getBackpack().getItems().keySet()) {
+            if (item instanceof Tool tool) {
+                sb
+                        .append(tool.getName()).append(": ").append(tool.getToolMaterial())
+                        .append("! Related Skill: ").append(tool.getRelatedSkill()).append("\n")
+                ;
+            }
+        }
+        return new Result(true, sb.toString());
     }
 
     public Result upgradeTools(String toolsName) {
@@ -415,7 +424,7 @@ public class GameController {
         return new Result(true, "");
     }
 
-    private boolean canToolBeUsedHere(Tile tile, ToolType toolType) { // todo: check greenhouse options.
+    private boolean canToolBeUsedHere(Tile tile, ToolType toolType) { // todo: check GREENHOUSE options.
         TileType tileType = tile.getType();
         if (toolType == ToolType.HOE) {
             return tileType == TileType.PLOWED_SOIL ||
