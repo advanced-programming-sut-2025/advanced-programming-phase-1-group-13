@@ -325,6 +325,11 @@ public class User {
         if (!this.isEnergyUnlimited) this.energy -= amount;
     }
 
+    public void increaseEnergyBy(int amount) {
+        if (!this.isEnergyUnlimited) this.energy += amount;
+        else this.energy = Integer.MAX_VALUE;
+    }
+
     public boolean isEnergyUnlimited() {
         return this.isEnergyUnlimited;
     }
@@ -466,10 +471,6 @@ public class User {
     }
 
     public void LearnNewCookingRecipe(CookingRecipe cookingRecipe) {
-        // TODO
-    }
-
-    public void eat(Food food) {
         // TODO
     }
 

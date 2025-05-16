@@ -367,12 +367,30 @@ public class GameController {
     public Result eat(String foodName) {
         FoodType foodType = FoodType.getFoodTypeByName(foodName);
         Food food = new Food(foodType);
-        // TODO: check if player HAS the food, and return appropriate Result if not.
-        // TODO: increase energy
-        // TODO: apply buff
         User player = App.getLoggedIn();
-        player.eat(food);
-        return new Result(true, ""); // todo: return appropriate Result (list the buff, etc. ?)
+        Backpack backpack = player.getBackpack();
+        Refrigerator homeRefrigerator = player.getFarm().getCabin().getRefrigerator();
+        if (!backpack.getItems().containsKey(food) && !homeRefrigerator.getItems().containsKey(food)) {
+            return new Result(
+                    false,
+                    "You don't have a " + food.getName() + ", neither in your backpack, nor in your cabin's refrigerator."
+            );
+        }
+        if (!backpack.getItems().containsKey(food) &&
+                homeRefrigerator.getItems().containsKey(food) &&
+                getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
+            return new Result(
+                    false,
+                    "You don't have a " + food.getName() + " in your backpack, but you have one back in your cabin.\n" +
+                            "Go there and enjoy your " + food.getName() + "!"
+            );
+        }
+        player.increaseEnergyBy(foodType.getEnergy());
+        FoodBuff buff = foodType.getBuff();
+        // TODO: apply buff
+        String message = "Bon appétit!\nYour " + food.getName() + " had these effects:\n" +
+                "\tyour energy increased by " + foodType.getEnergy() + "\n" + "\tbuff: " + buff.getBuffDisplayName();
+        return new Result(true, message);
     }
 
     private Result canCraftResult(CraftType craftType) {
