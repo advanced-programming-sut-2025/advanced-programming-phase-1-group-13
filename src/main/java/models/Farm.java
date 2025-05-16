@@ -11,6 +11,7 @@ import models.farming.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Farm {
     private ArrayList<Tile> farmTiles;
@@ -235,6 +236,15 @@ public class Farm {
         }
         return null;
     }
+
+    public Position getRandomTilePosition() {
+        if (farmTiles.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        return farmTiles.get(random.nextInt(farmTiles.size())).getPosition();
+    }
+
 
     public Artisan getFullArtisanByArtisanType(ArtisanType artisanType) {
         for (Artisan artisan : this.artisans) {

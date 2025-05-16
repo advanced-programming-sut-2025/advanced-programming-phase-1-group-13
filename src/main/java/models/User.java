@@ -27,6 +27,8 @@ public class User {
     private String nickname;
     private String email;
     private Gender gender;
+    private int woodCount; // todo: check for other usages
+    private int stoneCount; // todo: check for other usages
     private transient Game activeGame;
     private int energy;
     private boolean isEnergyUnlimited;
@@ -61,6 +63,8 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.woodCount = 0;
+        this.stoneCount = 0;
         this.numberOfGames = 0;
         this.activeGame = null;
         this.energy = 200;
@@ -565,5 +569,13 @@ public class User {
                 "Nickname: " + this.nickname + "\n" +
                 "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
                 "Number of games: " + this.numberOfGames;
+    }
+
+    public int getWoodCount() {
+        return this.woodCount;
+    }
+
+    public int getStoneCount() {
+        return this.stoneCount;
     }
 }

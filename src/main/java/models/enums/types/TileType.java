@@ -1,7 +1,6 @@
 package models.enums.types;
 
 public enum TileType {
-    // TODO: complete this enum the right way...
     GREENHOUSE("Greenhouse"),
     CABIN("Cabin"),
     QUARRY_GROUND("Quarry's Ground"),

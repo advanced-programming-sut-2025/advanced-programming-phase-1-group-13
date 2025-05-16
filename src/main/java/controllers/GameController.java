@@ -2,7 +2,6 @@ package controllers;
 
 import models.*;
 import models.enums.*;
-import models.enums.commands.GameCommands;
 import models.enums.types.*;
 import models.farming.*;
 import models.inventory.*;
@@ -11,7 +10,6 @@ import models.enums.environment.*;
 import models.trade.*;
 
 import java.util.*;
-import java.util.regex.Matcher;
 
 import static models.Greenhouse.canBuildGreenhouse;
 import static models.Position.areClose;
@@ -641,11 +639,18 @@ public class GameController {
 
     // === GAME STATUS === //
 
-    public Result cheatThor(String x, String y) {
-        Position position = new Position(Integer.parseInt(x), Integer.parseInt(y));
-        // TODO: cheat Thor
-        return new Result(true, "");
+    public Result cheatThor(String xString, String yString) {
+        Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
+        Tile tile = getTileByPosition(position);
+
+        if (tile != null) {
+            tile.setType(TileType.NOT_PLOWED_SOIL); // TODO: is it good?
+            App.getCurrentGame().getGameState().triggerLightningStrike();
+            return new Result(true, "Thor has struck (" + xString + ", " + yString + ")!");
+        }
+        return new Result(false, "Invalid position for Thor's strike.");
     }
+
 
     public Result showWeather() {
         return new Result(true, "Current weather: " +
@@ -680,11 +685,15 @@ public class GameController {
 
     public Result buildGreenhouse() {
         if (!canBuildGreenhouse()) {
-            return new Result(false, "You can't build greenhouse!");
+            return new Result(false, "You don't have enough resources or a greenhouse already exists!");
         }
-        // TODO: build a greenhouse
-        return new Result(true, "Building greenhouse..."); // todo: show its info in detail?
+
+        App.getLoggedIn();
+        Greenhouse greenhouse = generateGreenhouse(10, 10, 5, 5);
+
+        return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }
+
 
     // === PLANTS === //
 

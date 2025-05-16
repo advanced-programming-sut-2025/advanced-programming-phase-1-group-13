@@ -1,13 +1,15 @@
 package models;
 
 import com.google.gson.GsonBuilder;
-import models.enums.environment.Season;
 import models.enums.environment.Time;
 import models.enums.environment.Weather;
+import models.enums.types.TileType;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Random;
+
+import static controllers.GameController.getTileByPosition;
 
 public class GameState {
     private int cropGrowthRate;
@@ -77,7 +79,7 @@ public class GameState {
         return energyUsageRate;
     }
 
-    public boolean isPossibilityOfThor() {
+    public boolean getPossibilityOfThor() {
         return possibilityOfThor;
     }
 
@@ -88,4 +90,29 @@ public class GameState {
     public Weather getCurrentWeather() {
         return currentWeather;
     }
+
+    public void triggerLightningStrike() {
+        if (this.currentWeather == Weather.STORM) {
+            this.possibilityOfThor = true;
+            for (Farm farm : App.getCurrentGame().getGameMap().getFarms()) {
+                strikeRandomTiles(farm);
+            }
+        } else {
+            this.possibilityOfThor = false;
+        }
+    }
+
+    private void strikeRandomTiles(Farm farm) {
+        Random random = new Random();
+        int strikeCount = 3;
+
+        for (int i = 0; i < strikeCount; i++) {
+            Position strikePosition = farm.getRandomTilePosition();
+            Tile tile = getTileByPosition(strikePosition);
+            if (tile != null) {
+                tile.setType(TileType.STONE);
+            }
+        }
+    }
+
 }
