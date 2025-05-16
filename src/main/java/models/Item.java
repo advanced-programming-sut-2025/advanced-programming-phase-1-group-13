@@ -3,7 +3,7 @@ package models;
 import models.enums.Quality;
 import models.enums.types.*;
 import models.farming.Crop;
-import models.tools.Tool;
+import models.tools.*;
 
 public abstract class Item {
     private boolean isSellable;
@@ -103,6 +103,19 @@ public abstract class Item {
         if (itemType instanceof CraftType) {
             return new Craft((CraftType) itemType);
         }
+        if (itemType instanceof ToolType toolType) {
+            return switch (toolType) {
+                case HOE -> new Hoe();
+                case PICKAXE -> new Pickaxe();
+                case AXE -> new Axe();
+                case WATERING_CAN -> new WateringCan();
+                case SCYTHE -> new Scythe();
+                case SHEARS -> new Shear();
+                case MILK_PAIL -> new MilkPail();
+                case TRASH_CAN -> new TrashCan();
+                case FISHING_ROD -> new FishingRod(null); // todoL: null?
+            };
+        }
 
         if (itemType instanceof CropType) {
             return new Crop((CropType) itemType);
@@ -158,7 +171,7 @@ public abstract class Item {
             return this.getPrice();
         }
 
-        return  (int) (quality.getPriceCoefficient() * quality.getPriceCoefficient());
+        return (int) (quality.getPriceCoefficient() * quality.getPriceCoefficient());
     }
 
     @Override
