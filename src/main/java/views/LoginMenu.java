@@ -7,7 +7,6 @@ import models.enums.commands.LoginCommands;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-// TODO: Check This Class!!!
 public class LoginMenu implements AppMenu {
     private final LoginController controller = new LoginController();
     Matcher matcher;
