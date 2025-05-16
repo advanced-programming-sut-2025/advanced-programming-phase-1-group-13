@@ -1,106 +1,87 @@
 package models.farming;
 
 import models.Item;
-import models.Position;
 import models.enums.environment.Season;
 import models.enums.types.CropType;
+import models.enums.types.SeedType;
 
 import java.util.ArrayList;
 
 public class Crop extends Item implements Harvestable {
     private final CropType type;
-    private PlantSource source;
-    private int numOfStages;
-    private ArrayList<Integer> stages;
-    private int totalHarvestTime;
-    private int baseSellPrice;
-    private boolean isEdible;
-    private int energy;
-    private ArrayList<Season> seasons;
-    private boolean canBecomeGiant;
+    private final SeedType source;
+    private final int numOfStages;
+    private final ArrayList<Integer> stagesTimes;
+    private final int totalHarvestTime;
+    private final int baseSellPrice;
+    private final boolean isEdible;
+    private final int energy;
+    private final ArrayList<Season> seasons;
+    private final boolean canBecomeGiant;
     private boolean isGiant;
-    private Position position;
-    private boolean oneTime;
-    int regrowthTime;
+    private final boolean oneTime;
+    private final int regrowthTime;
+    private int dayInStage;
+    private int stage;
 
     public Crop(CropType type) {
+
         this.type = type;
+        this.source = type.getSource();
+        this.numOfStages = type.getNumberOfStages();
+        this.stagesTimes = type.getStages();
+        this.totalHarvestTime = type.getTotalHarvestTime();
+        this.baseSellPrice = type.getSellPrice();
+        this.isEdible = type.isEdible();
+        this.energy = type.getEnergy();
+        this.seasons = type.getSeasons();
+        this.canBecomeGiant = type.canBecomeGiant();
+        this.oneTime = type.isOneTime();
+        this.regrowthTime = type.getRegrowthTime();
+
+        this.isGiant = false;
+        this.dayInStage = 0;
+        this.stage = 0;
     }
 
     public CropType getType() {
         return type;
     }
 
-    public PlantSource getSource() {
+    public SeedType getSource() {
         return source;
-    }
-
-    public void setSource(PlantSource source) {
-        this.source = source;
     }
 
     public int getNumOfStages() {
         return numOfStages;
     }
 
-    public void setNumOfStages(int numOfStages) {
-        this.numOfStages = numOfStages;
-    }
-
-    public ArrayList<Integer> getStages() {
-        return stages;
-    }
-
-    public void setStages(ArrayList<Integer> stages) {
-        this.stages = stages;
+    public ArrayList<Integer> getStagesTimes() {
+        return stagesTimes;
     }
 
     public int getTotalHarvestTime() {
         return totalHarvestTime;
     }
 
-    public void setTotalHarvestTime(int totalHarvestTime) {
-        this.totalHarvestTime = totalHarvestTime;
-    }
-
     public int getBaseSellPrice() {
         return baseSellPrice;
-    }
-
-    public void setBaseSellPrice(int baseSellPrice) {
-        this.baseSellPrice = baseSellPrice;
     }
 
     public boolean isEdible() {
         return isEdible;
     }
 
-    public void setEdible(boolean edible) {
-        isEdible = edible;
-    }
-
     public int getEnergy() {
         return energy;
-    }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
     }
 
     public ArrayList<Season> getSeasons() {
         return seasons;
     }
 
-    public void setSeasons(ArrayList<Season> seasons) {
-        this.seasons = seasons;
-    }
-
     public boolean isCanBecomeGiant() {
         return canBecomeGiant;
-    }
-
-    public void setCanBecomeGiant(boolean canBecomeGiant) {
-        this.canBecomeGiant = canBecomeGiant;
     }
 
     public boolean isGiant() {
@@ -111,28 +92,28 @@ public class Crop extends Item implements Harvestable {
         isGiant = giant;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
     public boolean isOneTime() {
         return oneTime;
-    }
-
-    public void setOneTime(boolean oneTime) {
-        this.oneTime = oneTime;
     }
 
     public int getRegrowthTime() {
         return regrowthTime;
     }
 
-    public void setRegrowthTime(int regrowthTime) {
-        this.regrowthTime = regrowthTime;
+    public int getDayInStage() {
+        return dayInStage;
+    }
+
+    public void setDayInStage(int dayInStage) {
+        this.dayInStage = dayInStage;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
     }
 
     public void showInfo() {
