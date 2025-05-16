@@ -19,7 +19,6 @@ public class GameController {
     // === PLAYER'S STATUS === //
 
     public Result nextTurn() {
-        // TODO
         Game game = App.getCurrentGame();
         game.nextTurn(App.getLoggedIn());
         return new Result(true, "Next turn!\nBye-bye " + App.getLoggedIn().getNickname() + ".");
@@ -237,9 +236,30 @@ public class GameController {
         return new Result(true, "Item added to inventory.");
     }
 
-    public Result cookingRefrigerator(String putOrPick, String item) {
-        // TODO
-        return new Result(true, "");
+    public Result cookingRefrigerator(String putOrPick, String itemStr) {
+        User player = App.getLoggedIn();
+        Backpack backpack = player.getBackpack();
+        Refrigerator refrigerator = player.getFarm().getCabin().getRefrigerator();
+        Item item = Item.getItemByItemName(itemStr);
+        Boolean isPut = switch (putOrPick.toLowerCase()) {
+            case "put" -> true;
+            case "pick" -> false;
+            default -> null;
+        };
+        if (isPut == null) {
+            return new Result(false, "Rewrite the command; make sure you use \"put\" or \"pick\".");
+        }
+        if (isPut) {
+            int number = backpack.getItems().get(item);
+            refrigerator.addToInventory(item, number);
+            backpack.removeFromInventory(item, number);
+            return new Result(true, number + " " + item.getName() + " has been transferred from backpack to refrigerator.");
+        } else {
+            int number = refrigerator.getItems().get(item);
+            backpack.addToInventory(item, number);
+            refrigerator.removeFromInventory(item, number);
+            return new Result(true, number + " " + item.getName() + " has been transferred from refrigerator to backpack.");
+        }
     }
 
     public Result prepareCook(String foodName) {
