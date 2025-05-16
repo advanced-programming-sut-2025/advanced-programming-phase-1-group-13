@@ -4,7 +4,6 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import models.enums.FriendshipLevel;
 import models.enums.environment.Time;
 import models.enums.types.ItemType;
@@ -161,11 +160,11 @@ public class Game {
         return false;
     }
 
-    public void nextTurn(String callerUsername) {
+    public void nextTurn(User previousUser) {
         Time.advanceOneHour(this);
-
+        int previousPlayerIndex = players.indexOf(previousUser);
+        App.setLoggedIn(players.get((previousPlayerIndex + 1) % players.size()));
         // TODO: show unread messages when starting new turn
-
         saveGameState();
     }
 
@@ -324,6 +323,7 @@ public class Game {
                     public boolean shouldSkipField(FieldAttributes f) {
                         return f.getName().equals("activeGame");
                     }
+
                     @Override
                     public boolean shouldSkipClass(Class<?> clazz) {
                         return false;

@@ -20,7 +20,9 @@ public class GameController {
 
     public Result nextTurn() {
         // TODO
-        return new Result(true, "");
+        Game game = App.getCurrentGame();
+        game.nextTurn(App.getLoggedIn());
+        return new Result(true, "Next turn!\nBye-bye " + App.getLoggedIn().getNickname() + ".");
     }
 
     public Result showPlayerEnergy() {
@@ -421,7 +423,7 @@ public class GameController {
         return getTileByPosition(newPosition);
     }
 
-    private Tile getTileByPosition(Position position) {
+    public static Tile getTileByPosition(Position position) {
         // TODO: loop (the entire map) and return the tile whose position equals "position".
         return null;
     }

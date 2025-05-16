@@ -1,10 +1,13 @@
 package models.farming;
 
+import controllers.GameController;
 import models.Item;
 import models.Position;
+import models.Tile;
 import models.enums.environment.Season;
 import models.enums.types.FruitType;
 import models.enums.types.SeedType;
+import models.enums.types.TileType;
 
 import java.util.ArrayList;
 
@@ -27,7 +30,13 @@ public class Tree extends Item implements Harvestable {
 
 
     public Tree(Position pos) {
-        super();
+        Tile tile = GameController.getTileByPosition(pos);
+        if (tile == null) {
+            return;
+        }
+        tile.setType(TileType.TREE);
+        this.position = pos;
+        // todo: complete this
     }
 
     public void showInfo() {
