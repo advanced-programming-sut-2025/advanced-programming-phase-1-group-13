@@ -82,12 +82,8 @@ public enum GameCommands implements Command {
     FRIENDSHIPNPC_LIST("^\\s*friendship\\s+NPC\\s+list\\s*$"),
     QUESTS_LIST("^\\s*quests\\s+list\\s*$"),
     QUESTS_FINISH("^\\s*quests\\s+finish\\s+-n\\s+(?<npcName>.+)\\s+-i\\s+(?<index>\\d+)\\s*$"),
-
-
-    // TODO: complete these commands below:
-    THROW_ITEM_TO_TRASH(" <itemName> <number>"), // number is optional (it's ok to get nothing (null). check controller.
-    EXIT_GAME("^\\s*exit\\s+game\\s*$")
-    ;
+    THROW_ITEM_TO_TRASH("^\\s*inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s*(?<number>\\d)?\\s*$"),
+    EXIT_GAME("^\\s*exit\\s+game\\s*$");
     private final String regex;
     private final Pattern pattern;
 
