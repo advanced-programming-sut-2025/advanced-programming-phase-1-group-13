@@ -49,7 +49,7 @@ public class Time {
                 }
             }
 
-            game.changeDay();
+            System.out.println(game.changeDay().message());
         }
 
         for (User player : game.getPlayers()) {
