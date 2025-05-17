@@ -125,7 +125,6 @@ public class GameController {
     public Result cheatAdvanceTime(String hourIncreaseStr) {
         int hour = Integer.parseInt(hourIncreaseStr);
         Time.cheatAdvanceTime(hour, App.getCurrentGame());
-        App.getLoggedIn().decreaseHoursLeftTillBuffVanishes(hour);
         return new Result(true, "Time increased by " + hour + " hours.");
     }
 
