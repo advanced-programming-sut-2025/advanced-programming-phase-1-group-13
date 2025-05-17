@@ -5,3 +5,27 @@ public class Main {
         (new AppView()).run();
     }
 }
+
+/*
+register -u arvin -p LeoLeo1 LeoLeo1 -n arv -e arvin@gmail.com -g Male
+pick question -q 1 -a Earth -c Earth
+login -u arvin -p LeoLeo1
+show current menu
+menu enter Profile Menu
+show current menu
+change username -u newUsername
+user info
+change username -u arvin
+user info
+menu exit
+menu exit
+register -u selma -p NoCat2 NoCat2 -n sel -e selma@gmail.com -g Female
+pick question -q 1 -a Earth -c Earth
+register -u farrokhi -p AbanAban3 AbanAban3 -n far -e farrokhi@gmail.com -g Rather not say
+pick question -q 1 -a Earth -c Earth
+login -u farrokhi -p AbanAban3
+menu enter Pre-Game Menu
+game new
+game new username
+game new farrokhi selma arvin
+*/

@@ -33,6 +33,8 @@ public class Game {
         this.gameState = new GameState();
         this.gameMap = new GameMap(mapNumber);
 
+        App.setCurrentGame(this);
+
         this.npcs = new ArrayList<>();
 
         for (NPCType npcType : NPCType.values()) {
@@ -107,6 +109,7 @@ public class Game {
         this.talkHistory = talkHistory;
        // saveGameState();
     }
+
 
     public ArrayList<User> getPlayers() {
         return players;

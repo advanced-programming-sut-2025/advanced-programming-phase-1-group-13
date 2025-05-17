@@ -472,6 +472,7 @@ public class GameController {
                 tileType == TileType.QUARRY_GROUND;
     }
 
+
     public Tile neighborTile(Direction direction) {
         User player = App.getLoggedIn();
         Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
@@ -484,9 +485,9 @@ public class GameController {
                 return tile;
             }
         }
+        System.out.println("Tile not found at: " + position);
         return null;
     }
-
 
     // === WALK === //
 
