@@ -72,22 +72,22 @@ public class GameController {
 
     public Result upgradeTools(String toolName) {
         User player = App.getLoggedIn();
-        if (App.getCurrentShop().getType() != ShopType.BLACKSMITH) {
-            return new Result(false, "You can only ask the blacksmith to upgrade your tools. Pay him a visit!");
-        }
         Tool tool = (Tool) Item.getItemByItemName(toolName);
         if (tool == null) {
-            return new Result(false, "You do not have any tools with that name! Use: \n" + ToolType.getFullList());
+            return new Result(false, "No tools with that name! Use: \n" + ToolType.getFullList());
+        }
+        if ((tool instanceof FishingRod)) {
+            return new Result(false, "You should \"buy\" fishing rods at the fisher's shop. Don't use the upgrade command.");
         }
 
-        if (!canUpgradeTool(tool, player)) {
-            return new Result(false, "You cannot upgrade this tool with your current items of possession.");
+        if (App.getCurrentShop().getType() != ShopType.BLACKSMITH) {
+            return new Result(false, "You can only ask the blacksmith to upgrade your " + toolName + ". Pay him a visit!");
         }
         equipTool(toolName);
-        player.getCurrentTool().upgradeTool();
-        if (tool.getToolType() == ToolType.FISHING_ROD) {
-            return new Result(true, "Your Fishing Rods upgraded to " + ((FishingRod) tool).getRodType() + ".");
+        if (!canUpgradeTool(player.getCurrentTool(), player)) {
+            return new Result(false, "You cannot upgrade this tool with your current items of possession.");
         }
+        player.getCurrentTool().upgradeTool();
         return new Result(true, toolName + " has been upgraded to " + tool.getToolMaterial() + ".");
     }
 
@@ -96,14 +96,13 @@ public class GameController {
             return false;
         }
         if (tool instanceof FishingRod) {
-            // todo: upgrade fishing rod
+            return false;
         } else {
             Item ingredientItem = Item.getItemByItemType(tool.getToolMaterial().getIngredientForUpgrade());
             return player.getBackpack().getItems().get(ingredientItem) != null &&
                     player.getBackpack().getItems().get(ingredientItem) >= tool.getToolMaterial().getNumOfIngredientNeededForUpgrade() &&
                     player.getBalance() >= tool.getToolMaterial().getUpgradePrice();
         }
-        return true;
     }
 
     public Result showLearntCookingRecipes() {
@@ -177,19 +176,19 @@ public class GameController {
 
     // === TOOLS, FOODS, ITEMS, AND CRAFTS === //
 
-    public Result equipTool(String toolName) {
+    public Result equipTool(String toolTypeName) {
         User player = App.getLoggedIn();
-        ToolType toolType = ToolType.getToolTypeByName(toolName);
+        ToolType toolType = ToolType.getToolTypeByName(toolTypeName);
         if (toolType == null) {
             String notFoundMessage = "Tool not found.\n" + "Enter a valid tool name: \n" + ToolType.getFullList();
             return new Result(false, notFoundMessage);
         }
-        Item itemFromInventory = player.getBackpack().getItemFromInventoryByName(toolName);
+        Item itemFromInventory = player.getBackpack().getItemFromInventoryByName(toolTypeName);
         if (itemFromInventory == null) {
             return new Result(false, "Tool not found in inventory.");
         }
         player.setCurrentTool((Tool) itemFromInventory);
-        return new Result(true, toolName + " equipped.");
+        return new Result(true, toolTypeName + " equipped.");
     }
 
     public Result useTool(String directionString) {
@@ -1344,6 +1343,18 @@ public class GameController {
         int price = product.getPrice() * count;
 
         User player = App.getLoggedIn();
+        if (
+                good.getType() == GoodsType.IRIDIUM_ROD &&
+                        player.getSkillLevels().get(Skill.FISHING) != SkillLevel.LEVEL_FOUR
+        ) {
+            return new Result(false, "Your fishing skill must reach level 4 to buy an iridium rod.");
+        }
+        if (
+                good.getType() == GoodsType.FIBERGLASS_ROD &&
+                        player.getSkillLevels().get(Skill.FISHING) == SkillLevel.LEVEL_ONE
+        ) {
+            return new Result(false, "Your fishing skill must reach level 2 to buy a fiberglass rod.");
+        }
         if (player.getBalance() < price) {
             return new Result(false, "You don't have enough money.");
         }
@@ -1360,7 +1371,6 @@ public class GameController {
             return new Result(false, "You have already bought " + numberOfBought + " of " + productName
                     + " and can not buy any more.");
         }
-
         result = player.getBackpack().addToInventory(product, count);
         if (!result.success()) {
             return new Result(false, "You don't have enough space in your backpack.");
