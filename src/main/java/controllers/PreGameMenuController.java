@@ -28,7 +28,7 @@ public class PreGameMenuController {
             if (user == null) {
                 return new Result(false, "Please enter valid usernames.");
             }
-            if (user.equals(loggedInUser)) {
+            if (username.equals(loggedInUser.getUsername())) {
                 return new Result(false, "Don't enter your own username.");
             }
             players.add(user);
