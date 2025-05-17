@@ -15,7 +15,7 @@ public class Greenhouse {
     }
 
     private void generateFixedGreenhouseTiles() {
-        int startX = 20; // todo: does it matter?
+        int startX = 20;
         int startY = 20;
         int width = 5;
         int height = 5;
