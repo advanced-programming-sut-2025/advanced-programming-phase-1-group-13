@@ -24,6 +24,7 @@ public class Crop extends Item implements Harvestable {
     private int dayInStage;
     private int stage;
     private Integer daySinceLastHarvest;
+    private boolean hasBeenWateredToday;
 
     public Crop(CropType type) {
 
@@ -43,6 +44,7 @@ public class Crop extends Item implements Harvestable {
         this.isGiant = false;
         this.dayInStage = 0;
         this.stage = 0;
+        this.hasBeenWateredToday = false;
     }
 
     public CropType getType() {
@@ -142,5 +144,13 @@ public class Crop extends Item implements Harvestable {
 
     public void setDaySinceLastHarvest(Integer daySinceLastHarvest) {
         this.daySinceLastHarvest = daySinceLastHarvest;
+    }
+
+    public boolean hasBeenWateredToday() {
+        return hasBeenWateredToday;
+    }
+
+    public void setHasBeenWateredToday(boolean hasBeenWateredToday) {
+        this.hasBeenWateredToday = hasBeenWateredToday;
     }
 }

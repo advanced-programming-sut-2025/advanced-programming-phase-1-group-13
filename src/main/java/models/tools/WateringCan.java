@@ -1,5 +1,6 @@
 package models.tools;
 
+import models.Item;
 import models.Tile;
 import models.User;
 import models.enums.Skill;
@@ -7,6 +8,8 @@ import models.enums.SkillLevel;
 import models.enums.types.TileType;
 import models.enums.types.ToolMaterial;
 import models.enums.types.ToolType;
+import models.farming.Crop;
+import models.farming.Tree;
 
 import java.util.HashMap;
 
@@ -69,11 +72,10 @@ public class WateringCan extends Tool {
         if (tile.getType() == TileType.WATER) {
             WateringCan wateringCan = (WateringCan) player.getCurrentTool();
             wateringCan.fillTheWateringCan();
-        } else if (tile.getType() == TileType.TREE ||
-                tile.getType() == TileType.PLANTED_SEED ||
-                tile.getType() == TileType.GROWING_CROP) {
-            // todo: abyari mishavand
-            return;
+        } else if (tile.getType() == TileType.TREE) {
+            ((Tree) tile.getItemPlacedOnTile()).setHasBeenWateredToday(true);
+        } else if (tile.getType() == TileType.PLANTED_SEED || tile.getType() == TileType.GROWING_CROP) {
+            ((Crop) tile.getItemPlacedOnTile()).setHasBeenWateredToday(true);
         } else if (tile.getType() == TileType.PLOWED_SOIL) {
             tile.setType(TileType.WATERED_PLOWED_SOIL);
         } else if (tile.getType() == TileType.NOT_PLOWED_SOIL) {
