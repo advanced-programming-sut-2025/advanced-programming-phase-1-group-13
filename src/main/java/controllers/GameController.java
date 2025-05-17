@@ -560,7 +560,7 @@ public class GameController {
             Position destination = new Position(targetX, targetY);
 
             // are coordinates within map bounds?
-            if (!isPositionValid(destination)) {
+            if (isPositionInvalid(destination)) {
                 return new Result(false, "Coordinates (" + targetX + "," + targetY + ") are out of bounds.");
             }
 
@@ -619,15 +619,15 @@ public class GameController {
     }
 
 
-    private boolean isPositionValid(Position pos) {
+    private boolean isPositionInvalid(Position pos) {
         List<Tile> allTiles = App.getCurrentGame().getGameMap().getAllTiles();
-        if (allTiles.isEmpty()) return false;
+        if (allTiles.isEmpty()) return true;
 
         int maxX = allTiles.stream().mapToInt(t -> t.getPosition().getX()).max().orElse(0);
         int maxY = allTiles.stream().mapToInt(t -> t.getPosition().getY()).max().orElse(0);
 
-        return pos.getX() >= 0 && pos.getX() <= maxX &&
-                pos.getY() >= 0 && pos.getY() <= maxY;
+        return pos.getX() < 0 || pos.getX() > maxX ||
+                pos.getY() < 0 || pos.getY() > maxY;
     }
 
     // === PRINT MAP === //
@@ -637,7 +637,7 @@ public class GameController {
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
 
-        if (!isPositionValid(new Position(x, y))) {
+        if (isPositionInvalid(new Position(x, y))) {
             return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
         }
 
@@ -804,12 +804,28 @@ public class GameController {
         Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
         if (tile.getType() != TileType.PLANTED_SEED &&
                 tile.getType() != TileType.GROWING_CROP &&
-                tile.getType() != TileType.GREENHOUSE) {
+                tile.getType() != TileType.GREENHOUSE &&
+                tile.getType() != TileType.TREE) {
             return new Result(false, "No plants in this tile.");
         }
-        // Todo: plant's info, including:
-        //  name, time left till being harvestable, current stage, wateredTodayOrNot, Quality, FertilizedOrNot
-        return new Result(true, "");
+
+
+        Item item = tile.getItemPlacedOnTile();
+        String message = showCraftInfo(item.getName()).message();
+
+        if (item instanceof Tree) {
+            Tree tree = (Tree) item;
+            message +=
+                    "Time left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
+                    "Current stage: " + tree.getStage() + "\n" +
+                    "Has been watered today: ";
+
+            if (tree.isHasBeenWateredToday()) {
+
+            }
+        }
+        //TODO  name, time left till being harvestable, current stage, wateredTodayOrNot, Quality, FertilizedOrNot
+        return new Result(true, message);
     }
 
     public Result fertilize(String fertilizerName, String directionName) {
