@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-import static controllers.GameController.getTileByPosition;
-
 public class GameState {
     private int cropGrowthRate;
     private boolean automaticIrrigation;
@@ -108,7 +106,7 @@ public class GameState {
 
         for (int i = 0; i < strikeCount; i++) {
             Position strikePosition = farm.getRandomTilePosition();
-            Tile tile = getTileByPosition(strikePosition);
+            Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(strikePosition);
             if (tile != null) {
                 tile.setType(TileType.STONE);
             }

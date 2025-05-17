@@ -20,8 +20,6 @@ public enum GameCommands implements Command {
     WALK("^\\s*walk\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
     WALK_CONFIRM("^\\s*walk confirm\\s+(?<yOrN>\\w)\\s*$"),
     PRINT_MAP("^\\s*print\\s+map\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+(?<size>\\d+)\\s*$"),
-    PRINT_COLORED_MAP("^\\s*print\\s+colored\\s+map\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+size\\s+" +
-            "(?<size>\\d+)\\s*$"),
     HELP_READING_MAP("^\\s*help\\s+reading\\s+map\\s*$"),
     ENERGY_SHOW("^\\s*energy\\s+show\\s*$"),
     CHEAT_ENERGY_SET("^\\s*energy\\s+set\\s+-v\\s+(?<value>\\d+)\\s*$"),
@@ -83,7 +81,8 @@ public enum GameCommands implements Command {
     QUESTS_LIST("^\\s*quests\\s+list\\s*$"),
     QUESTS_FINISH("^\\s*quests\\s+finish\\s+-n\\s+(?<npcName>.+)\\s+-i\\s+(?<index>\\d+)\\s*$"),
     THROW_ITEM_TO_TRASH("^\\s*inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s*(?<number>\\d)?\\s*$"),
-    EXIT_GAME("^\\s*exit\\s+game\\s*$");
+    EXIT_GAME("^\\s*exit\\s+game\\s*$"),
+    SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$");
     private final String regex;
     private final Pattern pattern;
 
