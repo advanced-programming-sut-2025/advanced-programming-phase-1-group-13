@@ -75,14 +75,6 @@ public class Farm {
         return height;
     }
 
-    public void placeScarecrow(Position position) {
-        // TODO: scarecrow
-    }
-
-    public void harvest(Harvestable harvestable) {
-        // TODO: harvest() method in Farm class?
-    }
-
     public ArrayList<ShippingBin> getShippingBins() {
         return shippingBins;
     }
@@ -137,7 +129,7 @@ public class Farm {
         for (int i = 0; i < farmBuildingType.getWidth(); i++) {
             for (int j = 0; j < farmBuildingType.getLength(); j++) {
                 Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
-                if (!this.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
+                if (!App.getCurrentGame().getGameMap().getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
                     return false;
                 }
             }
@@ -223,15 +215,6 @@ public class Farm {
 
             if (xTopLeft < x && xTopLeft + length > x && yTopLeft < y && yTopLeft + width > y) {
                 return farmBuilding;
-            }
-        }
-        return null;
-    }
-
-    public Tile getTileByPosition(Position position) {
-        for (Tile tile : farmTiles) {
-            if (tile.getPosition().equals(position)) {
-                return tile;
             }
         }
         return null;

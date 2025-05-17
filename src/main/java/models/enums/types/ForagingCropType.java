@@ -4,6 +4,7 @@ import models.enums.environment.Season;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public enum ForagingCropType implements ItemType {
     COMMON_MUSHROOM("Common Mushroom", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)), 40, 38),
@@ -52,6 +53,11 @@ public enum ForagingCropType implements ItemType {
 
     public int getEnergy() {
         return energy;
+    }
+
+    public static ForagingCropType getRandomForagingCropType() {
+        ForagingCropType[] values = ForagingCropType.values();
+        return values[new Random().nextInt(values.length)];
     }
 
     @Override

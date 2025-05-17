@@ -235,7 +235,7 @@ public class GameController {
     public Result craft(String itemName) {
         User player = App.getLoggedIn();
         ItemType itemType = Item.getItemTypeByItemName(itemName);
-        Item item = Item.getItemByItemType(itemType);
+        Item item = Item.getItemByItemName(itemName);
         CraftType craftType = CraftType.getCraftByName(itemName);
         if (craftType == null) {
             return new Result(false, "Item not found.");
@@ -295,6 +295,10 @@ public class GameController {
     public Result cheatAddItem(String itemName, String numberStr) {
         User player = App.getLoggedIn();
         Item item = Item.getItemByItemName(itemName);
+        if (item == null) {
+            return new Result(false, "Item not found.");
+        }
+
         int number = 1;
         if (numberStr != null) {
             number = Integer.parseInt(numberStr);
@@ -806,14 +810,14 @@ public class GameController {
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(String farmBuildingTypeStr, String xString, String yString) {
-        Shop shop = App.getCurrentShop();
-        if (shop == null) {
-            return new Result(false, "You must first enter Marnie's Ranch.");
-        }
-
-        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-            return new Result(false, "You must first enter Marnie's Ranch.");
-        }
+//        Shop shop = App.getCurrentShop();
+//        if (shop == null) {
+//            return new Result(false, "You must first enter Marnie's Ranch.");
+//        }
+//
+//        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+//            return new Result(false, "You must first enter Marnie's Ranch.");
+//        }
 
         FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
         if (farmBuildingType == null) {
@@ -839,8 +843,14 @@ public class GameController {
         HashMap<Item, Integer> items = player.getBackpack().getItems();
         Material wood = new Material(MaterialType.WOOD);
         Material stone = new Material(MaterialType.STONE);
-        int woodInInventory = items.get(wood);
-        int stoneInInventory = items.get(stone);
+        int woodInInventory = 0;
+        if (items.get(wood) != null) {
+            items.get(wood);
+        }
+        int stoneInInventory = 0;
+        if (items.get(stone) != null) {
+            items.get(stone);
+        }
         int woodNeeded = farmBuildingType.getWoodCount();
         int stoneNeeded = farmBuildingType.getStoneCount();
         boolean enoughSupplies = (woodNeeded <= woodInInventory) && (stoneNeeded <= stoneInInventory);
@@ -871,14 +881,14 @@ public class GameController {
     }
 
     public Result buyAnimal(String animalTypeStr, String name) {
-        Shop shop = App.getCurrentShop();
-        if (shop == null) {
-            return new Result(false, "You Must first enter Marnie's Ranch.");
-        }
-
-        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-            return new Result(false, "You Must first enter Marnie's Ranch.");
-        }
+//        Shop shop = App.getCurrentShop();
+//        if (shop == null) {
+//            return new Result(false, "You Must first enter Marnie's Ranch.");
+//        }
+//
+//        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+//            return new Result(false, "You Must first enter Marnie's Ranch.");
+//        }
 
         AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
         if (animalType == null) {
@@ -994,7 +1004,7 @@ public class GameController {
                         + ", is already at " + newPosition.toString());
             }
 
-            if (!farm.getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
+            if (!App.getCurrentGame().getGameMap().getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
                 return new Result(false, "Your animal can only go on grass.");
             }
 
@@ -1768,7 +1778,7 @@ public class GameController {
         App.setCurrentMenu(Menu.TARDE_MENU);
 
         User player = App.getLoggedIn();
-        StringBuilder message = new StringBuilder("You are now in Trade Menu.\n\nNew Trade requests and offers:");
+        StringBuilder message = new StringBuilder("You are now in Trade Menu.\nNew Trade requests and offers:\n");
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (!trade.getCreator().equals(player) &&
                     (trade.getRequester().equals(player) || trade.getOfferer().equals(player))) {

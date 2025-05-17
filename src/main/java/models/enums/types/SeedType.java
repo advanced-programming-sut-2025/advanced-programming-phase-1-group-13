@@ -42,14 +42,15 @@ public enum SeedType implements ItemType {
     RARE_SEED("Rare Seed"),
     POWDERMELON_SEEDS("Powdermelon Seeds"),
     ANCIENT_SEEDS("Ancient Seeds"),
-    MIXED_SEEDS("Mixed Seeds");
+
+    MIXED_SEEDS("Mixed Seeds"),
+    TREE_SOURCE_SEED("Tree Source Seeds");
 
     private final String name;
 
     SeedType(String name) {
         this.name = name;
     }
-
 
 
     public static SeedType getSeedByName(String name) {

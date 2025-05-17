@@ -26,11 +26,13 @@ public class Tree extends Item implements Harvestable {
     private int stage;
     private int dayInStage;
     private Integer daySinceLastHarvest;
+    private boolean hasBeenWateredToday;
 
     public Tree(TreeType treeType) {
         this.type = treeType;
         this.fruitType = type.getFruit();
         this.fruitHarvestCycle = type.getFruitHarvestCycle();
+        this.hasBeenWateredToday = false;
     }
 
     public Tree(TreeType type, Position position, Tile tile) {
@@ -53,6 +55,9 @@ public class Tree extends Item implements Harvestable {
         this.isBurnt = false;
         this.dayInStage = 0;
         this.stage = 0;
+
+        this.hasBeenWateredToday = false;
+
     }
 
     public void showInfo() {
@@ -142,5 +147,11 @@ public class Tree extends Item implements Harvestable {
         this.daySinceLastHarvest++;
     }
 
+    public boolean isHasBeenWateredToday() {
+        return this.hasBeenWateredToday;
+    }
 
+    public void setHasBeenWateredToday(boolean hasBeenWateredToday) {
+        this.hasBeenWateredToday = hasBeenWateredToday;
+    }
 }

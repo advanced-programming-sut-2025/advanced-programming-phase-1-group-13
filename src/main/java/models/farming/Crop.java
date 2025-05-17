@@ -3,6 +3,7 @@ package models.farming;
 import models.Item;
 import models.enums.environment.Season;
 import models.enums.types.CropType;
+import models.enums.types.ItemType;
 import models.enums.types.SeedType;
 
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class Crop extends Item implements Harvestable {
     private int dayInStage;
     private int stage;
     private Integer daySinceLastHarvest;
+    private boolean hasBeenWateredToday;
 
     public Crop(CropType type) {
-
         this.type = type;
         this.source = type.getSource();
         this.numOfStages = type.getNumberOfStages();
@@ -43,6 +44,7 @@ public class Crop extends Item implements Harvestable {
         this.isGiant = false;
         this.dayInStage = 0;
         this.stage = 0;
+        this.hasBeenWateredToday = false;
     }
 
     public CropType getType() {
@@ -142,5 +144,13 @@ public class Crop extends Item implements Harvestable {
 
     public void setDaySinceLastHarvest(Integer daySinceLastHarvest) {
         this.daySinceLastHarvest = daySinceLastHarvest;
+    }
+
+    public boolean hasBeenWateredToday() {
+        return hasBeenWateredToday;
+    }
+
+    public void setHasBeenWateredToday(boolean hasBeenWateredToday) {
+        this.hasBeenWateredToday = hasBeenWateredToday;
     }
 }
