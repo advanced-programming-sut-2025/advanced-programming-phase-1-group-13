@@ -35,15 +35,19 @@ public class Axe extends Tool {
 
     @Override
     public void useTool(Tile tile, User player) {
+        boolean successfulUsage = tile.getType() != TileType.PLOWED_SOIL && tile.getType() != TileType.NOT_PLOWED_SOIL;
+
         int energyNeeded = calculateEnergyNeeded(player.getSkillLevels(), player.getCurrentTool());
         if (player.getBuffRelatedSkill() == Skill.FORAGING && player.getHoursLeftTillBuffVanishes() > 0) {
+            energyNeeded = Math.max(0, energyNeeded - 1);
+        }
+        if (!successfulUsage) {
             energyNeeded = Math.max(0, energyNeeded - 1);
         }
         if (energyNeeded >= player.getEnergy()) {
             player.faint();
             return;
         }
-        // todo: energy needed BASED ON successful vs. not?
         player.decreaseEnergyBy(energyNeeded);
         if (tile.getType() == TileType.TREE) {
             Tree tree = (Tree) tile.getItemPlacedOnTile();

@@ -463,7 +463,9 @@ public class GameController {
                     tileType == TileType.UNDER_AN_ITEM;
         } else if (toolType == ToolType.AXE) {
             return tileType == TileType.TREE ||
-                    tileType == TileType.WOOD_LOG;
+                    tileType == TileType.WOOD_LOG ||
+                    tileType == TileType.PLOWED_SOIL ||
+                    tileType == TileType.NOT_PLOWED_SOIL;
         } else if (toolType == ToolType.WATERING_CAN) {
             return tileType != TileType.CABIN && tileType != TileType.SHOP;
         } else if (toolType == ToolType.FISHING_ROD) {
