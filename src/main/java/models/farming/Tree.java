@@ -29,6 +29,7 @@ public class Tree extends Item implements Harvestable {
     private int stage;
     private int dayInStage;
 
+
     public Tree(TreeType type, Position position, Tile tile) {
         if (tile == null) {
             throw new IllegalArgumentException("No tile found at position: " + position);

@@ -475,6 +475,7 @@ public class GameController {
                 tileType == TileType.QUARRY_GROUND;
     }
 
+
     public Tile neighborTile(Direction direction) {
         User player = App.getLoggedIn();
         Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
@@ -482,10 +483,8 @@ public class GameController {
     }
 
     public static Tile getTileByPosition(Position position) {
-        System.out.println("Looking for tile at: " + position);
         for (Tile tile : GameMap.getAllTiles()) {
             if (tile.getPosition().equals(position)) {
-                System.out.println("Found tile at: " + position);
                 return tile;
             }
         }

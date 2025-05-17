@@ -328,6 +328,7 @@ public final class GameMap {
         }
     }
 
+
     public static Tile getTileByPosition(Position position) {
         for (Tile tile : GameMap.getAllTiles()) {
             if (tile.getPosition().equals(position)) {
