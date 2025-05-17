@@ -60,10 +60,7 @@ public final class GameMap {
                 }
             }
         }
-        System.out.println("Successfully created " + allTiles.size() + " tiles");
     }
-
-
 
     public static int getMAP_SIZE() {
         return MAP_SIZE;

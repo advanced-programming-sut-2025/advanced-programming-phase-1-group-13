@@ -109,7 +109,7 @@ public class User {
         this.exchangedFlowerToday = new HashMap<>();
         this.currentFoodBuff = null;
         this.buffRelatedSkill = null;
-        hoursLeftTillBuffVanishes = null;
+        this.hoursLeftTillBuffVanishes = null;
     }
 
     public void setPosition(Position position) {
@@ -184,9 +184,11 @@ public class User {
     }
 
     public void decreaseHoursLeftTillBuffVanishes(Integer decreaseBy) {
-        this.hoursLeftTillBuffVanishes -= decreaseBy;
-        if (this.hoursLeftTillBuffVanishes <= 0) {
-            this.hoursLeftTillBuffVanishes = 0;
+        if (this.hoursLeftTillBuffVanishes != null) {
+            this.hoursLeftTillBuffVanishes -= decreaseBy;
+            if (this.hoursLeftTillBuffVanishes <= 0) {
+                this.hoursLeftTillBuffVanishes = 0;
+            }
         }
     }
 
@@ -447,7 +449,8 @@ public class User {
     }
 
     public boolean hasExchangedFlowerToday(User user) {
-        return this.getExchangedFlowerToday().get(user);
+        if (this.getExchangedFlowerToday() != null) return this.getExchangedFlowerToday().get(user);
+        return false;
     }
 
     public void setExchangedFlowerToday(User user, boolean hasReceived) {

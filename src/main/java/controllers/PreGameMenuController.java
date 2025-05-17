@@ -65,4 +65,8 @@ public class PreGameMenuController {
         App.setCurrentMenu(Menu.GAME_MENU);
         return new Result(true, "Starting game...");
     }
+
+    public Result showCurrentMenu() {
+        return new Result(true, "You are now in " + App.getCurrentMenu().toString() + ".");
+    }
 }
