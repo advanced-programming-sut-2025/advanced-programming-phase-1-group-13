@@ -78,9 +78,9 @@ public final class GameMap {
     private void generateFixedElements() {
         if (mapNumber == 1) {
             this.lake = generateLake(10, 15, 5, 8);
-            this.cabin = generateCabin(3, 3, 3, 3);
+            this.cabin = generateCabin(3, 3, 4, 4);
             this.greenhouse = generateGreenhouse();
-            this.quarry = generateQuarry(20, 50, 10, 15);
+            this.quarry = generateQuarry(20, 50, 10, 10);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 8, 5);
             this.cabin = generateCabin(4, 4, 4, 4);
@@ -103,7 +103,7 @@ public final class GameMap {
 
         Collections.shuffle(availablePositions, random);
 
-        int treeCount = Math.min(40 + random.nextInt(11), availablePositions.size());
+        int treeCount = Math.min(120 + random.nextInt(11), availablePositions.size());
         for (int i = 0; i < treeCount; i++) {
             Position pos = availablePositions.get(i);
             Tile tile = getTileByPosition(pos);
@@ -111,14 +111,14 @@ public final class GameMap {
             tile.setType(TileType.TREE);
         }
 
-        int stoneCount = Math.min(10 + random.nextInt(11), availablePositions.size() - treeCount);
+        int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
         for (int i = 0; i < stoneCount; i++) {
             Position pos = availablePositions.get(treeCount + i);
             stones.add(new Mineral(pos));
             getTileByPosition(pos).setType(TileType.STONE);
         }
 
-        int foragingCount = Math.min(3 + random.nextInt(6),
+        int foragingCount = Math.min(30 + random.nextInt(6),
                 availablePositions.size() - treeCount - stoneCount);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = availablePositions.get(treeCount + stoneCount + i);
@@ -126,7 +126,7 @@ public final class GameMap {
             getTileByPosition(pos).setType(TileType.GRASS);
         }
 
-        int woodCount = Math.min(10 + random.nextInt(11),
+        int woodCount = Math.min(50 + random.nextInt(11),
                 availablePositions.size() - treeCount - stoneCount - foragingCount);
         for (int i = 0; i < woodCount; i++) {
             Position pos = availablePositions.get(treeCount + stoneCount + foragingCount + i);
