@@ -188,4 +188,9 @@ public class TradeController {
         App.setCurrentMenu(Menu.GAME_MENU);
         return new Result(true, "Exiting Trade Menu...");
     }
+
+    public Result showCurrentMenu() {
+        return new Result(true, "Current Menu: " +
+                App.getCurrentMenu().toString());
+    }
 }
