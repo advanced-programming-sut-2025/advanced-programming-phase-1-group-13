@@ -48,15 +48,15 @@ public class App {
             users = new ArrayList<>();
         }
 
-        try (FileReader reader = new FileReader("users.json")) {
-            Gson gson = new Gson();
-            ArrayList<User> loadedUsers = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
-            if (loadedUsers != null) {
-                users = loadedUsers;
-            }
-        } catch (IOException e) {
-            users = new ArrayList<>();
-        }
+//        try (FileReader reader = new FileReader("users.json")) {
+//            Gson gson = new Gson();
+//            ArrayList<User> loadedUsers = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+//            if (loadedUsers != null) {
+//                users = loadedUsers;
+//            }
+//        } catch (IOException e) {
+//            users = new ArrayList<>();
+//        }
         return users;
     }
 
@@ -72,14 +72,14 @@ public class App {
     public static void addUser(User user) {
         App.users.add(user);
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(users);
-
-        try (FileWriter writer = new FileWriter("users.json")) {
-            writer.write(json);
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle errors
-        }
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        String json = gson.toJson(users);
+//
+//        try (FileWriter writer = new FileWriter("users.json")) {
+//            writer.write(json);
+//        } catch (IOException e) {
+//            e.printStackTrace(); // Handle errors
+//        }
     }
 
     public static ArrayList<Game> getGames() {
