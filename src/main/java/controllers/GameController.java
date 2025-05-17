@@ -53,6 +53,9 @@ public class GameController {
     public Result showCurrentTool() {
         User player = App.getLoggedIn();
         Tool playerCurrentTool = player.getCurrentTool();
+        if (playerCurrentTool == null) {
+            return new Result(false, "No tool equipped.");
+        }
         return new Result(true, "Your tool is: " + playerCurrentTool.toString());
     }
 
