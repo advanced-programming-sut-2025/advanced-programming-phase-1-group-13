@@ -263,7 +263,11 @@ public class Game {
             message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
                     .append(income).append("g.\n");
         }
-        //saveGameState();
+
+        for (Tile tile : gameMap.) {
+
+        }
+
         return new Result(true, message.toString());
     }
 
