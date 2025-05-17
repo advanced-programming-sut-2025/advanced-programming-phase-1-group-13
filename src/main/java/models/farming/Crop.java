@@ -23,6 +23,7 @@ public class Crop extends Item implements Harvestable {
     private final int regrowthTime;
     private int dayInStage;
     private int stage;
+    private int daySinceLastHarvest;
 
     public Crop(CropType type) {
 
@@ -38,7 +39,7 @@ public class Crop extends Item implements Harvestable {
         this.canBecomeGiant = type.canBecomeGiant();
         this.oneTime = type.isOneTime();
         this.regrowthTime = type.getRegrowthTime();
-
+        this.daySinceLastHarvest = 0;
         this.isGiant = false;
         this.dayInStage = 0;
         this.stage = 0;
@@ -118,5 +119,17 @@ public class Crop extends Item implements Harvestable {
 
     public void showInfo() {
 
+    }
+
+    public int getDaySinceLastHarvest() {
+        return this.daySinceLastHarvest;
+    }
+
+    public void setDaySinceLastHarvest(int daySinceLastHarvest) {
+        this.daySinceLastHarvest = daySinceLastHarvest;
+    }
+
+    public void incrementDaySinceLastHarvest(int daySinceLastHarvest) {
+        this.daySinceLastHarvest++;
     }
 }

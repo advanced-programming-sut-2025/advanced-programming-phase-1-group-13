@@ -1,13 +1,10 @@
 package models.farming;
 
-import controllers.GameController;
-import models.App;
 import models.Item;
 import models.Position;
 import models.Tile;
 import models.enums.environment.Season;
 import models.enums.types.FruitType;
-import models.enums.types.SeedType;
 import models.enums.types.TileType;
 import models.enums.types.TreeType;
 
@@ -23,11 +20,12 @@ public class Tree extends Item implements Harvestable {
     private Integer energy;
     private ArrayList<Season> seasons;
     private Position position;
-    private FruitType fruit;
-    private int fruitHarvestCycle;
+    private final FruitType fruit;
+    private final int fruitHarvestCycle;
     private boolean isBurnt;
     private int stage;
     private int dayInStage;
+    private int daySinceLastHarvest;
 
 
     public Tree(TreeType type, Position position, Tile tile) {
@@ -122,5 +120,17 @@ public class Tree extends Item implements Harvestable {
 
     public void setDayInStage(int dayInStage) {
         this.dayInStage = dayInStage;
+    }
+
+    public int getDaySinceLastHarvest() {
+        return this.daySinceLastHarvest;
+    }
+
+    public void setDaySinceLastHarvest(int daySinceLastHarvest) {
+        this.daySinceLastHarvest = daySinceLastHarvest;
+    }
+
+    public void incrementDaySinceLastHarvest(int daySinceLastHarvest) {
+        this.daySinceLastHarvest++;
     }
 }
