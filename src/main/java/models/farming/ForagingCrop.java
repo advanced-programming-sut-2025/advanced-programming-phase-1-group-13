@@ -13,6 +13,11 @@ public class ForagingCrop extends Crop implements ForagingStuff {
         this.position = position;
     }
 
+    public ForagingCrop(ForagingCropType foragingCropType) {
+        super(foragingCropType);
+        this.foragingCropType = foragingCropType;
+    }
+
     @Override
     public void generate() {
 
