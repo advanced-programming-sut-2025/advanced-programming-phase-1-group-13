@@ -11,6 +11,13 @@ public class Tile {
         return this.type;
     }
 
+    public Tile() {}
+
+    public Tile(Position position, TileType type) {
+        this.position = position;
+        this.type = type;
+    }
+
     public void setType(TileType type) {
         this.type = type;
     }

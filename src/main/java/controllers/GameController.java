@@ -624,6 +624,35 @@ public class GameController {
 
     // === PRINT MAP === //
 
+    public Result printMapVillage(String xString, String yString, String sizeString) {
+        int x = Integer.parseInt(xString);
+        int y = Integer.parseInt(yString);
+        int size = Integer.parseInt(sizeString);
+
+        if (!isPositionValid(new Position(x, y))) {
+            return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
+        }
+
+        StringBuilder mapRepresentation = new StringBuilder();
+        Position playerPos = App.getLoggedIn().getPosition();
+
+        for (int i = x; i < x + size; i++) {
+            for (int j = y; j < y + size; j++) {
+                Position pos = new Position(j, i);
+                Tile tile = App.getCurrentGame().getVillage().getTileByPosition(pos);
+
+                if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
+                    mapRepresentation.append("👤");
+                } else {
+                    mapRepresentation.append(getTileSymbol(tile)).append(" ");
+                }
+            }
+            mapRepresentation.append("\n");
+        }
+
+        return new Result(true, mapRepresentation.toString());
+    }
+
     public Result printMap(String xString, String yString, String sizeString) {
         int x = Integer.parseInt(xString);
         int y = Integer.parseInt(yString);
@@ -1807,6 +1836,72 @@ public class GameController {
     }
 
     // === NPC === //
+
+    public Result walkInVillage(String xStr, String yStr) {
+        try {
+            int x = Integer.parseInt(xStr);
+            int y = Integer.parseInt(yStr);
+            NPCVillage village = App.getCurrentGame().getVillage();
+            Position pos = new Position(x, y);
+
+            if (!village.isPositionValid(pos)) {
+                return new Result(false, "Position (" + x + "," + y + ") is out of bounds.");
+            }
+
+            Tile tile = village.getTileByPosition(pos);
+
+            if (tile == null) {
+                return new Result(false, "No tile found at (" + x + "," + y + ").");
+            }
+
+            if (tile.getType() == TileType.SHOP) {
+                Shop shop = village.getShopAtPosition(pos);
+
+                if (shop != null) {
+                    App.setCurrentShop(shop);
+                    return new Result(true, "You have entered " + shop.getType() + " at (" + x + "," + y + ").");
+                } else {
+                    return new Result(false, "This shop's type could not be determined.");
+                }
+            }
+
+            return new Result(false, "This tile is not a shop.");
+
+        } catch (NumberFormatException e) {
+            return new Result(false, "Invalid input! Coordinates must be numeric values.");
+        }
+    }
+
+
+    public Result goToVillage() {
+        Game currentGame = App.getCurrentGame();
+        User player = App.getLoggedIn();
+
+        if (currentGame.isInNPCVillage()) {
+            return new Result(false, "You are already in the village!");
+        }
+
+        Position villageEntrance = new Position(1, 1);
+        player.setPosition(villageEntrance);
+
+        currentGame.setInNPCVillage(true);
+
+        return new Result(true, "You have entered the village. Welcome!");
+    }
+
+    public Result exitVillage() {
+        Game currentGame = App.getCurrentGame();
+        User player = App.getLoggedIn();
+
+        if (!currentGame.isInNPCVillage()) {
+            return new Result(false, "You are not in the village!");
+        }
+        Position villageExit = new Position(1, 1); // Example position
+        player.setPosition(villageExit);
+        currentGame.setInNPCVillage(false);
+
+        return new Result(true, "You have left the village and returned to your farm.");
+    }
 
     public Result meetNPC(String NCPName) {
         Game game = App.getCurrentGame();

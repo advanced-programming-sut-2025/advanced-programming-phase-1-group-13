@@ -67,7 +67,14 @@ public class GameMenu implements AppMenu {
                     matcher.group("y"),
                     matcher.group("size")
             ));
-        } else if ((matcher = GameCommands.HELP_READING_MAP.getMatcher(inputLine)) != null) {
+        } else if ((matcher = GameCommands.PRINT_MAP_VILLAGE.getMatcher(inputLine)) != null)  {
+            System.out.println(controller.printMapVillage(
+                    matcher.group("x"),
+                    matcher.group("y"),
+                    matcher.group("size")
+            ));
+        }
+        else if ((matcher = GameCommands.HELP_READING_MAP.getMatcher(inputLine)) != null) {
             System.out.println(controller.showHelpReadingMap());
         } else if ((matcher = GameCommands.ENERGY_SHOW.getMatcher(inputLine)) != null) {
             System.out.println(controller.showPlayerEnergy());
@@ -262,6 +269,12 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.exitGame());
         } else if ((matcher = GameCommands.SHOW_CURRENT_MENU.getMatcher(inputLine)) != null) {
             System.out.println("Game Menu");
+        } else if ((matcher = GameCommands.GO_TO_VILLAGE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.goToVillage());
+        } else if ((matcher = GameCommands.EXIT_VILLAGE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.exitVillage());
+        } else if ((matcher = GameCommands.WALK_VILLAGE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.walkInVillage(matcher.group("x"), matcher.group("y")));
         }
         else {
             System.out.println("Invalid Command. Please try again!");
