@@ -42,12 +42,6 @@ public final class GameMap {
         generateFixedElements();
         consolidateAllTiles();
         generateRandomElements();
-        for (Tile tile : allTiles) {
-            if (tile.getType() != TileType.NOT_PLOWED_SOIL) {
-                System.out.println("Tile at " + tile.getPosition() + " is of type: " + tile.getType());
-            }
-        }
-
     }
 
     private void generateBaseMapTiles() {
