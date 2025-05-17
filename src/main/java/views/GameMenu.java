@@ -67,12 +67,6 @@ public class GameMenu implements AppMenu {
                     matcher.group("y"),
                     matcher.group("size")
             ));
-        } else if ((matcher = GameCommands.PRINT_COLORED_MAP.getMatcher(inputLine)) != null) {
-            System.out.println(controller.printMap(
-                    matcher.group("x"),
-                    matcher.group("y"),
-                    matcher.group("size")
-            ));
         } else if ((matcher = GameCommands.HELP_READING_MAP.getMatcher(inputLine)) != null) {
             System.out.println(controller.showHelpReadingMap());
         } else if ((matcher = GameCommands.ENERGY_SHOW.getMatcher(inputLine)) != null) {
@@ -266,7 +260,10 @@ public class GameMenu implements AppMenu {
             ));
         } else if ((matcher = GameCommands.EXIT_GAME.getMatcher(inputLine)) != null) {
             System.out.println(controller.exitGame());
-        } else {
+        } else if ((matcher = GameCommands.SHOW_CURRENT_MENU.getMatcher(inputLine)) != null) {
+            System.out.println("Game Menu");
+        }
+        else {
             System.out.println("Invalid Command. Please try again!");
         }
     }
