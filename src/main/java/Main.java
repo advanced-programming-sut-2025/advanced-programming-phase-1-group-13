@@ -31,5 +31,5 @@ game new farrokhi selma arvin
 game new selma arvin
 game map 1
 print map -l 1,1 -s 100
-walk -l 10,10
+walk -l 6, 9
 */

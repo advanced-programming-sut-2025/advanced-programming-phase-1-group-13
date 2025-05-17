@@ -624,7 +624,6 @@ public class GameController {
         }
 
         StringBuilder mapRepresentation = new StringBuilder();
-        System.out.println(App.getLoggedIn().getPosition() + App.getLoggedIn().getUsername());
         Position playerPos = App.getLoggedIn().getPosition();
 
         for (int i = x; i < x + size; i++) {
@@ -633,7 +632,6 @@ public class GameController {
                 Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(pos);
 
                 if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
-                    System.out.println("HEYYYY");
                     mapRepresentation.append("👤");
                 } else {
                     mapRepresentation.append(getTileSymbol(tile)).append(" ");
@@ -1251,6 +1249,8 @@ public class GameController {
             return new Result(false, "You either have no " + artisanNameString + "s or all of your " +
                     artisanNameString + "s are already making another product.");
         }
+
+        System.out.println("Trying to find product with ingredients of " + itemTypes);
 
         ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes,
                 artisanType);
