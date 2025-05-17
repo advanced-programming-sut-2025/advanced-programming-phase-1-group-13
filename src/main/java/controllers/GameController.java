@@ -828,7 +828,7 @@ public class GameController {
             message += "\n" +
                 "Has been fertilized today: ";
 
-            if (tree.hasBeenWateredToday()) {
+            if (tree.hasBeenFertilizedToday()) {
                 message += "Yes";
             } else {
                 message += "No";
@@ -850,7 +850,7 @@ public class GameController {
             message += "\n" +
                     "Has been fertilized today: ";
 
-            if (crop.hasBeenWateredToday()) {
+            if (crop.hasBeenFertilizedToday()) {
                 message += "Yes";
             } else {
                 message += "No";
