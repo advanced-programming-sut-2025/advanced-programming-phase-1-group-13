@@ -75,14 +75,6 @@ public class Farm {
         return height;
     }
 
-    public void placeScarecrow(Position position) {
-        // TODO: scarecrow
-    }
-
-    public void harvest(Harvestable harvestable) {
-        // TODO: harvest() method in Farm class?
-    }
-
     public ArrayList<ShippingBin> getShippingBins() {
         return shippingBins;
     }

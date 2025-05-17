@@ -52,6 +52,7 @@ public class Axe extends Tool {
             if (tree.isBurnt()) {
                 Item coal = getItemByItemType(GoodsType.COAL);
                 player.getBackpack().addToInventory(coal, 1);
+                tile.setType(TileType.NOT_PLOWED_SOIL);
                 return;
             }
             boolean canHarvestWithAxe = switch (tree.getFruitType()) {
@@ -68,7 +69,8 @@ public class Axe extends Tool {
             }
         } else if (tile.getType() == TileType.WOOD_LOG) {
             Item woodLog = getItemByItemType(GoodsType.WOOD);
-            player.getBackpack().addToInventory(woodLog, 1);
+            player.getBackpack().addToInventory(woodLog, 5);
+            tile.setType(TileType.NOT_PLOWED_SOIL);
         }
     }
 }
