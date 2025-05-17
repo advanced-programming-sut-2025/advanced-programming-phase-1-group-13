@@ -861,7 +861,10 @@ public class GameController {
     }
 
     public Result fertilize(String fertilizerName, String directionName) {
-        // TODO : get FertilizerType from its name
+        FertilizerType fertilizerType = FertilizerType.getFertilizerTypeByName(fertilizerName);
+        if (fertilizerType == null) {
+            return new Result(false, "Invalid fertilizer name");
+        }
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         // TODO: fertilize (should we have another tileType ??
         //  FERTILIZED_GROWING_CROP,
