@@ -79,14 +79,31 @@ public class GameController {
         if (tool == null) {
             return new Result(false, "You do not have any tools with that name! Use: \n" + ToolType.getFullList());
         }
-        // TODO: check the skills and budget...
+
+        if (!canUpgradeTool(tool, player)) {
+            return new Result(false, "You cannot upgrade this tool with your current items of possession.");
+        }
         equipTool(toolName);
         player.getCurrentTool().upgradeTool();
         if (tool.getToolType() == ToolType.FISHING_ROD) {
             return new Result(true, "Your Fishing Rods upgraded to " + ((FishingRod) tool).getRodType() + ".");
         }
-        player.getCurrentTool().upgradeTool();
         return new Result(true, toolName + " has been upgraded to " + tool.getToolMaterial() + ".");
+    }
+
+    public boolean canUpgradeTool(Tool tool, User player) {
+        if (tool == null) {
+            return false;
+        }
+        if (tool instanceof FishingRod) {
+            // todo: upgrade fishing rod
+        } else {
+            Item ingredientItem = Item.getItemByItemType(tool.getToolMaterial().getIngredientForUpgrade());
+            return player.getBackpack().getItems().get(ingredientItem) != null &&
+                    player.getBackpack().getItems().get(ingredientItem) >= tool.getToolMaterial().getNumOfIngredientNeededForUpgrade() &&
+                    player.getBalance() >= tool.getToolMaterial().getUpgradePrice();
+        }
+        return true;
     }
 
     public Result showLearntCookingRecipes() {
