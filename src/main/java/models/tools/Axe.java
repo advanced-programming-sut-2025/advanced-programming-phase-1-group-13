@@ -47,6 +47,7 @@ public class Axe extends Tool {
             return;
         }
         player.decreaseEnergyBy(energyNeeded);
+        player.updateSkillPoints(Skill.FORAGING, 10);
         if (tile.getType() == TileType.TREE) {
             Tree tree = (Tree) tile.getItemPlacedOnTile();
             if (tree.isBurnt()) {

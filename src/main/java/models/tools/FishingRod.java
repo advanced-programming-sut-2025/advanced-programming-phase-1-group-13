@@ -51,7 +51,7 @@ public class FishingRod extends Tool {
 
         player.updateSkillPoints(Skill.FISHING, 5);
 
-        player.setEnergy(player.getEnergy() - energyNeeded);
+        player.decreaseEnergyBy(energyNeeded);
 
         super.useTool(tile, player);
     }

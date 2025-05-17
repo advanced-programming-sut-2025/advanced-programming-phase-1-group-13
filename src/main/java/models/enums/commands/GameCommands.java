@@ -33,7 +33,7 @@ public enum GameCommands implements Command {
     TOOLS_SHOW_CURRENT("^\\s*tools\\s+show\\s+current\\s*$"),
     TOOLS_SHOW_AVAILABLE("^\\s*tools\\s+show\\s+available\\s*$"),
     TOOLS_UPGRADE("^\\s*tools\\s+upgrade\\s+(?<toolsName>.+)\\s*$"),
-    TOOLS_USE("^\\s*tools\\s+-d\\s+(?<direction>.+)\\s*$"),
+    TOOLS_USE("^\\s*tools\\s+use\\s+-d\\s+(?<direction>.+)\\s*$"),
     CRAFT_INFO("^\\s*craftinfo\\s+-n\\s+(?<craftName>.+)\\s*$"),
     GO_TO_VILLAGE("^\\s*go\\s+to\\s+village\\s*$"),
     PLANT("^\\s*plant\\s+-s(?<seed>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),

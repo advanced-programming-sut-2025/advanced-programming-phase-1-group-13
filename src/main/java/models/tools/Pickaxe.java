@@ -49,6 +49,7 @@ public class Pickaxe extends Tool {
             return;
         }
         player.decreaseEnergyBy(energyNeeded);
+        player.updateSkillPoints(Skill.MINING, 10);
 
         if (tile.getType() == TileType.PLOWED_SOIL ||
                 tile.getType() == TileType.NOT_PLOWED_SOIL ||
@@ -67,7 +68,13 @@ public class Pickaxe extends Tool {
                     tile.pLaceItemOnTile(mineral);
                     System.out.println("Not able to add mineral to inventory.");
                 } else {
-                    backpack.addToInventory(mineral, null);
+
+                    if (player.getSkillLevels().get(Skill.MINING) != SkillLevel.LEVEL_ONE) {
+                        backpack.addToInventory(mineral, 2);
+                    } else {
+                        backpack.addToInventory(mineral, 1);
+                    }
+
                     System.out.println("One " + mineral.getName() + " has been added to the inventory.");
                 }
             } else {

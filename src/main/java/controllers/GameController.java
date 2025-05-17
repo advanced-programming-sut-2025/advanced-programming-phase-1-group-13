@@ -53,6 +53,9 @@ public class GameController {
     public Result showCurrentTool() {
         User player = App.getLoggedIn();
         Tool playerCurrentTool = player.getCurrentTool();
+        if (playerCurrentTool == null) {
+            return new Result(false, "No tool equipped.");
+        }
         return new Result(true, "Your tool is: " + playerCurrentTool.toString());
     }
 
@@ -207,6 +210,14 @@ public class GameController {
         }
         if (tool == null) {
             return new Result(false, "You should equip tool first.");
+        }
+        if (tool.getToolType() == ToolType.MILK_PAIL) {
+            return new Result(false, "Use the command below to use milk pail:\n" +
+                    "collect produce -n <animal's name>");
+        }
+        if (tool.getToolType() == ToolType.SHEARS) {
+            return new Result(false, "Use the command below to use shear:\n" +
+                    "collect produce -n <animal's name>");
         }
         if (canToolBeUsedHere(tile, tool.getToolType())) {
             tool.useTool(tile, player);
@@ -552,7 +563,7 @@ public class GameController {
             Position destination = new Position(targetX, targetY);
 
             // are coordinates within map bounds?
-            if (!isPositionValid(destination)) {
+            if (isPositionInvalid(destination)) {
                 return new Result(false, "Coordinates (" + targetX + "," + targetY + ") are out of bounds.");
             }
 
@@ -583,8 +594,8 @@ public class GameController {
     public Result applyTheWalk(String yOrN, String xAndYValues) {
         Boolean confirmed = switch (yOrN.toLowerCase()) {
             case "y", "yes" -> true;
-            case "n", "no"  -> false;
-            default         -> null;
+            case "n", "no" -> false;
+            default -> null;
         };
         if (confirmed == null) {
             return new Result(false, "Invalid confirmation. Use \"y\" or \"n\".");
@@ -611,15 +622,15 @@ public class GameController {
     }
 
 
-    private boolean isPositionValid(Position pos) {
+    private boolean isPositionInvalid(Position pos) {
         List<Tile> allTiles = App.getCurrentGame().getGameMap().getAllTiles();
-        if (allTiles.isEmpty()) return false;
+        if (allTiles.isEmpty()) return true;
 
         int maxX = allTiles.stream().mapToInt(t -> t.getPosition().getX()).max().orElse(0);
         int maxY = allTiles.stream().mapToInt(t -> t.getPosition().getY()).max().orElse(0);
 
-        return pos.getX() >= 0 && pos.getX() <= maxX &&
-                pos.getY() >= 0 && pos.getY() <= maxY;
+        return pos.getX() < 0 || pos.getX() > maxX ||
+                pos.getY() < 0 || pos.getY() > maxY;
     }
 
     // === PRINT MAP === //
@@ -658,7 +669,7 @@ public class GameController {
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
 
-        if (!isPositionValid(new Position(x, y))) {
+        if (isPositionInvalid(new Position(x, y))) {
             return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
         }
 
@@ -825,23 +836,82 @@ public class GameController {
         Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
         if (tile.getType() != TileType.PLANTED_SEED &&
                 tile.getType() != TileType.GROWING_CROP &&
-                tile.getType() != TileType.GREENHOUSE) {
+                tile.getType() != TileType.GREENHOUSE &&
+                tile.getType() != TileType.TREE) {
             return new Result(false, "No plants in this tile.");
         }
-        // Todo: plant's info, including:
-        //  name, time left till being harvestable, current stage, wateredTodayOrNot, Quality, FertilizedOrNot
-        return new Result(true, "");
+
+
+        Item item = tile.getItemPlacedOnTile();
+        String message = showCraftInfo(item.getName()).message();
+
+        if (item instanceof Tree tree) {
+            message +=
+                    "Days left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
+                            "Current stage: " + tree.getStage() + "\n" +
+                            "Has been watered today: ";
+
+            if (tree.hasBeenWateredToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
+
+            message += "\n" +
+                    "Has been fertilized today: ";
+
+            if (tree.hasBeenFertilizedToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
+        }
+
+        if (item instanceof Crop crop) {
+            message +=
+                    "Days left to harvest: " + (crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest()) + "\n" +
+                            "Current stage: " + crop.getStage() + "\n" +
+                            "Has been watered today: ";
+
+            if (crop.hasBeenWateredToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
+
+            message += "\n" +
+                    "Has been fertilized today: ";
+
+            if (crop.hasBeenFertilizedToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
+        }
+
+        return new Result(true, message);
     }
 
     public Result fertilize(String fertilizerName, String directionName) {
-        // TODO : get FertilizerType from its name
+        FertilizerType fertilizerType = FertilizerType.getFertilizerTypeByName(fertilizerName);
+        if (fertilizerType == null) {
+            return new Result(false, "Invalid fertilizer name");
+        }
         Direction direction = Direction.getDirectionByDisplayName(directionName);
-        // TODO: fertilize (should we have another tileType ??
-        //  FERTILIZED_GROWING_CROP,
-        //  FERTILIZED_PLANTED_SEED,
-        //  FERTILIZED_TREE,
-        //  FERTILIZED_PLOWED_SOIL, ... ?
-        return new Result(true, "");
+        Tile tile = neighborTile(direction);
+        Item plant = tile.getItemPlacedOnTile();
+        if (!(plant instanceof Tree) && !(plant instanceof Crop) && !(plant instanceof PlantSource)) {
+            return new Result(false, "You can fertilize crops, trees, and seeds only.");
+        }
+        if (plant instanceof Tree tree) {
+            tree.setHasBeenFertilizedToday(true);
+            return new Result(true, "Tree fertilized with " + fertilizerType.getName());
+        }
+        if (plant instanceof Crop crop) {
+            crop.setHasBeenWateredToday(true);
+            return new Result(true, "Crop fertilized with " + fertilizerType.getName());
+        }
+        return new Result(true, "Fertilized with " + fertilizerType.getName());
     }
 
     public Result howMuchWater() {

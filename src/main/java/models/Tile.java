@@ -35,6 +35,6 @@ public class Tile {
         this.setType(TileType.UNDER_AN_ITEM);
     }
 
-    public Object getItemPlacedOnTile() { return itemPLacedOnTile; }
+    public Item getItemPlacedOnTile() { return itemPLacedOnTile; }
 
 }
