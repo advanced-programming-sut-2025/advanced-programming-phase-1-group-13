@@ -2,6 +2,7 @@ package models;
 
 import com.google.gson.GsonBuilder;
 
+import controllers.GameController;
 import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
@@ -494,7 +495,9 @@ public class User {
     }
 
     public void faint() {
-        // TODO: well, faint!
+        this.energy = (int) (0.75 * this.maxEnergy);
+        System.out.println("You fainted! Your energy falls to 75% of max-energy, when you wake up in the next turn.");
+        GameController.nextTurn();
     }
 
     public void changePosition(Position newPosition) {

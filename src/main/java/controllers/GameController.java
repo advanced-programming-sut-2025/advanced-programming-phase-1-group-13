@@ -18,7 +18,7 @@ public class GameController {
 
     // === PLAYER'S STATUS === //
 
-    public Result nextTurn() {
+    public static Result nextTurn() {
         Game game = App.getCurrentGame();
         game.nextTurn(App.getLoggedIn());
         return new Result(true, "Next turn!\nBye-bye " + App.getLoggedIn().getNickname() + ".");
@@ -48,12 +48,6 @@ public class GameController {
         User player = App.getLoggedIn();
         player.setEnergyUnlimited(false);
         return new Result(true, "Unlimited Energy deactivated!");
-    }
-
-    public Result faint() {
-        User player = App.getLoggedIn();
-        player.faint();
-        return new Result(true, ""); // todo: appropriate message (next turn? or wake up in cabin?)
     }
 
     public Result showCurrentTool() {
