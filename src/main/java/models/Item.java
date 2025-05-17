@@ -161,6 +161,9 @@ public abstract class Item {
         if (itemType instanceof TreeType) {
             return new Tree((TreeType) itemType);
         }
+        if (itemType instanceof IngredientType) {
+            return new Ingredient((IngredientType) itemType);
+        }
         return null;
     }
 
