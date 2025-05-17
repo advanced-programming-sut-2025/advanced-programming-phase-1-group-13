@@ -70,20 +70,23 @@ public class GameController {
         return new Result(true, sb.toString());
     }
 
-    public Result upgradeTools(String toolsName) {
+    public Result upgradeTools(String toolName) {
+        User player = App.getLoggedIn();
         if (App.getCurrentShop().getType() != ShopType.BLACKSMITH) {
             return new Result(false, "You can only ask the blacksmith to upgrade your tools. Pay him a visit!");
         }
-        Tool tool = (Tool) Item.getItemByItemName(toolsName);
+        Tool tool = (Tool) Item.getItemByItemName(toolName);
         if (tool == null) {
             return new Result(false, "You do not have any tools with that name! Use: \n" + ToolType.getFullList());
         }
         // TODO: check the skills and budget...
-        // TODO: remove the previous tool and add the upgraded one
+        equipTool(toolName);
+        player.getCurrentTool().upgradeTool();
         if (tool.getToolType() == ToolType.FISHING_ROD) {
             return new Result(true, "Your Fishing Rods upgraded to " + ((FishingRod) tool).getRodType() + ".");
         }
-        return new Result(true, toolsName + " has been upgraded to " + tool.getToolMaterial() + ".");
+        player.getCurrentTool().upgradeTool();
+        return new Result(true, toolName + " has been upgraded to " + tool.getToolMaterial() + ".");
     }
 
     public Result showLearntCookingRecipes() {

@@ -53,4 +53,14 @@ public class FishingRod extends Tool {
 
         super.useTool(tile, player);
     }
+
+    @Override
+    public void upgradeTool() {
+        this.type = switch (type) {
+            case TRAINING -> FishingRodType.BAMBOO;
+            case BAMBOO -> FishingRodType.FIBERGLASS;
+            case FIBERGLASS, IRIDIUM -> FishingRodType.IRIDIUM;
+            default -> FishingRodType.TRAINING;
+        };
+    }
 }
