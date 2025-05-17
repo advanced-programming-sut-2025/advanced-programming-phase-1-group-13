@@ -273,6 +273,10 @@ public class Game {
                     tree.incrementDaySinceLastHarvest();
                 }
 
+                tree.incrementDayInStage();
+                if (tree.getDayInStage() == tree.getType().getStagesTime()) {
+                    tree.incrementStage();
+                }
             } else if (tile.getType() == TileType.GROWING_CROP) {
 
             }

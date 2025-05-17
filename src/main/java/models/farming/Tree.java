@@ -110,16 +110,19 @@ public class Tree extends Item implements Harvestable {
         return stage;
     }
 
-    public void setStage(int stage) {
-        this.stage = stage;
+    public void incrementStage() {
+        this.stage++;
+        if (this.stage > this.numOfStages) {
+            this.stage = this.numOfStages;
+        }
     }
 
     public int getDayInStage() {
         return dayInStage;
     }
 
-    public void setDayInStage(int dayInStage) {
-        this.dayInStage = dayInStage;
+    public void incrementDayInStage() {
+        this.dayInStage++;
     }
 
     public Integer getDaySinceLastHarvest() {
@@ -133,4 +136,6 @@ public class Tree extends Item implements Harvestable {
     public void incrementDaySinceLastHarvest() {
         this.daySinceLastHarvest++;
     }
+
+
 }
