@@ -200,7 +200,22 @@ public enum GoodsType implements ItemType {
             List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
     QUALITY_RETAINING_SOIL("Quality Retaining Soil", "This soil has a good chance of staying watered" +
             " overnight. Mix into tilled soil.", 150, Integer.MAX_VALUE, ShopType.PIERRE_GENERAL_STORE,
-            List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER));
+            List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+
+    // Fisher's Shop
+    FISH_SMOKER_RECIPE("Fish Smoker (Recipe)", "A recipe to make Fish Smoker", 10000, 1,
+            ShopType.THE_STARDROP_SALOON, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+    TROUT_SOUP("Trout Soup", "Pretty salty.", 250, 1,
+            ShopType.THE_STARDROP_SALOON, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+    BAMBOO_POLE("Bamboo Pole", "Use in the water to catch fish.", 500, 1,
+            ShopType.THE_STARDROP_SALOON, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+    TRAINING_ROD("Training Rod", "It's a lot easier to use than other rods, but can only catch basic fish.", 25, 1,
+            ShopType.THE_STARDROP_SALOON, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+    FIBERGLASS_ROD("Fiberglass Rod", "Use in the water to catch fish.", 1800, 1,
+            ShopType.THE_STARDROP_SALOON, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)),
+    IRIDIUM_ROD("Iridium Rod", "Use in the water to catch fish.", 7500, 1,
+            ShopType.THE_STARDROP_SALOON, List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER));
+
 
     private final String name;
     private final String description;
@@ -267,4 +282,3 @@ public enum GoodsType implements ItemType {
         return (this.seasonalStock.contains(currentSeason)) && (numberOfBought < this.dailyLimit);
     }
 }
-

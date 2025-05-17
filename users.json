@@ -8,6 +8,7 @@
     "woodCount": 0,
     "stoneCount": 0,
     "energy": 200,
+    "maxEnergy": 0,
     "isEnergyUnlimited": false,
     "position": {
       "x": 0,
@@ -73,6 +74,7 @@
     "woodCount": 0,
     "stoneCount": 0,
     "energy": 200,
+    "maxEnergy": 0,
     "isEnergyUnlimited": false,
     "position": {
       "x": 0,
@@ -138,6 +140,7 @@
     "woodCount": 0,
     "stoneCount": 0,
     "energy": 200,
+    "maxEnergy": 0,
     "isEnergyUnlimited": false,
     "position": {
       "x": 0,
@@ -161,6 +164,70 @@
     "qAndA": {
       "null": "Earth"
     },
+    "farm": {
+      "cropCount": 0,
+      "plantedCrops": [],
+      "trees": [],
+      "farmBuildings": [],
+      "height": 8,
+      "width": 8,
+      "artisans": []
+    },
+    "backpack": {
+      "type": "INITIAL",
+      "capacity": 12,
+      "isCapacityUnlimited": false,
+      "items": {}
+    },
+    "gifts": [],
+    "balance": 0.0,
+    "mostEarnedMoney": 0,
+    "numberOfGames": 0,
+    "trashCan": {
+      "toolType": "TRASH_CAN",
+      "toolMaterial": "BASIC",
+      "isSellable": false,
+      "isPurchasable": false,
+      "price": 0
+    },
+    "hasTalkedToToday": {},
+    "exchangedGiftToday": {},
+    "hasHuggedToday": {},
+    "exchangedFlowerToday": {},
+    "marriageRequests": [],
+    "isDepressed": false
+  },
+  {
+    "username": "rominaa",
+    "password": "LeoLeo1",
+    "nickname": "arv",
+    "email": "arvisgdfn@gmail.com",
+    "gender": "MAN",
+    "woodCount": 0,
+    "stoneCount": 0,
+    "energy": 200,
+    "maxEnergy": 200,
+    "isEnergyUnlimited": false,
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "hashedPassword": "f4340e977ca7014b8abc94727c379b795ae8cb0e58e32ceb6ef953d8ed7d7121",
+    "skillLevels": {
+      "FORAGING": "LEVEL_ONE",
+      "MINING": "LEVEL_ONE",
+      "FARMING": "LEVEL_ONE",
+      "FISHING": "LEVEL_ONE"
+    },
+    "skillPoints": {
+      "FORAGING": 0,
+      "MINING": 0,
+      "FARMING": 0,
+      "FISHING": 0
+    },
+    "learntCraftRecipes": [],
+    "learntCookingRecipes": [],
+    "qAndA": {},
     "farm": {
       "cropCount": 0,
       "plantedCrops": [],
