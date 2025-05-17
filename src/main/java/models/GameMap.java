@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public final class GameMap {
-    private static final int MAP_SIZE = 80;
+    private static final int MAP_SIZE = 100;
     private static final int CABIN_SIZE = 10;
     private final ArrayList<Farm> farms;
     private final ArrayList<Shop> shops;
