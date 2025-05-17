@@ -586,7 +586,7 @@ public class User {
         for (int dx = -1; dx < 1; dx++) {
             for (int dy = -1; dy < 1; dy++) {
                 position = new Position(x + dx, y + dy);
-                if (!(dx == 0 && dy == 0) && this.farm.getTileByPosition(position).getType().equals(tileType)) {
+                if (!(dx == 0 && dy == 0) && this.activeGame.getGameMap().getTileByPosition(position).getType().equals(tileType)) {
                     return true;
                 }
             }

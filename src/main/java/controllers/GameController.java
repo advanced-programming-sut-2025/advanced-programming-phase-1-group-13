@@ -295,6 +295,10 @@ public class GameController {
     public Result cheatAddItem(String itemName, String numberStr) {
         User player = App.getLoggedIn();
         Item item = Item.getItemByItemName(itemName);
+        if (item == null) {
+            return new Result(false, "Item not found.");
+        }
+
         int number = 1;
         if (numberStr != null) {
             number = Integer.parseInt(numberStr);
@@ -879,14 +883,14 @@ public class GameController {
     }
 
     public Result buyAnimal(String animalTypeStr, String name) {
-        Shop shop = App.getCurrentShop();
-        if (shop == null) {
-            return new Result(false, "You Must first enter Marnie's Ranch.");
-        }
-
-        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-            return new Result(false, "You Must first enter Marnie's Ranch.");
-        }
+//        Shop shop = App.getCurrentShop();
+//        if (shop == null) {
+//            return new Result(false, "You Must first enter Marnie's Ranch.");
+//        }
+//
+//        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+//            return new Result(false, "You Must first enter Marnie's Ranch.");
+//        }
 
         AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
         if (animalType == null) {
@@ -1002,7 +1006,7 @@ public class GameController {
                         + ", is already at " + newPosition.toString());
             }
 
-            if (!farm.getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
+            if (!App.getCurrentGame().getGameMap().getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
                 return new Result(false, "Your animal can only go on grass.");
             }
 
