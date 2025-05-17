@@ -813,18 +813,50 @@ public class GameController {
         Item item = tile.getItemPlacedOnTile();
         String message = showCraftInfo(item.getName()).message();
 
-        if (item instanceof Tree) {
-            Tree tree = (Tree) item;
+        if (item instanceof Tree tree) {
             message +=
-                    "Time left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
-                            "Current stage: " + tree.getStage() + "\n" +
+                    "Days left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
+                    "Current stage: " + tree.getStage() + "\n" +
                             "Has been watered today: ";
 
-            if (tree.isHasBeenWateredToday()) {
+            if (tree.hasBeenWateredToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
 
+            message += "\n" +
+                "Has been fertilized today: ";
+
+            if (tree.hasBeenFertilizedToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
             }
         }
-        //TODO  name, time left till being harvestable, current stage, wateredTodayOrNot, Quality, FertilizedOrNot
+
+        if (item instanceof Crop crop) {
+            message +=
+                    "Days left to harvest: " + (crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest()) + "\n" +
+                            "Current stage: " + crop.getStage() + "\n" +
+                            "Has been watered today: ";
+
+            if (crop.hasBeenWateredToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
+
+            message += "\n" +
+                    "Has been fertilized today: ";
+
+            if (crop.hasBeenFertilizedToday()) {
+                message += "Yes";
+            } else {
+                message += "No";
+            }
+        }
+
         return new Result(true, message);
     }
 

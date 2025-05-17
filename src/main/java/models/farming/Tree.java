@@ -27,6 +27,7 @@ public class Tree extends Item implements Harvestable {
     private int dayInStage;
     private Integer daySinceLastHarvest;
     private boolean hasBeenWateredToday;
+    private boolean hasBeenFertilizedToday;
 
     public Tree(TreeType treeType) {
         this.type = treeType;
@@ -147,11 +148,19 @@ public class Tree extends Item implements Harvestable {
         this.daySinceLastHarvest++;
     }
 
-    public boolean isHasBeenWateredToday() {
+    public boolean hasBeenWateredToday() {
         return this.hasBeenWateredToday;
     }
 
     public void setHasBeenWateredToday(boolean hasBeenWateredToday) {
         this.hasBeenWateredToday = hasBeenWateredToday;
+    }
+
+    public boolean hasBeenFertilizedToday() {
+        return hasBeenFertilizedToday;
+    }
+
+    public void setHasBeenFertilizedToday(boolean hasBeenFertilizedToday) {
+        this.hasBeenFertilizedToday = hasBeenFertilizedToday;
     }
 }
