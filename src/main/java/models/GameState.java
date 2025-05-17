@@ -42,12 +42,12 @@ public class GameState {
 
     public void setTime(Time time) {
         this.time = time;
-        saveGameState();
+        //saveGameState();
     }
 
     public void setCurrentWeather(Weather currentWeather) {
         this.currentWeather = currentWeather;
-        saveGameState();
+        //saveGameState();
     }
 
     private void saveGameState() {
@@ -114,5 +114,4 @@ public class GameState {
             }
         }
     }
-
 }

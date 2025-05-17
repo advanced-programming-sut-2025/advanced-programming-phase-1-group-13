@@ -1,14 +1,10 @@
 package models;
 
-import com.google.gson.GsonBuilder;
 import models.enums.types.TreeType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
 import models.enums.types.TileType;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -63,15 +59,7 @@ public final class GameMap {
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
-        saveGameMap();
-    }
-
-    private void saveGameMap() {
-        try (FileWriter writer = new FileWriter("gameMap.json")) {
-            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(this));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Removed JSON saveGameMap() call
     }
 
     public ArrayList<Tile> getWoodLogs() {
@@ -91,7 +79,6 @@ public final class GameMap {
             stones.add(new Mineral(pos));
         }
 
-        // TODO: CHECK!!!
         int foragingCount = 3 + random.nextInt(6);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = getRandomPosition();
@@ -195,7 +182,6 @@ public final class GameMap {
     private Greenhouse generateGreenhouse() {
         return new Greenhouse();
     }
-
 
     private Quarry generateQuarry(int x, int y, int width, int height) {
         Quarry quarry = new Quarry();
@@ -329,6 +315,4 @@ public final class GameMap {
             allTiles.add(tile);
         }
     }
-
-
 }
