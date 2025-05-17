@@ -482,14 +482,16 @@ public class GameController {
     }
 
     public static Tile getTileByPosition(Position position) {
+        System.out.println("Looking for tile at: " + position);
         for (Tile tile : GameMap.getAllTiles()) {
             if (tile.getPosition().equals(position)) {
+                System.out.println("Found tile at: " + position);
                 return tile;
             }
         }
+        System.out.println("Tile not found at: " + position);
         return null;
     }
-
 
     // === WALK === //
 

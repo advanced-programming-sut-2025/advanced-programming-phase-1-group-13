@@ -33,6 +33,8 @@ public class Game {
         this.gameState = new GameState();
         this.gameMap = new GameMap(mapNumber);
 
+        App.setCurrentGame(this);
+
         this.npcs = new ArrayList<>();
 
         for (NPCType npcType : NPCType.values()) {

@@ -6,6 +6,7 @@ import models.farming.Tree;
 import models.enums.types.TileType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public final class GameMap {
@@ -35,9 +36,34 @@ public final class GameMap {
         this.foragings = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
 
+        generateBaseMapTiles();
         generateFixedElements();
+        consolidateAllTiles();
         generateRandomElements();
     }
+
+    private void generateBaseMapTiles() {
+        allTiles = new ArrayList<>(MAP_SIZE * MAP_SIZE); // Pre-size for efficiency
+
+        for (int x = 0; x < MAP_SIZE; x++) {
+            for (int y = 0; y < MAP_SIZE; y++) {
+                Position pos = new Position(x, y);
+                Tile tile = new Tile();
+                tile.setPosition(pos);
+                tile.setType(TileType.NOT_PLOWED_SOIL);
+                allTiles.add(tile);
+
+                // Verify the tile was added and is accessible
+                Tile verifyTile = getTileByPosition(pos);
+                if (verifyTile == null || !verifyTile.getPosition().equals(pos)) {
+                    throw new IllegalStateException("Failed to properly create tile at " + pos);
+                }
+            }
+        }
+        System.out.println("Successfully created " + allTiles.size() + " tiles");
+    }
+
+
 
     public static int getMAP_SIZE() {
         return MAP_SIZE;
@@ -59,7 +85,6 @@ public final class GameMap {
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
-        // Removed JSON saveGameMap() call
     }
 
     public ArrayList<Tile> getWoodLogs() {
@@ -67,29 +92,43 @@ public final class GameMap {
     }
 
     private void generateRandomElements() {
-        int treeCount = 40 + random.nextInt(11);
+        ArrayList<Position> availablePositions = new ArrayList<>();
+        for (Tile tile : allTiles) {
+            if (tile.getType() == TileType.NOT_PLOWED_SOIL && !isPositionOccupied(tile.getPosition())) {
+                availablePositions.add(tile.getPosition());
+            }
+        }
+
+        Collections.shuffle(availablePositions, random);
+
+        int treeCount = Math.min(40 + random.nextInt(11), availablePositions.size());
         for (int i = 0; i < treeCount; i++) {
-            Position pos = getRandomPosition();
-            trees.add(new Tree(TreeType.getRandomTreeType(), pos));
+            Position pos = availablePositions.get(i);
+            Tile tile = getTileByPosition(pos);
+            trees.add(new Tree(TreeType.getRandomTreeType(), pos, tile));
+            tile.setType(TileType.TREE);
         }
 
-        int stoneCount = 10 + random.nextInt(11);
+        int stoneCount = Math.min(10 + random.nextInt(11), availablePositions.size() - treeCount);
         for (int i = 0; i < stoneCount; i++) {
-            Position pos = getRandomPosition();
+            Position pos = availablePositions.get(treeCount + i);
             stones.add(new Mineral(pos));
+            getTileByPosition(pos).setType(TileType.STONE);
         }
 
-        int foragingCount = 3 + random.nextInt(6);
+        int foragingCount = Math.min(3 + random.nextInt(6),
+                availablePositions.size() - treeCount - stoneCount);
         for (int i = 0; i < foragingCount; i++) {
-            Position pos = getRandomPosition();
+            Position pos = availablePositions.get(treeCount + stoneCount + i);
             foragings.add(new ForagingCrop(pos));
+            getTileByPosition(pos).setType(TileType.GRASS);
         }
 
-        int woodCount = 10 + random.nextInt(11);
+        int woodCount = Math.min(10 + random.nextInt(11),
+                availablePositions.size() - treeCount - stoneCount - foragingCount);
         for (int i = 0; i < woodCount; i++) {
-            Position pos = getRandomPosition();
-            Tile woodLog = new Tile();
-            woodLog.setPosition(pos);
+            Position pos = availablePositions.get(treeCount + stoneCount + foragingCount + i);
+            Tile woodLog = getTileByPosition(pos);
             woodLog.setType(TileType.WOOD_LOG);
             woodLogs.add(woodLog);
         }
@@ -108,46 +147,30 @@ public final class GameMap {
     }
 
     private boolean isPositionOccupied(Position pos) {
-        if (lake != null && lake.getTiles().contains(pos)) {
+        // First check if tile exists and is basic soil
+        Tile tile = getTileByPosition(pos);
+        if (tile == null || tile.getType() != TileType.NOT_PLOWED_SOIL) {
             return true;
         }
 
-        if (quarry != null) {
-            for (Tile tile : quarry.getTiles()) {
-                if (tile.getPosition().equals(pos)) {
-                    return true;
-                }
-            }
-        }
+        // Check fixed elements
+        if (lake != null && lake.getTiles().contains(pos)) return true;
+        if (quarry != null && quarry.getTiles().stream()
+                .anyMatch(t -> t.getPosition().equals(pos))) return true;
+        if (greenhouse != null && greenhouse.getTiles().stream()
+                .anyMatch(t -> t.getPosition().equals(pos))) return true;
+        if (cabin != null && cabin.getTiles().contains(pos)) return true;
 
-        if (greenhouse != null) {
-            for (Tile tile : greenhouse.getTiles()) {
-                if (tile.getPosition().equals(pos)) {
-                    return true;
-                }
-            }
-        }
-
-        if (cabin != null) {
-            for (Position cabinTile : cabin.getTiles()) {
-                if (cabinTile.equals(pos)) {
-                    return true;
-                }
-            }
-        }
-
+        // Check dynamic elements
         for (Tree tree : trees) {
             if (tree.getPosition().equals(pos)) return true;
         }
-
         for (Mineral stone : stones) {
             if (stone.getPosition().equals(pos)) return true;
         }
-
         for (ForagingCrop crop : foragings) {
             if (crop.getPosition().equals(pos)) return true;
         }
-
         for (Tile log : woodLogs) {
             if (log.getPosition().equals(pos)) return true;
         }
@@ -258,61 +281,59 @@ public final class GameMap {
     }
 
     public void consolidateAllTiles() {
-        allTiles = new ArrayList<>();
-
         if (cabin != null) {
             for (Position pos : cabin.getTiles()) {
-                Tile tile = new Tile();
-                tile.setPosition(pos);
-                tile.setType(TileType.CABIN);
-                allTiles.add(tile);
+                Tile tile = getTileByPosition(pos);
+                if (tile != null) tile.setType(TileType.CABIN);
             }
         }
 
         if (greenhouse != null) {
-            allTiles.addAll(greenhouse.getTiles());
+            for (Tile tile : greenhouse.getTiles()) {
+                Tile baseTile = getTileByPosition(tile.getPosition());
+                if (baseTile != null) baseTile.setType(tile.getType());
+                else allTiles.add(tile);
+            }
         }
 
         if (quarry != null) {
-            allTiles.addAll(quarry.getTiles());
+            for (Tile tile : quarry.getTiles()) {
+                Tile baseTile = getTileByPosition(tile.getPosition());
+                if (baseTile != null) baseTile.setType(tile.getType());
+                else allTiles.add(tile);
+            }
         }
 
         if (lake != null) {
             for (Position pos : lake.getTiles()) {
-                Tile tile = new Tile();
-                tile.setPosition(pos);
-                tile.setType(TileType.WATER);
-                allTiles.add(tile);
+                Tile tile = getTileByPosition(pos);
+                if (tile != null) tile.setType(TileType.WATER);
             }
         }
 
         for (Farm farm : farms) {
-            allTiles.addAll(farm.getFarmTiles());
+            for (Tile tile : farm.getFarmTiles()) {
+                Tile baseTile = getTileByPosition(tile.getPosition());
+                if (baseTile != null) baseTile.setType(tile.getType());
+                else allTiles.add(tile);
+            }
         }
 
         for (Shop shop : shops) {
-            allTiles.addAll(shop.getShopTiles());
+            for (Tile tile : shop.getShopTiles()) {
+                Tile baseTile = getTileByPosition(tile.getPosition());
+                if (baseTile != null) baseTile.setType(tile.getType());
+                else allTiles.add(tile);
+            }
         }
+    }
 
-        for (Tree tree : trees) {
-            Tile tile = new Tile();
-            tile.setPosition(tree.getPosition());
-            tile.setType(TileType.TREE);
-            allTiles.add(tile);
+    public static Tile getTileByPosition(Position position) {
+        for (Tile tile : GameMap.getAllTiles()) {
+            if (tile.getPosition().equals(position)) {
+                return tile;
+            }
         }
-
-        for (Mineral stone : stones) {
-            Tile tile = new Tile();
-            tile.setPosition(stone.getPosition());
-            tile.setType(TileType.STONE);
-            allTiles.add(tile);
-        }
-
-        for (ForagingCrop crop : foragings) {
-            Tile tile = new Tile();
-            tile.setPosition(crop.getPosition());
-            tile.setType(TileType.GROWING_CROP);
-            allTiles.add(tile);
-        }
+        return null;
     }
 }

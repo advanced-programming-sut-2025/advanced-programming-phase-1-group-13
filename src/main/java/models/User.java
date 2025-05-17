@@ -232,7 +232,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public String getPassword() {
@@ -305,7 +305,7 @@ public class User {
 
     public void changeBalance(double amount) {
         this.balance += amount;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public void setEnergy(int energyAmount) {
@@ -314,7 +314,7 @@ public class User {
         } else {
             this.energy = energyAmount;
         }
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     private void saveUsersToJson() {

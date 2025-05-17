@@ -1,6 +1,7 @@
 package models.farming;
 
 import controllers.GameController;
+import models.App;
 import models.Item;
 import models.Position;
 import models.Tile;
@@ -19,7 +20,7 @@ public class Tree extends Item implements Harvestable {
     private int totalHarvestTime;
     private int baseSellPrice;
     private boolean isEdible;
-    private int energy;
+    private Integer energy;
     private ArrayList<Season> seasons;
     private Position position;
     private FruitType fruit;
@@ -28,10 +29,9 @@ public class Tree extends Item implements Harvestable {
     private int stage;
     private int dayInStage;
 
-    public Tree(TreeType type, Position position) {
-        Tile tile = GameController.getTileByPosition(position);
+    public Tree(TreeType type, Position position, Tile tile) {
         if (tile == null) {
-            return;
+            throw new IllegalArgumentException("No tile found at position: " + position);
         }
         tile.setType(TileType.TREE);
         this.position = position;
