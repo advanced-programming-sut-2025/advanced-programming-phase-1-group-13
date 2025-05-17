@@ -208,6 +208,14 @@ public class GameController {
         if (tool == null) {
             return new Result(false, "You should equip tool first.");
         }
+        if (tool.getToolType() == ToolType.MILK_PAIL) {
+            return new Result(false, "Use the command below to use milk pail:\n" +
+                    "collect produce -n <animal's name>");
+        }
+        if (tool.getToolType() == ToolType.SHEARS) {
+            return new Result(false, "Use the command below to use shear:\n" +
+                    "collect produce -n <animal's name>");
+        }
         if (canToolBeUsedHere(tile, tool.getToolType())) {
             tool.useTool(tile, player);
             return new Result(true, "Done!");
@@ -583,8 +591,8 @@ public class GameController {
     public Result applyTheWalk(String yOrN, String xAndYValues) {
         Boolean confirmed = switch (yOrN.toLowerCase()) {
             case "y", "yes" -> true;
-            case "n", "no"  -> false;
-            default         -> null;
+            case "n", "no" -> false;
+            default -> null;
         };
         if (confirmed == null) {
             return new Result(false, "Invalid confirmation. Use \"y\" or \"n\".");
