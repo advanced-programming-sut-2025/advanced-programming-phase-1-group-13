@@ -3,6 +3,7 @@ package models;
 import models.enums.Quality;
 import models.enums.types.*;
 import models.farming.Crop;
+import models.farming.Tree;
 import models.tools.*;
 
 public abstract class Item {
@@ -164,7 +165,7 @@ public abstract class Item {
             // todo
         }
         if (itemType instanceof TreeType) {
-            // todo
+            return new Tree((TreeType) itemType);
         }
         if (itemType instanceof MoneyType) {
             // todo

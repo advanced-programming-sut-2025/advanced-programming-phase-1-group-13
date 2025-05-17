@@ -27,6 +27,11 @@ public class Tree extends Item implements Harvestable {
     private int dayInStage;
     private Integer daySinceLastHarvest;
 
+    public Tree(TreeType treeType) {
+        this.type = treeType;
+        this.fruitType = type.getFruit();
+        this.fruitHarvestCycle = type.getFruitHarvestCycle();
+    }
 
     public Tree(TreeType type, Position position, Tile tile) {
         if (tile == null) {
