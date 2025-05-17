@@ -129,7 +129,7 @@ public class Tree extends Item implements Harvestable {
         return this.daySinceLastHarvest;
     }
 
-    public void setDaySinceLastHarvest() {
+    public void setDaySinceLastHarvest(Integer daySinceLastHarvest) {
         this.daySinceLastHarvest = daySinceLastHarvest;
     }
 
