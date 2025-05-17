@@ -253,9 +253,43 @@ public class GameController {
         return new Result(true, itemName + " crafted and added to inventory.");
     }
 
-    public Result showCraftInfo(String craftName) {
-        // TODO: tf is it? page 33 ... vegetables?
-        return new Result(true, "");
+    public Result showCraftInfo(String cropName) {
+        CropType cropType = CropType.getCropTypeByName(cropName);
+        if (cropType == null) {
+            return new Result(false, "Crop not found.");
+        }
+
+        StringBuilder message =
+                new StringBuilder("Name: " + cropType.getName() + "\n" +
+                        "Source: " + cropType.getSource() + "\n" +
+                        "Stages: ");
+
+        for (Integer stage : cropType.getStages()) {
+            message.append(stage).append("-");
+        }
+        message.replace(message.length() - 1, message.length(), "");
+
+        message.append("\n" + "Total Harvest Time: ").append(cropType.getTotalHarvestTime()).append("\n").append("One Time: ").append(cropType.isOneTime()).append("\n")
+                .append("Regrowth Time: ");
+
+        if (cropType.getRegrowthTime() != null) {
+            message.append(cropType.getRegrowthTime());
+        }
+
+        message.append("\n").append("Base Sell Price: ").append(cropType.getSellPrice()).append("\n").
+                append("Is Edible: ").append(cropType.isEdible()).append("\n").
+                append("Base Energy: ");
+
+        if (cropType.isEdible()) {
+            message.append(cropType.getEnergy());
+        } else {
+            message.append("Not Edible");
+        }
+        message.append("\nSeason: ").append(cropType.getSource()).append("\n").
+                append("Can Become Giant: ").append(cropType.canBecomeGiant()).append("\n")
+        ;
+
+        return new Result(true, message.toString());
     }
 
     public Result cheatAddItem(String itemName, String numberStr) {
@@ -297,7 +331,7 @@ public class GameController {
 
     public Result prepareCook(String foodName) {
         User player = App.getLoggedIn();
-        if (getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
+        if (App.getCurrentGame().getGameMap().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
         }
 
@@ -411,7 +445,7 @@ public class GameController {
         }
         if (!backpack.getItems().containsKey(food) &&
                 homeRefrigerator.getItems().containsKey(food) &&
-                getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
+                App.getCurrentGame().getGameMap().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(
                     false,
                     "You don't have a " + food.getName() + " in your backpack, but you have one back in your cabin.\n" +
@@ -494,17 +528,7 @@ public class GameController {
     public Tile neighborTile(Direction direction) {
         User player = App.getLoggedIn();
         Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
-        return getTileByPosition(newPosition);
-    }
-
-    public static Tile getTileByPosition(Position position) {
-        for (Tile tile : GameMap.getAllTiles()) {
-            if (tile.getPosition().equals(position)) {
-                return tile;
-            }
-        }
-        System.out.println("Tile not found at: " + position);
-        return null;
+        return App.getCurrentGame().getGameMap().getTileByPosition(newPosition);
     }
 
     // === WALK === //
@@ -569,7 +593,7 @@ public class GameController {
     }
 
     private boolean isPositionValid(Position pos) {
-        List<Tile> allTiles = GameMap.getAllTiles();
+        List<Tile> allTiles = App.getCurrentGame().getGameMap().getAllTiles();
         if (allTiles.isEmpty()) return false;
 
         int maxX = allTiles.stream().mapToInt(t -> t.getPosition().getX()).max().orElse(0);
@@ -594,7 +618,7 @@ public class GameController {
 
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                Tile tile = getTileByPosition(new Position(i, j));
+                Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(new Position(i, j));
                 mapRepresentation.append(getTileSymbol(tile)).append(" ");
             }
             mapRepresentation.append("\n");
@@ -675,7 +699,7 @@ public class GameController {
 
     public Result cheatThor(String xString, String yString) {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
-        Tile tile = getTileByPosition(position);
+        Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
 
         if (tile != null) {
             tile.setType(TileType.NOT_PLOWED_SOIL); // TODO: is it good?
@@ -742,7 +766,7 @@ public class GameController {
 
     public Result showPlant(String xString, String yString) {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
-        Tile tile = getTileByPosition(position);
+        Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
         if (tile.getType() != TileType.PLANTED_SEED &&
                 tile.getType() != TileType.GROWING_CROP &&
                 tile.getType() != TileType.GREENHOUSE) {

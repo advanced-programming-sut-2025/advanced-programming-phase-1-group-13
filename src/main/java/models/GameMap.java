@@ -40,6 +40,12 @@ public final class GameMap {
         generateFixedElements();
         consolidateAllTiles();
         generateRandomElements();
+        for (Tile tile : allTiles) {
+            if (tile.getType() != TileType.NOT_PLOWED_SOIL) {
+                System.out.println("Tile at " + tile.getPosition() + " is of type: " + tile.getType());
+            }
+        }
+
     }
 
     private void generateBaseMapTiles() {
@@ -53,7 +59,6 @@ public final class GameMap {
                 tile.setType(TileType.NOT_PLOWED_SOIL);
                 allTiles.add(tile);
 
-                // Verify the tile was added and is accessible
                 Tile verifyTile = getTileByPosition(pos);
                 if (verifyTile == null || !verifyTile.getPosition().equals(pos)) {
                     throw new IllegalStateException("Failed to properly create tile at " + pos);
@@ -73,12 +78,12 @@ public final class GameMap {
     private void generateFixedElements() {
         if (mapNumber == 1) {
             this.lake = generateLake(10, 15, 5, 8);
-            this.cabin = generateCabin(70, 70);
+            this.cabin = generateCabin(3, 3, 3, 3);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10, 15);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 8, 5);
-            this.cabin = generateCabin(10, 71);
+            this.cabin = generateCabin(4, 4, 4, 4);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
@@ -177,14 +182,40 @@ public final class GameMap {
 
     private Lake generateLake(int x, int y, int width, int height) {
         Lake lake = new Lake();
-        lake.setTiles(generateTilePositions(x, y, width, height));
+        ArrayList<Position> positions = generateTilePositions(x, y, width, height);
+        lake.setTiles(positions);
+
+        for (Position pos : positions) {
+            Tile tile = getTileByPosition(pos);
+            if (tile == null) {
+                tile = new Tile();
+                tile.setPosition(pos);
+                tile.setType(TileType.WATER);
+                allTiles.add(tile);
+            } else {
+                tile.setType(TileType.WATER);
+            }
+        }
+
         return lake;
     }
 
-    private Cabin generateCabin(int x, int y) {
+    private Cabin generateCabin(int x, int y, int width, int height) {
         Cabin cabin = new Cabin();
-        cabin.setTiles(generateTilePositions(x, y, CABIN_SIZE, CABIN_SIZE));
-        return cabin;
+        ArrayList<Position> positions = generateTilePositions(x, y, width, height);
+        cabin.setTiles(positions);
+
+        for (Position pos : positions) {
+            Tile tile = getTileByPosition(pos);
+            if (tile == null) {
+                tile = new Tile();
+                tile.setPosition(pos);
+                tile.setType(TileType.CABIN);
+                allTiles.add(tile);
+            } else {
+                tile.setType(TileType.CABIN);
+            }
+        }        return cabin;
     }
 
     private ArrayList<Position> generateTilePositions(int x, int y, int width, int height) {
@@ -273,7 +304,7 @@ public final class GameMap {
         return random;
     }
 
-    public static ArrayList<Tile> getAllTiles() {
+    public ArrayList<Tile> getAllTiles() {
         return allTiles;
     }
 
@@ -326,9 +357,10 @@ public final class GameMap {
     }
 
 
-    public static Tile getTileByPosition(Position position) {
-        for (Tile tile : GameMap.getAllTiles()) {
-            if (tile.getPosition().equals(position)) {
+    public Tile getTileByPosition(Position position) {
+        for (Tile tile : this.getAllTiles()) {
+            if (tile.getPosition().getX() == position.getX() &&
+            tile.getPosition().getY() == position.getY()) {
                 return tile;
             }
         }

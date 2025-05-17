@@ -6,7 +6,7 @@ import models.enums.Menu;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static models.App.getUserByUsername;
+import static models.App.*;
 
 public class PreGameMenuController {
     public Result gameNew(String usernamesStr) {
@@ -55,6 +55,7 @@ public class PreGameMenuController {
         }
         User player = App.getLoggedIn();
         player.getActiveGame().setGameMap(new GameMap(mapNumber));
+        setCurrentMenu(Menu.GAME_MENU);
         return new Result(true, "Game");
     }
 

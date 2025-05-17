@@ -177,7 +177,6 @@ public class Game {
         for (User sender : hashmap1.keySet()) {
             resultMessage.append("------------------------------------------------------------\n");
             resultMessage.append("  From ").append(sender.getUsername()).append(":\n");
-            resultMessage.append("------------------------------------------------------------\n");
 
             HashMap<String, Boolean> hashmap2 = hashmap1.get(sender);
             for (String message : hashmap2.keySet()) {
@@ -186,7 +185,6 @@ public class Game {
                 }
             }
 
-            resultMessage.append("------------------------------------------------------------\n");
         }
 
         return resultMessage.toString();
