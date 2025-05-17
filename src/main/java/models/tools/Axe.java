@@ -36,6 +36,9 @@ public class Axe extends Tool {
     @Override
     public void useTool(Tile tile, User player) {
         int energyNeeded = calculateEnergyNeeded(player.getSkillLevels(), player.getCurrentTool());
+        if (player.getBuffRelatedSkill() == Skill.FORAGING && player.getHoursLeftTillBuffVanishes() > 0) {
+            energyNeeded = Math.max(0, energyNeeded - 1);
+        }
         if (energyNeeded >= player.getEnergy()) {
             player.faint();
             return;

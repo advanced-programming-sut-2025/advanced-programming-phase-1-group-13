@@ -39,6 +39,9 @@ public class FishingRod extends Tool {
     @Override
     public void useTool(Tile tile, User player) {
         int energyNeeded = this.calculateEnergyNeeded(player.getSkillLevels(), null);
+        if (player.getBuffRelatedSkill() == Skill.FISHING && player.getHoursLeftTillBuffVanishes() > 0) {
+            energyNeeded = Math.max(0, energyNeeded - 1);
+        }
         if (energyNeeded >= player.getEnergy()) {
             player.faint();
             return;
