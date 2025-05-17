@@ -126,9 +126,10 @@ public class GameController {
     }
 
     public Result cheatAdvanceTime(String hourIncreaseStr) {
-        int hourIncrease = Integer.parseInt(hourIncreaseStr);
-        Time.cheatAdvanceTime(hourIncrease, App.getCurrentGame());
-        return new Result(true, "Time increased by " + hourIncrease + " hours.");
+        int hour = Integer.parseInt(hourIncreaseStr);
+        Time.cheatAdvanceTime(hour, App.getCurrentGame());
+        App.getLoggedIn().decreaseHoursLeftTillBuffVanishes(hour);
+        return new Result(true, "Time increased by " + hour + " hours.");
     }
 
     public Result cheatAdvanceDate(String dayIncreaseStr) {
@@ -407,7 +408,7 @@ public class GameController {
         }
         player.increaseEnergyBy(foodType.getEnergy());
         FoodBuff buff = foodType.getBuff();
-        // TODO: apply buff
+        player.activateFoodBuff(buff);
         String message = "Bon appétit!\nYour " + food.getName() + " had these effects:\n" +
                 "\tyour energy increased by " + foodType.getEnergy() + "\n" + "\tbuff: " + buff.getBuffDisplayName();
         return new Result(true, message);
@@ -591,49 +592,67 @@ public class GameController {
         if (tile == null) return "⬜";
 
         switch (tile.getType()) {
-            case TREE: return "🌳";
-            case WATER: return "🌊";
-            case CABIN: return "🏠";
-            case STONE: return "🪨";
-            case GREENHOUSE: return "🪟";
-            case QUARRY_GROUND: return "⛰️";
-            case WOOD_LOG: return "🪵";
-            case GROWING_CROP: return "🌱";
-            case ANIMAL: return "🐄";
-            case PLOWED_SOIL: return "🟤";
-            case NOT_PLOWED_SOIL: return "🟫";
-            case PLANTED_SEED: return "🌾";
-            case WATERED_NOT_PLOWED_SOIL: return "💧";
-            case WATERED_PLOWED_SOIL: return "💦";
-            case GRASS: return "⸙";
-            case UNDER_AN_ITEM: return "📦";
-            case SHOP: return "🏪";
-            default: return "❓";
+            case TREE:
+                return "🌳";
+            case WATER:
+                return "🌊";
+            case CABIN:
+                return "🏠";
+            case STONE:
+                return "🪨";
+            case GREENHOUSE:
+                return "🪟";
+            case QUARRY_GROUND:
+                return "⛰️";
+            case WOOD_LOG:
+                return "🪵";
+            case GROWING_CROP:
+                return "🌱";
+            case ANIMAL:
+                return "🐄";
+            case PLOWED_SOIL:
+                return "🟤";
+            case NOT_PLOWED_SOIL:
+                return "🟫";
+            case PLANTED_SEED:
+                return "🌾";
+            case WATERED_NOT_PLOWED_SOIL:
+                return "💧";
+            case WATERED_PLOWED_SOIL:
+                return "💦";
+            case GRASS:
+                return "⸙";
+            case UNDER_AN_ITEM:
+                return "📦";
+            case SHOP:
+                return "🏪";
+            default:
+                return "❓";
         }
     }
 
     public Result showHelpReadingMap() {
         String helpText = """
-        === Map Symbols Legend ===
-        🌳 - Tree
-        🌊 - Water
-        🏠 - Cabin
-        🪨 - Stone
-        🪟 - Greenhouse
-        ⛰️ - Quarry Ground
-        🪵 - Wood Log
-        🌱 - Growing Crop
-        🐄 - Animal
-        🟤 - Plowed Soil
-        🟫 - Not Plowed Soil
-        🌾 - Planted Seed
-        💧 - Watered Not Plowed Soil
-        💦 - Watered Plowed Soil
-        ⸙ - Grass
-        📦 - Item
-        🏪 - Shop
-        ⬜ - Empty Space
-        """;
+                === Map Symbols Legend ===
+                🌳 - Tree
+                🌊 - Water
+                🏠 - Cabin
+                🪨 - Stone
+                🪟 - Greenhouse
+                ⛰️ - Quarry Ground
+                🪵 - Wood Log
+                🌱 - Growing Crop
+                🐄 - Animal
+                🟤 - Plowed Soil
+                🟫 - Not Plowed Soil
+                🌾 - Planted Seed
+                💧 - Watered Not Plowed Soil
+                💦 - Watered Plowed Soil
+                ⸙ - Grass
+                📦 - Item
+                🏪 - Shop
+                ⬜ - Empty Space
+                """;
         return new Result(true, helpText);
     }
 
