@@ -615,17 +615,27 @@ public class GameController {
         }
 
         StringBuilder mapRepresentation = new StringBuilder();
+        System.out.println(App.getLoggedIn().getPosition() + App.getLoggedIn().getUsername());
+        Position playerPos = App.getLoggedIn().getPosition();
 
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(new Position(i, j));
-                mapRepresentation.append(getTileSymbol(tile)).append(" ");
+                Position pos = new Position(i, j);
+                Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(pos);
+
+                if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
+                    System.out.println("HEYYYY");
+                    mapRepresentation.append("👤");
+                } else {
+                    mapRepresentation.append(getTileSymbol(tile)).append(" ");
+                }
             }
             mapRepresentation.append("\n");
         }
 
         return new Result(true, mapRepresentation.toString());
     }
+
 
     private String getTileSymbol(Tile tile) {
         if (tile == null) return "⬜";
