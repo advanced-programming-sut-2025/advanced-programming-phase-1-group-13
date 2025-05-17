@@ -4,7 +4,6 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import models.enums.FriendshipLevel;
 import models.enums.Menu;
 import models.enums.environment.Time;
@@ -32,6 +31,8 @@ public class Game {
         this.players = players;
         this.gameState = new GameState();
         this.gameMap = new GameMap(mapNumber);
+
+        App.setCurrentGame(this);
 
         this.npcs = new ArrayList<>();
 
@@ -108,6 +109,7 @@ public class Game {
        // saveGameState();
     }
 
+
     public ArrayList<User> getPlayers() {
         return players;
     }
@@ -155,14 +157,14 @@ public class Game {
                 player.setActiveGame(null);
                 if (player.getMostEarnedMoney() < player.getBalance()) {
                     player.setMostEarnedMoney((int) player.getBalance());
-                    // TODO: reset player fields
                 }
+                player.resetPlayer();
             }
         }
         App.setCurrentMenu(Menu.PRE_GAME_MENU);
     }
 
-    public void nextTurn(User previousUser) {
+    public String nextTurn(User previousUser) {
         int previousPlayerIndex = players.indexOf(previousUser);
         App.setLoggedIn(players.get((previousPlayerIndex + 1) % players.size()));
 
@@ -170,9 +172,24 @@ public class Game {
             Time.advanceOneHour(this);
         }
 
-        // TODO: show unread messages when starting new turn
+        StringBuilder resultMessage = new StringBuilder("New messages:\n");
+        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(previousUser);
+        for (User sender : hashmap1.keySet()) {
+            resultMessage.append("------------------------------------------------------------\n");
+            resultMessage.append("  From ").append(sender.getUsername()).append(":\n");
+            resultMessage.append("------------------------------------------------------------\n");
 
-       // saveGameState();
+            HashMap<String, Boolean> hashmap2 = hashmap1.get(sender);
+            for (String message : hashmap2.keySet()) {
+                if (hashmap2.get(message)) {
+                    resultMessage.append("    ").append(message).append("\n");
+                }
+            }
+
+            resultMessage.append("------------------------------------------------------------\n");
+        }
+
+        return resultMessage.toString();
     }
 
     public Result changeDay() {

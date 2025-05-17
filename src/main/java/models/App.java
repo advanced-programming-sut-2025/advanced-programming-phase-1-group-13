@@ -1,8 +1,15 @@
 package models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import models.enums.Menu;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     private static ArrayList<User> users = new ArrayList<>();
@@ -37,8 +44,22 @@ public class App {
     }
 
     public static ArrayList<User> getUsers() {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+
+        try (FileReader reader = new FileReader("users.json")) {
+            Gson gson = new Gson();
+            ArrayList<User> loadedUsers = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+            if (loadedUsers != null) {
+                users = loadedUsers;
+            }
+        } catch (IOException e) {
+            users = new ArrayList<>();
+        }
         return users;
     }
+
 
     public static Shop getCurrentShop() {
         return currentShop;
@@ -49,7 +70,16 @@ public class App {
     }
 
     public static void addUser(User user) {
-        users.add(user);
+        App.users.add(user);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(users);
+
+        try (FileWriter writer = new FileWriter("users.json")) {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle errors
+        }
     }
 
     public static ArrayList<Game> getGames() {
@@ -61,10 +91,11 @@ public class App {
     }
 
     public static User getUserByUsername(String username) {
-        if (users.isEmpty()) {
+        ArrayList<User> usersList = getUsers();
+        if (usersList.isEmpty()) {
             return null;
         }
-        for (User user : users) {
+        for (User user : usersList) {
             if (user.getUsername().equals(username)) {
                 return user;
             }
@@ -72,11 +103,14 @@ public class App {
         return null;
     }
 
+
     public static User getUserByEmail(String email) {
-        if (users.isEmpty()) {
+        ArrayList<User> usersList = getUsers();
+
+        if (usersList.isEmpty()) {
             return null;
         }
-        for (User user : users) {
+        for (User user : usersList) {
             if (user.getEmail().equals(email)) {
                 return user;
             }

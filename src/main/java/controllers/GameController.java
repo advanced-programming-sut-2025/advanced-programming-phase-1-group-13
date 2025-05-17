@@ -20,8 +20,8 @@ public class GameController {
 
     public static Result nextTurn() {
         Game game = App.getCurrentGame();
-        game.nextTurn(App.getLoggedIn());
-        return new Result(true, "Next turn!\nBye-bye " + App.getLoggedIn().getNickname() + ".");
+        String message = game.nextTurn(App.getLoggedIn());
+        return new Result(true, "It is now " + App.getLoggedIn().getNickname() + "'s turn.\n" + message);
     }
 
     public Result showPlayerEnergy() {
@@ -489,6 +489,7 @@ public class GameController {
                 tileType == TileType.QUARRY_GROUND;
     }
 
+
     public Tile neighborTile(Direction direction) {
         User player = App.getLoggedIn();
         Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
@@ -501,9 +502,9 @@ public class GameController {
                 return tile;
             }
         }
+        System.out.println("Tile not found at: " + position);
         return null;
     }
-
 
     // === WALK === //
 

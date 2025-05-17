@@ -68,10 +68,15 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.numberOfGames = 0;
+        this.mostEarnedMoney = 0;
+        this.activeGame = null;
+        this.resetPlayer();
+    }
+
+    public void resetPlayer() {
         this.woodCount = 0;
         this.stoneCount = 0;
-        this.numberOfGames = 0;
-        this.activeGame = null;
         this.energy = 200;
         this.maxEnergy = 200;
         this.farm = new Farm(0); // TODO
@@ -106,7 +111,6 @@ public class User {
         this.buffRelatedSkill = null;
         hoursLeftTillBuffVanishes = null;
     }
-
 
     public void setPosition(Position position) {
         this.position = position;
@@ -288,7 +292,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public String getPassword() {
@@ -361,7 +365,7 @@ public class User {
 
     public void changeBalance(double amount) {
         this.balance += amount;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public void setEnergy(int energyAmount) {
@@ -370,7 +374,7 @@ public class User {
         } else {
             this.energy = energyAmount;
         }
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     private void saveUsersToJson() {
