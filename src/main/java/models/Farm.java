@@ -129,8 +129,8 @@ public class Farm {
         for (int i = 0; i < farmBuildingType.getWidth(); i++) {
             for (int j = 0; j < farmBuildingType.getLength(); j++) {
                 Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
-                if (!this.getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
-                    return false;
+                if (!App.getCurrentGame().getGameMap().getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
+//                    return false;
                 }
             }
         }
