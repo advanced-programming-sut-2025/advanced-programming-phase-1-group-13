@@ -17,28 +17,54 @@ public class LoginMenu implements AppMenu {
         Matcher matcher;
         if (LoginCommands.MENU_EXIT.getMatcher(inputLine) != null) {
             System.out.println(controller.exit());
-        } else if ((matcher = LoginCommands.REGISTER_USER.getMatcher(inputLine)) != null) {
+        } else if ((matcher = LoginCommands.REGISTER_USER_PASS.getMatcher(inputLine)) != null) {
+            // Manual registration with password provided
+            String username = matcher.group("username").trim();
             Result result = controller.registerUser(
-                    matcher.group("username"),
+                    username,
                     matcher.group("password"),
                     matcher.group("repeatPassword"),
                     matcher.group("nickname"),
                     matcher.group("email"),
-                    matcher.group("gender")
+                    matcher.group("gender"),
+                    false  // not generating random password
             );
+            System.out.println(result.message());
             if (result.success()) {
                 inputLine = scanner.nextLine();
                 if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
                     System.out.println(controller.pickSecurityQuestion(
-                            result.message(),
+                            username,  // pass the actual username instead of result.message()
                             matcher.group("questionNumber"),
                             matcher.group("answer"),
                             matcher.group("repeatAnswer")
                     ));
                 }
-
             }
-        } else if ((matcher = LoginCommands.FORGET_PASSWORD.getMatcher(inputLine)) != null) {
+        } else if ((matcher = LoginCommands.REGISTER_USER_RAND.getMatcher(inputLine)) != null) {
+            // Registration using random password generation
+            String username = matcher.group("username").trim();
+            Result result = controller.registerUser(
+                    username,
+                    matcher.group("nickname"),
+                    matcher.group("email"),
+                    matcher.group("gender"),
+                    true  // generate random password
+            );
+            System.out.println(result.message());
+            if (result.success()) {
+                inputLine = scanner.nextLine();
+                if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
+                    System.out.println(controller.pickSecurityQuestion(
+                            username, // again, pass the stored username
+                            matcher.group("questionNumber"),
+                            matcher.group("answer"),
+                            matcher.group("repeatAnswer")
+                    ));
+                }
+            }
+        }
+        else if ((matcher = LoginCommands.FORGET_PASSWORD.getMatcher(inputLine)) != null) {
             String username = matcher.group("username");
             Result result = controller.forgotPassword(username);
             System.out.println(result);

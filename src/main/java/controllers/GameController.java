@@ -685,8 +685,8 @@ public class GameController {
 
 
     public Result showWeather() {
-        return new Result(true, "Current weather: " +
-                App.getCurrentGame().getGameState().getCurrentWeather().name());
+        Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
+        return new Result(true, "Current weather: " + weather.getName());
     }
 
     public Result showWeatherForecast() {

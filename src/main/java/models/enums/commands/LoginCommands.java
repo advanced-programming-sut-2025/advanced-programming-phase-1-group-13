@@ -7,8 +7,10 @@ public enum LoginCommands implements Command {
     VALID_PASSWORD("^[a-zA-Z0-9?<>,\"';:\\\\/|\\[\\] {}+=)(*&^%\\$#!]+$"),
     VALID_EMAIL("^(?!.*\\.\\.)[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*" +
             "[A-Za-z0-9])?\\.)+[A-Za-z]{2,}$"),
-    REGISTER_USER("^\\s*register\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>.+)\\s+(?<repeatPassword>.+)\\s+" +
+    REGISTER_USER_PASS("^\\s*register\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>.+)\\s+(?<repeatPassword>.+)\\s+" +
             "-n\\s+(?<nickname>.+)\\s+-e\\s+(?<email>.+)\\s+-g\\s+(?<gender>.+)\\s*$"),
+    REGISTER_USER_RAND("^\\s*register\\s+-u\\s+(?<username>.+)\\s+" +
+            "-n\\s+(?<nickname>.+)\\s+-e\\s+(?<email>.+)\\s+-g\\s+(?<gender>.+)\\s+-r\\s*$"),
     PICK_QUESTION_REGEX("^\\s*pick\\s+question\\s+-q\\s+(?<questionNumber>\\d+)\\s+-a\\s+(?<answer>.+)\\s+-c\\s+(?<repeatAnswer>.+)\\s*$"),
     LOGIN("^\\s*login\\s+-u\\s+(?<username>.+)\\s+-p\\s+(?<password>.+)\\s*(?<stayLoggedIn>-stay-logged-in)?\\s*$"),
     FORGET_PASSWORD("^\\s*forget\\s+password\\s+-u\\s+(?<username>.+)\\s*$"),
