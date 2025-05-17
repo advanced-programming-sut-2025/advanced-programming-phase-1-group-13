@@ -9,9 +9,7 @@ import models.enums.SkillLevel;
 import models.enums.environment.Time;
 import models.enums.types.*;
 import models.inventory.Backpack;
-import models.tools.FishingRod;
-import models.tools.Tool;
-import models.tools.TrashCan;
+import models.tools.*;
 import models.trade.Trade;
 import models.trade.TradeWithItem;
 import models.trade.TradeWithMoney;
@@ -88,6 +86,14 @@ public class User {
         this.learntCookingRecipes = new ArrayList<>();
         this.qAndA = new HashMap<>();
         this.backpack = new Backpack(BackpackType.INITIAL);
+        this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new MilkPail(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new Pickaxe(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new Scythe(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new Shear(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new TrashCan(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
         this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
@@ -549,7 +555,7 @@ public class User {
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {
         this.qAndA.put(securityQuestion, answer);
-       // saveUsersToJson();
+        // saveUsersToJson();
     }
 
     public Gift getGiftById(int id) {
