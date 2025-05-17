@@ -147,7 +147,7 @@ public class Tree extends Item implements Harvestable {
         this.daySinceLastHarvest++;
     }
 
-    public boolean isHasBeenWateredToday() {
+    public boolean hasBeenWateredToday() {
         return this.hasBeenWateredToday;
     }
 
