@@ -4,7 +4,6 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import models.enums.FriendshipLevel;
 import models.enums.Menu;
 import models.enums.environment.Time;
@@ -158,8 +157,8 @@ public class Game {
                 player.setActiveGame(null);
                 if (player.getMostEarnedMoney() < player.getBalance()) {
                     player.setMostEarnedMoney((int) player.getBalance());
-                    // TODO: reset player fields
                 }
+                player.resetPlayer();
             }
         }
         App.setCurrentMenu(Menu.PRE_GAME_MENU);
