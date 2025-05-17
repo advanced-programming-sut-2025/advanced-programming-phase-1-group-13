@@ -640,7 +640,7 @@ public class GameController {
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
 
-        if (!isPositionValid(new Position(x, y))) {
+        if (!App.getCurrentGame().getVillage().isPositionValid(new Position(x, y))) {
             return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
         }
 
