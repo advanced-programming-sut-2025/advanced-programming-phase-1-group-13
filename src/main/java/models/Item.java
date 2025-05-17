@@ -100,7 +100,6 @@ public abstract class Item {
                     new Animal("", ((AnimalProductType) itemType).getAnimal(), null));
         }
 
-
         if (itemType instanceof CraftType) {
             return new Craft((CraftType) itemType);
         }

@@ -1,5 +1,6 @@
 package models;
 
+import controllers.GameController;
 import models.enums.types.TreeType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
@@ -215,7 +216,8 @@ public final class GameMap {
             } else {
                 tile.setType(TileType.CABIN);
             }
-        }        return cabin;
+        }
+        return cabin;
     }
 
     private ArrayList<Position> generateTilePositions(int x, int y, int width, int height) {
@@ -360,10 +362,16 @@ public final class GameMap {
     public Tile getTileByPosition(Position position) {
         for (Tile tile : this.getAllTiles()) {
             if (tile.getPosition().getX() == position.getX() &&
-            tile.getPosition().getY() == position.getY()) {
+                    tile.getPosition().getY() == position.getY()) {
                 return tile;
             }
         }
         return null;
+    }
+
+    public Item getItemByPosition(Position position) {
+        Tile tile = this.getTileByPosition(position);
+        if (tile == null) return null;
+        return tile.getItemPlacedOnTile();
     }
 }

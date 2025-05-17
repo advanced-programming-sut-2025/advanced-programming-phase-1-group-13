@@ -235,7 +235,7 @@ public class GameController {
     public Result craft(String itemName) {
         User player = App.getLoggedIn();
         ItemType itemType = Item.getItemTypeByItemName(itemName);
-        Item item = Item.getItemByItemType(itemType);
+        Item item = Item.getItemByItemName(itemName);
         CraftType craftType = CraftType.getCraftByName(itemName);
         if (craftType == null) {
             return new Result(false, "Item not found.");
