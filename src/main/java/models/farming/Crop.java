@@ -121,15 +121,26 @@ public class Crop extends Item implements Harvestable {
 
     }
 
-    public int getDaySinceLastHarvest() {
+    public Integer getDaySinceLastHarvest() {
         return this.daySinceLastHarvest;
     }
 
-    public void setDaySinceLastHarvest(int daySinceLastHarvest) {
-        this.daySinceLastHarvest = daySinceLastHarvest;
+    public void incrementStage() {
+        this.stage++;
+        if (this.stage > this.numOfStages) {
+            this.stage = this.numOfStages;
+        }
     }
 
-    public void incrementDaySinceLastHarvest(int daySinceLastHarvest) {
+    public void incrementDayInStage() {
+        this.dayInStage++;
+    }
+
+    public void incrementDaySinceLastHarvest() {
         this.daySinceLastHarvest++;
+    }
+
+    public void setDaySinceLastHarvest(Integer daySinceLastHarvest) {
+        this.daySinceLastHarvest = daySinceLastHarvest;
     }
 }

@@ -11,6 +11,7 @@ import models.enums.types.ItemType;
 import models.enums.types.NPCType;
 import models.enums.types.ShopType;
 import models.enums.types.TileType;
+import models.farming.Crop;
 import models.farming.Tree;
 import models.trade.Trade;
 
@@ -213,15 +214,15 @@ public class Game {
                 player.setEnergy(200);
             }
 
-            for (int i = this.players.indexOf(player); i < this.players.size(); i++) {
-                User otherPlayer = this.players.get(i);
-                if (!player.hasInteractedToday(otherPlayer)) {
-                    this.changeFriendship(player, otherPlayer, -10);
-                    message.append(player).append(" did not interact with ").append(otherPlayer.getUsername())
-                            .append(". Their friendship decreased and is now ")
-                            .append(this.getUserFriendship(player, otherPlayer).toString()).append(".\n");
-                }
-            }
+//            for (int i = this.players.indexOf(player); i < this.players.size(); i++) {
+//                User otherPlayer = this.players.get(i);
+//                if (!player.hasInteractedToday(otherPlayer)) {
+//                    this.changeFriendship(player, otherPlayer, -10);
+//                    message.append(player).append(" did not interact with ").append(otherPlayer.getUsername())
+//                            .append(". Their friendship decreased and is now ")
+//                            .append(this.getUserFriendship(player, otherPlayer).toString()).append(".\n");
+//                }
+//            }
 
             for (NPC npc : this.npcs) {
                 if (this.getNpcFriendshipPoints(player, npc) / 200 >= 3) {
@@ -254,33 +255,41 @@ public class Game {
             }
         }
 
-        for (User player : this.players) {
-            int income = 0;
-            for (ShippingBin shippingBin : player.getFarm().getShippingBins()) {
-                for (Item item : shippingBin.getItemsToShip()) {
-                    income += item.getSellPrice();
-                }
-            }
-            player.changeBalance(income);
-            message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
-                    .append(income).append("g.\n");
-        }
+//        for (User player : this.players) {
+//            int income = 0;
+//            for (ShippingBin shippingBin : player.getFarm().getShippingBins()) {
+//                for (Item item : shippingBin.getItemsToShip()) {
+//                    income += item.getSellPrice();
+//                }
+//            }
+//            player.changeBalance(income);
+//            message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
+//                    .append(income).append("g.\n");
+//        }
 
-        for (Tile tile : gameMap.getAllTiles()) {
-            if (tile.getType() == TileType.TREE) {
-                Tree tree = (Tree) tile.getItemPlacedOnTile();
-                if (tree.getDaySinceLastHarvest() != null) {
-                    tree.incrementDaySinceLastHarvest();
-                }
-
-                tree.incrementDayInStage();
-                if (tree.getDayInStage() == tree.getType().getStagesTime()) {
-                    tree.incrementStage();
-                }
-            } else if (tile.getType() == TileType.GROWING_CROP) {
-
-            }
-        }
+//        for (Tile tile : gameMap.getAllTiles()) {
+//            if (tile.getType() == TileType.TREE) {
+//                Tree tree = (Tree) tile.getItemPlacedOnTile();
+//                if (tree.getDaySinceLastHarvest() != null) {
+//                    tree.incrementDaySinceLastHarvest();
+//                }
+//
+//                tree.incrementDayInStage();
+//                if (tree.getDayInStage() == tree.getType().getStagesTime()) {
+//                    tree.incrementStage();
+//                }
+//            } else if (tile.getType() == TileType.GROWING_CROP) {
+//                Crop crop = (Crop) tile.getItemPlacedOnTile();
+//                if (crop.getDaySinceLastHarvest() != null) {
+//                    crop.incrementDaySinceLastHarvest();
+//                }
+//
+//                crop.incrementDayInStage();
+//                if (crop.getDayInStage() == crop.getStagesTimes().get(crop.getStage())) {
+//                    crop.incrementStage();
+//                }
+//            }
+//        }
 
         return new Result(true, message.toString());
     }
