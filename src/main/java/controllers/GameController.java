@@ -838,7 +838,7 @@ public class GameController {
         if (item instanceof Tree tree) {
             message +=
                     "Days left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
-                    "Current stage: " + tree.getStage() + "\n" +
+                            "Current stage: " + tree.getStage() + "\n" +
                             "Has been watered today: ";
 
             if (tree.hasBeenWateredToday()) {
@@ -848,7 +848,7 @@ public class GameController {
             }
 
             message += "\n" +
-                "Has been fertilized today: ";
+                    "Has been fertilized today: ";
 
             if (tree.hasBeenFertilizedToday()) {
                 message += "Yes";
@@ -888,12 +888,20 @@ public class GameController {
             return new Result(false, "Invalid fertilizer name");
         }
         Direction direction = Direction.getDirectionByDisplayName(directionName);
-        // TODO: fertilize (should we have another tileType ??
-        //  FERTILIZED_GROWING_CROP,
-        //  FERTILIZED_PLANTED_SEED,
-        //  FERTILIZED_TREE,
-        //  FERTILIZED_PLOWED_SOIL, ... ?
-        return new Result(true, "");
+        Tile tile = neighborTile(direction);
+        Item plant = tile.getItemPlacedOnTile();
+        if (!(plant instanceof Tree) && !(plant instanceof Crop) && !(plant instanceof PlantSource)) {
+            return new Result(false, "You can fertilize crops, trees, and seeds only.");
+        }
+        if (plant instanceof Tree tree) {
+            tree.setHasBeenFertilizedToday(true);
+            return new Result(true, "Tree fertilized with " + fertilizerType.getName());
+        }
+        if (plant instanceof Crop crop) {
+            crop.setHasBeenWateredToday(true);
+            return new Result(true, "Crop fertilized with " + fertilizerType.getName());
+        }
+        return new Result(true, "Fertilized with " + fertilizerType.getName());
     }
 
     public Result howMuchWater() {
