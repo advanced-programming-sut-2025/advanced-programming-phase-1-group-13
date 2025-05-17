@@ -269,6 +269,28 @@ public class GameController {
     public Result showCraftInfo(String cropName) {
         CropType cropType = CropType.getCropTypeByName(cropName);
         if (cropType == null) {
+            if (TreeType.getTreeTypeByName(cropName) != null) {
+                TreeType treeType = TreeType.getTreeTypeByName(cropName);
+                StringBuilder message =
+                        new StringBuilder("Name: " + treeType.getName() + "\n" +
+                                "Source: " + treeType.getSource() + "\n" +
+                                "Stages: ");
+
+                message.append("7-7-7-7");
+
+                message.append("\n" + "Total Harvest Time: ").append(treeType.getTotalHarvestTime()).append("\n").
+                        append("Base Sell Price: ").append(treeType.getFruitBaseSellPrice()).append("\n").
+                        append("Is Edible: ").append(treeType.isFruitEdible()).append("\n").
+                        append("Base Fruit Energy: ");
+
+                if (cropType.isEdible()) {
+                    message.append(treeType.getFruitEnergy());
+                } else {
+                    message.append("Not Edible");
+                }
+
+                message.append("\nSource: ").append(treeType.getSource()).append("\n");
+            }
             return new Result(false, "Crop not found.");
         }
 

@@ -87,4 +87,13 @@ public enum TreeType implements ItemType {
     public static TreeType getRandomTreeType() {
         return TreeType.values()[(int) (Math.random() * TreeType.values().length)];
     }
+
+    public static TreeType getTreeTypeByName(String name) {
+        for (TreeType treeType : TreeType.values()) {
+            if (treeType.getName().equals(name)) {
+                return treeType;
+            }
+        }
+        return null;
+    }
 }
