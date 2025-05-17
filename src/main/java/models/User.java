@@ -81,7 +81,7 @@ public class User {
         this.maxEnergy = 200;
         this.farm = new Farm(0); // TODO
         this.backpack = new Backpack(BackpackType.INITIAL);
-        this.position = new Position(0, 0); // TODO
+        this.position = new Position(6, 7); // TODO
         this.isEnergyUnlimited = false;
         this.balance = 0;
         this.learntCraftRecipes = new ArrayList<>();
