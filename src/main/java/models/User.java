@@ -74,43 +74,6 @@ public class User {
         this.resetPlayer();
     }
 
-    public void resetPlayer() {
-        this.woodCount = 0;
-        this.stoneCount = 0;
-        this.energy = 200;
-        this.maxEnergy = 200;
-        this.farm = new Farm(0); // TODO
-        this.backpack = new Backpack(BackpackType.INITIAL);
-        this.position = new Position(0, 0); // TODO
-        this.isEnergyUnlimited = false;
-        this.balance = 0;
-        this.learntCraftRecipes = new ArrayList<>();
-        this.learntCookingRecipes = new ArrayList<>();
-        this.qAndA = new HashMap<>();
-        this.backpack = new Backpack(BackpackType.INITIAL);
-        this.skillLevels = new HashMap<>();
-        this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
-        this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
-        this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ONE);
-        this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ONE);
-        this.skillPoints = new HashMap<>();
-        this.skillPoints.put(Skill.FARMING, 0);
-        this.skillPoints.put(Skill.FISHING, 0);
-        this.skillPoints.put(Skill.MINING, 0);
-        this.skillPoints.put(Skill.FORAGING, 0);
-        this.trashCan = new TrashCan(ToolMaterial.BASIC);
-        this.marriageRequests = new ArrayList<>();
-        this.spouse = null;
-        this.isDepressed = false;
-        this.gifts = new ArrayList<>();
-        this.hasTalkedToToday = new HashMap<>();
-        this.exchangedGiftToday = new HashMap<>();
-        this.hasHuggedToday = new HashMap<>();
-        this.exchangedFlowerToday = new HashMap<>();
-        this.currentFoodBuff = null;
-        this.buffRelatedSkill = null;
-        hoursLeftTillBuffVanishes = null;
-    }
 
     public void setPosition(Position position) {
         this.position = position;
@@ -292,7 +255,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public String getPassword() {
@@ -365,7 +328,7 @@ public class User {
 
     public void changeBalance(double amount) {
         this.balance += amount;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public void setEnergy(int energyAmount) {
@@ -374,7 +337,7 @@ public class User {
         } else {
             this.energy = energyAmount;
         }
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     private void saveUsersToJson() {
@@ -546,7 +509,7 @@ public class User {
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {
         this.qAndA.put(securityQuestion, answer);
-       // saveUsersToJson();
+        saveUsersToJson();
     }
 
     public Gift getGiftById(int id) {
@@ -639,5 +602,43 @@ public class User {
 
     public int getStoneCount() {
         return this.stoneCount;
+    }
+
+    public void resetPlayer() {
+        this.woodCount = 0;
+        this.stoneCount = 0;
+        this.energy = 200;
+        this.maxEnergy = 200;
+        this.farm = new Farm(0); // TODO
+        this.backpack = new Backpack(BackpackType.INITIAL);
+        this.position = new Position(0, 0); // TODO
+        this.isEnergyUnlimited = false;
+        this.balance = 0;
+        this.learntCraftRecipes = new ArrayList<>();
+        this.learntCookingRecipes = new ArrayList<>();
+        this.qAndA = new HashMap<>();
+        this.backpack = new Backpack(BackpackType.INITIAL);
+        this.skillLevels = new HashMap<>();
+        this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
+        this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
+        this.skillLevels.put(Skill.MINING, SkillLevel.LEVEL_ONE);
+        this.skillLevels.put(Skill.FORAGING, SkillLevel.LEVEL_ONE);
+        this.skillPoints = new HashMap<>();
+        this.skillPoints.put(Skill.FARMING, 0);
+        this.skillPoints.put(Skill.FISHING, 0);
+        this.skillPoints.put(Skill.MINING, 0);
+        this.skillPoints.put(Skill.FORAGING, 0);
+        this.trashCan = new TrashCan(ToolMaterial.BASIC);
+        this.marriageRequests = new ArrayList<>();
+        this.spouse = null;
+        this.isDepressed = false;
+        this.gifts = new ArrayList<>();
+        this.hasTalkedToToday = new HashMap<>();
+        this.exchangedGiftToday = new HashMap<>();
+        this.hasHuggedToday = new HashMap<>();
+        this.exchangedFlowerToday = new HashMap<>();
+        this.currentFoodBuff = null;
+        this.buffRelatedSkill = null;
+        this.hoursLeftTillBuffVanishes = null;
     }
 }
