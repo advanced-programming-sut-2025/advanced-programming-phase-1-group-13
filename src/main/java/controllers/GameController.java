@@ -808,14 +808,14 @@ public class GameController {
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(String farmBuildingTypeStr, String xString, String yString) {
-        Shop shop = App.getCurrentShop();
-        if (shop == null) {
-            return new Result(false, "You must first enter Marnie's Ranch.");
-        }
-
-        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-            return new Result(false, "You must first enter Marnie's Ranch.");
-        }
+//        Shop shop = App.getCurrentShop();
+//        if (shop == null) {
+//            return new Result(false, "You must first enter Marnie's Ranch.");
+//        }
+//
+//        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+//            return new Result(false, "You must first enter Marnie's Ranch.");
+//        }
 
         FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
         if (farmBuildingType == null) {
@@ -841,8 +841,14 @@ public class GameController {
         HashMap<Item, Integer> items = player.getBackpack().getItems();
         Material wood = new Material(MaterialType.WOOD);
         Material stone = new Material(MaterialType.STONE);
-        int woodInInventory = items.get(wood);
-        int stoneInInventory = items.get(stone);
+        int woodInInventory = 0;
+        if (items.get(wood) != null) {
+            items.get(wood);
+        }
+        int stoneInInventory = 0;
+        if (items.get(stone) != null) {
+            items.get(stone);
+        }
         int woodNeeded = farmBuildingType.getWoodCount();
         int stoneNeeded = farmBuildingType.getStoneCount();
         boolean enoughSupplies = (woodNeeded <= woodInInventory) && (stoneNeeded <= stoneInInventory);
