@@ -41,13 +41,14 @@ public class PathFinder {
         if (!confirm) {
             return new Result(false, "Walk cancelled");
         }
-        if (player.getEnergy() < p.getEnergyNeeded()) {
+        int energyCost = p.getEnergyNeeded();
+        if (player.getEnergy() < energyCost) {
             return new Result(false, "Not enough energy");
         }
+        player.setEnergy(player.getEnergy() - energyCost);
         Position last = p.getPathTiles().get(p.getPathTiles().size() - 1).getPosition();
         player.changePosition(last);
-        player.setEnergy(player.getEnergy() - p.getEnergyNeeded());
-        return new Result(true, "Walked! Energy used=" + p.getEnergyNeeded());
+        return new Result(true, "Walked! Energy used=" + energyCost);
     }
 
     public Path findValidPath(Position orig, Position dest) {
@@ -72,11 +73,9 @@ public class PathFinder {
         visited = new boolean[height][width];
         parent = new Position[height][width];
 
-        boolean found = bfs(orig, dest);
-        if (!found) {
+        if (!bfs(orig, dest)) {
             return null;
         }
-
         return buildPath(orig, dest);
     }
 
@@ -85,8 +84,7 @@ public class PathFinder {
         queue.offer(orig);
         visited[orig.getY()][orig.getX()] = true;
 
-        int[][] directions = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
-
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         while (!queue.isEmpty()) {
             Position current = queue.poll();
             if (current.getX() == dest.getX() && current.getY() == dest.getY()) {
@@ -137,9 +135,7 @@ public class PathFinder {
         for (int i = 2; i < path.size(); i++) {
             int curDirX = path.get(i).getX() - path.get(i-1).getX();
             int curDirY = path.get(i).getY() - path.get(i-1).getY();
-            if (curDirX != prevDirX || curDirY != prevDirY) {
-                turns++;
-            }
+            if (curDirX != prevDirX || curDirY != prevDirY) turns++;
             prevDirX = curDirX;
             prevDirY = curDirY;
         }

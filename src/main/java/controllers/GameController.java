@@ -583,8 +583,8 @@ public class GameController {
     public Result applyTheWalk(String yOrN, String xAndYValues) {
         Boolean confirmed = switch (yOrN.toLowerCase()) {
             case "y", "yes" -> true;
-            case "n", "no" -> false;
-            default -> null;
+            case "n", "no"  -> false;
+            default         -> null;
         };
         if (confirmed == null) {
             return new Result(false, "Invalid confirmation. Use \"y\" or \"n\".");
@@ -596,10 +596,20 @@ public class GameController {
         String[] parts = xAndYValues.split(" ");
         int x = Integer.parseInt(parts[0]);
         int y = Integer.parseInt(parts[1]);
+
         User player = App.getLoggedIn();
-        player.changePosition(new Position(x, y));
-        return new Result(true, "You are now at " + player.getPosition());
+        Position orig = player.getPosition();
+        Position dest = new Position(x, y);
+
+        PathFinder pf = new PathFinder(player);
+        Path path = pf.findValidPath(orig, dest);
+        if (path == null) {
+            return new Result(false, "No valid path found to (" + x + "," + y + ")");
+        }
+
+        return pf.walk(path, yOrN);
     }
+
 
     private boolean isPositionValid(Position pos) {
         List<Tile> allTiles = App.getCurrentGame().getGameMap().getAllTiles();
