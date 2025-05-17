@@ -1,6 +1,7 @@
 package views;
 
 import controllers.TradeController;
+import models.enums.commands.MainMenuCommands;
 import models.enums.commands.TradeCommands;
 
 import java.util.Scanner;
@@ -31,6 +32,8 @@ public class TradeMenu implements AppMenu {
             System.out.println(controller.showTradeHistory());
         } else if ((matcher = TradeCommands.EXIT_TRADE_MENU.getMatcher(inputLine)) != null) {
             System.out.println(controller.exitTradeMenu());
+        } else if ((matcher = MainMenuCommands.SHOW_CURRENT_MENU.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showCurrentMenu());
         } else {
             System.out.println("Invalid Command. Please try again!");
         }
