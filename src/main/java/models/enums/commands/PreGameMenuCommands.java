@@ -7,7 +7,7 @@ public enum PreGameMenuCommands implements Command {
     GAME_NEW("^\\s*game\\s+new\\s*(?<usernames>.+)*\\s*$"),
     GAME_MAP("^\\s*game\\s+map\\s+(?<mapNumber>\\d+)$"),
     LOAD_GAME("^\\s*load\\s+game\\s*$"),
-    EXIT_GAME("^\\s*exit\\s+game\\s*$");
+    EXIT("^\\s*(menu)?\\s*exit\\s*$");
 
     private final String regex;
     private final Pattern pattern;
