@@ -253,9 +253,43 @@ public class GameController {
         return new Result(true, itemName + " crafted and added to inventory.");
     }
 
-    public Result showCraftInfo(String craftName) {
-        // TODO: tf is it? page 33 ... vegetables?
-        return new Result(true, "");
+    public Result showCraftInfo(String cropName) {
+        CropType cropType = CropType.getCropTypeByName(cropName);
+        if (cropType == null) {
+            return new Result(false, "Crop not found.");
+        }
+
+        StringBuilder message =
+                new StringBuilder("Name: " + cropType.getName() + "\n" +
+                        "Source: " + cropType.getSource() + "\n" +
+                        "Stages: ");
+
+        for (Integer stage : cropType.getStages()) {
+            message.append(stage).append("-");
+        }
+        message.replace(message.length() - 1, message.length(), "");
+
+        message.append("\n" + "Total Harvest Time: ").append(cropType.getTotalHarvestTime()).append("\n").append("One Time: ").append(cropType.isOneTime()).append("\n")
+                .append("Regrowth Time: ");
+
+        if (cropType.getRegrowthTime() != null) {
+            message.append(cropType.getRegrowthTime());
+        }
+
+        message.append("\n").append("Base Sell Price: ").append(cropType.getSellPrice()).append("\n").
+                append("Is Edible: ").append(cropType.isEdible()).append("\n").
+                append("Base Energy: ");
+
+        if (cropType.isEdible()) {
+            message.append(cropType.getEnergy());
+        } else {
+            message.append("Not Edible");
+        }
+        message.append("\nSeason: ").append(cropType.getSource()).append("\n").
+                append("Can Become Giant: ").append(cropType.canBecomeGiant()).append("\n")
+        ;
+
+        return new Result(true, message.toString());
     }
 
     public Result cheatAddItem(String itemName, String numberStr) {
