@@ -10,6 +10,8 @@ import models.enums.environment.Time;
 import models.enums.types.ItemType;
 import models.enums.types.NPCType;
 import models.enums.types.ShopType;
+import models.enums.types.TileType;
+import models.farming.Tree;
 import models.trade.Trade;
 
 import java.io.FileWriter;
@@ -264,8 +266,16 @@ public class Game {
                     .append(income).append("g.\n");
         }
 
-        for (Tile tile : gameMap.) {
+        for (Tile tile : gameMap.getAllTiles()) {
+            if (tile.getType() == TileType.TREE) {
+                Tree tree = (Tree) tile.getItemPlacedOnTile();
+                if (tree.getDaySinceLastHarvest() != null) {
+                    tree.incrementDaySinceLastHarvest();
+                }
 
+            } else if (tile.getType() == TileType.GROWING_CROP) {
+
+            }
         }
 
         return new Result(true, message.toString());
