@@ -8,6 +8,7 @@ import models.enums.types.TileType;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,12 +55,12 @@ public final class GameMap {
         if (mapNumber == 1) {
             this.lake = generateLake(10, 15, 5, 8);
             this.cabin = generateCabin(70, 70);
-            this.greenhouse = generateGreenhouse(60, 60, 3, 4);
+            this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10, 15);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 8, 5);
             this.cabin = generateCabin(10, 71);
-            this.greenhouse = generateGreenhouse(70, 10, 4, 3);
+            this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
         saveGameMap();
@@ -132,7 +133,38 @@ public final class GameMap {
             }
         }
 
-        // TODO: Check other fixed elements...
+        if (greenhouse != null) {
+            for (Tile tile : greenhouse.getTiles()) {
+                if (tile.getPosition().equals(pos)) {
+                    return true;
+                }
+            }
+        }
+
+        if (cabin != null) {
+            for (Position cabinTile : cabin.getTiles()) {
+                if (cabinTile.equals(pos)) {
+                    return true;
+                }
+            }
+        }
+
+        for (Tree tree : trees) {
+            if (tree.getPosition().equals(pos)) return true;
+        }
+
+        for (Mineral stone : stones) {
+            if (stone.getPosition().equals(pos)) return true;
+        }
+
+        for (ForagingCrop crop : foragings) {
+            if (crop.getPosition().equals(pos)) return true;
+        }
+
+        for (Tile log : woodLogs) {
+            if (log.getPosition().equals(pos)) return true;
+        }
+
         return false;
     }
 
@@ -160,22 +192,10 @@ public final class GameMap {
         return tiles;
     }
 
-    private Greenhouse generateGreenhouse(int x, int y, int width, int height) {
-        Greenhouse greenhouse = new Greenhouse();
-        ArrayList<Tile> tiles = new ArrayList<>();
-
-        for (int i = x; i < x + width; i++) {
-            for (int j = y; j < y + height; j++) {
-                Tile tile = new Tile();
-                tile.setPosition(new Position(i, j));
-                tile.setType(TileType.GREENHOUSE);
-                tiles.add(tile);
-            }
-        }
-
-        greenhouse.setTiles(tiles);
-        return greenhouse;
+    private Greenhouse generateGreenhouse() {
+        return new Greenhouse();
     }
+
 
     private Quarry generateQuarry(int x, int y, int width, int height) {
         Quarry quarry = new Quarry();

@@ -687,10 +687,7 @@ public class GameController {
         if (!canBuildGreenhouse()) {
             return new Result(false, "You don't have enough resources or a greenhouse already exists!");
         }
-
-        App.getLoggedIn();
-        Greenhouse greenhouse = generateGreenhouse(10, 10, 5, 5);
-
+        App.getCurrentGame().getGameMap().getGreenhouse().setCanEnter(true);
         return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }
 
