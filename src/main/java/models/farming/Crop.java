@@ -27,8 +27,7 @@ public class Crop extends Item implements Harvestable {
     private Integer daySinceLastHarvest;
     private boolean hasBeenWateredToday;
 
-    public Crop(ItemType itemType) {
-        CropType type = (CropType) itemType;
+    public Crop(CropType type) {
         this.type = type;
         this.source = type.getSource();
         this.numOfStages = type.getNumberOfStages();
