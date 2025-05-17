@@ -370,9 +370,9 @@ public final class GameMap {
         return null;
     }
 
-    public Item getItemByPosition(Position position) {
-        Tile tile = this.getTileByPosition(position);
-        if (tile == null) return null;
-        return tile.getItemPlacedOnTile();
-    }
+//    public Item getItemByPosition(Position position) {
+//        Tile tile = this.getTileByPosition(position);
+//        if (tile == null) return null;
+//        return tile.getItemPlacedOnTile();
+//    }
 }
