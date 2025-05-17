@@ -15,7 +15,7 @@ public class GameMenu implements AppMenu {
     public void check(Scanner scanner) {
         String inputLine = scanner.nextLine();
         if ((matcher = GameCommands.NEXT_TURN.getMatcher(inputLine)) != null) {
-            System.out.println(controller.nextTurn());
+            System.out.println(GameController.nextTurn());
         } else if ((matcher = GameCommands.TIME.getMatcher(inputLine)) != null) {
             System.out.println(controller.showTime());
         } else if ((matcher = GameCommands.DATE.getMatcher(inputLine)) != null) {
