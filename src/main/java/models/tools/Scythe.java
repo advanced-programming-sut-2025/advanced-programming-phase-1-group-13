@@ -61,7 +61,7 @@ public class Scythe extends Tool {
                 Item fruit = getItemByItemType(tree.getFruitType());
                 if (fruit != null) {
                     player.getBackpack().addToInventory(fruit, 20);
-                    tree.setDaySinceLastHarvest();
+                    tree.setDaySinceLastHarvest(0);
                 }
             }
         } else if (tile.getType() == TileType.GROWING_CROP ||
