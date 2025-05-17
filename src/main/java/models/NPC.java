@@ -31,6 +31,7 @@ public class NPC {
         this.type = type;
         this.name = type.getName();
         this.role = type.getRole();
+        this.position = new Position(0, 0); // TODO
         this.dialog = new ArrayList<>();
         this.quests = type.getQuests();
         this.favorites = type.getFavorites();

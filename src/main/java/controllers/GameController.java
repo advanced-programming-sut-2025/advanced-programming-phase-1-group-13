@@ -1791,7 +1791,8 @@ public class GameController {
         }
 
         User player = App.getLoggedIn();
-        if (areClose(player.getPosition(), npc.getPosition())) {
+//        if (areClose(player.getPosition(), npc.getPosition())) {
+        if (true) {
             int timeOfDay = game.getGameState().getTime().getHour();
             Season season = game.getGameState().getTime().getSeason();
             Weather weather = game.getGameState().getCurrentWeather();

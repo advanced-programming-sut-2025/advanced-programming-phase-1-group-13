@@ -281,7 +281,7 @@ public enum Dialog {
                                               Weather weather, int friendshipLevel) {
         for (Dialog dialogType : Dialog.values()) {
             if (dialogType.getSpeaker().equals(speaker) &&
-                    dialogType.getTimeOfDay() == timeOfDay &&
+//                    dialogType.getTimeOfDay() == timeOfDay &&
                     dialogType.getSeason().equals(season) &&
                     dialogType.getWeather().equals(weather) &&
                     dialogType.getFriendshipLevel() == friendshipLevel) {
