@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2db738a2-fcde-4212-af39-df7e8a396d45" name="Changes" comment="eat() except buff" />
+    <list default="true" id="2db738a2-fcde-4212-af39-df7e8a396d45" name="Changes" comment="canUpgradeTool()">
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/enums/types/FishingRodType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/enums/types/FishingRodType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/enums/types/GoodsType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/enums/types/GoodsType.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,175 +124,8 @@
       <workItem from="1747158045141" duration="1080000" />
       <workItem from="1747164350317" duration="6477000" />
       <workItem from="1747305413305" duration="18397000" />
-      <workItem from="1747373795916" duration="6467000" />
-    </task>
-    <task id="LOCAL-00064" summary="Tile, canPlaceItem(), canToolBeUsed()">
-      <option name="closed" value="true" />
-      <created>1746878888978</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1746878888978</updated>
-    </task>
-    <task id="LOCAL-00065" summary="craft (incomplete)">
-      <option name="closed" value="true" />
-      <created>1746880019455</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1746880019455</updated>
-    </task>
-    <task id="LOCAL-00066" summary="update it fellows!">
-      <option name="closed" value="true" />
-      <created>1746885947884</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1746885947884</updated>
-    </task>
-    <task id="LOCAL-00067" summary="renamed inventory remove">
-      <option name="closed" value="true" />
-      <created>1746887537540</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1746887537540</updated>
-    </task>
-    <task id="LOCAL-00068" summary="fixed errors">
-      <option name="closed" value="true" />
-      <created>1746888728491</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1746888728492</updated>
-    </task>
-    <task id="LOCAL-00069" summary=".">
-      <option name="closed" value="true" />
-      <created>1746894563884</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1746894563884</updated>
-    </task>
-    <task id="LOCAL-00070" summary="cheat Add Item">
-      <option name="closed" value="true" />
-      <created>1746897521627</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1746897521627</updated>
-    </task>
-    <task id="LOCAL-00071" summary="place Item">
-      <option name="closed" value="true" />
-      <created>1746897620989</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1746897620989</updated>
-    </task>
-    <task id="LOCAL-00072" summary="FoodBuff and FoodType and CookingRecipe relations">
-      <option name="closed" value="true" />
-      <created>1746899684738</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1746899684738</updated>
-    </task>
-    <task id="LOCAL-00073" summary="CookingRecipe and canCook()">
-      <option name="closed" value="true" />
-      <created>1746901345506</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1746901345506</updated>
-    </task>
-    <task id="LOCAL-00074" summary="craft and ingredients enums">
-      <option name="closed" value="true" />
-      <created>1746909245620</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1746909245620</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Craft and CraftRecipe">
-      <option name="closed" value="true" />
-      <created>1746910028400</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1746910028400</updated>
-    </task>
-    <task id="LOCAL-00076" summary="ingredients in Craft (incomplete)">
-      <option name="closed" value="true" />
-      <created>1746947676871</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1746947676871</updated>
-    </task>
-    <task id="LOCAL-00077" summary="craft (a bit)">
-      <option name="closed" value="true" />
-      <created>1747002779079</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1747002779079</updated>
-    </task>
-    <task id="LOCAL-00078" summary="add Craft class and completed craft() method">
-      <option name="closed" value="true" />
-      <created>1747028546363</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1747028546363</updated>
-    </task>
-    <task id="LOCAL-00079" summary="CraftType">
-      <option name="closed" value="true" />
-      <created>1747080142653</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1747080142653</updated>
-    </task>
-    <task id="LOCAL-00080" summary="CraftType">
-      <option name="closed" value="true" />
-      <created>1747080252627</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1747080252627</updated>
-    </task>
-    <task id="LOCAL-00081" summary="useTool override (incomplete)">
-      <option name="closed" value="true" />
-      <created>1747082482194</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1747082482194</updated>
-    </task>
-    <task id="LOCAL-00082" summary="calculate energy (tool use) updated. Hoe useTool() completed">
-      <option name="closed" value="true" />
-      <created>1747119341152</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1747119341152</updated>
-    </task>
-    <task id="LOCAL-00083" summary="calculate energy (tool use) for Pickaxe">
-      <option name="closed" value="true" />
-      <created>1747119698371</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1747119698371</updated>
-    </task>
-    <task id="LOCAL-00084" summary="calculate energy for all tools.">
-      <option name="closed" value="true" />
-      <created>1747121566687</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1747121566687</updated>
+      <workItem from="1747373795916" duration="17387000" />
+      <workItem from="1747462742783" duration="8826000" />
     </task>
     <task id="LOCAL-00085" summary="Pickaxe useTool() (incomplete) and Mineral">
       <option name="closed" value="true" />
@@ -515,7 +351,175 @@
       <option name="project" value="LOCAL" />
       <updated>1747382843434</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="unversioned files and .class">
+      <option name="closed" value="true" />
+      <created>1747394333304</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1747394333304</updated>
+    </task>
+    <task id="LOCAL-00114" summary="unversioned files and .class">
+      <option name="closed" value="true" />
+      <created>1747394366735</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1747394366735</updated>
+    </task>
+    <task id="LOCAL-00115" summary="useTool() of Axe">
+      <option name="closed" value="true" />
+      <created>1747396058660</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1747396058660</updated>
+    </task>
+    <task id="LOCAL-00116" summary="omitted extra todo">
+      <option name="closed" value="true" />
+      <created>1747396172025</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1747396172025</updated>
+    </task>
+    <task id="LOCAL-00117" summary="omitted extra todo">
+      <option name="closed" value="true" />
+      <created>1747396336745</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1747396336745</updated>
+    </task>
+    <task id="LOCAL-00118" summary="learn recipes (no usages?!)">
+      <option name="closed" value="true" />
+      <created>1747396479066</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1747396479066</updated>
+    </task>
+    <task id="LOCAL-00119" summary="showAvailableTools()">
+      <option name="closed" value="true" />
+      <created>1747397173731</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1747397173731</updated>
+    </task>
+    <task id="LOCAL-00120" summary="upgrade tool (incomplete)">
+      <option name="closed" value="true" />
+      <created>1747398183575</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1747398183575</updated>
+    </task>
+    <task id="LOCAL-00121" summary="add todo">
+      <option name="closed" value="true" />
+      <created>1747399025489</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1747399025489</updated>
+    </task>
+    <task id="LOCAL-00122" summary="fixed a message">
+      <option name="closed" value="true" />
+      <created>1747399092086</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1747399092086</updated>
+    </task>
+    <task id="LOCAL-00123" summary="Command fixed">
+      <option name="closed" value="true" />
+      <created>1747399394194</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1747399394194</updated>
+    </task>
+    <task id="LOCAL-00124" summary="fixed todo">
+      <option name="closed" value="true" />
+      <created>1747399502443</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1747399502443</updated>
+    </task>
+    <task id="LOCAL-00125" summary="fixed todo">
+      <option name="closed" value="true" />
+      <created>1747399545353</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1747399545353</updated>
+    </task>
+    <task id="LOCAL-00126" summary="fixed todo">
+      <option name="closed" value="true" />
+      <created>1747399612350</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1747399612350</updated>
+    </task>
+    <task id="LOCAL-00127" summary="food buff">
+      <option name="closed" value="true" />
+      <created>1747467878811</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1747467878811</updated>
+    </task>
+    <task id="LOCAL-00128" summary="considering food buff in useTool()">
+      <option name="closed" value="true" />
+      <created>1747468229465</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1747468229465</updated>
+    </task>
+    <task id="LOCAL-00129" summary="faint()">
+      <option name="closed" value="true" />
+      <created>1747469421926</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1747469421926</updated>
+    </task>
+    <task id="LOCAL-00130" summary="upgradeTool()">
+      <option name="closed" value="true" />
+      <created>1747470075487</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1747470075487</updated>
+    </task>
+    <task id="LOCAL-00131" summary="put decreaseHoursLeftTillBuffVanishes() in Time Class">
+      <option name="closed" value="true" />
+      <created>1747470662624</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1747470662624</updated>
+    </task>
+    <task id="LOCAL-00132" summary="updated ToolMaterial">
+      <option name="closed" value="true" />
+      <created>1747471763685</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1747471763685</updated>
+    </task>
+    <task id="LOCAL-00133" summary="canUpgradeTool()">
+      <option name="closed" value="true" />
+      <created>1747473264049</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1747473264049</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -533,23 +537,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Mineral extends Item!" />
-    <MESSAGE value="Pickaxe useTool(), Inventory, Mineral, MineralType updated" />
-    <MESSAGE value="neighborTile() method" />
-    <MESSAGE value="MineralType updated" />
-    <MESSAGE value="Unversioned Files?" />
-    <MESSAGE value="check if &quot;users&quot; is empty." />
-    <MESSAGE value="unversioned files?" />
-    <MESSAGE value="fixed MineralType and added MoneyType enum" />
-    <MESSAGE value="deactivateUnlimitedEnergy() method" />
-    <MESSAGE value="the recipes extend Item" />
-    <MESSAGE value="Food Class + Refrigerator in Cabin (incomplete)" />
-    <MESSAGE value="tools usages (incomplete!)" />
-    <MESSAGE value="useTool() Scythe" />
-    <MESSAGE value="fillWateringCan()" />
-    <MESSAGE value="added todo!" />
-    <MESSAGE value="recipes" />
-    <MESSAGE value="cooking-related methods" />
     <MESSAGE value="craft" />
     <MESSAGE value="Seed -&gt; SeedType + &#10;plant() method" />
     <MESSAGE value="removed todo" />
@@ -558,7 +545,24 @@
     <MESSAGE value="Tree constructor, nextTurn()" />
     <MESSAGE value="cookingRefrigerator() method" />
     <MESSAGE value="eat() except buff" />
-    <option name="LAST_COMMIT_MESSAGE" value="eat() except buff" />
+    <MESSAGE value="unversioned files and .class" />
+    <MESSAGE value="useTool() of Axe" />
+    <MESSAGE value="omitted extra todo" />
+    <MESSAGE value="learn recipes (no usages?!)" />
+    <MESSAGE value="showAvailableTools()" />
+    <MESSAGE value="upgrade tool (incomplete)" />
+    <MESSAGE value="add todo" />
+    <MESSAGE value="fixed a message" />
+    <MESSAGE value="Command fixed" />
+    <MESSAGE value="fixed todo" />
+    <MESSAGE value="food buff" />
+    <MESSAGE value="considering food buff in useTool()" />
+    <MESSAGE value="faint()" />
+    <MESSAGE value="upgradeTool()" />
+    <MESSAGE value="put decreaseHoursLeftTillBuffVanishes() in Time Class" />
+    <MESSAGE value="updated ToolMaterial" />
+    <MESSAGE value="canUpgradeTool()" />
+    <option name="LAST_COMMIT_MESSAGE" value="canUpgradeTool()" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

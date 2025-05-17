@@ -5,6 +5,8 @@
     "nickname": "arv",
     "email": "arvin@gmail.com",
     "gender": "MAN",
+    "woodCount": 0,
+    "stoneCount": 0,
     "energy": 200,
     "isEnergyUnlimited": false,
     "position": {
@@ -13,10 +15,16 @@
     },
     "hashedPassword": "f4340e977ca7014b8abc94727c379b795ae8cb0e58e32ceb6ef953d8ed7d7121",
     "skillLevels": {
-      "FARMING": "LEVEL_ZERO",
-      "FISHING": "LEVEL_ZERO",
-      "MINING": "LEVEL_ZERO",
-      "FORAGING": "LEVEL_ZERO"
+      "FORAGING": "LEVEL_ONE",
+      "MINING": "LEVEL_ONE",
+      "FISHING": "LEVEL_ONE",
+      "FARMING": "LEVEL_ONE"
+    },
+    "skillPoints": {
+      "FORAGING": 0,
+      "MINING": 0,
+      "FISHING": 0,
+      "FARMING": 0
     },
     "learntCraftRecipes": [],
     "learntCookingRecipes": [],
@@ -62,6 +70,8 @@
     "nickname": "sel",
     "email": "selma@gmail.com",
     "gender": "WOMAN",
+    "woodCount": 0,
+    "stoneCount": 0,
     "energy": 200,
     "isEnergyUnlimited": false,
     "position": {
@@ -70,10 +80,16 @@
     },
     "hashedPassword": "20332ce1eb415cb29d27df4482736176cce84bf7e3d61a275627e03c1b327b01",
     "skillLevels": {
-      "FARMING": "LEVEL_ZERO",
-      "FISHING": "LEVEL_ZERO",
-      "MINING": "LEVEL_ZERO",
-      "FORAGING": "LEVEL_ZERO"
+      "FORAGING": "LEVEL_ONE",
+      "MINING": "LEVEL_ONE",
+      "FISHING": "LEVEL_ONE",
+      "FARMING": "LEVEL_ONE"
+    },
+    "skillPoints": {
+      "FORAGING": 0,
+      "MINING": 0,
+      "FISHING": 0,
+      "FARMING": 0
     },
     "learntCraftRecipes": [],
     "learntCookingRecipes": [],
@@ -119,6 +135,8 @@
     "nickname": "far",
     "email": "farrokhi@gmail.com",
     "gender": "RATHER_NOT_SAY",
+    "woodCount": 0,
+    "stoneCount": 0,
     "energy": 200,
     "isEnergyUnlimited": false,
     "position": {
@@ -127,15 +145,21 @@
     },
     "hashedPassword": "3634b05fbaf899d0097479b296f7eeb26236ddc65434e94723848176f9a1501b",
     "skillLevels": {
-      "FARMING": "LEVEL_ZERO",
-      "FISHING": "LEVEL_ZERO",
-      "MINING": "LEVEL_ZERO",
-      "FORAGING": "LEVEL_ZERO"
+      "FORAGING": "LEVEL_ONE",
+      "MINING": "LEVEL_ONE",
+      "FISHING": "LEVEL_ONE",
+      "FARMING": "LEVEL_ONE"
+    },
+    "skillPoints": {
+      "FORAGING": 0,
+      "MINING": 0,
+      "FISHING": 0,
+      "FARMING": 0
     },
     "learntCraftRecipes": [],
     "learntCookingRecipes": [],
     "qAndA": {
-      "1. What\u0027s your favorite planet?": "Earth"
+      "null": "Earth"
     },
     "farm": {
       "cropCount": 0,
