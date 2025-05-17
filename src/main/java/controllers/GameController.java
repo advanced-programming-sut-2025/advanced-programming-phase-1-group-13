@@ -204,7 +204,7 @@ public class GameController {
         Direction direction = Direction.getDirectionByDisplayName(directionString);
         Tile tile = neighborTile(direction);
         Tool tool = player.getCurrentTool();
-        String failingMessage = "You can't use" + tool.toString() + " here on your " + directionString + ".";
+        String failingMessage = "You can't use " + tool.toString() + " here on your " + direction.getDisplayName() + ".";
         if (tile == null) {
             return new Result(false, failingMessage);
         }
