@@ -30,6 +30,8 @@ game new username
 game new farrokhi selma arvin
 game new selma arvin
 game map 1
+go to village
+print map village -l 1,1 -s 30
 print map -l 1,1 -s 100
 walk -l 60,20
 print map -l 1,1 -s 100

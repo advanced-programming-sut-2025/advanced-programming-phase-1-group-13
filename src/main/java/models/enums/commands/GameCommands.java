@@ -18,8 +18,11 @@ public enum GameCommands implements Command {
     CHEAT_WEATHER_SET("^\\s*cheat\\s+weather\\s+set\\s+(?<type>.+)\\s*$"),
     GREENHOUSE_BUILD("^\\s*greenhouse\\s+build\\s*$"),
     WALK("^\\s*walk\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
-    WALK_CONFIRM("^\\s*walk confirm\\s+(?<yOrN>\\w)\\s*$"),
+    WALK_CONFIRM("^\\s*walk\\s+confirm\\s+(?<yOrN>\\w)\\s*$"),
+    WALK_VILLAGE("^\\s*walk\\s+village\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
+    WALK_VILLAGE_CONFIRM("^\\s*walk\\s+village\\s+confirm\\s+(?<yOrN>\\w)\\s*$"),
     PRINT_MAP("^\\s*print\\s+map\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+(?<size>\\d+)\\s*$"),
+    PRINT_MAP_VILLAGE("^\\s*print\\s+map\\s+village\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+(?<size>\\d+)\\s*$"),
     HELP_READING_MAP("^\\s*help\\s+reading\\s+map\\s*$"),
     ENERGY_SHOW("^\\s*energy\\s+show\\s*$"),
     CHEAT_ENERGY_SET("^\\s*energy\\s+set\\s+-v\\s+(?<value>\\d+)\\s*$"),
@@ -32,6 +35,7 @@ public enum GameCommands implements Command {
     TOOLS_UPGRADE("^\\s*tools\\s+upgrade\\s+(?<toolsName>.+)\\s*$"),
     TOOLS_USE("^\\s*tools\\s+use\\s+-d\\s+(?<direction>.+)\\s*$"),
     CRAFT_INFO("^\\s*craftinfo\\s+-n\\s+(?<craftName>.+)\\s*$"),
+    GO_TO_VILLAGE("^\\s*go\\s+to\\s+village\\s*$"),
     PLANT("^\\s*plant\\s+-s(?<seed>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),
     SHOW_PLANT("^\\s*showplant\\s+-l\\s+(?<x>\\d+)\\s+(?<y>\\d+)\\s*$"),
     FERTILIZE("^\\s*fertilize\\s+-f\\s+(?<fertilizer>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),
@@ -82,7 +86,9 @@ public enum GameCommands implements Command {
     QUESTS_FINISH("^\\s*quests\\s+finish\\s+-n\\s+(?<npcName>.+)\\s+-i\\s+(?<index>\\d+)\\s*$"),
     THROW_ITEM_TO_TRASH("^\\s*inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s*(?<number>\\d)?\\s*$"),
     EXIT_GAME("^\\s*exit\\s+game\\s*$"),
-    SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$");
+    SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$"),
+    EXIT_VILLAGE("^\\s*exit\\s+village\\s*$");
+
     private final String regex;
     private final Pattern pattern;
 
