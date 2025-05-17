@@ -21,6 +21,7 @@ public class TradeController {
             return new Result(false, "User not found.");
         }
 
+        amountStr = amountStr.trim();
         if (!amountStr.matches("\\d+")) {
             return new Result(false, "Invalid amount.");
         }

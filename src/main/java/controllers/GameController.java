@@ -1770,7 +1770,7 @@ public class GameController {
         App.setCurrentMenu(Menu.TARDE_MENU);
 
         User player = App.getLoggedIn();
-        StringBuilder message = new StringBuilder("You are now in Trade Menu.\n\nNew Trade requests and offers:\n");
+        StringBuilder message = new StringBuilder("You are now in Trade Menu.\nNew Trade requests and offers:\n");
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (!trade.getCreator().equals(player) &&
                     (trade.getRequester().equals(player) || trade.getOfferer().equals(player))) {

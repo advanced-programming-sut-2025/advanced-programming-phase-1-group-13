@@ -4,9 +4,9 @@ import models.enums.Quality;
 import models.enums.types.FishType;
 
 public class Fish extends Item {
-    FishType type;
-    Quality quality;
-    String name;
+    private FishType type;
+    private Quality quality;
+    private String name;
 
     public Fish(FishType type, Quality quality) {
         this.type = type;
