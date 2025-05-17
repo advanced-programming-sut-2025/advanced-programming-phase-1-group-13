@@ -1,6 +1,7 @@
 package models;
 
 import controllers.GameController;
+import models.enums.types.ForagingCropType;
 import models.enums.types.TreeType;
 import models.farming.ForagingCrop;
 import models.farming.Tree;
@@ -123,7 +124,7 @@ public final class GameMap {
                 availablePositions.size() - treeCount - stoneCount);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = availablePositions.get(treeCount + stoneCount + i);
-            foragings.add(new ForagingCrop(pos));
+            foragings.add(new ForagingCrop(ForagingCropType.getRandomForagingCropType() , pos));
             getTileByPosition(pos).setType(TileType.GRASS);
         }
 

@@ -3,6 +3,8 @@ package models;
 import models.enums.Quality;
 import models.enums.types.*;
 import models.farming.Crop;
+import models.farming.ForagingCrop;
+import models.farming.PlantSource;
 import models.farming.Tree;
 import models.tools.*;
 
@@ -146,28 +148,18 @@ public abstract class Item {
         }
 
         if (itemType instanceof ForagingCropType) {
-            // todo
+            return new ForagingCrop((ForagingCropType) itemType);
         }
         if (itemType instanceof FruitType) {
             return new Fruit((FruitType) itemType);
         }
-        if (itemType instanceof IngredientType) {
-            // todo
-        }
-        if (itemType instanceof MixedSeedsType) {
 
+        if (itemType instanceof MixedSeedsType || itemType instanceof SeedType || itemType instanceof TreeSourceType) {
+            return new PlantSource(itemType);
         }
-        if (itemType instanceof SeedType) {
-            // todo
-        }
-        if (itemType instanceof TreeSourceType) {
-            // todo
-        }
+
         if (itemType instanceof TreeType) {
             return new Tree((TreeType) itemType);
-        }
-        if (itemType instanceof MoneyType) {
-            // todo
         }
         return null;
     }
