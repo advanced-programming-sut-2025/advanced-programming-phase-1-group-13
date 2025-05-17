@@ -27,10 +27,10 @@ public class Game {
     private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
 
-    public Game(ArrayList<User> players, int mapNumber) {
+    public Game(ArrayList<User> players) {
         this.players = players;
         this.gameState = new GameState();
-        this.gameMap = new GameMap(mapNumber);
+        this.gameMap = null;
 
         App.setCurrentGame(this);
 
