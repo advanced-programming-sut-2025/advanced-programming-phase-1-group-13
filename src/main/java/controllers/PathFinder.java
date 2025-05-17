@@ -2,11 +2,10 @@ package controllers;
 
 import models.*;
 import models.enums.types.TileType;
-
 import java.util.*;
 
 public class PathFinder {
-    private final User player;
+    private User player;
     private boolean[][] visited;
     private Position[][] parent;
     private Tile[][] farmMap;
@@ -16,12 +15,36 @@ public class PathFinder {
         this.player = player;
     }
 
+    public Result respondForWalkRequest(String xStr, String yStr) {
+        try {
+            int x = Integer.parseInt(xStr);
+            int y = Integer.parseInt(yStr);
+            Position dest = new Position(x, y);
+            Position orig = player.getPosition();
+
+            Path p = findValidPath(orig, dest);
+            if (p == null) {
+                return new Result(false, "No valid path found!");
+            }
+
+            String msg = String.format(
+                    "Found path:\nDistance: %d tiles\nTurns: %d\nEnergy needed: %d",
+                    p.getDistanceInTiles(), p.getNumOfTurns(), p.getEnergyNeeded());
+            return new Result(true, msg);
+        } catch (NumberFormatException e) {
+            return new Result(false, "Invalid coordinates!");
+        }
+    }
+
     public Result walk(Path p, String conf) {
-        boolean c = conf.equalsIgnoreCase("y");
-        if (!c) return new Result(false, "Walk cancelled");
-        if (player.getEnergy() < p.getEnergyNeeded())
+        boolean confirm = conf.equalsIgnoreCase("y");
+        if (!confirm) {
+            return new Result(false, "Walk cancelled");
+        }
+        if (player.getEnergy() < p.getEnergyNeeded()) {
             return new Result(false, "Not enough energy");
-        Position last = p.getPathTiles().getLast().getPosition();
+        }
+        Position last = p.getPathTiles().get(p.getPathTiles().size() - 1).getPosition();
         player.changePosition(last);
         player.setEnergy(player.getEnergy() - p.getEnergyNeeded());
         return new Result(true, "Walked! Energy used=" + p.getEnergyNeeded());
@@ -31,29 +54,52 @@ public class PathFinder {
         Farm f = player.getFarm();
         width = f.getWidth();
         height = f.getHeight();
-        farmMap = new Tile[width][height];
-        for (Tile t : f.getFarmTiles()) {
-            Position pos = t.getPosition();
-            farmMap[pos.getX()][pos.getY()] = t;
-        }
-        if (!inBounds(dest) || !isAllowed(farmMap[dest.getX()][dest.getY()]))
-            return null;
+        farmMap = new Tile[height][width];
 
-        visited = new boolean[width][height];
-        parent = new Position[width][height];
-        if (!dfs(orig.getX(), orig.getY(), dest)) return null;
+        for (Tile t : f.getFarmTiles()) {
+            if (t == null) continue;
+            Position pos = t.getPosition();
+            if (pos != null && inBounds(pos)) {
+                farmMap[pos.getY()][pos.getX()] = t;
+            }
+        }
+
+        if (!inBounds(orig) || !isAllowed(farmMap[orig.getY()][orig.getX()]) ||
+                !inBounds(dest) || !isAllowed(farmMap[dest.getY()][dest.getX()])) {
+            return null;
+        }
+
+        visited = new boolean[height][width];
+        parent = new Position[height][width];
+
+        boolean found = bfs(orig, dest);
+        if (!found) {
+            return null;
+        }
+
         return buildPath(orig, dest);
     }
 
-    private boolean dfs(int x, int y, Position dest) {
-        visited[x][y] = true;
-        if (x == dest.getX() && y == dest.getY()) return true;
-        int[][] d = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        for (int[] dir : d) {
-            int nx = x + dir[0], ny = y + dir[1];
-            if (inBounds(nx, ny) && !visited[nx][ny] && isAllowed(farmMap[nx][ny])) {
-                parent[nx][ny] = new Position(x, y);
-                if (dfs(nx, ny, dest)) return true;
+    private boolean bfs(Position orig, Position dest) {
+        Queue<Position> queue = new LinkedList<>();
+        queue.offer(orig);
+        visited[orig.getY()][orig.getX()] = true;
+
+        int[][] directions = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
+
+        while (!queue.isEmpty()) {
+            Position current = queue.poll();
+            if (current.getX() == dest.getX() && current.getY() == dest.getY()) {
+                return true;
+            }
+            for (int[] dir : directions) {
+                int nx = current.getX() + dir[0];
+                int ny = current.getY() + dir[1];
+                if (inBounds(nx, ny) && !visited[ny][nx] && isAllowed(farmMap[ny][nx])) {
+                    visited[ny][nx] = true;
+                    parent[ny][nx] = current;
+                    queue.offer(new Position(nx, ny));
+                }
             }
         }
         return false;
@@ -62,57 +108,41 @@ public class PathFinder {
     private Path buildPath(Position origin, Position destination) {
         List<Position> positions = new ArrayList<>();
         Position current = destination;
-
-        while (current != null && !current.equals(origin)) {
+        while (current != null && (current.getX() != origin.getX() || current.getY() != origin.getY())) {
             positions.add(current);
-            current = parent[current.getX()][current.getY()];
+            current = parent[current.getY()][current.getX()];
         }
         positions.add(origin);
         Collections.reverse(positions);
 
-        ArrayList<Tile> pathTiles = new ArrayList<>();
+        List<Tile> pathTiles = new ArrayList<>();
         for (Position p : positions) {
-            pathTiles.add(farmMap[p.getX()][p.getY()]);
+            pathTiles.add(farmMap[p.getY()][p.getX()]);
         }
 
         int turns = calculateTurns(positions);
-
         Path path = new Path();
-        path.setPathTiles(pathTiles);
+        path.setPathTiles((ArrayList<Tile>) pathTiles);
         path.setDistanceInTiles(pathTiles.size() - 1);
         path.setNumOfTurns(turns);
-        path.setEnergyNeeded((pathTiles.size() + 10 * turns) / 20);
-
+        path.setEnergyNeeded((pathTiles.size() + (10 * turns)) / 20);
         return path;
     }
 
-
     private int calculateTurns(List<Position> path) {
         if (path.size() < 3) return 0;
-
         int turns = 0;
-        int prevDirX = 0, prevDirY = 0;
-
-        Position first = path.get(0);
-        Position second = path.get(1);
-        prevDirX = second.getX() - first.getX();
-        prevDirY = second.getY() - first.getY();
-
+        int prevDirX = path.get(1).getX() - path.get(0).getX();
+        int prevDirY = path.get(1).getY() - path.get(0).getY();
         for (int i = 2; i < path.size(); i++) {
-            Position current = path.get(i);
-            Position previous = path.get(i - 1);
-
-            int currentDirX = current.getX() - previous.getX();
-            int currentDirY = current.getY() - previous.getY();
-
-            if (currentDirX != prevDirX || currentDirY != prevDirY) {
+            int curDirX = path.get(i).getX() - path.get(i-1).getX();
+            int curDirY = path.get(i).getY() - path.get(i-1).getY();
+            if (curDirX != prevDirX || curDirY != prevDirY) {
                 turns++;
             }
-
-            prevDirX = currentDirX;
-            prevDirY = currentDirY;
+            prevDirX = curDirX;
+            prevDirY = curDirY;
         }
-
         return turns;
     }
 
@@ -125,6 +155,7 @@ public class PathFinder {
     }
 
     private boolean isAllowed(Tile t) {
+        if (t == null) return false;
         if (t.getItemPlacedOnTile() != null) return false;
         TileType tp = t.getType();
         return tp != TileType.WATER && tp != TileType.STONE
