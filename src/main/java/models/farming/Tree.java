@@ -20,7 +20,7 @@ public class Tree extends Item implements Harvestable {
     private Integer energy;
     private ArrayList<Season> seasons;
     private Position position;
-    private final FruitType fruit;
+    private final FruitType fruitType;
     private final int fruitHarvestCycle;
     private boolean isBurnt;
     private int stage;
@@ -42,7 +42,7 @@ public class Tree extends Item implements Harvestable {
         this.isEdible = type.isFruitEdible();
         this.energy = type.getFruitEnergy();
         this.seasons = type.getSeasons();
-        this.fruit = type.getFruit();
+        this.fruitType = type.getFruit();
         this.fruitHarvestCycle = type.getFruitHarvestCycle();
 
         this.isBurnt = false;
@@ -90,8 +90,8 @@ public class Tree extends Item implements Harvestable {
         return position;
     }
 
-    public FruitType getFruit() {
-        return fruit;
+    public FruitType getFruitType() {
+        return fruitType;
     }
 
     public int getFruitHarvestCycle() {

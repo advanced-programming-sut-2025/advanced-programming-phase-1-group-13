@@ -46,20 +46,19 @@ public class Scythe extends Tool {
             tile.setType(TileType.NOT_PLOWED_SOIL);
         } else if (tile.getType() == TileType.TREE) {
             Tree tree = (Tree) tile.getItemPlacedOnTile();
-            // todo: harvest
             Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
             if (tree.isBurnt()) {
                 System.out.println("The tree is burnt. Use axe to collect coal!");
                 return;
             }
             if (!tree.getSeasons().contains(currentSeason)) {
-                System.out.println("You cannot harvest " + tree.getFruit().getName() +
+                System.out.println("You cannot harvest " + tree.getFruitType().getName() +
                         " in the " + currentSeason.getName() + ".");
                 return;
             }
             boolean lastStage = tree.getStage() == tree.getNumOfStages();
             if (lastStage) {
-                Item fruit = getItemByItemType(tree.getFruit());
+                Item fruit = getItemByItemType(tree.getFruitType());
                 if (fruit != null) {
                     player.getBackpack().addToInventory(fruit, 20);
                     tree.setDaySinceLastHarvest(0);
