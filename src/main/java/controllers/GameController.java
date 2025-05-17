@@ -1319,8 +1319,6 @@ public class GameController {
                     artisanNameString + "s are already making another product.");
         }
 
-        System.out.println("Trying to find product with ingredients of " + itemTypes);
-
         ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes,
                 artisanType);
         if (processedItemType == null) {
