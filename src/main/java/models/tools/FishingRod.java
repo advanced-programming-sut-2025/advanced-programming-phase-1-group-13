@@ -15,6 +15,8 @@ public class FishingRod extends Tool {
 
     public FishingRod(ToolMaterial material) {
         super(ToolType.FISHING_ROD, material);
+        // TODO
+        this.type = FishingRodType.TRAINING;
     }
 
     public FishingRodType getRodType() {
