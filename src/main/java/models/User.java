@@ -2,6 +2,7 @@ package models;
 
 import com.google.gson.GsonBuilder;
 
+import controllers.GameController;
 import models.enums.SecurityQuestion;
 import models.enums.Skill;
 import models.enums.SkillLevel;
@@ -31,7 +32,11 @@ public class User {
     private int stoneCount; // todo: check for other usages
     private transient Game activeGame;
     private int energy;
+    private int maxEnergy;
     private boolean isEnergyUnlimited;
+    private FoodBuff currentFoodBuff;
+    private Skill buffRelatedSkill;
+    private Integer hoursLeftTillBuffVanishes;
     private Position position;
     private Tool currentTool;
     private String hashedPassword;
@@ -68,6 +73,7 @@ public class User {
         this.numberOfGames = 0;
         this.activeGame = null;
         this.energy = 200;
+        this.maxEnergy = 200;
         this.farm = new Farm(0); // TODO
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.position = new Position(0, 0); // TODO
@@ -96,7 +102,11 @@ public class User {
         this.exchangedGiftToday = new HashMap<>();
         this.hasHuggedToday = new HashMap<>();
         this.exchangedFlowerToday = new HashMap<>();
+        this.currentFoodBuff = null;
+        this.buffRelatedSkill = null;
+        hoursLeftTillBuffVanishes = null;
     }
+
 
     public void setPosition(Position position) {
         this.position = position;
@@ -128,6 +138,52 @@ public class User {
         }
         skillPoints.put(skill, newPoints);
         skillLevels.put(skill, newLevel);
+    }
+
+    public Skill getBuffRelatedSkill() {
+        return this.buffRelatedSkill;
+    }
+
+    public void updateBuffRelatedSkill() {
+        this.buffRelatedSkill = switch (this.currentFoodBuff) {
+            case FARMING_5_HOURS -> Skill.FARMING;
+            case FISHING_5_HOURS, FISHING_10_HOURS -> Skill.FISHING;
+            case MINING_5_HOURS -> Skill.MINING;
+            case FORAGING_5_HOURS, FORAGING_11_HOURS -> Skill.FORAGING;
+            case MAX_ENERGY_PLUS_50, MAX_ENERGY_PLUS_100 -> null;
+            case null, default -> null;
+        };
+    }
+
+    public FoodBuff getCurrentFoodBuff() {
+        return this.currentFoodBuff;
+    }
+
+    public void activateFoodBuff(FoodBuff foodBuff) {
+        this.currentFoodBuff = foodBuff;
+        this.hoursLeftTillBuffVanishes = foodBuff.getBuffDurationInHours();
+        switch (foodBuff) {
+            case MAX_ENERGY_PLUS_50 -> {
+                this.energy = 250;
+                this.maxEnergy = 250;
+            }
+            case MAX_ENERGY_PLUS_100 -> {
+                this.energy = 300;
+                this.maxEnergy = 300;
+            }
+        }
+        this.updateBuffRelatedSkill();
+    }
+
+    public Integer getHoursLeftTillBuffVanishes() {
+        return this.hoursLeftTillBuffVanishes;
+    }
+
+    public void decreaseHoursLeftTillBuffVanishes(Integer decreaseBy) {
+        this.hoursLeftTillBuffVanishes -= decreaseBy;
+        if (this.hoursLeftTillBuffVanishes <= 0) {
+            this.hoursLeftTillBuffVanishes = 0;
+        }
     }
 
     public void setLearntCraftRecipes(ArrayList<CraftRecipe> learntCraftRecipes) {
@@ -439,7 +495,9 @@ public class User {
     }
 
     public void faint() {
-        // TODO: well, faint!
+        this.energy = (int) (0.75 * this.maxEnergy);
+        System.out.println("You fainted! Your energy falls to 75% of max-energy, when you wake up in the next turn.");
+        GameController.nextTurn();
     }
 
     public void changePosition(Position newPosition) {
