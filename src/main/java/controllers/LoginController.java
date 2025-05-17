@@ -45,7 +45,7 @@ public class LoginController {
             if (password == null || repeatPassword == null) {
                 return new Result(false, "Password and repeat password must be provided.");
             }
-            if (!LoginCommands.VALID_PASSWORD.matches(password)) {
+            if (!LoginCommands.VALID_PASSWORD.matches(password) | password.length() < 8) {
                 return new Result(false, "Password invalid.");
             }
             if (!password.equals(repeatPassword)) {

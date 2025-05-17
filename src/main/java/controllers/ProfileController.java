@@ -2,6 +2,7 @@ package controllers;
 
 import models.App;
 import models.Result;
+import models.User;
 import models.enums.Menu;
 import models.enums.commands.LoginCommands;
 
@@ -10,10 +11,14 @@ import static models.App.getUserByUsername;
 
 public class ProfileController {
     public Result changeUsername(String newUsername) {
-        if (getUserByUsername(newUsername) != null) {
+        User currentUser = App.getLoggedIn();
+
+        User existingUser = getUserByUsername(newUsername);
+        if (existingUser != null && !existingUser.equals(currentUser)) {
             return new Result(false, "Username already taken.");
         }
-        App.getLoggedIn().setUsername(newUsername);
+
+        currentUser.setUsername(newUsername);
         return new Result(true, "Username changed successfully.");
     }
 

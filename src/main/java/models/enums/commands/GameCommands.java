@@ -19,7 +19,7 @@ public enum GameCommands implements Command {
     GREENHOUSE_BUILD("^\\s*greenhouse\\s+build\\s*$"),
     WALK("^\\s*walk\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
     WALK_CONFIRM("^\\s*walk confirm\\s+(?<yOrN>\\w)\\s*$"),
-    PRINT_MAP("^\\s*print\\s+map\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+size\\s+(?<size>\\d+)\\s*$"),
+    PRINT_MAP("^\\s*print\\s+map\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+(?<size>\\d+)\\s*$"),
     PRINT_COLORED_MAP("^\\s*print\\s+colored\\s+map\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+size\\s+" +
             "(?<size>\\d+)\\s*$"),
     HELP_READING_MAP("^\\s*help\\s+reading\\s+map\\s*$"),

@@ -18,7 +18,6 @@ public class LoginMenu implements AppMenu {
         if (LoginCommands.MENU_EXIT.getMatcher(inputLine) != null) {
             System.out.println(controller.exit());
         } else if ((matcher = LoginCommands.REGISTER_USER_PASS.getMatcher(inputLine)) != null) {
-            // Manual registration with password provided
             String username = matcher.group("username").trim();
             Result result = controller.registerUser(
                     username,
@@ -27,14 +26,14 @@ public class LoginMenu implements AppMenu {
                     matcher.group("nickname"),
                     matcher.group("email"),
                     matcher.group("gender"),
-                    false  // not generating random password
+                    false
             );
             System.out.println(result.message());
             if (result.success()) {
                 inputLine = scanner.nextLine();
                 if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
                     System.out.println(controller.pickSecurityQuestion(
-                            username,  // pass the actual username instead of result.message()
+                            username,
                             matcher.group("questionNumber"),
                             matcher.group("answer"),
                             matcher.group("repeatAnswer")
@@ -42,7 +41,6 @@ public class LoginMenu implements AppMenu {
                 }
             }
         } else if ((matcher = LoginCommands.REGISTER_USER_RAND.getMatcher(inputLine)) != null) {
-            // Registration using random password generation
             String username = matcher.group("username").trim();
             Result result = controller.registerUser(
                     username,
@@ -56,7 +54,7 @@ public class LoginMenu implements AppMenu {
                 inputLine = scanner.nextLine();
                 if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
                     System.out.println(controller.pickSecurityQuestion(
-                            username, // again, pass the stored username
+                            username,
                             matcher.group("questionNumber"),
                             matcher.group("answer"),
                             matcher.group("repeatAnswer")
