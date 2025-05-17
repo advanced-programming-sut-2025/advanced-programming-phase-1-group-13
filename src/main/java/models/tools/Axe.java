@@ -1,14 +1,12 @@
 package models.tools;
 
+import models.Fruit;
 import models.Item;
 import models.Tile;
 import models.User;
 import models.enums.Skill;
 import models.enums.SkillLevel;
-import models.enums.types.GoodsType;
-import models.enums.types.TileType;
-import models.enums.types.ToolMaterial;
-import models.enums.types.ToolType;
+import models.enums.types.*;
 import models.farming.Tree;
 
 import java.util.HashMap;
@@ -56,13 +54,15 @@ public class Axe extends Tool {
                 player.getBackpack().addToInventory(coal, 1);
                 return;
             }
-            boolean canHarvestWithAxe = switch (tree.getFruit()) {
+            boolean canHarvestWithAxe = switch (tree.getFruitType()) {
                 case OAK_RESIN, MAPLE_SYRUP, PINE_TAR,
                      SAP, COMMON_MUSHROOM, MYSTIC_SYRUP -> true;
                 default -> false;
             };
             if (canHarvestWithAxe) {
-                // todo: harvest and add to inventory
+                Fruit fruit = new Fruit(tree.getFruitType());
+                player.getBackpack().addToInventory(fruit, 20);
+                tree.setDaySinceLastHarvest(0);
             } else {
                 tile.setType(TileType.WOOD_LOG);
             }

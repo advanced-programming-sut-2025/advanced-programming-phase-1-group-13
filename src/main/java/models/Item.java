@@ -145,6 +145,30 @@ public abstract class Item {
             return new ProcessedItem((ProcessedItemType) itemType);
         }
 
+        if (itemType instanceof ForagingCropType) {
+            // todo
+        }
+        if (itemType instanceof FruitType) {
+            return new Fruit((FruitType) itemType);
+        }
+        if (itemType instanceof IngredientType) {
+            // todo
+        }
+        if (itemType instanceof MixedSeedsType) {
+
+        }
+        if (itemType instanceof SeedType) {
+            // todo
+        }
+        if (itemType instanceof TreeSourceType) {
+            // todo
+        }
+        if (itemType instanceof TreeType) {
+            // todo
+        }
+        if (itemType instanceof MoneyType) {
+            // todo
+        }
         return null;
     }
 
