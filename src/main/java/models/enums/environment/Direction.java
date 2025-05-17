@@ -3,14 +3,14 @@ package models.enums.environment;
 import models.Position;
 
 public enum Direction {
-    UP("up", 0, 1),
-    DOWN("down", 0, -1),
-    RIGHT("right", 1, 0),
-    LEFT("left", -1, 0),
-    UP_RIGHT("up-right", 1, 1),
+    UP("up", -1, 0),
+    DOWN("down", 1, 0),
+    LEFT("left", 0, -1),
+    RIGHT("right", 0, 1),
+    UP_RIGHT("up-right", -1, -1),
     UP_LEFT("up-left", -1, 1),
     DOWN_RIGHT("down-right", 1, -1),
-    DOWN_LEFT("down-left", -1, -1);
+    DOWN_LEFT("down-left", 1, 1);
 
     private final String displayName;
     private final int deltaX;
@@ -32,6 +32,12 @@ public enum Direction {
 
     public int getDeltaY() {
         return deltaY;
+    }
+
+    public static Position getNewPosition(Position currentPosition, Direction direction) {
+        currentPosition.addToX(direction.deltaX);
+        currentPosition.addToY(direction.deltaY);
+        return currentPosition;
     }
 
     public static Direction getDirectionByDisplayName(String name) {
@@ -58,11 +64,4 @@ public enum Direction {
             default -> null;
         };
     }
-
-    public static Position getNewPosition(Position currentPosition, Direction direction) {
-        currentPosition.addToX(direction.deltaX);
-        currentPosition.addToY(direction.deltaY);
-        return currentPosition;
-    }
-
 }
