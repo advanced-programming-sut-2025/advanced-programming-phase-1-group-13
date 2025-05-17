@@ -34,8 +34,8 @@ public class Farm {
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
         this.artisans = new ArrayList<>();
-        this.height = GameMap.getMAP_SIZE() / 10;
-        this.width = GameMap.getMAP_SIZE() / 10;
+        this.height = GameMap.getMAP_SIZE();
+        this.width = GameMap.getMAP_SIZE();
 
         if (mapNumberToFollow == 1) {
             // TODO: complete Constructor
@@ -88,7 +88,7 @@ public class Farm {
     }
 
     public ArrayList<Tile> getFarmTiles() {
-        return this.farmTiles;
+        return App.getLoggedIn().getActiveGame().getGameMap().getAllTiles();
     }
 
     public Cabin getCabin() {

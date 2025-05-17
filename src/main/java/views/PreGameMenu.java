@@ -1,6 +1,8 @@
 package views;
 
 import controllers.PreGameMenuController;
+import models.App;
+import models.enums.Menu;
 import models.enums.commands.PreGameMenuCommands;
 import models.enums.commands.ProfileCommands;
 
@@ -22,6 +24,9 @@ public class PreGameMenu implements AppMenu {
             System.out.println(controller.loadGame());
         } else if ((matcher = ProfileCommands.SHOW_CURRENT_MENU.getMatcher(inputLine)) != null) {
             System.out.println(controller.showCurrentMenu());
+        } else if ((matcher = PreGameMenuCommands.EXIT.getMatcher(inputLine)) != null) {
+            App.setCurrentMenu(Menu.MAIN_MENU);
+            System.out.println("Menu switched to Main Menu.");
         } else {
             System.out.println("Invalid command. Please try again.");
         }
