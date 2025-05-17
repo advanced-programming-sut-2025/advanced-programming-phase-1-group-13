@@ -12,7 +12,7 @@ public class PlantSource extends Item {
     private TreeSourceType treeSourceType;
     private boolean isMixedSeed;
     private boolean isTreeSeed;
-
+    private String name;
 
     public PlantSource(ItemType seedType) {
         if (seedType instanceof MixedSeedsType) {
@@ -30,6 +30,12 @@ public class PlantSource extends Item {
             this.isMixedSeed = false;
             this.mixedSeedsType = null;
         }
+        this.name = seedType.getName();
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     public SeedType getSeedType() {

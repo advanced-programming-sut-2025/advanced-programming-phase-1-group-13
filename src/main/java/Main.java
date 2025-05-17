@@ -7,6 +7,7 @@ public class Main {
 }
 
 /*
+Thom96un5Krk
 register -u arvin -p LeoLeoLeo1 LeoLeoLeo1 -n arv -e arvin@gmail.com -g Male
 pick question -q 1 -a Earth -c Earth
 login -u arvin -p LeoLeoLeo1

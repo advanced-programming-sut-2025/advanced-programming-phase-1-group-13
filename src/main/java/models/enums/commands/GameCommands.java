@@ -28,7 +28,7 @@ public enum GameCommands implements Command {
     CHEAT_ENERGY_SET("^\\s*energy\\s+set\\s+-v\\s+(?<value>\\d+)\\s*$"),
     CHEAT_ENERGY_UNLIMITED("^\\s*energy\\s+unlimited\\s*$"),
     CHEAT_ENERGY_LIMITED("^\\s*energy\\s+limited\\s*$"),
-    INVENTORY_SHOW("^\\s*energy\\s+show\\s*"),
+    INVENTORY_SHOW("^\\s*inventory\\s+show\\s*"),
     TOOLS_EQUIP("^\\s*tools\\s+equip\\s+(?<toolName>.+)\\s*$"),
     TOOLS_SHOW_CURRENT("^\\s*tools\\s+show\\s+current\\s*$"),
     TOOLS_SHOW_AVAILABLE("^\\s*tools\\s+show\\s+available\\s*$"),

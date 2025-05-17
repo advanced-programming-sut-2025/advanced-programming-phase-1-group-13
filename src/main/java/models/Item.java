@@ -57,6 +57,10 @@ public abstract class Item {
         if (cropType != null) {
             return cropType;
         }
+        SeedType seedType = SeedType.getSeedByName(itemName);
+        if (seedType != null) {
+            return seedType;
+        }
 
         FishType fishType = FishType.getFishTypeByName(itemName);
         if (fishType != null) {
@@ -121,6 +125,10 @@ public abstract class Item {
 
         if (itemType instanceof CropType) {
             return new Crop((CropType) itemType);
+        }
+
+        if (itemType instanceof SeedType seedType) {
+            return new PlantSource(seedType);
         }
 
         if (itemType instanceof FishType) {
