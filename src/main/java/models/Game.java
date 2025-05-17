@@ -23,6 +23,8 @@ import java.util.HashMap;
 public class Game {
     private final ArrayList<User> players; // The 3 players
     private GameMap gameMap;
+    private NPCVillage village;
+    private boolean isInNPCVillage;
     private GameState gameState;
     private final ArrayList<NPC>  npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
@@ -34,6 +36,8 @@ public class Game {
         this.players = players;
         this.gameState = new GameState();
         this.gameMap = null;
+        this.isInNPCVillage = false;
+        this.village = new NPCVillage();
 
         App.setCurrentGame(this);
 
@@ -112,6 +116,21 @@ public class Game {
        // saveGameState();
     }
 
+    public NPCVillage getVillage() {
+        return village;
+    }
+
+    public boolean isInNPCVillage() {
+        return isInNPCVillage;
+    }
+
+    public void setInNPCVillage(boolean inNPCVillage) {
+        isInNPCVillage = inNPCVillage;
+    }
+
+    public void setVillage(NPCVillage village) {
+        this.village = village;
+    }
 
     public ArrayList<User> getPlayers() {
         return players;

@@ -26,6 +26,11 @@ public abstract class Tool extends Item {
         this.toolMaterial = toolMaterial;
     }
 
+    @Override
+    public String getName() {
+        return this.toolType.getName();
+    }
+
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
         return 0;
     }
