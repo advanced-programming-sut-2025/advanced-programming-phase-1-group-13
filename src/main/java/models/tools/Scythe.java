@@ -42,6 +42,7 @@ public class Scythe extends Tool {
             return;
         }
         player.decreaseEnergyBy(energyNeeded);
+        player.updateSkillPoints(Skill.FARMING, 5);
         if (tile.getType() == TileType.GRASS) {
             tile.setType(TileType.NOT_PLOWED_SOIL);
         } else if (tile.getType() == TileType.TREE) {
