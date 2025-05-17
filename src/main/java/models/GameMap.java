@@ -118,7 +118,7 @@ public final class GameMap {
                 availablePositions.size() - treeCount - stoneCount);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = availablePositions.get(treeCount + stoneCount + i);
-            foragings.add(new ForagingCrop(ForagingCropType.getRandomForagingCropType() , pos));
+            foragings.add(new ForagingCrop(ForagingCropType.getRandomForagingCropType(), pos));
             getTileByPosition(pos).setType(TileType.GRASS);
         }
 
@@ -227,8 +227,13 @@ public final class GameMap {
         return tiles;
     }
 
-    private Greenhouse generateGreenhouse() {
+    public Greenhouse generateGreenhouse() {
         return new Greenhouse();
+    }
+
+    public void activateGreenhouse() {
+        this.greenhouse = generateGreenhouse();
+        this.greenhouse.setCanEnter(true);
     }
 
     private Quarry generateQuarry(int x, int y, int width, int height) {
@@ -274,7 +279,7 @@ public final class GameMap {
     }
 
     public Greenhouse getGreenhouse() {
-        return greenhouse;
+        return this.greenhouse;
     }
 
     public Cabin getCabin() {

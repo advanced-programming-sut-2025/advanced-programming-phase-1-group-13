@@ -37,7 +37,7 @@ public enum GameCommands implements Command {
     CRAFT_INFO("^\\s*craftinfo\\s+-n\\s+(?<craftName>.+)\\s*$"),
     GO_TO_VILLAGE("^\\s*go\\s+to\\s+village\\s*$"),
     PLANT("^\\s*plant\\s+-s(?<seed>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),
-    SHOW_PLANT("^\\s*showplant\\s+-l\\s+(?<x>\\d+)\\s+(?<y>\\d+)\\s*$"),
+    SHOW_PLANT("^\\s*showplant\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
     FERTILIZE("^\\s*fertilize\\s+-f\\s+(?<fertilizer>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),
     HOWMUCH_WATER("^\\s*howmuch\\s+water\\s*$"),
     CRAFTING_SHOW_RECIPES("^\\s*crafting\\s+show\\s+recipes\\s*$"),
@@ -87,7 +87,10 @@ public enum GameCommands implements Command {
     THROW_ITEM_TO_TRASH("^\\s*inventory\\s+trash\\s+-i\\s+(?<itemName>.+)\\s*(?<number>\\d)?\\s*$"),
     EXIT_GAME("^\\s*exit\\s+game\\s*$"),
     SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$"),
-    EXIT_VILLAGE("^\\s*exit\\s+village\\s*$");
+    EXIT_VILLAGE("^\\s*exit\\s+village\\s*$"),
+
+    // Commands We Added //
+    CHEAT_BUILD_GREENHOUSE("^\\s*cheat\\s+greenhouse\\s+build\\s*$");
 
     private final String regex;
     private final Pattern pattern;

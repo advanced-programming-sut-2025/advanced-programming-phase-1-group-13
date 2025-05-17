@@ -38,7 +38,7 @@ public class Greenhouse {
         this.tiles = tiles;
     }
 
-    public boolean isCanEnter() {
+    public boolean canEnter() {
         return canEnter;
     }
 
@@ -56,5 +56,12 @@ public class Greenhouse {
         boolean greenhouseExists = App.getCurrentGame().getGameMap().getGreenhouse() != null;
 
         return hasEnoughResources && !greenhouseExists;
+    }
+
+    public static boolean isPositionInGreenhouse(Position pos) { // fixed greenhoouse position in all gameMaps.
+        if (pos.getX() >= 20 && pos.getY() >= 20 && pos.getX() < 25 && pos.getY() < 25) {
+            return true;
+        }
+        return false;
     }
 }

@@ -42,6 +42,8 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.cheatWeatherSet(matcher.group("type")));
         } else if ((matcher = GameCommands.GREENHOUSE_BUILD.getMatcher(inputLine)) != null) {
             System.out.println(controller.buildGreenhouse());
+        } else if ((matcher = GameCommands.CHEAT_BUILD_GREENHOUSE.getMatcher(inputLine)) != null) {
+            System.out.println(controller.cheatBuildNewGreenhouse());
         } else if ((matcher = GameCommands.WALK.getMatcher(inputLine)) != null) {
             Result result = controller.respondForWalkRequest(
                     matcher.group("x"),
@@ -67,14 +69,13 @@ public class GameMenu implements AppMenu {
                     matcher.group("y"),
                     matcher.group("size")
             ));
-        } else if ((matcher = GameCommands.PRINT_MAP_VILLAGE.getMatcher(inputLine)) != null)  {
+        } else if ((matcher = GameCommands.PRINT_MAP_VILLAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.printMapVillage(
                     matcher.group("x"),
                     matcher.group("y"),
                     matcher.group("size")
             ));
-        }
-        else if ((matcher = GameCommands.HELP_READING_MAP.getMatcher(inputLine)) != null) {
+        } else if ((matcher = GameCommands.HELP_READING_MAP.getMatcher(inputLine)) != null) {
             System.out.println(controller.showHelpReadingMap());
         } else if ((matcher = GameCommands.ENERGY_SHOW.getMatcher(inputLine)) != null) {
             System.out.println(controller.showPlayerEnergy());
@@ -275,8 +276,7 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.exitVillage());
         } else if ((matcher = GameCommands.WALK_VILLAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.walkInVillage(matcher.group("x"), matcher.group("y")));
-        }
-        else {
+        } else {
             System.out.println("Invalid Command. Please try again!");
         }
     }

@@ -589,6 +589,10 @@ public class GameController {
                 return new Result(false, "Coordinates (" + targetX + "," + targetY + ") are out of bounds.");
             }
 
+            if (Greenhouse.isPositionInGreenhouse(destination) &&
+                    !App.getCurrentGame().getGameMap().getGreenhouse().canEnter()) {
+                return new Result(false, "You haven't built the greenhouse yet, so you can't enter it.");
+            }
             PathFinder pf = new PathFinder(player);
             Path path = pf.findValidPath(playerPos, destination);
 
@@ -834,10 +838,14 @@ public class GameController {
         if (!canBuildGreenhouse()) {
             return new Result(false, "You don't have enough resources or a greenhouse already exists!");
         }
-        App.getCurrentGame().getGameMap().getGreenhouse().setCanEnter(true);
+        App.getCurrentGame().getGameMap().activateGreenhouse();
         return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }
 
+    public Result cheatBuildNewGreenhouse() {
+        App.getCurrentGame().getGameMap().activateGreenhouse();
+        return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
+    }
 
     // === PLANTS === //
 
