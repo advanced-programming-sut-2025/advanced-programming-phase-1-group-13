@@ -20,8 +20,8 @@ public class GameController {
 
     public static Result nextTurn() {
         Game game = App.getCurrentGame();
-        game.nextTurn(App.getLoggedIn());
-        return new Result(true, "Next turn!\nBye-bye " + App.getLoggedIn().getNickname() + ".");
+        String message = game.nextTurn(App.getLoggedIn());
+        return new Result(true, "It is now " + App.getLoggedIn().getNickname() + "'s turn.\n" + message);
     }
 
     public Result showPlayerEnergy() {

@@ -162,7 +162,7 @@ public class Game {
         App.setCurrentMenu(Menu.PRE_GAME_MENU);
     }
 
-    public void nextTurn(User previousUser) {
+    public String nextTurn(User previousUser) {
         int previousPlayerIndex = players.indexOf(previousUser);
         App.setLoggedIn(players.get((previousPlayerIndex + 1) % players.size()));
 
@@ -170,9 +170,24 @@ public class Game {
             Time.advanceOneHour(this);
         }
 
-        // TODO: show unread messages when starting new turn
+        StringBuilder resultMessage = new StringBuilder("New messages:\n");
+        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(previousUser);
+        for (User sender : hashmap1.keySet()) {
+            resultMessage.append("------------------------------------------------------------\n");
+            resultMessage.append("  From ").append(sender.getUsername()).append(":\n");
+            resultMessage.append("------------------------------------------------------------\n");
 
-       // saveGameState();
+            HashMap<String, Boolean> hashmap2 = hashmap1.get(sender);
+            for (String message : hashmap2.keySet()) {
+                if (hashmap2.get(message)) {
+                    resultMessage.append("    ").append(message).append("\n");
+                }
+            }
+
+            resultMessage.append("------------------------------------------------------------\n");
+        }
+
+        return resultMessage.toString();
     }
 
     public Result changeDay() {
