@@ -23,12 +23,10 @@ public class LoginController {
                                String repeatPassword,
                                String nickname,
                                String email,
-                               String genderString) {
+                               String genderString,
+                               boolean generateRandomPassword) {
         if (!LoginCommands.VALID_USERNAME.matches(username)) {
             return new Result(false, "Username invalid.");
-        }
-        if (!LoginCommands.VALID_PASSWORD.matches(password)) {
-            return new Result(false, "Password invalid.");
         }
         if (!LoginCommands.VALID_EMAIL.matches(email)) {
             return new Result(false, "Email format invalid.");
@@ -39,24 +37,52 @@ public class LoginController {
         if (getUserByEmail(email) != null) {
             return new Result(false, "Email already in use.");
         }
-        if (!password.equals(repeatPassword)) {
-            return new Result(false, "Passwords do not match.");
+
+        String finalPassword;
+        if (generateRandomPassword) {
+            finalPassword = randomPasswordGenerator().message();
+        } else {
+            if (password == null || repeatPassword == null) {
+                return new Result(false, "Password and repeat password must be provided.");
+            }
+            if (!LoginCommands.VALID_PASSWORD.matches(password)) {
+                return new Result(false, "Password invalid.");
+            }
+            if (!password.equals(repeatPassword)) {
+                return new Result(false, "Passwords do not match.");
+            }
+            finalPassword = password;
         }
+
         Gender gender = Gender.getGenderByName(genderString);
-        User user = new User(username, password, hashSha256(password), nickname, email, gender);
+        User user = new User(username, finalPassword, hashSha256(finalPassword), nickname, email, gender);
         App.addUser(user);
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Registration successful.\nPick a Security question: \n");
+        stringBuilder.append("Registration successful.\n");
+        if (generateRandomPassword) {
+            stringBuilder.append("Your generated password is: ").append(finalPassword).append("\n");
+            stringBuilder.append("Please save this password securely.\n");
+        }
+        stringBuilder.append("Pick a Security question: \n");
         for (SecurityQuestion question : SecurityQuestion.values()) {
             stringBuilder.append(question.toString()).append("\n");
         }
-        stringBuilder
-                .append("Answer in this format: ")
-                .append("\"pick question -q <question number> -a <answer> -c <repeated answer>\"");
-        System.out.println(stringBuilder);
-        return new Result(true, username);
+        stringBuilder.append("Answer in this format: \"pick question -q <question number> -a <answer> -c <repeated answer>\"");
+
+        return new Result(true, stringBuilder.toString());
     }
+
+
+    public Result registerUser(String username,
+                               String nickname,
+                               String email,
+                               String genderString,
+                               boolean generateRandomPassword) {
+        return registerUser(username, null, null, nickname, email, genderString, generateRandomPassword);
+    }
+
+
 
     String hashSha256(String input) {
         try {
