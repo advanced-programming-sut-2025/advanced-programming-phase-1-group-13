@@ -39,6 +39,9 @@ public class FishingRod extends Tool {
     @Override
     public void useTool(Tile tile, User player) {
         int energyNeeded = this.calculateEnergyNeeded(player.getSkillLevels(), null);
+        if (player.getBuffRelatedSkill() == Skill.FISHING && player.getHoursLeftTillBuffVanishes() > 0) {
+            energyNeeded = Math.max(0, energyNeeded - 1);
+        }
         if (energyNeeded >= player.getEnergy()) {
             player.faint();
             return;
@@ -49,5 +52,15 @@ public class FishingRod extends Tool {
         player.setEnergy(player.getEnergy() - energyNeeded);
 
         super.useTool(tile, player);
+    }
+
+    @Override
+    public void upgradeTool() {
+        this.type = switch (type) {
+            case TRAINING -> FishingRodType.BAMBOO;
+            case BAMBOO -> FishingRodType.FIBERGLASS;
+            case FIBERGLASS, IRIDIUM -> FishingRodType.IRIDIUM;
+            default -> FishingRodType.TRAINING;
+        };
     }
 }

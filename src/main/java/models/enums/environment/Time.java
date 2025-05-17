@@ -1,5 +1,6 @@
 package models.enums.environment;
 
+import models.App;
 import models.Artisan;
 import models.Game;
 import models.User;
@@ -59,6 +60,8 @@ public class Time {
 
             System.out.println(game.changeDay().message());
         }
+
+        App.getLoggedIn().decreaseHoursLeftTillBuffVanishes(1);
 
         for (User player : game.getPlayers()) {
             for (Artisan artisan : player.getFarm().getArtisans()) {

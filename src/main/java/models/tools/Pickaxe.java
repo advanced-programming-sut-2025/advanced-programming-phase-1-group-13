@@ -38,6 +38,9 @@ public class Pickaxe extends Tool {
     public void useTool(Tile tile, User player) {
         boolean successfulUsage = tile.getType() != TileType.QUARRY_GROUND && tile.getType() != TileType.NOT_PLOWED_SOIL;
         int energyNeeded = this.calculateEnergyNeeded(player.getSkillLevels(), player.getCurrentTool());
+        if (player.getBuffRelatedSkill() == Skill.MINING && player.getHoursLeftTillBuffVanishes() > 0) {
+            energyNeeded = Math.max(0, energyNeeded - 1);
+        }
         if (!successfulUsage) {
             energyNeeded = Math.max(0, energyNeeded - 1);
         }

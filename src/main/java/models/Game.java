@@ -27,7 +27,6 @@ public class Game {
     private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
-    // Each inner HashMap stores the messages and boolean of have they been read by the receiver
 
     public Game(ArrayList<User> players, int mapNumber) {
         this.players = players;
@@ -91,22 +90,22 @@ public class Game {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
-        saveGameState();
+        //saveGameState();
     }
 
     public void setUserFriendships(HashMap<User, HashMap<User, Friendship>> userFriendships) {
         this.userFriendships = userFriendships;
-        saveGameState();
+        //saveGameState();
     }
 
     public void setNpcFriendships(HashMap<User, HashMap<NPC, Integer>> npcFriendships) {
         this.npcFriendships = npcFriendships;
-        saveGameState();
+        //saveGameState();
     }
 
     public void setTalkHistory(HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory) {
         this.talkHistory = talkHistory;
-        saveGameState();
+       // saveGameState();
     }
 
     public ArrayList<User> getPlayers() {
@@ -123,7 +122,7 @@ public class Game {
 
     public void setGameMap(GameMap gameMap) {
         this.gameMap = gameMap;
-        saveGameState();
+        //saveGameState();
     }
 
     public ArrayList<NPC> getNpcs() {
@@ -150,10 +149,6 @@ public class Game {
         this.trades.add(trade);
     }
 
-    public void setGameMap(int mapNumber) {
-        // TODO
-    }
-
     public void forceTerminateGame(boolean vote1, boolean vote2, boolean vote3) {
         if (vote1 && vote2 && vote3) {
             for (User player : this.players) {
@@ -177,7 +172,7 @@ public class Game {
 
         // TODO: show unread messages when starting new turn
 
-        saveGameState();
+       // saveGameState();
     }
 
     public Result changeDay() {
@@ -253,7 +248,7 @@ public class Game {
             message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
                     .append(income).append("g.\n");
         }
-        saveGameState();
+        //saveGameState();
         return new Result(true, message.toString());
     }
 
@@ -308,7 +303,7 @@ public class Game {
                 friendshipPoints = 799;
             }
             npcFriendships.get(player).put(npc, friendshipPoints);
-            saveGameState();
+            //saveGameState();
         }
     }
 
@@ -324,7 +319,7 @@ public class Game {
         Friendship friendship = getUserFriendship(user1, user2);
         if (friendship != null) {
             friendship.setLevel(friendshipLevel);
-            saveGameState();
+            //saveGameState();
         }
     }
 
