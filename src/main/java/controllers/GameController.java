@@ -403,6 +403,17 @@ public class GameController {
 
     private Result canCookResult(CookingRecipe givenRecipe) {
         User player = App.getLoggedIn();
+        boolean hasLearntRecipe = false;
+        for (CookingRecipe recipe : player.getLearntCookingRecipes()) {
+            if (recipe.getFoodType() == givenRecipe.getFoodType()) {
+                hasLearntRecipe = true;
+                break;
+            }
+        }
+        if (!hasLearntRecipe) {
+            return new Result(false, "You haven't learnt the recipe for this food.");
+        }
+
         Backpack backpack = player.getBackpack();
         Refrigerator homeRefrigerator = player.getFarm().getCabin().getRefrigerator();
         Refrigerator combinedInventory = new Refrigerator();
@@ -418,16 +429,7 @@ public class GameController {
         ) {
             return new Result(false, "Your refrigerator is full.");
         }
-        boolean hasLearntRecipe = false;
-        for (CookingRecipe recipe : player.getLearntCookingRecipes()) {
-            if (recipe.getFoodType() == givenRecipe.getFoodType()) {
-                hasLearntRecipe = true;
-                break;
-            }
-        }
-        if (!hasLearntRecipe) {
-            return new Result(false, "You haven't learnt the recipe for this food.");
-        }
+
 
         for (Map.Entry<IngredientType, Integer> entry : givenRecipe.getFoodType().getIngredients().entrySet()) {
             IngredientType ingredientType = entry.getKey();
