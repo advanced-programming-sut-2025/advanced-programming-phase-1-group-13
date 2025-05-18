@@ -15,4 +15,9 @@ public class Fruit extends Item {
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public String toString  () {
+        return this.name;
+    }
 }
