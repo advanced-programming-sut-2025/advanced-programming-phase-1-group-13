@@ -3,6 +3,7 @@ package models;
 import models.enums.types.FoodBuff;
 import models.enums.types.FoodType;
 
+// todo: extends Good? it is indeed a "good"" because recipes are sold as goods and are in GoodTypes
 public class CookingRecipe extends Item {
     private int energyOfFood;
     private final FoodType foodType;
@@ -67,5 +68,10 @@ public class CookingRecipe extends Item {
     @Override
     public String toString() {
         return nameOfFood;
+    }
+
+    @Override
+    public String getName() {
+        return this.nameOfFood; // todo
     }
 }
