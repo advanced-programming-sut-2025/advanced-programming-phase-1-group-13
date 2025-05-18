@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import models.enums.types.ShopType;
 import models.enums.types.TileType;
 import java.util.*;
 
@@ -48,7 +49,23 @@ public class PathFinder {
         player.setEnergy(player.getEnergy() - energyCost);
         Position last = p.getPathTiles().get(p.getPathTiles().size() - 1).getPosition();
         player.changePosition(last);
+        if (App.getCurrentGame().isInNPCVillage()) {
+            Tile tile = new Tile (last);
+            if (tile.getType().equals(TileType.SHOP)) {
+                App.setCurrentShop(whichShop(tile));
+            }
+        }
         return new Result(true, "Walked! Energy used=" + energyCost);
+    }
+
+    public static Shop whichShop(Tile tile) {
+        for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
+            if (shop.containsPosition(tile.getPosition())) {
+                return shop;
+            }
+        }
+
+        return null;
     }
 
     public Path findValidPath(Position orig, Position dest) {
