@@ -1,6 +1,11 @@
 package models;
 
+import models.enums.types.CropType;
+import models.enums.types.GoodsType;
 import models.enums.types.TileType;
+import models.farming.Crop;
+import models.farming.PlantSource;
+import models.farming.Tree;
 
 public class Tile {
     private TileType type;
@@ -11,7 +16,8 @@ public class Tile {
         return this.type;
     }
 
-    public Tile() {}
+    public Tile() {
+    }
 
     public Tile(Position position, TileType type) {
         this.position = position;
@@ -32,9 +38,16 @@ public class Tile {
 
     public void pLaceItemOnTile(Item itemPLacedOnTile) {
         this.itemPLacedOnTile = itemPLacedOnTile;
-        this.setType(TileType.UNDER_AN_ITEM);
+        if (itemPLacedOnTile instanceof Tree) this.setType(TileType.TREE);
+        else if (itemPLacedOnTile instanceof PlantSource) this.setType(TileType.PLANTED_SEED);
+        else if (itemPLacedOnTile instanceof Crop) this.setType(TileType.GROWING_CROP);
+        else if (itemPLacedOnTile instanceof Good && ((Good) itemPLacedOnTile).getType() == GoodsType.WOOD) {
+            this.setType(TileType.WOOD_LOG);
+        } else this.setType(TileType.UNDER_AN_ITEM);
     }
 
-    public Item getItemPlacedOnTile() { return itemPLacedOnTile; }
+    public Item getItemPlacedOnTile() {
+        return itemPLacedOnTile;
+    }
 
 }
