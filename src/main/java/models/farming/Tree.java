@@ -36,6 +36,7 @@ public class Tree extends Item implements Harvestable {
         this.fruitType = type.getFruit();
         this.fruitHarvestCycle = type.getFruitHarvestCycle();
         this.hasBeenWateredToday = false;
+        this.isBurnt = false;
     }
 
     public Tree(TreeType type, Tile tile) {

@@ -58,6 +58,7 @@ public class Pickaxe extends Tool {
                 tile.getType() == TileType.GROWING_CROP ||
                 tile.getType() == TileType.UNDER_AN_ITEM) {
             tile.setType(TileType.NOT_PLOWED_SOIL);
+            tile.pLaceItemOnTile(null);
         } else if (tile.getType() == TileType.STONE) {
             Mineral mineral = (Mineral) tile.getItemPlacedOnTile();
             if (canMineMineral(mineral, player.getCurrentTool())) {
@@ -78,6 +79,7 @@ public class Pickaxe extends Tool {
                         backpack.addToInventory(mineral, 1);
                     }
 
+                    tile.setType(TileType.NOT_PLOWED_SOIL);
                     System.out.println("One " + mineral.getName() + " has been added to the inventory.");
                 }
             } else {

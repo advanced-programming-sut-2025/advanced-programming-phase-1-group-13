@@ -104,7 +104,7 @@ public final class GameMap {
             Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
             trees.add(tree);
             tile.setType(TileType.TREE);
-            //tile.pLaceItemOnTile(tree);
+            tile.pLaceItemOnTile(tree);
         }
 
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
