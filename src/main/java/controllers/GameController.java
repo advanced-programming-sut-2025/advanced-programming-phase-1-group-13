@@ -631,11 +631,16 @@ public class GameController {
     }
 
     public Result applyTheWalk(String yOrN, String xAndYValues) {
-        Boolean confirmed = switch (yOrN.toLowerCase()) {
-            case "y", "yes" -> true;
-            case "n", "no" -> false;
-            default -> null;
-        };
+        Boolean confirmed;
+        if (yOrN == null) confirmed = true;
+        else {
+            confirmed = switch (yOrN.toLowerCase()) {
+                case "y", "yes" -> true;
+                case "n", "no" -> false;
+                default -> null;
+            };
+        }
+
         if (confirmed == null) {
             return new Result(false, "Invalid confirmation. Use \"y\" or \"n\".");
         }

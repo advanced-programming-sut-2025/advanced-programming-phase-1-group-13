@@ -18,7 +18,7 @@ public enum GameCommands implements Command {
     CHEAT_WEATHER_SET("^\\s*cheat\\s+weather\\s+set\\s+(?<type>.+)\\s*$"),
     GREENHOUSE_BUILD("^\\s*greenhouse\\s+build\\s*$"),
     WALK("^\\s*walk\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
-    WALK_CONFIRM("^\\s*walk\\s+confirm\\s+(?<yOrN>\\w)\\s*$"),
+    WALK_CONFIRM("^\\s*walk\\s+confirm\\s+(?<yOrN>\\w+)\\s*$"),
     WALK_VILLAGE("^\\s*walk\\s+village\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
     WALK_VILLAGE_CONFIRM("^\\s*walk\\s+village\\s+confirm\\s+(?<yOrN>\\w)\\s*$"),
     PRINT_MAP("^\\s*print\\s+map\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+(?<size>\\d+)\\s*$"),
