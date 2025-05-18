@@ -916,12 +916,13 @@ public class GameController {
             tile.pLaceItemOnTile(new Crop(seedType));
             tile.setType(TileType.GROWING_CROP);
             return new Result(true, seedName + " (crop seed) planted in position: " + tile.getPosition().toString());
-        } else if (treeSourceType != null) {
+        }
+        if (treeSourceType != null) {
             tile.pLaceItemOnTile(new Tree(TreeType.getTreeTypeBySourceType(treeSourceType)));
             tile.setType(TileType.TREE);
             return new Result(true, seedName + " (tree source) planted in position: " + tile.getPosition().toString());
         }
-        return new Result(true, seedName + " planted in position: " + tile.getPosition().toString());
+        return new Result(false, "seed not found");
     }
 
     public Result showPlant(String xString, String yString) {

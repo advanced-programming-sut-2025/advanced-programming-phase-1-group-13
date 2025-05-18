@@ -27,7 +27,7 @@ public enum TreeSourceType implements ItemType {
         if (name == null) {
             return null;
         }
-        return switch (name.toLowerCase()) {
+        return switch (name.trim().toLowerCase()) {
             case "apricot sapling" -> APRICOT_SAPLING;
             case "cherry sapling" -> CHERRY_SAPLING;
             case "banana sapling" -> BANANA_SAPLING;
@@ -42,6 +42,7 @@ public enum TreeSourceType implements ItemType {
             case "mahogany seeds" -> MAHOGANY_SEEDS;
             case "mushroom tree seeds" -> MUSHROOM_TREE_SEEDS;
             case "mystic tree seeds" -> MYSTIC_TREE_SEEDS;
+
             default -> null;
         };
     }
