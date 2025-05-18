@@ -45,7 +45,7 @@ public final class GameMap {
     }
 
     private void generateBaseMapTiles() {
-        allTiles = new ArrayList<>(MAP_SIZE * MAP_SIZE); // Pre-size for efficiency
+        allTiles = new ArrayList<>(MAP_SIZE * MAP_SIZE);
 
         for (int x = 0; x < MAP_SIZE; x++) {
             for (int y = 0; y < MAP_SIZE; y++) {
@@ -311,13 +311,6 @@ public final class GameMap {
     }
 
     public void consolidateAllTiles() {
-        if (cabin != null) {
-            for (Position pos : cabin.getTiles()) {
-                Tile tile = getTileByPosition(pos);
-                if (tile != null) tile.setType(TileType.CABIN);
-            }
-        }
-
         if (greenhouse != null) {
             for (Tile tile : greenhouse.getTiles()) {
                 Tile baseTile = getTileByPosition(tile.getPosition());

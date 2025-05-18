@@ -1,11 +1,12 @@
 package models;
 
+import models.enums.types.TileType;
 import models.inventory.Refrigerator;
 
 import java.util.ArrayList;
 
 public class Cabin {
-    private ArrayList<Position> tiles;
+    private ArrayList<Tile> tiles;
     private Refrigerator refrigerator;
 
     public Cabin() {
@@ -17,11 +18,15 @@ public class Cabin {
         return this.refrigerator;
     }
 
-    public ArrayList<Position> getTiles() {
+    public ArrayList<Tile> getTiles() {
         return tiles;
     }
 
-    public void setTiles(ArrayList<Position> tiles) {
+    public void setTiles(ArrayList<Position> positions) {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (Position position : positions) {
+            tiles.add(new Tile(position, TileType.CABIN));
+        }
         this.tiles = tiles;
     }
 }

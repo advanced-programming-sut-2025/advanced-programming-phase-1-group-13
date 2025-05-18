@@ -11,7 +11,7 @@ public interface Command {
         return pattern.matcher(input);
     }
 
-    default boolean matches(String input) {
+    default Boolean matches(String input) {
         return getMatcher(input).matches();
     }
 }
