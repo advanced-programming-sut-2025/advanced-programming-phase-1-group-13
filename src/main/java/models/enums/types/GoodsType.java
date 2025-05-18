@@ -136,8 +136,6 @@ public enum GoodsType implements ItemType {
             "Assorted colors.", 250, 5, ShopType.JOJAMART, List.of(Season.FALL)),
     RARE_SEED("Rare Seed", "Sow in fall. Takes all season to grow.", 1000, 1,
             ShopType.JOJAMART, List.of(Season.FALL)),
-    WHAT_SEEDS("Wheat Seeds", "Plant these in the summer or fall. Takes 4 days to mature. Harvest " +
-            "with the scythe.", 12, 5, ShopType.JOJAMART, List.of(Season.FALL)),
     POWDERMELON_SEEDS("Powdermelon Seeds", "This special melon grows in the winter. Takes 7 days " +
             "to grow.", 20, 10, ShopType.JOJAMART, List.of(Season.WINTER)),
     RICE("Rice", "A basic grain often served under vegetables.", 200, Integer.MAX_VALUE,
@@ -244,18 +242,94 @@ public enum GoodsType implements ItemType {
         this.seasonalStock = seasonalStocks;
     }
 
+
     public static GoodsType getGoodsTypeByName(String goodsTypeName) {
-        for (GoodsType goodsType : GoodsType.values()) {
-            if (goodsType.name().equals(goodsTypeName)) {
-                return goodsType;
-            }
-        }
-        return null;
+        if (goodsTypeName == null) return null;
+
+        return switch (goodsTypeName) {
+            case "COPPER_ORE" -> GoodsType.COPPER_ORE;
+            case "IRON_ORE" -> GoodsType.IRON_ORE;
+            case "COAL" -> GoodsType.COAL;
+            case "GOLD_ORE" -> GoodsType.GOLD_ORE;
+            case "HAY" -> GoodsType.HAY;
+            case "MILK_PAIL" -> GoodsType.MILK_PAIL;
+            case "SHEARS" -> GoodsType.SHEARS;
+            case "BEER" -> GoodsType.BEER;
+            case "SALAD" -> GoodsType.SALAD;
+            case "BREAD" -> GoodsType.BREAD;
+            case "SPAGHETTI" -> GoodsType.SPAGHETTI;
+            case "PIZZA" -> GoodsType.PIZZA;
+            case "COFFEE" -> GoodsType.COFFEE;
+            case "HASHBROWNS_RECIPE" -> GoodsType.HASHBROWNS_RECIPE;
+            case "OMELET_RECIPE" -> GoodsType.OMELET_RECIPE;
+            case "PANCAKES_RECIPE" -> GoodsType.PANCAKES_RECIPE;
+            case "BREAD_RECIPE" -> GoodsType.BREAD_RECIPE;
+            case "TORTILLA_RECIPE" -> GoodsType.TORTILLA_RECIPE;
+            case "PIZZA_RECIPE" -> GoodsType.PIZZA_RECIPE;
+            case "MAKI_ROLL_RECIPE" -> GoodsType.MAKI_ROLL_RECIPE;
+            case "TRIPLE_SHOT_ESPRESSO_RECIPE" -> GoodsType.TRIPLE_SHOT_ESPRESSO_RECIPE;
+            case "COOKIE_RECIPE" -> GoodsType.COOKIE_RECIPE;
+            case "WOOD" -> GoodsType.WOOD;
+            case "STONE" -> GoodsType.STONE;
+            case "JOJA_COLA" -> GoodsType.JOJA_COLA;
+            case "ANCIENT_SEED" -> GoodsType.ANCIENT_SEED;
+            case "GRASS_STARTER" -> GoodsType.GRASS_STARTER;
+            case "SUGAR" -> GoodsType.SUGAR;
+            case "WHEAT_FLOUR" -> GoodsType.WHEAT_FLOUR;
+            case "RICE_JOJA" -> GoodsType.RICE_JOJA;
+            case "PARSNIP_SEEDS" -> GoodsType.PARSNIP_SEEDS;
+            case "BEAN_STARTER" -> GoodsType.BEAN_STARTER;
+            case "CAULIFLOWER_SEEDS" -> GoodsType.CAULIFLOWER_SEEDS;
+            case "POTATO_SEEDS" -> GoodsType.POTATO_SEEDS;
+            case "STRAWBERRY_SEEDS" -> GoodsType.STRAWBERRY_SEEDS;
+            case "TULIP_BULB" -> GoodsType.TULIP_BULB;
+            case "KALE_SEEDS" -> GoodsType.KALE_SEEDS;
+            case "COFFEE_BEANS" -> GoodsType.COFFEE_BEANS;
+            case "CARROT_SEEDS" -> GoodsType.CARROT_SEEDS;
+            case "RHUBARB_SEEDS" -> GoodsType.RHUBARB_SEEDS;
+            case "JAZZ_SEEDS" -> GoodsType.JAZZ_SEEDS;
+            case "TOMATO_SEEDS" -> GoodsType.TOMATO_SEEDS;
+            case "PEPPER_SEEDS" -> GoodsType.PEPPER_SEEDS;
+            case "WHEAT_SEEDS" -> GoodsType.WHEAT_SEEDS;
+            case "SUMMER_SQUASH_SEEDS" -> GoodsType.SUMMER_SQUASH_SEEDS;
+            case "RADISH_SEEDS" -> GoodsType.RADISH_SEEDS;
+            case "MELON_SEEDS" -> GoodsType.MELON_SEEDS;
+            case "HOPS_STARTER" -> GoodsType.HOPS_STARTER;
+            case "POPPY_SEEDS" -> GoodsType.POPPY_SEEDS;
+            case "SPANGLE_SEEDS" -> GoodsType.SPANGLE_SEEDS;
+            case "STARFRUIT_SEEDS" -> GoodsType.STARFRUIT_SEEDS;
+            case "SUNFLOWER_SEEDS" -> GoodsType.SUNFLOWER_SEEDS;
+            case "CORN_SEEDS" -> GoodsType.CORN_SEEDS;
+            case "EGGPLANT_SEEDS" -> GoodsType.EGGPLANT_SEEDS;
+            case "PUMPKIN_SEEDS" -> GoodsType.PUMPKIN_SEEDS;
+            case "BROCCOLI_SEEDS" -> GoodsType.BROCCOLI_SEEDS;
+            case "AMARANTH_SEEDS" -> GoodsType.AMARANTH_SEEDS;
+            case "GRAPE_STARTER" -> GoodsType.GRAPE_STARTER;
+            case "BEET_SEEDS" -> GoodsType.BEET_SEEDS;
+            case "YAM_SEEDS" -> GoodsType.YAM_SEEDS;
+            case "BOK_CHOY_SEEDS" -> GoodsType.BOK_CHOY_SEEDS;
+            case "CRANBERRY_SEEDS" -> GoodsType.CRANBERRY_SEEDS;
+            case "FAIRY_SEEDS" -> GoodsType.FAIRY_SEEDS;
+            case "RARE_SEED" -> GoodsType.RARE_SEED;
+            case "POWDERMELON_SEEDS" -> GoodsType.POWDERMELON_SEEDS;
+            case "RICE" -> GoodsType.RICE;
+            case "WHEAT_FLOUR_PIERRE" -> GoodsType.WHEAT_FLOUR_PIERRE;
+            case "BOUQUET" -> GoodsType.BOUQUET;
+            case "WEDDING_RING" -> GoodsType.WEDDING_RING;
+            case "DEHYDRATOR_RECIPE" -> GoodsType.DEHYDRATOR_RECIPE;
+            case "GRASS_STARTER_RECIPE" -> GoodsType.GRASS_STARTER_RECIPE;
+            case "SUGAR_PIERRE" -> GoodsType.SUGAR_PIERRE;
+            case "OIL" -> GoodsType.OIL;
+            case "VINEGAR" -> GoodsType.VINEGAR;
+            case "BASIC_FERTILIZER" -> GoodsType.BASIC_FERTILIZER;
+            case "QUALITY_FERTILIZER" -> GoodsType.QUALITY_FERTILIZER;
+            default -> null;
+        };
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getDescription() {
