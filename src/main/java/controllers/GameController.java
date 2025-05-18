@@ -770,12 +770,12 @@ public class GameController {
             case UNDER_AN_ITEM:
                 return "📦";
             case SHOP:
-                return switch (whichShop(tile)){
+                return switch (whichShop(tile)) {
                     case ShopType.JOJAMART -> "🏪"; // farming tools and seeds
                     case ShopType.CARPENTER_SHOP -> "\uD83E\uDE9A"; //wood and stone
                     case ShopType.FISH_SHOP -> "\uD83D\uDC1F"; //fishing
                     case ShopType.MARNIE_RANCH -> "🐄"; //animal
-                    case ShopType.BLACKSMITH ->  "⚒️"; // mineral and extracting tools
+                    case ShopType.BLACKSMITH -> "⚒️"; // mineral and extracting tools
                     case ShopType.PIERRE_GENERAL_STORE -> "\uD83C\uDF3E"; //farming
                     case ShopType.THE_STARDROP_SALOON -> "🍻"; //foods and drinks
                 };
@@ -795,37 +795,36 @@ public class GameController {
     }
 
 
-
     public Result showHelpReadingMap() {
         String helpText = """
-            === Map Symbols Legend ===
-            🌳 - Tree
-            🌊 - Water
-            🏠 - Cabin
-            🪨 - Stone
-            🪟 - Greenhouse
-            ⛰️ - Quarry Ground
-            🪵 - Wood Log
-            🌱 - Growing Crop
-            🐄 - Animal
-            🟤 - Plowed Soil
-            🟫 - Not Plowed Soil
-            🌾 - Planted Seed
-            💧 - Watered Not Plowed Soil
-            💦 - Watered Plowed Soil
-            ⸙ - Grass
-            📦 - Item
-            ❓ - Unknown Tile
-
-            === Shops ===
-            🏪 - JojaMart (General store)
-            🪚 - Carpenter Shop (Wood and construction)
-            \uD83D\uDC1F - Fish Shop (Fishing supplies)
-            🐄 - Marnie Ranch (Animal ranch)
-            ⚒️ - Blacksmith (Crafting and minerals)
-            \uD83C\uDF3E - Pierre's General Store (Farming goods)
-            🍻 - Stardrop Saloon (Food and drinks)
-            """;
+                === Map Symbols Legend ===
+                🌳 - Tree
+                🌊 - Water
+                🏠 - Cabin
+                🪨 - Stone
+                🪟 - Greenhouse
+                ⛰️ - Quarry Ground
+                🪵 - Wood Log
+                🌱 - Growing Crop
+                🐄 - Animal
+                🟤 - Plowed Soil
+                🟫 - Not Plowed Soil
+                🌾 - Planted Seed
+                💧 - Watered Not Plowed Soil
+                💦 - Watered Plowed Soil
+                ⸙ - Grass
+                📦 - Item
+                ❓ - Unknown Tile
+                
+                === Shops ===
+                🏪 - JojaMart (General store)
+                🪚 - Carpenter Shop (Wood and construction)
+                \uD83D\uDC1F - Fish Shop (Fishing supplies)
+                🐄 - Marnie Ranch (Animal ranch)
+                ⚒️ - Blacksmith (Crafting and minerals)
+                \uD83C\uDF3E - Pierre's General Store (Farming goods)
+                🍻 - Stardrop Saloon (Food and drinks)
+                """;
         return new Result(true, helpText);
     }
 
@@ -898,8 +897,8 @@ public class GameController {
         if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-        tile.setType(TileType.PLANTED_SEED);
-        tile.pLaceItemOnTile(new PlantSource(seedType));
+        tile.setType(TileType.GROWING_CROP);
+        tile.pLaceItemOnTile(new Crop(seedType));
         return new Result(true, seedName + " planted in position: " + tile.getPosition().toString());
     }
 
@@ -940,9 +939,13 @@ public class GameController {
         }
 
         if (item instanceof Crop crop) {
+            if (crop.getDaySinceLastHarvest() != null) {
+                message += "Days left to harvest: " + (crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest()) + "\n";
+            } else {
+                message += "Days left to harvest: " + crop.getTotalHarvestTime() + "\n";
+            }
             message +=
-                    "Days left to harvest: " + (crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest()) + "\n" +
-                            "Current stage: " + crop.getStage() + "\n" +
+                    "Current stage: " + crop.getStage() + "\n" +
                             "Has been watered today: ";
 
             if (crop.hasBeenWateredToday()) {
@@ -980,7 +983,7 @@ public class GameController {
             return new Result(true, "Tree fertilized with " + fertilizerType.getName());
         }
         if (plant instanceof Crop crop) {
-            crop.setHasBeenWateredToday(true);
+            crop.setHasBeenFertilizedToday(true);
             return new Result(true, "Crop fertilized with " + fertilizerType.getName());
         }
         return new Result(true, "Fertilized with " + fertilizerType.getName());

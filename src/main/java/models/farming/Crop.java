@@ -51,6 +51,28 @@ public class Crop extends Item implements Harvestable {
         this.hasBeenFertilizedToday = false;
     }
 
+    public Crop(SeedType source) {
+        this.source = source;
+        this.type = CropType.getCropTypeBySeedType(source);
+        this.name = (this.type).getName();
+        this.numOfStages = (this.type).getNumberOfStages();
+        this.stagesTimes = (this.type).getStages();
+        this.totalHarvestTime = (this.type).getTotalHarvestTime();
+        this.baseSellPrice = (this.type).getSellPrice();
+        this.isEdible = (this.type).isEdible();
+        this.energy = (this.type).getEnergy();
+        this.seasons = (this.type).getSeasons();
+        this.canBecomeGiant = (this.type).canBecomeGiant();
+        this.oneTime = (this.type).isOneTime();
+        this.regrowthTime = (this.type).getRegrowthTime();
+        this.daySinceLastHarvest = null;
+        this.isGiant = false;
+        this.dayInStage = 0;
+        this.stage = 0;
+        this.hasBeenWateredToday = false;
+        this.hasBeenFertilizedToday = false;
+    }
+
     public CropType getType() {
         return this.type;
     }
@@ -67,7 +89,7 @@ public class Crop extends Item implements Harvestable {
         return stagesTimes;
     }
 
-    public int getTotalHarvestTime() {
+    public Integer getTotalHarvestTime() {
         return totalHarvestTime;
     }
 

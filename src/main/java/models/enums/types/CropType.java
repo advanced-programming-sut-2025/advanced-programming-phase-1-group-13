@@ -129,6 +129,15 @@ public enum CropType implements ItemType {
         return null;
     }
 
+    public static CropType getCropTypeBySeedType(SeedType seedType) {
+        for (CropType cropType : CropType.values()) {
+            if (seedType == cropType.getSource()) {
+                return cropType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getName() {
         return this.name;

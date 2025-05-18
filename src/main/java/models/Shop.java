@@ -35,7 +35,7 @@ public class Shop {
     private void initializeShopTiles(int width, int height) {
         for (int x = position.getX(); x < position.getX() + width; x++) {
             for (int y = position.getY(); y < position.getY() + height; y++) {
-                Tile tile = new Tile();
+                Tile tile = new Tile(position, TileType.SHOP);
                 tile.setPosition(new Position(x, y));
                 tile.setType(TileType.SHOP);
                 shopTiles.add(tile);
