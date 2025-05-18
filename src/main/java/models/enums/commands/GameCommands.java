@@ -18,7 +18,7 @@ public enum GameCommands implements Command {
     CHEAT_WEATHER_SET("^\\s*cheat\\s+weather\\s+set\\s+(?<type>.+)\\s*$"),
     GREENHOUSE_BUILD("^\\s*greenhouse\\s+build\\s*$"),
     WALK("^\\s*walk\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
-    WALK_CONFIRM("^\\s*walk\\s+confirm\\s+(?<yOrN>\\w)\\s*$"),
+    WALK_CONFIRM("^\\s*walk\\s+confirm\\s+(?<yOrN>\\w+)\\s*$"),
     WALK_VILLAGE("^\\s*walk\\s+village\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*$"),
     WALK_VILLAGE_CONFIRM("^\\s*walk\\s+village\\s+confirm\\s+(?<yOrN>\\w)\\s*$"),
     PRINT_MAP("^\\s*print\\s+map\\s+-l\\s+(?<x>\\d+)\\s*,\\s*(?<y>\\d+)\\s*-s\\s+(?<size>\\d+)\\s*$"),
@@ -29,11 +29,11 @@ public enum GameCommands implements Command {
     CHEAT_ENERGY_UNLIMITED("^\\s*energy\\s+unlimited\\s*$"),
     CHEAT_ENERGY_LIMITED("^\\s*energy\\s+limited\\s*$"),
     INVENTORY_SHOW("^\\s*inventory\\s+show\\s*"),
-    TOOLS_EQUIP("^\\s*tools\\s+equip\\s+(?<toolName>.+)\\s*$"),
-    TOOLS_SHOW_CURRENT("^\\s*tools\\s+show\\s+current\\s*$"),
+    TOOLS_EQUIP("^\\s*tools?\\s+equip\\s+(?<toolName>.+)\\s*$"),
+    TOOLS_SHOW_CURRENT("^\\s*tools?\\s+show\\s+current\\s*$"),
     TOOLS_SHOW_AVAILABLE("^\\s*tools\\s+show\\s+available\\s*$"),
-    TOOLS_UPGRADE("^\\s*tools\\s+upgrade\\s+(?<toolsName>.+)\\s*$"),
-    TOOLS_USE("^\\s*tools\\s+use\\s+-d\\s+(?<direction>.+)\\s*$"),
+    TOOLS_UPGRADE("^\\s*tools?\\s+upgrade\\s+(?<toolsName>.+)\\s*$"),
+    TOOLS_USE("^\\s*tools?\\s+use\\s+-d\\s+(?<direction>.+)\\s*$"),
     CRAFT_INFO("^\\s*craftinfo\\s+-n\\s+(?<craftName>.+)\\s*$"),
     GO_TO_VILLAGE("^\\s*go\\s+to\\s+village\\s*$"),
     PLANT("^\\s*plant\\s+-s(?<seed>.+)\\s+-d\\s+(?<direction>.+)\\s*$"),
@@ -96,7 +96,9 @@ public enum GameCommands implements Command {
     PLAYER_POSITION_SHORTCUT("^\\s*p\\s*p\\s*$"),
     PRINT_MAP_SHORTCUT("^\\s*p\\s*m\\s*(?<size>\\d+)\\s*$"),
     PRINT_VILLAGE_MAP_SHORTCUT("^\\s*p\\s*m\\s*v\\s*(?<size>\\d+)\\s*$"),
-    ;
+    INVENTORY_SHOW_SHORTCUT("^\\s*inv\\s*(show)?\\s*$"),
+    CONFIRM_WALK_SHORTCUT("^\\s*walk\\s+confirm\\s*$"),
+    CONFIRM_WALK_TYPO("^\\s*walk\\s+confrim\\s*$");
     private final String regex;
     private final Pattern pattern;
 

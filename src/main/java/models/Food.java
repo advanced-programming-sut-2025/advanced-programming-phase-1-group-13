@@ -6,11 +6,13 @@ public class Food extends Item {
     private final FoodType foodType;
     private final CookingRecipe cookingRecipe;
     private int energy;
+    private String name;
 
     public Food(CookingRecipe cookingRecipe) {
         this.cookingRecipe = cookingRecipe;
         this.foodType = cookingRecipe.getFoodType();
         this.energy = foodType.getEnergy();
+        this.name = foodType.getName();
     }
 
     public Food(FoodType foodType) {
@@ -30,4 +32,8 @@ public class Food extends Item {
         return this.energy;
     }
 
+    @Override
+    public String getName() {
+        return this.name;
+    }
 }

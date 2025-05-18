@@ -1,9 +1,6 @@
 package models.tools;
 
-import models.Fruit;
-import models.Item;
-import models.Tile;
-import models.User;
+import models.*;
 import models.enums.Skill;
 import models.enums.SkillLevel;
 import models.enums.types.*;
@@ -64,13 +61,17 @@ public class Axe extends Tool {
             if (canHarvestWithAxe) {
                 Fruit fruit = new Fruit(tree.getFruitType());
                 player.getBackpack().addToInventory(fruit, 20);
+                System.out.println(20 + " of " + fruit + " added to backpack.");
                 tree.setDaySinceLastHarvest(0);
             } else {
+                tile.pLaceItemOnTile(new Good(GoodsType.WOOD));
                 tile.setType(TileType.WOOD_LOG);
+                System.out.println("You chopped down the tree.");
             }
         } else if (tile.getType() == TileType.WOOD_LOG) {
-            Item woodLog = getItemByItemType(GoodsType.WOOD);
+            Good woodLog = new Good(GoodsType.WOOD);
             player.getBackpack().addToInventory(woodLog, 5);
+            System.out.println(5 + " wood logs added to backpack.");
             tile.setType(TileType.NOT_PLOWED_SOIL);
         }
     }

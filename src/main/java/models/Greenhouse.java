@@ -22,7 +22,7 @@ public class Greenhouse {
 
         for (int i = startX; i < startX + width; i++) {
             for (int j = startY; j < startY + height; j++) {
-                Tile tile = new Tile();
+                Tile tile = new Tile(new Position(i, j), TileType.GREENHOUSE);
                 tile.setPosition(new Position(i, j));
                 tile.setType(TileType.GREENHOUSE);
                 tiles.add(tile);

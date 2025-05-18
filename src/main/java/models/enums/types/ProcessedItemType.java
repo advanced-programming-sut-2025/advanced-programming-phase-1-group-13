@@ -133,15 +133,20 @@ public enum ProcessedItemType implements ItemType {
         return null;
     }
 
-    public static ProcessedItemType getProcessedItemTypeByIngredients(ArrayList<ItemType> ingredients,
-                                                                      ArtisanType artisanType1) {
+    public static ProcessedItemType getProcessedItemTypeByIngredients(ArrayList<ItemType> ingredients, ArtisanType artisanType1) {
+        HashMap<ItemType, Integer> ingredientMap = new HashMap<>();
+        for (ItemType item : ingredients) {
+            ingredientMap.put(item, 1);
+        }
+
         for (ProcessedItemType processedItemType : ProcessedItemType.values()) {
             ArtisanType artisanType2 = processedItemType.getArtisanType();
             if (artisanType2 == null) {
-                return null;
+                continue;
             }
+
             if (artisanType2.equals(artisanType1)) {
-                if ((new ArrayList<>(processedItemType.ingredients.keySet())).equals(ingredients)) {
+                if (processedItemType.getIngredients().equals(ingredientMap)) {
                     return processedItemType;
                 }
             }

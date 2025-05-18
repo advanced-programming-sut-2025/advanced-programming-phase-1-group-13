@@ -7,10 +7,12 @@ import models.enums.types.ForagingCropType;
 public class ForagingCrop extends Item implements ForagingStuff {
     private Position position;
     private final ForagingCropType foragingCropType;
+    private String name;
 
     public ForagingCrop(ForagingCropType foragingCropType, Position position) {
         this.foragingCropType = foragingCropType;
         this.position = position;
+        this.name = foragingCropType.getName();
     }
 
     public ForagingCrop(ForagingCropType foragingCropType) {
@@ -27,5 +29,10 @@ public class ForagingCrop extends Item implements ForagingStuff {
 
     public ForagingCropType getForagingCropType() {
         return this.foragingCropType;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

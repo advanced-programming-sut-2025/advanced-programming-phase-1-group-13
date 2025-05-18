@@ -1,5 +1,6 @@
 package models.tools;
 
+import controllers.GameController;
 import models.Mineral;
 import models.Tile;
 import models.User;
@@ -57,10 +58,13 @@ public class Pickaxe extends Tool {
                 tile.getType() == TileType.GROWING_CROP ||
                 tile.getType() == TileType.UNDER_AN_ITEM) {
             tile.setType(TileType.NOT_PLOWED_SOIL);
+            tile.pLaceItemOnTile(null);
         } else if (tile.getType() == TileType.STONE) {
             Mineral mineral = (Mineral) tile.getItemPlacedOnTile();
             if (canMineMineral(mineral, player.getCurrentTool())) {
                 System.out.println("Mineral " + mineral.getName() + " has been mined.");
+                tile.setType(TileType.NOT_PLOWED_SOIL);
+                tile.pLaceItemOnTile(null);
                 Backpack backpack = player.getBackpack();
                 if (backpack == null ||
                         (backpack.getCapacity() <= backpack.getItems().size() && !backpack.isCapacityUnlimited())) {
@@ -75,6 +79,7 @@ public class Pickaxe extends Tool {
                         backpack.addToInventory(mineral, 1);
                     }
 
+                    tile.setType(TileType.NOT_PLOWED_SOIL);
                     System.out.println("One " + mineral.getName() + " has been added to the inventory.");
                 }
             } else {

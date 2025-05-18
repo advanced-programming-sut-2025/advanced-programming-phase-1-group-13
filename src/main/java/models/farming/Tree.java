@@ -13,8 +13,11 @@ import java.util.ArrayList;
 public class Tree extends Item implements Harvestable {
     private TreeType type;
     private PlantSource source;
+    private String name;
+
     private int numOfStages;
     private int totalHarvestTime;
+
     private int baseSellPrice;
     private boolean isEdible;
     private Integer energy;
@@ -31,9 +34,12 @@ public class Tree extends Item implements Harvestable {
 
     public Tree(TreeType treeType) {
         this.type = treeType;
+        this.totalHarvestTime = treeType.getTotalHarvestTime();
+        this.name = treeType.name();
         this.fruitType = type.getFruit();
         this.fruitHarvestCycle = type.getFruitHarvestCycle();
         this.hasBeenWateredToday = false;
+        this.isBurnt = false;
     }
 
     public Tree(TreeType type, Tile tile) {
@@ -44,6 +50,7 @@ public class Tree extends Item implements Harvestable {
         this.position = tile.getPosition();
 
         this.type = type;
+        this.name = type.getName();
         this.numOfStages = 4;
         this.totalHarvestTime = type.getTotalHarvestTime();
         this.baseSellPrice = type.getFruitBaseSellPrice();
@@ -162,5 +169,10 @@ public class Tree extends Item implements Harvestable {
 
     public void setHasBeenFertilizedToday(boolean hasBeenFertilizedToday) {
         this.hasBeenFertilizedToday = hasBeenFertilizedToday;
+    }
+
+    @Override
+    public String getName() {
+        return this.type.getName();
     }
 }

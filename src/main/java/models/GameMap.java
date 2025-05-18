@@ -48,7 +48,7 @@ public final class GameMap {
         for (int x = 0; x < MAP_SIZE; x++) {
             for (int y = 0; y < MAP_SIZE; y++) {
                 Position pos = new Position(x, y);
-                Tile tile = new Tile();
+                Tile tile = new Tile(pos, TileType.NOT_PLOWED_SOIL);
                 tile.setPosition(pos);
                 tile.setType(TileType.NOT_PLOWED_SOIL);
                 allTiles.add(tile);
@@ -104,7 +104,7 @@ public final class GameMap {
             Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
             trees.add(tree);
             tile.setType(TileType.TREE);
-            //tile.pLaceItemOnTile(tree);
+            tile.pLaceItemOnTile(tree);
         }
 
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
@@ -187,7 +187,7 @@ public final class GameMap {
         for (Position pos : positions) {
             Tile tile = getTileByPosition(pos);
             if (tile == null) {
-                tile = new Tile();
+                tile = new Tile(pos, TileType.WATER);
                 tile.setPosition(pos);
                 tile.setType(TileType.WATER);
                 allTiles.add(tile);
@@ -207,7 +207,7 @@ public final class GameMap {
         for (Position pos : positions) {
             Tile tile = getTileByPosition(pos);
             if (tile == null) {
-                tile = new Tile();
+                tile = new Tile(pos, TileType.CABIN);
                 tile.setPosition(pos);
                 tile.setType(TileType.CABIN);
                 allTiles.add(tile);
@@ -246,7 +246,7 @@ public final class GameMap {
 
         for (int i = x; i < x + width; i++) {
             for (int j = y; j < y + height; j++) {
-                Tile tile = new Tile();
+                Tile tile = new Tile(new Position(i, j), TileType.QUARRY_GROUND);
                 tile.setPosition(new Position(i, j));
                 tile.setType(TileType.QUARRY_GROUND);
                 tiles.add(tile);

@@ -1,6 +1,6 @@
 package models.enums.types;
 
-public enum FertilizerType {
+public enum FertilizerType implements ItemType {
     BASIC_FERTILIZER("Basic Fertilizer"),
     QUALITY_FERTILIZER("Quality Fertilizer");
     private final String name;
@@ -9,8 +9,9 @@ public enum FertilizerType {
         this.name = name;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public static FertilizerType getFertilizerTypeByName(String name) {

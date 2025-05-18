@@ -133,6 +133,9 @@ public class GameController {
     public Result showLearntCraftRecipes() {
         User player = App.getLoggedIn();
         String learntRecipes = player.getStringLearntCraftRecipes();
+        if (learntRecipes == null) {
+            return new Result(false, "No learnt recipes found.");
+        }
         return new Result(true, learntRecipes);
     }
 
@@ -213,6 +216,9 @@ public class GameController {
     public Result useTool(String directionString) {
         User player = App.getLoggedIn();
         Direction direction = Direction.getDirectionByDisplayName(directionString);
+        if (direction == null) {
+            return new Result(false, "Invalid Direction.");
+        }
         Tile tile = neighborTile(direction);
         Tool tool = player.getCurrentTool();
         String failingMessage = "You can't use " + tool.toString() + " here on your " + direction.getDisplayName() + ".";
@@ -283,29 +289,32 @@ public class GameController {
     public Result showCraftInfo(String cropName) {
         CropType cropType = CropType.getCropTypeByName(cropName);
         if (cropType == null) {
-            if (TreeType.getTreeTypeByName(cropName) != null) {
-                TreeType treeType = TreeType.getTreeTypeByName(cropName);
-                StringBuilder message =
-                        new StringBuilder("Name: " + treeType.getName() + "\n" +
-                                "Source: " + treeType.getSource() + "\n" +
-                                "Stages: ");
-
-                message.append("7-7-7-7");
-
-                message.append("\n" + "Total Harvest Time: ").append(treeType.getTotalHarvestTime()).append("\n").
-                        append("Base Sell Price: ").append(treeType.getFruitBaseSellPrice()).append("\n").
-                        append("Is Edible: ").append(treeType.isFruitEdible()).append("\n").
-                        append("Base Fruit Energy: ");
-
-                if (cropType.isEdible()) {
-                    message.append(treeType.getFruitEnergy());
-                } else {
-                    message.append("Not Edible");
-                }
-
-                message.append("\nSource: ").append(treeType.getSource()).append("\n");
+            TreeType treeType = TreeType.getTreeTypeByName(cropName);
+            if (treeType == null) {
+                return new Result(false, "Tree not found. (" + cropName + ")");
             }
-            return new Result(false, "Crop not found.");
+            System.out.println(treeType);
+            StringBuilder message =
+                    new StringBuilder("Name: " + treeType.getName() + "\n" +
+                            "Source: " + treeType.getSource() + "\n" +
+                            "Stages: ");
+
+            message.append("7-7-7-7");
+
+            message.append("\n" + "Total Harvest Time: ").append(treeType.getTotalHarvestTime()).append("\n").
+                    append("Base Sell Price: ").append(treeType.getFruitBaseSellPrice()).append("\n").
+                    append("Is Edible: ").append(treeType.isFruitEdible()).append("\n").
+                    append("Base Fruit Energy: ");
+
+            if (treeType.isFruitEdible()) {
+                message.append(treeType.getFruitEnergy());
+            } else {
+                message.append("Not Edible");
+            }
+
+            message.append("\nSource: ").append(treeType.getSource().getName()).append("\n");
+
+            return new Result(true, message.toString());
         }
 
         StringBuilder message =
@@ -631,11 +640,16 @@ public class GameController {
     }
 
     public Result applyTheWalk(String yOrN, String xAndYValues) {
-        Boolean confirmed = switch (yOrN.toLowerCase()) {
-            case "y", "yes" -> true;
-            case "n", "no" -> false;
-            default -> null;
-        };
+        Boolean confirmed;
+        if (yOrN == null) confirmed = true;
+        else {
+            confirmed = switch (yOrN.toLowerCase()) {
+                case "y", "yes" -> true;
+                case "n", "no" -> false;
+                default -> null;
+            };
+        }
+
         if (confirmed == null) {
             return new Result(false, "Invalid confirmation. Use \"y\" or \"n\".");
         }
@@ -770,12 +784,12 @@ public class GameController {
             case UNDER_AN_ITEM:
                 return "📦";
             case SHOP:
-                return switch (whichShop(tile)){
+                return switch (whichShop(tile)) {
                     case ShopType.JOJAMART -> "🏪"; // farming tools and seeds
                     case ShopType.CARPENTER_SHOP -> "\uD83E\uDE9A"; //wood and stone
                     case ShopType.FISH_SHOP -> "\uD83D\uDC1F"; //fishing
                     case ShopType.MARNIE_RANCH -> "🐄"; //animal
-                    case ShopType.BLACKSMITH ->  "⚒️"; // mineral and extracting tools
+                    case ShopType.BLACKSMITH -> "⚒️"; // mineral and extracting tools
                     case ShopType.PIERRE_GENERAL_STORE -> "\uD83C\uDF3E"; //farming
                     case ShopType.THE_STARDROP_SALOON -> "🍻"; //foods and drinks
                 };
@@ -795,37 +809,36 @@ public class GameController {
     }
 
 
-
     public Result showHelpReadingMap() {
         String helpText = """
-            === Map Symbols Legend ===
-            🌳 - Tree
-            🌊 - Water
-            🏠 - Cabin
-            🪨 - Stone
-            🪟 - Greenhouse
-            ⛰️ - Quarry Ground
-            🪵 - Wood Log
-            🌱 - Growing Crop
-            🐄 - Animal
-            🟤 - Plowed Soil
-            🟫 - Not Plowed Soil
-            🌾 - Planted Seed
-            💧 - Watered Not Plowed Soil
-            💦 - Watered Plowed Soil
-            ⸙ - Grass
-            📦 - Item
-            ❓ - Unknown Tile
-
-            === Shops ===
-            🏪 - JojaMart (General store)
-            🪚 - Carpenter Shop (Wood and construction)
-            \uD83D\uDC1F - Fish Shop (Fishing supplies)
-            🐄 - Marnie Ranch (Animal ranch)
-            ⚒️ - Blacksmith (Crafting and minerals)
-            \uD83C\uDF3E - Pierre's General Store (Farming goods)
-            🍻 - Stardrop Saloon (Food and drinks)
-            """;
+                === Map Symbols Legend ===
+                🌳 - Tree
+                🌊 - Water
+                🏠 - Cabin
+                🪨 - Stone
+                🪟 - Greenhouse
+                ⛰️ - Quarry Ground
+                🪵 - Wood Log
+                🌱 - Growing Crop
+                🐄 - Animal
+                🟤 - Plowed Soil
+                🟫 - Not Plowed Soil
+                🌾 - Planted Seed
+                💧 - Watered Not Plowed Soil
+                💦 - Watered Plowed Soil
+                ⸙ - Grass
+                📦 - Item
+                ❓ - Unknown Tile
+                
+                === Shops ===
+                🏪 - JojaMart (General store)
+                🪚 - Carpenter Shop (Wood and construction)
+                \uD83D\uDC1F - Fish Shop (Fishing supplies)
+                🐄 - Marnie Ranch (Animal ranch)
+                ⚒️ - Blacksmith (Crafting and minerals)
+                \uD83C\uDF3E - Pierre's General Store (Farming goods)
+                🍻 - Stardrop Saloon (Food and drinks)
+                """;
         return new Result(true, helpText);
     }
 
@@ -893,14 +906,23 @@ public class GameController {
 
     public Result plant(String seedName, String directionName) {
         SeedType seedType = SeedType.getSeedByName(seedName);
+        TreeSourceType treeSourceType = TreeSourceType.getTreeSourceTypeByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         Tile tile = neighborTile(direction);
         if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-        tile.setType(TileType.PLANTED_SEED);
-        tile.pLaceItemOnTile(new PlantSource(seedType));
-        return new Result(true, seedName + " planted in position: " + tile.getPosition().toString());
+        if (seedType != null) {
+            tile.pLaceItemOnTile(new Crop(seedType));
+            tile.setType(TileType.GROWING_CROP);
+            return new Result(true, seedName + " (crop seed) planted in position: " + tile.getPosition().toString());
+        }
+        if (treeSourceType != null) {
+            tile.pLaceItemOnTile(new Tree(TreeType.getTreeTypeBySourceType(treeSourceType)));
+            tile.setType(TileType.TREE);
+            return new Result(true, seedName + " (tree source) planted in position: " + tile.getPosition().toString());
+        }
+        return new Result(false, "seed not found");
     }
 
     public Result showPlant(String xString, String yString) {
@@ -913,15 +935,19 @@ public class GameController {
             return new Result(false, "No plants in this tile.");
         }
 
-
         Item item = tile.getItemPlacedOnTile();
         String message = showCraftInfo(item.getName()).message();
 
         if (item instanceof Tree tree) {
-            message +=
-                    "Days left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
-                            "Current stage: " + tree.getStage() + "\n" +
-                            "Has been watered today: ";
+            int daysLeft;
+            if (tree.getDaySinceLastHarvest() != null) {
+                daysLeft = tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest();
+            } else {
+                daysLeft = tree.getTotalHarvestTime();
+            }
+            message += "Days left to harvest: " + (daysLeft <= 0 ? "Ready to harvest" : daysLeft) + "\n" +
+                    "Current stage: " + tree.getStage() + "\n" +
+                    "Has been watered today: ";
 
             if (tree.hasBeenWateredToday()) {
                 message += "Yes";
@@ -940,10 +966,13 @@ public class GameController {
         }
 
         if (item instanceof Crop crop) {
-            message +=
-                    "Days left to harvest: " + (crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest()) + "\n" +
-                            "Current stage: " + crop.getStage() + "\n" +
-                            "Has been watered today: ";
+            int daysLeft = crop.getDaySinceLastHarvest() == null ? crop.getTotalHarvestTime() :
+                    crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest();
+
+            message += "Days left to harvest: " + (daysLeft < 0 ? "Ready to harvest" : daysLeft) + "\n";
+
+            message += "Current stage: " + crop.getStage() + "\n" +
+                    "Has been watered today: ";
 
             if (crop.hasBeenWateredToday()) {
                 message += "Yes";
@@ -980,7 +1009,7 @@ public class GameController {
             return new Result(true, "Tree fertilized with " + fertilizerType.getName());
         }
         if (plant instanceof Crop crop) {
-            crop.setHasBeenWateredToday(true);
+            crop.setHasBeenFertilizedToday(true);
             return new Result(true, "Crop fertilized with " + fertilizerType.getName());
         }
         return new Result(true, "Fertilized with " + fertilizerType.getName());
@@ -1448,7 +1477,7 @@ public class GameController {
                     player.getBackpack().addToInventory(itemToRemove,
                             processedItemType.getIngredients().get(itemTypes.get(i)));
                 }
-                return new Result(false, "You don't have enough " + itemType.getName());
+                return new Result(false, "You don't have enough ingredients.");
             }
         }
 

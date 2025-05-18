@@ -81,6 +81,9 @@ public class WateringCan extends Tool {
         } else if (tile.getType() == TileType.NOT_PLOWED_SOIL) {
             tile.setType(TileType.WATERED_NOT_PLOWED_SOIL);
         }
+        if (tile.getType() != TileType.WATER) {
+            this.remainingWater = Math.max(0, this.remainingWater - 1);
+        }
     }
 }
 

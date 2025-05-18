@@ -16,7 +16,7 @@ public class Fish extends Item {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public FishType getType() {

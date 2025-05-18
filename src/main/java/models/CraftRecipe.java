@@ -2,6 +2,7 @@ package models;
 
 import models.enums.types.CraftType;
 
+// todo: extends Good?
 public class CraftRecipe extends Item {
     private final String nameOfCraft;
     private int sellPrice;
@@ -38,5 +39,10 @@ public class CraftRecipe extends Item {
     @Override
     public String toString() {
         return nameOfCraft + "\n\t(" + description + ")";
+    }
+
+    @Override
+    public String getName() {
+        return this.nameOfCraft;
     }
 }
