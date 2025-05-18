@@ -24,6 +24,6 @@ public enum TreeSourceType implements ItemType {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 }

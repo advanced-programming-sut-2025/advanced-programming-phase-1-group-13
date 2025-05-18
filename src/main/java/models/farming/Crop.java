@@ -27,9 +27,11 @@ public class Crop extends Item implements Harvestable {
     private Integer daySinceLastHarvest;
     private boolean hasBeenWateredToday;
     private boolean hasBeenFertilizedToday;
+    private String name;
 
     public Crop(CropType type) {
         this.type = type;
+        this.name = type.getName();
         this.source = type.getSource();
         this.numOfStages = type.getNumberOfStages();
         this.stagesTimes = type.getStages();
@@ -50,7 +52,7 @@ public class Crop extends Item implements Harvestable {
     }
 
     public CropType getType() {
-        return type;
+        return this.type;
     }
 
     public SeedType getSource() {
@@ -162,5 +164,10 @@ public class Crop extends Item implements Harvestable {
 
     public void setHasBeenWateredToday(boolean hasBeenWateredToday) {
         this.hasBeenWateredToday = hasBeenWateredToday;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

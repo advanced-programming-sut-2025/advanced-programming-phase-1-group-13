@@ -45,7 +45,7 @@ public enum TreeType implements ItemType {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public TreeSourceType getSource() {

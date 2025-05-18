@@ -1,5 +1,6 @@
 package models.tools;
 
+import controllers.GameController;
 import models.Mineral;
 import models.Tile;
 import models.User;
@@ -61,6 +62,8 @@ public class Pickaxe extends Tool {
             Mineral mineral = (Mineral) tile.getItemPlacedOnTile();
             if (canMineMineral(mineral, player.getCurrentTool())) {
                 System.out.println("Mineral " + mineral.getName() + " has been mined.");
+                tile.setType(TileType.NOT_PLOWED_SOIL);
+                tile.pLaceItemOnTile(null);
                 Backpack backpack = player.getBackpack();
                 if (backpack == null ||
                         (backpack.getCapacity() <= backpack.getItems().size() && !backpack.isCapacityUnlimited())) {
