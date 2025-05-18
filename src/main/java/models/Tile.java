@@ -16,7 +16,8 @@ public class Tile {
         return this.type;
     }
 
-    public Tile() {
+    public Tile(Position position) {
+        this.position = position;
     }
 
     public Tile(Position position, TileType type) {

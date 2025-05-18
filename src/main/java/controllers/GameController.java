@@ -688,7 +688,7 @@ public class GameController {
 
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
-                Position pos = new Position(j, i);
+                Position pos = new Position(i, j);
                 Tile tile = App.getCurrentGame().getVillage().getTileByPosition(pos);
 
                 if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
@@ -784,7 +784,7 @@ public class GameController {
         }
     }
 
-    public ShopType whichShop(Tile tile) {
+    public static ShopType whichShop(Tile tile) {
         for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
             if (shop.containsPosition(tile.getPosition())) {
                 return shop.getType();
