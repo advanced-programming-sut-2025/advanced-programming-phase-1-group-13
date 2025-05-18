@@ -2054,10 +2054,13 @@ public class GameController {
 
                 if (shop != null) {
                     App.setCurrentShop(shop);
+                    App.getLoggedIn().setPosition(pos);
                     return new Result(true, "You have entered " + shop.getType() + " at (" + x + "," + y + ").");
                 } else {
                     return new Result(false, "This shop's type could not be determined.");
                 }
+            } else {
+                App.setCurrentShop(null);
             }
 
             return new Result(false, "This tile is not a shop.");
