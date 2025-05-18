@@ -286,29 +286,28 @@ public class Game {
 //                    .append(income).append("g.\n");
 //        }
 
-//        for (Tile tile : gameMap.getAllTiles()) {
-//            if (tile.getType() == TileType.TREE) {
-//                Tree tree = (Tree) tile.getItemPlacedOnTile();
-//                if (tree.getDaySinceLastHarvest() != null) {
-//                    tree.incrementDaySinceLastHarvest();
-//                }
-//
-//                tree.incrementDayInStage();
-//                if (tree.getDayInStage() == tree.getType().getStagesTime()) {
-//                    tree.incrementStage();
-//                }
-//            } else if (tile.getType() == TileType.GROWING_CROP) {
-//                Crop crop = (Crop) tile.getItemPlacedOnTile();
-//                if (crop.getDaySinceLastHarvest() != null) {
-//                    crop.incrementDaySinceLastHarvest();
-//                }
-//
-//                crop.incrementDayInStage();
-//                if (crop.getDayInStage() == crop.getStagesTimes().get(crop.getStage())) {
-//                    crop.incrementStage();
-//                }
-//            }
-//        }
+        for (Tile tile : gameMap.getAllTiles()) {
+            if (tile.getType() == TileType.TREE) {
+                Tree tree = (Tree) tile.getItemPlacedOnTile();
+                if (tree.getDaySinceLastHarvest() != null) {
+                    tree.incrementDaySinceLastHarvest();
+                }
+
+                tree.incrementDayInStage();
+                if (tree.getDayInStage() == tree.getType().getStagesTime()) {
+                    tree.incrementStage();
+                }
+            } else if (tile.getType() == TileType.GROWING_CROP) {
+                Crop crop = (Crop) tile.getItemPlacedOnTile();
+                crop.incrementDaySinceLastHarvest();
+
+                crop.incrementDayInStage();
+                if (crop.getDayInStage() == crop.getStagesTimes().get(crop.getStage())) {
+                    crop.incrementStage();
+                }
+
+            }
+        }
 
         return new Result(true, message.toString());
     }

@@ -3,7 +3,6 @@ package models.farming;
 import models.Item;
 import models.enums.environment.Season;
 import models.enums.types.CropType;
-import models.enums.types.ItemType;
 import models.enums.types.SeedType;
 
 import java.util.ArrayList;
@@ -141,10 +140,6 @@ public class Crop extends Item implements Harvestable {
         return stage;
     }
 
-    public void setStage(int stage) {
-        this.stage = stage;
-    }
-
     public void showInfo() {
 
     }
@@ -153,19 +148,8 @@ public class Crop extends Item implements Harvestable {
         return this.daySinceLastHarvest;
     }
 
-    public void incrementStage() {
-        this.stage++;
-        if (this.stage > this.numOfStages) {
-            this.stage = this.numOfStages;
-        }
-    }
-
     public void incrementDayInStage() {
         this.dayInStage++;
-    }
-
-    public void incrementDaySinceLastHarvest() {
-        this.daySinceLastHarvest++;
     }
 
     public void setDaySinceLastHarvest(Integer daySinceLastHarvest) {
@@ -188,8 +172,60 @@ public class Crop extends Item implements Harvestable {
         this.hasBeenWateredToday = hasBeenWateredToday;
     }
 
+    public void incrementStage() {
+        this.stage++;
+        if (this.stage >= this.numOfStages) {
+            this.stage = this.numOfStages;
+            if (!this.oneTime) {
+                this.daySinceLastHarvest = 0;
+            }
+        }
+    }
+
+
+    public void incrementDaySinceLastHarvest() {
+        if (this.daySinceLastHarvest == null) {
+            this.daySinceLastHarvest = 0;
+        }
+        this.daySinceLastHarvest++;
+    }
+
+    public int getDaysLeftToHarvest() {
+        if (this.daySinceLastHarvest == null) {
+            return this.totalHarvestTime - this.dayInStage;
+        }
+        int remainingTime = this.totalHarvestTime - this.daySinceLastHarvest;
+        if (!this.oneTime && remainingTime <= 0) {
+            return this.regrowthTime;
+        }
+        return remainingTime;
+    }
+
+
     @Override
     public String getName() {
         return this.name;
     }
 }
+
+/*
+
+tools equip Hoe
+tools use -d r
+cheat advance date 29d
+cheat add item -n Blueberry Seeds
+plant -s Blueberry Seeds -d r
+pm15
+showplant -l 6,8
+fertilize -f Basic Fertilizer -d r
+showplant -l 6,8
+tools show current
+tools equip Watering can
+tools show current
+tools use -d r
+showplant -l 6,8
+cheat advance date 10d
+showplant -l 6,8
+cheat advance date 13d
+
+ */

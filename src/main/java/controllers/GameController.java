@@ -917,15 +917,14 @@ public class GameController {
             return new Result(false, "No plants in this tile.");
         }
 
-
         Item item = tile.getItemPlacedOnTile();
         String message = showCraftInfo(item.getName()).message();
 
         if (item instanceof Tree tree) {
-            message +=
-                    "Days left to harvest: " + (tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest()) + "\n" +
-                            "Current stage: " + tree.getStage() + "\n" +
-                            "Has been watered today: ";
+            int daysLeft = tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest();
+            message += "Days left to harvest: " + (daysLeft < 0 ? "Ready to harvest" : daysLeft) + "\n" +
+                    "Current stage: " + tree.getStage() + "\n" +
+                    "Has been watered today: ";
 
             if (tree.hasBeenWateredToday()) {
                 message += "Yes";
@@ -944,14 +943,13 @@ public class GameController {
         }
 
         if (item instanceof Crop crop) {
-            if (crop.getDaySinceLastHarvest() != null) {
-                message += "Days left to harvest: " + (crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest()) + "\n";
-            } else {
-                message += "Days left to harvest: " + crop.getTotalHarvestTime() + "\n";
-            }
-            message +=
-                    "Current stage: " + crop.getStage() + "\n" +
-                            "Has been watered today: ";
+            int daysLeft = crop.getDaySinceLastHarvest() == null ? crop.getTotalHarvestTime() :
+                    crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest();
+
+            message += "Days left to harvest: " + (daysLeft < 0 ? "Ready to harvest" : daysLeft) + "\n";
+
+            message += "Current stage: " + crop.getStage() + "\n" +
+                    "Has been watered today: ";
 
             if (crop.hasBeenWateredToday()) {
                 message += "Yes";
