@@ -58,6 +58,13 @@ public class GameMenu implements AppMenu {
                             matcher.group("yOrN"),
                             result.message()
                     ));
+                } else if ((matcher = GameCommands.CONFIRM_WALK_SHORTCUT.getMatcher(newInputLine)) != null) {
+                    System.out.println(controller.applyTheWalk(
+                            "y",
+                            result.message()
+                    ));
+                } else if ((matcher = GameCommands.CONFIRM_WALK_TYPO.getMatcher(newInputLine)) != null) {
+                    System.out.println("Bro, it's \"confirm\", not \"confrim\".");
                 } else {
                     System.out.println("Invalid command.");
                 }
