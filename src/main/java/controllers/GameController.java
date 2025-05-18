@@ -903,13 +903,20 @@ public class GameController {
 
     public Result plant(String seedName, String directionName) {
         SeedType seedType = SeedType.getSeedByName(seedName);
+        TreeSourceType treeSourceType = TreeSourceType.getTreeSourceTypeByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         Tile tile = neighborTile(direction);
         if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-        tile.setType(TileType.GROWING_CROP);
-        tile.pLaceItemOnTile(new Crop(seedType));
+        if (seedType != null) {
+            tile.pLaceItemOnTile(new Crop(seedType));
+            tile.setType(TileType.GROWING_CROP);
+        } else if (treeSourceType != null) {
+            tile.pLaceItemOnTile(new Tree(TreeType.getTreeTypeBySourceType(treeSourceType)));
+            tile.setType(TileType.TREE);
+            return new Result(true, seedName + " (tree source) planted in position: " + tile.getPosition().toString());
+        }
         return new Result(true, seedName + " planted in position: " + tile.getPosition().toString());
     }
 
