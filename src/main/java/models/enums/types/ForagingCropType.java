@@ -64,4 +64,34 @@ public enum ForagingCropType implements ItemType {
     public String getName() {
         return this.name;
     }
+
+    public static ForagingCropType getForagingCropTypeByName(String name) {
+        if (name == null) return null;
+        return switch (name.trim().toLowerCase()) {
+            case "common mushroom" -> COMMON_MUSHROOM;
+            case "daffodil" -> DAFFODIL;
+            case "dandelion" -> DANDELION;
+            case "leek" -> LEEK;
+            case "morel" -> MOREL;
+            case "salmonberry" -> SALMONBERRY;
+            case "spring onion" -> SPRING_ONION;
+            case "wild horseradish" -> WILD_HORSERADISH;
+            case "fiddlehead fern" -> FIDDLEHEAD_FERN;
+            case "grape" -> GRAPE;
+            case "red mushroom" -> RED_MUSHROOM;
+            case "spice berry" -> SPICE_BERRY;
+            case "sweet pea" -> SWEET_PEA;
+            case "blackberry" -> BLACKBERRY;
+            case "chanterelle" -> CHANTERELLE;
+            case "hazelnut" -> HAZELNUT;
+            case "purple mushroom" -> PURPLE_MUSHROOM;
+            case "wild plum" -> WILD_PLUM;
+            case "crocus" -> CROCUS;
+            case "crystal fruit" -> CRYSTAL_FRUIT;
+            case "holly" -> HOLLY;
+            case "snow yam" -> SNOW_YAM;
+            case "winter root" -> WINTER_ROOT;
+            default -> null;
+        };
+    }
 }
