@@ -52,8 +52,9 @@ public class Shop {
     }
 
     public boolean containsPosition(Position position) {
-        for (Tile tile : shopTiles) {
-            if (tile.getPosition().equals(position)) {
+        for (Tile tile : this.shopTiles) {
+            System.out.println(tile.getPosition());
+            if (tile.getPosition().getX() == position.getX() && tile.getPosition().getY() == position.getY()) {
                 return true;
             }
         }
