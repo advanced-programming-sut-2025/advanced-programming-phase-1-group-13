@@ -770,36 +770,63 @@ public class GameController {
             case UNDER_AN_ITEM:
                 return "📦";
             case SHOP:
-                return "🏪";
+                return switch (whichShop(tile)){
+                    case ShopType.JOJAMART -> "🏪"; // farming tools and seeds
+                    case ShopType.CARPENTER_SHOP -> "🛠️"; //wood and stone
+                    case ShopType.FISH_SHOP -> "\uD83D\uDC1F"; //fishing
+                    case ShopType.MARNIE_RANCH -> "🐄"; //animal
+                    case ShopType.BLACKSMITH ->  "⚒️"; // mineral and extracting tools
+                    case ShopType.PIERRE_GENERAL_STORE -> "\uD83C\uDF3E"; //farming
+                    case ShopType.THE_STARDROP_SALOON -> "🍻"; //foods and drinks
+                };
             default:
                 return "❓";
         }
     }
 
+    public ShopType whichShop(Tile tile) {
+        for (Shop shop : App.getCurrentGame().getGameMap().getShops()) {
+            if (shop.containsPosition(tile.getPosition())) {
+                return shop.getType();
+            }
+        }
+        return null;
+    }
+
+
     public Result showHelpReadingMap() {
         String helpText = """
-                === Map Symbols Legend ===
-                🌳 - Tree
-                🌊 - Water
-                🏠 - Cabin
-                🪨 - Stone
-                🪟 - Greenhouse
-                ⛰️ - Quarry Ground
-                🪵 - Wood Log
-                🌱 - Growing Crop
-                🐄 - Animal
-                🟤 - Plowed Soil
-                🟫 - Not Plowed Soil
-                🌾 - Planted Seed
-                💧 - Watered Not Plowed Soil
-                💦 - Watered Plowed Soil
-                ⸙ - Grass
-                📦 - Item
-                🏪 - Shop
-                ⬜ - Empty Space
-                """;
+            === Map Symbols Legend ===
+            🌳 - Tree
+            🌊 - Water
+            🏠 - Cabin
+            🪨 - Stone
+            🪟 - Greenhouse
+            ⛰️ - Quarry Ground
+            🪵 - Wood Log
+            🌱 - Growing Crop
+            🐄 - Animal
+            🟤 - Plowed Soil
+            🟫 - Not Plowed Soil
+            🌾 - Planted Seed
+            💧 - Watered Not Plowed Soil
+            💦 - Watered Plowed Soil
+            ⸙ - Grass
+            📦 - Item
+            ❓ - Unknown Tile
+
+            === Shops ===
+            🏪 - JojaMart (General store)
+            🛠️ - Carpenter Shop (Wood and construction)
+            \uD83D\uDC1F - Fish Shop (Fishing supplies)
+            🐄 - Marnie Ranch (Animal ranch)
+            ⚒️ - Blacksmith (Crafting and minerals)
+            🛒 - Pierre's General Store (Farming goods)
+            🍻 - Stardrop Saloon (Food and drinks)
+            """;
         return new Result(true, helpText);
     }
+
 
     // === GAME STATUS === //
 
