@@ -278,7 +278,9 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.WALK_VILLAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.walkInVillage(matcher.group("x"), matcher.group("y")));
         } else if ((matcher = GameCommands.CHEAT_FAINT.getMatcher(inputLine)) != null) {
-            App.getLoggedIn().faint()   ;
+            App.getLoggedIn().faint();
+        } else if ((matcher = GameCommands.PLAYER_POSITION.getMatcher(inputLine)) != null) {
+            System.out.println(controller.showPlayerPosition());
         } else {
             System.out.println("Invalid Command. Please try again!");
         }

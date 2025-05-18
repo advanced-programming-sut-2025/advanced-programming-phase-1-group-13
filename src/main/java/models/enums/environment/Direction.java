@@ -35,9 +35,10 @@ public enum Direction {
     }
 
     public static Position getNewPosition(Position currentPosition, Direction direction) {
-        currentPosition.addToX(direction.deltaX);
-        currentPosition.addToY(direction.deltaY);
-        return currentPosition;
+        Position newPosition = new Position(currentPosition.getX(), currentPosition.getY());
+        newPosition.addToX(direction.deltaX);
+        newPosition.addToY(direction.deltaY);
+        return newPosition;
     }
 
     public static Direction getDirectionByDisplayName(String name) {

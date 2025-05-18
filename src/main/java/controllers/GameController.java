@@ -33,6 +33,12 @@ public class GameController {
         return new Result(true, "Your energy is: " + playerEnergy);
     }
 
+    public Result showPlayerPosition() {
+        User player = App.getLoggedIn();
+        Position position = player.getPosition();
+        return new Result(true, "Your current position is: " + position);
+    }
+
     public Result setPlayerEnergy(String energyAmountStr) {
         int energyAmount = Integer.parseInt(energyAmountStr);
 
