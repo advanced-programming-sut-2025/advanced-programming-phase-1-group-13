@@ -1,5 +1,6 @@
 package models.inventory;
 
+import models.AnimalProduct;
 import models.Item;
 import models.Result;
 import models.User;
@@ -108,10 +109,18 @@ public abstract class Inventory {
     }
 
     public Result removeFromInventory(Item item, Integer n) {
-        if (!items.containsKey(item)) {
-            return new Result(false, "Item does not exist.");
+        boolean found = false;
+        Item itemToRemove = null;
+        for (Item item2 : items.keySet()) {
+            if (item.getName().equals(item2.getName())) {
+                found = true;
+                itemToRemove = item2;
+            }
         }
-        int currentQuantity = items.get(item);
+        if (!found) {
+            return new Result(false, "Item does not exist."+item.getName());
+        }
+        int currentQuantity = items.get(itemToRemove);
         if (n != null && currentQuantity < n) {
             String message = "The provided number is larger than the quantity in inventory.\n" +
                     "You have " + currentQuantity + " " + item + " in your inventory.";

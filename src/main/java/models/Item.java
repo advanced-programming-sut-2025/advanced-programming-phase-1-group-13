@@ -106,9 +106,8 @@ public abstract class Item {
     }
 
     public static Item getItemByItemType(ItemType itemType) {
-        if (itemType instanceof AnimalProductType) {
-            return new AnimalProduct((AnimalProductType) itemType, Quality.NORMAL,
-                    new Animal("", ((AnimalProductType) itemType).getAnimal(), null));
+        if (itemType instanceof AnimalProductType animalProductType) {
+            return new AnimalProduct(animalProductType, Quality.NORMAL, null);
         }
 
         if (itemType instanceof CraftType) {
