@@ -86,7 +86,9 @@ public class GameController {
             return new Result(false, "You should \"buy\" fishing rods at the fisher's shop. Don't use the upgrade command.");
         }
 
-        if (App.getCurrentShop().getType() != ShopType.BLACKSMITH) {
+        if (
+                App.getCurrentShop() == null ||
+                        App.getCurrentShop().getType() != ShopType.BLACKSMITH) {
             return new Result(false, "You can only ask the blacksmith to upgrade your " + toolName + ". Pay him a visit!");
         }
         equipTool(toolName);
