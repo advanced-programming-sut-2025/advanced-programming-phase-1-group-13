@@ -27,6 +27,9 @@ public class GameController {
     public Result showPlayerEnergy() {
         User player = App.getLoggedIn();
         int playerEnergy = player.getEnergy();
+        if (player.isEnergyUnlimited()) {
+            return new Result(true, "Your energy is: " + playerEnergy + "\n(unlimited energy is activated)");
+        }
         return new Result(true, "Your energy is: " + playerEnergy);
     }
 

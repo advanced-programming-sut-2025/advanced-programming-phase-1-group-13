@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2db738a2-fcde-4212-af39-df7e8a396d45" name="Changes" comment="fixes May17th">
-      <change beforePath="$PROJECT_DIR$/src/main/java/models/enums/commands/GameCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/enums/commands/GameCommands.java" afterDir="false" />
-    </list>
+    <list default="true" id="2db738a2-fcde-4212-af39-df7e8a396d45" name="Changes" comment="exit command for Main Menu fixed" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +49,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -125,23 +123,8 @@
       <workItem from="1747305413305" duration="18397000" />
       <workItem from="1747373795916" duration="17387000" />
       <workItem from="1747462742783" duration="41180000" />
-      <workItem from="1747521699514" duration="856000" />
-    </task>
-    <task id="LOCAL-00121" summary="add todo">
-      <option name="closed" value="true" />
-      <created>1747399025489</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1747399025489</updated>
-    </task>
-    <task id="LOCAL-00122" summary="fixed a message">
-      <option name="closed" value="true" />
-      <created>1747399092086</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1747399092086</updated>
+      <workItem from="1747521699514" duration="3188000" />
+      <workItem from="1747551911240" duration="349000" />
     </task>
     <task id="LOCAL-00123" summary="Command fixed">
       <option name="closed" value="true" />
@@ -519,7 +502,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747521725746</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <task id="LOCAL-00170" summary="cheat command for greenhouse, check in walk if it is built yet.">
+      <option name="closed" value="true" />
+      <created>1747524682983</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1747524682983</updated>
+    </task>
+    <task id="LOCAL-00171" summary="exit command for Main Menu fixed">
+      <option name="closed" value="true" />
+      <created>1747524890777</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1747524890777</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -537,8 +536,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="upgradeTool() and FishingRod confusion solved" />
-    <MESSAGE value="successful usage of axe" />
     <MESSAGE value="fixed &quot; cannot find symbol &quot;" />
     <MESSAGE value="harvest()" />
     <MESSAGE value="User constructor" />
@@ -562,7 +559,9 @@
     <MESSAGE value="useTool() modified" />
     <MESSAGE value="Direction fixed" />
     <MESSAGE value="fixes May17th" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes May17th" />
+    <MESSAGE value="cheat command for greenhouse, check in walk if it is built yet." />
+    <MESSAGE value="exit command for Main Menu fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="exit command for Main Menu fixed" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

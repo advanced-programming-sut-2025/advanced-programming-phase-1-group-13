@@ -510,7 +510,7 @@ public class User {
     public void faint() {
         this.energy = (int) (0.75 * this.maxEnergy);
         System.out.println("You fainted! Your energy falls to 75% of max-energy, when you wake up in the next turn.");
-        GameController.nextTurn();
+        System.out.println(GameController.nextTurn());
     }
 
     public void changePosition(Position newPosition) {

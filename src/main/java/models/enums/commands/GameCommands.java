@@ -90,8 +90,9 @@ public enum GameCommands implements Command {
     EXIT_VILLAGE("^\\s*exit\\s+village\\s*$"),
 
     // Commands We Added //
-    CHEAT_BUILD_GREENHOUSE("^\\s*cheat\\s+greenhouse\\s+build\\s*$");
-
+    CHEAT_BUILD_GREENHOUSE("^\\s*cheat\\s+greenhouse\\s+build\\s*$"),
+    CHEAT_FAINT("^\\s*cheat\\s+faint\\s*$"),
+    ;
     private final String regex;
     private final Pattern pattern;
 

@@ -1,6 +1,7 @@
 package views;
 
 import controllers.GameController;
+import models.App;
 import models.Result;
 import models.enums.commands.GameCommands;
 
@@ -276,6 +277,8 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.exitVillage());
         } else if ((matcher = GameCommands.WALK_VILLAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.walkInVillage(matcher.group("x"), matcher.group("y")));
+        } else if ((matcher = GameCommands.CHEAT_FAINT.getMatcher(inputLine)) != null) {
+            App.getLoggedIn().faint()   ;
         } else {
             System.out.println("Invalid Command. Please try again!");
         }

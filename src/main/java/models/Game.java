@@ -26,7 +26,7 @@ public class Game {
     private NPCVillage village;
     private boolean isInNPCVillage;
     private GameState gameState;
-    private final ArrayList<NPC>  npcs;
+    private final ArrayList<NPC> npcs;
     private HashMap<User, HashMap<User, Friendship>> userFriendships;
     private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
@@ -113,7 +113,7 @@ public class Game {
 
     public void setTalkHistory(HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory) {
         this.talkHistory = talkHistory;
-       // saveGameState();
+        // saveGameState();
     }
 
     public NPCVillage getVillage() {
@@ -186,16 +186,17 @@ public class Game {
         App.setCurrentMenu(Menu.PRE_GAME_MENU);
     }
 
-    public String nextTurn(User previousUser) {
-        int previousPlayerIndex = players.indexOf(previousUser);
-        App.setLoggedIn(players.get((previousPlayerIndex + 1) % players.size()));
+    public String nextTurn(User previousPlayer) {
+        int previousPlayerIndex = players.indexOf(previousPlayer);
+        User newPlayer = players.get((previousPlayerIndex + 1) % players.size());
+        App.setLoggedIn(newPlayer);
 
         if (previousPlayerIndex == players.size() - 1) {
             Time.advanceOneHour(this);
         }
 
         StringBuilder resultMessage = new StringBuilder("New messages:\n");
-        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(previousUser);
+        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(newPlayer); // todo: previousPlayer OR newPlayer ?!
         for (User sender : hashmap1.keySet()) {
             resultMessage.append("------------------------------------------------------------\n");
             resultMessage.append("  From ").append(sender.getUsername()).append(":\n");
