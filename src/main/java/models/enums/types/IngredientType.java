@@ -73,7 +73,8 @@ public enum IngredientType implements ItemType {
         return null;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 }

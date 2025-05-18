@@ -62,6 +62,6 @@ public enum ForagingCropType implements ItemType {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 }

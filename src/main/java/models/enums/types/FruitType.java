@@ -31,6 +31,6 @@ public enum FruitType implements ItemType {
 
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
 }

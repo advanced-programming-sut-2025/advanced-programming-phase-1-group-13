@@ -77,6 +77,7 @@ public enum FoodType implements ItemType {
         };
     }
 
+    @Override
     public String getName() {
         return this.name;
     }

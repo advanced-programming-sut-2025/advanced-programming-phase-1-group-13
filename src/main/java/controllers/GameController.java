@@ -213,6 +213,9 @@ public class GameController {
     public Result useTool(String directionString) {
         User player = App.getLoggedIn();
         Direction direction = Direction.getDirectionByDisplayName(directionString);
+        if (direction == null) {
+            return new Result(false, "Invalid Direction.");
+        }
         Tile tile = neighborTile(direction);
         Tool tool = player.getCurrentTool();
         String failingMessage = "You can't use " + tool.toString() + " here on your " + direction.getDisplayName() + ".";
