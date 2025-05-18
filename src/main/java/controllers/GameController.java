@@ -295,18 +295,14 @@ public class GameController {
                 if (foragingCropType == null) {
                     return new Result(false, "No tree, crop, nor foraging crop found!");
                 } else {
-                    // todo: the message for Foraging Crop
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    //  todo now
+                    StringBuilder message = new StringBuilder();
+                    message.append("Name of Foraging Crop: ").append(foragingCropType.getName()).append("\n");
+                    if (!foragingCropType.getSeasons().isEmpty()) {
+                        message.append("Season: ").append(foragingCropType.getSeasons()).append("\n");
+                    }
+                    message.append("Base sell price: ").append(foragingCropType.getBaseSellPrice()).append("\n");
+                    message.append("Energy: ").append(foragingCropType.getEnergy()).append("\n");
+                    return new Result(true, message.toString());
                 }
             } else {
                 StringBuilder message =
