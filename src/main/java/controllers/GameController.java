@@ -290,10 +290,10 @@ public class GameController {
         CropType cropType = CropType.getCropTypeByName(cropName);
         if (cropType == null) {
             TreeType treeType = TreeType.getTreeTypeByName(cropName);
-            System.out.println(treeType.toString());
             if (treeType == null) {
-                return new Result(false, "Tree not found.(" + cropName + ")");
+                return new Result(false, "Tree not found. (" + cropName + ")");
             }
+            System.out.println(treeType);
             StringBuilder message =
                     new StringBuilder("Name: " + treeType.getName() + "\n" +
                             "Source: " + treeType.getSource() + "\n" +
