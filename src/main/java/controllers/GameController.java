@@ -300,7 +300,7 @@ public class GameController {
                         append("Is Edible: ").append(treeType.isFruitEdible()).append("\n").
                         append("Base Fruit Energy: ");
 
-                if (cropType.isEdible()) {
+                if (treeType.isFruitEdible()) {
                     message.append(treeType.getFruitEnergy());
                 } else {
                     message.append("Not Edible");
