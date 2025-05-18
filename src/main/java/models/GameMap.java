@@ -15,7 +15,6 @@ public final class GameMap {
     private static final int MAP_SIZE = 100;
     private static final int CABIN_SIZE = 10;
     private final ArrayList<Farm> farms;
-    private final ArrayList<Shop> shops;
     private final int mapNumber;
     private Lake lake;
     private Greenhouse greenhouse;
@@ -32,7 +31,6 @@ public final class GameMap {
         this.mapNumber = mapNumber;
         this.random = new Random();
         this.farms = new ArrayList<>();
-        this.shops = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.stones = new ArrayList<>();
         this.foragings = new ArrayList<>();
@@ -106,7 +104,7 @@ public final class GameMap {
             Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
             trees.add(tree);
             tile.setType(TileType.TREE);
-            tile.pLaceItemOnTile(tree);
+            //tile.pLaceItemOnTile(tree);
         }
 
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
@@ -268,10 +266,6 @@ public final class GameMap {
         return farms;
     }
 
-    public ArrayList<Shop> getShops() {
-        return shops;
-    }
-
     public int getMapNumber() {
         return mapNumber;
     }
@@ -338,14 +332,6 @@ public final class GameMap {
 
         for (Farm farm : farms) {
             for (Tile tile : farm.getFarmTiles()) {
-                Tile baseTile = getTileByPosition(tile.getPosition());
-                if (baseTile != null) baseTile.setType(tile.getType());
-                else allTiles.add(tile);
-            }
-        }
-
-        for (Shop shop : shops) {
-            for (Tile tile : shop.getShopTiles()) {
                 Tile baseTile = getTileByPosition(tile.getPosition());
                 if (baseTile != null) baseTile.setType(tile.getType());
                 else allTiles.add(tile);

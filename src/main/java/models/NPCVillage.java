@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NPCVillage {
-    private final List<Shop> shops;
+    public static ArrayList<Shop> shops;
     private ArrayList<Tile> villageTiles;
     private final int width = 30;
     private final int height = 30;
@@ -50,7 +50,7 @@ public class NPCVillage {
         }
     }
 
-    public List<Shop> getShops() {
+    public static ArrayList<Shop> getShops() {
         return shops;
     }
 

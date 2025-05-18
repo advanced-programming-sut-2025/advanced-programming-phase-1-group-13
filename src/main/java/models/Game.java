@@ -35,10 +35,9 @@ public class Game {
     public Game(ArrayList<User> players) {
         this.players = players;
         this.gameState = new GameState();
-        this.gameMap = null;
         this.isInNPCVillage = false;
         this.village = new NPCVillage();
-
+        this.gameMap = null;
         App.setCurrentGame(this);
 
         this.npcs = new ArrayList<>();
@@ -269,7 +268,7 @@ public class Game {
             }
         }
 
-        for (Shop shop : this.getGameMap().getShops()) {
+        for (Shop shop : this.getVillage().getShops()) {
             for (Good good : shop.getShopInventory()) {
                 good.setNumberSoldToUsersToday(0);
             }
@@ -333,7 +332,7 @@ public class Game {
     }
 
     public Shop getShopByShopType(ShopType shopType) {
-        for (Shop shop : this.gameMap.getShops()) {
+        for (Shop shop : this.getVillage().getShops()) {
             if (shop.getType().equals(shopType)) {
                 return shop;
             }
@@ -438,4 +437,5 @@ public class Game {
         }
         return null;
     }
+
 }

@@ -772,7 +772,7 @@ public class GameController {
             case SHOP:
                 return switch (whichShop(tile)){
                     case ShopType.JOJAMART -> "🏪"; // farming tools and seeds
-                    case ShopType.CARPENTER_SHOP -> "🛠️"; //wood and stone
+                    case ShopType.CARPENTER_SHOP -> "\uD83E\uDE9A"; //wood and stone
                     case ShopType.FISH_SHOP -> "\uD83D\uDC1F"; //fishing
                     case ShopType.MARNIE_RANCH -> "🐄"; //animal
                     case ShopType.BLACKSMITH ->  "⚒️"; // mineral and extracting tools
@@ -785,15 +785,13 @@ public class GameController {
     }
 
     public ShopType whichShop(Tile tile) {
-        for (Shop shop : App.getCurrentGame().getGameMap().getShops()) {
+        for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
             if (shop.containsPosition(tile.getPosition())) {
-                System.out.println("Tile belongs to shop: " + shop.getName());
                 return shop.getType();
             }
         }
 
-        System.out.println("No shop found for tile at: " + tile.getPosition());
-        return null; // Return null only if no shop is found
+        return null;
     }
 
 
@@ -821,11 +819,11 @@ public class GameController {
 
             === Shops ===
             🏪 - JojaMart (General store)
-            🛠️ - Carpenter Shop (Wood and construction)
+            🪚 - Carpenter Shop (Wood and construction)
             \uD83D\uDC1F - Fish Shop (Fishing supplies)
             🐄 - Marnie Ranch (Animal ranch)
             ⚒️ - Blacksmith (Crafting and minerals)
-            🛒 - Pierre's General Store (Farming goods)
+            \uD83C\uDF3E - Pierre's General Store (Farming goods)
             🍻 - Stardrop Saloon (Food and drinks)
             """;
         return new Result(true, helpText);
