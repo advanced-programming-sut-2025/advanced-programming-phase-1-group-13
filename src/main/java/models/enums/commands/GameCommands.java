@@ -99,6 +99,7 @@ public enum GameCommands implements Command {
     INVENTORY_SHOW_SHORTCUT("^\\s*inv\\s*(show)?\\s*$"),
     CONFIRM_WALK_SHORTCUT("^\\s*walk\\s+confirm\\s*$"),
     CONFIRM_WALK_TYPO("^\\s*walk\\s+confrim\\s*$");
+
     private final String regex;
     private final Pattern pattern;
 

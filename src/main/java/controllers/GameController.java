@@ -286,35 +286,51 @@ public class GameController {
         return new Result(true, itemName + " crafted and added to inventory.");
     }
 
-    public Result showCraftInfo(String cropName) {
-        CropType cropType = CropType.getCropTypeByName(cropName);
+    public Result showCraftInfo(String name) {
+        CropType cropType = CropType.getCropTypeByName(name);
         if (cropType == null) {
-            TreeType treeType = TreeType.getTreeTypeByName(cropName);
+            TreeType treeType = TreeType.getTreeTypeByName(name);
             if (treeType == null) {
-                return new Result(false, "Tree not found. (" + cropName + ")");
-            }
-            System.out.println(treeType);
-            StringBuilder message =
-                    new StringBuilder("Name: " + treeType.getName() + "\n" +
-                            "Source: " + treeType.getSource() + "\n" +
-                            "Stages: ");
-
-            message.append("7-7-7-7");
-
-            message.append("\n" + "Total Harvest Time: ").append(treeType.getTotalHarvestTime()).append("\n").
-                    append("Base Sell Price: ").append(treeType.getFruitBaseSellPrice()).append("\n").
-                    append("Is Edible: ").append(treeType.isFruitEdible()).append("\n").
-                    append("Base Fruit Energy: ");
-
-            if (treeType.isFruitEdible()) {
-                message.append(treeType.getFruitEnergy());
+                ForagingCropType foragingCropType = ForagingCropType.getForagingCropTypeByName(name);
+                if (foragingCropType == null) {
+                    return new Result(false, "No tree, crop, nor foraging crop found!");
+                } else {
+                    // todo: the message for Foraging Crop
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    // todo now
+                    //  todo now
+                }
             } else {
-                message.append("Not Edible");
+                StringBuilder message =
+                        new StringBuilder("Name: " + treeType.getName() + "\n" +
+                                "Source: " + treeType.getSource() + "\n" +
+                                "Stages: ");
+
+                message.append("7-7-7-7");
+
+                message.append("\n" + "Total Harvest Time: ").append(treeType.getTotalHarvestTime()).append("\n").
+                        append("Base Sell Price: ").append(treeType.getFruitBaseSellPrice()).append("\n").
+                        append("Is Edible: ").append(treeType.isFruitEdible()).append("\n").
+                        append("Base Fruit Energy: ");
+
+                if (treeType.isFruitEdible()) {
+                    message.append(treeType.getFruitEnergy());
+                } else {
+                    message.append("Not Edible");
+                }
+
+                message.append("\nSource: ").append(treeType.getSource().getName()).append("\n");
+
+                return new Result(true, message.toString());
             }
-
-            message.append("\nSource: ").append(treeType.getSource().getName()).append("\n");
-
-            return new Result(true, message.toString());
         }
 
         StringBuilder message =
