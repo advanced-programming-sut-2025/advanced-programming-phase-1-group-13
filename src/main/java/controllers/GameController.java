@@ -787,11 +787,15 @@ public class GameController {
     public ShopType whichShop(Tile tile) {
         for (Shop shop : App.getCurrentGame().getGameMap().getShops()) {
             if (shop.containsPosition(tile.getPosition())) {
+                System.out.println("Tile belongs to shop: " + shop.getName());
                 return shop.getType();
             }
         }
-        return null;
+
+        System.out.println("No shop found for tile at: " + tile.getPosition());
+        return null; // Return null only if no shop is found
     }
+
 
 
     public Result showHelpReadingMap() {
