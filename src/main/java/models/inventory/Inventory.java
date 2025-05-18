@@ -94,9 +94,9 @@ public abstract class Inventory {
         }
         StringBuilder sb = new StringBuilder();
         for (Item item : items.keySet()) {
-            sb.append(item.getName());
-            sb.append("\n");
+            sb.append(item.getName()).append(" : ").append(items.get(item)).append("\n");
         }
+        sb.append("\n");
         if (!isCapacityUnlimited) {
             int emptyLeft = capacity - items.size();
             sb.append("capacity: ").append(capacity).append("\n")

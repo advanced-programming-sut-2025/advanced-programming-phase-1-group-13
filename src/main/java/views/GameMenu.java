@@ -70,6 +70,12 @@ public class GameMenu implements AppMenu {
                     matcher.group("y"),
                     matcher.group("size")
             ));
+        } else if ((matcher = GameCommands.PRINT_MAP_SHORTCUT.getMatcher(inputLine)) != null) {
+            System.out.println(controller.printMap(
+                    "1",
+                    "1",
+                    matcher.group("size")
+            ));
         } else if ((matcher = GameCommands.PRINT_MAP_VILLAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.printMapVillage(
                     matcher.group("x"),
@@ -279,7 +285,9 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.walkInVillage(matcher.group("x"), matcher.group("y")));
         } else if ((matcher = GameCommands.CHEAT_FAINT.getMatcher(inputLine)) != null) {
             App.getLoggedIn().faint();
-        } else if ((matcher = GameCommands.PLAYER_POSITION.getMatcher(inputLine)) != null) {
+        } else if ((matcher = GameCommands.PLAYER_POSITION.getMatcher(inputLine)) != null
+                || (matcher = GameCommands.PLAYER_POSITION_SHORTCUT.getMatcher(inputLine)) != null
+        ) {
             System.out.println(controller.showPlayerPosition());
         } else {
             System.out.println("Invalid Command. Please try again!");

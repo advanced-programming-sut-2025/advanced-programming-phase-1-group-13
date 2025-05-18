@@ -93,6 +93,7 @@ public enum GameCommands implements Command {
     CHEAT_BUILD_GREENHOUSE("^\\s*cheat\\s+greenhouse\\s+build\\s*$"),
     CHEAT_FAINT("^\\s*cheat\\s+faint\\s*$"),
     PLAYER_POSITION("^\\s*player\\s+position\\s*$"),
+    PLAYER_POSITION_SHORTCUT("^\\s*p\\s*p\\s*$"),
     PRINT_MAP_SHORTCUT("^\\s*p\\s*m\\s*(?<size>\\d+)\\s*$"),
     ;
     private final String regex;
