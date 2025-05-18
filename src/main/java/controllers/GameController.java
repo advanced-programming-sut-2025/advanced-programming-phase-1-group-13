@@ -915,6 +915,7 @@ public class GameController {
         if (seedType != null) {
             tile.pLaceItemOnTile(new Crop(seedType));
             tile.setType(TileType.GROWING_CROP);
+            return new Result(true, seedName + " (crop seed) planted in position: " + tile.getPosition().toString());
         } else if (treeSourceType != null) {
             tile.pLaceItemOnTile(new Tree(TreeType.getTreeTypeBySourceType(treeSourceType)));
             tile.setType(TileType.TREE);
