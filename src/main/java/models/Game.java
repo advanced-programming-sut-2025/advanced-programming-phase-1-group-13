@@ -289,14 +289,13 @@ public class Game {
         for (Tile tile : gameMap.getAllTiles()) {
             if (tile.getType() == TileType.TREE) {
                 Tree tree = (Tree) tile.getItemPlacedOnTile();
-                if (tree.getDaySinceLastHarvest() != null) {
-                    tree.incrementDaySinceLastHarvest();
-                }
+                tree.incrementDaySinceLastHarvest();
 
                 tree.incrementDayInStage();
-                if (tree.getDayInStage() == tree.getType().getStagesTime()) {
+                if (tree.getDayInStage() == tree.getStage()) {
                     tree.incrementStage();
                 }
+
             } else if (tile.getType() == TileType.GROWING_CROP) {
                 Crop crop = (Crop) tile.getItemPlacedOnTile();
                 crop.incrementDaySinceLastHarvest();

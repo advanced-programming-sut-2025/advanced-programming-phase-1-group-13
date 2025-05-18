@@ -1550,7 +1550,7 @@ public class GameController {
 
         StringBuilder productList = new StringBuilder("All Products in " + shop.getName() + ":\n");
         for (GoodsType product : GoodsType.values()) {
-            if (product.getShopType() == shop.getType()) {
+            if (product.getShopType().equals(shop.getType().getName())) {
                 productList.append(String.format("  " + product.getName() + ": %.2fg\n", product.getPrice()));
             }
         }
@@ -1567,7 +1567,7 @@ public class GameController {
 
         StringBuilder availableProducts = new StringBuilder("Available Products in " + shop.getType().getName() + ":\n");
         for (GoodsType product : GoodsType.values()) {
-            if (product.getShopType() == shop.getType()) {
+            if (product.getShopType().equals(shop.getType().getName())) {
                 if (product.isAvailable()) {
                     availableProducts.append(String.format("- %s: %d gold\n", product.name(), product.getPrice()));
                 }
@@ -1624,21 +1624,21 @@ public class GameController {
         int price = product.getPrice() * count;
 
         User player = App.getLoggedIn();
-        if (
-                good.getType() == GoodsType.IRIDIUM_ROD &&
-                        player.getSkillLevels().get(Skill.FISHING) != SkillLevel.LEVEL_FOUR
-        ) {
-            return new Result(false, "Your fishing skill must reach level 4 to buy an iridium rod.");
-        }
-        if (
-                good.getType() == GoodsType.FIBERGLASS_ROD &&
-                        player.getSkillLevels().get(Skill.FISHING) == SkillLevel.LEVEL_ONE
-        ) {
-            return new Result(false, "Your fishing skill must reach level 2 to buy a fiberglass rod.");
-        }
-        if (player.getBalance() < price) {
-            return new Result(false, "You don't have enough money.");
-        }
+//        if (
+//                good.getType() == GoodsType.IRIDIUM_ROD &&
+//                        player.getSkillLevels().get(Skill.FISHING) != SkillLevel.LEVEL_FOUR
+//        ) {
+//            return new Result(false, "Your fishing skill must reach level 4 to buy an iridium rod.");
+//        }
+//        if (
+//                good.getType() == GoodsType.FIBERGLASS_ROD &&
+//                        player.getSkillLevels().get(Skill.FISHING) == SkillLevel.LEVEL_ONE
+//        ) {
+//            return new Result(false, "Your fishing skill must reach level 2 to buy a fiberglass rod.");
+//        }
+//        if (player.getBalance() < price) {
+//            return new Result(false, "You don't have enough money.");
+//        }
 
         int dailyLimit = good.getType().getDailyLimit();
         if (count > dailyLimit) {
