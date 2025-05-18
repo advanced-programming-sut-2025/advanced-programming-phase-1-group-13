@@ -172,6 +172,6 @@ public class Tree extends Item implements Harvestable {
 
     @Override
     public String getName() {
-        return this.name;
+        return this.type.getName();
     }
 }

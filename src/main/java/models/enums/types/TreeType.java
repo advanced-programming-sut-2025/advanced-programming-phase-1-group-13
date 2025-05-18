@@ -89,11 +89,45 @@ public enum TreeType implements ItemType {
     }
 
     public static TreeType getTreeTypeByName(String name) {
-        for (TreeType treeType : TreeType.values()) {
-            if (treeType.getName().equals(name)) {
-                return treeType;
-            }
+        if (name == null) {
+            return null;
         }
-        return null;
+        return switch (name.toLowerCase()) {
+            case "apricot tree" -> APRICOT_TREE;
+            case "cherry tree" -> CHERRY_TREE;
+            case "banana tree" -> BANANA_TREE;
+            case "mango tree" -> MANGO_TREE;
+            case "orange tree" -> ORANGE_TREE;
+            case "peach tree" -> PEACH_TREE;
+            case "apple tree" -> APPLE_TREE;
+            case "pomegranate tree" -> POMEGRANATE_TREE;
+            case "oak tree" -> OAK_TREE;
+            case "maple tree" -> MAPLE_TREE;
+            case "pine tree" -> PINE_TREE;
+            case "mahogany tree" -> MAHOGANY_TREE;
+            case "mushroom tree" -> MUSHROOM_TREE;
+            case "mystic tree" -> MYSTIC_TREE;
+            default -> null;
+        };
     }
+
+    public static TreeType getTreeTypeBySourceType(TreeSourceType sourceType) {
+        return switch (sourceType) {
+            case APRICOT_SAPLING -> APRICOT_TREE;
+            case CHERRY_SAPLING -> CHERRY_TREE;
+            case BANANA_SAPLING -> BANANA_TREE;
+            case MANGO_SAPLING -> MANGO_TREE;
+            case ORANGE_SAPLING -> ORANGE_TREE;
+            case PEACH_SAPLING -> PEACH_TREE;
+            case APPLE_SAPLING -> APPLE_TREE;
+            case POMEGRANATE_SAPLING -> POMEGRANATE_TREE;
+            case ACORNS -> OAK_TREE;
+            case MAPLE_SEEDS -> MAPLE_TREE;
+            case PINE_CONES -> PINE_TREE;
+            case MAHOGANY_SEEDS -> MAHOGANY_TREE;
+            case MUSHROOM_TREE_SEEDS -> MUSHROOM_TREE;
+            case MYSTIC_TREE_SEEDS -> MYSTIC_TREE;
+        };
+    }
+
 }

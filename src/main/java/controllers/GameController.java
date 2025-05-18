@@ -290,10 +290,10 @@ public class GameController {
         CropType cropType = CropType.getCropTypeByName(cropName);
         if (cropType == null) {
             TreeType treeType = TreeType.getTreeTypeByName(cropName);
-            System.out.println(treeType.toString());
             if (treeType == null) {
-                return new Result(false, "Tree not found.(" + cropName + ")");
+                return new Result(false, "Tree not found. (" + cropName + ")");
             }
+            System.out.println(treeType);
             StringBuilder message =
                     new StringBuilder("Name: " + treeType.getName() + "\n" +
                             "Source: " + treeType.getSource() + "\n" +
@@ -906,14 +906,23 @@ public class GameController {
 
     public Result plant(String seedName, String directionName) {
         SeedType seedType = SeedType.getSeedByName(seedName);
+        TreeSourceType treeSourceType = TreeSourceType.getTreeSourceTypeByName(seedName);
         Direction direction = Direction.getDirectionByDisplayName(directionName);
         Tile tile = neighborTile(direction);
         if (tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
             return new Result(false, "You must plow the ground first! Use hoe.");
         }
-        tile.setType(TileType.GROWING_CROP);
-        tile.pLaceItemOnTile(new Crop(seedType));
-        return new Result(true, seedName + " planted in position: " + tile.getPosition().toString());
+        if (seedType != null) {
+            tile.pLaceItemOnTile(new Crop(seedType));
+            tile.setType(TileType.GROWING_CROP);
+            return new Result(true, seedName + " (crop seed) planted in position: " + tile.getPosition().toString());
+        }
+        if (treeSourceType != null) {
+            tile.pLaceItemOnTile(new Tree(TreeType.getTreeTypeBySourceType(treeSourceType)));
+            tile.setType(TileType.TREE);
+            return new Result(true, seedName + " (tree source) planted in position: " + tile.getPosition().toString());
+        }
+        return new Result(false, "seed not found");
     }
 
     public Result showPlant(String xString, String yString) {
