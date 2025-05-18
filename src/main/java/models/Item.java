@@ -62,6 +62,11 @@ public abstract class Item {
             return seedType;
         }
 
+        TreeSourceType treeSourceType = TreeSourceType.getTreeSourceTypeByName(itemName);
+        if (treeSourceType != null) {
+            return treeSourceType;
+        }
+
         FishType fishType = FishType.getFishTypeByName(itemName);
         if (fishType != null) {
             return fishType;
