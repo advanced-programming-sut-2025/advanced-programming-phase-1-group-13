@@ -90,6 +90,6 @@ public enum SeedType implements ItemType {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 }
