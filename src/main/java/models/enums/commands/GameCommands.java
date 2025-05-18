@@ -95,6 +95,7 @@ public enum GameCommands implements Command {
     PLAYER_POSITION("^\\s*player\\s+position\\s*$"),
     PLAYER_POSITION_SHORTCUT("^\\s*p\\s*p\\s*$"),
     PRINT_MAP_SHORTCUT("^\\s*p\\s*m\\s*(?<size>\\d+)\\s*$"),
+    PRINT_VILLAGE_MAP_SHORTCUT("^\\s*p\\s*m\\s*v\\s*(?<size>\\d+)\\s*$"),
     ;
     private final String regex;
     private final Pattern pattern;

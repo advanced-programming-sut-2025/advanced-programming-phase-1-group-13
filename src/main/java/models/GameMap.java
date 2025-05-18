@@ -110,8 +110,11 @@ public final class GameMap {
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
         for (int i = 0; i < stoneCount; i++) {
             Position pos = availablePositions.get(treeCount + i);
-            stones.add(new Mineral(pos));
-            getTileByPosition(pos).setType(TileType.STONE);
+            Mineral stone = new Mineral(pos);
+            stones.add(stone);
+            Tile tile = getTileByPosition(pos);
+            tile.pLaceItemOnTile(stone);
+            tile.setType(TileType.STONE);
         }
 
         int foragingCount = Math.min(30 + random.nextInt(6),

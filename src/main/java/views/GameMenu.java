@@ -76,6 +76,12 @@ public class GameMenu implements AppMenu {
                     "1",
                     matcher.group("size")
             ));
+        } else if ((matcher = GameCommands.PRINT_VILLAGE_MAP_SHORTCUT.getMatcher(inputLine)) != null) {
+            System.out.println(controller.printMapVillage(
+                    "1",
+                    "1",
+                    matcher.group("size")
+            ));
         } else if ((matcher = GameCommands.PRINT_MAP_VILLAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.printMapVillage(
                     matcher.group("x"),
