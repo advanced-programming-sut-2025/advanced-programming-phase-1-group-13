@@ -53,8 +53,10 @@ public class PathFinder {
             Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(last);
             if (tile.getType().equals(TileType.SHOP)) {
                 App.setCurrentShop(whichShop(tile));
+                System.out.println(whichShop(tile));
             } else {
                 App.setCurrentShop(null);
+                System.out.println("set null");
             }
         }
         return new Result(true, "Walked! Energy used=" + energyCost);

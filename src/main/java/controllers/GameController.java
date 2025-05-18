@@ -295,18 +295,14 @@ public class GameController {
                 if (foragingCropType == null) {
                     return new Result(false, "No tree, crop, nor foraging crop found!");
                 } else {
-                    // todo: the message for Foraging Crop
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    // todo now
-                    //  todo now
+                    StringBuilder message = new StringBuilder();
+                    message.append("Name of Foraging Crop: ").append(foragingCropType.getName()).append("\n");
+                    if (!foragingCropType.getSeasons().isEmpty()) {
+                        message.append("Season: ").append(foragingCropType.getSeasons()).append("\n");
+                    }
+                    message.append("Base sell price: ").append(foragingCropType.getBaseSellPrice()).append("\n");
+                    message.append("Energy: ").append(foragingCropType.getEnergy()).append("\n");
+                    return new Result(true, message.toString());
                 }
             } else {
                 StringBuilder message =
@@ -2054,10 +2050,13 @@ public class GameController {
 
                 if (shop != null) {
                     App.setCurrentShop(shop);
+                    App.getLoggedIn().setPosition(pos);
                     return new Result(true, "You have entered " + shop.getType() + " at (" + x + "," + y + ").");
                 } else {
                     return new Result(false, "This shop's type could not be determined.");
                 }
+            } else {
+                App.setCurrentShop(null);
             }
 
             return new Result(false, "This tile is not a shop.");
