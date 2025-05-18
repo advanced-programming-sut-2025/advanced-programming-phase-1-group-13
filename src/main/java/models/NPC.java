@@ -7,6 +7,7 @@ import models.enums.types.Role;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import static models.Item.getItemTypeByItemName;
 
@@ -31,7 +32,7 @@ public class NPC {
         this.type = type;
         this.name = type.getName();
         this.role = type.getRole();
-        this.position = new Position(0, 0); // TODO
+        this.position = new Position((new Random()).nextInt(30), (new Random()).nextInt(30));
         this.dialog = new ArrayList<>();
         this.quests = type.getQuests();
         this.favorites = type.getFavorites();

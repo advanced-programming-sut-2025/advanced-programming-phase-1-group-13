@@ -717,7 +717,17 @@ public class GameController {
                 Position pos = new Position(i, j);
                 Tile tile = App.getCurrentGame().getVillage().getTileByPosition(pos);
 
-                if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
+                if (pos.getX() == 10 && pos.getY() == 15) {
+                    mapRepresentation.append("\uD83E\uDDD1\u200D\uD83D\uDCBB"); // Sebastian
+                } else if (pos.getX() == 15 && pos.getY() == 10) {
+                    mapRepresentation.append("\uD83E\uDDD1\u200D\uD83C\uDFA4"); // Abigail
+                } else if (pos.getX() == 25 && pos.getY() == 5) {
+                    mapRepresentation.append("\uD83D\uDC68\u200D⚕\uFE0F"); // Harvey
+                } else if (pos.getX() == 5 && pos.getY() == 20) {
+                    mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDF3E"); // Harvey
+                } else if (pos.getX() == 20 && pos.getY() == 20) {
+                    mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDFED"); // Harvey
+                } else if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
                     mapRepresentation.append("👤");
                 } else {
                     mapRepresentation.append(getTileSymbol(tile)).append(" ");
