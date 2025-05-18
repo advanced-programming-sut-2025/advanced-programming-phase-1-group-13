@@ -42,4 +42,11 @@ public class AnimalProduct extends Item {
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public String toString() {
+        return "AnimalProduct{" +
+                "type=" + type +
+                ", quality=" + quality;
+    }
 }

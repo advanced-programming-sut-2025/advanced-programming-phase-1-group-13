@@ -34,7 +34,9 @@ public class Farm {
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
         this.artisans = new ArrayList<>();
-        this.artisans.add(new Artisan(ArtisanType.KEG));
+        for (ArtisanType artisanType : ArtisanType.values()) {
+            this.artisans.add(new Artisan(artisanType));
+        }
         this.height = GameMap.getMAP_SIZE();
         this.width = GameMap.getMAP_SIZE();
 

@@ -133,6 +133,9 @@ public class GameController {
     public Result showLearntCraftRecipes() {
         User player = App.getLoggedIn();
         String learntRecipes = player.getStringLearntCraftRecipes();
+        if (learntRecipes == null) {
+            return new Result(false, "No learnt recipes found.");
+        }
         return new Result(true, learntRecipes);
     }
 
@@ -1465,7 +1468,7 @@ public class GameController {
                     player.getBackpack().addToInventory(itemToRemove,
                             processedItemType.getIngredients().get(itemTypes.get(i)));
                 }
-                return new Result(false, "You don't have enough " + itemType.getName());
+                return new Result(false, "You don't have enough ingredients.");
             }
         }
 
