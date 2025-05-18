@@ -50,7 +50,7 @@ public class PathFinder {
         Position last = p.getPathTiles().get(p.getPathTiles().size() - 1).getPosition();
         player.changePosition(last);
         if (App.getCurrentGame().isInNPCVillage()) {
-            Tile tile = new Tile (last);
+            Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(last);
             if (tile.getType().equals(TileType.SHOP)) {
                 App.setCurrentShop(whichShop(tile));
             } else {

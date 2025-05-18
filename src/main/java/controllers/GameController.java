@@ -728,9 +728,9 @@ public class GameController {
                 } else if (pos.getX() == 25 && pos.getY() == 5) {
                     mapRepresentation.append("\uD83D\uDC68\u200D⚕\uFE0F"); // Harvey
                 } else if (pos.getX() == 5 && pos.getY() == 20) {
-                    mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDF3E"); // Harvey
+                    mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDF3E"); // Leah
                 } else if (pos.getX() == 20 && pos.getY() == 20) {
-                    mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDFED"); // Harvey
+                    mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDFED"); // Robin
                 } else if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
                     mapRepresentation.append("👤");
                 } else {
