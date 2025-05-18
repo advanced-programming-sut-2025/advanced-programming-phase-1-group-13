@@ -50,10 +50,22 @@ public abstract class Inventory {
     }
 
     public Result removeFromInventoryToTrash(Item item, Integer n, User player) {
-        if (!items.containsKey(item)) {
+        boolean inventoryHasItem = false;
+        Item theItem = null;
+
+        for (Item itemInSet : items.keySet()) {
+            if (itemInSet.getName().equals(item.getName())) {
+                inventoryHasItem = true;
+                theItem = itemInSet;
+                break;
+            }
+        }
+
+        if (!inventoryHasItem) {
             return new Result(false, "Item does not exist.");
         }
-        int currentQuantity = items.get(item);
+
+        int currentQuantity = items.get(theItem);
         if (n != null && currentQuantity < n) {
             String message = "The provided number is larger than the quantity in inventory.\n" +
                     "You have " + currentQuantity + " " + item + " in your inventory.";
@@ -118,7 +130,7 @@ public abstract class Inventory {
             }
         }
         if (!found) {
-            return new Result(false, "Item does not exist."+item.getName());
+            return new Result(false, "Item does not exist." + item.getName());
         }
         int currentQuantity = items.get(itemToRemove);
         if (n != null && currentQuantity < n) {

@@ -34,6 +34,7 @@ public class Tree extends Item implements Harvestable {
 
     public Tree(TreeType treeType) {
         this.type = treeType;
+        this.totalHarvestTime = treeType.getTotalHarvestTime();
         this.name = treeType.name();
         this.fruitType = type.getFruit();
         this.fruitHarvestCycle = type.getFruitHarvestCycle();

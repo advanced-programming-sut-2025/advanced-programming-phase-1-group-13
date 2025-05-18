@@ -945,7 +945,7 @@ public class GameController {
             } else {
                 daysLeft = tree.getTotalHarvestTime();
             }
-            message += "Days left to harvest: " + (daysLeft < 0 ? "Ready to harvest" : daysLeft) + "\n" +
+            message += "Days left to harvest: " + (daysLeft <= 0 ? "Ready to harvest" : daysLeft) + "\n" +
                     "Current stage: " + tree.getStage() + "\n" +
                     "Has been watered today: ";
 
