@@ -9,6 +9,9 @@ public class Mineral extends Item implements ForagingStuff {
     private Position position;
 
     public Mineral(Position position) {
+        // todo:
+        this.position = position;
+        this.mineralType = MineralType.STONE;
     }
 
     @Override
