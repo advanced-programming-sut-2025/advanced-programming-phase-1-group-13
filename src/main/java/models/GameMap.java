@@ -45,7 +45,7 @@ public final class GameMap {
     }
 
     private void generateBaseMapTiles() {
-        allTiles = new ArrayList<>(MAP_SIZE * MAP_SIZE); // Pre-size for efficiency
+        allTiles = new ArrayList<>(MAP_SIZE * MAP_SIZE);
 
         for (int x = 0; x < MAP_SIZE; x++) {
             for (int y = 0; y < MAP_SIZE; y++) {
@@ -103,8 +103,10 @@ public final class GameMap {
         for (int i = 0; i < treeCount; i++) {
             Position pos = availablePositions.get(i);
             Tile tile = getTileByPosition(pos);
-            trees.add(new Tree(TreeType.getRandomTreeType(), pos, tile));
+            Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
+            trees.add(tree);
             tile.setType(TileType.TREE);
+            tile.pLaceItemOnTile(tree);
         }
 
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
@@ -311,13 +313,6 @@ public final class GameMap {
     }
 
     public void consolidateAllTiles() {
-        if (cabin != null) {
-            for (Position pos : cabin.getTiles()) {
-                Tile tile = getTileByPosition(pos);
-                if (tile != null) tile.setType(TileType.CABIN);
-            }
-        }
-
         if (greenhouse != null) {
             for (Tile tile : greenhouse.getTiles()) {
                 Tile baseTile = getTileByPosition(tile.getPosition());

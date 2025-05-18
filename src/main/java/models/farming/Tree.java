@@ -36,12 +36,12 @@ public class Tree extends Item implements Harvestable {
         this.hasBeenWateredToday = false;
     }
 
-    public Tree(TreeType type, Position position, Tile tile) {
+    public Tree(TreeType type, Tile tile) {
         if (tile == null) {
-            throw new IllegalArgumentException("No tile found at position: " + position);
+            throw new IllegalArgumentException("No tile found at position: " + tile.getPosition());
         }
         tile.setType(TileType.TREE);
-        this.position = position;
+        this.position = tile.getPosition();
 
         this.type = type;
         this.numOfStages = 4;

@@ -18,13 +18,13 @@ public class NPCVillage {
 
         initializeVillageTiles();
 
-        addShop(ShopType.BLACKSMITH, new Position(3, 5), 2, 2);
-        addShop(ShopType.JOJAMART, new Position(6, 7), 5, 5);
-        addShop(ShopType.PIERRE_GENERAL_STORE, new Position(10, 10), 7, 2);
-        addShop(ShopType.CARPENTER_SHOP, new Position(13, 3), 13, 4);
-        addShop(ShopType.FISH_SHOP, new Position(16, 1), 10, 3);
-        addShop(ShopType.MARNIE_RANCH, new Position(19, 4), 13, 3);
-        addShop(ShopType.THE_STARDROP_SALOON, new Position(22, 9), 8, 2);
+        addShop(ShopType.BLACKSMITH, new Position(7, 5), 3, 3);
+        addShop(ShopType.JOJAMART, new Position(2, 13), 3, 3);
+        addShop(ShopType.PIERRE_GENERAL_STORE, new Position(10, 20), 5, 5);
+        addShop(ShopType.CARPENTER_SHOP, new Position(3, 26), 2, 2);
+        addShop(ShopType.FISH_SHOP, new Position(24, 8), 4, 4);
+        addShop(ShopType.MARNIE_RANCH, new Position(19, 1), 3, 3);
+        addShop(ShopType.THE_STARDROP_SALOON, new Position(25, 17), 2, 2);
     }
 
     private void initializeVillageTiles() {

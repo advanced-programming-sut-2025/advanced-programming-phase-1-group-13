@@ -20,7 +20,7 @@ public enum TradeCommands implements Command {
     }
 
     @Override
-    public boolean matches(String input) {
+    public Boolean matches(String input) {
         return Command.super.matches(input);
     }
 
