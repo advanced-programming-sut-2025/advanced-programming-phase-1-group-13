@@ -53,6 +53,8 @@ public class PathFinder {
             Tile tile = new Tile (last);
             if (tile.getType().equals(TileType.SHOP)) {
                 App.setCurrentShop(whichShop(tile));
+            } else {
+                App.setCurrentShop(null);
             }
         }
         return new Result(true, "Walked! Energy used=" + energyCost);
