@@ -27,9 +27,6 @@ public enum AnimalProductType implements ItemType {
         this.purchasePrice = purchasePrice;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public AnimalType getAnimal() {
         return AnimalType.valueOf(animalName); // Lazy resolution to avoid static init errors
@@ -50,5 +47,10 @@ public enum AnimalProductType implements ItemType {
             }
         }
         return null;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }

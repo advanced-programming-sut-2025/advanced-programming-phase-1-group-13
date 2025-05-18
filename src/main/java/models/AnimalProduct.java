@@ -8,9 +8,11 @@ public class AnimalProduct extends Item {
     private final int basePrice;
     private final Quality quality;
     private final Animal producerAnimal;
+    private String name;
 
     public AnimalProduct(AnimalProductType type, Quality quality, Animal producerAnimal) {
         this.type = type;
+        this.name = type.getName();
         this.quality = quality;
         this.producerAnimal = producerAnimal;
         this.basePrice = type.getBasePrice();
@@ -34,5 +36,10 @@ public class AnimalProduct extends Item {
 
     public int calculatePrice() {
         return (int) (this.basePrice * this.quality.getPriceCoefficient());
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 }
