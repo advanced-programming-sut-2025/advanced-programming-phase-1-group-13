@@ -10,5 +10,6 @@
         <module name="advanced-programming-phase-1-group-13" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
   </component>
 </project>
