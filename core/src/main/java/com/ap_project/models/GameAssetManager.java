@@ -10,6 +10,7 @@ public class GameAssetManager {
     private final Skin skin = new Skin(Gdx.files.internal("Skin/pixthulhu-ui.json"));
 
     private final Texture logo = new Texture(Gdx.files.internal("Images/Logo.png"));
+    private final Texture titleMenuBackground = new Texture(Gdx.files.internal("Images/Logo.png")); // TODO
 
     public static GameAssetManager getGameAssetManager() {
         return gameAssetManager;
@@ -21,5 +22,9 @@ public class GameAssetManager {
 
     public Texture getLogo() {
         return logo;
+    }
+
+    public Texture getTitleMenuBackground() {
+        return titleMenuBackground;
     }
 }

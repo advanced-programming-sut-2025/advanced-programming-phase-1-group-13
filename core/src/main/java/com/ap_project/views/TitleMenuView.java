@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class TitleMenuView implements Screen {
     private Stage stage;
     private final Texture logo;
-    private final Texture leaves;
+    private final Texture background;
     private final TextButton signUpButton;
     private final TextButton loginButton;
     private final TextButton exitButton;
@@ -23,7 +23,7 @@ public class TitleMenuView implements Screen {
 
     public TitleMenuView(TitleMenuController controller, Skin skin) {
         this.logo = GameAssetManager.getGameAssetManager().getLogo();
-        this.leaves = GameAssetManager.getGameAssetManager().getLogo();
+        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
 
         this.signUpButton = new TextButton("Signup", skin);
         this.loginButton = new TextButton("Login", skin);
@@ -48,6 +48,10 @@ public class TitleMenuView implements Screen {
         float originalHeight = logo.getHeight();
         logoImage.setSize(originalWidth * 2, originalHeight * 2);
 
+        Image backgroundImage = new Image(background);
+        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // stage.addActor(backgroundImage);
+
         table.add(logoImage).width(originalWidth * 2).height(originalHeight * 2).padBottom(40);
         table.row();
 
@@ -62,7 +66,7 @@ public class TitleMenuView implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(39f / 255f, 33f / 255f, 48f / 255f, 1f);
+        ScreenUtils.clear(0.136f, 0.508f, 0.884f, 1f);
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
