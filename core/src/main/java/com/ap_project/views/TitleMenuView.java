@@ -50,7 +50,7 @@ public class TitleMenuView implements Screen {
 
         Image backgroundImage = new Image(background);
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        // stage.addActor(backgroundImage);
+         stage.addActor(backgroundImage);
 
         table.add(logoImage).width(originalWidth * 2).height(originalHeight * 2).padBottom(40);
         table.row();
