@@ -1,12 +1,12 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.Quality;
-import com.project.models.enums.types.*;
-import com.project.models.farming.Crop;
-import com.project.models.farming.ForagingCrop;
-import com.project.models.farming.PlantSource;
-import com.project.models.farming.Tree;
-import com.project.models.tools.*;
+import com.ap_project.models.enums.Quality;
+import com.ap_project.models.enums.types.*;
+import com.ap_project.models.farming.Crop;
+import com.ap_project.models.farming.ForagingCrop;
+import com.ap_project.models.farming.PlantSource;
+import com.ap_project.models.farming.Tree;
+import com.ap_project.models.tools.*;
 
 public abstract class Item {
     private boolean isSellable;
@@ -106,32 +106,57 @@ public abstract class Item {
     }
 
     public static Item getItemByItemType(ItemType itemType) {
-        if (itemType instanceof AnimalProductType animalProductType) {
+        if (itemType instanceof AnimalProductType) {
+            AnimalProductType animalProductType = (AnimalProductType) itemType;
             return new AnimalProduct(animalProductType, Quality.NORMAL, null);
         }
 
         if (itemType instanceof CraftType) {
             return new Craft((CraftType) itemType);
         }
-        if (itemType instanceof ToolType toolType) {
-            return switch (toolType) {
-                case HOE -> new Hoe();
-                case PICKAXE -> new Pickaxe();
-                case AXE -> new Axe();
-                case WATERING_CAN -> new WateringCan();
-                case SCYTHE -> new Scythe();
-                case SHEARS -> new Shear();
-                case MILK_PAIL -> new MilkPail();
-                case TRASH_CAN -> new TrashCan();
-                case FISHING_ROD -> new FishingRod(null); // todoL: null?
-            };
+        if (itemType instanceof ToolType) {
+            ToolType toolType = (ToolType) itemType;
+            Tool result;
+            switch (toolType) {
+                case HOE:
+                    result = new Hoe();
+                    break;
+                case PICKAXE:
+                    result = new Pickaxe();
+                    break;
+                case AXE:
+                    result = new Axe();
+                    break;
+                case WATERING_CAN:
+                    result = new WateringCan();
+                    break;
+                case SCYTHE:
+                    result = new Scythe();
+                    break;
+                case SHEARS:
+                    result = new Shear();
+                    break;
+                case MILK_PAIL:
+                    result = new MilkPail();
+                    break;
+                case TRASH_CAN:
+                    result = new TrashCan();
+                    break;
+                case FISHING_ROD:
+                    result = new FishingRod(null); // TODO
+                    break;
+                default:
+                    result = null;
+            }
+            return result;
         }
 
         if (itemType instanceof CropType) {
             return new Crop((CropType) itemType);
         }
 
-        if (itemType instanceof SeedType seedType) {
+        if (itemType instanceof SeedType) {
+            SeedType seedType = (SeedType) itemType;
             return new PlantSource(seedType);
         }
 

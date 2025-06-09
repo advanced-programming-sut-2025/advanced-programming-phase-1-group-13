@@ -1,6 +1,6 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.MaterialType;
+import com.ap_project.models.enums.types.MaterialType;
 
 public class Material extends Item {
     private final MaterialType type;

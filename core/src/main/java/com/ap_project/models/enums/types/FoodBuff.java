@@ -1,4 +1,4 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
 public enum FoodBuff {
     NOTHING("no buff!", 0),

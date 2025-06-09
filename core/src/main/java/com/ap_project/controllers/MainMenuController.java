@@ -1,7 +1,7 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
-import com.project.models.*;
-import com.project.models.enums.Menu;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.Menu;
 
 public class MainMenuController {
 
@@ -33,7 +33,7 @@ public class MainMenuController {
     }
 
     private boolean canSwitchMenu(Menu newMenu) {
-        return !newMenu.equals(Menu.TARDE_MENU) && !newMenu.equals(Menu.GAME_MENU);
+        return !newMenu.equals(Menu.TRADE_MENU) && !newMenu.equals(Menu.GAME_MENU);
     }
 
 }

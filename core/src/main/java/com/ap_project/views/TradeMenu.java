@@ -1,8 +1,8 @@
-package com.project.views;
+package com.ap_project.views;
 
-import controllers.TradeController;
-import com.project.models.enums.commands.MainMenuCommands;
-import com.project.models.enums.commands.TradeCommands;
+import com.ap_project.controllers.TradeController;
+import com.ap_project.models.enums.commands.MainMenuCommands;
+import com.ap_project.models.enums.commands.TradeCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

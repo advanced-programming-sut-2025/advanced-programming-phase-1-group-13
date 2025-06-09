@@ -1,8 +1,8 @@
-package com.project.models.trade;
+package com.ap_project.models.trade;
 
-import com.project.models.Game;
-import com.project.models.Item;
-import com.project.models.User;
+import com.ap_project.models.Game;
+import com.ap_project.models.Item;
+import com.ap_project.models.User;
 
 public class TradeWithItem extends Trade {
     private final Item targetItem;

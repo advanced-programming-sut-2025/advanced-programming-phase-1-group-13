@@ -1,12 +1,12 @@
-package com.project.models.tools;
+package com.ap_project.models.tools;
 
-import com.project.models.Tile;
-import com.project.models.User;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.types.FishingRodType;
-import com.project.models.enums.types.ToolMaterial;
-import com.project.models.enums.types.ToolType;
+import com.ap_project.models.Tile;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.types.FishingRodType;
+import com.ap_project.models.enums.types.ToolMaterial;
+import com.ap_project.models.enums.types.ToolType;
 
 import java.util.HashMap;
 
@@ -58,11 +58,20 @@ public class FishingRod extends Tool {
 
     @Override
     public void upgradeTool() {
-        this.type = switch (type) {
-            case TRAINING -> FishingRodType.BAMBOO;
-            case BAMBOO -> FishingRodType.FIBERGLASS;
-            case FIBERGLASS, IRIDIUM -> FishingRodType.IRIDIUM;
-            default -> FishingRodType.TRAINING;
-        };
+        switch (this.type) {
+            case TRAINING:
+                this.type = FishingRodType.BAMBOO;
+                break;
+            case BAMBOO:
+                this.type = FishingRodType.FIBERGLASS;
+                break;
+            case FIBERGLASS:
+            case IRIDIUM:
+                this.type = FishingRodType.IRIDIUM;
+                break;
+            default:
+                this.type = FishingRodType.TRAINING;
+                break;
+        }
     }
 }

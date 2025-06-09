@@ -1,18 +1,16 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.google.gson.GsonBuilder;
-
-import controllers.GameController;
-import com.project.models.enums.SecurityQuestion;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.environment.Time;
-import com.project.models.enums.types.*;
-import com.project.models.inventory.Backpack;
-import com.project.models.tools.*;
-import com.project.models.trade.Trade;
-import com.project.models.trade.TradeWithItem;
-import com.project.models.trade.TradeWithMoney;
+import com.ap_project.controllers.*;
+import com.ap_project.models.enums.SecurityQuestion;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.environment.Time;
+import com.ap_project.models.enums.types.*;
+import com.ap_project.models.inventory.Backpack;
+import com.ap_project.models.tools.*;
+import com.ap_project.models.trade.Trade;
+import com.ap_project.models.trade.TradeWithItem;
+import com.ap_project.models.trade.TradeWithMoney;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -155,14 +153,27 @@ public class User {
     }
 
     public void updateBuffRelatedSkill() {
-        this.buffRelatedSkill = switch (this.currentFoodBuff) {
-            case FARMING_5_HOURS -> Skill.FARMING;
-            case FISHING_5_HOURS, FISHING_10_HOURS -> Skill.FISHING;
-            case MINING_5_HOURS -> Skill.MINING;
-            case FORAGING_5_HOURS, FORAGING_11_HOURS -> Skill.FORAGING;
-            case MAX_ENERGY_PLUS_50, MAX_ENERGY_PLUS_100 -> null;
-            case null, default -> null;
-        };
+        switch (this.currentFoodBuff) {
+            case FARMING_5_HOURS:
+                this.buffRelatedSkill = Skill.FARMING;
+                break;
+            case FISHING_5_HOURS:
+            case FISHING_10_HOURS:
+                this.buffRelatedSkill = Skill.FISHING;
+                break;
+            case MINING_5_HOURS:
+                this.buffRelatedSkill = Skill.MINING;
+                break;
+            case FORAGING_5_HOURS:
+            case FORAGING_11_HOURS:
+                this.buffRelatedSkill = Skill.FORAGING;
+                break;
+            case MAX_ENERGY_PLUS_50:
+            case MAX_ENERGY_PLUS_100:
+            default:
+                this.buffRelatedSkill = null;
+                break;
+        }
     }
 
     public FoodBuff getCurrentFoodBuff() {
@@ -172,16 +183,18 @@ public class User {
     public void activateFoodBuff(FoodBuff foodBuff) {
         this.currentFoodBuff = foodBuff;
         this.hoursLeftTillBuffVanishes = foodBuff.getBuffDurationInHours();
+
         switch (foodBuff) {
-            case MAX_ENERGY_PLUS_50 -> {
+            case MAX_ENERGY_PLUS_50:
                 this.energy = 250;
                 this.maxEnergy = 250;
-            }
-            case MAX_ENERGY_PLUS_100 -> {
+                break;
+            case MAX_ENERGY_PLUS_100:
                 this.energy = 300;
                 this.maxEnergy = 300;
-            }
+                break;
         }
+
         this.updateBuffRelatedSkill();
     }
 
@@ -387,7 +400,7 @@ public class User {
 
     private void saveUsersToJson() {
         try (FileWriter writer = new FileWriter("users.json")) {
-            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
+            // writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -570,7 +583,8 @@ public class User {
     public FishingRod getFishingRodByName(String name) {
         ArrayList<Item> items = new ArrayList<>(this.getBackpack().getItems().keySet());
         for (Item item : items) {
-            if (item instanceof FishingRod fishingRod) {
+            if (item instanceof FishingRod) {
+                FishingRod fishingRod = (FishingRod) item;
                 if (fishingRod.getRodType().getName().equals(name)) {
                     return fishingRod;
                 }

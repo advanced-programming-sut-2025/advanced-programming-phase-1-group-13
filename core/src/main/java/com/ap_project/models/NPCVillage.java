@@ -1,7 +1,7 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.ShopType;
-import com.project.models.enums.types.TileType;
+import com.ap_project.models.enums.types.ShopType;
+import com.ap_project.models.enums.types.TileType;
 
 import java.util.ArrayList;
 import java.util.List;

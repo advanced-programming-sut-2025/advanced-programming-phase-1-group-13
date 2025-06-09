@@ -1,6 +1,6 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.CraftType;
+import com.ap_project.models.enums.types.CraftType;
 
 // todo: extends Good?
 public class CraftRecipe extends Item {
@@ -12,11 +12,18 @@ public class CraftRecipe extends Item {
     public CraftRecipe(CraftType craftType) {
         this.craftType = craftType;
         this.nameOfCraft = craftType.getName();
-        this.sellPrice = switch (craftType) {
-            case BOMB, MEGA_BOMB, CHERRY_BOMB -> 50;
-            case MYSTIC_TREE_SEED -> 100;
-            default -> 0;
-        };
+        switch (craftType) {
+            case BOMB:
+            case MEGA_BOMB:
+            case CHERRY_BOMB:
+                this.sellPrice = 50;
+                break;
+            case MYSTIC_TREE_SEED:
+                this.sellPrice = 100;
+                break;
+            default:
+                this.sellPrice = 0;
+        }
         this.description = craftType.getDescription();
     }
 

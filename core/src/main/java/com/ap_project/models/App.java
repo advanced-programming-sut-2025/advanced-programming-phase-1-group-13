@@ -1,6 +1,6 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.Menu;
+import com.ap_project.models.enums.Menu;
 
 import java.util.ArrayList;
 

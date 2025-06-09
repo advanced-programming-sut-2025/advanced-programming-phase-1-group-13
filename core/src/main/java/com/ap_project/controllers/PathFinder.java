@@ -1,8 +1,8 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
-import com.project.models.*;
-import com.project.models.enums.types.ShopType;
-import com.project.models.enums.types.TileType;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.types.ShopType;
+import com.ap_project.models.enums.types.TileType;
 import java.util.*;
 
 public class PathFinder {

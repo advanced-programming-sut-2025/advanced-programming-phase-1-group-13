@@ -1,7 +1,7 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
-import com.project.models.enums.environment.Season;
-import com.project.models.enums.environment.Weather;
+import com.ap_project.models.enums.environment.Season;
+import com.ap_project.models.enums.environment.Weather;
 
 public enum Dialog {
     DIALOG_1(NPCType.CLINT, "Morning. If you need ores smelted, just leave 'em with me. Got plenty of work to do.", 8, Season.SPRING, Weather.SUNNY, 0),
@@ -68,20 +68,20 @@ public enum Dialog {
     DIALOG_60(NPCType.PIERRE, "Running a shop isn’t just about profit... it’s about building something that lasts.", 20, Season.FALL, Weather.SUNNY, 2),
 
     DIALOG_61(NPCType.ROBIN, "Morning! Need any upgrades for your farm? A little investment can go a long way!", 8, Season.SPRING, Weather.SUNNY, 1),
-    DIALOG_62(NPCType.ROBIN, "Rain’s great for trees! I just hope it doesn’t slow down my building projects.", 14, Season.SPRING, Weather.RAINY, 0),
+    DIALOG_62(NPCType.ROBIN, "Rain’s great for trees! I just hope it doesn’t slow down my building com.ap_project.s.", 14, Season.SPRING, Weather.RAINY, 0),
     DIALOG_63(NPCType.ROBIN, "Summer is perfect for outdoor construction. Sunshine, fresh air, and plenty of lumber!", 11, Season.SUMMER, Weather.SUNNY, 2),
     DIALOG_64(NPCType.ROBIN, "Storms can be rough on old buildings. If your barn’s looking a little shaky, I can fix it up for you.", 16, Season.SUMMER, Weather.STORM, 1),
     DIALOG_65(NPCType.ROBIN, "Fall always makes me think about cozy cabins. A home should feel warm and inviting, don’t you think?", 12, Season.FALL, Weather.SUNNY, 3),
     DIALOG_66(NPCType.ROBIN, "Snow can be a hassle, but honestly? I love how peaceful everything looks when it’s covered in white.", 18, Season.WINTER, Weather.SNOW, 2),
     DIALOG_67(NPCType.ROBIN, "You seem to be settling into farm life well! If you ever need extra storage space, just let me know.", 17, Season.FALL, Weather.SUNNY, 3),
-    DIALOG_68(NPCType.ROBIN, "Winter makes outdoor projects tricky, but I still keep busy designing new home additions!", 10, Season.WINTER, Weather.SNOW, 1),
+    DIALOG_68(NPCType.ROBIN, "Winter makes outdoor com.ap_project.s tricky, but I still keep busy designing new home additions!", 10, Season.WINTER, Weather.SNOW, 1),
     DIALOG_69(NPCType.ROBIN, "I love seeing people take pride in their homes. Nothing feels better than improving the space you live in!", 13, Season.SPRING, Weather.SUNNY, 2),
     DIALOG_70(NPCType.ROBIN, "A well-built farmhouse makes all the difference. Sturdy materials, smart design... I could talk about this all day!", 20, Season.SUMMER, Weather.SUNNY, 3),
     DIALOG_71(NPCType.ROBIN, "You’d be surprised how much personality a house can have. Little details really make a place feel special.", 15, Season.FALL, Weather.SUNNY, 1),
     DIALOG_72(NPCType.ROBIN, "Lumber prices are going up again... maybe I should start growing my own trees!", 9, Season.SPRING, Weather.SUNNY, 2),
     DIALOG_73(NPCType.ROBIN, "It’s nice having a job where I can create something lasting. A well-built home is a legacy in itself.", 17, Season.FALL, Weather.SUNNY, 3),
     DIALOG_74(NPCType.ROBIN, "I may work with wood all day, but even I appreciate the beauty of freshly fallen snow!", 14, Season.WINTER, Weather.SNOW, 2),
-    DIALOG_75(NPCType.ROBIN, "Winter is perfect for planning new projects! Got any ideas for farm upgrades?", 10, Season.SPRING, Weather.RAINY, 0),
+    DIALOG_75(NPCType.ROBIN, "Winter is perfect for planning new com.ap_project.s! Got any ideas for farm upgrades?", 10, Season.SPRING, Weather.RAINY, 0),
     DIALOG_76(NPCType.ROBIN, "Summer is my busiest season—everyone wants new barns, coops, and expansions!", 16, Season.SUMMER, Weather.SUNNY, 2),
     DIALOG_77(NPCType.ROBIN, "Building a house is one thing, but turning it into a home? That’s the real magic.", 19, Season.WINTER, Weather.SNOW, 1),
     DIALOG_78(NPCType.ROBIN, "Hard work pays off. Just look at how much your farm has grown!", 12, Season.FALL, Weather.SUNNY, 3),

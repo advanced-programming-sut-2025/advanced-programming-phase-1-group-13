@@ -1,6 +1,6 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
-import com.project.models.enums.SkillLevel;
+import com.ap_project.models.enums.SkillLevel;
 
 public enum FishingRodType {
     TRAINING("Training", 8, 0.1, 25, SkillLevel.LEVEL_ONE),

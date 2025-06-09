@@ -1,4 +1,4 @@
-package com.project.models.enums.environment;
+package com.ap_project.models.enums.environment;
 
 import java.util.List;
 import java.util.Random;

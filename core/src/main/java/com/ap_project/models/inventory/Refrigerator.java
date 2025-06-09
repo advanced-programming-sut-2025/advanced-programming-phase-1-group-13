@@ -1,4 +1,4 @@
-package com.project.models.inventory;
+package com.ap_project.models.inventory;
 
 public class Refrigerator extends Inventory {
     public Refrigerator() {

@@ -1,9 +1,8 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.google.gson.GsonBuilder;
-import com.project.models.enums.environment.Time;
-import com.project.models.enums.environment.Weather;
-import com.project.models.enums.types.TileType;
+import com.ap_project.models.enums.environment.Time;
+import com.ap_project.models.enums.environment.Weather;
+import com.ap_project.models.enums.types.TileType;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,11 +48,13 @@ public class GameState {
     }
 
     private void saveGameState() {
+        /*
         try (FileWriter writer = new FileWriter("gameState.json")) {
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(this));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
     public void modifyState(String key, int value) {

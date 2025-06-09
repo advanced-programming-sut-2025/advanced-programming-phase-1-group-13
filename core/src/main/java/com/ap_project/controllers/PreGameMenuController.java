@@ -1,12 +1,12 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
-import com.project.models.*;
-import com.project.models.enums.Menu;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.project.models.App.*;
+import static com.ap_project.models.App.*;
 
 public class PreGameMenuController {
     public Result gameNew(String usernamesStr) {

@@ -1,4 +1,4 @@
-package com.project.views;
+package com.ap_project.views;
 
 import java.util.Scanner;
 

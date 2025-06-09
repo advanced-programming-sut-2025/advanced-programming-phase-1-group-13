@@ -1,6 +1,6 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.FarmBuildingType;
+import com.ap_project.models.enums.types.FarmBuildingType;
 
 import java.util.ArrayList;
 public class ShippingBin extends FarmBuilding {

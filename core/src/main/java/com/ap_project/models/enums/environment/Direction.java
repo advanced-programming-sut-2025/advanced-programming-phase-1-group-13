@@ -1,6 +1,6 @@
-package com.project.models.enums.environment;
+package com.ap_project.models.enums.environment;
 
-import com.project.models.Position;
+import com.ap_project.models.Position;
 
 public enum Direction {
     UP("up", -1, 0),
@@ -45,24 +45,44 @@ public enum Direction {
         if (name == null) {
             return null;
         }
-        return switch (name.toLowerCase()) {
-            case "up" -> UP;
-            case "u" -> UP;
-            case "down" -> DOWN;
-            case "d" -> DOWN;
-            case "right" -> RIGHT;
-            case "r" -> RIGHT;
-            case "left" -> LEFT;
-            case "l" -> LEFT;
-            case "up-right" -> UP_RIGHT;
-            case "ur" -> UP_RIGHT;
-            case "up-left" -> UP_LEFT;
-            case "ul" -> UP_LEFT;
-            case "down-right" -> DOWN_RIGHT;
-            case "dr" -> DOWN_RIGHT;
-            case "down-left" -> DOWN_LEFT;
-            case "dl" -> DOWN_LEFT;
-            default -> null;
-        };
+
+        Direction result;
+        switch (name.toLowerCase()) {
+            case "up":
+            case "u":
+                result = UP;
+                break;
+            case "down":
+            case "d":
+                result = DOWN;
+                break;
+            case "right":
+            case "r":
+                result = RIGHT;
+                break;
+            case "left":
+            case "l":
+                result = LEFT;
+                break;
+            case "up-right":
+            case "ur":
+                result = UP_RIGHT;
+                break;
+            case "up-left":
+            case "ul":
+                result = UP_LEFT;
+                break;
+            case "down-right":
+            case "dr":
+                result = DOWN_RIGHT;
+                break;
+            case "down-left":
+            case "dl":
+                result = DOWN_LEFT;
+                break;
+            default:
+                result = null;
+        }
+        return result;
     }
 }

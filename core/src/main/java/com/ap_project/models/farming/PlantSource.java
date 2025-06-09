@@ -1,10 +1,10 @@
-package com.project.models.farming;
+package com.ap_project.models.farming;
 
-import com.project.models.Item;
-import com.project.models.enums.types.ItemType;
-import com.project.models.enums.types.MixedSeedsType;
-import com.project.models.enums.types.SeedType;
-import com.project.models.enums.types.TreeSourceType;
+import com.ap_project.models.Item;
+import com.ap_project.models.enums.types.ItemType;
+import com.ap_project.models.enums.types.MixedSeedsType;
+import com.ap_project.models.enums.types.SeedType;
+import com.ap_project.models.enums.types.TreeSourceType;
 
 public class PlantSource extends Item {
     private SeedType seedType;

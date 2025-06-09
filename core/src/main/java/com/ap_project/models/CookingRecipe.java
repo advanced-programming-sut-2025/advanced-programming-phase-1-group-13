@@ -1,7 +1,7 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.FoodBuff;
-import com.project.models.enums.types.FoodType;
+import com.ap_project.models.enums.types.FoodBuff;
+import com.ap_project.models.enums.types.FoodType;
 
 // todo: extends Good? it is indeed a "good"" because recipes are sold as goods and are in GoodTypes
 public class CookingRecipe extends Item {

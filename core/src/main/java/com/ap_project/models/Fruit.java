@@ -1,6 +1,6 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.FruitType;
+import com.ap_project.models.enums.types.FruitType;
 
 public class Fruit extends Item {
     private final FruitType fruitType;

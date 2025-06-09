@@ -1,4 +1,4 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
 public enum IngredientType implements ItemType {
     EGG("Egg"),

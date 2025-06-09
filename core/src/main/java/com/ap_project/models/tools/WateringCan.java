@@ -1,15 +1,15 @@
-package com.project.models.tools;
+package com.ap_project.models.tools;
 
-import com.project.models.Item;
-import com.project.models.Tile;
-import com.project.models.User;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.types.TileType;
-import com.project.models.enums.types.ToolMaterial;
-import com.project.models.enums.types.ToolType;
-import com.project.models.farming.Crop;
-import com.project.models.farming.Tree;
+import com.ap_project.models.Item;
+import com.ap_project.models.Tile;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.types.TileType;
+import com.ap_project.models.enums.types.ToolMaterial;
+import com.ap_project.models.enums.types.ToolType;
+import com.ap_project.models.farming.Crop;
+import com.ap_project.models.farming.Tree;
 
 import java.util.HashMap;
 
@@ -23,16 +23,30 @@ public class WateringCan extends Tool {
 
     public WateringCan(ToolMaterial material) {
         super(ToolType.WATERING_CAN, material);
-        this.waterCapacity = switch (material) {
-            case BASIC -> 40;
-            case COPPER -> 55;
-            case IRON -> 70;
-            case GOLD -> 85;
-            case IRIDIUM -> 100;
-        };
+
+        switch (material) {
+            case BASIC:
+                this.waterCapacity = 40;
+                break;
+            case COPPER:
+                this.waterCapacity = 55;
+                break;
+            case IRON:
+                this.waterCapacity = 70;
+                break;
+            case GOLD:
+                this.waterCapacity = 85;
+                break;
+            case IRIDIUM:
+                this.waterCapacity = 100;
+                break;
+            default:
+                this.waterCapacity = 0;
+                break;
+        }
+
         this.remainingWater = this.waterCapacity;
     }
-
 
     public int getRemainingWater() {
         return this.remainingWater;

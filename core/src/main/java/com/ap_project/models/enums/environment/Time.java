@@ -1,9 +1,9 @@
-package com.project.models.enums.environment;
+package com.ap_project.models.enums.environment;
 
-import com.project.models.App;
-import com.project.models.Artisan;
-import com.project.models.Game;
-import com.project.models.User;
+import com.ap_project.models.App;
+import com.ap_project.models.Artisan;
+import com.ap_project.models.Game;
+import com.ap_project.models.User;
 
 public class Time {
     private int year;
@@ -58,7 +58,7 @@ public class Time {
                 }
             }
 
-            System.out.println(game.changeDay().message());
+            System.out.println(game.changeDay().message);
         }
 
         App.getLoggedIn().decreaseHoursLeftTillBuffVanishes(1);

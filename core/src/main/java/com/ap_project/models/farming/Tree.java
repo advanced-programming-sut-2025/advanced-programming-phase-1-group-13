@@ -1,12 +1,12 @@
-package com.project.models.farming;
+package com.ap_project.models.farming;
 
-import com.project.models.Item;
-import com.project.models.Position;
-import com.project.models.Tile;
-import com.project.models.enums.environment.Season;
-import com.project.models.enums.types.FruitType;
-import com.project.models.enums.types.TileType;
-import com.project.models.enums.types.TreeType;
+import com.ap_project.models.Item;
+import com.ap_project.models.Position;
+import com.ap_project.models.Tile;
+import com.ap_project.models.enums.environment.Season;
+import com.ap_project.models.enums.types.FruitType;
+import com.ap_project.models.enums.types.TileType;
+import com.ap_project.models.enums.types.TreeType;
 
 import java.util.ArrayList;
 

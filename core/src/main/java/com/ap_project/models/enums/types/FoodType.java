@@ -1,4 +1,4 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
 import java.util.HashMap;
 
@@ -49,32 +49,12 @@ public enum FoodType implements ItemType {
     }
 
     public static FoodType getFoodTypeByName(String foodTypeName) {
-        return switch (foodTypeName.toLowerCase()) {
-            case "fried egg" -> FRIED_EGG;
-            case "baked fish" -> BAKED_FISH;
-            case "salad" -> SALAD;
-            case "omelet" -> OMELET;
-            case "pumpkin pie" -> PUMPKIN_PIE;
-            case "spaghetti" -> SPAGHETTI;
-            case "pizza" -> PIZZA;
-            case "tortilla" -> TORTILLA;
-            case "maki roll" -> MAKI_ROLL;
-            case "triple shot espresso" -> TRIPLE_SHOT_ESPRESSO;
-            case "cookie" -> COOKIE;
-            case "hash browns" -> HASH_BROWNS;
-            case "pancakes" -> PANCAKES;
-            case "fruit salad" -> FRUIT_SALAD;
-            case "red plate" -> RED_PLATE;
-            case "bread" -> BREAD;
-            case "salmon dinner" -> SALMON_DINNER;
-            case "vegetable medley" -> VEGETABLE_MEDLEY;
-            case "farmer's lunch" -> FARMERS_LUNCH;
-            case "survival burger" -> SURVIVAL_BURGER;
-            case "dish o' the sea" -> DISH_O_THE_SEA;
-            case "seafoam pudding" -> SEAFORM_PUDDING;
-            case "miner's treat" -> MINERS_TREAT;
-            default -> null;
-        };
+        for (FoodType foodType : FoodType.values()) {
+            if (foodType.name.equals(foodTypeName)) {
+                return foodType;
+            }
+        }
+        return null;
     }
 
     @Override

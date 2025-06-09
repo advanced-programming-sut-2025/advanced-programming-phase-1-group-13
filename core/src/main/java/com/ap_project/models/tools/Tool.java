@@ -1,12 +1,12 @@
-package com.project.models.tools;
+package com.ap_project.models.tools;
 
-import com.project.models.Item;
-import com.project.models.Tile;
-import com.project.models.User;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.types.ToolMaterial;
-import com.project.models.enums.types.ToolType;
+import com.ap_project.models.Item;
+import com.ap_project.models.Tile;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.types.ToolMaterial;
+import com.ap_project.models.enums.types.ToolType;
 
 import java.util.HashMap;
 
@@ -37,13 +37,28 @@ public abstract class Tool extends Item {
 
     static int the54321EnergyPattern(Tool tool, SkillLevel skillLevel) {
         ToolMaterial toolMaterial = tool.getToolMaterial();
-        int energy = switch (toolMaterial) {
-            case BASIC -> 5;
-            case COPPER -> 4;
-            case IRON -> 3;
-            case GOLD -> 2;
-            case IRIDIUM -> 1;
-        };
+        int energy;
+        switch (toolMaterial) {
+            case BASIC:
+                energy = 5;
+                break;
+            case COPPER:
+                energy = 4;
+                break;
+            case IRON:
+                energy = 3;
+                break;
+            case GOLD:
+                energy = 2;
+                break;
+            case IRIDIUM:
+                energy = 1;
+                break;
+            default:
+                energy = 0;
+                break;
+        }
+
         if (skillLevel == SkillLevel.LEVEL_THREE) {
             energy--;
         }
@@ -55,13 +70,23 @@ public abstract class Tool extends Item {
     }
 
     public void upgradeTool() {
-        this.toolMaterial = switch (toolMaterial) {
-            case BASIC -> ToolMaterial.COPPER;
-            case COPPER -> ToolMaterial.IRON;
-            case IRON -> ToolMaterial.GOLD;
-            case GOLD -> ToolMaterial.IRIDIUM;
-            case IRIDIUM -> null;
-        };
+        switch (this.toolMaterial) {
+            case BASIC:
+                this.toolMaterial = ToolMaterial.COPPER;
+                break;
+            case COPPER:
+                this.toolMaterial = ToolMaterial.IRON;
+                break;
+            case IRON:
+                this.toolMaterial = ToolMaterial.GOLD;
+                break;
+            case GOLD:
+                this.toolMaterial = ToolMaterial.IRIDIUM;
+                break;
+            case IRIDIUM:
+                this.toolMaterial = null;
+                break;
+        }
     }
 
     public void useTool(Tile tile, User player) {

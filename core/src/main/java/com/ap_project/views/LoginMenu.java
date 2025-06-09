@@ -1,8 +1,8 @@
-package com.project.views;
+package com.ap_project.views;
 
-import controllers.LoginController;
-import com.project.models.Result;
-import com.project.models.enums.commands.LoginCommands;
+import com.ap_project.controllers.LoginController;
+import com.ap_project.models.Result;
+import com.ap_project.models.enums.commands.LoginCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -28,8 +28,8 @@ public class LoginMenu implements AppMenu {
                     matcher.group("gender"),
                     false
             );
-            System.out.println(result.message());
-            if (result.success()) {
+            System.out.println(result.message);
+            if (result.success) {
                 inputLine = scanner.nextLine();
                 if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
                     System.out.println(controller.pickSecurityQuestion(
@@ -49,8 +49,8 @@ public class LoginMenu implements AppMenu {
                     matcher.group("gender"),
                     true  // generate random password
             );
-            System.out.println(result.message());
-            if (result.success()) {
+            System.out.println(result.message);
+            if (result.success) {
                 inputLine = scanner.nextLine();
                 if ((matcher = LoginCommands.PICK_QUESTION_REGEX.getMatcher(inputLine)) != null) {
                     System.out.println(controller.pickSecurityQuestion(
@@ -66,12 +66,12 @@ public class LoginMenu implements AppMenu {
             String username = matcher.group("username");
             Result result = controller.forgotPassword(username);
             System.out.println(result);
-            if (result.success()) {
+            if (result.success) {
                 inputLine = scanner.nextLine();
                 if ((matcher = LoginCommands.ANSWER_SECURITY_QUESTION.getMatcher(inputLine)) != null) {
                     System.out.println(controller.validateSecurityQuestion(
                             username,
-                            result.message(),
+                            result.message,
                             matcher.group("answer")
                     ));
                 } else {

@@ -1,11 +1,11 @@
-package com.project.models.inventory;
+package com.ap_project.models.inventory;
 
-import com.project.models.AnimalProduct;
-import com.project.models.Item;
-import com.project.models.Result;
-import com.project.models.User;
-import com.project.models.enums.types.ToolMaterial;
-import com.project.models.tools.TrashCan;
+import com.ap_project.models.AnimalProduct;
+import com.ap_project.models.Item;
+import com.ap_project.models.Result;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.types.ToolMaterial;
+import com.ap_project.models.tools.TrashCan;
 
 import java.util.HashMap;
 

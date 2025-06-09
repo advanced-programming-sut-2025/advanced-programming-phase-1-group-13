@@ -1,4 +1,4 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -6,16 +6,16 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.project.models.App;
-import com.project.models.Result;
-import com.project.models.User;
-import com.project.models.enums.Menu;
-import com.project.models.enums.SecurityQuestion;
-import com.project.models.enums.types.Gender;
-import com.project.models.enums.commands.LoginCommands;
+import com.ap_project.models.App;
+import com.ap_project.models.Result;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Menu;
+import com.ap_project.models.enums.SecurityQuestion;
+import com.ap_project.models.enums.types.Gender;
+import com.ap_project.models.enums.commands.LoginCommands;
 
-import static com.project.models.App.getUserByEmail;
-import static com.project.models.App.getUserByUsername;
+import static com.ap_project.models.App.getUserByEmail;
+import static com.ap_project.models.App.getUserByUsername;
 
 public class LoginController {
     public Result registerUser(String username,
@@ -40,7 +40,7 @@ public class LoginController {
 
         String finalPassword;
         if (generateRandomPassword) {
-            finalPassword = randomPasswordGenerator().message();
+            finalPassword = randomPasswordGenerator().message;
         } else {
             if (password == null || repeatPassword == null) {
                 return new Result(false, "Password and repeat password must be provided.");
@@ -161,7 +161,7 @@ public class LoginController {
             return new Result(false, "User not found.");
         }
         String correctAnswer = user.getQAndA().get(securityQuestion);
-        String newPassword = randomPasswordGenerator().message();
+        String newPassword = randomPasswordGenerator().message;
         if (correctAnswer.equals(answer)) {
             user.setPassword(newPassword);
             return new Result(true, "Correct answer! Your new password is: " + newPassword);

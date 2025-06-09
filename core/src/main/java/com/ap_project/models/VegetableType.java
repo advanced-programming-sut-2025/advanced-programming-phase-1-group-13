@@ -1,4 +1,4 @@
-package com.project.models;
+package com.ap_project.models;
 
 public class VegetableType {
     private final int price;

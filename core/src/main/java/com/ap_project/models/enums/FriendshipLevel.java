@@ -1,4 +1,4 @@
-package com.project.models.enums;
+package com.ap_project.models.enums;
 
 public enum FriendshipLevel {
     STRANGER(0),

@@ -1,6 +1,6 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.GoodsType;
+import com.ap_project.models.enums.types.GoodsType;
 
 public class Good extends Item {
     private final GoodsType type;

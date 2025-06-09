@@ -1,4 +1,4 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
 public enum SeedType implements ItemType {
     JAZZ_SEEDS("Jazz Seeds"),

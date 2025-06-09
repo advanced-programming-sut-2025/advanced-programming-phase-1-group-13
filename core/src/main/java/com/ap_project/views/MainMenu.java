@@ -1,7 +1,7 @@
-package com.project.views;
+package com.ap_project.views;
 
-import controllers.MainMenuController;
-import com.project.models.enums.commands.MainMenuCommands;
+import com.ap_project.controllers.MainMenuController;
+import com.ap_project.models.enums.commands.MainMenuCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

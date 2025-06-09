@@ -1,16 +1,16 @@
-package com.project.models.tools;
+package com.ap_project.models.tools;
 
-import controllers.GameController;
-import com.project.models.Mineral;
-import com.project.models.Tile;
-import com.project.models.User;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.types.MineralType;
-import com.project.models.enums.types.TileType;
-import com.project.models.enums.types.ToolMaterial;
-import com.project.models.enums.types.ToolType;
-import com.project.models.inventory.Backpack;
+import com.ap_project.controllers.GameController;
+import com.ap_project.models.Mineral;
+import com.ap_project.models.Tile;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.types.MineralType;
+import com.ap_project.models.enums.types.TileType;
+import com.ap_project.models.enums.types.ToolMaterial;
+import com.ap_project.models.enums.types.ToolType;
+import com.ap_project.models.inventory.Backpack;
 
 import java.util.HashMap;
 
@@ -90,17 +90,41 @@ public class Pickaxe extends Tool {
 
     private boolean canMineMineral(Mineral mineral, Tool tool) {
         MineralType mineralType = mineral.getMineralType();
-        return switch (tool.getToolMaterial()) {
-            case BASIC -> switch (mineralType) {
-                case STONE, COPPER -> true;
-                default -> false;
-            };
-            case COPPER -> switch (mineralType) {
-                case STONE, COPPER, IRON -> true;
-                default -> false;
-            };
-            case IRON -> mineralType != MineralType.IRIDIUM;
-            case GOLD, IRIDIUM -> true;
-        };
+        boolean result;
+
+        switch (tool.getToolMaterial()) {
+            case BASIC:
+                switch (mineralType) {
+                    case STONE:
+                    case COPPER:
+                        result = true;
+                        break;
+                    default:
+                        result = false;
+                }
+                break;
+            case COPPER:
+                switch (mineralType) {
+                    case STONE:
+                    case COPPER:
+                    case IRON:
+                        result = true;
+                        break;
+                    default:
+                        result = false;
+                }
+                break;
+            case IRON:
+                result = mineralType != MineralType.IRIDIUM;
+                break;
+            case GOLD:
+            case IRIDIUM:
+                result = true;
+                break;
+            default:
+                result = false;
+        }
+
+        return result;
     }
 }

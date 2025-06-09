@@ -1,11 +1,10 @@
-package com.project.models;
+package com.ap_project.models;
 
-import controllers.GameController;
-import com.project.models.enums.types.ForagingCropType;
-import com.project.models.enums.types.TreeType;
-import com.project.models.farming.ForagingCrop;
-import com.project.models.farming.Tree;
-import com.project.models.enums.types.TileType;
+import com.ap_project.models.enums.types.ForagingCropType;
+import com.ap_project.models.enums.types.TreeType;
+import com.ap_project.models.farming.ForagingCrop;
+import com.ap_project.models.farming.Tree;
+import com.ap_project.models.enums.types.TileType;
 
 import java.util.ArrayList;
 import java.util.Collections;

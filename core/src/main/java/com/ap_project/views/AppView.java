@@ -1,7 +1,7 @@
-package com.project.views;
+package com.ap_project.views;
 
-import com.project.models.App;
-import com.project.models.enums.Menu;
+import com.ap_project.models.App;
+import com.ap_project.models.enums.Menu;
 
 import java.util.Scanner;
 

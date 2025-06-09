@@ -1,6 +1,6 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
-import com.project.models.NPC;
+import com.ap_project.models.NPC;
 
 public enum ShopType {
     BLACKSMITH("Blacksmith", NPCType.CLINT, 9, 16),

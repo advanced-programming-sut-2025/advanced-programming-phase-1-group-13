@@ -1,4 +1,4 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,17 +36,12 @@ public enum AnimalType {
     }
 
     public static AnimalType getAnimalTypeByName(String name) {
-        return switch (name) {
-            case "Chicken" -> CHICKEN;
-            case "Duck" -> DUCK;
-            case "Rabbit" -> RABBIT;
-            case "Dinosaur" -> DINOSAUR;
-            case "Cow" -> COW;
-            case "Goat" -> GOAT;
-            case "Sheep" -> SHEEP;
-            case "Pig" -> PIG;
-            default -> null;
-        };
+        for (AnimalType animalType : values()) {
+            if (animalType.name.equals(name)) {
+                return animalType;
+            }
+        }
+        return null;
     }
 
     public String getName() {

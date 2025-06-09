@@ -1,7 +1,7 @@
-package com.project.views;
+package com.ap_project.views;
 
-import controllers.ProfileController;
-import com.project.models.enums.commands.ProfileCommands;
+import com.ap_project.controllers.ProfileController;
+import com.ap_project.models.enums.commands.ProfileCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

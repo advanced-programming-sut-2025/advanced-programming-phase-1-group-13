@@ -1,4 +1,4 @@
-package com.project.models;
+package com.ap_project.models;
 
 public class Result {
     public final boolean success;
@@ -11,14 +11,6 @@ public class Result {
 
     @Override
     public String toString() {
-        return message;
-    }
-
-    public boolean success() {
-        return success;
-    }
-
-    public String message() {
         return message;
     }
 }

@@ -1,13 +1,13 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.ArtisanType;
-import com.project.models.enums.types.FarmBuildingType;
-import com.project.models.enums.types.FertilizerType;
-import com.project.models.enums.types.TileType;
-import com.project.models.farming.Crop;
-import com.project.models.farming.Harvestable;
-import com.project.models.farming.PlantSource;
-import com.project.models.farming.Tree;
+import com.ap_project.models.enums.types.ArtisanType;
+import com.ap_project.models.enums.types.FarmBuildingType;
+import com.ap_project.models.enums.types.FertilizerType;
+import com.ap_project.models.enums.types.TileType;
+import com.ap_project.models.farming.Crop;
+import com.ap_project.models.farming.Harvestable;
+import com.ap_project.models.farming.PlantSource;
+import com.ap_project.models.farming.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,7 +165,8 @@ public class Farm {
     public AnimalLivingSpace getAvailableLivingSpace(List<FarmBuildingType> livingSpaceTypes) {
         for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
             if (livingSpaceTypes.contains(farmBuilding.getFarmBuildingType())) {
-                if (farmBuilding instanceof AnimalLivingSpace animalLivingSpace) {
+                if (farmBuilding instanceof AnimalLivingSpace) {
+                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
                     if (!animalLivingSpace.isFull()) {
                         return animalLivingSpace;
                     }

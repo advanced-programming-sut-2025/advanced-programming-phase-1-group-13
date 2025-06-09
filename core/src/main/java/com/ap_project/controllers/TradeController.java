@@ -1,10 +1,10 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
-import com.project.models.*;
-import com.project.models.enums.Menu;
-import com.project.models.trade.Trade;
-import com.project.models.trade.TradeWithItem;
-import com.project.models.trade.TradeWithMoney;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.Menu;
+import com.ap_project.models.trade.Trade;
+import com.ap_project.models.trade.TradeWithItem;
+import com.ap_project.models.trade.TradeWithMoney;
 
 public class TradeController {
     public Result trade(String username, String typeStr, String itemName, String amountStr, String priceStr,
@@ -101,7 +101,7 @@ public class TradeController {
                 if (trade.getRequester().getBalance() >= price) {
                     Result result = trade.getOfferer().getBackpack()
                             .removeFromInventory(trade.getItem(), trade.getAmount());
-                    if (!result.success()) {
+                    if (!result.success) {
                         if (trade.getRequester().equals(player)) {
                             return new Result(false,
                                     trade.getRequester().getUsername() + " doesn't have enough of " +
@@ -122,7 +122,7 @@ public class TradeController {
                 TradeWithItem tradeWithItem = (TradeWithItem) trade;
                 Result result = trade.getRequester().getBackpack()
                         .removeFromInventory(tradeWithItem.getTargetItem(), tradeWithItem.getTargetAmount());
-                if (!result.success()) {
+                if (!result.success) {
                     if (trade.getRequester().equals(player)) {
                         return new Result(false, "You don't have enough of " +
                                 trade.getItem().getName() + ".");
@@ -133,7 +133,7 @@ public class TradeController {
                 }
 
                 result = trade.getOfferer().getBackpack().removeFromInventory(trade.getItem(), trade.getAmount());
-                if (!result.success()) {
+                if (!result.success) {
                     trade.getRequester().getBackpack()
                             .addToInventory(tradeWithItem.getTargetItem(), tradeWithItem.getTargetAmount());
                     if (trade.getRequester().equals(player)) {
@@ -161,24 +161,20 @@ public class TradeController {
     public Result showTradeHistory() {
         User player = App.getLoggedIn();
 
-        StringBuilder message = new StringBuilder("""
-                Trade History:
-                ---------------------------------------------------------------------
-                    Trades Submitted by You:
-                """);
+        StringBuilder message = new StringBuilder("Trade History:\n" +
+            "---------------------------------------------------------------------\n" +
+            "    Trades Submitted by You:\n");
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (trade.getCreator().equals(player)) {
-                message.append("    ").append(trade.toString());
+                message.append("    ").append(trade.toString()).append("\n");
             }
         }
 
-        message.append("""
-                ---------------------------------------------------------------------
-                    Trades accepted by You:
-                """);
+        message.append("---------------------------------------------------------------------\n" +
+            "    Trades accepted by You:\n");
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (!trade.getCreator().equals(player) && trade.isAccepted()) {
-                message.append("    ").append(trade.toString());
+                message.append("    ").append(trade.toString()).append("\n");
             }
         }
 

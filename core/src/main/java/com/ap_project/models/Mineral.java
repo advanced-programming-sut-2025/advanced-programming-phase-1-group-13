@@ -1,7 +1,7 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.MineralType;
-import com.project.models.farming.ForagingStuff;
+import com.ap_project.models.enums.types.MineralType;
+import com.ap_project.models.farming.ForagingStuff;
 
 public class Mineral extends Item implements ForagingStuff {
     private int sellPrice;

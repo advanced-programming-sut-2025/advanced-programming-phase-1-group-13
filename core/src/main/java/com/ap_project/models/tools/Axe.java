@@ -1,10 +1,10 @@
-package com.project.models.tools;
+package com.ap_project.models.tools;
 
-import com.project.models.*;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.types.*;
-import com.project.models.farming.Tree;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.types.*;
+import com.ap_project.models.farming.Tree;
 
 import java.util.HashMap;
 
@@ -53,11 +53,19 @@ public class Axe extends Tool {
                 tile.setType(TileType.NOT_PLOWED_SOIL);
                 return;
             }
-            boolean canHarvestWithAxe = switch (tree.getFruitType()) {
-                case OAK_RESIN, MAPLE_SYRUP, PINE_TAR,
-                     SAP, COMMON_MUSHROOM, MYSTIC_SYRUP -> true;
-                default -> false;
-            };
+            boolean canHarvestWithAxe;
+            switch (tree.getFruitType()) {
+                case OAK_RESIN:
+                case MAPLE_SYRUP:
+                case PINE_TAR:
+                case SAP:
+                case COMMON_MUSHROOM:
+                case MYSTIC_SYRUP:
+                    canHarvestWithAxe = true;
+                    break;
+                default:
+                    canHarvestWithAxe = false;
+            }
             if (canHarvestWithAxe) {
                 Fruit fruit = new Fruit(tree.getFruitType());
                 player.getBackpack().addToInventory(fruit, 20);

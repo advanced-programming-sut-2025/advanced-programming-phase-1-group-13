@@ -1,7 +1,7 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.Quality;
-import com.project.models.enums.types.FishType;
+import com.ap_project.models.enums.Quality;
+import com.ap_project.models.enums.types.FishType;
 
 public class Fish extends Item {
     private FishType type;

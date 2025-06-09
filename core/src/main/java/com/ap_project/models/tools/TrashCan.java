@@ -1,11 +1,11 @@
-package com.project.models.tools;
+package com.ap_project.models.tools;
 
-import com.project.models.Tile;
-import com.project.models.User;
-import com.project.models.enums.Skill;
-import com.project.models.enums.SkillLevel;
-import com.project.models.enums.types.ToolMaterial;
-import com.project.models.enums.types.ToolType;
+import com.ap_project.models.Tile;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.types.ToolMaterial;
+import com.ap_project.models.enums.types.ToolType;
 
 import java.util.HashMap;
 
@@ -40,13 +40,22 @@ public class TrashCan extends Tool {
                                                          Integer itemPrice) {
         double moneyToEarn = 0.0;
         switch (trashCanMaterial) {
-            case BASIC -> moneyToEarn = 0.0;
-            case COPPER -> moneyToEarn = (0.15 * numOfItemToThrowAway * itemPrice);
-            case IRON -> moneyToEarn = (0.3 * numOfItemToThrowAway * itemPrice);
-            case GOLD -> moneyToEarn = (0.45 * numOfItemToThrowAway * itemPrice);
-            case IRIDIUM -> moneyToEarn = (0.6 * numOfItemToThrowAway * itemPrice);
+            case BASIC:
+                moneyToEarn = 0.0;
+                break;
+            case COPPER:
+                moneyToEarn = (0.15 * numOfItemToThrowAway * itemPrice);
+                break;
+            case IRON:
+                moneyToEarn = (0.3 * numOfItemToThrowAway * itemPrice);
+                break;
+            case GOLD:
+                moneyToEarn = (0.45 * numOfItemToThrowAway * itemPrice);
+                break;
+            case IRIDIUM:
+                moneyToEarn = (0.6 * numOfItemToThrowAway * itemPrice);
+                break;
         }
         return moneyToEarn;
     }
-
 }

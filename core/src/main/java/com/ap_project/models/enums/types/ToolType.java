@@ -1,8 +1,8 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
-import com.project.models.enums.Skill;
-import com.project.models.inventory.Backpack;
-import com.project.models.tools.*;
+import com.ap_project.models.enums.Skill;
+import com.ap_project.models.inventory.Backpack;
+import com.ap_project.models.tools.*;
 
 public enum ToolType implements ItemType {
     HOE("Hoe", Skill.FARMING),
@@ -34,17 +34,39 @@ public enum ToolType implements ItemType {
     }
 
     public static Tool getToolByToolTypeAndMaterial(ToolType toolType, ToolMaterial material) {
-        return switch (toolType) {
-            case HOE -> new Hoe(material);
-            case PICKAXE -> new Pickaxe(material);
-            case AXE -> new Axe(material);
-            case WATERING_CAN -> new WateringCan(material);
-            case FISHING_ROD -> new FishingRod(material);
-            case SCYTHE -> new Scythe(material);
-            case MILK_PAIL -> new MilkPail(material);
-            case SHEARS -> new Shear(material);
-            case TRASH_CAN -> new TrashCan(material);
-        };
+        Tool result;
+        switch (toolType) {
+            case HOE:
+                result = new Hoe(material);
+                break;
+            case PICKAXE:
+                result = new Pickaxe(material);
+                break;
+            case AXE:
+                result = new Axe(material);
+                break;
+            case WATERING_CAN:
+                result = new WateringCan(material);
+                break;
+            case FISHING_ROD:
+                result = new FishingRod(material);
+                break;
+            case SCYTHE:
+                result = new Scythe(material);
+                break;
+            case MILK_PAIL:
+                result = new MilkPail(material);
+                break;
+            case SHEARS:
+                result = new Shear(material);
+                break;
+            case TRASH_CAN:
+                result = new TrashCan(material);
+                break;
+            default:
+                result = null;
+        }
+        return result;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.project.models.enums.types;
+package com.ap_project.models.enums.types;
 
 public enum FarmBuildingType {
     BARN("Barn", 7, 4, "Houses 4 barn-dwelling animals.", 350, 150, 6000, false, 4),
@@ -38,16 +38,12 @@ public enum FarmBuildingType {
     }
 
     public static FarmBuildingType getFarmBuildingTypeByName(String name) {
-        return switch (name) {
-            case "Barn" -> BARN;
-            case "Big Barn" -> BIG_BARN;
-            case "Deluxe Barn" -> DELUXE_BARN;
-            case "Coop" -> COOP;
-            case "Big Coop" -> BIG_COOP;
-            case "Well" -> WELL;
-            case "Shipping Bin" -> SHIPPING_BIN;
-            default -> null;
-        };
+        for (FarmBuildingType farmBuildingType : FarmBuildingType.values()) {
+            if (farmBuildingType.getName().equals(name)) {
+                return farmBuildingType;
+            }
+        }
+        return null;
     }
 
     public String getName() {

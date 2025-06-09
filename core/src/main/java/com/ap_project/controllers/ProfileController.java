@@ -1,13 +1,13 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
-import com.project.models.App;
-import com.project.models.Result;
-import com.project.models.User;
-import com.project.models.enums.Menu;
-import com.project.models.enums.commands.LoginCommands;
+import com.ap_project.models.App;
+import com.ap_project.models.Result;
+import com.ap_project.models.User;
+import com.ap_project.models.enums.Menu;
+import com.ap_project.models.enums.commands.LoginCommands;
 
-import static com.project.models.App.getUserByEmail;
-import static com.project.models.App.getUserByUsername;
+import static com.ap_project.models.App.getUserByEmail;
+import static com.ap_project.models.App.getUserByUsername;
 
 public class ProfileController {
     public Result changeUsername(String newUsername) {

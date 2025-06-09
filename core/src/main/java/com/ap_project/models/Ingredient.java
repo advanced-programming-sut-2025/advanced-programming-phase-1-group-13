@@ -1,7 +1,7 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.project.models.enums.types.IngredientType;
-import com.project.models.enums.types.ItemType;
+import com.ap_project.models.enums.types.IngredientType;
+import com.ap_project.models.enums.types.ItemType;
 
 public class Ingredient extends Item {
     private final IngredientType ingredientType;

@@ -1,6 +1,6 @@
-package com.project.models.enums;
+package com.ap_project.models.enums;
 
-import views.*;
+import com.ap_project.views.*;
 
 import java.util.Scanner;
 
@@ -10,7 +10,7 @@ public enum Menu {
     GAME_MENU(new GameMenu(), "Game Menu"),
     PRE_GAME_MENU(new PreGameMenu(), "Pre-Game Menu"),
     PROFILE_MENU(new ProfileMenu(), "Profile Menu"),
-    TARDE_MENU(new TradeMenu(), "Trade Menu"),
+    TRADE_MENU(new TradeMenu(), "Trade Menu"),
     EXIT(new ExitMenu(), "Exit");
 
     private final AppMenu menu;
@@ -31,16 +31,33 @@ public enum Menu {
     }
 
     public static Menu getMenuFromDisplayName(String displayName) {
-        return switch (displayName) {
-            case "Login Menu" -> LOGIN_MENU;
-            case "Main Menu" -> MAIN_MENU;
-            case "Profile Menu" -> PROFILE_MENU;
-            case "Game Menu" -> GAME_MENU;
-            case "Pre-Game Menu" -> PRE_GAME_MENU;
-            case "Trade Menu" -> TARDE_MENU;
-            case "Exit" -> EXIT;
-            default -> null;
-        };
+        Menu result;
+        switch (displayName) {
+            case "Login Menu":
+                result = LOGIN_MENU;
+                break;
+            case "Main Menu":
+                result = MAIN_MENU;
+                break;
+            case "Profile Menu":
+                result = PROFILE_MENU;
+                break;
+            case "Game Menu":
+                result = GAME_MENU;
+                break;
+            case "Pre-Game Menu":
+                result = PRE_GAME_MENU;
+                break;
+            case "Trade Menu":
+                result = TRADE_MENU;
+                break;
+            case "Exit":
+                result = EXIT;
+                break;
+            default:
+                result = null;
+        }
+        return result;
     }
 
 }

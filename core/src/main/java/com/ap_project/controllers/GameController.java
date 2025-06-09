@@ -1,25 +1,25 @@
-package com.project.controllers;
+package com.ap_project.controllers;
 
-import com.project.models.*;
-import com.project.models.enums.environment.*;
-import com.project.models.enums.*;
-import com.project.models.enums.types.*;
-import com.project.models.farming.*;
-import com.project.models.inventory.*;
-import com.project.models.tools.*;
-import com.project.models.trade.*;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.environment.*;
+import com.ap_project.models.enums.*;
+import com.ap_project.models.enums.types.*;
+import com.ap_project.models.farming.*;
+import com.ap_project.models.inventory.*;
+import com.ap_project.models.tools.*;
+import com.ap_project.models.trade.*;
 
 import java.util.*;
 
-import static com.project.models.Greenhouse.canBuildGreenhouse;
-import static com.project.models.Position.areClose;
+import static com.ap_project.models.Greenhouse.canBuildGreenhouse;
+import static com.ap_project.models.Position.areClose;
 
 public class GameController {
 
     // === PLAYER'S STATUS === //
 
     public static Result nextTurn() {
-        com.project.models.Game game = App.getCurrentGame();
+        Game game = App.getCurrentGame();
         String message = game.nextTurn(App.getLoggedIn());
         return new Result(true, "It is now " + App.getLoggedIn().getNickname() + "'s turn.\n" + message);
     }
@@ -72,7 +72,8 @@ public class GameController {
         User player = App.getLoggedIn();
         StringBuilder sb = new StringBuilder();
         for (Item item : player.getBackpack().getItems().keySet()) {
-            if (item instanceof Tool tool) {
+            if (item instanceof Tool) {
+                Tool tool = (Tool) item;
                 sb
                     .append(tool.getName()).append(": ").append(tool.getToolMaterial())
                     .append("! Related Skill: ").append(tool.getRelatedSkill()).append("\n")
@@ -152,7 +153,7 @@ public class GameController {
     }
 
     public Result showDateAndTime() {
-        return new Result(true, showTime().message() + "\n" + showDate().message());
+        return new Result(true, showTime().message + "\n" + showDate().message);
     }
 
     public Result showDayOfTheWeek() {
@@ -273,7 +274,7 @@ public class GameController {
         if (craftType == null) {
             return new Result(false, "Item not found.");
         }
-        if (!canCraftResult((CraftType) itemType).success()) {
+        if (!canCraftResult((CraftType) itemType).success) {
             return canCraftResult((CraftType) itemType);
         }
 
@@ -382,11 +383,17 @@ public class GameController {
         Backpack backpack = player.getBackpack();
         Refrigerator refrigerator = player.getFarm().getCabin().getRefrigerator();
         Item item = Item.getItemByItemName(itemStr);
-        Boolean isPut = switch (putOrPick.toLowerCase()) {
-            case "put" -> true;
-            case "pick" -> false;
-            default -> null;
-        };
+        Boolean isPut;
+        switch (putOrPick.toLowerCase()) {
+            case "put":
+                isPut = true;
+                break;
+            case "pick":
+                isPut = false;
+                break;
+            default:
+                isPut = null;
+        }
         if (isPut == null) {
             return new Result(false, "Rewrite the command; make sure you use \"put\" or \"pick\".");
         }
@@ -414,8 +421,8 @@ public class GameController {
             return new Result(false, "Food not found.");
         }
 
-        if (!canCookResult(cookingRecipe).success()) {
-            return new Result(false, canCookResult(cookingRecipe).message());
+        if (!canCookResult(cookingRecipe).success) {
+            return new Result(false, canCookResult(cookingRecipe).message);
         }
 
         Backpack backpack = player.getBackpack();
@@ -655,11 +662,18 @@ public class GameController {
         Boolean confirmed;
         if (yOrN == null) confirmed = true;
         else {
-            confirmed = switch (yOrN.toLowerCase()) {
-                case "y", "yes" -> true;
-                case "n", "no" -> false;
-                default -> null;
-            };
+            switch (yOrN.toLowerCase()) {
+                case "y":
+                case "yes":
+                    confirmed = true;
+                    break;
+                case "n":
+                case "no":
+                    confirmed = false;
+                    break;
+                default:
+                    confirmed = null;
+            }
         }
 
         if (confirmed == null) {
@@ -806,15 +820,33 @@ public class GameController {
             case UNDER_AN_ITEM:
                 return "📦";
             case SHOP:
-                return switch (whichShop(tile)) {
-                    case JOJAMART -> "🏪"; // farming tools and seeds
-                    case CARPENTER_SHOP -> "\uD83E\uDE9A"; //wood and stone
-                    case FISH_SHOP -> "\uD83D\uDC1F"; //fishing
-                    case MARNIE_RANCH -> "🐄"; //animal
-                    case BLACKSMITH -> "⚒️"; // mineral and extracting tools
-                    case PIERRE_GENERAL_STORE -> "\uD83C\uDF3E"; //farming
-                    case THE_STARDROP_SALOON -> "🍻"; //foods and drinks
-                };
+                String shopIcon;
+                switch (whichShop(tile)) {
+                    case JOJAMART:
+                        shopIcon = "🏪"; // farming tools and seeds
+                        break;
+                    case CARPENTER_SHOP:
+                        shopIcon = "\uD83E\uDE9A"; // wood and stone
+                        break;
+                    case FISH_SHOP:
+                        shopIcon = "\uD83D\uDC1F"; // fishing
+                        break;
+                    case MARNIE_RANCH:
+                        shopIcon = "🐄"; // animal
+                        break;
+                    case BLACKSMITH:
+                        shopIcon = "⚒️"; // mineral and extracting tools
+                        break;
+                    case PIERRE_GENERAL_STORE:
+                        shopIcon = "\uD83C\uDF3E"; // farming
+                        break;
+                    case THE_STARDROP_SALOON:
+                        shopIcon = "🍻"; // foods and drinks
+                        break;
+                    default:
+                        shopIcon = null;
+                }
+                return shopIcon;
             default:
                 return "❓";
         }
@@ -832,35 +864,33 @@ public class GameController {
 
 
     public Result showHelpReadingMap() {
-        String helpText = """
-            === Map Symbols Legend ===
-            🌳 - Tree
-            🌊 - Water
-            🏠 - Cabin
-            🪨 - Stone
-            🪟 - Greenhouse
-            ⛰️ - Quarry Ground
-            🪵 - Wood Log
-            🌱 - Growing Crop
-            🐄 - Animal
-            🟤 - Plowed Soil
-            🟫 - Not Plowed Soil
-            🌾 - Planted Seed
-            💧 - Watered Not Plowed Soil
-            💦 - Watered Plowed Soil
-            ⸙ - Grass
-            📦 - Item
-            ❓ - Unknown Tile
+        String helpText = "=== Map Symbols Legend ===\n" +
+            "🌳 - Tree\n" +
+            "🌊 - Water\n" +
+            "🏠 - Cabin\n" +
+            "🪨 - Stone\n" +
+            "🪟 - Greenhouse\n" +
+            "⛰️ - Quarry Ground\n" +
+            "🪵 - Wood Log\n" +
+            "🌱 - Growing Crop\n" +
+            "🐄 - Animal\n" +
+            "🟤 - Plowed Soil\n" +
+            "🟫 - Not Plowed Soil\n" +
+            "🌾 - Planted Seed\n" +
+            "💧 - Watered Not Plowed Soil\n" +
+            "💦 - Watered Plowed Soil\n" +
+            "⸙ - Grass\n" +
+            "📦 - Item\n" +
+            "❓ - Unknown Tile\n\n" +
 
-            === Shops ===
-            🏪 - JojaMart (General store)
-            🪚 - Carpenter Shop (Wood and construction)
-            \uD83D\uDC1F - Fish Shop (Fishing supplies)
-            🐄 - Marnie Ranch (Animal ranch)
-            ⚒️ - Blacksmith (Crafting and minerals)
-            \uD83C\uDF3E - Pierre's General Store (Farming goods)
-            🍻 - Stardrop Saloon (Food and drinks)
-            """;
+            "=== Shops ===\n" +
+            "🏪 - JojaMart (General store)\n" +
+            "🪚 - Carpenter Shop (Wood and construction)\n" +
+            "\uD83D\uDC1F - Fish Shop (Fishing supplies)\n" +
+            "🐄 - Marnie Ranch (Animal ranch)\n" +
+            "⚒️ - Blacksmith (Crafting and minerals)\n" +
+            "\uD83C\uDF3E - Pierre's General Store (Farming goods)\n" +
+            "🍻 - Stardrop Saloon (Food and drinks)\n";
         return new Result(true, helpText);
     }
 
@@ -958,9 +988,10 @@ public class GameController {
         }
 
         Item item = tile.getItemPlacedOnTile();
-        String message = showCraftInfo(item.getName()).message();
+        String message = showCraftInfo(item.getName()).message;
 
-        if (item instanceof Tree tree) {
+        if (item instanceof Tree) {
+            Tree tree = (Tree) item;
             int daysLeft;
             if (tree.getDaySinceLastHarvest() != null) {
                 daysLeft = tree.getTotalHarvestTime() - tree.getDaySinceLastHarvest();
@@ -987,7 +1018,8 @@ public class GameController {
             }
         }
 
-        if (item instanceof Crop crop) {
+        if (item instanceof Crop) {
+            Crop crop = (Crop) item;
             int daysLeft = crop.getDaySinceLastHarvest() == null ? crop.getTotalHarvestTime() :
                 crop.getTotalHarvestTime() - crop.getDaySinceLastHarvest();
 
@@ -1026,11 +1058,13 @@ public class GameController {
         if (!(plant instanceof Tree) && !(plant instanceof Crop) && !(plant instanceof PlantSource)) {
             return new Result(false, "You can fertilize crops, trees, and seeds only.");
         }
-        if (plant instanceof Tree tree) {
+        if (plant instanceof Tree) {
+            Tree tree = (Tree) plant;
             tree.setHasBeenFertilizedToday(true);
             return new Result(true, "Tree fertilized with " + fertilizerType.getName());
         }
-        if (plant instanceof Crop crop) {
+        if (plant instanceof Crop) {
+            Crop crop = (Crop) plant;
             crop.setHasBeenFertilizedToday(true);
             return new Result(true, "Crop fertilized with " + fertilizerType.getName());
         }
@@ -1493,7 +1527,7 @@ public class GameController {
             int quantity = processedItemType.getIngredients().get(itemType);
             Item item = Item.getItemByItemType(itemType);
             Result result = player.getBackpack().removeFromInventory(item, quantity);
-            if (!result.success()) {
+            if (!result.success) {
                 for (int i = 0; i < itemTypes.indexOf(itemType); i++) {
                     Item itemToRemove = Item.getItemByItemType(itemTypes.get(i));
                     player.getBackpack().addToInventory(itemToRemove,
@@ -1531,7 +1565,7 @@ public class GameController {
         }
 
         Result result = player.getBackpack().addToInventory(item, 1);
-        if (!result.success()) {
+        if (!result.success) {
             return new Result(false, "You don't have enough space in your backpack.");
         }
         artisan.setItemPending(null);
@@ -1544,7 +1578,7 @@ public class GameController {
     public Result showAllProducts() {
         Shop shop = App.getCurrentShop();
         Result result = checkShopStatus(shop);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
@@ -1561,7 +1595,7 @@ public class GameController {
     public Result showAvailableProducts() {
         Shop shop = App.getCurrentShop();
         Result result = checkShopStatus(shop);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
@@ -1593,7 +1627,7 @@ public class GameController {
     public Result purchase(String productName, String countStr) {
         Shop shop = App.getCurrentShop();
         Result result = checkShopStatus(shop);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
@@ -1609,9 +1643,11 @@ public class GameController {
             return new Result(false, "Product not found.");
         }
 
-        if (!(product instanceof Good good)) {
+        if (!(product instanceof Good)) {
             return new Result(false, "Product not found.");
         }
+
+        Good good = (Good) product;
 
         if (!good.getType().getShopType().equals(shop.getType())) {
             return new Result(false, shop.getName() + " does not sell this product.");
@@ -1653,7 +1689,7 @@ public class GameController {
                 + " and can not buy any more.");
         }
         result = player.getBackpack().addToInventory(product, count);
-        if (!result.success()) {
+        if (!result.success) {
             return new Result(false, "You don't have enough space in your backpack.");
         }
 
@@ -1695,7 +1731,7 @@ public class GameController {
         }
 
         Result result = player.getBackpack().addToInventory(item, count);
-        if (!result.success()) {
+        if (!result.success) {
             return new Result(false, "You don't have enough " + productName + " to sell.");
         }
 
@@ -1800,7 +1836,7 @@ public class GameController {
 
         int amount = Integer.parseInt(amountStr);
         Result result = player.getBackpack().removeFromInventory(item, amount);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
@@ -1937,12 +1973,12 @@ public class GameController {
         CropType cropType = CropType.getCropTypeByName(flowerName);
         Crop flower = new Crop(cropType);
         Result result = player.getBackpack().removeFromInventory(flower, 1);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
         result = targetPlayer.getBackpack().addToInventory(flower, 1);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
@@ -2012,7 +2048,7 @@ public class GameController {
     // === TRADE === //
 
     public Result startTrade() {
-        App.setCurrentMenu(Menu.TARDE_MENU);
+        App.setCurrentMenu(Menu.TRADE_MENU);
 
         User player = App.getLoggedIn();
         StringBuilder message = new StringBuilder("You are now in Trade Menu.\nNew Trade requests and offers:\n");
@@ -2143,7 +2179,7 @@ public class GameController {
         }
 
         Result result = player.getBackpack().removeFromInventory(item, 1);
-        if (!result.success()) {
+        if (!result.success) {
             return result;
         }
 
@@ -2167,10 +2203,8 @@ public class GameController {
             if (friendshipPoints > 0) {
                 message.append(npc.getName()).append(": \n" +
                     "   Friendship level: ").append(friendshipPoints / 200).append("\n" +
-                    "   Friendship points: ").append(friendshipPoints).append("""
+                    "   Friendship points: ").append(friendshipPoints).append("\n-------------------------------\n");
 
-                    -------------------------------
-                    """);
             }
         }
         return new Result(true, message.toString());
@@ -2221,13 +2255,13 @@ public class GameController {
         Item rewardItem = Item.getItemByItemType(npc.getType().getRewardItemType(index));
         int rewardQuantity = npc.getType().getRewardQuantity(index);
         Result rewardResult = player.getBackpack().addToInventory(rewardItem, rewardQuantity);
-        if (!rewardResult.success()) {
+        if (!rewardResult.success) {
             return new Result(false,
                 "You do not have enough space in your inventory for this quest's reward.");
         }
 
         Result requestResult = player.getBackpack().removeFromInventory(item, requestQuantity);
-        if (!requestResult.success()) {
+        if (!requestResult.success) {
             assert itemType != null;
             return new Result(false, "You don't have enough of " + itemType.getName() +
                 " to finish quest.");
@@ -2246,7 +2280,7 @@ public class GameController {
     public Result exitGame() {
         Game game = App.getCurrentGame();
         User player = App.getLoggedIn();
-        if (!game.getPlayers().getFirst().equals(player)) {
+        if (!game.getPlayers().get(0).equals(player)) {
             return new Result(false, "Only the creator of the game can exit it.");
         }
         App.setCurrentMenu(Menu.PRE_GAME_MENU);

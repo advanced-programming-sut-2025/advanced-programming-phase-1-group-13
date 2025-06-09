@@ -1,7 +1,7 @@
-package com.project.models.inventory;
+package com.ap_project.models.inventory;
 
-import com.project.models.Item;
-import com.project.models.enums.types.BackpackType;
+import com.ap_project.models.Item;
+import com.ap_project.models.enums.types.BackpackType;
 
 import java.util.HashMap;
 

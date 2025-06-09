@@ -1,19 +1,15 @@
-package com.project.models;
+package com.ap_project.models;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.project.models.enums.FriendshipLevel;
-import com.project.models.enums.Menu;
-import com.project.models.enums.environment.Time;
-import com.project.models.enums.types.ItemType;
-import com.project.models.enums.types.NPCType;
-import com.project.models.enums.types.ShopType;
-import com.project.models.enums.types.TileType;
-import com.project.models.farming.Crop;
-import com.project.models.farming.Tree;
-import com.project.models.trade.Trade;
+import com.ap_project.models.enums.FriendshipLevel;
+import com.ap_project.models.enums.Menu;
+import com.ap_project.models.enums.environment.Time;
+import com.ap_project.models.enums.types.ItemType;
+import com.ap_project.models.enums.types.NPCType;
+import com.ap_project.models.enums.types.ShopType;
+import com.ap_project.models.enums.types.TileType;
+import com.ap_project.models.farming.Crop;
+import com.ap_project.models.farming.Tree;
+import com.ap_project.models.trade.Trade;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -249,7 +245,7 @@ public class Game {
                         ItemType itemType = npc.getType().getRandomGift();
                         Item item = Item.getItemByItemType(itemType);
                         Result result = player.getBackpack().addToInventory(item, 1);
-                        if (result.success()) {
+                        if (result.success) {
                             assert item != null;
                             message.append(npc.getName()).append(" has given you a ").append(item.getName())
                                     .append(" as a gift!");
@@ -383,6 +379,7 @@ public class Game {
     }
 
     private void saveGameState() {
+        /*
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -403,6 +400,7 @@ public class Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
     public void sendMessage(User sender, User receiver, String message) {

@@ -1,8 +1,8 @@
-package com.project.views;
+package com.ap_project.views;
 
-import com.project.controllers.*;
-import com.project.models.*;
-import com.project.models.enums.commands.*;
+import com.ap_project.controllers.*;
+import com.ap_project.models.*;
+import com.ap_project.models.enums.commands.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -50,17 +50,17 @@ public class GameMenu implements AppMenu {
                     matcher.group("y")
             );
             System.out.println(result);
-            if (result.success()) {
+            if (result.success) {
                 String newInputLine = scanner.nextLine();
                 if ((matcher = GameCommands.WALK_CONFIRM.getMatcher(newInputLine)) != null) {
                     System.out.println(controller.applyTheWalk(
                             matcher.group("yOrN"),
-                            result.message()
+                            result.message
                     ));
                 } else if ((matcher = GameCommands.CONFIRM_WALK_SHORTCUT.getMatcher(newInputLine)) != null) {
                     System.out.println(controller.applyTheWalk(
                             "y",
-                            result.message()
+                            result.message
                     ));
                 } else if ((matcher = GameCommands.CONFIRM_WALK_TYPO.getMatcher(newInputLine)) != null) {
                     System.out.println("Bro, it's \"confirm\", not \"confrim\".");
