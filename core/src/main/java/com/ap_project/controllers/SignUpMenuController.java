@@ -8,6 +8,7 @@ import com.ap_project.models.enums.commands.LoginCommands;
 import com.ap_project.models.enums.types.Gender;
 import com.ap_project.views.SignUpMenuView;
 
+import static com.ap_project.Main.goToSecurityQuestionMenu;
 import static com.ap_project.Main.goToTitleMenu;
 import static com.ap_project.controllers.LoginController.hashSha256;
 import static com.ap_project.controllers.LoginController.randomPasswordGenerator;
@@ -25,7 +26,7 @@ public class SignUpMenuController {
         if (view != null) {
             if (view.getSignUpButton().isChecked()) {
                 // TODO
-                goToTitleMenu();
+                goToSecurityQuestionMenu();
             } else if (view.getBackButton().isChecked()) {
                 goToTitleMenu();
             }

@@ -1,9 +1,19 @@
 package com.ap_project.models.enums.types;
 
 public enum Gender {
-    WOMAN,
-    MAN,
-    RATHER_NOT_SAY;
+    WOMAN("Woman"),
+    MAN("Man"),
+    RATHER_NOT_SAY("Rather Not Say");
+
+    private final String name;
+
+    Gender(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public static Gender getGenderByName(String genderName) {
         genderName = genderName.toLowerCase();

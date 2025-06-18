@@ -21,6 +21,7 @@ public class LoginMenuView implements Screen {
     private final TextField usernameField;
     private final Label password;
     private final TextField passwordField;
+    private final CheckBox stayLoggedIn;
     private final TextButton loginButton;
     private final TextButton forgotPasswordButton;
     private final TextButton backButton;
@@ -37,9 +38,12 @@ public class LoginMenuView implements Screen {
         this.username = new Label("Username", skin);
         username.setFontScale(2.0f);
         this.usernameField = new TextField("", skin);
+
         this.password = new Label("Password", skin);
         password.setFontScale(2.0f);
         this.passwordField = new TextField("", skin);
+
+        this.stayLoggedIn = new CheckBox("Stay LoggedIn", skin);
 
         this.loginButton = new TextButton("Login", skin);
         this.forgotPasswordButton = new TextButton("Forgot Password", skin);
@@ -76,6 +80,8 @@ public class LoginMenuView implements Screen {
 
         table.add(password).align(Align.left).padRight(10);
         table.add(passwordField).width(750).padBottom(30).row();
+
+        table.add(stayLoggedIn).center().padRight(10).row();
 
         table.add(backButton).padTop(50);
         table.add(forgotPasswordButton).padTop(50).padRight(100);
