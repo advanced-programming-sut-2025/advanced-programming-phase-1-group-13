@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class LoginMenuView implements Screen {
     private Stage stage;
     private final Texture background;
-    private final Label gameTitle;
+    private final Label menuTitle;
     private final Label username;
     private final TextField usernameField;
     private final Label password;
@@ -32,8 +32,8 @@ public class LoginMenuView implements Screen {
     public LoginMenuView(LoginController controller, Skin skin) {
         this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
 
-        this.gameTitle = new Label("Login", skin);
-        gameTitle.setFontScale(2.0f);
+        this.menuTitle = new Label("Login", skin);
+        menuTitle.setFontScale(2.0f);
 
         this.username = new Label("Username", skin);
         username.setFontScale(2.0f);
@@ -42,6 +42,7 @@ public class LoginMenuView implements Screen {
         this.password = new Label("Password", skin);
         password.setFontScale(2.0f);
         this.passwordField = new TextField("", skin);
+        passwordField.setPasswordMode(true);
 
         this.stayLoggedIn = new CheckBox("Stay LoggedIn", skin);
 
@@ -51,6 +52,7 @@ public class LoginMenuView implements Screen {
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.table = new Table();
 
@@ -67,25 +69,24 @@ public class LoginMenuView implements Screen {
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(backgroundImage);
 
+        stage.addActor(errorMessageLabel);
+
         table.clear();
         table.setFillParent(true);
         table.center();
 
-        table.add(errorMessageLabel).colspan(2).left().padBottom(10).row();
+        table.add(menuTitle).align(Align.center).colspan(3).padBottom(40).center().row();
 
-        table.add(gameTitle).colspan(2).padBottom(60).center().row();
+        table.add(username).align(Align.right).padBottom(40).padRight(20);
+        table.add(usernameField).width(750).padBottom(40).row();
 
-        table.add(username).align(Align.left).padRight(10);
-        table.add(usernameField).width(750).padBottom(20).row();
+        table.add(password).align(Align.right).padBottom(40).padRight(20);
+        table.add(passwordField).width(750).padBottom(40).row();
 
-        table.add(password).align(Align.left).padRight(10);
-        table.add(passwordField).width(750).padBottom(30).row();
+        table.add(stayLoggedIn).right().padRight(10).row();
 
-        table.add(stayLoggedIn).center().padRight(10).row();
-
-        table.add(backButton).padTop(50);
-        table.add(forgotPasswordButton).padTop(50).padRight(100);
-        table.add(loginButton).padTop(50);
+        table.add(backButton).padTop(20);
+        table.add(loginButton).padTop(20).row();
 
         stage.addActor(table);
     }
@@ -130,7 +131,7 @@ public class LoginMenuView implements Screen {
     }
 
     public Label getGameTitle() {
-        return gameTitle;
+        return menuTitle;
     }
 
     public Label getUsername() {

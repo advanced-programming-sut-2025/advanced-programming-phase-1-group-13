@@ -4,9 +4,10 @@ import com.ap_project.models.App;
 import com.ap_project.models.Result;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.SecurityQuestion;
-import com.ap_project.models.enums.commands.LoginCommands;
 import com.ap_project.models.enums.types.Gender;
 import com.ap_project.views.SignUpMenuView;
+
+import java.util.Objects;
 
 import static com.ap_project.Main.goToSecurityQuestionMenu;
 import static com.ap_project.Main.goToTitleMenu;
@@ -25,12 +26,29 @@ public class SignUpMenuController {
     public void handleSignUpMenuButtons() {
         if (view != null) {
             if (view.getSignUpButton().isChecked()) {
-                // TODO
-                goToSecurityQuestionMenu();
+                String username = view.getUsernameField().getText();
+                String password = view.getPasswordField().getText();
+                String repeatPassword = view.getRepeatPasswordField().getText();
+                String nickname = view.getNicknameField().getText();
+                String email = view.getEmailField().getText();
+                String genderString = view.getGenders().getSelected();
+                Result result = registerUser(username, password, repeatPassword, nickname, email, genderString);
+                if (result.success) {
+                    goToSecurityQuestionMenu();
+                } else {
+                    view.setErrorMessage(result.message);
+                }
+            } else if (view.getRandomPasswordButton().isChecked()) {
+                String randomPassword = randomPasswordGenerator();
+                view.getPasswordField().setText(randomPassword);
+                view.getPasswordField().setPasswordMode(false);
+                view.getRepeatPasswordField().setText(randomPassword);
+                view.getRepeatPasswordField().setPasswordMode(false);
             } else if (view.getBackButton().isChecked()) {
                 goToTitleMenu();
             }
             view.getSignUpButton().setChecked(false);
+            view.getRandomPasswordButton().setChecked(false);
             view.getBackButton().setChecked(false);
         }
     }
@@ -40,70 +58,42 @@ public class SignUpMenuController {
                                String repeatPassword,
                                String nickname,
                                String email,
-                               String genderString,
-                               boolean generateRandomPassword) {
-        if (!LoginCommands.VALID_USERNAME.matches(username)) {
+                               String genderString) {
+        String VALID_USERNAME_REGEX = "^[a-zA-Z0-9-]+$";
+        if (!username.matches(VALID_USERNAME_REGEX)) {
             return new Result(false, "Username invalid.");
         }
-        if (!LoginCommands.VALID_EMAIL.matches(email)) {
-            return new Result(false, "Email format invalid.");
-        }
+
         if (getUserByUsername(username) != null) {
             return new Result(false, "Username already exists.");
         }
+
         if (getUserByEmail(email) != null) {
             return new Result(false, "Email already in use.");
         }
 
-        String finalPassword;
-        if (generateRandomPassword) {
-            finalPassword = randomPasswordGenerator().message;
-        } else {
-            if (password == null || repeatPassword == null) {
-                return new Result(false, "Password and repeat password must be provided.");
-            }
-            if (!LoginCommands.VALID_PASSWORD.matches(password) | password.length() < 8) {
-                return new Result(false, "Password invalid.");
-            }
-            if (!password.equals(repeatPassword)) {
-                return new Result(false, "Passwords do not match.");
-            }
-            finalPassword = password;
+        String VALID_PASSWORD_REGEX = "^[a-zA-Z0-9?<>,\"';:\\\\/|\\[\\] {}+=)(*&^%$#!]+$";
+        if (Objects.equals(password, "") || Objects.equals(repeatPassword, "")) {
+            return new Result(false, "Password and repeat password must be provided.");
+        }
+        if (!password.matches(VALID_PASSWORD_REGEX) | password.length() < 8) {
+            return new Result(false, "Password invalid.");
+        }
+        if (!password.equals(repeatPassword)) {
+            return new Result(false, "Passwords do not match.");
+        }
+
+        String VALID_EMAIL_REGEX = "^(?!.*\\.\\.)[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?@(?:[A-Za-z0-9](?:[A-Za-z0" +
+            "-9-]*[A-Za-z0-9])?\\.)+[A-Za-z]{2,}$";
+        if (!email.matches(VALID_EMAIL_REGEX)) {
+            return new Result(false, "Email format invalid.");
         }
 
         Gender gender = Gender.getGenderByName(genderString);
-        User user = new User(username, finalPassword, hashSha256(finalPassword), nickname, email, gender);
+
+        User user = new User(username, password, hashSha256(password), nickname, email, gender);
         App.addUser(user);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Registration successful.\n");
-        if (generateRandomPassword) {
-            stringBuilder.append("Your generated password is: ").append(finalPassword).append("\n");
-            stringBuilder.append("Please save this password securely.\n");
-        }
-        stringBuilder.append("Pick a Security question: \n");
-        for (SecurityQuestion question : SecurityQuestion.values()) {
-            stringBuilder.append(question.toString()).append("\n");
-        }
-        stringBuilder.append("Answer in this format: \"pick question -q <question number> -a <answer> -c <repeated answer>\"");
-
-        return new Result(true, stringBuilder.toString());
-    }
-
-    public Result pickSecurityQuestion(String username, String questionNumberStr, String answer, String repeatAnswer) {
-        int questionNumber = Integer.parseInt(questionNumberStr);
-        SecurityQuestion question = SecurityQuestion.getSecurityQuestionByNumber(questionNumber);
-        if (question == null) {
-            return new Result(false, "Invalid question number.");
-        }
-        if (!answer.equals(repeatAnswer)) {
-            return new Result(false, "Answers do not match.");
-        }
-        User user = getUserByUsername(username);
-        if (user == null) {
-            return new Result(false, "User not found.");
-        }
-        user.addQAndA(question, answer);
-        return new Result(true, "Security question and answer added successfully.");
+        return new Result(true, "Registration successful.");
     }
 }

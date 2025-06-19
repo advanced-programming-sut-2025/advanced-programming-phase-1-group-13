@@ -13,6 +13,7 @@ import com.ap_project.models.enums.Menu;
 import com.ap_project.models.enums.SecurityQuestion;
 import com.ap_project.views.LoginMenuView;
 
+import static com.ap_project.Main.goToMainMenu;
 import static com.ap_project.Main.goToTitleMenu;
 import static com.ap_project.models.App.getUserByUsername;
 
@@ -22,8 +23,16 @@ public class LoginController {
     public void handleLoginMenuButtons() {
         if (view != null) {
             if (view.getLoginButton().isChecked()) {
-                goToTitleMenu();
+                String username = view.getUsernameField().getText();
+                String password = view.getPasswordField().getText();
+                Result result = login(username, password);
+                if (result.success) {
+                    goToMainMenu();
+                } else {
+                    view.setErrorMessage(result.message);
+                }
             } else if (view.getForgotPasswordButton().isChecked()) {
+                // TODO
                 goToTitleMenu();
             } else if (view.getBackButton().isChecked()) {
                 goToTitleMenu();
@@ -75,7 +84,7 @@ public class LoginController {
             return new Result(false, "User not found.");
         }
         String correctAnswer = user.getQAndA().get(securityQuestion);
-        String newPassword = randomPasswordGenerator().message;
+        String newPassword = randomPasswordGenerator();
         if (correctAnswer.equals(answer)) {
             user.setPassword(newPassword);
             return new Result(true, "Correct answer! Your new password is: " + newPassword);
@@ -97,13 +106,13 @@ public class LoginController {
         }
     }
 
-    public static Result randomPasswordGenerator() {
+    public static String randomPasswordGenerator() {
         int len = 12;
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
         SecureRandom rnd = new SecureRandom();
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) sb.append(chars.charAt(rnd.nextInt(chars.length())));
-        return new Result(true, sb.toString());
+        return sb.toString();
     }
 
     public Result exit() {
