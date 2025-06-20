@@ -1,7 +1,7 @@
-package com.ap_project.views;
+package com.ap_project.views.signup;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.SignUpMenuController;
+import com.ap_project.controllers.signup.SignUpMenuController;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.enums.types.Gender;
 import com.badlogic.gdx.Gdx;

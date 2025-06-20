@@ -1,6 +1,6 @@
 package com.ap_project.views;
 
-import com.ap_project.controllers.LoginController;
+import com.ap_project.controllers.login.LoginController;
 import com.ap_project.models.Result;
 import com.ap_project.models.enums.commands.LoginCommands;
 
@@ -63,32 +63,32 @@ public class LoginMenu implements AppMenu {
 //                }
 //            }
 //        }
-        else if ((matcher = LoginCommands.FORGET_PASSWORD.getMatcher(inputLine)) != null) {
-            String username = matcher.group("username");
-            Result result = controller.forgotPassword(username);
-            System.out.println(result);
-            if (result.success) {
-                inputLine = scanner.nextLine();
-                if ((matcher = LoginCommands.ANSWER_SECURITY_QUESTION.getMatcher(inputLine)) != null) {
-                    System.out.println(controller.validateSecurityQuestion(
-                        username,
-                        result.message,
-                        matcher.group("answer")
-                    ));
-                } else {
-                    System.out.println("Invalid command. Try \"answer -a <your answer>\".");
-                }
-            }
-        } else if ((matcher = LoginCommands.LOGIN.getMatcher(inputLine)) != null) {
-            System.out.println(controller.login(
-                matcher.group("username"),
-                matcher.group("password")
-            )); // TODO: "stay logged in" flag !
-        } else if (LoginCommands.SHOW_CURRENT_MENU.getMatcher(inputLine) != null) {
-            System.out.println("You are currently in the Login Menu.");
-        } else {
-            System.out.println("Invalid command. Please try again.");
-        }
+//        else if ((matcher = LoginCommands.FORGET_PASSWORD.getMatcher(inputLine)) != null) {
+//            String username = matcher.group("username");
+//            Result result = controller.forgotPassword(username);
+//            System.out.println(result);
+//            if (result.success) {
+//                inputLine = scanner.nextLine();
+//                if ((matcher = LoginCommands.ANSWER_SECURITY_QUESTION.getMatcher(inputLine)) != null) {
+//                    System.out.println(controller.validateSecurityQuestion(
+//                        username,
+//                        result.message,
+//                        matcher.group("answer")
+//                    ));
+//                } else {
+//                    System.out.println("Invalid command. Try \"answer -a <your answer>\".");
+//                }
+//            }
+//        } else if ((matcher = LoginCommands.LOGIN.getMatcher(inputLine)) != null) {
+//            System.out.println(controller.login(
+//                matcher.group("username"),
+//                matcher.group("password")
+//            )); // TODO: "stay logged in" flag !
+//        } else if (LoginCommands.SHOW_CURRENT_MENU.getMatcher(inputLine) != null) {
+//            System.out.println("You are currently in the Login Menu.");
+//        } else {
+//            System.out.println("Invalid command. Please try again.");
+//        }
     }
 }
 

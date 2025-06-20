@@ -1,20 +1,15 @@
-package com.ap_project.controllers;
+package com.ap_project.controllers.login;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.ap_project.models.App;
 import com.ap_project.models.Result;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.Menu;
-import com.ap_project.models.enums.SecurityQuestion;
-import com.ap_project.views.LoginMenuView;
+import com.ap_project.views.login.LoginMenuView;
 
-import static com.ap_project.Main.goToMainMenu;
-import static com.ap_project.Main.goToTitleMenu;
+import static com.ap_project.Main.*;
 import static com.ap_project.models.App.getUserByUsername;
 
 public class LoginController {
@@ -32,8 +27,7 @@ public class LoginController {
                     view.setErrorMessage(result.message);
                 }
             } else if (view.getForgotPasswordButton().isChecked()) {
-                // TODO
-                goToTitleMenu();
+                goToForgetPasswordMenu();
             } else if (view.getBackButton().isChecked()) {
                 goToTitleMenu();
             }
@@ -60,36 +54,6 @@ public class LoginController {
         App.setLoggedIn(user);
         App.setCurrentMenu(Menu.MAIN_MENU);
         return new Result(true, "Login successful. You are now in Main Menu.");
-    }
-
-    public Result forgotPassword(String username) {
-        User user = getUserByUsername(username);
-        if (user == null) {
-            return new Result(false, "Username not found");
-        }
-        if (user.getQAndA() == null || user.getQAndA().isEmpty()) {
-            return new Result(false, "You haven't picked any security questions! Regret it ...");
-        }
-        Random random = new Random();
-        int index = random.nextInt(user.getQAndA().size());
-        String securityQuestion = (new ArrayList<>(user.getQAndA().keySet())).get(index).getQuestion();//
-        System.out.println("Answer the following security question. \nUse this format: \"answer -a <your answer>\"");
-        return new Result(true, securityQuestion);
-    }
-
-    public Result validateSecurityQuestion(String username, String question, String answer) {
-        SecurityQuestion securityQuestion = SecurityQuestion.getSecurityQuestionByQuestion(question);
-        User user = getUserByUsername(username);
-        if (user == null) {
-            return new Result(false, "User not found.");
-        }
-        String correctAnswer = user.getQAndA().get(securityQuestion);
-        String newPassword = randomPasswordGenerator();
-        if (correctAnswer.equals(answer)) {
-            user.setPassword(newPassword);
-            return new Result(true, "Correct answer! Your new password is: " + newPassword);
-        }
-        return new Result(false, "Incorrect answer.");
     }
 
     public static String hashSha256(String input) {

@@ -1,18 +1,17 @@
-package com.ap_project.controllers;
+package com.ap_project.controllers.signup;
 
 import com.ap_project.models.App;
 import com.ap_project.models.Result;
 import com.ap_project.models.User;
-import com.ap_project.models.enums.SecurityQuestion;
 import com.ap_project.models.enums.types.Gender;
-import com.ap_project.views.SignUpMenuView;
+import com.ap_project.views.signup.SignUpMenuView;
 
 import java.util.Objects;
 
 import static com.ap_project.Main.goToSecurityQuestionMenu;
 import static com.ap_project.Main.goToTitleMenu;
-import static com.ap_project.controllers.LoginController.hashSha256;
-import static com.ap_project.controllers.LoginController.randomPasswordGenerator;
+import static com.ap_project.controllers.login.LoginController.hashSha256;
+import static com.ap_project.controllers.login.LoginController.randomPasswordGenerator;
 import static com.ap_project.models.App.getUserByEmail;
 import static com.ap_project.models.App.getUserByUsername;
 
@@ -34,7 +33,7 @@ public class SignUpMenuController {
                 String genderString = view.getGenders().getSelected();
                 Result result = registerUser(username, password, repeatPassword, nickname, email, genderString);
                 if (result.success) {
-                    goToSecurityQuestionMenu();
+                    goToSecurityQuestionMenu(username);
                 } else {
                     view.setErrorMessage(result.message);
                 }
