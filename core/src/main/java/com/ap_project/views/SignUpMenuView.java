@@ -1,7 +1,7 @@
-package com.ap_project.views.signup;
+package com.ap_project.views;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.signup.SignUpMenuController;
+import com.ap_project.controllers.SignUpMenuController;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.enums.types.Gender;
 import com.badlogic.gdx.Gdx;
@@ -34,6 +34,8 @@ public class SignUpMenuView implements Screen {
     private final TextButton signUpButton;
     private final TextButton randomPasswordButton;
     private final TextButton backButton;
+    private final Label securityAnswerLabel;
+    private final TextField securityAnswerField;
     private final Label errorMessageLabel;
     private final Table table;
     private final SignUpMenuController controller;
@@ -72,13 +74,16 @@ public class SignUpMenuView implements Screen {
         gender.setFontScale(2.0f);
         this.genders = new SelectBox<>(skin);
 
+        this.securityAnswerLabel = new Label("Answer", skin);
+        securityAnswerLabel.setFontScale(2.0f);
+        this.securityAnswerField = new TextField("", skin);
+
         this.signUpButton = new TextButton("Signup", skin);
-        this.randomPasswordButton = new TextButton("Random", skin);
+        this.randomPasswordButton = new TextButton("Random Password", skin);
         this.backButton = new TextButton("Back", skin);
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
-        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.table = new Table();
 
@@ -102,31 +107,30 @@ public class SignUpMenuView implements Screen {
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(backgroundImage);
 
-        stage.addActor(errorMessageLabel);
-
         table.clear();
         table.setFillParent(true);
         table.center();
 
+        table.add(errorMessageLabel).colspan(2).left().padBottom(10).row();
+
         table.add(menuTitle).align(Align.center).colspan(3).padBottom(20).center().row();
 
-        table.add(username).align(Align.right).padBottom(20).padRight(20);
+        table.add(username).align(Align.right).padRight(10);
         table.add(usernameField).width(750).padBottom(20).row();
 
-        table.add(password).align(Align.right).padBottom(20).padRight(20);
-        table.add(passwordField).width(750).padBottom(20);
-        table.add(randomPasswordButton).padLeft(20).row();
+        table.add(password).align(Align.right).padRight(10);
+        table.add(passwordField).width(750).padBottom(20).row();
 
-        table.add(repeatPassword).align(Align.right).padBottom(20).padRight(20);
+        table.add(repeatPassword).align(Align.right).padRight(10);
         table.add(repeatPasswordField).width(750).padBottom(20).row();
 
-        table.add(nickname).align(Align.right).padBottom(20).padRight(20);
+        table.add(nickname).align(Align.right).padRight(10);
         table.add(nicknameField).width(750).padBottom(20).row();
 
-        table.add(email).align(Align.right).padBottom(20).padRight(20);
+        table.add(email).align(Align.right).padRight(10);
         table.add(emailField).width(750).padBottom(20).row();
 
-        table.add(gender).align(Align.right).padBottom(20).padRight(20);
+        table.add(gender).align(Align.right).padRight(10);
         table.add(genders).width(750).padBottom(20).row();
 
         table.add(backButton).padTop(20).padBottom(30);
@@ -160,40 +164,52 @@ public class SignUpMenuView implements Screen {
     @Override
     public void dispose() {}
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Label getGameTitle() {
+        return menuTitle;
+    }
+
+    public Label getUsername() {
+        return username;
+    }
+
     public TextField getUsernameField() {
         return usernameField;
+    }
+
+    public Label getPassword() {
+        return password;
     }
 
     public TextField getPasswordField() {
         return passwordField;
     }
 
-    public TextField getRepeatPasswordField() {
-        return repeatPasswordField;
-    }
-
-    public TextField getNicknameField() {
-        return nicknameField;
-    }
-
-    public TextField getEmailField() {
-        return emailField;
-    }
-
-    public SelectBox<String> getGenders() {
-        return genders;
-    }
-
     public TextButton getSignUpButton() {
         return signUpButton;
     }
 
-    public TextButton getRandomPasswordButton() {
-        return randomPasswordButton;
-    }
-
     public TextButton getBackButton() {
         return backButton;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public SignUpMenuController getController() {
+        return controller;
+    }
+
+    public Label getSecurityAnswerLabel() {
+        return securityAnswerLabel;
+    }
+
+    public TextField getSecurityAnswerField() {
+        return securityAnswerField;
     }
 
     public void setErrorMessage(String message) {

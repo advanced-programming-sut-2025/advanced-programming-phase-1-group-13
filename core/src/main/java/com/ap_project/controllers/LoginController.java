@@ -1,15 +1,19 @@
-package com.ap_project.controllers.login;
+package com.ap_project.controllers;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.ap_project.models.App;
 import com.ap_project.models.Result;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.Menu;
-import com.ap_project.views.login.LoginMenuView;
+import com.ap_project.models.enums.SecurityQuestion;
+import com.ap_project.views.LoginMenuView;
 
-import static com.ap_project.Main.*;
+import static com.ap_project.Main.goToTitleMenu;
 import static com.ap_project.models.App.getUserByUsername;
 
 public class LoginController {
@@ -18,16 +22,9 @@ public class LoginController {
     public void handleLoginMenuButtons() {
         if (view != null) {
             if (view.getLoginButton().isChecked()) {
-                String username = view.getUsernameField().getText();
-                String password = view.getPasswordField().getText();
-                Result result = login(username, password);
-                if (result.success) {
-                    goToMainMenu();
-                } else {
-                    view.setErrorMessage(result.message);
-                }
+                goToTitleMenu();
             } else if (view.getForgotPasswordButton().isChecked()) {
-                goToForgetPasswordMenu();
+                goToTitleMenu();
             } else if (view.getBackButton().isChecked()) {
                 goToTitleMenu();
             }
@@ -56,6 +53,36 @@ public class LoginController {
         return new Result(true, "Login successful. You are now in Main Menu.");
     }
 
+    public Result forgotPassword(String username) {
+        User user = getUserByUsername(username);
+        if (user == null) {
+            return new Result(false, "Username not found");
+        }
+        if (user.getQAndA() == null || user.getQAndA().isEmpty()) {
+            return new Result(false, "You haven't picked any security questions! Regret it ...");
+        }
+        Random random = new Random();
+        int index = random.nextInt(user.getQAndA().size());
+        String securityQuestion = (new ArrayList<>(user.getQAndA().keySet())).get(index).getQuestion();//
+        System.out.println("Answer the following security question. \nUse this format: \"answer -a <your answer>\"");
+        return new Result(true, securityQuestion);
+    }
+
+    public Result validateSecurityQuestion(String username, String question, String answer) {
+        SecurityQuestion securityQuestion = SecurityQuestion.getSecurityQuestionByQuestion(question);
+        User user = getUserByUsername(username);
+        if (user == null) {
+            return new Result(false, "User not found.");
+        }
+        String correctAnswer = user.getQAndA().get(securityQuestion);
+        String newPassword = randomPasswordGenerator().message;
+        if (correctAnswer.equals(answer)) {
+            user.setPassword(newPassword);
+            return new Result(true, "Correct answer! Your new password is: " + newPassword);
+        }
+        return new Result(false, "Incorrect answer.");
+    }
+
     public static String hashSha256(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -70,13 +97,13 @@ public class LoginController {
         }
     }
 
-    public static String randomPasswordGenerator() {
+    public static Result randomPasswordGenerator() {
         int len = 12;
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
         SecureRandom rnd = new SecureRandom();
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) sb.append(chars.charAt(rnd.nextInt(chars.length())));
-        return sb.toString();
+        return new Result(true, sb.toString());
     }
 
     public Result exit() {

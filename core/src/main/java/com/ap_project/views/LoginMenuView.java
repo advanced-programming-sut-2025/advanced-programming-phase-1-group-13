@@ -1,7 +1,7 @@
-package com.ap_project.views.login;
+package com.ap_project.views;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.login.ForgetPasswordMenuController;
+import com.ap_project.controllers.LoginController;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,44 +13,44 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class ForgetPasswordMenuView implements Screen {
+public class LoginMenuView implements Screen {
     private Stage stage;
     private final Texture background;
-    private final Label menuTitle;
+    private final Label gameTitle;
     private final Label username;
     private final TextField usernameField;
-    private final Label securityQuestion;
-    private final Label answer;
-    private final TextField answerField;
-    private final TextButton enterButton;
+    private final Label password;
+    private final TextField passwordField;
+    private final CheckBox stayLoggedIn;
+    private final TextButton loginButton;
+    private final TextButton forgotPasswordButton;
     private final TextButton backButton;
     private final Label errorMessageLabel;
     private final Table table;
-    private final ForgetPasswordMenuController controller;
+    private final LoginController controller;
 
-    public ForgetPasswordMenuView(ForgetPasswordMenuController controller, Skin skin) {
+    public LoginMenuView(LoginController controller, Skin skin) {
         this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
 
-        this.menuTitle = new Label("Change Password", skin);
-        menuTitle.setFontScale(2.0f);
+        this.gameTitle = new Label("Login", skin);
+        gameTitle.setFontScale(2.0f);
 
         this.username = new Label("Username", skin);
         username.setFontScale(2.0f);
         this.usernameField = new TextField("", skin);
 
-        this.securityQuestion = new Label("Security Question: ", skin);
-        securityQuestion.setFontScale(2.0f);
+        this.password = new Label("Password", skin);
+        password.setFontScale(2.0f);
+        this.passwordField = new TextField("", skin);
 
-        this.answer = new Label("Answer", skin);
-        username.setFontScale(2.0f);
-        this.answerField = new TextField("", skin);
+        this.stayLoggedIn = new CheckBox("Stay LoggedIn", skin);
 
-        this.enterButton = new TextButton("Enter", skin);
+        this.loginButton = new TextButton("Login", skin);
+        this.forgotPasswordButton = new TextButton("Forgot Password", skin);
         this.backButton = new TextButton("Back", skin);
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
-        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.table = new Table();
 
@@ -67,24 +67,25 @@ public class ForgetPasswordMenuView implements Screen {
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(backgroundImage);
 
-        stage.addActor(errorMessageLabel);
-
         table.clear();
         table.setFillParent(true);
         table.center();
 
-        table.add(menuTitle).align(Align.center).colspan(3).padBottom(40).center().row();
+        table.add(errorMessageLabel).colspan(2).left().padBottom(10).row();
 
-        table.add(username).align(Align.right).padBottom(40).padRight(20);
-        table.add(usernameField).width(750).padBottom(40).row();
+        table.add(gameTitle).colspan(2).padBottom(60).center().row();
 
-        table.add(securityQuestion).align(Align.right).padBottom(40).row();
+        table.add(username).align(Align.left).padRight(10);
+        table.add(usernameField).width(750).padBottom(20).row();
 
-        table.add(answer).align(Align.right).padBottom(40).row();
-        table.add(answerField).align(Align.right).padBottom(40).row();
+        table.add(password).align(Align.left).padRight(10);
+        table.add(passwordField).width(750).padBottom(30).row();
 
-        table.add(backButton).padTop(20);
-        table.add(enterButton).padTop(20).row();
+        table.add(stayLoggedIn).center().padRight(10).row();
+
+        table.add(backButton).padTop(50);
+        table.add(forgotPasswordButton).padTop(50).padRight(100);
+        table.add(loginButton).padTop(50);
 
         stage.addActor(table);
     }
@@ -96,7 +97,7 @@ public class ForgetPasswordMenuView implements Screen {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        controller.handleForgetPasswordMenuButtons();
+        controller.handleLoginMenuButtons();
     }
 
     @Override
@@ -124,20 +125,36 @@ public class ForgetPasswordMenuView implements Screen {
 
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Label getGameTitle() {
+        return gameTitle;
+    }
+
+    public Label getUsername() {
+        return username;
+    }
+
     public TextField getUsernameField() {
         return usernameField;
     }
 
-    public TextField getAnswerField() {
-        return answerField;
+    public Label getPassword() {
+        return password;
     }
 
-    public void setQuestion(String message) {
-        securityQuestion.setText("Security Question: " + message);
+    public TextField getPasswordField() {
+        return passwordField;
     }
 
-    public TextButton getEnterButton() {
-        return enterButton;
+    public TextButton getLoginButton() {
+        return loginButton;
+    }
+
+    public TextButton getForgotPasswordButton() {
+        return forgotPasswordButton;
     }
 
     public TextButton getBackButton() {
