@@ -32,7 +32,7 @@ public class PreGameMenuController {
         User player = App.getLoggedIn();
         Game game = player.getActiveGame();
         App.setCurrentGame(game);
-        goToGame(game);
+        goToGame();
         App.setCurrentMenu(Menu.GAME_MENU);
         return new Result(true, "Starting game...");
     }

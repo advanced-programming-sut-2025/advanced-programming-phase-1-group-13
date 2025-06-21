@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 
+import static com.ap_project.Main.goToGame;
+
 public class ChooseMapMenuView implements Screen {
     private Stage stage;
     private final Texture background;
@@ -33,7 +35,7 @@ public class ChooseMapMenuView implements Screen {
     private ArrayList<User> players;
 
     public ChooseMapMenuView(ChooseMapMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Choose Map", skin);
         menuTitle.setFontScale(2.0f);
@@ -124,9 +126,17 @@ public class ChooseMapMenuView implements Screen {
         return chooseButton;
     }
 
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
     public void nextTurn() {
-        currentPlayerIndex++;
-        description.setText(players.get(currentPlayerIndex).getUsername() + ", please choose a map for your farm");
-        mapOptions.setSelectedIndex(0);
+        if (currentPlayerIndex != players.size() - 1) {
+            currentPlayerIndex++;
+            description.setText(players.get(currentPlayerIndex).getUsername() + ", please choose a map for your farm");
+            mapOptions.setSelectedIndex(0);
+            return;
+        }
+        goToGame();
     }
 }

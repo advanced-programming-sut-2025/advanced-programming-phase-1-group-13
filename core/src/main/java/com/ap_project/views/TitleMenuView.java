@@ -23,7 +23,7 @@ public class TitleMenuView implements Screen {
 
     public TitleMenuView(TitleMenuController controller, Skin skin) {
         this.logo = GameAssetManager.getGameAssetManager().getLogo();
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.signUpButton = new TextButton("Signup", skin);
         this.loginButton = new TextButton("Login", skin);

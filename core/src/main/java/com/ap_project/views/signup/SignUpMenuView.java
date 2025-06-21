@@ -39,7 +39,7 @@ public class SignUpMenuView implements Screen {
     private final SignUpMenuController controller;
 
     public SignUpMenuView(SignUpMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Signup", skin);
         menuTitle.setFontScale(2.0f);

@@ -23,7 +23,7 @@ public class PreGameMenuView implements Screen {
     private final PreGameMenuController controller;
 
     public PreGameMenuView(PreGameMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("PreGame Menu", skin);
         menuTitle.setFontScale(2.0f);

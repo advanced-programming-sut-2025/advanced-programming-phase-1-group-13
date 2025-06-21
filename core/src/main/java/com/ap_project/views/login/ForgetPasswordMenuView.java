@@ -30,7 +30,7 @@ public class ForgetPasswordMenuView implements Screen {
     private final ForgetPasswordMenuController controller;
 
     public ForgetPasswordMenuView(ForgetPasswordMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Change Password", skin);
         menuTitle.setFontScale(2.0f);

@@ -40,7 +40,7 @@ public class ProfileMenuView implements Screen {
     private final ProfileMenuController controller;
 
     public ProfileMenuView(ProfileMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Profile Menu", skin);
         menuTitle.setFontScale(2.0f);

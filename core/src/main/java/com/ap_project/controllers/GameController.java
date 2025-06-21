@@ -8,6 +8,7 @@ import com.ap_project.models.farming.*;
 import com.ap_project.models.inventory.*;
 import com.ap_project.models.tools.*;
 import com.ap_project.models.trade.*;
+import com.ap_project.views.GameView;
 
 import java.util.*;
 
@@ -15,6 +16,11 @@ import static com.ap_project.models.Greenhouse.canBuildGreenhouse;
 import static com.ap_project.models.Position.areClose;
 
 public class GameController {
+    private GameView view;
+
+    public void setView(GameView view) {
+        this.view = view;
+    }
 
     // === PLAYER'S STATUS === //
 

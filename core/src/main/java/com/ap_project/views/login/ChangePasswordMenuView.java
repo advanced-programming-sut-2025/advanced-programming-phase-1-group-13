@@ -26,7 +26,7 @@ public class ChangePasswordMenuView implements Screen {
     private final ChangePasswordMenuController controller;
 
     public ChangePasswordMenuView(ChangePasswordMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Change Password", skin);
         menuTitle.setFontScale(2.0f);

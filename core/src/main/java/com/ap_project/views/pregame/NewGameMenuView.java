@@ -30,7 +30,7 @@ public class NewGameMenuView implements Screen {
     private final NewGameMenuController controller;
 
     public NewGameMenuView(NewGameMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("New Game Menu", skin);
         menuTitle.setFontScale(2.0f);

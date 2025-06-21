@@ -82,8 +82,8 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChooseMapMenuView(new ChooseMapMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-    public static void goToGame(com.ap_project.models.Game game) {
-
+    public static void goToGame() {
+        Main.getMain().setScreen(new GameView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static Main getMain() {

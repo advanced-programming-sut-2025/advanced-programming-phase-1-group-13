@@ -23,7 +23,7 @@ public class MainMenuView implements Screen {
     private final MainMenuController controller;
 
     public MainMenuView(MainMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Main Menu", skin);
         menuTitle.setFontScale(2.0f);

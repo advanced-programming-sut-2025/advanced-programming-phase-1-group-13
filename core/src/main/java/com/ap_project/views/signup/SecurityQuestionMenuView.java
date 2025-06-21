@@ -32,7 +32,7 @@ public class SecurityQuestionMenuView implements Screen {
     private final SecurityQuestionMenuController controller;
 
     public SecurityQuestionMenuView(SecurityQuestionMenuController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Choose a security question:", skin);
         menuTitle.setFontScale(2.0f);

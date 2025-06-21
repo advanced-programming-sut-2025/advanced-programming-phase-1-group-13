@@ -30,7 +30,7 @@ public class LoginMenuView implements Screen {
     private final LoginController controller;
 
     public LoginMenuView(LoginController controller, Skin skin) {
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Login", skin);
         menuTitle.setFontScale(2.0f);
