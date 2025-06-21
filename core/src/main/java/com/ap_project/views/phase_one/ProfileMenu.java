@@ -1,13 +1,13 @@
-package com.ap_project.views;
+package com.ap_project.views.phase_one;
 
-import com.ap_project.controllers.ProfileController;
+import com.ap_project.controllers.ProfileMenuController;
 import com.ap_project.models.enums.commands.ProfileCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ProfileMenu implements AppMenu {
-    private final ProfileController controller = new ProfileController();
+    private final ProfileMenuController controller = new ProfileMenuController();
     Matcher matcher;
 
     @Override
@@ -26,7 +26,7 @@ public class ProfileMenu implements AppMenu {
         } else if ((matcher = ProfileCommands.USER_INFO.getMatcher(inputLine)) != null) {
             System.out.println(controller.showUserInfo());
         } else if ((matcher = ProfileCommands.MENU_EXIT.getMatcher(inputLine)) != null) {
-            System.out.println(controller.goToMainMenu());
+            System.out.println(controller.goToMainmenu());
         } else {
             System.out.println("Invalid command. Please try again.");
         }

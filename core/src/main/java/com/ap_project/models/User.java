@@ -12,20 +12,21 @@ import com.ap_project.models.trade.Trade;
 import com.ap_project.models.trade.TradeWithItem;
 import com.ap_project.models.trade.TradeWithMoney;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import static com.ap_project.controllers.login.LoginController.hashSha256;
 
 public class User {
     private String username;
     private String password;
     private String nickname;
     private String email;
-    private Gender gender;
-    private int woodCount; // todo: check for other usages
-    private int stoneCount; // todo: check for other usages
+    private final Gender gender;
+    private int woodCount;
+    private int stoneCount;
     private transient Game activeGame;
     private int energy;
     private int maxEnergy;
@@ -64,6 +65,7 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.qAndA = new HashMap<>();
         this.numberOfGames = 0;
         this.mostEarnedMoney = 0;
         this.activeGame = null;
@@ -82,7 +84,6 @@ public class User {
         this.balance = 0;
         this.learntCraftRecipes = new ArrayList<>();
         this.learntCookingRecipes = new ArrayList<>();
-        this.qAndA = new HashMap<>();
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
@@ -332,10 +333,6 @@ public class User {
         return gender;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -345,7 +342,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = hashSha256(password);
     }
 
     public int getEnergy() {
@@ -396,14 +393,6 @@ public class User {
             this.energy = energyAmount;
         }
         //saveUsersToJson();
-    }
-
-    private void saveUsersToJson() {
-        try (FileWriter writer = new FileWriter("users.json")) {
-            // writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void decreaseEnergyBy(int amount) {
@@ -600,7 +589,7 @@ public class User {
         for (int dx = -1; dx < 1; dx++) {
             for (int dy = -1; dy < 1; dy++) {
                 position = new Position(x + dx, y + dy);
-                if (!(dx == 0 && dy == 0) && this.activeGame.getGameMap().getTileByPosition(position).getType().equals(tileType)) {
+                if (!(dx == 0 && dy == 0) && Objects.requireNonNull(this.activeGame.getGameMap().getTileByPosition(position)).getType().equals(tileType)) {
                     return true;
                 }
             }

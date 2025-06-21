@@ -1,8 +1,12 @@
 package com.ap_project;
 
 import com.ap_project.controllers.*;
+import com.ap_project.controllers.login.*;
+import com.ap_project.controllers.signup.*;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.views.*;
+import com.ap_project.views.login.*;
+import com.ap_project.views.signup.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -36,16 +40,28 @@ public class Main extends Game {
         Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-    public static void goToSecurityQuestionMenu() {
-        Main.getMain().setScreen(new SecurityQuestionMenuView(new SecurityQuestionMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    public static void goToSecurityQuestionMenu(String username) {
+        Main.getMain().setScreen(new SecurityQuestionMenuView(new SecurityQuestionMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToLoginMenu() {
         Main.getMain().setScreen(new LoginMenuView(new LoginController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+    public static void goToForgetPasswordMenu() {
+        Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToChangePasswordMenu(String username) {
+        Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
     public static void goToMainMenu() {
         Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToProfileMenu() {
+        Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static Main getMain() {

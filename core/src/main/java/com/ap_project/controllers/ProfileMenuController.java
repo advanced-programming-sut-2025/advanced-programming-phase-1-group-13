@@ -5,11 +5,49 @@ import com.ap_project.models.Result;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.Menu;
 import com.ap_project.models.enums.commands.LoginCommands;
+import com.ap_project.views.ProfileMenuView;
 
+import static com.ap_project.Main.goToMainMenu;
+import static com.ap_project.controllers.login.LoginController.hashSha256;
 import static com.ap_project.models.App.getUserByEmail;
 import static com.ap_project.models.App.getUserByUsername;
 
-public class ProfileController {
+public class ProfileMenuController {
+    private ProfileMenuView view;
+
+    public void setView(ProfileMenuView view) {
+        this.view = view;
+    }
+
+    public void handleProfileMenuButtons() {
+        if (view != null) {
+            Result result = new Result(true, "");
+            if (view.getChangeUsernameButton().isChecked()) {
+                String username = view.getUsernameField().getText();
+                result = changeUsername(username);
+            } else if (view.getChangePasswordButton().isChecked()) {
+                String password = view.getPasswordField().getText();
+                result = changePassword(password, password);
+            } else if (view.getChangeNicknameButton().isChecked()) {
+                String nickname = view.getNicknameField().getText();
+                result = changeNickname(nickname);
+            } else if (view.getChangeEmailButton().isChecked()) {
+                String email = view.getEmailField().getText();
+                result = changeEmail(email);
+            } else if (view.getBackButton().isChecked()) {
+                goToMainMenu();
+            }
+            if (!result.success) {
+                view.setErrorMessage(result.message);
+            }
+            view.getChangeUsernameButton().setChecked(false);
+            view.getChangePasswordButton().setChecked(false);
+            view.getChangeNicknameButton().setChecked(false);
+            view.getChangeEmailButton().setChecked(false);
+            view.getBackButton().setChecked(false);
+        }
+    }
+
     public Result changeUsername(String newUsername) {
         User currentUser = App.getLoggedIn();
 
@@ -39,14 +77,14 @@ public class ProfileController {
     }
 
     public Result changePassword(String oldPassword, String newPassword) {
-        String currentHash = new LoginController().hashSha256(oldPassword);
+        String currentHash = hashSha256(oldPassword);
         if (!App.getLoggedIn().getPassword().equals(currentHash)) {
             return new Result(false, "Old password does not match.");
         }
         if (!LoginCommands.VALID_PASSWORD.matches(newPassword)) {
             return new Result(false, "New password does not meet requirements.");
         }
-        App.getLoggedIn().setPassword(new LoginController().hashSha256(newPassword));
+        App.getLoggedIn().setPassword(newPassword);
         return new Result(true, "Password changed successfully.");
     }
 
@@ -59,8 +97,8 @@ public class ProfileController {
         return new Result(true, App.getLoggedIn().toString());
     }
 
-    public Result goToMainMenu() {
+    public Result goToMainmenu() {
         App.setCurrentMenu(Menu.MAIN_MENU);
-        return new Result(true, "Heading to Main Menu");
+        return new Result(true, "Heading to Profile Menu");
     }
 }

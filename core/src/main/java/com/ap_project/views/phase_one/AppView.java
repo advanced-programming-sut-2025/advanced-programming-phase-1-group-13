@@ -1,4 +1,4 @@
-package com.ap_project.views;
+package com.ap_project.views.phase_one;
 
 import com.ap_project.models.App;
 import com.ap_project.models.enums.Menu;

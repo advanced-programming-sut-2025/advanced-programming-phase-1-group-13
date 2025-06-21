@@ -4,11 +4,9 @@ import com.ap_project.models.*;
 import com.ap_project.models.enums.Menu;
 import com.ap_project.views.MainMenuView;
 
-import static com.ap_project.Main.goToMainMenu;
-import static com.ap_project.Main.goToTitleMenu;
+import static com.ap_project.Main.*;
 
 public class MainMenuController {
-
     private MainMenuView view;
 
     public void setView(MainMenuView view) {
@@ -20,7 +18,7 @@ public class MainMenuController {
             if (view.getGameMenuButton().isChecked()) {
 
             } else if (view.getProfileMenuButton().isChecked()) {
-
+                goToProfileMenu();
             } else if (view.getLogoutButton().isChecked()) {
                 goToTitleMenu();
             }

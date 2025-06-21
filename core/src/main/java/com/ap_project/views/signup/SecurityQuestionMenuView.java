@@ -1,11 +1,12 @@
-package com.ap_project.views;
+package com.ap_project.views.signup;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.SecurityQuestionMenuController;
+import com.ap_project.controllers.signup.SecurityQuestionMenuController;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.enums.SecurityQuestion;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -20,10 +21,13 @@ public class SecurityQuestionMenuView implements Screen {
     private final Label menuTitle;
     private final Label securityQuestion;
     private final SelectBox<String> securityQuestions;
-    private final Label securityAnswerLabel;
-    private final TextField securityAnswerField;
+    private final Label answerLabel;
+    private final TextField answerField;
+    private final Label repeatAnswerLabel;
+    private final TextField repeatAnswerField;
     private final TextButton enterButton;
     private final TextButton skipButton;
+    private final Label errorMessageLabel;
     private final Table table;
     private final SecurityQuestionMenuController controller;
 
@@ -37,12 +41,20 @@ public class SecurityQuestionMenuView implements Screen {
         securityQuestion.setFontScale(2.0f);
         this.securityQuestions = new SelectBox<>(skin);
 
-        this.securityAnswerLabel = new Label("Answer", skin);
-        securityAnswerLabel.setFontScale(2.0f);
-        this.securityAnswerField = new TextField("", skin);
+        this.answerLabel = new Label("Answer", skin);
+        answerLabel.setFontScale(2.0f);
+        this.answerField = new TextField("", skin);
+
+        this.repeatAnswerLabel = new Label("Repeat Answer", skin);
+        repeatAnswerLabel.setFontScale(2.0f);
+        this.repeatAnswerField = new TextField("", skin);
 
         this.enterButton = new TextButton("Enter", skin);
         this.skipButton = new TextButton("Skip", skin);
+
+        this.errorMessageLabel = new Label("", skin);
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.table = new Table();
 
@@ -56,7 +68,6 @@ public class SecurityQuestionMenuView implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         Array<String> questions = new Array<>();
-        questions.add("None");
         for (SecurityQuestion securityQuestion : SecurityQuestion.values()) {
             questions.add(securityQuestion.getQuestion());
         }
@@ -65,6 +76,8 @@ public class SecurityQuestionMenuView implements Screen {
         Image backgroundImage = new Image(background);
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(backgroundImage);
+
+        stage.addActor(errorMessageLabel);
 
         table.clear();
         table.setFillParent(true);
@@ -75,8 +88,11 @@ public class SecurityQuestionMenuView implements Screen {
         table.add(securityQuestion).align(Align.right).padRight(10);
         table.add(securityQuestions).width(750).padBottom(20).row();
 
-        table.add(securityAnswerLabel).align(Align.right).padRight(10);
-        table.add(securityAnswerField).width(750).padBottom(30).row();
+        table.add(answerLabel).align(Align.right).padRight(10);
+        table.add(answerField).width(750).padBottom(30).row();
+
+        table.add(repeatAnswerLabel).align(Align.right).padRight(10);
+        table.add(repeatAnswerField).width(750).padBottom(30).row();
 
         table.add(skipButton).padTop(20).padBottom(30);
         table.add(enterButton).padTop(20).padBottom(30).row();
@@ -109,11 +125,27 @@ public class SecurityQuestionMenuView implements Screen {
     @Override
     public void dispose() {}
 
+    public SelectBox<String> getSecurityQuestions() {
+        return securityQuestions;
+    }
+
+    public TextField getAnswerField() {
+        return answerField;
+    }
+
+    public TextField getRepeatAnswerField() {
+        return repeatAnswerField;
+    }
+
     public TextButton getEnterButton() {
         return enterButton;
     }
 
     public TextButton getSkipButton() {
         return skipButton;
+    }
+
+    public void setErrorMessage(String message) {
+        errorMessageLabel.setText(message);
     }
 }
