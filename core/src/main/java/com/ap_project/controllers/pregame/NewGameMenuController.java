@@ -1,14 +1,41 @@
-package com.ap_project.controllers;
+package com.ap_project.controllers.pregame;
 
 import com.ap_project.models.*;
 import com.ap_project.models.enums.Menu;
+import com.ap_project.views.pregame.NewGameMenuView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.ap_project.models.App.*;
+import static com.ap_project.Main.goToChooseMapMenu;
+import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.models.App.setCurrentMenu;
 
-public class PreGameMenuController {
+public class NewGameMenuController {
+    private NewGameMenuView view;
+
+    public void setView(NewGameMenuView view) {
+        this.view = view;
+    }
+
+    public void handleNewGameMenuButtons() {
+        if (view != null) {
+            if (view.getStartButton().isChecked()) {
+                String usernames =
+                    view.getPlayer2Field().getText() + " " +
+                    view.getPlayer3Field().getText() + " " +
+                    view.getPlayer4Field().getText();
+                Result result = gameNew(usernames);
+                if (result.success) {
+                    goToChooseMapMenu();
+                } else {
+                    view.setErrorMessage(result.message);
+                }
+            }
+            view.getStartButton().setChecked(false);
+        }
+    }
+
     public Result gameNew(String usernamesStr) {
         if (usernamesStr == null || usernamesStr.trim().isEmpty()) {
             return new Result(false, "Enter usernames.");
@@ -46,27 +73,5 @@ public class PreGameMenuController {
         }
         App.addGame(game);
         return new Result(true, "New game made.");
-    }
-
-    public Result chooseGameMap(String mapNumberString) {
-        int mapNumber = Integer.parseInt(mapNumberString);
-        if (mapNumber != 1 & mapNumber != 2) {
-            return new Result(false, "Map number out of bounds. Chose either 1 or 2.");
-        }
-        User player = App.getLoggedIn();
-        player.getActiveGame().setGameMap(new GameMap(mapNumber));
-        setCurrentMenu(Menu.GAME_MENU);
-        return new Result(true, "Game");
-    }
-
-    public Result loadGame() {
-        User player = App.getLoggedIn();
-        App.setCurrentGame(player.getActiveGame());
-        App.setCurrentMenu(Menu.GAME_MENU);
-        return new Result(true, "Starting game...");
-    }
-
-    public Result showCurrentMenu() {
-        return new Result(true, "You are now in " + App.getCurrentMenu().toString() + ".");
     }
 }

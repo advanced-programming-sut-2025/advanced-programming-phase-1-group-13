@@ -1,7 +1,7 @@
-package com.ap_project.views;
+package com.ap_project.views.pregame;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.MainMenuController;
+import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,25 +12,25 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class MainMenuView implements Screen {
+public class PreGameMenuView implements Screen {
     private Stage stage;
     private final Texture background;
     private final Label menuTitle;
-    private final TextButton preGameMenuButton;
-    private final TextButton profileMenuButton;
-    private final TextButton logoutButton;
+    private final TextButton newGameButton;
+    private final TextButton loadGameButton;
+    private final TextButton backButton;
     private final Table table;
-    private final MainMenuController controller;
+    private final PreGameMenuController controller;
 
-    public MainMenuView(MainMenuController controller, Skin skin) {
+    public PreGameMenuView(PreGameMenuController controller, Skin skin) {
         this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
 
-        this.menuTitle = new Label("Main Menu", skin);
+        this.menuTitle = new Label("PreGame Menu", skin);
         menuTitle.setFontScale(2.0f);
 
-        this.preGameMenuButton = new TextButton("Pre Game Menu", skin);
-        this.profileMenuButton = new TextButton("Profile Menu", skin);
-        this.logoutButton = new TextButton("Logout", skin);
+        this.newGameButton = new TextButton("New Game", skin);
+        this.loadGameButton = new TextButton("Load Game", skin);
+        this.backButton = new TextButton("Back", skin);
 
         this.table = new Table();
 
@@ -53,9 +53,9 @@ public class MainMenuView implements Screen {
 
         table.add(menuTitle).align(Align.center).colspan(3).padBottom(20).center().row();
 
-        table.add(preGameMenuButton).padBottom(30).row();
-        table.add(profileMenuButton).padBottom(30).row();
-        table.add(logoutButton).padBottom(30).row();
+        table.add(newGameButton).padBottom(30).row();
+        table.add(loadGameButton).padBottom(30).row();
+        table.add(backButton).padBottom(30).row();
 
         stage.addActor(table);
     }
@@ -67,7 +67,7 @@ public class MainMenuView implements Screen {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        controller.handleMainMenuButtons();
+        controller.handlePreGameMenuButtons();
     }
 
     @Override
@@ -85,15 +85,15 @@ public class MainMenuView implements Screen {
     @Override
     public void dispose() {}
 
-    public TextButton getGameMenuButton() {
-        return preGameMenuButton;
+    public TextButton getNewGameButton() {
+        return newGameButton;
     }
 
-    public TextButton getProfileMenuButton() {
-        return profileMenuButton;
+    public TextButton getLoadGameButton() {
+        return loadGameButton;
     }
 
-    public TextButton getLogoutButton() {
-        return logoutButton;
+    public TextButton getBackButton() {
+        return backButton;
     }
 }

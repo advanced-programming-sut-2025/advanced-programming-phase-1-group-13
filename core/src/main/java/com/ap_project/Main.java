@@ -2,10 +2,16 @@ package com.ap_project;
 
 import com.ap_project.controllers.*;
 import com.ap_project.controllers.login.*;
+import com.ap_project.controllers.pregame.ChooseMapMenuController;
+import com.ap_project.controllers.pregame.NewGameMenuController;
+import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.controllers.signup.*;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.views.*;
 import com.ap_project.views.login.*;
+import com.ap_project.views.pregame.ChooseMapMenuView;
+import com.ap_project.views.pregame.NewGameMenuView;
+import com.ap_project.views.pregame.PreGameMenuView;
 import com.ap_project.views.signup.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -62,6 +68,22 @@ public class Main extends Game {
 
     public static void goToProfileMenu() {
         Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToPreGameMenu() {
+        Main.getMain().setScreen(new PreGameMenuView(new PreGameMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToNewGameMenu() {
+        Main.getMain().setScreen(new NewGameMenuView(new NewGameMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToChooseMapMenu() {
+        Main.getMain().setScreen(new ChooseMapMenuView(new ChooseMapMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToGame(com.ap_project.models.Game game) {
+
     }
 
     public static Main getMain() {

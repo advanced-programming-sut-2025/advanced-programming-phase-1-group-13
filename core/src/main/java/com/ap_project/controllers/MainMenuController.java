@@ -16,7 +16,7 @@ public class MainMenuController {
     public void handleMainMenuButtons() {
         if (view != null) {
             if (view.getGameMenuButton().isChecked()) {
-
+                goToPreGameMenu();
             } else if (view.getProfileMenuButton().isChecked()) {
                 goToProfileMenu();
             } else if (view.getLogoutButton().isChecked()) {
