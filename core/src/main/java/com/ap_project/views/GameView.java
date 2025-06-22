@@ -48,33 +48,7 @@ public class GameView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        Image clockImage = new Image(clock);
-        float scale = 0.90f;
-        clockImage.setScale(scale);
-        float xPosition = Gdx.graphics.getWidth() - clockImage.getWidth() * scale - 10;
-        float yPosition = Gdx.graphics.getHeight() - clockImage.getHeight() * scale - 10;
-        clockImage.setPosition(xPosition, yPosition);
-        stage.addActor(clockImage);
-
-        Image clockArrowImage = new Image(clockArrow);
-        clockArrowImage.setScale(scale);
-        clockArrowImage.setPosition(
-            xPosition + (0.23f * clockImage.getWidth()),
-            yPosition + (0.33f * clockImage.getHeight())
-        );
-        stage.addActor(clockArrowImage);
-
-        date.setPosition(
-            xPosition + (0.5f * clockImage.getWidth()) - 10,
-            yPosition + (0.77f * clockImage.getHeight())
-        );
-        stage.addActor(date);
-
-        time.setPosition(
-            xPosition + (0.5f * clockImage.getWidth()) - 20,
-            yPosition + (0.41f * clockImage.getHeight())
-        );
-        stage.addActor(time);
+        addClock();
     }
 
     @Override
@@ -84,22 +58,29 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        updateClockInfo();
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -146,6 +127,50 @@ public class GameView implements Screen, InputProcessor {
         return false;
     }
 
+    private void addClock() {
+        Image clockImage = new Image(clock);
+        float scale = 0.90f;
+        clockImage.setScale(scale);
+        float xPosition = Gdx.graphics.getWidth() - clockImage.getWidth() * scale - 10;
+        float yPosition = Gdx.graphics.getHeight() - clockImage.getHeight() * scale - 10;
+        clockImage.setPosition(xPosition, yPosition);
+        stage.addActor(clockImage);
+    }
+
+    private void updateClockInfo() {
+        Image clockImage = new Image(clock);
+        float scale = 0.90f;
+        clockImage.setScale(scale);
+        float xPosition = Gdx.graphics.getWidth() - clockImage.getWidth() * scale - 10;
+        float yPosition = Gdx.graphics.getHeight() - clockImage.getHeight() * scale - 10;
+        clockImage.setPosition(xPosition, yPosition);
+
+        Image clockArrowImage = new Image(clockArrow);
+        clockArrowImage.setScale(scale);
+        clockArrowImage.setPosition(
+            xPosition + (0.23f * clockImage.getWidth()),
+            yPosition + (0.33f * clockImage.getHeight())
+        );
+        clockArrowImage.setRotation(-getClockArrowDegree());
+        stage.addActor(clockArrowImage);
+
+        date.setPosition(
+            xPosition + (0.5f * clockImage.getWidth()) - 10,
+            yPosition + (0.77f * clockImage.getHeight())
+        );
+        stage.addActor(date);
+
+        time.setPosition(
+            xPosition + (0.5f * clockImage.getWidth()) - 20,
+            yPosition + (0.41f * clockImage.getHeight())
+        );
+        stage.addActor(time);
+
+        updateTimeLabel();
+        updateDateLabel();
+        updateBalanceLabel(clockImage, xPosition, yPosition, scale);
+    }
+
     private void updateDateLabel() {
         Time currentTime = App.getCurrentGame().getGameState().getTime();
         String weekday = currentTime.getWeekday().getName().substring(0, 3);
@@ -158,8 +183,27 @@ public class GameView implements Screen, InputProcessor {
         time.setText(hour % 12 + ":00 " + (hour < 12 ? "am" : "pm"));
     }
 
+    private void updateBalanceLabel(Image clockImage, float xPosition, float yPosition, float scale) {
+        int balance = (int) App.getLoggedIn().getBalance();
+        boolean started = false;
+        for (int i = 7; i >= 0; i--) {
+            int digit = balance / ((int) Math.pow(10, i));
+            balance %= ((int) Math.pow(10, i));
+            if (digit != 0 || i == 0 || started) {
+                started = true;
+                String digitString = Integer.toString(digit);
+                Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
+                digitLabel.setPosition(
+                    xPosition + (0.75f * clockImage.getWidth()) - 24 * scale * i,
+                    yPosition + (0.05f * clockImage.getHeight())
+                );
+                stage.addActor(digitLabel);
+            }
+        }
+    }
+
     private float getClockArrowDegree() {
-        int hour = App.getCurrentGame().getGameState().getTime().getHour();
-        return 3.141592f * (hour - 9) / (22 - 9);
+        float hour = (float) App.getCurrentGame().getGameState().getTime().getHour();
+        return 180 * (hour - 9f) / (22f - 9f);
     }
 }
