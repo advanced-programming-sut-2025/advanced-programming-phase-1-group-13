@@ -92,7 +92,7 @@ public class SignUpMenuView implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         Array<String> genderOptions = new Array<>();
-        for (int i = 0; i < 2 ; i++) {
+        for (int i = 0; i < 3 ; i++) {
             Gender genderOption = Gender.values()[i];
             genderOptions.add(genderOption.getName());
         }
@@ -129,10 +129,13 @@ public class SignUpMenuView implements Screen {
         table.add(gender).align(Align.right).padBottom(20).padRight(20);
         table.add(genders).width(750).padBottom(20).row();
 
-        table.add(backButton).padTop(20).padBottom(30);
-        table.add(signUpButton).padTop(20).padBottom(30).row();
-
+        table.setPosition(table.getX(), table.getY() + 75);
         stage.addActor(table);
+
+        backButton.setPosition(650, 100);
+        stage.addActor(backButton);
+        signUpButton.setPosition(950, 100);
+        stage.addActor(signUpButton);
     }
 
     @Override

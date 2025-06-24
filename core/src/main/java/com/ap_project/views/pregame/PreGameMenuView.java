@@ -53,9 +53,10 @@ public class PreGameMenuView implements Screen {
 
         table.add(menuTitle).align(Align.center).colspan(3).padBottom(20).center().row();
 
-        table.add(newGameButton).padBottom(30).row();
-        table.add(loadGameButton).padBottom(30).row();
-        table.add(backButton).padBottom(30).row();
+        float buttonWidth = 425f;
+        table.add(newGameButton).width(buttonWidth).padBottom(30).row();
+        table.add(loadGameButton).width(buttonWidth).padBottom(30).row();
+        table.add(backButton).width(buttonWidth).padBottom(30).row();
 
         stage.addActor(table);
     }

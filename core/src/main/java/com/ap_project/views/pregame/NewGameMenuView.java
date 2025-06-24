@@ -25,6 +25,7 @@ public class NewGameMenuView implements Screen {
     private final Label player4;
     private final TextField player4Field;
     private final TextButton startButton;
+    private final TextButton backButton;
     private final Label errorMessageLabel;
     private final Table table;
     private final NewGameMenuController controller;
@@ -51,6 +52,7 @@ public class NewGameMenuView implements Screen {
         this.player4Field = new TextField("", skin);
 
         this.startButton = new TextButton("Start", skin);
+        this.backButton = new TextButton("Back", skin);
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
@@ -88,9 +90,14 @@ public class NewGameMenuView implements Screen {
         table.add(player4).align(Align.right).padBottom(20).padRight(20);
         table.add(player4Field).width(750).padBottom(20).row();
 
-        table.add(startButton).padBottom(30).row();
+        table.add(backButton).padTop(20).padRight(20).width(200);
+        table.add(startButton).padTop(20).width(200).row();
 
         stage.addActor(table);
+
+        backButton.setPosition(700, 215);
+        backButton.setWidth(200);
+        stage.addActor(backButton);
 
         stage.addActor(errorMessageLabel);
     }
@@ -134,6 +141,10 @@ public class NewGameMenuView implements Screen {
 
     public TextButton getStartButton() {
         return startButton;
+    }
+
+    public TextButton getBackButton() {
+        return backButton;
     }
 
     public void setErrorMessage(String message) {

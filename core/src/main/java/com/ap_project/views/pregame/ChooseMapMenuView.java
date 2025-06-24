@@ -7,7 +7,6 @@ import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -28,11 +27,10 @@ public class ChooseMapMenuView implements Screen {
     private final Label mapNumber;
     private final SelectBox<String> mapOptions;
     private final TextButton chooseButton;
-    private final Label errorMessageLabel;
     private final Table table;
     private final ChooseMapMenuController controller;
     private int currentPlayerIndex;
-    private ArrayList<User> players;
+    private final ArrayList<User> players;
 
     public ChooseMapMenuView(ChooseMapMenuController controller, Skin skin) {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
@@ -49,10 +47,6 @@ public class ChooseMapMenuView implements Screen {
         this.mapOptions = new SelectBox<>(skin);
 
         this.chooseButton = new TextButton("Choose", skin);
-
-        this.errorMessageLabel = new Label("", skin);
-        errorMessageLabel.setColor(Color.RED);
-        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.table = new Table();
 
@@ -86,11 +80,11 @@ public class ChooseMapMenuView implements Screen {
         table.add(mapNumber).align(Align.right).padBottom(20).padRight(20);
         table.add(mapOptions).width(750).padBottom(20).row();
 
-        table.add(chooseButton).padBottom(30).row();
-
+        table.setPosition(table.getX(), table.getY() + 50);
         stage.addActor(table);
 
-        stage.addActor(errorMessageLabel);
+        chooseButton.setPosition(800, 320);
+        stage.addActor(chooseButton);
     }
 
     @Override
@@ -124,10 +118,6 @@ public class ChooseMapMenuView implements Screen {
 
     public TextButton getChooseButton() {
         return chooseButton;
-    }
-
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
     }
 
     public void nextTurn() {

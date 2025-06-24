@@ -1,15 +1,14 @@
 package com.ap_project.controllers.pregame;
 
 import com.ap_project.models.*;
-import com.ap_project.models.enums.Menu;
 import com.ap_project.views.pregame.NewGameMenuView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.ap_project.Main.goToChooseMapMenu;
+import static com.ap_project.Main.goToPreGameMenu;
 import static com.ap_project.models.App.getUserByUsername;
-import static com.ap_project.models.App.setCurrentMenu;
 
 public class NewGameMenuController {
     private NewGameMenuView view;
@@ -31,8 +30,11 @@ public class NewGameMenuController {
                 } else {
                     view.setErrorMessage(result.message);
                 }
+            } else if (view.getBackButton().isChecked()) {
+                goToPreGameMenu();
             }
             view.getStartButton().setChecked(false);
+            view.getBackButton().setChecked(false);
         }
     }
 

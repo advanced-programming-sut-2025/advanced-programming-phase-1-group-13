@@ -53,9 +53,10 @@ public class MainMenuView implements Screen {
 
         table.add(menuTitle).align(Align.center).colspan(3).padBottom(20).center().row();
 
-        table.add(preGameMenuButton).padBottom(30).row();
-        table.add(profileMenuButton).padBottom(30).row();
-        table.add(logoutButton).padBottom(30).row();
+        float buttonWidth = 425f;
+        table.add(preGameMenuButton).width(buttonWidth).padBottom(30).row();
+        table.add(profileMenuButton).width(buttonWidth).padBottom(30).row();
+        table.add(logoutButton).width(buttonWidth).padBottom(30).row();
 
         stage.addActor(table);
     }

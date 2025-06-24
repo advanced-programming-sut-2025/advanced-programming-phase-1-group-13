@@ -28,6 +28,7 @@ public class ChangePasswordMenuController {
                     view.setErrorMessage(result.message);
                 }
             } else if (view.getRandomPasswordButton().isChecked()) {
+                view.getNewPasswordField().setPasswordMode(false);
                 view.getNewPasswordField().setText(randomPasswordGenerator());
             }
             view.getEnterButton().setChecked(false);

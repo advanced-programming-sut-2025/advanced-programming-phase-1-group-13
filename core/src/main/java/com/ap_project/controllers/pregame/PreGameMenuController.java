@@ -18,7 +18,7 @@ public class PreGameMenuController {
             if (view.getNewGameButton().isChecked()) {
                 goToNewGameMenu();
             } else if (view.getLoadGameButton().isChecked()) {
-                loadGame();
+                // loadGame();
             } else if (view.getBackButton().isChecked()) {
                 goToMainMenu();
             }

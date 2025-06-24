@@ -8,7 +8,6 @@ import com.ap_project.models.enums.commands.LoginCommands;
 import com.ap_project.views.ProfileMenuView;
 
 import static com.ap_project.Main.goToMainMenu;
-import static com.ap_project.controllers.login.LoginController.hashSha256;
 import static com.ap_project.models.App.getUserByEmail;
 import static com.ap_project.models.App.getUserByUsername;
 
@@ -27,7 +26,7 @@ public class ProfileMenuController {
                 result = changeUsername(username);
             } else if (view.getChangePasswordButton().isChecked()) {
                 String password = view.getPasswordField().getText();
-                result = changePassword(password, password);
+                result = changePassword(password);
             } else if (view.getChangeNicknameButton().isChecked()) {
                 String nickname = view.getNicknameField().getText();
                 result = changeNickname(nickname);
@@ -76,11 +75,7 @@ public class ProfileMenuController {
         return new Result(true, "Email changed successfully.");
     }
 
-    public Result changePassword(String oldPassword, String newPassword) {
-        String currentHash = hashSha256(oldPassword);
-        if (!App.getLoggedIn().getPassword().equals(currentHash)) {
-            return new Result(false, "Old password does not match.");
-        }
+    public Result changePassword(String newPassword) {
         if (!LoginCommands.VALID_PASSWORD.matches(newPassword)) {
             return new Result(false, "New password does not meet requirements.");
         }

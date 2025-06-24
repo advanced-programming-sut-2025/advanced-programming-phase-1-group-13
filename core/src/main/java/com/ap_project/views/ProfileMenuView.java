@@ -54,7 +54,7 @@ public class ProfileMenuView implements Screen {
 
         this.password = new Label("Password", skin);
         password.setFontScale(2.0f);
-        this.passwordField = new TextField("password", skin);
+        this.passwordField = new TextField("", skin);
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
         this.changePasswordButton = new TextButton("Change Password", skin);
@@ -105,35 +105,35 @@ public class ProfileMenuView implements Screen {
 
         table.add(menuTitle).align(Align.center).colspan(3).padBottom(20).center().row();
 
+        float buttonWidth = 500f;
         table.add(username).align(Align.right).padBottom(20).padRight(20);
         table.add(usernameField).width(750).padBottom(20);
-        table.add(changeUsernameButton).padLeft(20).padBottom(20).row();
+        table.add(changeUsernameButton).width(buttonWidth).padLeft(20).padBottom(20).row();
 
         table.add(password).align(Align.right).padBottom(20).padRight(20);
         table.add(passwordField).width(750).padBottom(20);
-        table.add(changePasswordButton).padLeft(20).padBottom(20).row();
+        table.add(changePasswordButton).width(buttonWidth).padLeft(20).padBottom(20).row();
 
         table.add(nickname).align(Align.right).padBottom(20).padRight(20);
         table.add(nicknameField).width(750).padBottom(20);
-        table.add(changeNicknameButton).padLeft(20).padBottom(20).row();
+        table.add(changeNicknameButton).width(buttonWidth).padLeft(20).padBottom(20).row();
 
         table.add(email).align(Align.right).padBottom(20).padRight(20);
         table.add(emailField).width(750).padBottom(20);
-        table.add(changeEmailButton).padBottom(20).row();
+        table.add(changeEmailButton).width(buttonWidth).padLeft(20).padBottom(20).row();
+
+        table.setPosition(table.getX(), table.getY() + 180);
+        stage.addActor(table);
 
         Table infoTable = new Table();
 
         infoTable.add(gender).align(Align.center).padBottom(20).padLeft(100).row();
-
         infoTable.add(mostEarnedMoney).align(Align.center).padBottom(20).padLeft(100).row();
-
         infoTable.add(numberOfGames).align(Align.center).padBottom(20).padLeft(100).row();
+        infoTable.add(backButton).padBottom(20);
 
-        table.add(infoTable).width(750).padBottom(20).row();
-
-        table.add(backButton).padBottom(20);
-
-        stage.addActor(table);
+        infoTable.setPosition(infoTable.getX() + 900, infoTable.getY() + 200);
+        stage.addActor(infoTable);
 
         stage.addActor(errorMessageLabel);
     }

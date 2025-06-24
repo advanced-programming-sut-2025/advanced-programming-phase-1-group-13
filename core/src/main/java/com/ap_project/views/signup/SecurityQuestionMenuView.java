@@ -98,6 +98,12 @@ public class SecurityQuestionMenuView implements Screen {
         table.add(enterButton).padTop(20).padBottom(30).row();
 
         stage.addActor(table);
+
+
+        skipButton.setPosition(700, 200);
+        stage.addActor(skipButton);
+        enterButton.setPosition(1000, 200);
+        stage.addActor(enterButton);
     }
 
     @Override

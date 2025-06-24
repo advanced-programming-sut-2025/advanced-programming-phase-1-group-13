@@ -45,7 +45,7 @@ public class LoginMenuView implements Screen {
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
 
-        this.stayLoggedIn = new CheckBox("Stay LoggedIn", skin);
+        this.stayLoggedIn = new CheckBox("Stay Logged In", skin);
 
         this.loginButton = new TextButton("Login", skin);
         this.forgotPasswordButton = new TextButton("Forgot Password", skin);
@@ -82,7 +82,7 @@ public class LoginMenuView implements Screen {
         table.add(usernameField).width(750).padBottom(40).row();
 
         table.add(password).align(Align.right).padBottom(40).padRight(20);
-        table.add(passwordField).width(750).padBottom(40).row();
+        table.add(passwordField).width(750).padBottom(80).row();
 
         table.add(stayLoggedIn).right().padRight(10).row();
 
@@ -91,6 +91,9 @@ public class LoginMenuView implements Screen {
         table.add(loginButton).padTop(20).row();
 
         stage.addActor(table);
+
+        stayLoggedIn.setPosition(700, 380);
+        stage.addActor(stayLoggedIn);
     }
 
     @Override
