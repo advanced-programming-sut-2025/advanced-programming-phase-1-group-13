@@ -71,8 +71,9 @@ public class GameView implements Screen, InputProcessor {
 
         if (inventoryHotbarImage != null && selectedSlotImage != null) {
             selectedSlotImage.setPosition(
-                inventoryHotbarImage.getX() + selectedSlotIndex * 20.0f,
-                inventoryHotbarImage.getY()
+                ((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2 + 16.0f)
+                    + selectedSlotIndex * (selectedSlotImage.getWidth() + 1.0f),
+                25.0f
             );
         }
 
@@ -269,13 +270,6 @@ public class GameView implements Screen, InputProcessor {
     public void addInventoryHotbar() {
         inventoryHotbarImage.setPosition((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2, 10);
         stage.addActor(inventoryHotbarImage);
-
-        // TODO
-        selectedSlotImage = new Image(GameAssetManager.getGameAssetManager().getHotbarSelectedSlot());
-        selectedSlotImage.setPosition(
-            (inventoryHotbarImage.getImageX() + 50.0f) + selectedSlotIndex * (4 * selectedSlotImage.getWidth() + 10.0f),
-            (inventoryHotbarImage.getImageY() + 50.0f)
-        );
         stage.addActor(selectedSlotImage);
     }
 
