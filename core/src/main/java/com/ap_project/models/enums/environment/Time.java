@@ -20,6 +20,10 @@ public class Time {
         this.hour = 9;
     }
 
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
     public int getYear() {
         return year;
     }

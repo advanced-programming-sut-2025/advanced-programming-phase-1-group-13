@@ -29,6 +29,14 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal(path));
     }
 
+    public Texture getInventoryHotbar() {
+        return new Texture(Gdx.files.internal("Images/Inventory/InventoryHotbar.png"));
+    }
+
+    public Texture getHotbarSelectedSlot() {
+        return new Texture(Gdx.files.internal("Images/Inventory/SelectedSlot.png"));
+    }
+
     public Texture getClockArrow() {
         return new Texture(Gdx.files.internal("Images/Clock/Arrow.png"));
     }

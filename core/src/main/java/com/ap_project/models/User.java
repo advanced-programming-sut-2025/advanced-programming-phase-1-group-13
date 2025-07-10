@@ -11,7 +11,10 @@ import com.ap_project.models.tools.*;
 import com.ap_project.models.trade.Trade;
 import com.ap_project.models.trade.TradeWithItem;
 import com.ap_project.models.trade.TradeWithMoney;
+import com.google.gson.GsonBuilder;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -314,7 +317,7 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public String getPassword() {
@@ -383,7 +386,7 @@ public class User {
 
     public void changeBalance(double amount) {
         this.balance += amount;
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public void setEnergy(int energyAmount) {
@@ -392,7 +395,7 @@ public class User {
         } else {
             this.energy = energyAmount;
         }
-        //saveUsersToJson();
+        saveUsersToJson();
     }
 
     public void decreaseEnergyBy(int amount) {
@@ -651,5 +654,13 @@ public class User {
 
     public int getStoneCount() {
         return this.stoneCount;
+    }
+
+    private void saveUsersToJson() {
+        try (FileWriter writer = new FileWriter("users.json")) {
+            writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

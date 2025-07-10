@@ -5,6 +5,8 @@ import com.ap_project.controllers.TitleMenuController;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -37,6 +39,11 @@ public class TitleMenuView implements Screen {
 
     @Override
     public void show() {
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("Images/Cursor.png"));
+        Cursor customCursor = Gdx.graphics.newCursor(pixmap, pixmap.getWidth() / 2, pixmap.getHeight() / 2);
+        Gdx.graphics.setCursor(customCursor);
+        pixmap.dispose();
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 

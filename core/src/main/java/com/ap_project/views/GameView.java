@@ -9,6 +9,7 @@ import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.environment.Weather;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +24,10 @@ public class GameView implements Screen, InputProcessor {
     private final Label time;
     private final Texture clock;
     private final Texture clockArrow;
+    private Image inventoryHotbarImage;
+    private Image selectedSlotImage;
+    private int selectedSlotIndex;
+    Image previousClockImage = null;
     private final GameController controller;
 
     public GameView(GameController controller, Skin skin) {
@@ -39,6 +44,10 @@ public class GameView implements Screen, InputProcessor {
         this.clock = GameAssetManager.getGameAssetManager().getClock(weather, season);
         this.clockArrow = GameAssetManager.getGameAssetManager().getClockArrow();
 
+        this.inventoryHotbarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotbar());
+        this.selectedSlotImage = new Image(GameAssetManager.getGameAssetManager().getHotbarSelectedSlot());
+        this.selectedSlotIndex = 0;
+
         this.controller = controller;
         controller.setView(this);
     }
@@ -46,9 +55,12 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(this);
 
         addClock();
+        updateClockInfo();
+
+        addInventoryHotbar();
     }
 
     @Override
@@ -56,10 +68,26 @@ public class GameView implements Screen, InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1f);
         Main.getBatch().begin();
         Main.getBatch().end();
+
+        if (inventoryHotbarImage != null && selectedSlotImage != null) {
+            selectedSlotImage.setPosition(
+                inventoryHotbarImage.getX() + selectedSlotIndex * 20.0f,
+                inventoryHotbarImage.getY()
+            );
+        }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        updateClockInfo();
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            Time time = App.getCurrentGame().getGameState().getTime();
+            time.setHour(time.getHour() + 1);
+            if (time.getHour() == 22) {
+                time.setHour(9);
+            }
+            System.out.println("Time set to " + time.getHour());
+            updateClockInfo();
+        }
     }
 
     @Override
@@ -84,6 +112,25 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
+            selectedSlotIndex = keycode - Input.Keys.NUM_1;
+        }
+        if (keycode >= Input.Keys.NUMPAD_1 && keycode <= Input.Keys.NUMPAD_9) {
+            selectedSlotIndex = keycode - Input.Keys.NUMPAD_1;
+        }
+
+        if (keycode == Input.Keys.NUM_0 || keycode == Input.Keys.NUMPAD_0) {
+            selectedSlotIndex = 9;
+        }
+
+        if (keycode == Input.Keys.MINUS) {
+            selectedSlotIndex = 10;
+        }
+
+        if (keycode == Input.Keys.EQUALS) {
+            selectedSlotIndex = 11;
+        }
+
         return false;
     }
 
@@ -145,14 +192,22 @@ public class GameView implements Screen, InputProcessor {
         float yPosition = Gdx.graphics.getHeight() - clockImage.getHeight() * scale - 10;
         clockImage.setPosition(xPosition, yPosition);
 
+        if (previousClockImage != null) {
+            previousClockImage.remove();
+        }
         Image clockArrowImage = new Image(clockArrow);
         clockArrowImage.setScale(scale);
+        clockArrowImage.setOrigin(
+            clockArrowImage.getWidth() / 2,
+            clockArrowImage.getHeight()
+        );
         clockArrowImage.setPosition(
             xPosition + (0.23f * clockImage.getWidth()),
-            yPosition + (0.33f * clockImage.getHeight())
+            yPosition + (0.31f * clockImage.getHeight())
         );
-        clockArrowImage.setRotation(-getClockArrowDegree());
+        clockArrowImage.setRotation(getClockArrowDegree());
         stage.addActor(clockArrowImage);
+        previousClockImage = clockArrowImage;
 
         date.setPosition(
             xPosition + (0.5f * clockImage.getWidth()) - 10,
@@ -180,7 +235,11 @@ public class GameView implements Screen, InputProcessor {
 
     private void updateTimeLabel() {
         int hour = App.getCurrentGame().getGameState().getTime().getHour();
-        time.setText(hour % 12 + ":00 " + (hour < 12 ? "am" : "pm"));
+        String text = hour % 12 + ":00 " + (hour < 12 ? "am" : "pm");
+        if (text.equals("0:00 pm")) {
+            text = "12:00 pm";
+        }
+        time.setText(text);
     }
 
     private void updateBalanceLabel(Image clockImage, float xPosition, float yPosition, float scale) {
@@ -204,6 +263,29 @@ public class GameView implements Screen, InputProcessor {
 
     private float getClockArrowDegree() {
         float hour = (float) App.getCurrentGame().getGameState().getTime().getHour();
-        return 180 * (hour - 9f) / (22f - 9f);
+        return - 180 * (hour - 9f) / (22f - 9f);
+    }
+
+    public void addInventoryHotbar() {
+        inventoryHotbarImage.setPosition((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2, 10);
+        stage.addActor(inventoryHotbarImage);
+
+        // TODO
+        selectedSlotImage = new Image(GameAssetManager.getGameAssetManager().getHotbarSelectedSlot());
+        selectedSlotImage.setPosition(
+            (inventoryHotbarImage.getImageX() + 50.0f) + selectedSlotIndex * (4 * selectedSlotImage.getWidth() + 10.0f),
+            (inventoryHotbarImage.getImageY() + 50.0f)
+        );
+        stage.addActor(selectedSlotImage);
+    }
+
+    private void changeSelectedInventorySlot(int amount) {
+        selectedSlotIndex += amount;
+        if (selectedSlotIndex >= 11) {
+            selectedSlotIndex = 0;
+        }
+        if (selectedSlotIndex < 0) {
+            selectedSlotIndex = 11;
+        }
     }
 }
