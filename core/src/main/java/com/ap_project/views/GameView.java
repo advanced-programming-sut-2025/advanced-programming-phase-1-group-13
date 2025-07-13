@@ -4,6 +4,7 @@ import com.ap_project.Main;
 import com.ap_project.controllers.GameController;
 import com.ap_project.models.App;
 import com.ap_project.models.GameAssetManager;
+import com.ap_project.models.Item;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.environment.Weather;
@@ -18,14 +19,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameView implements Screen, InputProcessor {
     private Stage stage;
     private final Label date;
     private final Label time;
     private final Texture clock;
     private final Texture clockArrow;
-    private Image inventoryHotbarImage;
-    private Image selectedSlotImage;
+    private final Image inventoryHotbarImage;
+    private final Image selectedSlotImage;
     private int selectedSlotIndex;
     Image previousClockImage = null;
     private final GameController controller;
@@ -61,6 +65,26 @@ public class GameView implements Screen, InputProcessor {
         updateClockInfo();
 
         addInventoryHotbar();
+
+        updateGreenBar();
+
+        int count = 0;
+        HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
+        for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+            if (count > 11) {
+                break;
+            }
+
+            Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
+            itemImage.setPosition(
+                ((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2 + 25.0f)
+                    + count * (itemImage.getWidth() + 15.0f),
+                30.0f
+            );
+            stage.addActor(itemImage);
+
+            count++;
+        }
     }
 
     @Override
@@ -80,6 +104,7 @@ public class GameView implements Screen, InputProcessor {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
+        // TODO: time cheat
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             Time time = App.getCurrentGame().getGameState().getTime();
             time.setHour(time.getHour() + 1);
@@ -88,6 +113,13 @@ public class GameView implements Screen, InputProcessor {
             }
             System.out.println("Time set to " + time.getHour());
             updateClockInfo();
+        }
+
+        // TODO: energy cheat
+        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
+            App.getLoggedIn().decreaseEnergyBy(10);
+            System.out.println("Energy set to: " + App.getLoggedIn().getEnergy());
+            updateGreenBar();
         }
     }
 
@@ -172,6 +204,12 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
+        if (amountY >= 0) {
+            changeSelectedInventorySlot(1);
+        }
+        if (amountY <= 0) {
+            changeSelectedInventorySlot(-1);
+        }
         return false;
     }
 
@@ -267,6 +305,25 @@ public class GameView implements Screen, InputProcessor {
         return - 180 * (hour - 9f) / (22f - 9f);
     }
 
+    public void updateGreenBar() {
+        Image energyBar = new Image(GameAssetManager.getGameAssetManager().getEnergyBar());
+        energyBar.setPosition(
+            Gdx.graphics.getWidth() - energyBar.getWidth() - 10.0f,
+            10.0f
+        );
+        stage.addActor(energyBar);
+        updateTimeLabel();
+
+        Image greenBar = new Image(GameAssetManager.getGameAssetManager().getGreenBar());
+        float energyPercentage = App.getLoggedIn().getEnergy() / 200f;
+        greenBar.setHeight(energyPercentage * 0.72f * energyBar.getHeight());
+        greenBar.setPosition(
+            Gdx.graphics.getWidth() - energyBar.getWidth() + 1.0f,
+            20.0f
+        );
+        stage.addActor(greenBar);
+    }
+
     public void addInventoryHotbar() {
         inventoryHotbarImage.setPosition((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2, 10);
         stage.addActor(inventoryHotbarImage);
@@ -275,7 +332,7 @@ public class GameView implements Screen, InputProcessor {
 
     private void changeSelectedInventorySlot(int amount) {
         selectedSlotIndex += amount;
-        if (selectedSlotIndex >= 11) {
+        if (selectedSlotIndex > 11) {
             selectedSlotIndex = 0;
         }
         if (selectedSlotIndex < 0) {

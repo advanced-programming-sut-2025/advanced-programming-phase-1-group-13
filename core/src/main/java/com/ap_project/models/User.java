@@ -90,12 +90,9 @@ public class User {
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
-        this.backpack.addToInventory(new MilkPail(ToolMaterial.BASIC), 1);
+        this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Pickaxe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Scythe(ToolMaterial.BASIC), 1);
-        this.backpack.addToInventory(new Shear(ToolMaterial.BASIC), 1);
-        this.backpack.addToInventory(new TrashCan(ToolMaterial.BASIC), 1);
-        this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
         this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
@@ -400,6 +397,7 @@ public class User {
 
     public void decreaseEnergyBy(int amount) {
         if (!this.isEnergyUnlimited) this.energy -= amount;
+        if (this.energy < 0) this.energy = 0;
     }
 
     public void increaseEnergyBy(int amount) {

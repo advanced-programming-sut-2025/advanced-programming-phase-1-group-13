@@ -18,7 +18,6 @@ public enum ToolType implements ItemType {
     private final String name;
     private final Skill relatedSkill;
 
-
     ToolType(String name, Skill relatedSkill) {
         this.name = name;
         this.relatedSkill = relatedSkill;

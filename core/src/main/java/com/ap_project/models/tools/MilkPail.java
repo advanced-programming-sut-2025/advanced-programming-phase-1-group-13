@@ -19,7 +19,7 @@ public class MilkPail extends Tool {
     }
 
     public MilkPail(ToolMaterial material) {
-        super(ToolType.MILK_PAIL, material);
+        super(ToolType.MILK_PAIL, ToolMaterial.BASIC);
     }
 
     @Override
