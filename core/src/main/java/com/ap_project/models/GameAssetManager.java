@@ -72,6 +72,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal(path));
     }
 
+    public Texture getCloseButton() {
+        return new Texture(Gdx.files.internal("Images/Menu/CloseButton.png"));
+    }
+
     public static String toPascalCase(String input) {
         if (input == null || input.isEmpty()) return "";
 
