@@ -2,6 +2,7 @@ package com.ap_project.models;
 
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
+import com.ap_project.models.enums.types.GameMenuType;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -63,6 +64,11 @@ public class GameAssetManager {
         String name = toPascalCase(tool.getName());
         String material = toPascalCase(tool.getToolMaterial().getName());
         String path = "Images/Tools/" + name + "/" + material + name + ".png";
+        return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getMenuWindowByType(GameMenuType tab) {
+        String path = "Images/Menu/" + tab.getName() + "Menu.png";
         return new Texture(Gdx.files.internal(path));
     }
 

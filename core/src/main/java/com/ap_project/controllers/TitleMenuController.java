@@ -31,9 +31,9 @@ public class TitleMenuController {
     public void setView(TitleMenuView view) {
         // TODO: remove later
         App.addUser(new User("arvin", hashSha256("1"), hashSha256("1"), "arv", "arvin@gmail.com", Gender.MAN));
+        App.addUser(new User("dorsa", hashSha256("2"), hashSha256("2"), "dor", "dorsa@gmail.com", Gender.WOMAN));
         App.addUser(new User("farrokhi", hashSha256("2"), hashSha256("2"), "farrokh", "farrokhi@gmail.com", Gender.MAN));
         App.addUser(new User("selma", hashSha256("3"), hashSha256("3"), "sel", "selma@gmail.com", Gender.WOMAN));
-        App.addUser(new User("dorsa", hashSha256("4"), hashSha256("4"), "dor", "dorsa@gmail.com", Gender.WOMAN));
         this.view = view;
     }
 }

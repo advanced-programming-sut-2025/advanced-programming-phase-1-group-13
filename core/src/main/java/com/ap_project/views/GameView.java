@@ -22,6 +22,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ap_project.Main.goToGameMenu;
+
 public class GameView implements Screen, InputProcessor {
     private Stage stage;
     private final Label date;
@@ -162,6 +164,10 @@ public class GameView implements Screen, InputProcessor {
 
         if (keycode == Input.Keys.EQUALS) {
             selectedSlotIndex = 11;
+        }
+
+        if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE){
+            goToGameMenu(this);
         }
 
         return false;
