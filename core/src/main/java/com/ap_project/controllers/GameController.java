@@ -109,7 +109,7 @@ public class GameController {
             return new Result(false, "You cannot upgrade this tool with your current items of possession.");
         }
         player.getCurrentTool().upgradeTool();
-        player.setBalance(player.getBalance() - tool.getToolMaterial().getUpgradePrice());
+        player.changeBalance(-tool.getToolMaterial().getUpgradePrice());
         player.getBackpack().removeFromInventory(
             Item.getItemByItemType(tool.getToolMaterial().getIngredientForUpgrade()),
             tool.getToolMaterial().getNumOfIngredientNeededForUpgrade()

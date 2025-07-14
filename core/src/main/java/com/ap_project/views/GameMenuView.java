@@ -10,7 +10,7 @@ import com.ap_project.models.enums.types.GameMenuType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -22,18 +22,17 @@ import java.util.Map;
 
 public class GameMenuView implements Screen, InputProcessor {
     private Stage stage;
-    private final GameMenuType currentTab;
+    private GameMenuType currentTab;
     private Image window;
     private final Image closeButton;
-    private GameView gameView;
+    private final GameView gameView;
 
     public GameMenuView(GameView gameView) {
         Image blackScreen = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
         blackScreen.setColor(0, 0, 0, 0.2f);
         blackScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-//        this.currentTab = GameMenuType.INVENTORY;
-        this.currentTab = GameMenuType.SKILLS;
+        this.currentTab = GameMenuType.INVENTORY;
 
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
@@ -45,8 +44,7 @@ public class GameMenuView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
         updateWindow();
-//        showInventoryMenu();
-        showSkillsMenu();
+        showInventoryMenu();
         addCloseButton();
     }
 
@@ -100,6 +98,42 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        float convertedY = Gdx.graphics.getHeight() - screenY;
+
+        if (clickedOnImage(closeButton, screenX, convertedY)) {
+            Main.getMain().setScreen(gameView);
+            return true;
+        }
+
+        Image skillsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        skillsButton.setColor(Color.WHITE);
+        skillsButton.setScaleY(1.50f);
+        skillsButton.setScaleX(1.25f);
+        skillsButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 305f,
+            Gdx.graphics.getHeight() / 2f + 255f
+        );
+        if (clickedOnImage(skillsButton, screenX, convertedY)) {
+            currentTab = GameMenuType.SKILLS;
+            updateWindow();
+            showSkillsMenu();
+        }
+
+        Image inventoryButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        inventoryButton.setColor(Color.WHITE);
+        inventoryButton.setScaleY(1.50f);
+        inventoryButton.setScaleX(1.25f);
+        inventoryButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 370f,
+            Gdx.graphics.getHeight() / 2f + 255f
+        );
+
+        if (clickedOnImage(inventoryButton, screenX, convertedY)) {
+            currentTab = GameMenuType.INVENTORY;
+            updateWindow();
+            showInventoryMenu();
+        }
+
         return false;
     }
 
@@ -129,16 +163,21 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void updateWindow() {
+        if (this.window != null) { // TODO: doesn't work
+            this.window.remove();
+        }
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
         window.setPosition((Gdx.graphics.getWidth() - window.getWidth()) / 2, (Gdx.graphics.getHeight() - window.getHeight()) / 2);
         stage.addActor(window);
     }
 
     public void addCloseButton() {
-        closeButton.setPosition(
-            Gdx.graphics.getWidth() / 2f + 400f,
-            Gdx.graphics.getHeight() / 2f + 300f
-        );
+        float buttonX = Gdx.graphics.getWidth() / 2f + 400f;
+        float buttonY = Gdx.graphics.getHeight() / 2f + 300f;
+
+        closeButton.setPosition(buttonX, buttonY);
+        closeButton.setSize(closeButton.getWidth(), closeButton.getHeight());
+
         stage.addActor(closeButton);
     }
 
@@ -146,9 +185,12 @@ public class GameMenuView implements Screen, InputProcessor {
         User user = App.getLoggedIn();
         Label name = new Label(user.getUsername() + " Farm", GameAssetManager.getGameAssetManager().getSkin());
         name.setFontScale(1.5f);
-        Label currentFunds = new Label("Current Funds: " + getFundString((int) user.getBalance()), GameAssetManager.getGameAssetManager().getSkin());
+        Label currentFunds = new Label("Current Funds: " + getFundString((int) user.getBalance()),
+            GameAssetManager.getGameAssetManager().getSkin());
         currentFunds.setFontScale(1.5f);
-        Label totalEarnings = new Label("Total Earnings: " + getFundString((int) user.getBalance()), GameAssetManager.getGameAssetManager().getSkin()); //Todo
+        int total = (int) (user.getBalance() + user.getSpentMoney());
+        Label totalEarnings = new Label("Total Earnings: " + getFundString(total),
+            GameAssetManager.getGameAssetManager().getSkin());
         totalEarnings.setFontScale(1.5f);
 
         Table infoTable = new Table();
@@ -210,9 +252,9 @@ public class GameMenuView implements Screen, InputProcessor {
 
             Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
             itemImage.setPosition(
-                ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 45.0f)
-                    + count * (itemImage.getWidth() + 13.0f),
-                3 * Gdx.graphics.getHeight() / 4f - 35f
+                ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
+                    + count * (itemImage.getWidth() + 15.0f),
+                3 * Gdx.graphics.getHeight() / 4f - 90.0f
             );
             stage.addActor(itemImage);
 
@@ -222,5 +264,23 @@ public class GameMenuView implements Screen, InputProcessor {
 
     public String getFundString(int number) {
         return String.format("%,d", number) + "g";
+    }
+
+    public boolean clickedOnImage(Image image, float x, float y) {
+        return clickedOn(
+            image.getX() - 2f,
+            image.getY() - 2f,
+            image.getWidth() + 2 * 2f,
+            image.getHeight() + 2 * 2f,
+            x, y
+        );
+    }
+
+    public boolean clickedOn(float imageX, float imageY, float width, float height, float x, float y) {
+        return
+            x >= imageX &&
+            x <= imageX + width &&
+            y >= imageY &&
+            y <= imageY + height;
     }
 }

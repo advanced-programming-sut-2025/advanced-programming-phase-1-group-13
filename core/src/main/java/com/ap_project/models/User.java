@@ -49,6 +49,7 @@ public class User {
     private Backpack backpack;
     private ArrayList<Gift> gifts;
     private double balance;
+    private double spentMoney;
     private int mostEarnedMoney;
     private int numberOfGames;
     private TrashCan trashCan;
@@ -85,6 +86,7 @@ public class User {
         this.position = new Position(6, 7); // TODO
         this.isEnergyUnlimited = false;
         this.balance = 0;
+        this.spentMoney = 0;
         this.learntCraftRecipes = new ArrayList<>();
         this.learntCookingRecipes = new ArrayList<>();
         this.backpack = new Backpack(BackpackType.INITIAL);
@@ -240,10 +242,6 @@ public class User {
         this.gifts = gifts;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     public void setMostEarnedMoney(int mostEarnedMoney) {
         this.mostEarnedMoney = mostEarnedMoney;
     }
@@ -353,6 +351,10 @@ public class User {
         return balance;
     }
 
+    public double getSpentMoney() {
+        return spentMoney;
+    }
+
     public Game getActiveGame() {
         return activeGame;
     }
@@ -383,6 +385,7 @@ public class User {
 
     public void changeBalance(double amount) {
         this.balance += amount;
+        spentMoney += amount;
         saveUsersToJson();
     }
 
