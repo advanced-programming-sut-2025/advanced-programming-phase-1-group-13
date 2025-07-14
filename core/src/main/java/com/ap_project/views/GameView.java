@@ -166,7 +166,7 @@ public class GameView implements Screen, InputProcessor {
             selectedSlotIndex = 11;
         }
 
-        if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE){
+        if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE) {
             goToGameMenu(this);
         }
 
@@ -308,7 +308,7 @@ public class GameView implements Screen, InputProcessor {
 
     private float getClockArrowDegree() {
         float hour = (float) App.getCurrentGame().getGameState().getTime().getHour();
-        return - 180 * (hour - 9f) / (22f - 9f);
+        return -180 * (hour - 9f) / (22f - 9f);
     }
 
     public void updateGreenBar() {

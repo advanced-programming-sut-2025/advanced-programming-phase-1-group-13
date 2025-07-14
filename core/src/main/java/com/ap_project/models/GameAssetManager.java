@@ -3,10 +3,13 @@ package com.ap_project.models;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.types.GameMenuType;
+import com.ap_project.models.enums.types.Gender;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.sun.tools.javac.jvm.Gen;
+import org.w3c.dom.Text;
 
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
@@ -68,8 +71,26 @@ public class GameAssetManager {
     }
 
     public Texture getMenuWindowByType(GameMenuType tab) {
-        String path = "Images/Menu/" + tab.getName() + "Menu.png";
+        String gender;
+        if (App.getLoggedIn().getGender() == Gender.RATHER_NOT_SAY) {
+            gender = "Man";
+        } else {
+            gender = App.getLoggedIn().getGender().getName();
+        }
+        String path = "Images/Menu/" + tab.getName() + "Menu" + gender + ".png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getBlackScreen() {
+        return new Texture(Gdx.files.internal("Images/Menu/Black.png"));
+    }
+
+    public Texture getNumber(int number) {
+        return new Texture(Gdx.files.internal("Images/Menu/Number" + number + ".png"));
+    }
+
+    public Texture getSkillPoint() {
+        return new Texture(Gdx.files.internal("Images/Menu/SkillPoint.png"));
     }
 
     public Texture getCloseButton() {
