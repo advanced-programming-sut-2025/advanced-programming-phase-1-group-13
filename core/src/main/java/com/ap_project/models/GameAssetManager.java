@@ -93,6 +93,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/SkillPoint.png"));
     }
 
+    public Texture getSocialMenuPage(int number) {
+        return new Texture(Gdx.files.internal("Images/Menu/SocialMenuPage" + number + ".png"));
+    }
+
     public Texture getCloseButton() {
         return new Texture(Gdx.files.internal("Images/Menu/CloseButton.png"));
     }

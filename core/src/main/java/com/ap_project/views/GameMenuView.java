@@ -10,7 +10,6 @@ import com.ap_project.models.enums.types.GameMenuType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,10 +19,15 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ap_project.Main.goToTitleMenu;
+
 public class GameMenuView implements Screen, InputProcessor {
     private Stage stage;
     private GameMenuType currentTab;
     private Image window;
+    private final float windowX;
+    private final float windowY;
+    private int socialMenuPageIndex;
     private final Image closeButton;
     private final GameView gameView;
 
@@ -35,6 +39,12 @@ public class GameMenuView implements Screen, InputProcessor {
         this.currentTab = GameMenuType.INVENTORY;
 
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
+
+        this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
+        this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
+
+        this.socialMenuPageIndex = 1;
+
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
         this.gameView = gameView;
     }
@@ -51,6 +61,7 @@ public class GameMenuView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Main.getBatch().begin();
+        if (currentTab == GameMenuType.SOCIAL) showSocialMenu();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -105,8 +116,21 @@ public class GameMenuView implements Screen, InputProcessor {
             return true;
         }
 
+        Image inventoryButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        inventoryButton.setScaleY(1.50f);
+        inventoryButton.setScaleX(1.25f);
+        inventoryButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 370f,
+            Gdx.graphics.getHeight() / 2f + 255f
+        );
+
+        if (clickedOnImage(inventoryButton, screenX, convertedY)) {
+            currentTab = GameMenuType.INVENTORY;
+            updateWindow();
+            showInventoryMenu();
+        }
+
         Image skillsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
-        skillsButton.setColor(Color.WHITE);
         skillsButton.setScaleY(1.50f);
         skillsButton.setScaleX(1.25f);
         skillsButton.setPosition(
@@ -119,19 +143,55 @@ public class GameMenuView implements Screen, InputProcessor {
             showSkillsMenu();
         }
 
-        Image inventoryButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
-        inventoryButton.setColor(Color.WHITE);
-        inventoryButton.setScaleY(1.50f);
-        inventoryButton.setScaleX(1.25f);
-        inventoryButton.setPosition(
-            Gdx.graphics.getWidth() / 2f - 370f,
+        Image socialButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        socialButton.setScaleY(1.50f);
+        socialButton.setScaleX(1.25f);
+        socialButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 240f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
-
-        if (clickedOnImage(inventoryButton, screenX, convertedY)) {
-            currentTab = GameMenuType.INVENTORY;
+        if (clickedOnImage(socialButton, screenX, convertedY)) {
+            currentTab = GameMenuType.SOCIAL;
             updateWindow();
-            showInventoryMenu();
+            showSocialMenu();
+        }
+
+        Image exitButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        exitButton.setScaleY(1.50f);
+        exitButton.setScaleX(1.25f);
+        exitButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 50f,
+            Gdx.graphics.getHeight() / 2f + 255f
+        );
+        if (clickedOnImage(exitButton, screenX, convertedY)) {
+            currentTab = GameMenuType.EXIT;
+            updateWindow();
+        }
+
+        if (currentTab == GameMenuType.EXIT) {
+            Image exitToTitle = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            exitToTitle.setScaleY(2.35f);
+            exitToTitle.setScaleX(7.25f);
+            exitToTitle.setPosition(
+                Gdx.graphics.getWidth() / 2f - 140f,
+                Gdx.graphics.getHeight() / 2f + 19f
+            );
+            if (clickedOnImage(exitToTitle, screenX, convertedY)) {
+                App.setCurrentGame(null);
+                App.setLoggedIn(null);
+                goToTitleMenu();
+            }
+
+            Image exitToDesktop = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            exitToDesktop.setScaleY(2.35f);
+            exitToDesktop.setScaleX(8.50f);
+            exitToDesktop.setPosition(
+                Gdx.graphics.getWidth() / 2f - 165f,
+                Gdx.graphics.getHeight() / 2f - 120f
+            );
+            if (clickedOnImage(exitToDesktop, screenX, convertedY)) {
+                Gdx.app.exit();
+            }
         }
 
         return false;
@@ -159,6 +219,10 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
+        if (currentTab == GameMenuType.SOCIAL) {
+            if (amountY > 0) changeSocialMenuPageIndex(1);
+            if (amountY < 0) changeSocialMenuPageIndex(-1);
+        }
         return false;
     }
 
@@ -166,8 +230,10 @@ public class GameMenuView implements Screen, InputProcessor {
         if (this.window != null) { // TODO: doesn't work
             this.window.remove();
         }
+
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
-        window.setPosition((Gdx.graphics.getWidth() - window.getWidth()) / 2, (Gdx.graphics.getHeight() - window.getHeight()) / 2);
+        window.setPosition(windowX, windowY);
+
         stage.addActor(window);
     }
 
@@ -242,6 +308,12 @@ public class GameMenuView implements Screen, InputProcessor {
         }
     }
 
+    public void showSocialMenu() {
+        Image page = new Image(GameAssetManager.getGameAssetManager().getSocialMenuPage(socialMenuPageIndex));
+        page.setPosition(windowX, windowY);
+        stage.addActor(page);
+    }
+
     public void addItemsToInventory() {
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
@@ -282,5 +354,14 @@ public class GameMenuView implements Screen, InputProcessor {
             x <= imageX + width &&
             y >= imageY &&
             y <= imageY + height;
+    }
+
+    public void changeSocialMenuPageIndex(int amount) {
+        socialMenuPageIndex += amount;
+        if (socialMenuPageIndex < 1) {
+            socialMenuPageIndex = 1;
+        } if (socialMenuPageIndex > 3) {
+            socialMenuPageIndex = 3;
+        }
     }
 }

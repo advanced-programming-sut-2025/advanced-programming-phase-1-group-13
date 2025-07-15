@@ -1,7 +1,5 @@
 package com.ap_project.models.enums.types;
 
-import com.ap_project.models.farming.Crop;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

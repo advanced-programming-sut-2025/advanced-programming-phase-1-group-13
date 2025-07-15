@@ -167,6 +167,7 @@ public class GameView implements Screen, InputProcessor {
         }
 
         if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE) {
+            // TODO: clear inventory hotbar
             goToGameMenu(this);
         }
 
