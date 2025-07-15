@@ -8,8 +8,6 @@ import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.sun.tools.javac.jvm.Gen;
-import org.w3c.dom.Text;
 
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
@@ -95,6 +93,17 @@ public class GameAssetManager {
 
     public Texture getSocialMenuPage(int number) {
         return new Texture(Gdx.files.internal("Images/Menu/SocialMenuPage" + number + ".png"));
+    }
+
+    public Texture getPlayerFriendship(Gender gender) {
+        String genderStr;
+        if (gender == Gender.RATHER_NOT_SAY) {
+            genderStr = "Man";
+        } else {
+            genderStr = gender.getName();
+        }
+        String path = "Images/Menu/PlayerFriendship" + genderStr + ".png";
+        return new Texture(Gdx.files.internal(path));
     }
 
     public Texture getCloseButton() {

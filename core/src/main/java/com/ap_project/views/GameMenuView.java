@@ -1,10 +1,7 @@
 package com.ap_project.views;
 
 import com.ap_project.Main;
-import com.ap_project.models.App;
-import com.ap_project.models.GameAssetManager;
-import com.ap_project.models.Item;
-import com.ap_project.models.User;
+import com.ap_project.models.*;
 import com.ap_project.models.enums.Skill;
 import com.ap_project.models.enums.types.GameMenuType;
 import com.badlogic.gdx.Gdx;
@@ -16,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -312,6 +310,21 @@ public class GameMenuView implements Screen, InputProcessor {
         Image page = new Image(GameAssetManager.getGameAssetManager().getSocialMenuPage(socialMenuPageIndex));
         page.setPosition(windowX, windowY);
         stage.addActor(page);
+
+        if (socialMenuPageIndex == 3) {
+            ArrayList<User> players = App.getCurrentGame().getPlayers();
+            for(User player : players) {
+                if (player.getUsername().equals(App.getLoggedIn().getUsername())) continue;
+                Image image = new Image(
+                    GameAssetManager.getGameAssetManager().getPlayerFriendship(player.getGender())
+                );
+                image.setPosition(
+                    windowX + 30f,
+                    windowY + 463f - 112 * players.indexOf(player)
+                );
+                stage.addActor(image);
+            }
+        }
     }
 
     public void addItemsToInventory() {
