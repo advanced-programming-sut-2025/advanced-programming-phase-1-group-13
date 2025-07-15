@@ -95,6 +95,14 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/SocialMenuPage" + number + ".png"));
     }
 
+    public Texture getHeart() {
+        return new Texture(Gdx.files.internal("Images/Menu/Heart.png"));
+    }
+
+    public Texture getCheckedBox() {
+        return new Texture(Gdx.files.internal("Images/Menu/CheckedBox.png"));
+    }
+
     public Texture getPlayerFriendship(Gender gender) {
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {

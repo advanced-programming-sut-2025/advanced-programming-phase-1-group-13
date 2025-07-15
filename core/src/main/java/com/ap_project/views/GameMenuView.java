@@ -2,20 +2,24 @@ package com.ap_project.views;
 
 import com.ap_project.Main;
 import com.ap_project.models.*;
+import com.ap_project.models.enums.FriendshipLevel;
 import com.ap_project.models.enums.Skill;
 import com.ap_project.models.enums.types.GameMenuType;
+import com.ap_project.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static com.ap_project.Main.goToTitleMenu;
 
@@ -59,7 +63,6 @@ public class GameMenuView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Main.getBatch().begin();
-        if (currentTab == GameMenuType.SOCIAL) showSocialMenu();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -220,6 +223,7 @@ public class GameMenuView implements Screen, InputProcessor {
         if (currentTab == GameMenuType.SOCIAL) {
             if (amountY > 0) changeSocialMenuPageIndex(1);
             if (amountY < 0) changeSocialMenuPageIndex(-1);
+            showSocialMenu();
         }
         return false;
     }
@@ -311,9 +315,68 @@ public class GameMenuView implements Screen, InputProcessor {
         page.setPosition(windowX, windowY);
         stage.addActor(page);
 
+        Skin skin = GameAssetManager.getGameAssetManager().getSkin();
+        for (int i = 0; i < 5; i++) {
+            int rowY = 682 - i * 112;
+            int index = 5 * (socialMenuPageIndex - 1) + i;
+            if (index >= App.getCurrentGame().getNpcs().size()) break;
+            NPC npc = App.getCurrentGame().getNpcs().get(index);
+
+            int friendshipPoints = App.getCurrentGame().getNpcFriendshipPoints(App.getLoggedIn(), npc);
+
+            Label name;
+            if (friendshipPoints > 0) {
+                name = new Label(npc.getName(), skin);
+            } else {
+                name = new Label("???", skin);
+            }
+            name.setFontScale(1.25f);
+            name.setPosition(
+                670 - name.getWidth() / 2,
+                rowY
+            );
+            stage.addActor(name);
+
+            Label friendshipPointsLabel = new Label(friendshipPoints + "", skin);
+            friendshipPointsLabel.setFontScale(1.25f);
+            friendshipPointsLabel.setPosition(
+                850,
+                rowY
+            );
+            stage.addActor(friendshipPointsLabel);
+
+            int friendshipLevel = friendshipPoints / 200;
+            for (int j = 0; j < friendshipLevel; j++) {
+                Image heart = new Image(GameAssetManager.getGameAssetManager().getHeart());
+                heart.setPosition(
+                    963 + j * 36f,
+                    rowY
+                );
+                stage.addActor(heart);
+            }
+
+            if (npc.hasReceivedGiftToday(App.getLoggedIn())) {
+                Image giftCheckedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+                giftCheckedBox.setPosition(
+                    1154,
+                    rowY - 30
+                );
+                stage.addActor(giftCheckedBox);
+            }
+
+            if (npc.hasTalkedToToday(App.getLoggedIn())) {
+                Image talkCheckedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+                talkCheckedBox.setPosition(
+                    1271,
+                    rowY - 30
+                );
+                stage.addActor(talkCheckedBox);
+            }
+        }
+
         if (socialMenuPageIndex == 3) {
             ArrayList<User> players = App.getCurrentGame().getPlayers();
-            for(User player : players) {
+            for (User player : players) {
                 if (player.getUsername().equals(App.getLoggedIn().getUsername())) continue;
                 Image image = new Image(
                     GameAssetManager.getGameAssetManager().getPlayerFriendship(player.getGender())
@@ -323,6 +386,60 @@ public class GameMenuView implements Screen, InputProcessor {
                     windowY + 463f - 112 * players.indexOf(player)
                 );
                 stage.addActor(image);
+
+                int rowY = 680 - App.getCurrentGame().getPlayers().indexOf(player) * 112;
+
+                Friendship friendship = App.getCurrentGame().getUserFriendship(App.getLoggedIn(), player);
+                int xp = friendship.getCurrentXP();
+                int friendshipLevel = friendship.getLevel().getNumber();
+
+                Label name;
+                if (friendshipLevel == 0 && xp == 0) {
+                    name = new Label("???", skin);
+                } else {
+                    name = new Label(player.getUsername(), skin);
+                }
+                name.setFontScale(1.25f);
+                name.setPosition(
+                    670 - name.getWidth() / 2,
+                    rowY
+                );
+                stage.addActor(name);
+
+                Label xpLabel = new Label("XP: " + xp, skin);
+                xpLabel.setFontScale(1.25f);
+                xpLabel.setPosition(
+                    850 - xpLabel.getWidth() / 2,
+                    rowY
+                );
+                stage.addActor(xpLabel);
+
+                for (int j = 0; j < friendshipLevel; j++) {
+                    Image heart = new Image(GameAssetManager.getGameAssetManager().getHeart());
+                    heart.setPosition(
+                        927 + j * 36f,
+                        rowY
+                    );
+                    stage.addActor(heart);
+                }
+
+                if (player.exchangedGiftToday(App.getLoggedIn())) {
+                    Image giftCheckedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+                    giftCheckedBox.setPosition(
+                        1154,
+                        rowY - 30
+                    );
+                    stage.addActor(giftCheckedBox);
+                }
+
+                if (player.hasTalkedToToday(App.getLoggedIn())) {
+                    Image talkCheckedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+                    talkCheckedBox.setPosition(
+                        1271,
+                        rowY - 30
+                    );
+                    stage.addActor(talkCheckedBox);
+                }
             }
         }
     }
@@ -364,16 +481,17 @@ public class GameMenuView implements Screen, InputProcessor {
     public boolean clickedOn(float imageX, float imageY, float width, float height, float x, float y) {
         return
             x >= imageX &&
-            x <= imageX + width &&
-            y >= imageY &&
-            y <= imageY + height;
+                x <= imageX + width &&
+                y >= imageY &&
+                y <= imageY + height;
     }
 
     public void changeSocialMenuPageIndex(int amount) {
         socialMenuPageIndex += amount;
         if (socialMenuPageIndex < 1) {
             socialMenuPageIndex = 1;
-        } if (socialMenuPageIndex > 3) {
+        }
+        if (socialMenuPageIndex > 3) {
             socialMenuPageIndex = 3;
         }
     }
