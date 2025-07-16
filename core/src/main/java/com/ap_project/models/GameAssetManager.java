@@ -1,5 +1,6 @@
 package com.ap_project.models;
 
+import com.ap_project.models.enums.environment.Direction;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.types.GameMenuType;
@@ -7,7 +8,9 @@ import com.ap_project.models.enums.types.Gender;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
@@ -120,6 +123,40 @@ public class GameAssetManager {
 
     public Texture getCloseButton() {
         return new Texture(Gdx.files.internal("Images/Menu/CloseButton.png"));
+    }
+
+    public Texture getIdlePlayer(Gender gender, Direction direction) {
+        String genderStr;
+        if (gender == Gender.RATHER_NOT_SAY) {
+            genderStr = "Man";
+        } else {
+            genderStr = gender.getName();
+        }
+
+        String path = "Images/Player/" + genderStr + "/" + direction.toString() + "1.png";
+        return new Texture(Gdx.files.internal(path));
+    }
+
+    public Animation<Texture> getPlayerAnimation(Gender gender, Direction direction) {
+        // TODO: with atlas
+        String genderStr;
+        if (gender == Gender.RATHER_NOT_SAY) {
+            genderStr = "Man";
+        } else {
+            genderStr = gender.getName();
+        }
+
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 4; i++) {
+            String path = "Images/Player/" + genderStr + "/" + direction.toString() + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.1f, frames);
+    }
+
+    public Texture getBackground() {
+        // TODO
+        return new Texture(Gdx.files.internal("Images/TempFarm.png"));
     }
 
     public static String toPascalCase(String input) {

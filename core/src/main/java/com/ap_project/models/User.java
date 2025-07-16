@@ -4,6 +4,7 @@ import com.ap_project.controllers.*;
 import com.ap_project.models.enums.SecurityQuestion;
 import com.ap_project.models.enums.Skill;
 import com.ap_project.models.enums.SkillLevel;
+import com.ap_project.models.enums.environment.Direction;
 import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.types.*;
 import com.ap_project.models.inventory.Backpack;
@@ -38,6 +39,7 @@ public class User {
     private Skill buffRelatedSkill;
     private Integer hoursLeftTillBuffVanishes;
     private Position position;
+    private Direction direction;
     private Tool currentTool;
     private String hashedPassword;
     private HashMap<Skill, SkillLevel> skillLevels;
@@ -84,6 +86,7 @@ public class User {
         this.farm = new Farm(0); // TODO
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.position = new Position(6, 7); // TODO
+        this.direction = Direction.DOWN;
         this.isEnergyUnlimited = false;
         this.balance = 0;
         this.spentMoney = 0;
@@ -296,6 +299,10 @@ public class User {
 
     public Position getPosition() {
         return this.position;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public Farm getFarm() {
@@ -521,6 +528,14 @@ public class User {
 
     public void changePosition(Position newPosition) {
         this.position = newPosition;
+    }
+
+    public void changePosition(int amount, Direction direction) {
+        this.position = new Position(this.position.getX() + direction.getDeltaX() * amount, this.position.getY() + direction.getDeltaY() * amount);
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public String getStringLearntCookingRecipes() {

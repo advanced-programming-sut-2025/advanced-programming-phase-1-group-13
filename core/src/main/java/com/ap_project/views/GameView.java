@@ -8,12 +8,17 @@ import com.ap_project.models.Item;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.environment.Weather;
+import com.ap_project.models.enums.environment.Direction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -35,14 +40,22 @@ public class GameView implements Screen, InputProcessor {
     private int selectedSlotIndex;
     Image previousClockImage = null;
     private final GameController controller;
+    private final Sprite playerSprite;
+    private final Animation<Texture> playerUpAnimation;
+    private final Animation<Texture> playerDownAnimation;
+    private final Animation<Texture> playerLeftAnimation;
+    private final Animation<Texture> playerRightAnimation;
+    private Animation<Texture> currentAnimation;
+    private float stateTime;
+    private boolean isMoving;
+    private final Texture background;
+    private final OrthographicCamera camera;
 
     public GameView(GameController controller, Skin skin) {
         this.date = new Label("", skin);
-        // date.setColor(Color.BLACK);
         updateDateLabel();
 
         this.time = new Label("", skin);
-        // time.setColor(Color.BLACK);
         updateTimeLabel();
 
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
@@ -56,12 +69,30 @@ public class GameView implements Screen, InputProcessor {
 
         this.controller = controller;
         controller.setView(this);
+
+        playerUpAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.UP);
+        playerDownAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.DOWN);
+        playerLeftAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.LEFT);
+        playerRightAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.RIGHT);
+        currentAnimation = playerDownAnimation;
+        App.getLoggedIn().setDirection(Direction.DOWN);
+        stateTime = 0f;
+        isMoving = false;
+
+        playerSprite = new Sprite(GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), Direction.DOWN));
+
+        this.background = GameAssetManager.getGameAssetManager().getBackground();
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
+
+        playerSprite.setPosition(0, 0);
 
         addClock();
         updateClockInfo();
@@ -92,7 +123,79 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1f);
+
+        float displacement = 200f * delta; // Todo: change to tile size
+        isMoving = false;
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            playerSprite.setY(playerSprite.getY() + displacement);
+            currentAnimation = playerUpAnimation;
+            App.getLoggedIn().setDirection(Direction.UP);
+            walk();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            playerSprite.setY(playerSprite.getY() - displacement);
+            currentAnimation = playerDownAnimation;
+            App.getLoggedIn().setDirection(Direction.DOWN);
+            walk();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            playerSprite.setX(playerSprite.getX() - displacement);
+            currentAnimation = playerLeftAnimation;
+            App.getLoggedIn().setDirection(Direction.LEFT);
+            walk();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            playerSprite.setX(playerSprite.getX() + displacement);
+            currentAnimation = playerRightAnimation;
+            App.getLoggedIn().setDirection(Direction.RIGHT);
+            walk();
+        }
+
+        camera.position.set(
+            playerSprite.getX() + playerSprite.getWidth() / 2,
+            playerSprite.getY() + playerSprite.getHeight() / 2,
+            0
+        );
+        camera.update();
+
+        Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
+
+        float backgroundWidth = 3 * Gdx.graphics.getWidth();
+        float backgroundHeight = backgroundWidth * background.getHeight() / background.getWidth();
+        float cameraX = camera.position.x;
+        float cameraY = camera.position.y;
+        float viewportWidth = camera.viewportWidth;
+        float viewportHeight = camera.viewportHeight;
+
+        float startX = cameraX + viewportWidth / 2;
+        float startY = cameraY + viewportHeight / 2;
+
+        int tilesX = (int) Math.ceil(viewportWidth / backgroundWidth) + 1;
+        int tilesY = (int) Math.ceil(viewportHeight / backgroundHeight) + 1;
+        float offsetX = startX - (startX % backgroundWidth);
+        float offsetY = startY - (startY % backgroundHeight);
+
+        for (int x = -1; x <= tilesX; x++) {
+            for (int y = -1; y <= tilesY; y++) {
+                Main.getBatch().draw(
+                    background,
+                    offsetX + x * backgroundWidth,
+                    offsetY + y * backgroundHeight,
+                    backgroundWidth,
+                    backgroundHeight
+                );
+            }
+        }
+
+        stateTime += delta;
+        if (isMoving) {
+            Texture frame = currentAnimation.getKeyFrame(stateTime, true);
+            playerSprite.setRegion(new TextureRegion(frame));
+        } else {
+            playerSprite.setRegion(new TextureRegion(
+                GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), App.getLoggedIn().getDirection())
+            ));
+        }
+        playerSprite.draw(Main.getBatch());
+
         Main.getBatch().end();
 
         if (inventoryHotbarImage != null && selectedSlotImage != null) {
@@ -106,8 +209,7 @@ public class GameView implements Screen, InputProcessor {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        // TODO: time cheat
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && !isMoving) {
             Time time = App.getCurrentGame().getGameState().getTime();
             time.setHour(time.getHour() + 1);
             if (time.getHour() == 22) {
@@ -117,7 +219,6 @@ public class GameView implements Screen, InputProcessor {
             updateClockInfo();
         }
 
-        // TODO: energy cheat
         if (Gdx.input.isKeyPressed(Input.Keys.B)) {
             App.getLoggedIn().decreaseEnergyBy(10);
             System.out.println("Energy set to: " + App.getLoggedIn().getEnergy());
@@ -127,6 +228,8 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        camera.setToOrtho(false, width, height);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -143,6 +246,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
+        stage.dispose();
     }
 
     @Override
@@ -167,7 +271,6 @@ public class GameView implements Screen, InputProcessor {
         }
 
         if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE) {
-            // TODO: clear inventory hotbar
             goToGameMenu(this);
         }
 
@@ -345,5 +448,11 @@ public class GameView implements Screen, InputProcessor {
         if (selectedSlotIndex < 0) {
             selectedSlotIndex = 11;
         }
+    }
+
+    public void walk() {
+        isMoving = true;
+        App.getLoggedIn().decreaseEnergyBy((int) (0.05f * App.getLoggedIn().getEnergy()));
+        System.out.println(App.getLoggedIn().getEnergy());
     }
 }
