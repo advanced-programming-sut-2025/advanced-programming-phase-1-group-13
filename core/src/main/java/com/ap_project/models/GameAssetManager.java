@@ -79,6 +79,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal(path));
     }
 
+    public Texture getTrashCan() {
+        return new Texture(Gdx.files.internal("Images/Menu/TrashCan.png"));
+    }
+
     public Texture getBlackScreen() {
         return new Texture(Gdx.files.internal("Images/Menu/Black.png"));
     }

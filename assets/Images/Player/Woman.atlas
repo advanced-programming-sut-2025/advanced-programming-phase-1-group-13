@@ -1,0 +1,200 @@
+sprites.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Down1
+  rotate: false
+  xy: 0, 0
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Left1
+  rotate: false
+  xy: 0, 170
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Down2
+  rotate: false
+  xy: 188, 0
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Left2
+  rotate: false
+  xy: 188, 170
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Right1
+  rotate: false
+  xy: 0, 340
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Right2
+  rotate: false
+  xy: 188, 340
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Down3
+  rotate: false
+  xy: 376, 0
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Left3
+  rotate: false
+  xy: 376, 170
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Right3
+  rotate: false
+  xy: 376, 340
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Up1
+  rotate: false
+  xy: 0, 510
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Up2
+  rotate: false
+  xy: 188, 510
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Up3
+  rotate: false
+  xy: 376, 510
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Down4
+  rotate: false
+  xy: 564, 0
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Left4
+  rotate: false
+  xy: 564, 170
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Right4
+  rotate: false
+  xy: 564, 340
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+Up4
+  rotate: false
+  xy: 564, 510
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+DownAxe
+  rotate: false
+  xy: 0, 680
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+LeftAxe
+  rotate: false
+  xy: 188, 680
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+RightAxe
+  rotate: false
+  xy: 376, 680
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+UpAxe
+  rotate: false
+  xy: 564, 680
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+DownScythe
+  rotate: false
+  xy: 752, 0
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+LeftScythe
+  rotate: false
+  xy: 752, 170
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+RightScythe
+  rotate: false
+  xy: 752, 340
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+UpScythe
+  rotate: false
+  xy: 752, 510
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+DownWateringCan
+  rotate: false
+  xy: 752, 680
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+LeftWateringCan
+  rotate: false
+  xy: 0, 850
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+RightWateringCan
+  rotate: false
+  xy: 188, 850
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1
+UpWateringCan
+  rotate: false
+  xy: 376, 850
+  size: 187, 169
+  orig: 187, 169
+  offset: 0, 0
+  index: -1

@@ -2,10 +2,8 @@ package com.ap_project.views;
 
 import com.ap_project.Main;
 import com.ap_project.models.*;
-import com.ap_project.models.enums.FriendshipLevel;
 import com.ap_project.models.enums.Skill;
 import com.ap_project.models.enums.types.GameMenuType;
-import com.ap_project.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -14,12 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import static com.ap_project.Main.goToTitleMenu;
 
@@ -27,6 +25,8 @@ public class GameMenuView implements Screen, InputProcessor {
     private Stage stage;
     private GameMenuType currentTab;
     private Image window;
+    private Image page;
+    private final Image trashCan;
     private final float windowX;
     private final float windowY;
     private int socialMenuPageIndex;
@@ -41,6 +41,11 @@ public class GameMenuView implements Screen, InputProcessor {
         this.currentTab = GameMenuType.INVENTORY;
 
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
+        this.trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan());
+        trashCan.setPosition(
+            (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
+            Gdx.graphics.getHeight() / 2f - 65
+        );
 
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
@@ -62,8 +67,18 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
         Main.getBatch().end();
+
+        if (currentTab != GameMenuType.INVENTORY && trashCan != null && trashCan.getStage() != null) {
+            trashCan.remove();
+        }
+
+        if (currentTab != GameMenuType.SOCIAL && page != null && page.getStage() != null) {
+            page.remove();
+        }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -229,7 +244,7 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void updateWindow() {
-        if (this.window != null) { // TODO: doesn't work
+        if (this.window != null) {
             this.window.remove();
         }
 
@@ -274,6 +289,8 @@ public class GameMenuView implements Screen, InputProcessor {
         );
         stage.addActor(infoTable);
 
+        stage.addActor(trashCan);
+
         addItemsToInventory();
     }
 
@@ -311,7 +328,7 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void showSocialMenu() {
-        Image page = new Image(GameAssetManager.getGameAssetManager().getSocialMenuPage(socialMenuPageIndex));
+        page = new Image(GameAssetManager.getGameAssetManager().getSocialMenuPage(socialMenuPageIndex));
         page.setPosition(windowX, windowY);
         stage.addActor(page);
 
