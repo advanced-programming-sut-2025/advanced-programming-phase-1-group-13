@@ -26,7 +26,7 @@ public class MainMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Main Menu", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.preGameMenuButton = new TextButton("Pre Game Menu", skin);
         this.profileMenuButton = new TextButton("Profile Menu", skin);

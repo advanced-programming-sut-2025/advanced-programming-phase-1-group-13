@@ -34,21 +34,21 @@ public class NewGameMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("New Game Menu", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.description = new Label("Enter 1 to 3 usernames to add to the game:", skin);
         description.setFontScale(1.5f);
 
         this.player2 = new Label("Player 2", skin);
-        this.player2.setFontScale(2.0f);
+        this.player2.setFontScale(1.5f);
         this.player2Field = new TextField("", skin);
 
         this.player3 = new Label("Player 3", skin);
-        this.player3.setFontScale(2.0f);
+        this.player3.setFontScale(1.5f);
         this.player3Field = new TextField("", skin);
 
         this.player4 = new Label("Player 4", skin);
-        this.player4.setFontScale(2.0f);
+        this.player4.setFontScale(1.5f);
         this.player4Field = new TextField("", skin);
 
         this.startButton = new TextButton("Start", skin);

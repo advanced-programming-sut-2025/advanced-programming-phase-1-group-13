@@ -29,10 +29,10 @@ public class ChangePasswordMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Change Password", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.newPassword = new Label("New Password", skin);
-        newPassword.setFontScale(2.0f);
+        newPassword.setFontScale(1.5f);
         this.newPasswordField = new TextField("", skin);
         newPasswordField.setPasswordMode(true);
         newPasswordField.setPasswordCharacter('*');

@@ -36,14 +36,14 @@ public class ChooseMapMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Choose Map", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.players = App.getCurrentGame().getPlayers();
         this.description = new Label(players.get(currentPlayerIndex).getUsername() + ", please choose a map for your farm", skin);
         description.setFontScale(1.5f);
 
         this.mapNumber = new Label("Map Number", skin);
-        this.mapNumber.setFontScale(2.0f);
+        this.mapNumber.setFontScale(1.5f);
         this.mapOptions = new SelectBox<>(skin);
 
         this.chooseButton = new TextButton("Choose", skin);

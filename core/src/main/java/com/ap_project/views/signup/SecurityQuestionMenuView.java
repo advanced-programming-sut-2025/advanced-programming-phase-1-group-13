@@ -35,18 +35,18 @@ public class SecurityQuestionMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Choose a security question:", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.securityQuestion = new Label("Security Question", skin);
-        securityQuestion.setFontScale(2.0f);
+        securityQuestion.setFontScale(1.5f);
         this.securityQuestions = new SelectBox<>(skin);
 
         this.answerLabel = new Label("Answer", skin);
-        answerLabel.setFontScale(2.0f);
+        answerLabel.setFontScale(1.5f);
         this.answerField = new TextField("", skin);
 
         this.repeatAnswerLabel = new Label("Repeat Answer", skin);
-        repeatAnswerLabel.setFontScale(2.0f);
+        repeatAnswerLabel.setFontScale(1.5f);
         this.repeatAnswerField = new TextField("", skin);
 
         this.enterButton = new TextButton("Enter", skin);

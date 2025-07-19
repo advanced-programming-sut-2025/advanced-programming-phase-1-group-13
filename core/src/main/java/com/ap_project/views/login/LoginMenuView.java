@@ -33,14 +33,14 @@ public class LoginMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Login", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.username = new Label("Username", skin);
-        username.setFontScale(2.0f);
+        username.setFontScale(1.5f);
         this.usernameField = new TextField("", skin);
 
         this.password = new Label("Password", skin);
-        password.setFontScale(2.0f);
+        password.setFontScale(1.5f);
         this.passwordField = new TextField("", skin);
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');

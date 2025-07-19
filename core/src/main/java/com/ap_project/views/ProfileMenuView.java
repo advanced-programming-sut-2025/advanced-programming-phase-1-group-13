@@ -43,40 +43,40 @@ public class ProfileMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Profile Menu", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         User user = App.getLoggedIn();
 
         this.username = new Label("Username", skin);
-        username.setFontScale(2.0f);
+        username.setFontScale(1.5f);
         this.usernameField = new TextField(user.getUsername(), skin);
         this.changeUsernameButton = new TextButton("Change Username", skin);
 
         this.password = new Label("Password", skin);
-        password.setFontScale(2.0f);
+        password.setFontScale(1.5f);
         this.passwordField = new TextField("", skin);
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
         this.changePasswordButton = new TextButton("Change Password", skin);
 
         this.nickname = new Label("Nickname", skin);
-        nickname.setFontScale(2.0f);
+        nickname.setFontScale(1.5f);
         this.nicknameField = new TextField(user.getNickname(), skin);
         this.changeNicknameButton = new TextButton("Change Nickname", skin);
 
         this.email = new Label("Email", skin);
-        email.setFontScale(2.0f);
+        email.setFontScale(1.5f);
         this.emailField = new TextField(user.getEmail(), skin);
         this.changeEmailButton = new TextButton("Change Email", skin);
 
         this.gender = new Label("Gender:   " + user.getGender().getName(), skin);
-        gender.setFontScale(2.0f);
+        gender.setFontScale(1.5f);
 
         this.mostEarnedMoney = new Label("Most Earned Money in a game: " + user.getMostEarnedMoney(), skin);
-        mostEarnedMoney.setFontScale(2.0f);
+        mostEarnedMoney.setFontScale(1.5f);
 
         this.numberOfGames = new Label("Number of Games: " + user.getNumberOfGames(), skin);
-        numberOfGames.setFontScale(2.0f);
+        numberOfGames.setFontScale(1.5f);
 
         this.backButton = new TextButton("Back", skin);
 

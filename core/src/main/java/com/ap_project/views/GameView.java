@@ -14,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -53,9 +54,13 @@ public class GameView implements Screen, InputProcessor {
 
     public GameView(GameController controller, Skin skin) {
         this.date = new Label("", skin);
+        date.setFontScale(0.90f);
+        date.setColor(34f / 255, 17f / 255, 34f / 255, 1);
         updateDateLabel();
 
         this.time = new Label("", skin);
+        time.setFontScale(0.90f);
+        time.setColor(34f / 255, 17f / 255, 34f / 255, 1);
         updateTimeLabel();
 
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();

@@ -33,20 +33,20 @@ public class ForgetPasswordMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Change Password", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.username = new Label("Username", skin);
-        username.setFontScale(2.0f);
+        username.setFontScale(1.5f);
         this.usernameField = new TextField("", skin);
 
         this.securityQuestion = new Label("Security Question: ", skin);
-        securityQuestion.setFontScale(2.0f);
+        securityQuestion.setFontScale(1.5f);
 
         this.questionText = new Label("", skin);
-        questionText.setFontScale(2.0f);
+        questionText.setFontScale(1.5f);
 
         this.answer = new Label("Answer", skin);
-        answer.setFontScale(2.0f);
+        answer.setFontScale(1.5f);
         this.answerField = new TextField("", skin);
 
         this.enterButton = new TextButton("Enter", skin);

@@ -332,12 +332,15 @@ public class GameMenuView implements Screen, InputProcessor {
         User user = App.getLoggedIn();
         Label name = new Label(user.getUsername() + " Farm", GameAssetManager.getGameAssetManager().getSkin());
         name.setFontScale(1.5f);
+        name.setColor(34f / 255, 17f / 255, 34f / 255, 1);
         Label currentFunds = new Label("Current Funds: " + getFundString((int) user.getBalance()),
             GameAssetManager.getGameAssetManager().getSkin());
         currentFunds.setFontScale(1.5f);
+        currentFunds.setColor(34f / 255, 17f / 255, 34f / 255, 1);
         int total = (int) (user.getBalance() + user.getSpentMoney());
         Label totalEarnings = new Label("Total Earnings: " + getFundString(total),
             GameAssetManager.getGameAssetManager().getSkin());
+        totalEarnings.setColor(34f / 255, 17f / 255, 34f / 255, 1);
         totalEarnings.setFontScale(1.5f);
 
         Table infoTable = new Table();
@@ -362,6 +365,7 @@ public class GameMenuView implements Screen, InputProcessor {
         User user = App.getLoggedIn();
         Label username = new Label(user.getUsername(), GameAssetManager.getGameAssetManager().getSkin());
         username.setFontScale(2.0f);
+        username.setColor(34f / 255, 17f / 255, 34f / 255, 1);
         username.setPosition(
             Gdx.graphics.getWidth() / 2f,
             Gdx.graphics.getHeight() / 2f - window.getHeight() / 2.8f
@@ -412,6 +416,7 @@ public class GameMenuView implements Screen, InputProcessor {
                 name = new Label("???", skin);
             }
             name.setFontScale(1.25f);
+            name.setColor(34f / 255, 17f / 255, 34f / 255, 1);
             name.setPosition(
                 670 - name.getWidth() / 2,
                 rowY
@@ -420,6 +425,7 @@ public class GameMenuView implements Screen, InputProcessor {
 
             Label friendshipPointsLabel = new Label(friendshipPoints + "", skin);
             friendshipPointsLabel.setFontScale(1.25f);
+            friendshipPointsLabel.setColor(34f / 255, 17f / 255, 34f / 255, 1);
             friendshipPointsLabel.setPosition(
                 850,
                 rowY
@@ -481,6 +487,7 @@ public class GameMenuView implements Screen, InputProcessor {
                     name = new Label(player.getUsername(), skin);
                 }
                 name.setFontScale(1.25f);
+                name.setColor(34f / 255, 17f / 255, 34f / 255, 1);
                 name.setPosition(
                     670 - name.getWidth() / 2,
                     rowY
@@ -489,6 +496,7 @@ public class GameMenuView implements Screen, InputProcessor {
 
                 Label xpLabel = new Label("XP: " + xp, skin);
                 xpLabel.setFontScale(1.25f);
+                xpLabel.setColor(34f / 255, 17f / 255, 34f / 255, 1);
                 xpLabel.setPosition(
                     850 - xpLabel.getWidth() / 2,
                     rowY

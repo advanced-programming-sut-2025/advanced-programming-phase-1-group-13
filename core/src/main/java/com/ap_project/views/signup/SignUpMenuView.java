@@ -42,34 +42,34 @@ public class SignUpMenuView implements Screen {
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.menuTitle = new Label("Signup", skin);
-        menuTitle.setFontScale(2.0f);
+        menuTitle.setFontScale(1.5f);
 
         this.username = new Label("Username", skin);
-        username.setFontScale(2.0f);
+        username.setFontScale(1.5f);
         this.usernameField = new TextField("", skin);
 
         this.password = new Label("Password", skin);
-        password.setFontScale(2.0f);
+        password.setFontScale(1.5f);
         this.passwordField = new TextField("", skin);
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
 
         this.repeatPassword = new Label("Repeat Password", skin);
-        repeatPassword.setFontScale(2.0f);
+        repeatPassword.setFontScale(1.5f);
         this.repeatPasswordField = new TextField("", skin);
         repeatPasswordField.setPasswordMode(true);
         repeatPasswordField.setPasswordCharacter('*');
 
         this.nickname = new Label("Nickname", skin);
-        nickname.setFontScale(2.0f);
+        nickname.setFontScale(1.5f);
         this.nicknameField = new TextField("", skin);
 
         this.email = new Label("Email", skin);
-        email.setFontScale(2.0f);
+        email.setFontScale(1.5f);
         this.emailField = new TextField("", skin);
 
         this.gender = new Label("Gender", skin);
-        gender.setFontScale(2.0f);
+        gender.setFontScale(1.5f);
         this.genders = new SelectBox<>(skin);
 
         this.signUpButton = new TextButton("Signup", skin);
