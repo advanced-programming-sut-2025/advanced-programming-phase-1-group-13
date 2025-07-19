@@ -27,6 +27,7 @@ public class GameMenuView implements Screen, InputProcessor {
     private Image window;
     private Image page;
     private final Image trashCan;
+    private Image skillHoverImage;
     private final float windowX;
     private final float windowY;
     private int socialMenuPageIndex;
@@ -46,6 +47,8 @@ public class GameMenuView implements Screen, InputProcessor {
             (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
             Gdx.graphics.getHeight() / 2f - 65
         );
+
+        this.skillHoverImage = null;
 
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
@@ -127,7 +130,7 @@ public class GameMenuView implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
-        if (clickedOnImage(closeButton, screenX, convertedY)) {
+        if (hoverOnImage(closeButton, screenX, convertedY)) {
             Main.getMain().setScreen(gameView);
             return true;
         }
@@ -140,7 +143,7 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getHeight() / 2f + 255f
         );
 
-        if (clickedOnImage(inventoryButton, screenX, convertedY)) {
+        if (hoverOnImage(inventoryButton, screenX, convertedY)) {
             currentTab = GameMenuType.INVENTORY;
             updateWindow();
             showInventoryMenu();
@@ -153,7 +156,7 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getWidth() / 2f - 305f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
-        if (clickedOnImage(skillsButton, screenX, convertedY)) {
+        if (hoverOnImage(skillsButton, screenX, convertedY)) {
             currentTab = GameMenuType.SKILLS;
             updateWindow();
             showSkillsMenu();
@@ -166,7 +169,7 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getWidth() / 2f - 240f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
-        if (clickedOnImage(socialButton, screenX, convertedY)) {
+        if (hoverOnImage(socialButton, screenX, convertedY)) {
             currentTab = GameMenuType.SOCIAL;
             updateWindow();
             showSocialMenu();
@@ -179,7 +182,7 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getWidth() / 2f - 50f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
-        if (clickedOnImage(exitButton, screenX, convertedY)) {
+        if (hoverOnImage(exitButton, screenX, convertedY)) {
             currentTab = GameMenuType.EXIT;
             updateWindow();
         }
@@ -192,7 +195,7 @@ public class GameMenuView implements Screen, InputProcessor {
                 Gdx.graphics.getWidth() / 2f - 140f,
                 Gdx.graphics.getHeight() / 2f + 19f
             );
-            if (clickedOnImage(exitToTitle, screenX, convertedY)) {
+            if (hoverOnImage(exitToTitle, screenX, convertedY)) {
                 App.setCurrentGame(null);
                 App.setLoggedIn(null);
                 goToTitleMenu();
@@ -205,7 +208,7 @@ public class GameMenuView implements Screen, InputProcessor {
                 Gdx.graphics.getWidth() / 2f - 165f,
                 Gdx.graphics.getHeight() / 2f - 120f
             );
-            if (clickedOnImage(exitToDesktop, screenX, convertedY)) {
+            if (hoverOnImage(exitToDesktop, screenX, convertedY)) {
                 Gdx.app.exit();
             }
         }
@@ -230,6 +233,67 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        if (currentTab == GameMenuType.SKILLS) {
+            if (skillHoverImage != null && skillHoverImage.getStage() != null) {
+                skillHoverImage.remove();
+            }
+
+            float xScale = 4.75f;
+            float yScale = 1.50f;
+            float x = Gdx.graphics.getWidth() / 2f - 220f;
+            float initialY = Gdx.graphics.getHeight() / 2f + 160f;
+            float ySpacing = 85f;
+
+            Image farming = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            farming.setScaleY(yScale);
+            farming.setScaleX(xScale);
+            farming.setPosition(x, initialY);
+
+            Image mining = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            mining.setScaleY(yScale);
+            mining.setScaleX(xScale);
+            mining.setPosition(x, initialY - ySpacing * 1);
+
+            Image foraging = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            foraging.setScaleY(yScale);
+            foraging.setScaleX(xScale);
+            foraging.setPosition(x, initialY - ySpacing * 2);
+
+            Image fishing = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            fishing.setScaleY(yScale);
+            fishing.setScaleX(xScale);
+            fishing.setPosition(x, initialY - ySpacing * 3);
+
+            String skillHover;
+            float convertedY = Gdx.graphics.getHeight() - screenY;
+
+            if (hoverOnImage(farming, screenX, convertedY)) {
+                skillHover = "Farming";
+            } else if (hoverOnImage(mining, screenX, convertedY)) {
+                skillHover = "Mining";
+            } else if (hoverOnImage(foraging, screenX, convertedY)) {
+                skillHover = "Foraging";
+            } else if (hoverOnImage(fishing, screenX, convertedY)) {
+                skillHover = "Fishing";
+            } else {
+                skillHover = "";
+            }
+
+            if (!skillHover.isEmpty()) {
+                skillHoverImage = new Image(GameAssetManager.getGameAssetManager().getSkillMenuHover(skillHover));
+                skillHoverImage.setPosition(
+                    screenX,
+                    Gdx.graphics.getHeight() - screenY - skillHoverImage.getHeight()
+                );
+                stage.addActor(skillHoverImage);
+            }
+        } else {
+            if (skillHoverImage != null && skillHoverImage.getStage() != null) {
+                skillHoverImage.remove();
+                skillHoverImage = null;
+            }
+        }
+
         return false;
     }
 
@@ -485,17 +549,17 @@ public class GameMenuView implements Screen, InputProcessor {
         return String.format("%,d", number) + "g";
     }
 
-    public boolean clickedOnImage(Image image, float x, float y) {
-        return clickedOn(
+    public boolean hoverOnImage(Image image, float x, float y) {
+        return hoverOn(
             image.getX() - 2f,
             image.getY() - 2f,
-            image.getWidth() + 2 * 2f,
-            image.getHeight() + 2 * 2f,
+            image.getWidth() * image.getScaleX() + 2 * 2f,
+            image.getHeight() * image.getScaleY() + 2 * 2f,
             x, y
         );
     }
 
-    public boolean clickedOn(float imageX, float imageY, float width, float height, float x, float y) {
+    public boolean hoverOn(float imageX, float imageY, float width, float height, float x, float y) {
         return
             x >= imageX &&
                 x <= imageX + width &&

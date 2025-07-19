@@ -98,6 +98,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/SkillPoint.png"));
     }
 
+    public Texture getSkillMenuHover(String skillName) {
+        return new Texture(Gdx.files.internal("Images/Menu/Hover" + skillName + ".png"));
+    }
+
     public Texture getSocialMenuPage(int number) {
         return new Texture(Gdx.files.internal("Images/Menu/SocialMenuPage" + number + ".png"));
     }
