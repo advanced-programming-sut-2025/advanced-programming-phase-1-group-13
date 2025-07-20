@@ -557,7 +557,7 @@ public class GameMenuView implements Screen, InputProcessor {
         return String.format("%,d", number) + "g";
     }
 
-    public boolean hoverOnImage(Image image, float x, float y) {
+    public static boolean hoverOnImage(Image image, float x, float y) {
         return hoverOn(
             image.getX() - 2f,
             image.getY() - 2f,
@@ -567,7 +567,7 @@ public class GameMenuView implements Screen, InputProcessor {
         );
     }
 
-    public boolean hoverOn(float imageX, float imageY, float width, float height, float x, float y) {
+    public static boolean hoverOn(float imageX, float imageY, float width, float height, float x, float y) {
         return
             x >= imageX &&
                 x <= imageX + width &&

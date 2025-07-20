@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ap_project.Main.goToCheatWindow;
 import static com.ap_project.Main.goToGameMenu;
 
 public class GameView implements Screen, InputProcessor {
@@ -96,6 +97,10 @@ public class GameView implements Screen, InputProcessor {
         isMoving = false;
 
         playerSprite = new Sprite(GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), Direction.DOWN));
+        playerSprite.setPosition(
+            Gdx.graphics.getWidth() - 40f,
+            Gdx.graphics.getHeight()
+        );
 
         this.background = GameAssetManager.getGameAssetManager().getBackground();
 
@@ -107,8 +112,6 @@ public class GameView implements Screen, InputProcessor {
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
-
-        playerSprite.setPosition(0, 0);
 
         addClock();
         updateClockInfo();
@@ -167,8 +170,6 @@ public class GameView implements Screen, InputProcessor {
         renderGameWorld(fadeAlpha);
 
         renderUI(fadeAlpha);
-
-        cheatCodes();
     }
 
     private void updateGameLogic(float delta) {
@@ -274,19 +275,6 @@ public class GameView implements Screen, InputProcessor {
         stage.draw();
     }
 
-    private void cheatCodes() {
-        if (Gdx.input.isKeyPressed(Input.Keys.T) && !isMoving) {
-            controller.cheatAdvanceTime("1");
-            updateClockInfo();
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.B)) {
-            App.getLoggedIn().decreaseEnergyBy(10);
-            System.out.println("Energy set to: " + App.getLoggedIn().getEnergy());
-            updateGreenBar();
-        }
-    }
-
     @Override
     public void resize(int width, int height) {
         camera.setToOrtho(false, width, height);
@@ -333,6 +321,10 @@ public class GameView implements Screen, InputProcessor {
 
         if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE) {
             goToGameMenu(this);
+        }
+
+        if (keycode == Input.Keys.Q) {
+            goToCheatWindow(this, controller);
         }
 
         return false;
@@ -466,9 +458,10 @@ public class GameView implements Screen, InputProcessor {
                 started = true;
                 String digitString = Integer.toString(digit);
                 Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
+                digitLabel.setColor(128/255f,0,0,1);
                 digitLabel.setPosition(
                     xPosition + (0.75f * clockImage.getWidth()) - 24 * scale * i,
-                    yPosition + (0.05f * clockImage.getHeight())
+                    yPosition + (0.025f * clockImage.getHeight())
                 );
                 stage.addActor(digitLabel);
             }

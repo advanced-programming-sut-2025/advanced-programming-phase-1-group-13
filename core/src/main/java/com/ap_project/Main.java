@@ -90,6 +90,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new GameMenuView(gameView));
     }
 
+    public static void goToCheatWindow(GameView gameView, GameController controller) {
+        Main.getMain().setScreen(new CheatView(gameView, controller));
+    }
+
     public static Main getMain() {
         return main;
     }

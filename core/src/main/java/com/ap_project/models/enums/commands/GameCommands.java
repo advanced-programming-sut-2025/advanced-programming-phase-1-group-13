@@ -88,6 +88,7 @@ public enum GameCommands implements Command {
     EXIT_GAME("^\\s*exit\\s+game\\s*$"),
     SHOW_CURRENT_MENU("^\\s*show\\s+current\\s+menu\\s*$"),
     EXIT_VILLAGE("^\\s*exit\\s+village\\s*$"),
+    EXIT("^\\s*exit\\s*$"),
 
     // Commands We Added //
     CHEAT_BUILD_GREENHOUSE("^\\s*cheat\\s+greenhouse\\s+build\\s*$"),
