@@ -907,6 +907,8 @@ public class GameController {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
         Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
 
+        view.setLightningPosition(position);
+
         if (tile != null) {
             tile.setType(TileType.NOT_PLOWED_SOIL); // TODO: is it good?
             App.getCurrentGame().getGameState().triggerLightningStrike();
@@ -914,7 +916,6 @@ public class GameController {
         }
         return new Result(false, "Invalid position for Thor's strike.");
     }
-
 
     public Result showWeather() {
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();

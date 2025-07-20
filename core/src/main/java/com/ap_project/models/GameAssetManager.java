@@ -7,6 +7,7 @@ import com.ap_project.models.enums.types.GameMenuType;
 import com.ap_project.models.enums.types.Gender;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -142,7 +143,6 @@ public class GameAssetManager {
     }
 
     public Animation<Texture> getPlayerAnimation(Gender gender, Direction direction) {
-        // TODO: with atlas
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {
             genderStr = "Man";
@@ -161,6 +161,27 @@ public class GameAssetManager {
     public Texture getBackground() {
         // TODO
         return new Texture(Gdx.files.internal("Images/TempFarm.png"));
+    }
+
+    public Texture getRaindrop() {
+        return new Texture(Gdx.files.internal("Images/Weather/Raindrop.png"));
+    }
+
+    public Texture getSnowflake() {
+        return new Texture(Gdx.files.internal("Images/Weather/Snowflake.png"));
+    }
+
+    public Animation<Texture> getLightningAnimation() {
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 4; i++) {
+            String path = "Images/Weather/Lightning" + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.1f, frames);
+    }
+
+    public Texture getWhitePixel() {
+        return new Texture(Gdx.files.internal("Images/Weather/Flash.png"));
     }
 
     public static String toPascalCase(String input) {

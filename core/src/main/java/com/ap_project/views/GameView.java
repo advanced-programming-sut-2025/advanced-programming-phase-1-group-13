@@ -5,15 +5,13 @@ import com.ap_project.controllers.GameController;
 import com.ap_project.models.App;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.Item;
+import com.ap_project.models.Position;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.environment.Direction;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -24,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +57,20 @@ public class GameView implements Screen, InputProcessor {
     private final OrthographicCamera camera;
     private Image energyBar;
     private Image greenBar;
+    private final ArrayList<Image> raindrops;
+    private boolean isRaining;
+    private final ArrayList<Image> snowflakes;
+    private boolean isSnowing;
+    private final Animation<Texture> lightningAnimation;
+    private float lightningStateTime;
+    private boolean isLightningActive;
+    private Image lightningImage;
+    private int lightningX;
+    private int lightningY;
+    private boolean isLightningTransitioning;
+    private float lightningTransitionTimer;
+    private boolean hasTriggeredLightningTransition;
+    private float lightningFlashAlpha;
 
     public GameView(GameController controller, Skin skin) {
         this.date = new Label("", skin);
@@ -106,6 +119,19 @@ public class GameView implements Screen, InputProcessor {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        this.raindrops = new ArrayList<>();
+        this.isRaining = false;
+
+        this.snowflakes = new ArrayList<>();
+        this.isSnowing = false;
+
+        this.lightningAnimation = GameAssetManager.getGameAssetManager().getLightningAnimation();
+        this.lightningStateTime = 0f;
+        this.isLightningActive = false;
+        this.lightningImage = new Image();
+        this.lightningImage.setVisible(false);
+        this.lightningFlashAlpha = 0f;
     }
 
     @Override
@@ -169,7 +195,108 @@ public class GameView implements Screen, InputProcessor {
 
         renderGameWorld(fadeAlpha);
 
+        Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
+        if ((weather != Weather.RAINY && weather != Weather.STORM) && isRaining) {
+            clearRaindrops();
+            isRaining = false;
+        }
+        if (weather != Weather.SNOW && isSnowing) {
+            clearSnowflakes();
+            isSnowing = false;
+        }
+
+        if (weather == Weather.RAINY || weather == Weather.STORM) {
+            if (!isRaining) {
+                isRaining = true;
+            }
+            updateRain();
+        }
+
+        if (weather == Weather.SNOW) {
+            if (!isSnowing) {
+                isSnowing = true;
+            }
+            updateSnow();
+        }
+
+        if (isLightningActive) {
+            lightningStateTime += delta;
+            Texture frame = lightningAnimation.getKeyFrame(lightningStateTime, false);
+            lightningImage.setDrawable(new Image(frame).getDrawable());
+
+            lightningImage.setPosition(
+                lightningX - frame.getWidth() / 2f,
+                lightningY - frame.getHeight() / 2f
+            );
+
+            // Trigger white flash at the start of lightning
+            if (!hasTriggeredLightningTransition) {
+                isLightningTransitioning = true;
+                lightningTransitionTimer = 0.5f; // Shorter duration than 9 AM flash
+                hasTriggeredLightningTransition = true;
+            }
+
+            if (lightningAnimation.isAnimationFinished(lightningStateTime)) {
+                isLightningActive = false;
+                lightningImage.setVisible(false);
+                hasTriggeredLightningTransition = false;
+            }
+
+            if (lightningImage.getStage() == null) {
+                stage.addActor(lightningImage);
+            }
+        }
+
+// Update lightning transition timer
+        if (isLightningTransitioning) {
+            lightningTransitionTimer -= delta;
+            if (lightningTransitionTimer <= 0) {
+                isLightningTransitioning = false;
+                lightningTransitionTimer = 0;
+            }
+        }
+
+        // Lightning flash effect
+        float whiteFadeAlpha = 0f;
+        if (isLightningTransitioning) {
+            // Quick flash that peaks immediately and fades out
+            whiteFadeAlpha = lightningTransitionTimer * 4f; // Starts at 0.4f and quickly fades
+        }
+
+// Apply the subtle white flash
+        if (whiteFadeAlpha > 0) {
+            ScreenUtils.clear(1, 1, 1, whiteFadeAlpha);
+            stage.getBatch().begin();
+            stage.getBatch().setColor(1, 1, 1, whiteFadeAlpha);
+            stage.getBatch().draw(GameAssetManager.getGameAssetManager().getWhitePixel(),
+                0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            stage.getBatch().end();
+        }
+
+// Update lightning transition timer
+        if (isLightningTransitioning) {
+            lightningTransitionTimer -= delta;
+            if (lightningTransitionTimer <= 0) {
+                isLightningTransitioning = false;
+                lightningTransitionTimer = 0;
+            }
+        }
+
+        // Lightning flash effect - happens instantly and fades very quickly
+        if (lightningFlashAlpha > 0) {
+            ScreenUtils.clear(1, 1, 1, lightningFlashAlpha);
+            lightningFlashAlpha -= delta * 10f; // Fades out in 0.1 seconds (10x speed)
+
+            // Optional: Draw white rectangle if you want it more visible
+            stage.getBatch().begin();
+            stage.getBatch().setColor(1, 1, 1, lightningFlashAlpha);
+            stage.getBatch().draw(GameAssetManager.getGameAssetManager().getWhitePixel(),
+                0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            stage.getBatch().end();
+        }
+
         renderUI(fadeAlpha);
+
     }
 
     private void updateGameLogic(float delta) {
@@ -342,6 +469,8 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Position position = new Position(screenX, Gdx.graphics.getHeight() - screenY);
+        setLightningPosition(position);
         return false;
     }
 
@@ -520,7 +649,75 @@ public class GameView implements Screen, InputProcessor {
         System.out.println(App.getLoggedIn().getEnergy());
     }
 
-    public void newDay() {
-        System.out.println("New Day");
+    private void clearRaindrops() {
+        for (Image raindrop : raindrops) {
+            raindrop.remove();
+        }
+        raindrops.clear();
+    }
+
+    private void updateRain() {
+        clearRaindrops();
+        int raindropCount = randomIntBetween(100, 150);
+        for (int i = 0; i < raindropCount; i++) {
+            Image raindrop = new Image(GameAssetManager.getGameAssetManager().getRaindrop());
+            raindrop.setPosition(
+                randomIntBetween(0, Gdx.graphics.getWidth()),
+                randomIntBetween(0, Gdx.graphics.getHeight())
+            );
+            stage.addActor(raindrop);
+            raindrops.add(raindrop);
+        }
+    }
+
+    private void clearSnowflakes() {
+        for (Image snowflake : snowflakes) {
+            snowflake.remove();
+        }
+        snowflakes.clear();
+    }
+
+    private void updateSnow() {
+        clearSnowflakes();
+        int snowflakeCount = randomIntBetween(100, 150);
+        for (int i = 0; i < snowflakeCount; i++) {
+            Image snowflake = new Image(GameAssetManager.getGameAssetManager().getSnowflake());
+            snowflake.setPosition(
+                randomIntBetween(0, Gdx.graphics.getWidth()),
+                randomIntBetween(0, Gdx.graphics.getHeight())
+            );
+            stage.addActor(snowflake);
+            snowflakes.add(snowflake);
+        }
+    }
+
+    public void setLightningPosition(Position position) {
+        this.lightningX = position.getX();
+        this.lightningY = position.getY() + (int) lightningImage.getHeight() / 2;
+        this.isLightningActive = true;
+        this.lightningStateTime = 0f;
+        this.isLightningTransitioning = true;
+        this.lightningTransitionTimer = 0.005f; // Very short flash duration (0.1 seconds)
+
+        if (lightningImage.getStage() != null) {
+            lightningImage.remove();
+        }
+
+        Texture firstFrame = lightningAnimation.getKeyFrame(0);
+        lightningImage = new Image(firstFrame);
+        lightningImage.setVisible(true);
+
+        lightningImage.setPosition(
+            lightningX - firstFrame.getWidth() / 2f,
+            Gdx.graphics.getHeight() - lightningY - firstFrame.getHeight() / 2f
+        );
+
+        lightningFlashAlpha = 0.3f;
+
+        stage.addActor(lightningImage);
+    }
+
+    public int randomIntBetween(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 }
