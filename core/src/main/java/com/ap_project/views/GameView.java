@@ -67,10 +67,8 @@ public class GameView implements Screen, InputProcessor {
     private Image lightningImage;
     private int lightningX;
     private int lightningY;
-    private boolean isLightningTransitioning;
-    private float lightningTransitionTimer;
     private boolean hasTriggeredLightningTransition;
-    private float lightningFlashAlpha;
+    private final Image lightCircle;
 
     public GameView(GameController controller, Skin skin) {
         this.date = new Label("", skin);
@@ -131,7 +129,10 @@ public class GameView implements Screen, InputProcessor {
         this.isLightningActive = false;
         this.lightningImage = new Image();
         this.lightningImage.setVisible(false);
-        this.lightningFlashAlpha = 0f;
+
+        this.lightCircle = new Image(GameAssetManager.getGameAssetManager().getCircle());
+        this.lightCircle.setColor(1, 1, 1, 0.1f);
+        this.lightCircle.setVisible(false);
     }
 
     @Override
@@ -229,10 +230,7 @@ public class GameView implements Screen, InputProcessor {
                 lightningY - frame.getHeight() / 2f
             );
 
-            // Trigger white flash at the start of lightning
             if (!hasTriggeredLightningTransition) {
-                isLightningTransitioning = true;
-                lightningTransitionTimer = 0.5f; // Shorter duration than 9 AM flash
                 hasTriggeredLightningTransition = true;
             }
 
@@ -247,56 +245,30 @@ public class GameView implements Screen, InputProcessor {
             }
         }
 
-// Update lightning transition timer
-        if (isLightningTransitioning) {
-            lightningTransitionTimer -= delta;
-            if (lightningTransitionTimer <= 0) {
-                isLightningTransitioning = false;
-                lightningTransitionTimer = 0;
+        if (currentHour > 16) {
+            Main.getBatch().begin();
+            Main.getBatch().setColor(0, 0, 0, 0.4f * fadeAlpha);
+            Main.getBatch().draw(GameAssetManager.getGameAssetManager().getBlackScreen(),
+                0, 0, Gdx.graphics.getWidth() * 5, Gdx.graphics.getHeight() * 5);
+            Main.getBatch().end();
+
+            lightCircle.setVisible(true);
+            float circleX = playerSprite.getX() + playerSprite.getWidth() / 2 - lightCircle.getWidth() / 2;
+            float circleY = playerSprite.getY() + playerSprite.getHeight() / 2 - lightCircle.getHeight() / 2;
+
+            circleX -= camera.position.x - Gdx.graphics.getWidth() / 2f;
+            circleY -= camera.position.y - Gdx.graphics.getHeight() / 2f;
+
+            lightCircle.setPosition(circleX, circleY);
+
+            if (lightCircle.getStage() == null) {
+                stage.addActor(lightCircle);
             }
+        } else {
+            lightCircle.setVisible(false);
         }
 
-        // Lightning flash effect
-        float whiteFadeAlpha = 0f;
-        if (isLightningTransitioning) {
-            // Quick flash that peaks immediately and fades out
-            whiteFadeAlpha = lightningTransitionTimer * 4f; // Starts at 0.4f and quickly fades
-        }
-
-// Apply the subtle white flash
-        if (whiteFadeAlpha > 0) {
-            ScreenUtils.clear(1, 1, 1, whiteFadeAlpha);
-            stage.getBatch().begin();
-            stage.getBatch().setColor(1, 1, 1, whiteFadeAlpha);
-            stage.getBatch().draw(GameAssetManager.getGameAssetManager().getWhitePixel(),
-                0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            stage.getBatch().end();
-        }
-
-// Update lightning transition timer
-        if (isLightningTransitioning) {
-            lightningTransitionTimer -= delta;
-            if (lightningTransitionTimer <= 0) {
-                isLightningTransitioning = false;
-                lightningTransitionTimer = 0;
-            }
-        }
-
-        // Lightning flash effect - happens instantly and fades very quickly
-        if (lightningFlashAlpha > 0) {
-            ScreenUtils.clear(1, 1, 1, lightningFlashAlpha);
-            lightningFlashAlpha -= delta * 10f; // Fades out in 0.1 seconds (10x speed)
-
-            // Optional: Draw white rectangle if you want it more visible
-            stage.getBatch().begin();
-            stage.getBatch().setColor(1, 1, 1, lightningFlashAlpha);
-            stage.getBatch().draw(GameAssetManager.getGameAssetManager().getWhitePixel(),
-                0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            stage.getBatch().end();
-        }
-
-        renderUI(fadeAlpha);
-
+        renderUI();
     }
 
     private void updateGameLogic(float delta) {
@@ -380,23 +352,21 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().setColor(1, 1, 1, 1);
     }
 
-    private void renderUI(float alpha) {
-        if (clockImage != null) clockImage.getColor().a = alpha;
-        if (clockArrowImage != null) clockArrowImage.getColor().a = alpha;
-        date.getColor().a = alpha;
-        time.getColor().a = alpha;
-        inventoryHotbarImage.getColor().a = alpha;
-        selectedSlotImage.getColor().a = alpha;
-        if (energyBar != null) energyBar.getColor().a = alpha;
-        if (greenBar != null) greenBar.getColor().a = alpha;
+    private void renderUI() {
+        if (clockImage != null) clockImage.getColor().a = 1f;
+        if (clockArrowImage != null) clockArrowImage.getColor().a = 1f;
+        date.getColor().a = 1f;
+        time.getColor().a = 1f;
+        inventoryHotbarImage.getColor().a = 1f;
+        selectedSlotImage.getColor().a = 1f;
+        if (energyBar != null) energyBar.getColor().a = 1f;
+        if (greenBar != null) greenBar.getColor().a = 1f;
 
-        if (inventoryHotbarImage != null && selectedSlotImage != null) {
-            selectedSlotImage.setPosition(
-                ((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2 + 16.0f)
-                    + selectedSlotIndex * (selectedSlotImage.getWidth() + 1.0f),
-                25.0f
-            );
-        }
+        selectedSlotImage.setPosition(
+            ((stage.getWidth() - inventoryHotbarImage.getWidth()) / 2 + 16.0f)
+                + selectedSlotIndex * (selectedSlotImage.getWidth() + 1.0f),
+            25.0f
+        );
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -469,8 +439,6 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Position position = new Position(screenX, Gdx.graphics.getHeight() - screenY);
-        setLightningPosition(position);
         return false;
     }
 
@@ -587,7 +555,7 @@ public class GameView implements Screen, InputProcessor {
                 started = true;
                 String digitString = Integer.toString(digit);
                 Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
-                digitLabel.setColor(128/255f,0,0,1);
+                digitLabel.setColor(128 / 255f, 0, 0, 1);
                 digitLabel.setPosition(
                     xPosition + (0.75f * clockImage.getWidth()) - 24 * scale * i,
                     yPosition + (0.025f * clockImage.getHeight())
@@ -696,8 +664,6 @@ public class GameView implements Screen, InputProcessor {
         this.lightningY = position.getY() + (int) lightningImage.getHeight() / 2;
         this.isLightningActive = true;
         this.lightningStateTime = 0f;
-        this.isLightningTransitioning = true;
-        this.lightningTransitionTimer = 0.005f; // Very short flash duration (0.1 seconds)
 
         if (lightningImage.getStage() != null) {
             lightningImage.remove();
@@ -711,8 +677,6 @@ public class GameView implements Screen, InputProcessor {
             lightningX - firstFrame.getWidth() / 2f,
             Gdx.graphics.getHeight() - lightningY - firstFrame.getHeight() / 2f
         );
-
-        lightningFlashAlpha = 0.3f;
 
         stage.addActor(lightningImage);
     }

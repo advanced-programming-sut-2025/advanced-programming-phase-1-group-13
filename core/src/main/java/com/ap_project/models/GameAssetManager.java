@@ -163,6 +163,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/TempFarm.png"));
     }
 
+    public Texture getCircle() {
+        return new Texture(Gdx.files.internal("Images/Player/Circle.png"));
+    }
+
     public Texture getRaindrop() {
         return new Texture(Gdx.files.internal("Images/Weather/Raindrop.png"));
     }
