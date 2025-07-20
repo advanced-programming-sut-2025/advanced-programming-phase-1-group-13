@@ -208,7 +208,7 @@ public class Game {
         return resultMessage.toString();
     }
 
-    public Result changeDay() {
+    public Result changeDay() throws Exception {
         StringBuilder message = new StringBuilder("A new day has begun. Here are the updates for today:\n");
 
         for (Farm farm : this.getGameMap().getFarms()) {

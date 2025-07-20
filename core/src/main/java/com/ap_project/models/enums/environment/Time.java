@@ -20,10 +20,6 @@ public class Time {
         this.hour = 9;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
     public int getYear() {
         return year;
     }
@@ -62,7 +58,11 @@ public class Time {
                 }
             }
 
-            System.out.println(game.changeDay().message);
+            try {
+                System.out.println(game.changeDay().message);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         App.getLoggedIn().decreaseHoursLeftTillBuffVanishes(1);

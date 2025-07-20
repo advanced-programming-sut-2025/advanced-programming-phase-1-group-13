@@ -14,7 +14,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -36,10 +35,15 @@ public class GameView implements Screen, InputProcessor {
     private final Label time;
     private final Texture clock;
     private final Texture clockArrow;
+    private Image clockImage;
+    private Image clockArrowImage;
+    private boolean isTransitioning;
+    private float transitionTimer;
+    private boolean hasTriggeredTransition;
+    private int lastHour;
     private final Image inventoryHotbarImage;
     private final Image selectedSlotImage;
     private int selectedSlotIndex;
-    Image previousClockImage = null;
     private final GameController controller;
     private final Sprite playerSprite;
     private final Animation<Texture> playerUpAnimation;
@@ -51,6 +55,8 @@ public class GameView implements Screen, InputProcessor {
     private boolean isMoving;
     private final Texture background;
     private final OrthographicCamera camera;
+    private Image energyBar;
+    private Image greenBar;
 
     public GameView(GameController controller, Skin skin) {
         this.date = new Label("", skin);
@@ -67,6 +73,11 @@ public class GameView implements Screen, InputProcessor {
         Season season = App.getCurrentGame().getGameState().getTime().getSeason();
         this.clock = GameAssetManager.getGameAssetManager().getClock(weather, season);
         this.clockArrow = GameAssetManager.getGameAssetManager().getClockArrow();
+
+        this.isTransitioning = false;
+        this.transitionTimer = 0f;
+        this.hasTriggeredTransition = false;
+        this.lastHour = -1;
 
         this.inventoryHotbarImage = new Image(GameAssetManager.getGameAssetManager().getInventoryHotbar());
         this.selectedSlotImage = new Image(GameAssetManager.getGameAssetManager().getHotbarSelectedSlot());
@@ -101,9 +112,7 @@ public class GameView implements Screen, InputProcessor {
 
         addClock();
         updateClockInfo();
-
         addInventoryHotbar();
-
         updateGreenBar();
 
         int count = 0;
@@ -120,17 +129,52 @@ public class GameView implements Screen, InputProcessor {
                 30.0f
             );
             stage.addActor(itemImage);
-
             count++;
         }
     }
 
     @Override
     public void render(float delta) {
+        int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
+        if (currentHour == 9 && lastHour != 9 && !hasTriggeredTransition) {
+            isTransitioning = true;
+            transitionTimer = 1f;
+            hasTriggeredTransition = true;
+        }
+
+        if (currentHour != 9) {
+            hasTriggeredTransition = false;
+        }
+        lastHour = currentHour;
+
+        if (isTransitioning) {
+            transitionTimer -= delta;
+            if (transitionTimer <= 0) {
+                isTransitioning = false;
+                transitionTimer = 0;
+            }
+        }
+
+        float fadeAlpha = 1f;
+        if (isTransitioning) {
+            float progress = 1f - transitionTimer;
+            fadeAlpha = (progress < 0.5f) ? (1f - 2f * progress) : (2f * progress - 1f);
+        }
+
+        updateGameLogic(delta);
         ScreenUtils.clear(0, 0, 0, 1f);
 
-        float displacement = 200f * delta; // Todo: change to tile size
+        renderGameWorld(fadeAlpha);
+
+        renderUI(fadeAlpha);
+
+        cheatCodes();
+    }
+
+    private void updateGameLogic(float delta) {
+        float displacement = 200f * delta;
         isMoving = false;
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             playerSprite.setY(playerSprite.getY() + displacement);
             currentAnimation = playerUpAnimation;
@@ -159,9 +203,13 @@ public class GameView implements Screen, InputProcessor {
             0
         );
         camera.update();
+        stateTime += delta;
+    }
 
+    private void renderGameWorld(float alpha) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
+        Main.getBatch().setColor(1, 1, 1, alpha);
 
         float backgroundWidth = 3 * Gdx.graphics.getWidth();
         float backgroundHeight = backgroundWidth * background.getHeight() / background.getWidth();
@@ -190,7 +238,6 @@ public class GameView implements Screen, InputProcessor {
             }
         }
 
-        stateTime += delta;
         if (isMoving) {
             Texture frame = currentAnimation.getKeyFrame(stateTime, true);
             playerSprite.setRegion(new TextureRegion(frame));
@@ -202,6 +249,18 @@ public class GameView implements Screen, InputProcessor {
         playerSprite.draw(Main.getBatch());
 
         Main.getBatch().end();
+        Main.getBatch().setColor(1, 1, 1, 1);
+    }
+
+    private void renderUI(float alpha) {
+        if (clockImage != null) clockImage.getColor().a = alpha;
+        if (clockArrowImage != null) clockArrowImage.getColor().a = alpha;
+        date.getColor().a = alpha;
+        time.getColor().a = alpha;
+        inventoryHotbarImage.getColor().a = alpha;
+        selectedSlotImage.getColor().a = alpha;
+        if (energyBar != null) energyBar.getColor().a = alpha;
+        if (greenBar != null) greenBar.getColor().a = alpha;
 
         if (inventoryHotbarImage != null && selectedSlotImage != null) {
             selectedSlotImage.setPosition(
@@ -213,14 +272,11 @@ public class GameView implements Screen, InputProcessor {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+    }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && !isMoving) {
-            Time time = App.getCurrentGame().getGameState().getTime();
-            time.setHour(time.getHour() + 1);
-            if (time.getHour() == 22) {
-                time.setHour(9);
-            }
-            System.out.println("Time set to " + time.getHour());
+    private void cheatCodes() {
+        if (Gdx.input.isKeyPressed(Input.Keys.T) && !isMoving) {
+            controller.cheatAdvanceTime("1");
             updateClockInfo();
         }
 
@@ -328,8 +384,9 @@ public class GameView implements Screen, InputProcessor {
         return false;
     }
 
+
     private void addClock() {
-        Image clockImage = new Image(clock);
+        clockImage = new Image(clock);
         float scale = 0.90f;
         clockImage.setScale(scale);
         float xPosition = Gdx.graphics.getWidth() - clockImage.getWidth() * scale - 10;
@@ -338,18 +395,22 @@ public class GameView implements Screen, InputProcessor {
         stage.addActor(clockImage);
     }
 
+
     private void updateClockInfo() {
-        Image clockImage = new Image(clock);
+        Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
+        Season season = App.getCurrentGame().getGameState().getTime().getSeason();
+        Texture newClock = GameAssetManager.getGameAssetManager().getClock(weather, season);
+        clockImage.setDrawable(new Image(newClock).getDrawable());
+
         float scale = 0.90f;
-        clockImage.setScale(scale);
         float xPosition = Gdx.graphics.getWidth() - clockImage.getWidth() * scale - 10;
         float yPosition = Gdx.graphics.getHeight() - clockImage.getHeight() * scale - 10;
-        clockImage.setPosition(xPosition, yPosition);
 
-        if (previousClockImage != null) {
-            previousClockImage.remove();
+        if (clockArrowImage != null) {
+            clockArrowImage.remove();
         }
-        Image clockArrowImage = new Image(clockArrow);
+
+        clockArrowImage = new Image(clockArrow);
         clockArrowImage.setScale(scale);
         clockArrowImage.setOrigin(
             clockArrowImage.getWidth() / 2,
@@ -361,7 +422,6 @@ public class GameView implements Screen, InputProcessor {
         );
         clockArrowImage.setRotation(getClockArrowDegree());
         stage.addActor(clockArrowImage);
-        previousClockImage = clockArrowImage;
 
         date.setPosition(
             xPosition + (0.5f * clockImage.getWidth()) - 10,
@@ -421,15 +481,21 @@ public class GameView implements Screen, InputProcessor {
     }
 
     public void updateGreenBar() {
-        Image energyBar = new Image(GameAssetManager.getGameAssetManager().getEnergyBar());
+        if (energyBar != null) {
+            energyBar.remove();
+        }
+        if (greenBar != null) {
+            greenBar.remove();
+        }
+
+        energyBar = new Image(GameAssetManager.getGameAssetManager().getEnergyBar());
         energyBar.setPosition(
             Gdx.graphics.getWidth() - energyBar.getWidth() - 10.0f,
             10.0f
         );
         stage.addActor(energyBar);
-        updateTimeLabel();
 
-        Image greenBar = new Image(GameAssetManager.getGameAssetManager().getGreenBar());
+        greenBar = new Image(GameAssetManager.getGameAssetManager().getGreenBar());
         float energyPercentage = App.getLoggedIn().getEnergy() / 200f;
         greenBar.setHeight(energyPercentage * 0.72f * energyBar.getHeight());
         greenBar.setPosition(
@@ -459,5 +525,9 @@ public class GameView implements Screen, InputProcessor {
         isMoving = true;
         App.getLoggedIn().decreaseEnergyBy((int) (0.05f * App.getLoggedIn().getEnergy()));
         System.out.println(App.getLoggedIn().getEnergy());
+    }
+
+    public void newDay() {
+        System.out.println("New Day");
     }
 }
