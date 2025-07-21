@@ -46,13 +46,15 @@ public class GameView implements Screen, InputProcessor {
     private int selectedSlotIndex;
     private final GameController controller;
     private final Sprite playerSprite;
-    private final Animation<Texture> playerUpAnimation;
-    private final Animation<Texture> playerDownAnimation;
-    private final Animation<Texture> playerLeftAnimation;
-    private final Animation<Texture> playerRightAnimation;
+    private Animation<Texture> playerUpAnimation;
+    private Animation<Texture> playerDownAnimation;
+    private Animation<Texture> playerLeftAnimation;
+    private Animation<Texture> playerRightAnimation;
+    private Animation<Texture> playerFaintAnimation;
     private Animation<Texture> currentAnimation;
     private float stateTime;
     private boolean isMoving;
+    private boolean isFainting;
     private final Texture background;
     private final OrthographicCamera camera;
     private Image energyBar;
@@ -98,10 +100,6 @@ public class GameView implements Screen, InputProcessor {
         this.controller = controller;
         controller.setView(this);
 
-        playerUpAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.UP);
-        playerDownAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.DOWN);
-        playerLeftAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.LEFT);
-        playerRightAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.RIGHT);
         currentAnimation = playerDownAnimation;
         App.getLoggedIn().setDirection(Direction.DOWN);
         stateTime = 0f;
@@ -140,6 +138,9 @@ public class GameView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
+        stage.addActor(lightCircle);
+        lightCircle.setVisible(false);
+
         addClock();
         updateClockInfo();
         addInventoryHotbar();
@@ -165,6 +166,12 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        playerUpAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.UP);
+        playerDownAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.DOWN);
+        playerLeftAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.LEFT);
+        playerRightAnimation = GameAssetManager.getGameAssetManager().getPlayerAnimation(App.getLoggedIn().getGender(), Direction.RIGHT);
+        playerFaintAnimation = GameAssetManager.getGameAssetManager().getFaintAnimation(App.getLoggedIn().getGender());
+
         int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
         if (currentHour == 9 && lastHour != 9 && !hasTriggeredTransition) {
             isTransitioning = true;
@@ -260,10 +267,6 @@ public class GameView implements Screen, InputProcessor {
             circleY -= camera.position.y - Gdx.graphics.getHeight() / 2f;
 
             lightCircle.setPosition(circleX, circleY);
-
-            if (lightCircle.getStage() == null) {
-                stage.addActor(lightCircle);
-            }
         } else {
             lightCircle.setVisible(false);
         }
@@ -272,6 +275,18 @@ public class GameView implements Screen, InputProcessor {
     }
 
     private void updateGameLogic(float delta) {
+        isFainting = App.getLoggedIn().getEnergy() < 20;
+
+        if (isFainting) {
+            currentAnimation = playerFaintAnimation;
+            stateTime += delta;
+            if (playerFaintAnimation.isAnimationFinished(stateTime)) {
+                App.getLoggedIn().faint();
+                return;
+            }
+            return;
+        }
+
         float displacement = 200f * delta;
         isMoving = false;
 
@@ -338,7 +353,23 @@ public class GameView implements Screen, InputProcessor {
             }
         }
 
-        if (isMoving) {
+        int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
+        if (currentHour > 16) {
+            Texture circleTexture = GameAssetManager.getGameAssetManager().getCircle();
+            float circleX = playerSprite.getX() + playerSprite.getWidth() / 2 - circleTexture.getWidth() / 2f;
+            float circleY = playerSprite.getY() + playerSprite.getHeight() / 2 - circleTexture.getHeight() / 2f;
+
+            Main.getBatch().draw(
+                circleTexture,
+                circleX,
+                circleY
+            );
+        }
+
+        if (isFainting) {
+            Texture frame = currentAnimation.getKeyFrame(stateTime, true);
+            playerSprite.setRegion(new TextureRegion(frame));
+        } else if (isMoving) {
             Texture frame = currentAnimation.getKeyFrame(stateTime, true);
             playerSprite.setRegion(new TextureRegion(frame));
         } else {

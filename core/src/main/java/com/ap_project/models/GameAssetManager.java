@@ -7,7 +7,6 @@ import com.ap_project.models.enums.types.GameMenuType;
 import com.ap_project.models.enums.types.Gender;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -156,6 +155,22 @@ public class GameAssetManager {
             frames.add(new Texture(Gdx.files.internal(path)));
         }
         return new Animation<>(0.1f, frames);
+    }
+
+    public Animation<Texture> getFaintAnimation(Gender gender) {
+        String genderStr;
+        if (gender == Gender.RATHER_NOT_SAY) {
+            genderStr = "Man";
+        } else {
+            genderStr = gender.getName();
+        }
+
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 12; i++) {
+            String path = "Images/Player/" + genderStr + "/Faint" + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.5f, frames);
     }
 
     public Texture getBackground() {
