@@ -46,6 +46,7 @@ public class ProfileMenuController {
             view.getChangePasswordButton().setChecked(false);
             view.getChangeNicknameButton().setChecked(false);
             view.getChangeEmailButton().setChecked(false);
+            view.getChangeAvatarButton().setChecked(false);
             view.getBackButton().setChecked(false);
         }
     }

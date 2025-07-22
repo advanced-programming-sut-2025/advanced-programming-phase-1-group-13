@@ -175,6 +175,18 @@ public class GameMenuView implements Screen, InputProcessor {
             showSocialMenu();
         }
 
+        Image craftingButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        craftingButton.setScaleY(1.50f);
+        craftingButton.setScaleX(1.25f);
+        craftingButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 110f,
+            Gdx.graphics.getHeight() / 2f + 255f
+        );
+        if (hoverOnImage(craftingButton, screenX, convertedY)) {
+            currentTab = GameMenuType.CRAFTING;
+            updateWindow();
+        }
+
         Image exitButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
         exitButton.setScaleY(1.50f);
         exitButton.setScaleX(1.25f);
