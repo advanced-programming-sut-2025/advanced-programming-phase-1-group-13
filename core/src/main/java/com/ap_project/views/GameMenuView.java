@@ -142,6 +142,7 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getWidth() / 2f - 370f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
+        stage.addActor(inventoryButton);
 
         if (hoverOnImage(inventoryButton, screenX, convertedY)) {
             currentTab = GameMenuType.INVENTORY;

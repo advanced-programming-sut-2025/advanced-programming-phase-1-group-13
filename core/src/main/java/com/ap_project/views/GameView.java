@@ -472,6 +472,7 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        setLightningPosition(new Position(screenX, Gdx.graphics.getHeight() - screenY));
         return false;
     }
 
