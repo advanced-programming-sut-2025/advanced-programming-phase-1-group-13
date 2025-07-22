@@ -8,6 +8,7 @@ import com.ap_project.models.farming.*;
 import com.ap_project.models.inventory.*;
 import com.ap_project.models.tools.*;
 import com.ap_project.models.trade.*;
+import com.ap_project.views.GameView;
 
 import java.util.*;
 
@@ -15,6 +16,11 @@ import static com.ap_project.models.Greenhouse.canBuildGreenhouse;
 import static com.ap_project.models.Position.areClose;
 
 public class GameController {
+    private GameView view;
+
+    public void setView(GameView view) {
+        this.view = view;
+    }
 
     // === PLAYER'S STATUS === //
 
@@ -103,7 +109,7 @@ public class GameController {
             return new Result(false, "You cannot upgrade this tool with your current items of possession.");
         }
         player.getCurrentTool().upgradeTool();
-        player.setBalance(player.getBalance() - tool.getToolMaterial().getUpgradePrice());
+        player.changeBalance(-tool.getToolMaterial().getUpgradePrice());
         player.getBackpack().removeFromInventory(
             Item.getItemByItemType(tool.getToolMaterial().getIngredientForUpgrade()),
             tool.getToolMaterial().getNumOfIngredientNeededForUpgrade()
@@ -901,6 +907,8 @@ public class GameController {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
         Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
 
+        view.setLightningPosition(position);
+
         if (tile != null) {
             tile.setType(TileType.NOT_PLOWED_SOIL); // TODO: is it good?
             App.getCurrentGame().getGameState().triggerLightningStrike();
@@ -908,7 +916,6 @@ public class GameController {
         }
         return new Result(false, "Invalid position for Thor's strike.");
     }
-
 
     public Result showWeather() {
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();

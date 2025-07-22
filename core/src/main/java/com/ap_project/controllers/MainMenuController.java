@@ -2,8 +2,31 @@ package com.ap_project.controllers;
 
 import com.ap_project.models.*;
 import com.ap_project.models.enums.Menu;
+import com.ap_project.views.MainMenuView;
+
+import static com.ap_project.Main.*;
 
 public class MainMenuController {
+    private MainMenuView view;
+
+    public void setView(MainMenuView view) {
+        this.view = view;
+    }
+
+    public void handleMainMenuButtons() {
+        if (view != null) {
+            if (view.getGameMenuButton().isChecked()) {
+                goToPreGameMenu();
+            } else if (view.getProfileMenuButton().isChecked()) {
+                goToProfileMenu();
+            } else if (view.getLogoutButton().isChecked()) {
+                goToTitleMenu();
+            }
+            view.getGameMenuButton().setChecked(false);
+            view.getProfileMenuButton().setChecked(false);
+            view.getLogoutButton().setChecked(false);
+        }
+    }
 
     public Result enterMenu(String menuName) {
         Menu newMenu = Menu.getMenuFromDisplayName(menuName);

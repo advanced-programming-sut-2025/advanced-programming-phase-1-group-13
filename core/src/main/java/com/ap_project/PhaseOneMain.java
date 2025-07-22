@@ -1,6 +1,6 @@
 package com.ap_project;
 
-import com.ap_project.views.AppView;
+import com.ap_project.views.phase_one.AppView;
 
 public class PhaseOneMain{
     public static void main(String[] args) {

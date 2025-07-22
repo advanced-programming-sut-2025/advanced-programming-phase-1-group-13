@@ -5,6 +5,8 @@ import com.ap_project.controllers.TitleMenuController;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -23,7 +25,7 @@ public class TitleMenuView implements Screen {
 
     public TitleMenuView(TitleMenuController controller, Skin skin) {
         this.logo = GameAssetManager.getGameAssetManager().getLogo();
-        this.background = GameAssetManager.getGameAssetManager().getTitleMenuBackground();
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.signUpButton = new TextButton("Signup", skin);
         this.loginButton = new TextButton("Login", skin);
@@ -37,6 +39,11 @@ public class TitleMenuView implements Screen {
 
     @Override
     public void show() {
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("Images/Cursor.png"));
+        Cursor customCursor = Gdx.graphics.newCursor(pixmap, pixmap.getWidth() / 2, pixmap.getHeight() / 2);
+        Gdx.graphics.setCursor(customCursor);
+        pixmap.dispose();
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -50,16 +57,17 @@ public class TitleMenuView implements Screen {
 
         Image backgroundImage = new Image(background);
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-         stage.addActor(backgroundImage);
+        stage.addActor(backgroundImage);
 
         table.add(logoImage).width(originalWidth * 2).height(originalHeight * 2).padBottom(40);
         table.row();
 
-        table.add(signUpButton).padBottom(20);
+        float buttonWidth = 300f;
+        table.add(signUpButton).width(buttonWidth).padBottom(20);
         table.row();
-        table.add(loginButton).padBottom(20);
+        table.add(loginButton).width(buttonWidth).padBottom(20);
         table.row();
-        table.add(exitButton);
+        table.add(exitButton).width(buttonWidth);
 
         stage.addActor(table);
     }

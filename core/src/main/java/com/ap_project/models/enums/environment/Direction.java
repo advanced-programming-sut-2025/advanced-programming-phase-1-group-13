@@ -85,4 +85,21 @@ public enum Direction {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        if (this == Direction.UP || this == Direction.UP_RIGHT || this == Direction.UP_LEFT) {
+            return "Up";
+        }
+        if (this == Direction.DOWN || this == Direction.DOWN_RIGHT || this == Direction.DOWN_LEFT) {
+            return "Down";
+        }
+        if (this == Direction.RIGHT) {
+            return "Right";
+        }
+        if (this == Direction.LEFT) {
+            return "Left";
+        }
+        return null;
+    }
 }

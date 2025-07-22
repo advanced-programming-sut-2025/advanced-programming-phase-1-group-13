@@ -58,7 +58,11 @@ public class Time {
                 }
             }
 
-            System.out.println(game.changeDay().message);
+            try {
+                System.out.println(game.changeDay().message);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         App.getLoggedIn().decreaseHoursLeftTillBuffVanishes(1);
