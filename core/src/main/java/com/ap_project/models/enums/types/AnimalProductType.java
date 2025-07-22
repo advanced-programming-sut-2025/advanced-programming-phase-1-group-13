@@ -5,7 +5,6 @@ public enum AnimalProductType implements ItemType {
     LARGE_CHICKEN_EGG("Large Chicken Egg", "CHICKEN", 95, 800),
     DUCK_EGG("Duck Egg", "DUCK", 95, 1200),
     DUCK_FEATHER("Duck Feather", "DUCK", 250, 1200),
-    RABBIT_WOOL("Rabbit Wool", "RABBIT", 340, 8000),
     RABBIT_FOOT("Rabbit Foot", "RABBIT", 565, 8000),
     DINOSAUR_EGG("Dinosaur Egg", "DINOSAUR", 350, 14000),
     COW_MILK("Cow Milk", "COW", 125, 1500),
