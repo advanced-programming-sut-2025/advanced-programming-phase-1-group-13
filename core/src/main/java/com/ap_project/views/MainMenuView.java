@@ -2,6 +2,7 @@ package com.ap_project.views;
 
 import com.ap_project.Main;
 import com.ap_project.controllers.MainMenuController;
+import com.ap_project.models.App;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -47,6 +48,35 @@ public class MainMenuView implements Screen {
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(backgroundImage);
 
+        Image avatarBackground = new Image(GameAssetManager.getGameAssetManager().getAvatarBackground());
+        avatarBackground.setScale(5f);
+        avatarBackground.setPosition(
+            Gdx.graphics.getWidth() / 1.75f,
+            (Gdx.graphics.getHeight() - 5 * avatarBackground.getHeight()) / 2f
+        );
+        stage.addActor(avatarBackground);
+
+        float bgX = avatarBackground.getX();
+        float bgY = avatarBackground.getY();
+        float bgWidth = avatarBackground.getWidth() * avatarBackground.getScaleX();
+        float bgHeight = avatarBackground.getHeight() * avatarBackground.getScaleY();
+
+        Image avatar = new Image(GameAssetManager.getGameAssetManager().getAvatar(App.getLoggedIn().getAvatarNumber()));
+        avatar.setSize(4 * avatarBackground.getWidth(), 4 * avatarBackground.getHeight());
+        avatar.setPosition(
+            bgX + (bgWidth - avatar.getWidth()) / 2,
+            bgY + (bgHeight - avatar.getHeight()) / 2 - 10
+        );
+        stage.addActor(avatar);
+
+        Label nickname = new Label(App.getLoggedIn().getNickname(), GameAssetManager.getGameAssetManager().getSkin());
+        nickname.setFontScale(1.5f);
+        nickname.setPosition(
+            bgX + (bgWidth - nickname.getPrefWidth()) / 2,
+            bgY - nickname.getPrefHeight() - 10f
+        );
+        stage.addActor(nickname);
+
         table.clear();
         table.setFillParent(true);
         table.center();
@@ -58,6 +88,7 @@ public class MainMenuView implements Screen {
         table.add(profileMenuButton).width(buttonWidth).padBottom(30).row();
         table.add(logoutButton).width(buttonWidth).padBottom(30).row();
 
+        table.padRight(500f);
         stage.addActor(table);
     }
 

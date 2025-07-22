@@ -31,6 +31,14 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/MenuBackground.png"));
     }
 
+    public Texture getAvatarBackground() {
+        return new Texture(Gdx.files.internal("Images/Avatars/AvatarBackground.png"));
+    }
+
+    public Texture getAvatar(int number) {
+        return new Texture(Gdx.files.internal("Images/Avatars/Avatar" + number + ".png"));
+    }
+
     public Texture getClock(Weather weather, Season season) {
         String path = "Images/Clock/" + weather.getName() + season.getName() + ".png";
         return new Texture(Gdx.files.internal(path));

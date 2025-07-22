@@ -21,6 +21,9 @@ public class ProfileMenuController {
     public void handleProfileMenuButtons() {
         if (view != null) {
             Result result = new Result(true, "");
+            if (view.getChangeAvatarButton().isChecked()) {
+                App.getLoggedIn().setAvatarNumber(view.getAvatarBox().getSelected());
+            }
             if (view.getChangeUsernameButton().isChecked()) {
                 String username = view.getUsernameField().getText();
                 result = changeUsername(username);

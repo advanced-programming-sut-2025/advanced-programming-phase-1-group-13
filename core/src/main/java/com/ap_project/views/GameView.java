@@ -275,7 +275,7 @@ public class GameView implements Screen, InputProcessor {
     }
 
     private void updateGameLogic(float delta) {
-        isFainting = App.getLoggedIn().getEnergy() < 20;
+        isFainting = App.getLoggedIn().getEnergy() == 0;
 
         if (isFainting) {
             currentAnimation = playerFaintAnimation;
@@ -398,6 +398,8 @@ public class GameView implements Screen, InputProcessor {
                 + selectedSlotIndex * (selectedSlotImage.getWidth() + 1.0f),
             25.0f
         );
+
+        updateGreenBar();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

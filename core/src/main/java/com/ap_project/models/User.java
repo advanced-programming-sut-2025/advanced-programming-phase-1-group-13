@@ -16,10 +16,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.ap_project.controllers.login.LoginController.hashSha256;
 
@@ -29,6 +26,7 @@ public class User {
     private String nickname;
     private String email;
     private final Gender gender;
+    private int avatarNumber;
     private int woodCount;
     private int stoneCount;
     private transient Game activeGame;
@@ -71,6 +69,7 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.avatarNumber = (new Random()).nextInt(34) + 1;
         this.qAndA = new HashMap<>();
         this.numberOfGames = 0;
         this.mostEarnedMoney = 0;
@@ -336,6 +335,14 @@ public class User {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public int getAvatarNumber() {
+        return avatarNumber;
+    }
+
+    public void setAvatarNumber(int avatarNumber) {
+        this.avatarNumber = avatarNumber;
     }
 
     public String getNickname() {

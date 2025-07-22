@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -34,6 +35,10 @@ public class ProfileMenuView implements Screen {
     private final Label gender;
     private final Label mostEarnedMoney;
     private final Label numberOfGames;
+    private Image avatar;
+    private final Label avatarLabel;
+    private final SelectBox<Integer> avatarBox;
+    private final TextButton changeAvatarButton;
     private final TextButton backButton;
     private final Label errorMessageLabel;
     private final Table table;
@@ -77,6 +82,19 @@ public class ProfileMenuView implements Screen {
 
         this.numberOfGames = new Label("Number of Games: " + user.getNumberOfGames(), skin);
         numberOfGames.setFontScale(1.5f);
+
+        this.avatar = new Image(GameAssetManager.getGameAssetManager().getAvatar(App.getLoggedIn().getAvatarNumber()));
+
+        this.avatarLabel = new Label("Avatar", skin);
+        avatarLabel.setFontScale(1.5f);
+        this.avatarBox = new SelectBox<>(skin);
+        Array<Integer> options = new Array<>();
+        for (int i = 0; i < 35; i++) {
+            options.add(i);
+        }
+        avatarBox.setItems(options);
+        avatarBox.setSelected(App.getLoggedIn().getAvatarNumber());
+        this.changeAvatarButton = new TextButton("Change Avatar", skin);
 
         this.backButton = new TextButton("Back", skin);
 
@@ -125,6 +143,34 @@ public class ProfileMenuView implements Screen {
         table.setPosition(table.getX(), table.getY() + 180);
         stage.addActor(table);
 
+        Table avatarTable = new Table();
+        avatarTable.add(avatarLabel).align(Align.center).padBottom(20);
+        avatarTable.add(avatarBox).align(Align.center).padBottom(20).padLeft(20).row();
+        avatarTable.setPosition(avatarLabel.getX() + 220, avatarLabel.getY() + 200);
+        stage.addActor(avatarTable);
+        changeAvatarButton.setPosition(avatarLabel.getX() + 100, avatarLabel.getY() + 30);
+        stage.addActor(changeAvatarButton);
+
+        Image avatarBackground = new Image(GameAssetManager.getGameAssetManager().getAvatarBackground());
+        avatarBackground.setScale(5f);
+        avatarBackground.setPosition(
+            Gdx.graphics.getWidth() / 3f - 20,
+            (avatarBackground.getHeight()) / 2f - 20
+        );
+        stage.addActor(avatarBackground);
+
+        float bgX = avatarBackground.getX();
+        float bgY = avatarBackground.getY();
+        float bgWidth = avatarBackground.getWidth() * avatarBackground.getScaleX();
+        float bgHeight = avatarBackground.getHeight() * avatarBackground.getScaleY();
+
+        avatar.setSize(4 * avatarBackground.getWidth(), 4 * avatarBackground.getHeight());
+        avatar.setPosition(
+            bgX + (bgWidth - avatar.getWidth()) / 2,
+            bgY + (bgHeight - avatar.getHeight()) / 2 - 10
+        );
+        stage.addActor(avatar);
+
         Table infoTable = new Table();
 
         infoTable.add(gender).align(Align.center).padBottom(20).padLeft(100).row();
@@ -132,7 +178,7 @@ public class ProfileMenuView implements Screen {
         infoTable.add(numberOfGames).align(Align.center).padBottom(20).padLeft(100).row();
         infoTable.add(backButton).padBottom(20);
 
-        infoTable.setPosition(infoTable.getX() + 900, infoTable.getY() + 200);
+        infoTable.setPosition(infoTable.getX() + 1300, infoTable.getY() + 200);
         stage.addActor(infoTable);
 
         stage.addActor(errorMessageLabel);
@@ -143,6 +189,7 @@ public class ProfileMenuView implements Screen {
         ScreenUtils.clear(0, 0, 0, 1f);
         Main.getBatch().begin();
         Main.getBatch().end();
+        avatar = new Image(GameAssetManager.getGameAssetManager().getAvatar(App.getLoggedIn().getAvatarNumber()));
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         controller.handleProfileMenuButtons();
@@ -193,6 +240,14 @@ public class ProfileMenuView implements Screen {
 
     public TextButton getChangeEmailButton() {
         return changeEmailButton;
+    }
+
+    public TextButton getChangeAvatarButton() {
+        return changeAvatarButton;
+    }
+
+    public SelectBox<Integer> getAvatarBox() {
+        return avatarBox;
     }
 
     public TextButton getBackButton() {
