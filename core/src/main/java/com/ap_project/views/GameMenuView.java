@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ap_project.Main.goToMap;
 import static com.ap_project.Main.goToTitleMenu;
 
 public class GameMenuView implements Screen, InputProcessor {
@@ -142,8 +143,6 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getWidth() / 2f - 370f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
-        stage.addActor(inventoryButton);
-
         if (hoverOnImage(inventoryButton, screenX, convertedY)) {
             currentTab = GameMenuType.INVENTORY;
             updateWindow();
@@ -174,6 +173,18 @@ public class GameMenuView implements Screen, InputProcessor {
             currentTab = GameMenuType.SOCIAL;
             updateWindow();
             showSocialMenu();
+        }
+
+        Image mapButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        mapButton.setScaleY(1.50f);
+        mapButton.setScaleX(1.25f);
+        mapButton.setPosition(
+            Gdx.graphics.getWidth() / 2f - 175f,
+            Gdx.graphics.getHeight() / 2f + 255f
+        );
+        stage.addActor(mapButton);
+        if (hoverOnImage(mapButton, screenX, convertedY)) {
+            goToMap(gameView);
         }
 
         Image craftingButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());

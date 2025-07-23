@@ -26,8 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ap_project.Main.goToCheatWindow;
-import static com.ap_project.Main.goToGameMenu;
+import static com.ap_project.Main.*;
 
 public class GameView implements Screen, InputProcessor {
     private Stage stage;
@@ -111,7 +110,7 @@ public class GameView implements Screen, InputProcessor {
             Gdx.graphics.getHeight()
         );
 
-        this.background = GameAssetManager.getGameAssetManager().getBackground();
+        this.background = GameAssetManager.getGameAssetManager().getFarm(App.getCurrentGame(), App.getLoggedIn());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -430,6 +429,12 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        // TODO
+        if (keycode == Input.Keys.N) {
+            controller.nextTurn();
+            updateClockInfo();
+        }
+
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
         }
@@ -457,6 +462,10 @@ public class GameView implements Screen, InputProcessor {
             goToCheatWindow(this, controller);
         }
 
+        if (keycode == Input.Keys.M) {
+            goToMap(this);
+        }
+
         return false;
     }
 
@@ -472,7 +481,6 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        setLightningPosition(new Position(screenX, Gdx.graphics.getHeight() - screenY));
         return false;
     }
 
@@ -506,7 +514,6 @@ public class GameView implements Screen, InputProcessor {
         }
         return false;
     }
-
 
     private void addClock() {
         clockImage = new Image(clock);

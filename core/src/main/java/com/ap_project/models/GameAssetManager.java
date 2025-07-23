@@ -181,9 +181,10 @@ public class GameAssetManager {
         return new Animation<>(0.5f, frames);
     }
 
-    public Texture getBackground() {
-        // TODO
-        return new Texture(Gdx.files.internal("Images/TempFarm.png"));
+    public Texture getFarm(Game game, User user) {
+        int index = game.getPlayers().indexOf(user) + 1;
+        // TODO: String season = game.getGameState().getTime().getSeason().getName();
+        return new Texture(Gdx.files.internal("Images/Map/FarmSpring" + index + ".png"));
     }
 
     public Texture getCircle() {
@@ -207,8 +208,10 @@ public class GameAssetManager {
         return new Animation<>(0.1f, frames);
     }
 
-    public Texture getWhitePixel() {
-        return new Texture(Gdx.files.internal("Images/Weather/Flash.png"));
+    public Texture getMap(Game game) {
+        int numberOfPlayers = game.getPlayers().size();
+        String season = game.getGameState().getTime().getSeason().getName();
+        return new Texture(Gdx.files.internal("Images/Map/Map" + season + numberOfPlayers + ".png"));
     }
 
     public static String toPascalCase(String input) {

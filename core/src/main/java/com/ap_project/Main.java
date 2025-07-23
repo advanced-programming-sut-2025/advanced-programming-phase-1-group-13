@@ -94,6 +94,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new CheatView(gameView, controller));
     }
 
+    public static void goToMap(GameView gameView) {
+        Main.getMain().setScreen(new MapView(gameView));
+    }
+
     public static Main getMain() {
         return main;
     }
