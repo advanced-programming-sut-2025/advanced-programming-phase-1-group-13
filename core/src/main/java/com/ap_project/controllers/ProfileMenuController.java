@@ -4,7 +4,6 @@ import com.ap_project.models.App;
 import com.ap_project.models.Result;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.Menu;
-import com.ap_project.models.enums.commands.LoginCommands;
 import com.ap_project.views.ProfileMenuView;
 
 import static com.ap_project.Main.goToMainMenu;
@@ -42,6 +41,7 @@ public class ProfileMenuController {
             if (!result.success) {
                 view.setErrorMessage(result.message);
             }
+
             view.getChangeUsernameButton().setChecked(false);
             view.getChangePasswordButton().setChecked(false);
             view.getChangeNicknameButton().setChecked(false);
@@ -53,6 +53,11 @@ public class ProfileMenuController {
 
     public Result changeUsername(String newUsername) {
         User currentUser = App.getLoggedIn();
+
+        String validPassword = "^[a-zA-Z0-9-]+$";
+        if (!validPassword.matches(newUsername)) {
+            return new Result(false, "New password does not meet requirements.");
+        }
 
         User existingUser = getUserByUsername(newUsername);
         if (existingUser != null && !existingUser.equals(currentUser)) {
@@ -69,7 +74,9 @@ public class ProfileMenuController {
     }
 
     public Result changeEmail(String newEmail) {
-        if (!LoginCommands.VALID_EMAIL.matches(newEmail)) {
+        String validEmail = "^(?!.*\\.\\.)[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*" +
+            "[A-Za-z0-9])?\\.)+[A-Za-z]{2,}$";
+        if (!validEmail.matches(newEmail)) {
             return new Result(false, "Invalid email format.");
         }
         if (getUserByEmail(newEmail) != null) {
@@ -80,7 +87,8 @@ public class ProfileMenuController {
     }
 
     public Result changePassword(String newPassword) {
-        if (!LoginCommands.VALID_PASSWORD.matches(newPassword)) {
+        String validPassword = "^[a-zA-Z0-9?<>,\"';:\\\\/|\\[\\] {}+=)(*&^%\\$#!]+$";
+        if (!validPassword.matches(newPassword)) {
             return new Result(false, "New password does not meet requirements.");
         }
         App.getLoggedIn().setPassword(newPassword);
@@ -89,14 +97,14 @@ public class ProfileMenuController {
 
     public Result showCurrentMenu() {
         return new Result(true, "Current Menu: " +
-                App.getCurrentMenu().toString());
+            App.getCurrentMenu().toString());
     }
 
     public Result showUserInfo() {
         return new Result(true, App.getLoggedIn().toString());
     }
 
-    public Result goToMainmenu() {
+    public Result exitToMainMenu() {
         App.setCurrentMenu(Menu.MAIN_MENU);
         return new Result(true, "Heading to Profile Menu");
     }

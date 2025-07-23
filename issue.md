@@ -264,22 +264,21 @@
 </details>
 
 
-
 # فاز 2
 **نام و نام خانوادگی راهنما:**
 
 ## کارهایی که باید در فاز 2 انجام دهید
 
 <details>
-  <summary>فاز 1</summary>
+  <summary>فاز 2</summary>
 
-- موارد پیاده سازی فاز اول پروژه
+- موارد پیاده سازی فاز دوم پروژه
 
   <div  dir="ltr" align='right'>
 
     1. [ ] شروع نشده
-    2. [ ] در حال انجام
-    3. [x] تمام شده
+    2. [x] در حال انجام
+    3. [ ] تمام شده
        </div>
 </details>
 
@@ -287,127 +286,13 @@
 
 **نام و نام خانوادگی: یاسمن فرخی**
 <details>
-  <summary>منو</summary>
+  <summary>منوها</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>حیوانات</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>ماهی</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>فرآوری</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>فروشگاه</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>خرید و فروش</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>تعاملات بازیکنان</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>npc</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-## تسک‌های نفر دوم
-
-**نام و نام خانوادگی: درسا ضابطی**
-
-<details>
-  <summary>ثبت نام</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>ورود</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>منوی بازی</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
   </div>
 </details>
 
@@ -418,7 +303,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
   </div>
 </details>
 
@@ -429,32 +314,29 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
   </div>
 </details>
 
 <details>
-  <summary>نقشه</summary>
+  <summary>حرکت</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
   </div>
 </details>
 
-## تسک‌های نفر سوم
-
-**نام و نام خانوادگی: آروین رسول زاده**
 <details>
-  <summary>منوی اصلی</summary>
+  <summary>منوی داخل بازی</summary>
 
   <div dir="ltr" align='right'>
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
   </div>
 </details>
 
@@ -465,54 +347,13 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
   </div>
 </details>
 
-<details>
-  <summary>توانایی</summary>
+## تسک‌های نفر دوم
 
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>ابزار</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>کشاورزی</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
-<details>
-  <summary>ساخت و ساز</summary>
-
-  <div dir="ltr" align='right'>
-
-1. [ ] شروع نشده
-2. [ ] در حال انجام
-3. [x] تمام شده
-  </div>
-</details>
-
+**نام و نام خانوادگی: درسا ضابطی**
 <details>
   <summary>آشپزی</summary>
 
@@ -520,7 +361,35 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [x] تمام شده
+3. [ ] تمام شده
+  </div>
+</details>
+
+## تسک‌های نفر سوم
+
+**نام و نام خانوادگی: آروین رسول زاده**
+<details>
+  <summary>ساخت و ساز</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [ ] تمام شده
+  </div>
+</details>
+
+## تسک‌های نفر چهارم
+
+**نام و نام خانوادگی: سلما رضاوند**
+<details>
+  <summary>نقشه</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [ ] تمام شده
   </div>
 </details>
 

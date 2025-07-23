@@ -11,15 +11,15 @@ public enum ArtisanType {
             ProcessedItemType.LARGE_CHEESE,
             ProcessedItemType.GOAT_CHEESE, ProcessedItemType.LARGE_GOAT_CHEESE))),
     LOOM("Loom", new ArrayList<>(List.of(ProcessedItemType.CLOTH))),
-    MAYO_MACHINE("Mayo Machine", new ArrayList<>(Arrays.asList(ProcessedItemType.MAYONNAISE,
+    MAYONNAISE_MACHINE("Mayonnaise Machine", new ArrayList<>(Arrays.asList(ProcessedItemType.MAYONNAISE,
             ProcessedItemType.LARGE_MAYONNAISE,
             ProcessedItemType.DUCK_MAYONNAISE, ProcessedItemType.DINOSAUR_MAYONNAISE))),
     OIL_MAKER("Oil Maker", new ArrayList<>(Arrays.asList(ProcessedItemType.TRUFFLE_OIL, ProcessedItemType.OIL))),
     PRESERVES_JAR("Preserves Jar", new ArrayList<>(Arrays.asList(ProcessedItemType.PICKLES,
             ProcessedItemType.JELLY))),
-    DRYING_RACK("Drying Rack", new ArrayList<>(Arrays.asList(ProcessedItemType.DRIED_MUSHROOMS,
+    DEHYDRATOR("Dehydrator", new ArrayList<>(Arrays.asList(ProcessedItemType.DRIED_MUSHROOMS,
             ProcessedItemType.DRIED_FRUIT, ProcessedItemType.RAISINS))),
-    SMOKER("Smoker", new ArrayList<>(List.of(ProcessedItemType.SMOKED_FISH))),
+    FISH_SMOKER("Fish Smoker", new ArrayList<>(List.of(ProcessedItemType.SMOKED_FISH))),
     RECYCLER("Recycler", new ArrayList<>(Arrays.asList(ProcessedItemType.COAL, ProcessedItemType.METAL_BAR)));
 
     private final String name;

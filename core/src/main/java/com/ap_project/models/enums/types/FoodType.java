@@ -14,7 +14,7 @@ public enum FoodType implements ItemType {
     MAKI_ROLL("Maki Roll", createIngredientsMap(IngredientType.ANY_FISH, 1, IngredientType.RICE, 1, IngredientType.FIBER, 1), 100, FoodBuff.NOTHING, "Stardrop Saloon", 220),
     TRIPLE_SHOT_ESPRESSO("Triple Shot Espresso", createIngredientsMap(IngredientType.COFFEE, 3), 200, FoodBuff.MAX_ENERGY_PLUS_100, "Stardrop Saloon", 450),
     COOKIE("Cookie", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.SUGAR, 1, IngredientType.EGG, 1), 90, FoodBuff.NOTHING, "Stardrop Saloon", 140),
-    HASH_BROWNS("Hash Browns", createIngredientsMap(IngredientType.POTATO, 1, IngredientType.OIL, 1), 90, FoodBuff.FARMING_5_HOURS, "Stardrop Saloon", 120),
+    HASHBROWNS("Hash Browns", createIngredientsMap(IngredientType.POTATO, 1, IngredientType.OIL, 1), 90, FoodBuff.FARMING_5_HOURS, "Stardrop Saloon", 120),
     PANCAKES("Pancakes", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.EGG, 1), 90, FoodBuff.FORAGING_11_HOURS, "Stardrop Saloon", 80),
     FRUIT_SALAD("Fruit Salad", createIngredientsMap(IngredientType.BLUEBERRY, 1, IngredientType.MELON, 1, IngredientType.APRICOT, 1), 263, FoodBuff.NOTHING, "Stardrop Saloon", 450),
     RED_PLATE("Red Plate", createIngredientsMap(IngredientType.RED_CABBAGE, 1, IngredientType.RADISH, 1), 240, FoodBuff.MAX_ENERGY_PLUS_50, "Stardrop Saloon", 400),
@@ -24,7 +24,7 @@ public enum FoodType implements ItemType {
     FARMERS_LUNCH("Farmer's Lunch", createIngredientsMap(IngredientType.OMELET, 1, IngredientType.PARSNIP, 1), 200, FoodBuff.FARMING_5_HOURS, "Farming level 1", 150),
     SURVIVAL_BURGER("Survival Burger", createIngredientsMap(IngredientType.BREAD, 1, IngredientType.CARROT, 1, IngredientType.EGGPLANT, 1), 125, FoodBuff.FORAGING_5_HOURS, "Foraging level 3", 180),
     DISH_O_THE_SEA("Dish O' the Sea", createIngredientsMap(IngredientType.SARDINE, 2, IngredientType.HASH_BROWNS, 1), 150, FoodBuff.FISHING_5_HOURS, "Fishing level 2", 220),
-    SEAFORM_PUDDING("Seafoam Pudding", createIngredientsMap(IngredientType.FLOUNDER, 1, IngredientType.MIDNIGHT_CARP, 1), 175, FoodBuff.FISHING_10_HOURS, "Fishing level 3", 300),
+    SEAFOAM_PUDDING("Seafoam Pudding", createIngredientsMap(IngredientType.FLOUNDER, 1, IngredientType.MIDNIGHT_CARP, 1), 175, FoodBuff.FISHING_10_HOURS, "Fishing level 3", 300),
     MINERS_TREAT("Miner's Treat", createIngredientsMap(IngredientType.CARROT, 2, IngredientType.SUGAR, 1, IngredientType.MILK, 1), 125, FoodBuff.MINING_5_HOURS, "Mining level 1", 200);
 
     private final String name;

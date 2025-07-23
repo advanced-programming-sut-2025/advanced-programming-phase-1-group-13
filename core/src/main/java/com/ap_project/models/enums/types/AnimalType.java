@@ -8,7 +8,7 @@ public enum AnimalType {
             Arrays.asList(FarmBuildingType.COOP, FarmBuildingType.BIG_COOP, FarmBuildingType.DELUXE_COOP), 800),
     DUCK("Duck", Arrays.asList(AnimalProductType.DUCK_EGG, AnimalProductType.DUCK_FEATHER), true,
             Arrays.asList(FarmBuildingType.BIG_COOP, FarmBuildingType.DELUXE_COOP), 1200),
-    RABBIT("Rabbit", Arrays.asList(AnimalProductType.RABBIT_WOOL, AnimalProductType.RABBIT_FOOT), true,
+    RABBIT("Rabbit", Arrays.asList(AnimalProductType.WOOL, AnimalProductType.RABBIT_FOOT), true,
             List.of(FarmBuildingType.DELUXE_COOP), 8000),
     DINOSAUR("Dinosaur", List.of(AnimalProductType.DINOSAUR_EGG), true,
             List.of(FarmBuildingType.BIG_COOP), 14000),
