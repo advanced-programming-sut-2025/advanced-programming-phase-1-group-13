@@ -418,7 +418,7 @@ public class GameController {
 
     public Result prepareCook(String foodName) {
         User player = App.getLoggedIn();
-        if (App.getCurrentGame().getGameMap().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
+        if (App.getCurrentGame().getPlayerByUsername(player.getUsername()).getFarm().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(false, "You can cook inside your cabin only.");
         }
 
@@ -534,7 +534,7 @@ public class GameController {
         }
         if (!backpack.getItems().containsKey(food) &&
             homeRefrigerator.getItems().containsKey(food) &&
-            App.getCurrentGame().getGameMap().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
+            App.getCurrentGame().getPlayerByUsername(player.getUsername()).getFarm().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
             return new Result(
                 false,
                 "You don't have a " + food.getName() + " in your backpack, but you have one back in your cabin.\n" +
@@ -617,7 +617,7 @@ public class GameController {
     public Tile neighborTile(Direction direction) {
         User player = App.getLoggedIn();
         Position newPosition = Direction.getNewPosition(player.getPosition(), direction);
-        return App.getCurrentGame().getGameMap().getTileByPosition(newPosition);
+        return App.getCurrentGame().getPlayerByUsername(player.getUsername()).getFarm().getTileByPosition(newPosition);
     }
 
     // === WALK === //
@@ -637,7 +637,7 @@ public class GameController {
             }
 
             if (Greenhouse.isPositionInGreenhouse(destination) &&
-                !App.getCurrentGame().getGameMap().getGreenhouse().canEnter()) {
+                !App.getCurrentGame().getPlayerByUsername(player.getUsername()).getFarm().getGreenhouse().canEnter()) {
                 return new Result(false, "You haven't built the greenhouse yet, so you can't enter it.");
             }
             PathFinder pf = new PathFinder(player);
@@ -708,7 +708,7 @@ public class GameController {
 
 
     private boolean isPositionInvalid(Position pos) {
-        List<Tile> allTiles = App.getCurrentGame().getGameMap().getAllTiles();
+        List<Tile> allTiles = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getAllTiles();
         if (allTiles.isEmpty()) return true;
 
         int maxX = allTiles.stream().mapToInt(t -> t.getPosition().getX()).max().orElse(0);
@@ -774,7 +774,7 @@ public class GameController {
         for (int i = x; i < x + size; i++) {
             for (int j = y; j < y + size; j++) {
                 Position pos = new Position(i, j);
-                Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(pos);
+                Tile tile = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(pos);
 
                 if (pos.getX() == playerPos.getX() && pos.getY() == playerPos.getY()) {
                     mapRepresentation.append("👤");
@@ -905,7 +905,7 @@ public class GameController {
 
     public Result cheatThor(String xString, String yString) {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
-        Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
+        Tile tile = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(position);
 
         view.setLightningPosition(position);
 
@@ -952,12 +952,12 @@ public class GameController {
         if (!canBuildGreenhouse()) {
             return new Result(false, "You don't have enough resources or a greenhouse already exists!");
         }
-        App.getCurrentGame().getGameMap().activateGreenhouse();
+        App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().activateGreenhouse();
         return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }
 
     public Result cheatBuildNewGreenhouse() {
-        App.getCurrentGame().getGameMap().activateGreenhouse();
+        App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().activateGreenhouse();
         return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }
 
@@ -986,7 +986,7 @@ public class GameController {
 
     public Result showPlant(String xString, String yString) {
         Position position = new Position(Integer.parseInt(xString), Integer.parseInt(yString));
-        Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(position);
+        Tile tile = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(position);
         if (tile.getType() != TileType.PLANTED_SEED &&
             tile.getType() != TileType.GROWING_CROP &&
             tile.getType() != TileType.GREENHOUSE &&
@@ -1282,7 +1282,7 @@ public class GameController {
                     + ", is already at " + newPosition.toString());
             }
 
-            if (!App.getCurrentGame().getGameMap().getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
+            if (!App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
                 return new Result(false, "Your animal can only go on grass.");
             }
 

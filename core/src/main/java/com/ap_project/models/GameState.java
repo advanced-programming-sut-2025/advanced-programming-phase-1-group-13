@@ -93,9 +93,7 @@ public class GameState {
     public void triggerLightningStrike() {
         if (this.currentWeather == Weather.STORM) {
             this.possibilityOfThor = true;
-            for (Farm farm : App.getCurrentGame().getGameMap().getFarms()) {
-                strikeRandomTiles(farm);
-            }
+            strikeRandomTiles(App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm());
         } else {
             this.possibilityOfThor = false;
         }
@@ -107,7 +105,7 @@ public class GameState {
 
         for (int i = 0; i < strikeCount; i++) {
             Position strikePosition = farm.getRandomTilePosition();
-            Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(strikePosition);
+            Tile tile = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(strikePosition);
             if (tile != null) {
                 tile.setType(TileType.STONE);
             }

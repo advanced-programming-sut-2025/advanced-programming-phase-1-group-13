@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 public class Game {
     private final ArrayList<User> players; // The 3 players
-    private GameMap gameMap;
     private NPCVillage village;
     private boolean isInNPCVillage;
     private GameState gameState;
@@ -33,7 +32,6 @@ public class Game {
         this.gameState = new GameState();
         this.isInNPCVillage = false;
         this.village = new NPCVillage();
-        this.gameMap = null;
         App.setCurrentGame(this);
 
         this.npcs = new ArrayList<>();
@@ -135,14 +133,6 @@ public class Game {
         return gameState;
     }
 
-    public GameMap getGameMap() {
-        return gameMap;
-    }
-
-    public void setGameMap(GameMap gameMap) {
-        this.gameMap = gameMap;
-        //saveGameState();
-    }
 
     public ArrayList<NPC> getNpcs() {
         return npcs;
@@ -211,16 +201,16 @@ public class Game {
     public Result changeDay() {
         StringBuilder message = new StringBuilder("A new day has begun. Here are the updates for today:\n");
 
-        for (Farm farm : this.getGameMap().getFarms()) {
-            message.append(farm.updateAnimals());
-        }
+//        for (Farm farm : this.getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm()) {
+//            message.append(farm.updateAnimals());
+//        }
 
         for (User player : this.players) {
 
             if (player.isDepressed()) {
                 int days = Time.differenceInDays(player.getRejectionTime(), this.getGameState().getTime());
                 message.append(player.getUsername()).append("'s marriage proposal was rejected ").append(days)
-                        .append(" ago. Their energy for today is half the usual.");
+                    .append(" ago. Their energy for today is half the usual.");
                 if (days > 7) {
                     player.setDepressed(false);
                 }
@@ -248,7 +238,7 @@ public class Game {
                         if (result.success) {
                             assert item != null;
                             message.append(npc.getName()).append(" has given you a ").append(item.getName())
-                                    .append(" as a gift!");
+                                .append(" as a gift!");
                         }
                     }
                 }
@@ -258,7 +248,7 @@ public class Game {
                     if (npc.getDaysLeftToUnlockThirdQuest().get(player) == 0) {
                         npc.unlockThirdQuest(player);
                         message.append(npc.getName()).append("'s third quest unlocked for ")
-                                .append(player.getUsername()).append(".\n");
+                            .append(player.getUsername()).append(".\n");
                     }
                 }
             }
@@ -282,7 +272,7 @@ public class Game {
 //                    .append(income).append("g.\n");
 //        }
 
-        for (Tile tile : gameMap.getAllTiles()) {
+        for (Tile tile : getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getAllTiles()) {
             if (tile.getType() == TileType.TREE) {
                 Tree tree = (Tree) tile.getItemPlacedOnTile();
                 tree.incrementDaySinceLastHarvest();
