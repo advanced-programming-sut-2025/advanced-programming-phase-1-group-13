@@ -429,12 +429,6 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        // TODO
-        if (keycode == Input.Keys.N) {
-            controller.nextTurn();
-            updateClockInfo();
-        }
-
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
         }
@@ -464,6 +458,11 @@ public class GameView implements Screen, InputProcessor {
 
         if (keycode == Input.Keys.M) {
             goToMap(this);
+        }
+
+        if (keycode == Input.Keys.R) {
+            controller.cheatAdvanceTime("1");
+            updateClockInfo();
         }
 
         return false;

@@ -1,12 +1,14 @@
 package com.ap_project.views;
 
 import com.ap_project.Main;
+import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
 import com.ap_project.models.enums.Skill;
 import com.ap_project.models.enums.types.GameMenuType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -182,7 +184,6 @@ public class GameMenuView implements Screen, InputProcessor {
             Gdx.graphics.getWidth() / 2f - 175f,
             Gdx.graphics.getHeight() / 2f + 255f
         );
-        stage.addActor(mapButton);
         if (hoverOnImage(mapButton, screenX, convertedY)) {
             goToMap(gameView);
         }
@@ -220,9 +221,17 @@ public class GameMenuView implements Screen, InputProcessor {
                 Gdx.graphics.getHeight() / 2f + 19f
             );
             if (hoverOnImage(exitToTitle, screenX, convertedY)) {
-                App.setCurrentGame(null);
-                App.setLoggedIn(null);
-                goToTitleMenu();
+                if (App.getLoggedIn().equals(App.getCurrentGame().getPlayers().get(0))) {
+                    App.setCurrentGame(null);
+                    App.setLoggedIn(null);
+                    goToTitleMenu();
+                } else {
+                    Label errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+                    errorMessageLabel.setColor(Color.RED);
+                    errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+                    errorMessageLabel.setText("Only the creator of the game can exit it.");
+                    stage.addActor(errorMessageLabel);
+                }
             }
 
             Image exitToDesktop = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -233,7 +242,30 @@ public class GameMenuView implements Screen, InputProcessor {
                 Gdx.graphics.getHeight() / 2f - 120f
             );
             if (hoverOnImage(exitToDesktop, screenX, convertedY)) {
-                Gdx.app.exit();
+                if (App.getLoggedIn().equals(App.getCurrentGame().getPlayers().get(0))) {
+
+                    Gdx.app.exit();
+                } else {
+                    Label errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+                    errorMessageLabel.setColor(Color.RED);
+                    errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+                    errorMessageLabel.setText("Only the creator of the game can exit it.");
+                    stage.addActor(errorMessageLabel);
+                }
+            }
+
+            // TODO
+            Image nextTurn = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            nextTurn.setScaleY(2.35f);
+            nextTurn.setScaleX(8.50f);
+            nextTurn.setPosition(
+                Gdx.graphics.getWidth() / 2f - 165f,
+                Gdx.graphics.getHeight() / 2f - 240f
+            );
+            stage.addActor(nextTurn);
+            if (hoverOnImage(nextTurn, screenX, convertedY)) {
+                GameController.nextTurn();
+                Main.getMain().setScreen(gameView);
             }
         }
 
