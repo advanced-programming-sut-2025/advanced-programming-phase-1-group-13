@@ -5,6 +5,7 @@ import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.types.GameMenuType;
 import com.ap_project.models.enums.types.Gender;
+import com.ap_project.models.enums.types.ShopType;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -224,8 +225,16 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Player/" + genderStr + "/Icon.png"));
     }
 
+    public Texture getShop(ShopType shopType, Season season) {
+        String shopName = shopType.getName();
+        String seasonStr = season.getName();
+        return new Texture(Gdx.files.internal("Images/Map/Village/" + shopName + seasonStr + ".png"));
+    }
+
     public static String toPascalCase(String input) {
         if (input == null || input.isEmpty()) return "";
+
+        input = input.replaceAll("'", "");
 
         StringBuilder pascal = new StringBuilder();
         for (String word : input.trim().split("\\s+")) {
