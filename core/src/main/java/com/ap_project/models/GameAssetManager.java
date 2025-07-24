@@ -233,7 +233,7 @@ public class GameAssetManager {
 
     public Texture getVillage(Season season) {
         String seasonStr = season.getName();
-        return new Texture(Gdx.files.internal("Images/Map/Village/Blacksmith" + seasonStr + ".png"));
+        return new Texture(Gdx.files.internal("Images/Map/Village/Village" + seasonStr + ".png"));
     }
 
     public static String toPascalCase(String input) {
