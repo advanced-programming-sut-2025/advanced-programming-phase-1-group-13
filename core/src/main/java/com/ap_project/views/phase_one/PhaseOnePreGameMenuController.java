@@ -48,16 +48,15 @@ public class PhaseOnePreGameMenuController {
         return new Result(true, "New game made.");
     }
 
-    public Result chooseGameMap(String mapNumberString) {
+    public Result chooseGameMap(String mapNumberString, User user) {
         int mapNumber = Integer.parseInt(mapNumberString);
         if (mapNumber != 1 & mapNumber != 2) {
             return new Result(false, "Map number out of bounds. Chose either 1 or 2.");
         }
-        User player = App.getLoggedIn();
-        player.getActiveGame().setGameMap(new GameMap(mapNumber));
-        setCurrentMenu(Menu.GAME_MENU);
-        return new Result(true, "Game");
+        user.setFarm(new Farm(mapNumber));
+        return new Result(true, "Game map chosen. " + user.getFarm().getTrees());
     }
+
 
     public Result loadGame() {
         User player = App.getLoggedIn();

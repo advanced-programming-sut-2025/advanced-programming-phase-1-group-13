@@ -214,6 +214,16 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Map" + season + numberOfPlayers + ".png"));
     }
 
+    public Texture getPlayerIcon(Gender gender) {
+        String genderStr;
+        if (gender == Gender.RATHER_NOT_SAY) {
+            genderStr = "Man";
+        } else {
+            genderStr = gender.getName();
+        }
+        return new Texture(Gdx.files.internal("Images/Player/" + genderStr + "/Icon.png"));
+    }
+
     public static String toPascalCase(String input) {
         if (input == null || input.isEmpty()) return "";
 

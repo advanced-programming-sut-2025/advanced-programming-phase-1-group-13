@@ -77,6 +77,15 @@ public class User {
         this.resetPlayer();
     }
 
+    public Farm getFarm() {
+        return farm;
+    }
+
+
+    public void setFarm(Farm farm) {
+        this.farm = farm;
+    }
+
     public void resetPlayer() {
         this.woodCount = 0;
         this.stoneCount = 0;
@@ -232,10 +241,6 @@ public class User {
         this.qAndA = qAndA;
     }
 
-    public void setFarm(Farm farm) {
-        this.farm = farm;
-    }
-
     public void setBackpack(Backpack backpack) {
         this.backpack = backpack;
     }
@@ -302,10 +307,6 @@ public class User {
 
     public Direction getDirection() {
         return direction;
-    }
-
-    public Farm getFarm() {
-        return farm;
     }
 
     public Backpack getBackpack() {
@@ -485,9 +486,9 @@ public class User {
 
     public boolean hasInteractedToday(User user) {
         return this.hasExchangedFlowerToday(user) ||
-                this.hasHuggedToday(user) ||
-                this.exchangedGiftToday(user) ||
-                this.hasTalkedToToday(user);
+            this.hasHuggedToday(user) ||
+            this.exchangedGiftToday(user) ||
+            this.hasTalkedToToday(user);
     }
 
     public User getSpouse() {
@@ -615,7 +616,7 @@ public class User {
         for (int dx = -1; dx < 1; dx++) {
             for (int dy = -1; dy < 1; dy++) {
                 position = new Position(x + dx, y + dy);
-                if (!(dx == 0 && dy == 0) && Objects.requireNonNull(this.activeGame.getGameMap().getTileByPosition(position)).getType().equals(tileType)) {
+                if (!(dx == 0 && dy == 0) && Objects.requireNonNull(this.activeGame.getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(position)).getType().equals(tileType)) {
                     return true;
                 }
             }
@@ -643,8 +644,8 @@ public class User {
         }
         App.getCurrentGame().addTrade(trade);
         return new Result(true, "Trade offer created: " + (isOffer ? "Offering" : "Requesting") + " " +
-                item.getName() + "(x" + amount + ") for " + price + "g with " + targetUser.getUsername() + ". " +
-                "Wait for their respond.");
+            item.getName() + "(x" + amount + ") for " + price + "g with " + targetUser.getUsername() + ". " +
+            "Wait for their respond.");
     }
 
     public Result tradeWithItem(User targetUser, boolean isOffer, Item item, int amount,
@@ -652,23 +653,23 @@ public class User {
         Trade trade;
         if (isOffer) {
             trade = new TradeWithItem(this.activeGame, this, this, targetUser, item, amount,
-                    targetItem, targetAmount);
+                targetItem, targetAmount);
         } else {
             trade = new TradeWithItem(this.activeGame, this, targetUser, this, item, amount,
-                    targetItem, targetAmount);
+                targetItem, targetAmount);
         }
         App.getCurrentGame().addTrade(trade);
         return new Result(true, "Trade offer created: " + (isOffer ? "Offering" : "Requesting") + " " +
-                item.getName() + "(x" + amount + ") for " + targetItem.getName() + "(x" + targetAmount + ") with " +
-                targetUser.getUsername() + ". Wait for their respond.");
+            item.getName() + "(x" + amount + ") for " + targetItem.getName() + "(x" + targetAmount + ") with " +
+            targetUser.getUsername() + ". Wait for their respond.");
     }
 
     @Override
     public String toString() {
         return "Username: " + this.username + "\n" +
-                "Nickname: " + this.nickname + "\n" +
-                "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
-                "Number of games: " + this.numberOfGames;
+            "Nickname: " + this.nickname + "\n" +
+            "Most earned money in a game: " + this.mostEarnedMoney + "\n" +
+            "Number of games: " + this.numberOfGames;
     }
 
     public int getWoodCount() {

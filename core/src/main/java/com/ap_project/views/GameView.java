@@ -106,8 +106,8 @@ public class GameView implements Screen, InputProcessor {
 
         playerSprite = new Sprite(GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), Direction.DOWN));
         playerSprite.setPosition(
-            Gdx.graphics.getWidth() - 40f,
-            Gdx.graphics.getHeight()
+            App.getLoggedIn().getPosition().getX(),
+            App.getLoggedIn().getPosition().getY()
         );
 
         this.background = GameAssetManager.getGameAssetManager().getFarm(App.getCurrentGame(), App.getLoggedIn());
@@ -289,33 +289,61 @@ public class GameView implements Screen, InputProcessor {
         float displacement = 200f * delta;
         isMoving = false;
 
+        float backgroundWidth = 3 * Gdx.graphics.getWidth();
+        float backgroundHeight = backgroundWidth * background.getHeight() / background.getWidth();
+
+        float playerWidth = playerSprite.getWidth();
+        float playerHeight = playerSprite.getHeight();
+        float minX = playerWidth / 2;
+        float maxX = backgroundWidth - playerWidth / 2;
+        float minY = playerHeight / 2;
+        float maxY = backgroundHeight - playerHeight / 2;
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            playerSprite.setY(playerSprite.getY() + displacement);
+            float newY = playerSprite.getY() + displacement;
+            if (newY + playerHeight / 2 < maxY) {
+                playerSprite.setY(newY);
+            }
             currentAnimation = playerUpAnimation;
             App.getLoggedIn().setDirection(Direction.UP);
             walk();
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            playerSprite.setY(playerSprite.getY() - displacement);
+            float newY = playerSprite.getY() - displacement;
+            if (newY - playerHeight / 2 > minY) {
+                playerSprite.setY(newY);
+            }
             currentAnimation = playerDownAnimation;
             App.getLoggedIn().setDirection(Direction.DOWN);
             walk();
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            playerSprite.setX(playerSprite.getX() - displacement);
+            float newX = playerSprite.getX() - displacement;
+            if (newX - playerWidth / 2 > minX) {
+                playerSprite.setX(newX);
+            }
             currentAnimation = playerLeftAnimation;
             App.getLoggedIn().setDirection(Direction.LEFT);
             walk();
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            playerSprite.setX(playerSprite.getX() + displacement);
+            float newX = playerSprite.getX() + displacement;
+            if (newX + playerWidth / 2 < maxX) {
+                playerSprite.setX(newX);
+            }
             currentAnimation = playerRightAnimation;
             App.getLoggedIn().setDirection(Direction.RIGHT);
             walk();
         }
 
-        camera.position.set(
-            playerSprite.getX() + playerSprite.getWidth() / 2,
-            playerSprite.getY() + playerSprite.getHeight() / 2,
-            0
-        );
+        playerSprite.setX(Math.max(minX, Math.min(maxX, playerSprite.getX())));
+        playerSprite.setY(Math.max(minY, Math.min(maxY, playerSprite.getY())));
+
+        float cameraX = Math.max(camera.viewportWidth / 2,
+            Math.min(backgroundWidth - camera.viewportWidth / 2,
+                playerSprite.getX() + playerSprite.getWidth() / 2));
+        float cameraY = Math.max(camera.viewportHeight / 2,
+            Math.min(backgroundHeight - camera.viewportHeight / 2,
+                playerSprite.getY() + playerSprite.getHeight() / 2));
+
+        camera.position.set(cameraX, cameraY, 0);
         camera.update();
         stateTime += delta;
     }
