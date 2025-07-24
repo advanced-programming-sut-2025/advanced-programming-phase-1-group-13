@@ -31,7 +31,7 @@ public class Farm {
     private final ArrayList<Tile> woodLogs;
     private final ArrayList<ForagingCrop> foragings;
     private transient Random random = new Random();
-    private static ArrayList<Tile> allTiles;
+    private ArrayList<Tile> allTiles;
 
     public Farm(int mapNumberToFollow) {
         this.cropCount = 0;
@@ -130,10 +130,12 @@ public class Farm {
         for (int i = 0; i < treeCount; i++) {
             Position pos = availablePositions.get(i);
             Tile tile = getTileByPosition(pos);
-            Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
-            trees.add(tree);
-            tile.setType(TileType.TREE);
-            tile.pLaceItemOnTile(tree);
+            if (tile != null) {
+                Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
+                trees.add(tree);  // Add to trees list
+                tile.setType(TileType.TREE);
+                tile.pLaceItemOnTile(tree);
+            }
         }
 
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
@@ -392,7 +394,7 @@ public class Farm {
     }
 
     public ArrayList<Tile> getFarmTiles() {
-        return App.getLoggedIn().getActiveGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getAllTiles();
+        return this.getFarmTiles();
     }
 
     public Cabin getCabin() {

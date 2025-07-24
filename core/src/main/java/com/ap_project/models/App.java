@@ -32,7 +32,6 @@ public class App {
         return currentGame;
     }
 
-
     public static void setCurrentGame(Game currentGame) {
         App.currentGame = currentGame;
     }
