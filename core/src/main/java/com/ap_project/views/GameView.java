@@ -28,48 +28,48 @@ import java.util.Map;
 
 import static com.ap_project.Main.*;
 
-public class GameView implements Screen, InputProcessor {
-    private Stage stage;
-    private final Label date;
-    private final Label time;
-    private final Texture clock;
-    private final Texture clockArrow;
-    private Image clockImage;
-    private Image clockArrowImage;
-    private boolean isTransitioning;
-    private float transitionTimer;
-    private boolean hasTriggeredTransition;
-    private int lastHour;
-    private final Image inventoryHotbarImage;
-    private final Image selectedSlotImage;
-    private int selectedSlotIndex;
-    private final GameController controller;
-    private final Sprite playerSprite;
-    private Animation<Texture> playerUpAnimation;
-    private Animation<Texture> playerDownAnimation;
-    private Animation<Texture> playerLeftAnimation;
-    private Animation<Texture> playerRightAnimation;
-    private Animation<Texture> playerFaintAnimation;
-    private Animation<Texture> currentAnimation;
-    private float stateTime;
-    private boolean isMoving;
-    private boolean isFainting;
-    private final Texture background;
-    private final OrthographicCamera camera;
-    private Image energyBar;
-    private Image greenBar;
-    private final ArrayList<Image> raindrops;
-    private boolean isRaining;
-    private final ArrayList<Image> snowflakes;
-    private boolean isSnowing;
-    private final Animation<Texture> lightningAnimation;
-    private float lightningStateTime;
-    private boolean isLightningActive;
-    private Image lightningImage;
-    private int lightningX;
-    private int lightningY;
-    private boolean hasTriggeredLightningTransition;
-    private final Image lightCircle;
+public abstract class GameView implements Screen, InputProcessor {
+    protected Stage stage;
+    protected final Label date;
+    protected final Label time;
+    protected final Texture clock;
+    protected final Texture clockArrow;
+    protected Image clockImage;
+    protected Image clockArrowImage;
+    protected boolean isTransitioning;
+    protected float transitionTimer;
+    protected boolean hasTriggeredTransition;
+    protected int lastHour;
+    protected final Image inventoryHotbarImage;
+    protected final Image selectedSlotImage;
+    protected int selectedSlotIndex;
+    protected final GameController controller;
+    protected final Sprite playerSprite;
+    protected Animation<Texture> playerUpAnimation;
+    protected Animation<Texture> playerDownAnimation;
+    protected Animation<Texture> playerLeftAnimation;
+    protected Animation<Texture> playerRightAnimation;
+    protected Animation<Texture> playerFaintAnimation;
+    protected Animation<Texture> currentAnimation;
+    protected float stateTime;
+    protected boolean isMoving;
+    protected boolean isFainting;
+    protected Texture background;
+    protected final OrthographicCamera camera;
+    protected Image energyBar;
+    protected Image greenBar;
+    protected final ArrayList<Image> raindrops;
+    protected boolean isRaining;
+    protected final ArrayList<Image> snowflakes;
+    protected boolean isSnowing;
+    protected final Animation<Texture> lightningAnimation;
+    protected float lightningStateTime;
+    protected boolean isLightningActive;
+    protected Image lightningImage;
+    protected int lightningX;
+    protected int lightningY;
+    protected boolean hasTriggeredLightningTransition;
+    protected final Image lightCircle;
 
     public GameView(GameController controller, Skin skin) {
         this.date = new Label("", skin);
@@ -109,8 +109,6 @@ public class GameView implements Screen, InputProcessor {
             App.getLoggedIn().getPosition().getX(),
             App.getLoggedIn().getPosition().getY()
         );
-
-        this.background = GameAssetManager.getGameAssetManager().getFarm(App.getCurrentGame(), App.getLoggedIn());
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -273,7 +271,7 @@ public class GameView implements Screen, InputProcessor {
         renderUI();
     }
 
-    private void updateGameLogic(float delta) {
+    protected void updateGameLogic(float delta) {
         isFainting = App.getLoggedIn().getEnergy() == 0;
 
         if (isFainting) {
@@ -348,7 +346,7 @@ public class GameView implements Screen, InputProcessor {
         stateTime += delta;
     }
 
-    private void renderGameWorld(float alpha) {
+    protected void renderGameWorld(float alpha) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
         Main.getBatch().setColor(1, 1, 1, alpha);
@@ -410,7 +408,7 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().setColor(1, 1, 1, 1);
     }
 
-    private void renderUI() {
+    protected void renderUI() {
         if (clockImage != null) clockImage.getColor().a = 1f;
         if (clockArrowImage != null) clockArrowImage.getColor().a = 1f;
         date.getColor().a = 1f;
@@ -542,7 +540,7 @@ public class GameView implements Screen, InputProcessor {
         return false;
     }
 
-    private void addClock() {
+    protected void addClock() {
         clockImage = new Image(clock);
         float scale = 0.90f;
         clockImage.setScale(scale);
@@ -553,7 +551,7 @@ public class GameView implements Screen, InputProcessor {
     }
 
 
-    private void updateClockInfo() {
+    protected void updateClockInfo() {
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
         Season season = App.getCurrentGame().getGameState().getTime().getSeason();
         Texture newClock = GameAssetManager.getGameAssetManager().getClock(weather, season);
@@ -597,14 +595,14 @@ public class GameView implements Screen, InputProcessor {
         updateBalanceLabel(clockImage, xPosition, yPosition, scale);
     }
 
-    private void updateDateLabel() {
+    protected void updateDateLabel() {
         Time currentTime = App.getCurrentGame().getGameState().getTime();
         String weekday = currentTime.getWeekday().getName().substring(0, 3);
         int dayInSeason = currentTime.getDayInSeason();
         date.setText(weekday + ". " + dayInSeason);
     }
 
-    private void updateTimeLabel() {
+    protected void updateTimeLabel() {
         int hour = App.getCurrentGame().getGameState().getTime().getHour();
         String text = hour % 12 + ":00 " + (hour < 12 ? "am" : "pm");
         if (text.equals("0:00 pm")) {
@@ -613,7 +611,7 @@ public class GameView implements Screen, InputProcessor {
         time.setText(text);
     }
 
-    private void updateBalanceLabel(Image clockImage, float xPosition, float yPosition, float scale) {
+    protected void updateBalanceLabel(Image clockImage, float xPosition, float yPosition, float scale) {
         int balance = (int) App.getLoggedIn().getBalance();
         boolean started = false;
         for (int i = 7; i >= 0; i--) {
@@ -633,7 +631,7 @@ public class GameView implements Screen, InputProcessor {
         }
     }
 
-    private float getClockArrowDegree() {
+    protected float getClockArrowDegree() {
         float hour = (float) App.getCurrentGame().getGameState().getTime().getHour();
         return -180 * (hour - 9f) / (22f - 9f);
     }
@@ -669,7 +667,7 @@ public class GameView implements Screen, InputProcessor {
         stage.addActor(selectedSlotImage);
     }
 
-    private void changeSelectedInventorySlot(int amount) {
+    protected void changeSelectedInventorySlot(int amount) {
         selectedSlotIndex += amount;
         if (selectedSlotIndex > 11) {
             selectedSlotIndex = 0;
@@ -685,14 +683,14 @@ public class GameView implements Screen, InputProcessor {
         System.out.println(App.getLoggedIn().getEnergy());
     }
 
-    private void clearRaindrops() {
+    protected void clearRaindrops() {
         for (Image raindrop : raindrops) {
             raindrop.remove();
         }
         raindrops.clear();
     }
 
-    private void updateRain() {
+    protected void updateRain() {
         clearRaindrops();
         int raindropCount = randomIntBetween(100, 150);
         for (int i = 0; i < raindropCount; i++) {
@@ -706,14 +704,14 @@ public class GameView implements Screen, InputProcessor {
         }
     }
 
-    private void clearSnowflakes() {
+    protected void clearSnowflakes() {
         for (Image snowflake : snowflakes) {
             snowflake.remove();
         }
         snowflakes.clear();
     }
 
-    private void updateSnow() {
+    protected void updateSnow() {
         clearSnowflakes();
         int snowflakeCount = randomIntBetween(100, 150);
         for (int i = 0; i < snowflakeCount; i++) {
