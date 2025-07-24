@@ -17,8 +17,8 @@ public class Greenhouse {
     private void generateFixedGreenhouseTiles() {
         int startX = 20;
         int startY = 20;
-        int width = 5;
-        int height = 5;
+        int width = 7;
+        int height = 6;
 
         for (int i = startX; i < startX + width; i++) {
             for (int j = startY; j < startY + height; j++) {

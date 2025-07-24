@@ -18,13 +18,13 @@ public class Farm {
     private final ArrayList<Crop> plantedCrops;
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
-    private final int height;
-    private final int width;
+    private final int height = 74;
+    private final int width = 55;
     private final ArrayList<Artisan> artisans;
     private ArrayList<ShippingBin> shippingBins;
 
-    private static final int MAP_SIZE = 100;
-    private static final int CABIN_SIZE = 10;
+    private static final int CABIN_SIZE_X = 9;
+    private static final int CABIN_SIZE_Y = 6;
     private final int mapNumber;
     private Lake lake;
     private final ArrayList<Mineral> stones;
@@ -48,8 +48,6 @@ public class Farm {
         for (ArtisanType artisanType : ArtisanType.values()) {
             this.artisans.add(new Artisan(artisanType));
         }
-        this.height = 100;
-        this.width = 100;
 
         if (mapNumberToFollow == 1) {
             // TODO: complete Constructor
@@ -72,10 +70,10 @@ public class Farm {
 
     // GameMap Methods
     private void generateBaseMapTiles() {
-        allTiles = new ArrayList<>(MAP_SIZE * MAP_SIZE);
+        allTiles = new ArrayList<>(width * height);
 
-        for (int x = 0; x < MAP_SIZE; x++) {
-            for (int y = 0; y < MAP_SIZE; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 Position pos = new Position(x, y);
                 Tile tile = new Tile(pos, TileType.NOT_PLOWED_SOIL);
                 tile.setPosition(pos);
@@ -90,23 +88,15 @@ public class Farm {
         }
     }
 
-    public static int getMAP_SIZE() {
-        return MAP_SIZE;
-    }
-
-    public int getCABIN_SIZE() {
-        return CABIN_SIZE;
-    }
-
     private void generateFixedElements() {
         if (mapNumber == 1) {
-            this.lake = generateLake(10, 15, 5, 8);
-            this.cabin = generateCabin(3, 3, 4, 4);
+            this.lake = generateLake(10, 15, 10, 14);
+            this.cabin = generateCabin(3, 3, 9, 6);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10, 10);
         } else if (mapNumber == 2) {
-            this.lake = generateLake(50, 10, 8, 5);
-            this.cabin = generateCabin(4, 4, 4, 4);
+            this.lake = generateLake(50, 10, 6, 6);
+            this.cabin = generateCabin(4, 4, 9, 6);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15, 10);
         }
@@ -168,8 +158,8 @@ public class Farm {
 
     private Position getRandomPosition() {
         while (true) {
-            int x = random.nextInt(MAP_SIZE);
-            int y = random.nextInt(MAP_SIZE);
+            int x = random.nextInt(width);
+            int y = random.nextInt(height);
             Position pos = new Position(x, y);
 
             if (!isPositionOccupied(pos)) {
