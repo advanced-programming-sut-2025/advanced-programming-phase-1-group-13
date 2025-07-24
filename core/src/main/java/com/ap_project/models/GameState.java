@@ -16,6 +16,7 @@ public class GameState {
     private Time time;
     private Weather currentWeather;
 
+
     public GameState() {
         this.cropGrowthRate = 0; // TODO
         this.automaticIrrigation = false; // TODO

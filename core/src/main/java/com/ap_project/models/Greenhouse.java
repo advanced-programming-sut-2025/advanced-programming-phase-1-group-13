@@ -46,6 +46,7 @@ public class Greenhouse {
         this.canEnter = canEnter;
     }
 
+
     public static boolean canBuildGreenhouse() {
         int requiredWood = 500;
         int requiredStone = 1000;

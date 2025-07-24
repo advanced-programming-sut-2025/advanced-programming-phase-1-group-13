@@ -449,6 +449,7 @@ public class Farm {
         return true;
     }
 
+
     public ArrayList<Animal> getAllFarmAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
 

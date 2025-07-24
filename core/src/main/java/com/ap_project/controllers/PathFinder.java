@@ -62,6 +62,7 @@ public class PathFinder {
         return new Result(true, "Walked! Energy used=" + energyCost);
     }
 
+
     public static Shop whichShop(Tile tile) {
         for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
             if (shop.containsPosition(tile.getPosition())) {

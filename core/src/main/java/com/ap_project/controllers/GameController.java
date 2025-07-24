@@ -39,6 +39,7 @@ public class GameController {
         return new Result(true, "Your energy is: " + playerEnergy);
     }
 
+
     public Result showPlayerPosition() {
         User player = App.getLoggedIn();
         Position position = player.getPosition();
