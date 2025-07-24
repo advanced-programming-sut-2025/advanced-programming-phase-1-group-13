@@ -59,6 +59,7 @@ public class PhaseOnePreGameMenuController {
         return new Result(true, "Game");
     }
 
+
     public Result loadGame() {
         User player = App.getLoggedIn();
         App.setCurrentGame(player.getActiveGame());
