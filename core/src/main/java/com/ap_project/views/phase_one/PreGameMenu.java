@@ -1,6 +1,7 @@
 package com.ap_project.views.phase_one;
 
 import com.ap_project.models.App;
+import com.ap_project.models.Game;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.Menu;
 import com.ap_project.models.enums.commands.PreGameMenuCommands;
@@ -16,6 +17,7 @@ public class PreGameMenu implements AppMenu {
     private final PhaseOnePreGameMenuController controller = new PhaseOnePreGameMenuController();
     Matcher matcher;
     private List<String> pendingUsernames = new ArrayList<>();
+    private ArrayList<User> usersInGame = new ArrayList<>();
 
     @Override
     public void check(Scanner scanner) {
@@ -28,8 +30,21 @@ public class PreGameMenu implements AppMenu {
             } else {
                 pendingUsernames = new ArrayList<>(Arrays.asList(usernamesInput.trim().split("\\s+")));
                 pendingUsernames.add(App.getLoggedIn().getUsername());
+
+                // Convert pendingUsernames to usersInGame
+                usersInGame.clear();
+                for (String username : pendingUsernames) {
+                    User user = App.getUserByUsername(username);
+                    if (user != null) {
+                        usersInGame.add(user);
+                    } else {
+                        System.out.println("Warning: User '" + username + "' not found and will be ignored.");
+                    }
+                }
+
                 System.out.println("Game setup started. Users: " + String.join(", ", pendingUsernames));
                 System.out.println("Each user must select a map using: game map <mapNumber> <username>");
+
             }
         }
 
@@ -58,6 +73,7 @@ public class PreGameMenu implements AppMenu {
 
             if (pendingUsernames.isEmpty()) {
                 System.out.println("All players have selected their maps. Switching to GAME MENU...");
+                App.setCurrentGame(new Game(usersInGame));
                 App.setCurrentMenu(Menu.GAME_MENU);
             } else {
                 System.out.println("Remaining users: " + String.join(", ", pendingUsernames));
