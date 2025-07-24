@@ -54,10 +54,11 @@ public class PhaseOnePreGameMenuController {
             return new Result(false, "Map number out of bounds. Chose either 1 or 2.");
         }
         User player = App.getLoggedIn();
-        player.getActiveGame().setGameMap(new GameMap(mapNumber));
+        player.setFarm(new Farm(mapNumber));
         setCurrentMenu(Menu.GAME_MENU);
         return new Result(true, "Game");
     }
+
 
     public Result loadGame() {
         User player = App.getLoggedIn();

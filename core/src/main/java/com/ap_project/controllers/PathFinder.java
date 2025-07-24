@@ -50,7 +50,7 @@ public class PathFinder {
         Position last = p.getPathTiles().get(p.getPathTiles().size() - 1).getPosition();
         player.changePosition(last);
         if (App.getCurrentGame().isInNPCVillage()) {
-            Tile tile = App.getCurrentGame().getGameMap().getTileByPosition(last);
+            Tile tile = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(last);
             if (tile.getType().equals(TileType.SHOP)) {
                 App.setCurrentShop(whichShop(tile));
                 System.out.println(whichShop(tile));
@@ -61,6 +61,7 @@ public class PathFinder {
         }
         return new Result(true, "Walked! Energy used=" + energyCost);
     }
+
 
     public static Shop whichShop(Tile tile) {
         for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
