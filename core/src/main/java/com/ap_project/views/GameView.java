@@ -56,6 +56,10 @@ public abstract class GameView implements Screen, InputProcessor {
     protected boolean isFainting;
     protected Texture background;
     protected final OrthographicCamera camera;
+    protected static final float TILE_SIZE = 35.75f;
+    protected Position originPosition = new Position(6, 110);
+    protected Texture tileMarkerTexture;
+
     protected Image energyBar;
     protected Image greenBar;
     protected final ArrayList<Image> raindrops;
@@ -72,6 +76,8 @@ public abstract class GameView implements Screen, InputProcessor {
     protected final Image lightCircle;
 
     public GameView(GameController controller, Skin skin) {
+        this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getBlackScreen();
+
         this.date = new Label("", skin);
         date.setFontScale(0.90f);
         date.setColor(34f / 255, 17f / 255, 34f / 255, 1);
@@ -106,8 +112,8 @@ public abstract class GameView implements Screen, InputProcessor {
 
         playerSprite = new Sprite(GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), Direction.DOWN));
         playerSprite.setPosition(
-            App.getLoggedIn().getPosition().getX(),
-            App.getLoggedIn().getPosition().getY()
+            (App.getLoggedIn().getPosition().getX() + originPosition.getX()) * TILE_SIZE,
+            (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE
         );
 
         camera = new OrthographicCamera();
@@ -378,6 +384,8 @@ public abstract class GameView implements Screen, InputProcessor {
             }
         }
 
+        renderOriginMarker();
+
         int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
         if (currentHour > 16) {
             Texture circleTexture = GameAssetManager.getGameAssetManager().getCircle();
@@ -455,6 +463,16 @@ public abstract class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.O) {
+            if (App.getCurrentGame().isInNPCVillage()) {
+                App.getCurrentGame().setInNPCVillage(false);
+                goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+            } else {
+                App.getCurrentGame().setInNPCVillage(true);
+                goToGame(new VillageView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+            }
+        }
+
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
         }
@@ -749,5 +767,18 @@ public abstract class GameView implements Screen, InputProcessor {
 
     public int randomIntBetween(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
+    }
+
+    protected void renderOriginMarker() {
+        float worldX = originPosition.getX() * TILE_SIZE;
+        float worldY = originPosition.getY() * TILE_SIZE;
+
+        Main.getBatch().draw(
+            tileMarkerTexture,
+            worldX - TILE_SIZE / 2f,
+            worldY - TILE_SIZE / 2f,
+            TILE_SIZE * 2,
+            TILE_SIZE * 2
+        );
     }
 }
