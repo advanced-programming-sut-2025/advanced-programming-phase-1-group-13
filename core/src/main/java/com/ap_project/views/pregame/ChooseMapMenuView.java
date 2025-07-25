@@ -1,10 +1,12 @@
 package com.ap_project.views.pregame;
 
 import com.ap_project.Main;
+import com.ap_project.controllers.GameController;
 import com.ap_project.controllers.pregame.ChooseMapMenuController;
 import com.ap_project.models.App;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.User;
+import com.ap_project.views.FarmView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -127,6 +129,6 @@ public class ChooseMapMenuView implements Screen {
             mapOptions.setSelectedIndex(0);
             return;
         }
-        goToGame();
+        goToGame(new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 }
