@@ -56,8 +56,8 @@ public abstract class GameView implements Screen, InputProcessor {
     protected boolean isFainting;
     protected Texture background;
     protected final OrthographicCamera camera;
-    protected static final float TILE_SIZE = 35.75f;
-    protected Position originPosition = new Position(6, 110);
+    protected static final float TILE_SIZE = 70.5f;
+    protected Position originPosition = new Position(2, 54);
     protected Texture tileMarkerTexture;
 
     protected Image energyBar;
@@ -76,7 +76,8 @@ public abstract class GameView implements Screen, InputProcessor {
     protected final Image lightCircle;
 
     public GameView(GameController controller, Skin skin) {
-        this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getBlackScreen();
+        this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
+        App.getCurrentGame().getGameState().setCurrentWeather(Weather.SUNNY);
 
         this.date = new Label("", skin);
         date.setFontScale(0.90f);
@@ -112,7 +113,7 @@ public abstract class GameView implements Screen, InputProcessor {
 
         playerSprite = new Sprite(GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), Direction.DOWN));
         playerSprite.setPosition(
-            (App.getLoggedIn().getPosition().getX() + originPosition.getX()) * TILE_SIZE,
+            (App.getLoggedIn().getPosition().getX()) * TILE_SIZE,
             (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE
         );
 
@@ -303,6 +304,7 @@ public abstract class GameView implements Screen, InputProcessor {
         float minY = playerHeight / 2;
         float maxY = backgroundHeight - playerHeight / 2;
 
+        // TODO: update position field in User
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             float newY = playerSprite.getY() + displacement;
             if (newY + playerHeight / 2 < maxY) {
@@ -383,8 +385,6 @@ public abstract class GameView implements Screen, InputProcessor {
                 );
             }
         }
-
-        renderOriginMarker();
 
         int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
         if (currentHour > 16) {
@@ -765,20 +765,39 @@ public abstract class GameView implements Screen, InputProcessor {
         stage.addActor(lightningImage);
     }
 
+    public void nextTurn() {
+        playerSprite.setPosition(
+            (App.getLoggedIn().getPosition().getX()) * TILE_SIZE,
+            (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE
+        );
+    }
+
     public int randomIntBetween(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
-    protected void renderOriginMarker() {
-        float worldX = originPosition.getX() * TILE_SIZE;
-        float worldY = originPosition.getY() * TILE_SIZE;
+    protected void renderDebugTiles() {
+        Position debugTilePosition = originPosition;
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
+                float tileX = debugTilePosition.getX() * TILE_SIZE + x * TILE_SIZE;
+                float tileY = debugTilePosition.getY() * TILE_SIZE + y * TILE_SIZE;
 
-        Main.getBatch().draw(
-            tileMarkerTexture,
-            worldX - TILE_SIZE / 2f,
-            worldY - TILE_SIZE / 2f,
-            TILE_SIZE * 2,
-            TILE_SIZE * 2
-        );
+                if ((x + y) % 2 == 0) {
+                    Main.getBatch().setColor(1, 0, 0, 0.5f);
+                } else {
+                    Main.getBatch().setColor(0, 0, 1, 0.5f);
+                }
+
+                Main.getBatch().draw(
+                    tileMarkerTexture,
+                    tileX,
+                    tileY,
+                    TILE_SIZE,
+                    TILE_SIZE
+                );
+            }
+        }
+        Main.getBatch().setColor(1, 1, 1, 1);
     }
 }

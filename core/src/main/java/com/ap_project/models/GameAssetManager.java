@@ -99,6 +99,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/Black.png"));
     }
 
+    public Texture getWhiteScreen() {
+        return new Texture(Gdx.files.internal("Images/Menu/White.png"));
+    }
+
     public Texture getNumber(int number) {
         return new Texture(Gdx.files.internal("Images/Menu/Number" + number + ".png"));
     }
@@ -185,7 +189,7 @@ public class GameAssetManager {
     public Texture getFarm(Game game, User user) {
         int index = game.getPlayers().indexOf(user) + 1;
         // TODO: String season = game.getGameState().getTime().getSeason().getName();
-        return new Texture(Gdx.files.internal("Images/Map/FarmSpring" + index + ".png"));
+        return new Texture(Gdx.files.internal("Images/Map/Test.png"));
     }
 
     public Texture getCircle() {
