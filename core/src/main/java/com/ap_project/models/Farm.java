@@ -49,18 +49,10 @@ public class Farm {
             this.artisans.add(new Artisan(artisanType));
         }
 
-        if (mapNumberToFollow == 1) {
-            // TODO: complete Constructor
-            this.cabin = new Cabin(); // with map1 properties
-            this.lakes = new ArrayList<>(); // with map1 properties
-            this.quarry = new Quarry(); // with map1 properties
-            this.farmTiles = new ArrayList<>(); // with map1 properties
-        } else if (mapNumberToFollow == 2) {
-            this.cabin = new Cabin();
-            this.lakes = new ArrayList<>();
-            this.quarry = new Quarry();
-            this.farmTiles = new ArrayList<>();
-        }
+        this.cabin = new Cabin();
+        this.lakes = new ArrayList<>();
+        this.quarry = new Quarry();
+        this.farmTiles = new ArrayList<>();
 
         generateBaseMapTiles();
         generateFixedElements();
@@ -91,7 +83,7 @@ public class Farm {
     private void generateFixedElements() {
         if (mapNumber == 1) {
             this.lake = generateLake(10, 15, 10, 14);
-            this.cabin = generateCabin(3, 3, 9, 6);
+            this.cabin = generateCabin(70, 3, 9, 6);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10, 10);
         } else if (mapNumber == 2) {

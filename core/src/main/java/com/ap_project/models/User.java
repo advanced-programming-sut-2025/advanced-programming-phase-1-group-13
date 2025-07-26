@@ -83,6 +83,7 @@ public class User {
 
     public void setFarm(Farm farm) {
         this.farm = farm;
+        this.position = farm.getCabin().getPosition();
     }
 
     public void resetPlayer() {
@@ -90,9 +91,7 @@ public class User {
         this.stoneCount = 0;
         this.energy = 200;
         this.maxEnergy = 200;
-        this.farm = new Farm(0); // TODO
         this.backpack = new Backpack(BackpackType.INITIAL);
-        this.position = new Position(6, 7); // TODO
         this.direction = Direction.DOWN;
         this.isEnergyUnlimited = false;
         this.balance = 0;

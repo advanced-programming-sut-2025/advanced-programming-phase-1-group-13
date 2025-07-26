@@ -28,8 +28,6 @@ public class ChooseMapMenuController {
 
     public void chooseGameMap(String mapNumberString) {
         int mapNumber = Integer.parseInt(mapNumberString);
-        User player = App.getLoggedIn();
-        player.getActiveGame().getPlayerByUsername(App.getLoggedIn().getUsername()).setFarm(new Farm(mapNumber)); //TODO
-        setCurrentMenu(Menu.GAME_MENU);
+        view.getPlayers().get(view.getCurrentPlayerIndex()).setFarm(new Farm(mapNumber));
     }
 }
