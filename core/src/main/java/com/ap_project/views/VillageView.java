@@ -31,9 +31,13 @@ public class VillageView extends GameView {
         Main.getBatch().begin();
 
         for (int i = 0; i < shopTextures.size(); i++) {
-            if (ShopType.values()[i] != ShopType.MARNIE_RANCH) {
-                draw(shopTextures.get(i), NPCVillage.getShops().get(i).getPosition());
+            if (ShopType.values()[i] == ShopType.MARNIE_RANCH) {
+                scale = 1f;
+            } else {
+                scale = 4.400316f;
             }
+            draw(shopTextures.get(i), NPCVillage.getShops().get(i).getPosition());
+
         }
 
         Main.getBatch().end();

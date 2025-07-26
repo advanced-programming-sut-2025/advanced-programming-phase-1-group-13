@@ -101,6 +101,9 @@ public class User {
         this.spentMoney = 0;
         this.learntCraftRecipes = new ArrayList<>();
         this.learntCookingRecipes = new ArrayList<>();
+        this.learntCookingRecipes.add(new CookingRecipe(FoodType.SALAD));
+        this.learntCookingRecipes.add(new CookingRecipe(FoodType.SPAGHETTI));
+        this.learntCookingRecipes.add(new CookingRecipe(FoodType.HASHBROWNS));
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);

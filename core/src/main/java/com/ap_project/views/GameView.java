@@ -52,6 +52,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected Animation<Texture> playerRightAnimation;
     protected Animation<Texture> playerFaintAnimation;
     protected Animation<Texture> currentAnimation;
+    protected float displacementInTile;
     protected float stateTime;
     protected boolean isMoving;
     protected boolean isFainting;
@@ -108,6 +109,7 @@ public abstract class GameView implements Screen, InputProcessor {
         controller.setView(this);
 
         currentAnimation = playerDownAnimation;
+        this.displacementInTile = 0;
         App.getLoggedIn().setDirection(Direction.DOWN);
         stateTime = 0f;
         isMoving = false;
@@ -289,12 +291,13 @@ public abstract class GameView implements Screen, InputProcessor {
             stateTime += delta;
             if (playerFaintAnimation.isAnimationFinished(stateTime)) {
                 App.getLoggedIn().faint();
+                nextTurn();
                 return;
             }
             return;
         }
 
-        float displacement = 200f * delta;
+        float displacement = 400f * delta;
         isMoving = false;
 
         float backgroundWidth = scale * background.getWidth();
@@ -340,6 +343,17 @@ public abstract class GameView implements Screen, InputProcessor {
             currentAnimation = playerRightAnimation;
             App.getLoggedIn().setDirection(Direction.RIGHT);
             walk();
+        }
+
+        if (isMoving) {
+            displacementInTile += displacement;
+        }
+
+        System.out.println("displacementInTile: " + displacementInTile + "  Energy: " + App.getLoggedIn().getEnergy());
+        if (displacementInTile > TILE_SIZE) {
+            displacementInTile = 0;
+            App.getLoggedIn().decreaseEnergyBy(10);
+            updateGreenBar();
         }
 
         playerSprite.setX(Math.max(minX, Math.min(maxX, playerSprite.getX())));
@@ -724,8 +738,6 @@ public abstract class GameView implements Screen, InputProcessor {
 
     public void walk() {
         isMoving = true;
-        App.getLoggedIn().decreaseEnergyBy((int) (0.05f * App.getLoggedIn().getEnergy()));
-        System.out.println(App.getLoggedIn().getEnergy());
     }
 
     protected void clearRaindrops() {
