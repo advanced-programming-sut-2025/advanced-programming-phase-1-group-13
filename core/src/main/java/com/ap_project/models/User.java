@@ -83,7 +83,10 @@ public class User {
 
     public void setFarm(Farm farm) {
         this.farm = farm;
-        this.position = farm.getCabin().getPosition();
+        this.position = new Position(
+            farm.getCabin().getPosition().getX() + 4,
+            farm.getCabin().getPosition().getY() - 1
+        );
     }
 
     public void resetPlayer() {

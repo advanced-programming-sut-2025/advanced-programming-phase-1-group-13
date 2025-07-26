@@ -59,7 +59,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected static final float TILE_SIZE = 70.5f;
     protected Position originPosition = new Position(2, 54);
     protected Texture tileMarkerTexture;
-
+    protected float scale = 4.400316f;
     protected Image energyBar;
     protected Image greenBar;
     protected final ArrayList<Image> raindrops;
@@ -206,6 +206,8 @@ public abstract class GameView implements Screen, InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1f);
 
         renderGameWorld(fadeAlpha);
+        renderMap();
+        renderPlayer();
 
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
         if ((weather != Weather.RAINY && weather != Weather.STORM) && isRaining) {
@@ -399,6 +401,14 @@ public abstract class GameView implements Screen, InputProcessor {
             );
         }
 
+        Main.getBatch().end();
+        Main.getBatch().setColor(1, 1, 1, 1);
+    }
+
+    protected void renderPlayer() {
+        Main.getBatch().setProjectionMatrix(camera.combined);
+        Main.getBatch().begin();
+
         if (isFainting) {
             Texture frame = currentAnimation.getKeyFrame(stateTime, true);
             playerSprite.setRegion(new TextureRegion(frame));
@@ -413,7 +423,10 @@ public abstract class GameView implements Screen, InputProcessor {
         playerSprite.draw(Main.getBatch());
 
         Main.getBatch().end();
-        Main.getBatch().setColor(1, 1, 1, 1);
+    }
+
+    protected void renderMap() {
+
     }
 
     protected void renderUI() {
@@ -766,14 +779,23 @@ public abstract class GameView implements Screen, InputProcessor {
     }
 
     public void nextTurn() {
-        playerSprite.setPosition(
-            (App.getLoggedIn().getPosition().getX()) * TILE_SIZE,
-            (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE
-        );
+
     }
 
     public int randomIntBetween(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
+    }
+
+    protected void draw(Texture texture, Position position) {
+        float tileX = position.getX() * TILE_SIZE;
+        float tileY = (originPosition.getY() - position.getY()) * TILE_SIZE;
+        Main.getBatch().draw(
+            texture,
+            tileX,
+            tileY,
+            texture.getHeight() * scale,
+            texture.getWidth() * scale
+        );
     }
 
     protected void renderDebugTiles() {

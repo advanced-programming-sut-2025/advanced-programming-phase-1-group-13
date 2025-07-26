@@ -57,7 +57,6 @@ public class PhaseOnePreGameMenuController {
         return new Result(true, "Game map chosen. " + user.getFarm().getTrees());
     }
 
-
     public Result loadGame() {
         User player = App.getLoggedIn();
         App.setCurrentGame(player.getActiveGame());

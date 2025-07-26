@@ -189,7 +189,15 @@ public class GameAssetManager {
     public Texture getFarm(Game game, User user) {
         int index = game.getPlayers().indexOf(user) + 1;
         // TODO: String season = game.getGameState().getTime().getSeason().getName();
-        return new Texture(Gdx.files.internal("Images/Map/Test.png"));
+        return new Texture(Gdx.files.internal("Images/Map/Farm/FarmSpring1.png"));
+    }
+
+    public Texture getCabin() {
+        return new Texture(Gdx.files.internal("Images/Map/Farm/Cabin.png"));
+    }
+
+    public Texture getLake(int typeNumber) {
+        return new Texture(Gdx.files.internal("Images/Map/Farm/Lake" + typeNumber + ".png"));
     }
 
     public Texture getCircle() {
