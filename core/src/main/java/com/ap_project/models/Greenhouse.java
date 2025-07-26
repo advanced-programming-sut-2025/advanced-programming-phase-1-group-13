@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Greenhouse {
     private ArrayList<Tile> tiles;
     private boolean canEnter;
+    private Position position;
 
     public Greenhouse() {
         this.tiles = new ArrayList<>();
@@ -28,10 +29,16 @@ public class Greenhouse {
                 tiles.add(tile);
             }
         }
+
+        this.position = tiles.get(0).getPosition();
     }
 
     public ArrayList<Tile> getTiles() {
         return tiles;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     public void setTiles(ArrayList<Tile> tiles) {
@@ -46,7 +53,6 @@ public class Greenhouse {
         this.canEnter = canEnter;
     }
 
-
     public static boolean canBuildGreenhouse() {
         int requiredWood = 500;
         int requiredStone = 1000;
@@ -59,7 +65,7 @@ public class Greenhouse {
         return hasEnoughResources && !greenhouseExists;
     }
 
-    public static boolean isPositionInGreenhouse(Position pos) { // fixed greenhoouse position in all gameMaps.
+    public static boolean isPositionInGreenhouse(Position pos) { // fixed greenhouse position in all gameMaps.
         if (pos.getX() >= 20 && pos.getY() >= 20 && pos.getX() < 25 && pos.getY() < 25) {
             return true;
         }

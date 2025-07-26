@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class FarmView extends GameView {
     private final Texture cabinTexture;
     private Texture lakeTexture;
+    private Texture greenhouseTexture;
     private Farm farm;
 
     public FarmView(GameController controller, Skin skin) {
@@ -19,6 +20,7 @@ public class FarmView extends GameView {
         this.farm = App.getLoggedIn().getFarm();
         this.cabinTexture = GameAssetManager.getGameAssetManager().getCabin();
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
+        this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
     }
 
     @Override
@@ -28,6 +30,7 @@ public class FarmView extends GameView {
 
         draw(cabinTexture, farm.getCabin().getPosition());
         draw(lakeTexture, farm.getLake().getPosition());
+        draw(greenhouseTexture, farm.getGreenhouse().getPosition());
 
         Main.getBatch().end();
     }
@@ -40,5 +43,6 @@ public class FarmView extends GameView {
         );
         this.farm = App.getLoggedIn().getFarm();
         lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
+        greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
     }
 }

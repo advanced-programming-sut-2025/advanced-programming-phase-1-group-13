@@ -200,6 +200,13 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Farm/Lake" + typeNumber + ".png"));
     }
 
+    public Texture getGreenhouse(boolean isBuilt) {
+        if (isBuilt) {
+            return new Texture(Gdx.files.internal("Images/Map/Farm/Greenhouse.png"));
+        }
+        return new Texture(Gdx.files.internal("Images/Map/Farm/GreenhouseUnbuilt.png"));
+    }
+
     public Texture getCircle() {
         return new Texture(Gdx.files.internal("Images/Player/Circle.png"));
     }
