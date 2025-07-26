@@ -4,7 +4,7 @@ import com.ap_project.models.NPC;
 
 public enum ShopType {
     BLACKSMITH("Blacksmith", NPCType.CLINT, 9, 16),
-    JOJAMART("JojaMart", NPCType.MORRIS, 9, 23),
+    JOJAMART("Joja Mart", NPCType.MORRIS, 9, 23),
     PIERRE_GENERAL_STORE("Pierre's General Store", NPCType.PIERRE, 9, 17),
     CARPENTER_SHOP("Carpenter's Shop", NPCType.ROBIN, 9, 20),
     FISH_SHOP("Fish Shop", NPCType.WILLY, 9, 17),

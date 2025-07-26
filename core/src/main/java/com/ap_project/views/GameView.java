@@ -807,8 +807,8 @@ public abstract class GameView implements Screen, InputProcessor {
             texture,
             tileX,
             tileY,
-            texture.getHeight() * scale,
-            texture.getWidth() * scale
+            texture.getWidth() * scale,
+            texture.getHeight() * scale
         );
     }
 

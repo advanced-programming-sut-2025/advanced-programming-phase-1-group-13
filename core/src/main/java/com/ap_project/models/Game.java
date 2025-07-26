@@ -133,7 +133,6 @@ public class Game {
         return gameState;
     }
 
-
     public ArrayList<NPC> getNpcs() {
         return npcs;
     }

@@ -49,8 +49,9 @@ public class GameAssetManager {
         String path = "Images/Clock/" + weather.getName() + season.getName() + ".png";
         return new Texture(Gdx.files.internal(path));
     }
-    public Texture getFood(FoodType foodType) {
-        String path = "Images/Food/" + toPascalCase(foodType.getName()) + ".png";
+
+    public Texture getFood(FoodType foodType, boolean isLocked) {
+        String path = "Images/Food/" + toPascalCase(foodType.getName()) + (isLocked ? "Locked" : "") + ".png";
         return new Texture(Gdx.files.internal(path));
     }
 
@@ -258,7 +259,7 @@ public class GameAssetManager {
     }
 
     public Texture getShop(ShopType shopType, Season season) {
-        String shopName = shopType.getName();
+        String shopName = toPascalCase(shopType.getName());
         String seasonStr = season.getName();
         return new Texture(Gdx.files.internal("Images/Map/Village/" + shopName + seasonStr + ".png"));
     }

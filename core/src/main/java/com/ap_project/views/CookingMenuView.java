@@ -175,7 +175,9 @@ public class CookingMenuView implements Screen, InputProcessor {
     public void addFoodToMenu() {
         int count = 0;
         for (FoodType food : FoodType.values()) {
-            Image foodImage = new Image(GameAssetManager.getGameAssetManager().getFood(food));
+            boolean isLearnt = App.getLoggedIn().hasLearntCookingRecipe(food);
+
+            Image foodImage = new Image(GameAssetManager.getGameAssetManager().getFood(food, !isLearnt));
             foodImage.setPosition(
                     count % 10 * 80f + 550,
                     -count / 10 * 80f + 700
