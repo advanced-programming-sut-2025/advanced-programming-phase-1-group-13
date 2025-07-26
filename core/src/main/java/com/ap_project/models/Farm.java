@@ -30,7 +30,7 @@ public class Farm {
     private final ArrayList<Mineral> stones;
     private final ArrayList<Tile> woodLogs;
     private final ArrayList<ForagingCrop> foragings;
-    private transient Random random = new Random();
+    private final transient Random random;
     private ArrayList<Tile> allTiles;
 
     public Farm(int mapNumberToFollow) {
