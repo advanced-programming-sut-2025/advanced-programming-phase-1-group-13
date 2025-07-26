@@ -32,6 +32,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/MenuBackground.png"));
     }
 
+    public Texture getCookingMenu() {
+        return new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png"));
+    }
+
     public Texture getAvatarBackground() {
         return new Texture(Gdx.files.internal("Images/Avatars/AvatarBackground.png"));
     }
@@ -198,6 +202,13 @@ public class GameAssetManager {
 
     public Texture getLake(int typeNumber) {
         return new Texture(Gdx.files.internal("Images/Map/Farm/Lake" + typeNumber + ".png"));
+    }
+
+    public Texture getGreenhouse(boolean isBuilt) {
+        if (isBuilt) {
+            return new Texture(Gdx.files.internal("Images/Map/Farm/Greenhouse.png"));
+        }
+        return new Texture(Gdx.files.internal("Images/Map/Farm/GreenhouseUnbuilt.png"));
     }
 
     public Texture getCircle() {
