@@ -162,9 +162,9 @@ public class CookingMenuView implements Screen, InputProcessor {
 
             Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
             itemImage.setPosition(
-                    ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
-                            + count * (itemImage.getWidth() + 15.0f),
-                    initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
+                ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
+                    + count * (itemImage.getWidth() + 15.0f),
+                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
             );
             stage.addActor(itemImage);
 
@@ -179,8 +179,8 @@ public class CookingMenuView implements Screen, InputProcessor {
 
             Image foodImage = new Image(GameAssetManager.getGameAssetManager().getFood(food, !isLearnt));
             foodImage.setPosition(
-                    count % 10 * 80f + 550,
-                    -count / 10 * 80f + 700
+                count % 10 * 80f + 550,
+                -count / 10 * 80f + 700
             );
             stage.addActor(foodImage);
             count++;
