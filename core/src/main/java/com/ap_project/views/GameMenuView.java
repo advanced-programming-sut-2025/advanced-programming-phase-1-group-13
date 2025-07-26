@@ -387,6 +387,7 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void showInventoryMenu() {
+        updateWindow();
         User user = App.getLoggedIn();
         Label name = new Label(user.getUsername() + " Farm", GameAssetManager.getGameAssetManager().getSkin());
         name.setFontScale(1.5f);
@@ -416,7 +417,7 @@ public class GameMenuView implements Screen, InputProcessor {
 
         stage.addActor(trashCan);
 
-        addItemsToInventory();
+        addItemsToInventory(-5);
     }
 
     public void showSkillsMenu() {
@@ -591,7 +592,7 @@ public class GameMenuView implements Screen, InputProcessor {
         }
     }
 
-    public void addItemsToInventory() {
+    public void addItemsToInventory(float initialY) {
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
@@ -603,7 +604,7 @@ public class GameMenuView implements Screen, InputProcessor {
             itemImage.setPosition(
                 ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
                     + count * (itemImage.getWidth() + 15.0f),
-                3 * Gdx.graphics.getHeight() / 4f - 90.0f
+                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
             );
             stage.addActor(itemImage);
 
@@ -648,9 +649,9 @@ public class GameMenuView implements Screen, InputProcessor {
         addCloseButton();
         String[] craftingItemNames = {
             "BeeHouse", "Bomb", "CharcoalKiln", "CheesePress", "CherryBomb",
-            "FishSmoker", "Furnace", "GrassStarter", "Scarecrow", "Sprinkler",
-            "Keg", "Loom", "MayoMachine", "MegaBomb", "MysticTreeSeed",
-            "OilMaker", "PreservesJar"
+            "FishSmoker", "Furnace", "GrassStarter", "Scarecrow",
+            "DeluxeScarecrow", "Sprinkler", "QualitySprinkler", "IridiumSprinkler",
+            "Keg", "Loom", "MayoMachine", "MegaBomb", "MysticTreeSeed", "OilMaker", "PreservesJar"
         };
 
         float startX = windowX + 50;
@@ -677,5 +678,7 @@ public class GameMenuView implements Screen, InputProcessor {
                 currentY -= itemImage.getHeight() + ySpacing;
             }
         }
+
+        addItemsToInventory(-327);
     }
 }
