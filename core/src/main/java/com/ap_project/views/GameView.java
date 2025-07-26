@@ -297,8 +297,8 @@ public abstract class GameView implements Screen, InputProcessor {
         float displacement = 200f * delta;
         isMoving = false;
 
-        float backgroundWidth = 3 * Gdx.graphics.getWidth();
-        float backgroundHeight = backgroundWidth * background.getHeight() / background.getWidth();
+        float backgroundWidth = scale * background.getWidth();
+        float backgroundHeight = scale * background.getHeight();
 
         float playerWidth = playerSprite.getWidth();
         float playerHeight = playerSprite.getHeight();
@@ -595,7 +595,6 @@ public abstract class GameView implements Screen, InputProcessor {
         clockImage.setPosition(xPosition, yPosition);
         stage.addActor(clockImage);
     }
-
 
     protected void updateClockInfo() {
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();

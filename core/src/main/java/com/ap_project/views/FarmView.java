@@ -5,11 +5,12 @@ import com.ap_project.controllers.GameController;
 import com.ap_project.models.App;
 import com.ap_project.models.Farm;
 import com.ap_project.models.GameAssetManager;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import static com.ap_project.views.GameMenuView.hoverOn;
+import static com.ap_project.Main.goToFarmHouse;
 
 public class FarmView extends GameView {
     private final Texture cabinTexture;
@@ -47,6 +48,16 @@ public class FarmView extends GameView {
         this.farm = App.getLoggedIn().getFarm();
         lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        super.keyDown(keycode);
+
+        if (keycode == Input.Keys.H) {
+            goToFarmHouse(this);
+        }
+        return false;
     }
 
     @Override
