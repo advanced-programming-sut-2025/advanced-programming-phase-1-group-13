@@ -264,4 +264,9 @@ public class GameAssetManager {
         }
         return pascal.toString();
     }
+
+    public Texture getCraftingItemTexture(String itemName) {
+        String path = "Images/Craft/" + itemName + ".png";
+        return new Texture(Gdx.files.internal(path));
+    }
 }

@@ -198,6 +198,7 @@ public class GameMenuView implements Screen, InputProcessor {
         if (hoverOnImage(craftingButton, screenX, convertedY)) {
             currentTab = GameMenuType.CRAFTING;
             updateWindow();
+            showCraftingMenu();
         }
 
         Image exitButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -639,6 +640,42 @@ public class GameMenuView implements Screen, InputProcessor {
         }
         if (socialMenuPageIndex > 3) {
             socialMenuPageIndex = 3;
+        }
+    }
+
+    public void showCraftingMenu() {
+        updateWindow();
+        addCloseButton();
+        String[] craftingItemNames = {
+            "BeeHouse", "Bomb", "CharcoalKiln", "CheesePress", "CherryBomb",
+            "FishSmoker", "Furnace", "GrassStarter", "Scarecrow", "Sprinkler",
+            "Keg", "Loom", "MayoMachine", "MegaBomb", "MysticTreeSeed",
+            "OilMaker", "PreservesJar"
+        };
+
+        float startX = windowX + 50;
+        float startY = windowY + window.getHeight() - 190;
+
+        float xSpacing = 30;
+        float ySpacing = 50;
+
+        int itemsPerRow = 10;
+        float currentX = startX;
+        float currentY = startY;
+
+        for (int i = 0; i < craftingItemNames.length; i++) {
+            String itemName = craftingItemNames[i];
+            Image itemImage = new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(itemName));
+
+            itemImage.setPosition(currentX, currentY);
+            stage.addActor(itemImage);
+
+            currentX += itemImage.getWidth() + xSpacing;
+
+            if ((i + 1) % itemsPerRow == 0) {
+                currentX = startX;
+                currentY -= itemImage.getHeight() + ySpacing;
+            }
         }
     }
 }
