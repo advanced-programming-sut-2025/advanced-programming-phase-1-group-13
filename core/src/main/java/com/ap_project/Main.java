@@ -86,6 +86,10 @@ public class Main extends Game {
         Main.getMain().setScreen(gameView);
     }
 
+    public static void goToFarmHouse(GameView gameView) {
+        Main.getMain().setScreen(new FarmHouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
     public static void goToGameMenu(GameView gameView) {
         Main.getMain().setScreen(new GameMenuView(gameView));
     }
@@ -93,10 +97,10 @@ public class Main extends Game {
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
     }
+
     public static void goToRefrigeratorMenu(GameView gameView) {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
     }
-
 
     public static void goToCheatWindow(GameView gameView, GameController controller) {
         Main.getMain().setScreen(new CheatView(gameView, controller));

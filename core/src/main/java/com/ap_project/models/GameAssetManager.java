@@ -3,6 +3,7 @@ package com.ap_project.models;
 import com.ap_project.models.enums.environment.Direction;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
+import com.ap_project.models.enums.types.FoodType;
 import com.ap_project.models.enums.types.GameMenuType;
 import com.ap_project.models.enums.types.Gender;
 import com.ap_project.models.enums.types.ShopType;
@@ -46,6 +47,10 @@ public class GameAssetManager {
 
     public Texture getClock(Weather weather, Season season) {
         String path = "Images/Clock/" + weather.getName() + season.getName() + ".png";
+        return new Texture(Gdx.files.internal(path));
+    }
+    public Texture getFood(FoodType foodType) {
+        String path = "Images/Food/" + toPascalCase(foodType.getName()) + ".png";
         return new Texture(Gdx.files.internal(path));
     }
 
@@ -236,6 +241,10 @@ public class GameAssetManager {
         int numberOfPlayers = game.getPlayers().size();
         String season = game.getGameState().getTime().getSeason().getName();
         return new Texture(Gdx.files.internal("Images/Map/Map" + season + numberOfPlayers + ".png"));
+    }
+
+    public Texture getFarmHouse() {
+        return new Texture(Gdx.files.internal("Images/Map/FarmHouse/Indoors.png"));
     }
 
     public Texture getPlayerIcon(Gender gender) {
