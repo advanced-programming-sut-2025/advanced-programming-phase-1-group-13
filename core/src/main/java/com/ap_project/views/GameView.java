@@ -56,6 +56,10 @@ public abstract class GameView implements Screen, InputProcessor {
     protected boolean isFainting;
     protected Texture background;
     protected final OrthographicCamera camera;
+    protected static final float TILE_SIZE = 70.5f;
+    protected Position originPosition = new Position(2, 54);
+    protected Texture tileMarkerTexture;
+    protected float scale = 4.400316f;
     protected Image energyBar;
     protected Image greenBar;
     protected final ArrayList<Image> raindrops;
@@ -72,6 +76,9 @@ public abstract class GameView implements Screen, InputProcessor {
     protected final Image lightCircle;
 
     public GameView(GameController controller, Skin skin) {
+        this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
+        App.getCurrentGame().getGameState().setCurrentWeather(Weather.SUNNY);
+
         this.date = new Label("", skin);
         date.setFontScale(0.90f);
         date.setColor(34f / 255, 17f / 255, 34f / 255, 1);
@@ -106,8 +113,8 @@ public abstract class GameView implements Screen, InputProcessor {
 
         playerSprite = new Sprite(GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), Direction.DOWN));
         playerSprite.setPosition(
-            App.getLoggedIn().getPosition().getX(),
-            App.getLoggedIn().getPosition().getY()
+            (App.getLoggedIn().getPosition().getX()) * TILE_SIZE,
+            (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE
         );
 
         camera = new OrthographicCamera();
@@ -199,6 +206,8 @@ public abstract class GameView implements Screen, InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1f);
 
         renderGameWorld(fadeAlpha);
+        renderMap();
+        renderPlayer();
 
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
         if ((weather != Weather.RAINY && weather != Weather.STORM) && isRaining) {
@@ -297,6 +306,7 @@ public abstract class GameView implements Screen, InputProcessor {
         float minY = playerHeight / 2;
         float maxY = backgroundHeight - playerHeight / 2;
 
+        // TODO: update position field in User
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             float newY = playerSprite.getY() + displacement;
             if (newY + playerHeight / 2 < maxY) {
@@ -391,6 +401,14 @@ public abstract class GameView implements Screen, InputProcessor {
             );
         }
 
+        Main.getBatch().end();
+        Main.getBatch().setColor(1, 1, 1, 1);
+    }
+
+    protected void renderPlayer() {
+        Main.getBatch().setProjectionMatrix(camera.combined);
+        Main.getBatch().begin();
+
         if (isFainting) {
             Texture frame = currentAnimation.getKeyFrame(stateTime, true);
             playerSprite.setRegion(new TextureRegion(frame));
@@ -405,7 +423,10 @@ public abstract class GameView implements Screen, InputProcessor {
         playerSprite.draw(Main.getBatch());
 
         Main.getBatch().end();
-        Main.getBatch().setColor(1, 1, 1, 1);
+    }
+
+    protected void renderMap() {
+
     }
 
     protected void renderUI() {
@@ -455,6 +476,16 @@ public abstract class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.O) {
+            if (App.getCurrentGame().isInNPCVillage()) {
+                App.getCurrentGame().setInNPCVillage(false);
+                goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+            } else {
+                App.getCurrentGame().setInNPCVillage(true);
+                goToGame(new VillageView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+            }
+        }
+
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
         }
@@ -747,7 +778,48 @@ public abstract class GameView implements Screen, InputProcessor {
         stage.addActor(lightningImage);
     }
 
+    public void nextTurn() {
+
+    }
+
     public int randomIntBetween(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
+    }
+
+    protected void draw(Texture texture, Position position) {
+        float tileX = position.getX() * TILE_SIZE;
+        float tileY = (originPosition.getY() - position.getY()) * TILE_SIZE;
+        Main.getBatch().draw(
+            texture,
+            tileX,
+            tileY,
+            texture.getHeight() * scale,
+            texture.getWidth() * scale
+        );
+    }
+
+    protected void renderDebugTiles() {
+        Position debugTilePosition = originPosition;
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
+                float tileX = debugTilePosition.getX() * TILE_SIZE + x * TILE_SIZE;
+                float tileY = debugTilePosition.getY() * TILE_SIZE + y * TILE_SIZE;
+
+                if ((x + y) % 2 == 0) {
+                    Main.getBatch().setColor(1, 0, 0, 0.5f);
+                } else {
+                    Main.getBatch().setColor(0, 0, 1, 0.5f);
+                }
+
+                Main.getBatch().draw(
+                    tileMarkerTexture,
+                    tileX,
+                    tileY,
+                    TILE_SIZE,
+                    TILE_SIZE
+                );
+            }
+        }
+        Main.getBatch().setColor(1, 1, 1, 1);
     }
 }

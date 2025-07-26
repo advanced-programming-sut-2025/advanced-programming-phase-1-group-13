@@ -265,6 +265,7 @@ public class GameMenuView implements Screen, InputProcessor {
             stage.addActor(nextTurn);
             if (hoverOnImage(nextTurn, screenX, convertedY)) {
                 GameController.nextTurn();
+                gameView.nextTurn();
                 Main.getMain().setScreen(gameView);
             }
         }

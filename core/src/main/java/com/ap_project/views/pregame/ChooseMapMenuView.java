@@ -122,6 +122,14 @@ public class ChooseMapMenuView implements Screen {
         return chooseButton;
     }
 
+    public ArrayList<User> getPlayers() {
+        return players;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
     public void nextTurn() {
         if (currentPlayerIndex != players.size() - 1) {
             currentPlayerIndex++;
