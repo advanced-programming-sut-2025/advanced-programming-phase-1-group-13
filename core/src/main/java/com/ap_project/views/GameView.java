@@ -486,6 +486,10 @@ public abstract class GameView implements Screen, InputProcessor {
             }
         }
 
+        if (keycode == Input.Keys.C) {
+            // TODO: cooking
+        }
+
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
         }
