@@ -6,7 +6,10 @@ import com.ap_project.models.App;
 import com.ap_project.models.Farm;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
+import static com.ap_project.views.GameMenuView.hoverOn;
 
 public class FarmView extends GameView {
     private final Texture cabinTexture;
@@ -44,5 +47,14 @@ public class FarmView extends GameView {
         this.farm = App.getLoggedIn().getFarm();
         lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector3 cabinPosition = getPositionOnScreen(farm.getCabin().getPosition());
+        if (isTextureClicked(cabinTexture, cabinPosition.x, cabinPosition.y, cabinTexture.getWidth(), cabinTexture.getWidth(), screenX, screenY)) {
+            System.out.println("Touched on cabin");
+        }
+        return false;
     }
 }
