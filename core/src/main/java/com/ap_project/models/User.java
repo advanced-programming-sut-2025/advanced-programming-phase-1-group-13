@@ -579,6 +579,15 @@ public class User {
         this.learntCookingRecipes.add(cookingRecipe);
     }
 
+    public boolean hasLearntCookingRecipe(FoodType foodType) {
+        for (CookingRecipe cookingRecipe : learntCookingRecipes) {
+            if (cookingRecipe.getFoodType() == foodType) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Map<SecurityQuestion, String> getQAndA() {
         return qAndA;
     }
