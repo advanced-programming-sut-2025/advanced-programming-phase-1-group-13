@@ -1,53 +1,33 @@
 package com.ap_project.views;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
-import com.ap_project.models.enums.Skill;
-
+import com.ap_project.models.enums.types.FoodType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ap_project.Main.goToMap;
-import static com.ap_project.Main.goToTitleMenu;
 import static com.ap_project.views.GameMenuView.hoverOnImage;
 
 public class CookingMenuView implements Screen, InputProcessor {
     private Stage stage;
-
     private Image window;
-
-
     private final float windowX;
     private final float windowY;
     private final Image closeButton;
     private final GameView gameView;
 
     public CookingMenuView(GameView gameView) {
-        Image blackScreen = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
-        blackScreen.setColor(0, 0, 0, 0.2f);
-        blackScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-
         this.window = new Image(GameAssetManager.getGameAssetManager().getCookingMenu());
-
-
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
-
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
         this.gameView = gameView;
@@ -59,10 +39,13 @@ public class CookingMenuView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         updateWindow();
         addCloseButton();
+
         this.window = new Image(GameAssetManager.getGameAssetManager().getCookingMenu());
         window.setPosition(windowX, windowY);
-
         stage.addActor(window);
+
+        addItemsToInventory(-windowY - 70);
+        addFoodToMenu();
     }
 
     @Override
@@ -70,8 +53,6 @@ public class CookingMenuView implements Screen, InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
         Main.getBatch().end();
-
-
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -181,9 +162,9 @@ public class CookingMenuView implements Screen, InputProcessor {
 
             Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
             itemImage.setPosition(
-                ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
-                    + count * (itemImage.getWidth() + 15.0f),
-                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
+                    ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
+                            + count * (itemImage.getWidth() + 15.0f),
+                    initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
             );
             stage.addActor(itemImage);
 
@@ -191,4 +172,16 @@ public class CookingMenuView implements Screen, InputProcessor {
         }
     }
 
+    public void addFoodToMenu() {
+        int count = 0;
+        for (FoodType food : FoodType.values()) {
+            Image foodImage = new Image(GameAssetManager.getGameAssetManager().getFood(food));
+            foodImage.setPosition(
+                    count % 10 * 80f + 550,
+                    -count / 10 * 80f + 700
+            );
+            stage.addActor(foodImage);
+            count++;
+        }
+    }
 }
