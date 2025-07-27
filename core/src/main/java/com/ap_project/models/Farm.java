@@ -13,7 +13,6 @@ public class Farm {
     private Cabin cabin;
     private Greenhouse greenhouse;
     private Quarry quarry;
-    private ArrayList<Lake> lakes;
     private int cropCount;
     private final ArrayList<Crop> plantedCrops;
     private final ArrayList<Tree> trees;
@@ -22,9 +21,6 @@ public class Farm {
     private final int width = 55;
     private final ArrayList<Artisan> artisans;
     private ArrayList<ShippingBin> shippingBins;
-
-    private static final int CABIN_SIZE_X = 9;
-    private static final int CABIN_SIZE_Y = 6;
     private final int mapNumber;
     private Lake lake;
     private final ArrayList<Mineral> stones;
@@ -50,7 +46,6 @@ public class Farm {
         }
 
         this.cabin = new Cabin();
-        this.lakes = new ArrayList<>();
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
 
@@ -82,7 +77,7 @@ public class Farm {
 
     private void generateFixedElements() {
         if (mapNumber == 1) {
-            this.lake = generateLake(10, 15, 10, 14);
+            this.lake = generateLake(20, 35, 10, 14);
             this.cabin = generateCabin(63, 6, 9, 6);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10, 10);
@@ -389,10 +384,6 @@ public class Farm {
 
     public Quarry getQuarry() {
         return this.quarry;
-    }
-
-    public ArrayList<Lake> getLakes() {
-        return this.lakes;
     }
 
     public ArrayList<Crop> getPlantedCrops() {

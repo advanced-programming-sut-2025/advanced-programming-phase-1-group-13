@@ -1,12 +1,7 @@
 package com.ap_project.controllers.pregame;
 
-import com.ap_project.models.App;
 import com.ap_project.models.Farm;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.Menu;
 import com.ap_project.views.pregame.ChooseMapMenuView;
-
-import static com.ap_project.models.App.setCurrentMenu;
 
 public class ChooseMapMenuController {
     private ChooseMapMenuView view;

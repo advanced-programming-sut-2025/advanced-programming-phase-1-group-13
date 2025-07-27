@@ -7,7 +7,6 @@ import com.ap_project.models.Farm;
 import com.ap_project.models.GameAssetManager;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import static com.ap_project.Main.goToFarmHouse;
@@ -56,15 +55,6 @@ public class FarmView extends GameView {
 
         if (keycode == Input.Keys.H) {
             goToFarmHouse(this);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector3 cabinPosition = getPositionOnScreen(farm.getCabin().getPosition());
-        if (isTextureClicked(cabinTexture, cabinPosition.x, cabinPosition.y, cabinTexture.getWidth(), cabinTexture.getWidth(), screenX, screenY)) {
-            System.out.println("Touched on cabin");
         }
         return false;
     }

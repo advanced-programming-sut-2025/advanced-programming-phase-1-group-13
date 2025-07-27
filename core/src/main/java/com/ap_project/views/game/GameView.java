@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -352,7 +351,7 @@ public abstract class GameView implements Screen, InputProcessor {
         System.out.println("displacementInTile: " + displacementInTile + "  Energy: " + App.getLoggedIn().getEnergy());
         if (displacementInTile > TILE_SIZE) {
             displacementInTile = 0;
-            App.getLoggedIn().decreaseEnergyBy(10);
+            App.getLoggedIn().decreaseEnergyBy(1);
             updateGreenBar();
         }
 
@@ -438,15 +437,6 @@ public abstract class GameView implements Screen, InputProcessor {
         playerSprite.draw(Main.getBatch());
 
         Main.getBatch().end();
-    }
-
-    public  boolean isTextureClicked(Texture texture, float x, float y, float width, float height, int screenX, int screenY) {
-        Vector3 touchPos = new Vector3(screenX, screenY, 0);
-        camera.unproject(touchPos);
-        return touchPos.x >= x &&
-            touchPos.x <= x + width &&
-            touchPos.y >= y &&
-            touchPos.y <= y + height;
     }
 
     protected void renderMap() {
@@ -821,14 +811,6 @@ public abstract class GameView implements Screen, InputProcessor {
             tileY,
             texture.getWidth() * scale,
             texture.getHeight() * scale
-        );
-    }
-
-    protected Vector3 getPositionOnScreen(Position position) {
-        return new Vector3(
-            position.getX() * TILE_SIZE,
-            (originPosition.getY() - position.getY()) * TILE_SIZE,
-            0
         );
     }
 
