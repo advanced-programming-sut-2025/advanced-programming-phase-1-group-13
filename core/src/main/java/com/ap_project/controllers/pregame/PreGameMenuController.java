@@ -3,9 +3,9 @@ package com.ap_project.controllers.pregame;
 import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
 import com.ap_project.models.enums.Menu;
-import com.ap_project.views.FarmView;
-import com.ap_project.views.GameView;
-import com.ap_project.views.VillageView;
+import com.ap_project.views.game.FarmView;
+import com.ap_project.views.game.GameView;
+import com.ap_project.views.game.VillageView;
 import com.ap_project.views.pregame.PreGameMenuView;
 
 import static com.ap_project.Main.*;

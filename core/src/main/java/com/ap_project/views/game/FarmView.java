@@ -1,4 +1,4 @@
-package com.ap_project.views;
+package com.ap_project.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.controllers.GameController;

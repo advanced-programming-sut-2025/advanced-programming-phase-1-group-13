@@ -1,4 +1,4 @@
-package com.ap_project.views;
+package com.ap_project.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.models.App;
@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.ap_project.views.GameMenuView.hoverOnImage;
+import static com.ap_project.views.game.GameMenuView.hoverOnImage;
 
 
 public class MapView implements Screen, InputProcessor {

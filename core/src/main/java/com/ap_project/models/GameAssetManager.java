@@ -3,10 +3,7 @@ package com.ap_project.models;
 import com.ap_project.models.enums.environment.Direction;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
-import com.ap_project.models.enums.types.FoodType;
-import com.ap_project.models.enums.types.GameMenuType;
-import com.ap_project.models.enums.types.Gender;
-import com.ap_project.models.enums.types.ShopType;
+import com.ap_project.models.enums.types.*;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -267,6 +264,10 @@ public class GameAssetManager {
     public Texture getVillage(Season season) {
         String seasonStr = season.getName();
         return new Texture(Gdx.files.internal("Images/Map/Village/Village" + seasonStr + ".png"));
+    }
+
+    public Texture getNPC(NPCType npcType) {
+        return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + ".png"));
     }
 
     public static String toPascalCase(String input) {

@@ -3,6 +3,7 @@ package com.ap_project.views;
 import com.ap_project.Main;
 import com.ap_project.models.*;
 
+import com.ap_project.views.game.GameView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.HashMap;
 import java.util.Map;
-import static com.ap_project.views.GameMenuView.hoverOnImage;
+import static com.ap_project.views.game.GameMenuView.hoverOnImage;
 
 public class RefrigeratorMenuView implements Screen, InputProcessor {
     private Stage stage;

@@ -8,7 +8,7 @@ import com.ap_project.models.farming.*;
 import com.ap_project.models.inventory.*;
 import com.ap_project.models.tools.*;
 import com.ap_project.models.trade.*;
-import com.ap_project.views.GameView;
+import com.ap_project.views.game.GameView;
 
 import java.util.*;
 

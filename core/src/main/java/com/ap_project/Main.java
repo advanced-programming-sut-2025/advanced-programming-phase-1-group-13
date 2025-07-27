@@ -8,6 +8,7 @@ import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.controllers.signup.*;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.views.*;
+import com.ap_project.views.game.*;
 import com.ap_project.views.login.*;
 import com.ap_project.views.pregame.ChooseMapMenuView;
 import com.ap_project.views.pregame.NewGameMenuView;
