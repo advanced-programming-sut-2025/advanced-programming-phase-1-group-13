@@ -164,11 +164,33 @@ public class ChooseMapMenuView implements Screen {
 
     public void nextTurn() {
         if (currentPlayerIndex != players.size() - 1) {
+            // Remove old images from stage
+            map1.remove();
+            map2.remove();
+
             currentPlayerIndex++;
             description.setText(players.get(currentPlayerIndex).getUsername() + ", please choose a map for your farm");
             mapOptions.setSelectedIndex(0);
+
+            // Create new images
             this.map1 = new Image(GameAssetManager.getGameAssetManager().getMapPreview(1, currentPlayerIndex + 1));
+            map1.setScale(0.3f);
             this.map2 = new Image(GameAssetManager.getGameAssetManager().getMapPreview(2, currentPlayerIndex + 1));
+            map2.setScale(0.3f);
+
+            // Position and add new images to stage
+            map1.setPosition(
+                Gdx.graphics.getWidth() / 2f - 450,
+                Gdx.graphics.getHeight() / 2f - 100
+            );
+            stage.addActor(map1);
+
+            map2.setPosition(
+                Gdx.graphics.getWidth() / 2f + 50,
+                Gdx.graphics.getHeight() / 2f - 100
+            );
+            stage.addActor(map2);
+
             return;
         }
         goToGame(new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));

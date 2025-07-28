@@ -43,8 +43,7 @@ public class GameAssetManager {
     }
 
     public Texture getMapPreview(int mapNumber, int playerIndex) {
-        //return new Texture(Gdx.files.internal("Images/Map/Farm/Preview/Map" + mapNumber + "Player" + playerIndex + ".png"));
-        return new Texture(Gdx.files.internal("Images/Map/Farm/Preview/Map" + mapNumber + "Player1.png"));
+        return new Texture(Gdx.files.internal("Images/Map/Farm/Preview/Map" + mapNumber + "Player" + playerIndex + ".png"));
     }
 
     public Texture getClock(Weather weather, Season season) {
@@ -200,8 +199,8 @@ public class GameAssetManager {
 
     public Texture getFarm(Game game, User user) {
         int index = game.getPlayers().indexOf(user) + 1;
-        // TODO: String season = game.getGameState().getTime().getSeason().getName();
-        return new Texture(Gdx.files.internal("Images/Map/Farm/FarmSpring1.png"));
+        String season = game.getGameState().getTime().getSeason().getName();
+        return new Texture(Gdx.files.internal("Images/Map/Farm/Farm" + season + index + ".png"));
     }
 
     public Texture getCabin() {
