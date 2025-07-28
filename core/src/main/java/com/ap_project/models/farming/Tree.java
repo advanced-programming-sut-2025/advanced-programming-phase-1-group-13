@@ -51,7 +51,7 @@ public class Tree extends Item implements Harvestable {
 
         this.type = type;
         this.name = type.getName();
-        this.numOfStages = 4;
+        this.numOfStages = 5;
         this.totalHarvestTime = type.getTotalHarvestTime();
         this.baseSellPrice = type.getFruitBaseSellPrice();
         this.isEdible = type.isFruitEdible();
@@ -89,9 +89,11 @@ public class Tree extends Item implements Harvestable {
         this.isBurnt = false;
         this.dayInStage = 0;
         this.stage = stage;
+        if (stage == 5) {
+            this.daySinceLastHarvest = 1;
+        }
 
         this.hasBeenWateredToday = false;
-
     }
 
     public void showInfo() {
@@ -197,6 +199,10 @@ public class Tree extends Item implements Harvestable {
 
     public void setHasBeenFertilizedToday(boolean hasBeenFertilizedToday) {
         this.hasBeenFertilizedToday = hasBeenFertilizedToday;
+    }
+
+    public boolean hasFruits() {
+        return (stage == 5) && (daySinceLastHarvest == fruitHarvestCycle);
     }
 
     @Override

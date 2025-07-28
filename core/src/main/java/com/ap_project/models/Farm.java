@@ -109,7 +109,7 @@ public class Farm {
             Tile tile = getTileByPosition(pos);
             if (tile != null) {
                 TreeType treeType = TreeType.getRandomTreeType();
-                Tree tree = new Tree(treeType, tile, 4);
+                Tree tree = new Tree(treeType, tile, 5);
                 trees.add(tree);  // Add to trees list
                 tile.setType(TileType.TREE);
                 tile.pLaceItemOnTile(tree);

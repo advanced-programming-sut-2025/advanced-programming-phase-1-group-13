@@ -125,9 +125,12 @@ public class GameAssetManager {
     }
 
     public Texture getTextureByTree(Tree tree) {
-        // TODO: complete tree assets
-        tree = new Tree(TreeType.APPLE_TREE, new Tile(null), (new Random()).nextInt(5) + 1);
-        System.out.println("Stage: " + tree.getStage());
+        if (tree.hasFruits()) {
+            return new Texture(Gdx.files.internal("Images/Tree/" + toPascalCase(tree.getName()) + "/WithFruit.png"));
+        }
+        if (tree.isBurnt()) {
+            return new Texture(Gdx.files.internal("Images/Tree/" + toPascalCase(tree.getType().getName() + "/Burnt.png")));
+        }
         String seasonString = tree.getStage() == 5 ? App.getCurrentGame().getGameState().getTime().getSeason().getName() : "";
         return new Texture(Gdx.files.internal("Images/Tree/" + toPascalCase(tree.getName()) + "/Stage" + tree.getStage() + seasonString + ".png"));
     }
