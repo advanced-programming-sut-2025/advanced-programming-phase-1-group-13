@@ -89,7 +89,7 @@ public class ProfileMenuView implements Screen {
         avatarLabel.setFontScale(1.5f);
         this.avatarBox = new SelectBox<>(skin);
         Array<Integer> options = new Array<>();
-        for (int i = 0; i < 35; i++) {
+        for (int i = 1; i < 35; i++) {
             options.add(i);
         }
         avatarBox.setItems(options);
@@ -159,17 +159,7 @@ public class ProfileMenuView implements Screen {
         );
         stage.addActor(avatarBackground);
 
-        float bgX = avatarBackground.getX();
-        float bgY = avatarBackground.getY();
-        float bgWidth = avatarBackground.getWidth() * avatarBackground.getScaleX();
-        float bgHeight = avatarBackground.getHeight() * avatarBackground.getScaleY();
-
-        avatar.setSize(4 * avatarBackground.getWidth(), 4 * avatarBackground.getHeight());
-        avatar.setPosition(
-            bgX + (bgWidth - avatar.getWidth()) / 2,
-            bgY + (bgHeight - avatar.getHeight()) / 2 - 10
-        );
-        stage.addActor(avatar);
+        updateAvatar();
 
         Table infoTable = new Table();
 
@@ -189,26 +179,30 @@ public class ProfileMenuView implements Screen {
         ScreenUtils.clear(0, 0, 0, 1f);
         Main.getBatch().begin();
         Main.getBatch().end();
-        avatar = new Image(GameAssetManager.getGameAssetManager().getAvatar(App.getLoggedIn().getAvatarNumber()));
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         controller.handleProfileMenuButtons();
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 
     public TextField getUsernameField() {
         return usernameField;
@@ -256,5 +250,18 @@ public class ProfileMenuView implements Screen {
 
     public void setErrorMessage(String message) {
         errorMessageLabel.setText(message);
+    }
+
+    public void updateAvatar() {
+        avatar.remove();
+        avatar = new Image(GameAssetManager.getGameAssetManager().getAvatar(App.getLoggedIn().getAvatarNumber()));
+
+        Image avatarBackground = new Image(GameAssetManager.getGameAssetManager().getAvatarBackground());
+        avatar.setSize(4 * avatarBackground.getWidth(), 4 * avatarBackground.getHeight());
+        avatar.setPosition(
+            Gdx.graphics.getWidth() / 3f - 20 + (5 * avatarBackground.getWidth() - avatar.getWidth()) / 2,
+            (avatarBackground.getHeight()) / 2f - 20 + (5 * avatarBackground.getHeight() - avatar.getHeight()) / 2 - 10
+        );
+        stage.addActor(avatar);
     }
 }

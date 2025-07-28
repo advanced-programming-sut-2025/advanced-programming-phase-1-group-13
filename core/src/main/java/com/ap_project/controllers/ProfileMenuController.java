@@ -20,9 +20,7 @@ public class ProfileMenuController {
     public void handleProfileMenuButtons() {
         if (view != null) {
             Result result = new Result(true, "");
-            if (view.getChangeAvatarButton().isChecked()) {
-                App.getLoggedIn().setAvatarNumber(view.getAvatarBox().getSelected());
-            }
+
             if (view.getChangeUsernameButton().isChecked()) {
                 String username = view.getUsernameField().getText();
                 result = changeUsername(username);
@@ -35,6 +33,9 @@ public class ProfileMenuController {
             } else if (view.getChangeEmailButton().isChecked()) {
                 String email = view.getEmailField().getText();
                 result = changeEmail(email);
+            } else if (view.getChangeAvatarButton().isChecked()) {
+                App.getLoggedIn().setAvatarNumber(view.getAvatarBox().getSelected());
+                view.updateAvatar();
             } else if (view.getBackButton().isChecked()) {
                 goToMainMenu();
             }
