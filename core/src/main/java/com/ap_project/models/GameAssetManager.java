@@ -4,12 +4,16 @@ import com.ap_project.models.enums.environment.Direction;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.types.*;
+import com.ap_project.models.farming.ForagingCrop;
+import com.ap_project.models.farming.Tree;
 import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.Random;
 
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
@@ -85,18 +89,51 @@ public class GameAssetManager {
     }
 
     public Texture getTextureByItem(Item item) {
+        if (item instanceof ForagingCrop) {
+            return getTextureByForagingCrop((ForagingCrop) item);
+        }
+
+        if (item instanceof Mineral) {
+            return getTextureByMineral((Mineral) item);
+        }
+
         if (item instanceof Tool) {
             return getTextureByTool((Tool) item);
         }
+
+        if (item instanceof Tree) {
+            return getTextureByTree((Tree) item);
+        }
+
         // TODO
         return null;
+    }
+
+    public Texture getTextureByForagingCrop(ForagingCrop foragingCrop) {
+        return new Texture(Gdx.files.internal("Images/ForagingCrop/" + toPascalCase(foragingCrop.getForagingCropType().getName()) + ".png"));
+    }
+
+    public Texture getTextureByMineral(Mineral mineral) {
+        return new Texture(Gdx.files.internal("Images/Mineral/" + toPascalCase(mineral.getMineralType().getName()) + ".png"));
     }
 
     public Texture getTextureByTool(Tool tool) {
         String name = toPascalCase(tool.getName());
         String material = toPascalCase(tool.getToolMaterial().getName());
-        String path = "Images/Tools/" + name + "/" + material + name + ".png";
+        String path = "Images/Tool/" + name + "/" + material + name + ".png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getTextureByTree(Tree tree) {
+        // TODO: complete tree assets
+        tree = new Tree(TreeType.APPLE_TREE, new Tile(null), (new Random()).nextInt(5) + 1);
+        System.out.println("Stage: " + tree.getStage());
+        String seasonString = tree.getStage() == 5 ? App.getCurrentGame().getGameState().getTime().getSeason().getName() : "";
+        return new Texture(Gdx.files.internal("Images/Tree/" + toPascalCase(tree.getName()) + "/Stage" + tree.getStage() + seasonString + ".png"));
+    }
+
+    public Texture getWood() {
+        return new Texture(Gdx.files.internal("Images/Resource/Wood.png"));
     }
 
     public Texture getMenuWindowByType(GameMenuType tab) {
