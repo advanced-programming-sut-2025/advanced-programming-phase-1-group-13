@@ -1,9 +1,8 @@
-package com.ap_project.views;
+package com.ap_project.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.models.*;
 import com.ap_project.models.enums.types.FoodType;
-import com.ap_project.views.game.GameView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;

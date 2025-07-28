@@ -161,6 +161,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/CloseButton.png"));
     }
 
+    public Texture getJournal() {
+        return new Texture(Gdx.files.internal("Images/Journal/Journal.png"));
+    }
+
+    public Texture getSlider() {
+        return new Texture(Gdx.files.internal("Images/Journal/Slider.png"));
+    }
+
+    public Texture getSliderTrack() {
+        return new Texture(Gdx.files.internal("Images/Journal/SliderTrack.png"));
+    }
+
     public Texture getIdlePlayer(Gender gender, Direction direction) {
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {
