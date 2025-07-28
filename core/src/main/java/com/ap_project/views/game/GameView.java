@@ -348,7 +348,6 @@ public abstract class GameView implements Screen, InputProcessor {
             displacementInTile += displacement;
         }
 
-        System.out.println("displacementInTile: " + displacementInTile + "  Energy: " + App.getLoggedIn().getEnergy());
         if (displacementInTile > TILE_SIZE) {
             displacementInTile = 0;
             App.getLoggedIn().decreaseEnergyBy(1);

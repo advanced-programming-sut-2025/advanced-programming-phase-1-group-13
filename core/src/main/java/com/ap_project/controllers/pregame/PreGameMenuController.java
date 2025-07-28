@@ -22,7 +22,10 @@ public class PreGameMenuController {
             if (view.getNewGameButton().isChecked()) {
                 goToNewGameMenu();
             } else if (view.getLoadGameButton().isChecked()) {
-                loadGame();
+                Result result = loadGame();
+                if (!result.success) {
+                    view.getErrorMessageLabel().setText(result.message);
+                }
             } else if (view.getBackButton().isChecked()) {
                 goToMainMenu();
             }
@@ -35,6 +38,9 @@ public class PreGameMenuController {
     public Result loadGame() {
         User player = App.getLoggedIn();
         Game game = player.getActiveGame();
+        if (game == null) {
+            return new Result(false, "You have no active game to load.");
+        }
         App.setCurrentGame(game);
         GameView gameView;
         if (game.isInNPCVillage()) {
