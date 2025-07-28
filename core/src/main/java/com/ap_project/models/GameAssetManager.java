@@ -42,6 +42,14 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Avatars/Avatar" + number + ".png"));
     }
 
+    public Texture getSavedGame() {
+        return new Texture(Gdx.files.internal("Images/PregameMenu/SavedGame.png"));
+    }
+
+    public Texture getCoin() {
+        return new Texture(Gdx.files.internal("Images/PregameMenu/Coin.png"));
+    }
+
     public Texture getMapPreview(int mapNumber, int playerIndex) {
         return new Texture(Gdx.files.internal("Images/Map/Farm/Preview/Map" + mapNumber + "Player" + playerIndex + ".png"));
     }

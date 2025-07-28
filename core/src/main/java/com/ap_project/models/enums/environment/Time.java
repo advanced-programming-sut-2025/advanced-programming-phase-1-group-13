@@ -13,7 +13,7 @@ public class Time {
     private int hour;
 
     public Time() {
-        this.year = 0;
+        this.year = 1;
         this.season = Season.SPRING;
         this.dayInSeason = 1;
         this.weekday = Weekday.MERCDAY;

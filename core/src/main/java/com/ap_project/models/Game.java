@@ -157,19 +157,6 @@ public class Game {
         this.trades.add(trade);
     }
 
-    public void forceTerminateGame(boolean vote1, boolean vote2, boolean vote3) {
-        if (vote1 && vote2 && vote3) {
-            for (User player : this.players) {
-                player.setActiveGame(null);
-                if (player.getMostEarnedMoney() < player.getBalance()) {
-                    player.setMostEarnedMoney((int) player.getBalance());
-                }
-                player.resetPlayer();
-            }
-        }
-        App.setCurrentMenu(Menu.PRE_GAME_MENU);
-    }
-
     public String nextTurn(User previousPlayer) {
         int previousPlayerIndex = players.indexOf(previousPlayer);
         User newPlayer = players.get((previousPlayerIndex + 1) % players.size());

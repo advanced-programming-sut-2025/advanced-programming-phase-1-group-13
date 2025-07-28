@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ap_project.Main.goToMap;
-import static com.ap_project.Main.goToTitleMenu;
+import static com.ap_project.Main.*;
 
 public class GameMenuView implements Screen, InputProcessor {
     private Stage stage;
@@ -214,12 +213,36 @@ public class GameMenuView implements Screen, InputProcessor {
         }
 
         if (currentTab == GameMenuType.EXIT) {
+            Image nextTurn = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            nextTurn.setScaleY(2.35f);
+            nextTurn.setScaleX(6.45f);
+            nextTurn.setPosition(
+                Gdx.graphics.getWidth() / 2f - 120f,
+                Gdx.graphics.getHeight() / 2f + 120f
+            );
+            if (hoverOnImage(nextTurn, screenX, convertedY)) {
+                GameController.nextTurn();
+                gameView.nextTurn();
+                Main.getMain().setScreen(gameView);
+            }
+
+            Image forceTerminateGame = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            forceTerminateGame.setScaleY(2.35f);
+            forceTerminateGame.setScaleX(10.85f);
+            forceTerminateGame.setPosition(
+                Gdx.graphics.getWidth() / 2f - 210f,
+                Gdx.graphics.getHeight() / 2f
+            );
+            if (hoverOnImage(forceTerminateGame, screenX, convertedY)) {
+                forceTerminateGame();
+            }
+
             Image exitToTitle = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
             exitToTitle.setScaleY(2.35f);
             exitToTitle.setScaleX(7.25f);
             exitToTitle.setPosition(
                 Gdx.graphics.getWidth() / 2f - 140f,
-                Gdx.graphics.getHeight() / 2f + 19f
+                Gdx.graphics.getHeight() / 2f - 135f
             );
             if (hoverOnImage(exitToTitle, screenX, convertedY)) {
                 if (App.getLoggedIn().equals(App.getCurrentGame().getPlayers().get(0))) {
@@ -240,7 +263,7 @@ public class GameMenuView implements Screen, InputProcessor {
             exitToDesktop.setScaleX(8.50f);
             exitToDesktop.setPosition(
                 Gdx.graphics.getWidth() / 2f - 165f,
-                Gdx.graphics.getHeight() / 2f - 120f
+                Gdx.graphics.getHeight() / 2f - 270f
             );
             if (hoverOnImage(exitToDesktop, screenX, convertedY)) {
                 if (App.getLoggedIn().equals(App.getCurrentGame().getPlayers().get(0))) {
@@ -253,21 +276,6 @@ public class GameMenuView implements Screen, InputProcessor {
                     errorMessageLabel.setText("Only the creator of the game can exit it.");
                     stage.addActor(errorMessageLabel);
                 }
-            }
-
-            // TODO
-            Image nextTurn = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
-            nextTurn.setScaleY(2.35f);
-            nextTurn.setScaleX(8.50f);
-            nextTurn.setPosition(
-                Gdx.graphics.getWidth() / 2f - 165f,
-                Gdx.graphics.getHeight() / 2f - 240f
-            );
-            stage.addActor(nextTurn);
-            if (hoverOnImage(nextTurn, screenX, convertedY)) {
-                GameController.nextTurn();
-                gameView.nextTurn();
-                Main.getMain().setScreen(gameView);
             }
         }
 
@@ -612,7 +620,7 @@ public class GameMenuView implements Screen, InputProcessor {
         }
     }
 
-    public String getFundString(int number) {
+    public static String getFundString(int number) {
         return String.format("%,d", number) + "g";
     }
 
@@ -680,5 +688,16 @@ public class GameMenuView implements Screen, InputProcessor {
         }
 
         addItemsToInventory(-327);
+    }
+
+    public void forceTerminateGame() {
+            for (User player : App.getCurrentGame().getPlayers()) {
+                player.setActiveGame(null);
+                if (player.getMostEarnedMoney() < player.getBalance()) {
+                    player.setMostEarnedMoney((int) player.getBalance());
+                }
+                player.resetPlayer();
+            }
+            goToPreGameMenu();
     }
 }
