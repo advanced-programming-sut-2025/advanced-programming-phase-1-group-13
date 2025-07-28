@@ -30,8 +30,4 @@ public enum Season {
         int nextOrdinal = (this.ordinal() + 1) % values().length;
         return values()[nextOrdinal];
     }
-
-    public Weather getRandomWeather() {
-        return availableWeathers.get(new Random().nextInt(availableWeathers.size()));
-    }
 }

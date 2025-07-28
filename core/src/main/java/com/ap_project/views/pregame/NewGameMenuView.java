@@ -90,14 +90,16 @@ public class NewGameMenuView implements Screen {
         table.add(player4).align(Align.right).padBottom(20).padRight(20);
         table.add(player4Field).width(750).padBottom(20).row();
 
-        table.add(backButton).padTop(20).padRight(20).width(200);
-        table.add(startButton).padTop(20).width(200).row();
-
+        table.setPosition(table.getX(), table.getY() + 50);
         stage.addActor(table);
 
-        backButton.setPosition(700, 215);
+        backButton.setPosition(700, 150);
         backButton.setWidth(200);
         stage.addActor(backButton);
+
+        startButton.setPosition(1000, 150);
+        startButton.setWidth(200);
+        stage.addActor(startButton);
 
         stage.addActor(errorMessageLabel);
     }

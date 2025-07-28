@@ -95,6 +95,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new GameMenuView(gameView));
     }
 
+    public static void goToJournal(GameView gameView) {
+        Main.getMain().setScreen(new JournalView(gameView));
+    }
+
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
     }

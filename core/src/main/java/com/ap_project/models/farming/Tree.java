@@ -51,7 +51,7 @@ public class Tree extends Item implements Harvestable {
 
         this.type = type;
         this.name = type.getName();
-        this.numOfStages = 4;
+        this.numOfStages = 5;
         this.totalHarvestTime = type.getTotalHarvestTime();
         this.baseSellPrice = type.getFruitBaseSellPrice();
         this.isEdible = type.isFruitEdible();
@@ -66,6 +66,34 @@ public class Tree extends Item implements Harvestable {
 
         this.hasBeenWateredToday = false;
 
+    }
+
+    public Tree(TreeType type, Tile tile, int stage) {
+        if (tile == null) {
+            throw new IllegalArgumentException("No tile found at position: " + tile.getPosition());
+        }
+        tile.setType(TileType.TREE);
+        this.position = tile.getPosition();
+
+        this.type = type;
+        this.name = type.getName();
+        this.numOfStages = 4;
+        this.totalHarvestTime = type.getTotalHarvestTime();
+        this.baseSellPrice = type.getFruitBaseSellPrice();
+        this.isEdible = type.isFruitEdible();
+        this.energy = type.getFruitEnergy();
+        this.seasons = type.getSeasons();
+        this.fruitType = type.getFruit();
+        this.fruitHarvestCycle = type.getFruitHarvestCycle();
+
+        this.isBurnt = false;
+        this.dayInStage = 0;
+        this.stage = stage;
+        if (stage == 5) {
+            this.daySinceLastHarvest = 1;
+        }
+
+        this.hasBeenWateredToday = false;
     }
 
     public void showInfo() {
@@ -171,6 +199,10 @@ public class Tree extends Item implements Harvestable {
 
     public void setHasBeenFertilizedToday(boolean hasBeenFertilizedToday) {
         this.hasBeenFertilizedToday = hasBeenFertilizedToday;
+    }
+
+    public boolean hasFruits() {
+        return (stage == 5) && (daySinceLastHarvest == fruitHarvestCycle);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Farm {
     private Lake lake;
     private final ArrayList<Mineral> stones;
     private final ArrayList<Tile> woodLogs;
-    private final ArrayList<ForagingCrop> foragings;
+    private final ArrayList<ForagingCrop> foragingCrops;
     private final transient Random random;
     private ArrayList<Tile> allTiles;
 
@@ -38,7 +38,7 @@ public class Farm {
         this.mapNumber = mapNumberToFollow;
         this.random = new Random();
         this.stones = new ArrayList<>();
-        this.foragings = new ArrayList<>();
+        this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
 
         for (ArtisanType artisanType : ArtisanType.values()) {
@@ -108,7 +108,8 @@ public class Farm {
             Position pos = availablePositions.get(i);
             Tile tile = getTileByPosition(pos);
             if (tile != null) {
-                Tree tree = new Tree(TreeType.getRandomTreeType(), tile);
+                TreeType treeType = TreeType.getRandomTreeType();
+                Tree tree = new Tree(treeType, tile, 5);
                 trees.add(tree);  // Add to trees list
                 tile.setType(TileType.TREE);
                 tile.pLaceItemOnTile(tree);
@@ -129,7 +130,7 @@ public class Farm {
             availablePositions.size() - treeCount - stoneCount);
         for (int i = 0; i < foragingCount; i++) {
             Position pos = availablePositions.get(treeCount + stoneCount + i);
-            foragings.add(new ForagingCrop(ForagingCropType.getRandomForagingCropType(), pos));
+            foragingCrops.add(new ForagingCrop(ForagingCropType.getRandomForagingCropType(), pos));
             getTileByPosition(pos).setType(TileType.GRASS);
         }
 
@@ -177,7 +178,7 @@ public class Farm {
         for (Mineral stone : stones) {
             if (stone.getPosition().equals(pos)) return true;
         }
-        for (ForagingCrop crop : foragings) {
+        for (ForagingCrop crop : foragingCrops) {
             if (crop.getPosition().equals(pos)) return true;
         }
         for (Tile log : woodLogs) {
@@ -285,8 +286,8 @@ public class Farm {
         return stones;
     }
 
-    public ArrayList<ForagingCrop> getForagings() {
-        return foragings;
+    public ArrayList<ForagingCrop> getforagingCrops() {
+        return foragingCrops;
     }
 
     public Random getRandom() {

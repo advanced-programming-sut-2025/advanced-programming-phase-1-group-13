@@ -3,7 +3,6 @@ package com.ap_project.views.pregame;
 import com.ap_project.Main;
 import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.models.App;
-import com.ap_project.models.Game;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.models.enums.environment.Time;
 import com.badlogic.gdx.Gdx;
@@ -41,6 +40,10 @@ public class PreGameMenuView implements Screen {
         this.backButton = new TextButton("Back", skin);
 
         this.savedGame = new Image(GameAssetManager.getGameAssetManager().getSavedGame());
+        savedGame.setPosition(
+            Gdx.graphics.getWidth() / 2f + 100,
+            Gdx.graphics.getHeight() / 2f - 130
+        );
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
@@ -74,24 +77,52 @@ public class PreGameMenuView implements Screen {
         table.add(loadGameButton).width(buttonWidth).padBottom(30).row();
         table.add(backButton).width(buttonWidth).padBottom(30).row();
 
-        table.setPosition(table.getX() - 300, table.getY());
+        table.padRight(500f);
         stage.addActor(table);
 
         stage.addActor(savedGame);
+        Label savedGameLabel = new Label("Saved Game:", GameAssetManager.getGameAssetManager().getSkin());
+        savedGameLabel.setFontScale(1.5f);
+        savedGameLabel.setPosition(
+            savedGame.getX() + 20,
+            savedGame.getY() + 250
+        );
+        stage.addActor(savedGameLabel);
+
         if (App.getLoggedIn().getActiveGame() == null) {
             Label noSavedGames = new Label("No Saved Games", GameAssetManager.getGameAssetManager().getSkin());
             noSavedGames.setFontScale(1.5f);
+            noSavedGames.setColor(34f / 255, 17f / 255, 34f / 255, 1);
+            noSavedGames.setPosition(
+                savedGame.getX() + savedGame.getWidth() / 2f - 1.5f * noSavedGames.getWidth() / 2f,
+                savedGame.getY() + savedGame.getHeight() / 2f - noSavedGames.getHeight() / 2f
+            );
             stage.addActor(noSavedGames);
         } else {
             Time time = App.getLoggedIn().getActiveGame().getGameState().getTime();
             Label duration = new Label("Day " + time.getDayInSeason() + " of " + time.getSeason().getName() + ", Year " + time.getYear(), GameAssetManager.getGameAssetManager().getSkin());
-            duration.setFontScale(1.5f);
+            duration.setFontScale(1.25f);
+            duration.setColor(34f / 255, 17f / 255, 34f / 255, 1);
+            duration.setPosition(
+                savedGame.getX() + 50,
+                savedGame.getY() + 135
+            );
             stage.addActor(duration);
 
             Image coin = new Image(GameAssetManager.getGameAssetManager().getCoin());
+            coin.setPosition(
+                savedGame.getX() + 50,
+                savedGame.getY() + 55
+            );
             stage.addActor(coin);
+
             Label balance = new Label(getFundString((int) App.getLoggedIn().getBalance()), GameAssetManager.getGameAssetManager().getSkin());
-            balance.setFontScale(1.5f);
+            balance.setFontScale(1.25f);
+            balance.setColor(34f / 255, 17f / 255, 34f / 255, 1);
+            balance.setPosition(
+                coin.getX() + coin.getWidth() + 10,
+                coin.getY()
+            );
             stage.addActor(balance);
         }
     }
@@ -107,19 +138,24 @@ public class PreGameMenuView implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 
     public TextButton getNewGameButton() {
         return newGameButton;
