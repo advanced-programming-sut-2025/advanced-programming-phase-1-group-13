@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ap_project.Main.*;
+import static com.ap_project.models.GameAssetManager.toPascalCase;
 
 public class GameMenuView implements Screen, InputProcessor {
     private Stage stage;
@@ -659,8 +660,20 @@ public class GameMenuView implements Screen, InputProcessor {
             "BeeHouse", "Bomb", "CharcoalKiln", "CheesePress", "CherryBomb",
             "FishSmoker", "Furnace", "GrassStarter", "Scarecrow",
             "DeluxeScarecrow", "Sprinkler", "QualitySprinkler", "IridiumSprinkler",
-            "Keg", "Loom", "MayoMachine", "MegaBomb", "MysticTreeSeed", "OilMaker", "PreservesJar"
+            "Keg", "Loom", "MayonnaiseMachine", "MegaBomb", "MysticTreeSeed", "OilMaker", "PreservesJar"
         };
+
+        ArrayList<CraftRecipe> learntRecipes = App.getLoggedIn().getLearntCraftRecipes();
+        ArrayList<String> learntRecipesNamesPascalCase = new ArrayList<>();
+        for (CraftRecipe cr : learntRecipes) {
+            learntRecipesNamesPascalCase.add(toPascalCase(cr.getName()));
+        }
+
+        for (int i = 0; i < craftingItemNames.length; i++) {
+            if (!learntRecipesNamesPascalCase.contains(craftingItemNames[i])) {
+                craftingItemNames[i] = craftingItemNames[i] + "Locked";
+            }
+        }
 
         float startX = windowX + 50;
         float startY = windowY + window.getHeight() - 190;
@@ -691,13 +704,13 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void forceTerminateGame() {
-            for (User player : App.getCurrentGame().getPlayers()) {
-                player.setActiveGame(null);
-                if (player.getMostEarnedMoney() < player.getBalance()) {
-                    player.setMostEarnedMoney((int) player.getBalance());
-                }
-                player.resetPlayer();
+        for (User player : App.getCurrentGame().getPlayers()) {
+            player.setActiveGame(null);
+            if (player.getMostEarnedMoney() < player.getBalance()) {
+                player.setMostEarnedMoney((int) player.getBalance());
             }
-            goToPreGameMenu();
+            player.resetPlayer();
+        }
+        goToPreGameMenu();
     }
 }
