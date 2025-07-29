@@ -81,11 +81,11 @@ public class FarmView extends GameView {
                 draw(treesTextures.get(i), position);
             }
 
-            scale = 4.400316f;
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println(e.getMessage());
         }
+
+        scale = 4.400316f;
 
         Main.getBatch().end();
     }

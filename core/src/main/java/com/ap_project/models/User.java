@@ -44,7 +44,7 @@ public class User {
     private HashMap<Skill, Integer> skillPoints;
     private ArrayList<CraftRecipe> learntCraftRecipes;
     private ArrayList<CookingRecipe> learntCookingRecipes;
-    private HashMap<SecurityQuestion, String> qAndA;
+    private final HashMap<SecurityQuestion, String> qAndA;
     private Farm farm;
     private Backpack backpack;
     private ArrayList<Gift> gifts;
@@ -101,9 +101,13 @@ public class User {
         this.spentMoney = 0;
         this.learntCraftRecipes = new ArrayList<>();
         this.learntCookingRecipes = new ArrayList<>();
-        this.learntCookingRecipes.add(new CookingRecipe(FoodType.SALAD));
-        this.learntCookingRecipes.add(new CookingRecipe(FoodType.SPAGHETTI));
-        this.learntCookingRecipes.add(new CookingRecipe(FoodType.HASHBROWNS));
+        // TODO: Remove later
+        learnNewCraftRecipe(new CraftRecipe(CraftType.BEE_HOUSE));
+        learnNewCraftRecipe(new CraftRecipe(CraftType.CHEESE_PRESS));
+        learnNewCraftRecipe(new CraftRecipe(CraftType.MEGA_BOMB));
+        learnNewCookingRecipe(new CookingRecipe(FoodType.SALAD));
+        learnNewCookingRecipe(new CookingRecipe(FoodType.SPAGHETTI));
+        learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
         this.backpack = new Backpack(BackpackType.INITIAL);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
@@ -229,22 +233,6 @@ public class User {
         }
     }
 
-    public void setLearntCraftRecipes(ArrayList<CraftRecipe> learntCraftRecipes) {
-        this.learntCraftRecipes = learntCraftRecipes;
-    }
-
-    public void setLearntCookingRecipes(ArrayList<CookingRecipe> learntCookingRecipes) {
-        this.learntCookingRecipes = learntCookingRecipes;
-    }
-
-    public void learnCookingRecipe(CookingRecipe cookingRecipe) {
-        this.learntCookingRecipes.add(cookingRecipe);
-    }
-
-    public void setQAndA(HashMap<SecurityQuestion, String> qAndA) {
-        this.qAndA = qAndA;
-    }
-
     public void setBackpack(Backpack backpack) {
         this.backpack = backpack;
     }
@@ -263,26 +251,6 @@ public class User {
 
     public void setNumberOfGames(int numberOfGames) {
         this.numberOfGames = numberOfGames;
-    }
-
-    public void setHasTalkedToToday(HashMap<User, Boolean> hasTalkedToToday) {
-        this.hasTalkedToToday = hasTalkedToToday;
-    }
-
-    public void setExchangedGiftToday(HashMap<User, Boolean> exchangedGiftToday) {
-        this.exchangedGiftToday = exchangedGiftToday;
-    }
-
-    public void setHasHuggedToday(HashMap<User, Boolean> hasHuggedToday) {
-        this.hasHuggedToday = hasHuggedToday;
-    }
-
-    public void setExchangedFlowerToday(HashMap<User, Boolean> exchangedFlowerToday) {
-        this.exchangedFlowerToday = exchangedFlowerToday;
-    }
-
-    public void setMarriageRequests(ArrayList<User> marriageRequests) {
-        this.marriageRequests = marriageRequests;
     }
 
     public void setRejectionTime(Time rejectionTime) {
@@ -574,11 +542,11 @@ public class User {
         return sb.toString();
     }
 
-    public void LearnNewCraftRecipe(CraftRecipe craftRecipe) {
+    public void learnNewCraftRecipe(CraftRecipe craftRecipe) {
         this.learntCraftRecipes.add(craftRecipe);
     }
 
-    public void LearnNewCookingRecipe(CookingRecipe cookingRecipe) {
+    public void learnNewCookingRecipe(CookingRecipe cookingRecipe) {
         this.learntCookingRecipes.add(cookingRecipe);
     }
 

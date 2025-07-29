@@ -13,8 +13,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Random;
-
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
 
