@@ -2,10 +2,7 @@ package com.ap_project.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.controllers.GameController;
-import com.ap_project.models.App;
-import com.ap_project.models.GameAssetManager;
-import com.ap_project.models.Item;
-import com.ap_project.models.Position;
+import com.ap_project.models.*;
 import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.environment.Weather;
@@ -776,6 +773,9 @@ public abstract class GameView implements Screen, InputProcessor {
                 direction
             );
 
+            Tile tile = App.getLoggedIn().getFarm().getTileByPosition(getPositionByDirection(direction));
+            tool.useTool(tile, App.getLoggedIn());
+            updateGreenBar();
         }
     }
 
@@ -795,6 +795,22 @@ public abstract class GameView implements Screen, InputProcessor {
             }
         }
         return direction;
+    }
+
+    private Position getPositionByDirection(Direction direction) {
+        int playerX = App.getLoggedIn().getPosition().getX();
+        int playerY = App.getLoggedIn().getPosition().getY();
+        if (direction == Direction.LEFT) {
+            return new Position(playerX + 1, playerY);
+        }
+        if (direction == Direction.RIGHT) {
+            return new Position(playerX - 1, playerY);
+        }
+        if (direction == Direction.UP) {
+            return new Position(playerX, playerY + 1);
+        }
+
+        return new Position(playerX, playerY - 1);
     }
 
     public void walk() {
