@@ -3,24 +3,18 @@ package com.ap_project.views.phase_one;
 import com.ap_project.models.Result;
 import com.ap_project.models.enums.commands.LoginCommands;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.ap_project.models.App;
-import com.ap_project.models.Result;
 import com.ap_project.models.User;
 import com.ap_project.models.enums.Menu;
 import com.ap_project.models.enums.SecurityQuestion;
 import com.ap_project.models.enums.types.Gender;
-import com.ap_project.models.enums.commands.LoginCommands;
 
 import static com.ap_project.models.App.getUserByEmail;
 import static com.ap_project.models.App.getUserByUsername;
-import static com.ap_project.models.App.getUserByEmail;
-
 
 public class PhaseOneLoginController {
     public Result registerUser(String username,
@@ -60,7 +54,7 @@ public class PhaseOneLoginController {
         }
 
         Gender gender = Gender.getGenderByName(genderString);
-        User user = new User(username, finalPassword, hashSha256(finalPassword), nickname, email, gender);
+        User user = new User(username, finalPassword, nickname, email, gender);
         App.addUser(user);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -78,29 +72,12 @@ public class PhaseOneLoginController {
         return new Result(true, stringBuilder.toString());
     }
 
-
     public Result registerUser(String username,
                                String nickname,
                                String email,
                                String genderString,
                                boolean generateRandomPassword) {
         return registerUser(username, null, null, nickname, email, genderString, generateRandomPassword);
-    }
-
-
-
-    String hashSha256(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = md.digest(input.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : bytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Result pickSecurityQuestion(String username, String questionNumberStr, String answer, String repeatAnswer) {

@@ -39,7 +39,6 @@ public class User {
     private Position position;
     private Direction direction;
     private Tool currentTool;
-    private String hashedPassword;
     private HashMap<Skill, SkillLevel> skillLevels;
     private HashMap<Skill, Integer> skillPoints;
     private ArrayList<CraftRecipe> learntCraftRecipes;
@@ -62,10 +61,9 @@ public class User {
     private boolean isDepressed;
     private Time rejectionTime;
 
-    public User(String username, String password, String hashPass, String nickname, String email, Gender gender) {
+    public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
-        this.password = password;
-        this.hashedPassword = hashPass;
+        this.password = hashSha256(password);
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
@@ -140,10 +138,6 @@ public class User {
 
     public void setPosition(Position position) {
         this.position = position;
-    }
-
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
     }
 
     public void updateSkillPoints(Skill skill, int points) {
@@ -233,24 +227,12 @@ public class User {
         }
     }
 
-    public void setBackpack(Backpack backpack) {
-        this.backpack = backpack;
-    }
-
-    public void setGifts(ArrayList<Gift> gifts) {
-        this.gifts = gifts;
-    }
-
     public void setMostEarnedMoney(int mostEarnedMoney) {
         this.mostEarnedMoney = mostEarnedMoney;
     }
 
     public int getNumberOfGames() {
         return numberOfGames;
-    }
-
-    public void setNumberOfGames(int numberOfGames) {
-        this.numberOfGames = numberOfGames;
     }
 
     public void setRejectionTime(Time rejectionTime) {
@@ -347,11 +329,13 @@ public class User {
     }
 
     public void setActiveGame(Game activeGame) {
+        if (activeGame == null) {
+            numberOfGames++;
+            if (balance > mostEarnedMoney) {
+                mostEarnedMoney = (int) balance;
+            }
+        }
         this.activeGame = activeGame;
-    }
-
-    public HashMap<SecurityQuestion, String> getqAndA() {
-        return qAndA;
     }
 
     public int getMostEarnedMoney() {
@@ -401,10 +385,6 @@ public class User {
 
     public void setEnergyUnlimited(boolean unlimitedEnergy) {
         this.isEnergyUnlimited = unlimitedEnergy;
-    }
-
-    public String getHashedPassword() {
-        return hashedPassword;
     }
 
     public HashMap<User, Boolean> getHasTalkedToToday() {
@@ -606,8 +586,6 @@ public class User {
     }
 
     public ShippingBin getCloseShippingBin() {
-        int x = this.getPosition().getX();
-        int y = this.getPosition().getY();
         for (ShippingBin shippingBin : this.farm.getShippingBins()) {
             if (Position.areClose(shippingBin.getPosition(), this.getPosition())) {
                 return shippingBin;

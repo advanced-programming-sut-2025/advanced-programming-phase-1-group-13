@@ -1,7 +1,6 @@
 package com.ap_project.models;
 
 import com.ap_project.models.enums.FriendshipLevel;
-import com.ap_project.models.enums.Menu;
 import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.types.ItemType;
 import com.ap_project.models.enums.types.NPCType;
@@ -10,6 +9,10 @@ import com.ap_project.models.enums.types.TileType;
 import com.ap_project.models.farming.Crop;
 import com.ap_project.models.farming.Tree;
 import com.ap_project.models.trade.Trade;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,12 +21,12 @@ import java.util.HashMap;
 
 public class Game {
     private final ArrayList<User> players; // The 3 players
-    private NPCVillage village;
+    private final NPCVillage village;
     private boolean isInNPCVillage;
-    private GameState gameState;
+    private final GameState gameState;
     private final ArrayList<NPC> npcs;
-    private HashMap<User, HashMap<User, Friendship>> userFriendships;
-    private HashMap<User, HashMap<NPC, Integer>> npcFriendships;
+    private final HashMap<User, HashMap<User, Friendship>> userFriendships;
+    private final HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
 
@@ -89,26 +92,6 @@ public class Game {
         }
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-        //saveGameState();
-    }
-
-    public void setUserFriendships(HashMap<User, HashMap<User, Friendship>> userFriendships) {
-        this.userFriendships = userFriendships;
-        //saveGameState();
-    }
-
-    public void setNpcFriendships(HashMap<User, HashMap<NPC, Integer>> npcFriendships) {
-        this.npcFriendships = npcFriendships;
-        //saveGameState();
-    }
-
-    public void setTalkHistory(HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory) {
-        this.talkHistory = talkHistory;
-        // saveGameState();
-    }
-
     public NPCVillage getVillage() {
         return village;
     }
@@ -121,10 +104,6 @@ public class Game {
         isInNPCVillage = inNPCVillage;
     }
 
-    public void setVillage(NPCVillage village) {
-        this.village = village;
-    }
-
     public ArrayList<User> getPlayers() {
         return players;
     }
@@ -135,14 +114,6 @@ public class Game {
 
     public ArrayList<NPC> getNpcs() {
         return npcs;
-    }
-
-    public HashMap<User, HashMap<User, Friendship>> getUserFriendships() {
-        return userFriendships;
-    }
-
-    public HashMap<User, HashMap<NPC, Integer>> getNpcFriendships() {
-        return npcFriendships;
     }
 
     public HashMap<User, HashMap<User, HashMap<String, Boolean>>> getTalkHistory() {
@@ -241,7 +212,7 @@ public class Game {
             }
         }
 
-        for (Shop shop : this.getVillage().getShops()) {
+        for (Shop shop : NPCVillage.getShops()) {
             for (Good good : shop.getShopInventory()) {
                 good.setNumberSoldToUsersToday(0);
             }
@@ -255,7 +226,7 @@ public class Game {
 //                }
 //            }
 //            player.changeBalance(income);
-//            message.append(player.getUsername()).append("'s shipping bins have been emptied and they earned ")
+//            message.append(player.getUsername()).append("'s shipping bins have been emptied, and they earned ")
 //                    .append(income).append("g.\n");
 //        }
 
@@ -303,7 +274,7 @@ public class Game {
     }
 
     public Shop getShopByShopType(ShopType shopType) {
-        for (Shop shop : this.getVillage().getShops()) {
+        for (Shop shop : NPCVillage.getShops()) {
             if (shop.getType().equals(shopType)) {
                 return shop;
             }
@@ -356,7 +327,6 @@ public class Game {
     }
 
     private void saveGameState() {
-        /*
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
                     @Override
@@ -375,9 +345,8 @@ public class Game {
         try (FileWriter writer = new FileWriter("games.json")) {
             writer.write(gson.toJson(App.getGames()));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-        */
     }
 
     public void sendMessage(User sender, User receiver, String message) {

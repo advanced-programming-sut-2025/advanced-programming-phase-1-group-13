@@ -11,6 +11,7 @@ import com.ap_project.models.enums.environment.Time;
 import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.environment.Direction;
 
+import com.ap_project.models.tools.Tool;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.ap_project.Main.*;
@@ -43,8 +45,9 @@ public abstract class GameView implements Screen, InputProcessor {
     protected final Image inventoryHotbarImage;
     protected final Image selectedSlotImage;
     protected int selectedSlotIndex;
+    protected ArrayList<Item> inventory;
     protected final GameController controller;
-    protected final Sprite playerSprite;
+    protected Sprite playerSprite;
     protected Animation<Texture> playerUpAnimation;
     protected Animation<Texture> playerDownAnimation;
     protected Animation<Texture> playerLeftAnimation;
@@ -63,6 +66,10 @@ public abstract class GameView implements Screen, InputProcessor {
     protected float scale = 4.400316f;
     protected Image energyBar;
     protected Image greenBar;
+    protected boolean isUsingTool;
+    protected float toolUsageDuration;
+    protected float toolUsageTimer;
+    protected Texture currentToolTexture;
     protected final ArrayList<Image> raindrops;
     protected boolean isRaining;
     protected final ArrayList<Image> snowflakes;
@@ -104,6 +111,8 @@ public abstract class GameView implements Screen, InputProcessor {
         this.selectedSlotImage = new Image(GameAssetManager.getGameAssetManager().getHotbarSelectedSlot());
         this.selectedSlotIndex = 0;
 
+        this.inventory = new ArrayList<>(List.of(App.getLoggedIn().getBackpack().getItems().keySet().toArray(new Item[0])));
+
         this.controller = controller;
         controller.setView(this);
 
@@ -121,6 +130,8 @@ public abstract class GameView implements Screen, InputProcessor {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        this.toolUsageDuration = 0.5f;
 
         this.raindrops = new ArrayList<>();
         this.isRaining = false;
@@ -283,6 +294,14 @@ public abstract class GameView implements Screen, InputProcessor {
     }
 
     protected void updateGameLogic(float delta) {
+        if (isUsingTool) {
+            toolUsageTimer += delta;
+            if (toolUsageTimer >= toolUsageDuration) {
+                isUsingTool = false;
+            }
+            return;
+        }
+
         isFainting = App.getLoggedIn().getEnergy() == 0;
 
         if (isFainting) {
@@ -425,12 +444,17 @@ public abstract class GameView implements Screen, InputProcessor {
         if (isFainting) {
             Texture frame = currentAnimation.getKeyFrame(stateTime, true);
             playerSprite.setRegion(new TextureRegion(frame));
+        } else if (isUsingTool) {
+            playerSprite.setRegion(new TextureRegion(currentToolTexture));
         } else if (isMoving) {
             Texture frame = currentAnimation.getKeyFrame(stateTime, true);
             playerSprite.setRegion(new TextureRegion(frame));
         } else {
             playerSprite.setRegion(new TextureRegion(
-                GameAssetManager.getGameAssetManager().getIdlePlayer(App.getLoggedIn().getGender(), App.getLoggedIn().getDirection())
+                GameAssetManager.getGameAssetManager().getIdlePlayer(
+                    App.getLoggedIn().getGender(),
+                    App.getLoggedIn().getDirection()
+                )
             ));
         }
         playerSprite.draw(Main.getBatch());
@@ -558,6 +582,10 @@ public abstract class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (button == Input.Buttons.RIGHT) {
+            useTool(screenX, Gdx.graphics.getHeight() - screenY);
+            return true;
+        }
         return false;
     }
 
@@ -726,6 +754,47 @@ public abstract class GameView implements Screen, InputProcessor {
         if (selectedSlotIndex < 0) {
             selectedSlotIndex = 11;
         }
+
+        if (selectedSlotIndex < inventory.size()) {
+            if (inventory.get(selectedSlotIndex) instanceof Tool) {
+                App.getLoggedIn().setCurrentTool((Tool) inventory.get(selectedSlotIndex));
+            }
+        } else {
+            App.getLoggedIn().setCurrentTool(null);
+        }
+    }
+
+    protected void useTool(int x, int y) {
+        Tool tool = App.getLoggedIn().getCurrentTool();
+        if (tool != null && !isUsingTool) {
+            Direction direction = getClickedDirection(x, y); // TODO: fix
+            isUsingTool = true;
+            toolUsageTimer = 0f;
+            currentToolTexture = GameAssetManager.getGameAssetManager().getPlayerUsingTool(
+                tool,
+                App.getLoggedIn().getGender(),
+                direction
+            );
+
+        }
+    }
+
+    private Direction getClickedDirection(int x, int y) {
+        Direction direction;
+        if (y < playerSprite.getY() + TILE_SIZE / 2f && y > playerSprite.getY() - TILE_SIZE / 2f) {
+            if (x < playerSprite.getX()) {
+                direction = Direction.LEFT;
+            } else {
+                direction = Direction.RIGHT;
+            }
+        } else {
+            if (y > playerSprite.getY()) {
+                direction = Direction.UP;
+            } else {
+                direction = Direction.DOWN;
+            }
+        }
+        return direction;
     }
 
     public void walk() {

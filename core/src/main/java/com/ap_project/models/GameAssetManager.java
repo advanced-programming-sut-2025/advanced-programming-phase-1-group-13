@@ -6,7 +6,9 @@ import com.ap_project.models.enums.environment.Weather;
 import com.ap_project.models.enums.types.*;
 import com.ap_project.models.farming.ForagingCrop;
 import com.ap_project.models.farming.Tree;
+import com.ap_project.models.tools.Scythe;
 import com.ap_project.models.tools.Tool;
+import com.ap_project.models.tools.WateringCan;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -221,6 +223,26 @@ public class GameAssetManager {
 
         String path = "Images/Player/" + genderStr + "/" + direction.toString() + "1.png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getPlayerUsingTool(Tool tool, Gender gender, Direction direction) {
+        String genderStr;
+        if (gender == Gender.RATHER_NOT_SAY) {
+            genderStr = "Man";
+        } else {
+            genderStr = gender.getName();
+        }
+
+        String toolName;
+        if (tool instanceof Scythe) {
+            toolName = "Scythe";
+        } else if (tool instanceof WateringCan) {
+            toolName = "WateringCan";
+        } else {
+            toolName = "Axe";
+        }
+
+        return new Texture(Gdx.files.internal("Images/Player/" + genderStr + "/" + direction.toString() + toolName + ".png"));
     }
 
     public Animation<Texture> getPlayerAnimation(Gender gender, Direction direction) {

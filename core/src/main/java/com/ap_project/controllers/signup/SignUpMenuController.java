@@ -10,7 +10,6 @@ import java.util.Objects;
 
 import static com.ap_project.Main.goToSecurityQuestionMenu;
 import static com.ap_project.Main.goToTitleMenu;
-import static com.ap_project.controllers.login.LoginController.hashSha256;
 import static com.ap_project.controllers.login.LoginController.randomPasswordGenerator;
 import static com.ap_project.models.App.getUserByEmail;
 import static com.ap_project.models.App.getUserByUsername;
@@ -90,7 +89,7 @@ public class SignUpMenuController {
 
         Gender gender = Gender.getGenderByName(genderString);
 
-        User user = new User(username, hashSha256(password), hashSha256(password), nickname, email, gender);
+        User user = new User(username, password, nickname, email, gender);
         App.addUser(user);
 
         return new Result(true, "Registration successful.");
