@@ -33,7 +33,27 @@ public class Farm {
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
+
         this.farmBuildings = new ArrayList<>();
+        // TODO: remove later
+        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.BARN, new Position(0, 0)));
+        AnimalLivingSpace barn = (AnimalLivingSpace) farmBuildings.get(0);
+        barn.addAnimal(new Animal("Gav", AnimalType.COW, barn));
+        barn.addAnimal(new Animal("Morgh", AnimalType.CHICKEN, barn));
+        barn.addAnimal(new Animal("Khook", AnimalType.PIG, barn));
+
+        Animal cow = barn.getAnimals().get(0);
+        cow.setOutside(true);
+        cow.setPosition(new Position(63, 10));
+
+        Animal chicken = barn.getAnimals().get(1);
+        chicken.setOutside(true);
+        chicken.setPosition(new Position(65, 15));
+
+        Animal pig = barn.getAnimals().get(2);
+        pig.setOutside(true);
+        pig.setPosition(new Position(64, 20));
+
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
         this.random = new Random();
@@ -429,10 +449,16 @@ public class Farm {
     public ArrayList<Animal> getAllFarmAnimals() {
         ArrayList<Animal> animals = new ArrayList<>();
 
-        for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
-            if (farmBuilding.getFarmBuildingType().getIsCage() != null) {
-                AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
-                animals.addAll(animalLivingSpace.getAnimals());
+        for (FarmBuilding farmBuilding : farmBuildings) {
+            try {
+                if (farmBuilding.getFarmBuildingType().getIsCage() != null) {
+                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                    animals.addAll(animalLivingSpace.getAnimals());
+                }
+            } catch (Exception e) {
+                System.out.println("Exception in getAllFarmAnimals: " + e.getMessage());
+                e.printStackTrace();
+
             }
         }
 

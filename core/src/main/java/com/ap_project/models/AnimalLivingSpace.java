@@ -11,6 +11,7 @@ public class AnimalLivingSpace extends FarmBuilding {
 
     public AnimalLivingSpace(FarmBuildingType farmBuildingType, Position positionOfUpperLeftCorner) {
         super(farmBuildingType, positionOfUpperLeftCorner);
+        this.animals = new ArrayList<>();
         this.capacity = farmBuildingType.getCapacity();
     }
 

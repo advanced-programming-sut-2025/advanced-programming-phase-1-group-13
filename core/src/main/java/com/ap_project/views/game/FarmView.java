@@ -21,6 +21,8 @@ public class FarmView extends GameView {
     private final Texture stoneTexture;
     private final Texture woodTexture;
     private final ArrayList<Texture> treesTextures;
+    private final ArrayList<Texture> farmbuildingsTextures;
+    private final ArrayList<Texture> animalsTextures;
     private Farm farm;
 
     public FarmView(GameController controller, Skin skin) {
@@ -45,6 +47,16 @@ public class FarmView extends GameView {
         this.treesTextures = new ArrayList<>();
         for (Tree tree : farm.getTrees()) {
             treesTextures.add(GameAssetManager.getGameAssetManager().getTextureByTree(tree));
+        }
+
+        this.farmbuildingsTextures = new ArrayList<>();
+        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
+            farmbuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
+        }
+
+        this.animalsTextures = new ArrayList<>();
+        for (Animal animal : farm.getAllFarmAnimals()) {
+            animalsTextures.add(GameAssetManager.getGameAssetManager().getAnimal(animal.getAnimalType()));
         }
     }
 
@@ -81,6 +93,17 @@ public class FarmView extends GameView {
                 draw(treesTextures.get(i), position);
             }
 
+            for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
+                Position position = farm.getFarmBuildings().get(i).getPositionOfUpperLeftCorner();
+                position.setY(position.getY() + farm.getFarmBuildings().get(i).getWidth());
+                draw(farmbuildingsTextures.get(i), position);
+            }
+
+            scale = 1.25f;
+            for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
+                Position position = farm.getAllFarmAnimals().get(i).getPosition();
+                draw(animalsTextures.get(i), position);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

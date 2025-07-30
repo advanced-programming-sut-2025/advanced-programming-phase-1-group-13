@@ -298,6 +298,14 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Farm/GreenhouseUnbuilt.png"));
     }
 
+    public Texture getAnimal(AnimalType animalType) {
+        return new Texture(Gdx.files.internal("Images/Animal/" + animalType.getName() + ".png"));
+    }
+
+    public Texture getFarmBuilding(FarmBuildingType farmBuildingType) {
+        return new Texture(Gdx.files.internal("Images/FarmBuilding/" + toPascalCase(farmBuildingType.getName()) + ".png"));
+    }
+
     public Texture getCircle() {
         return new Texture(Gdx.files.internal("Images/Player/Circle.png"));
     }
