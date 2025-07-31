@@ -6,6 +6,7 @@ import com.ap_project.controllers.pregame.ChooseMapMenuController;
 import com.ap_project.controllers.pregame.NewGameMenuController;
 import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.controllers.signup.*;
+import com.ap_project.models.Animal;
 import com.ap_project.models.GameAssetManager;
 import com.ap_project.views.*;
 import com.ap_project.views.game.*;
@@ -105,6 +106,10 @@ public class Main extends Game {
 
     public static void goToRefrigeratorMenu(GameView gameView) {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
+    }
+
+    public static void goToAnimalMenu(GameView gameView, Animal animal) {
+        Main.getMain().setScreen(new AnimalMenuView(gameView, animal));
     }
 
     public static void goToCheatWindow(GameView gameView, GameController controller) {

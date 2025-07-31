@@ -3,14 +3,17 @@ package com.ap_project.views.game;
 import com.ap_project.Main;
 import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
+import com.ap_project.models.enums.types.AnimalType;
 import com.ap_project.models.farming.ForagingCrop;
 import com.ap_project.models.farming.Tree;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
 
+import static com.ap_project.Main.goToAnimalMenu;
 import static com.ap_project.Main.goToFarmHouse;
 
 public class FarmView extends GameView {
@@ -21,7 +24,7 @@ public class FarmView extends GameView {
     private final Texture stoneTexture;
     private final Texture woodTexture;
     private final ArrayList<Texture> treesTextures;
-    private final ArrayList<Texture> farmbuildingsTextures;
+    private final ArrayList<Texture> farmBuildingsTextures;
     private final ArrayList<Texture> animalsTextures;
     private Farm farm;
 
@@ -49,9 +52,9 @@ public class FarmView extends GameView {
             treesTextures.add(GameAssetManager.getGameAssetManager().getTextureByTree(tree));
         }
 
-        this.farmbuildingsTextures = new ArrayList<>();
+        this.farmBuildingsTextures = new ArrayList<>();
         for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
-            farmbuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
+            farmBuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
         }
 
         this.animalsTextures = new ArrayList<>();
@@ -96,11 +99,13 @@ public class FarmView extends GameView {
             for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
                 Position position = farm.getFarmBuildings().get(i).getPositionOfUpperLeftCorner();
                 position.setY(position.getY() + farm.getFarmBuildings().get(i).getWidth());
-                draw(farmbuildingsTextures.get(i), position);
+                draw(farmBuildingsTextures.get(i), position);
             }
 
             scale = 1.25f;
             for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
+                if (farm.getAllFarmAnimals().get(i).getAnimalType() == AnimalType.PIG) scale = 3; // TODO: resize asset
+                else scale = 1.25f;
                 Position position = farm.getAllFarmAnimals().get(i).getPosition();
                 draw(animalsTextures.get(i), position);
             }
@@ -130,6 +135,38 @@ public class FarmView extends GameView {
 
         if (keycode == Input.Keys.H) {
             goToFarmHouse(this);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        super.touchDown(screenX, screenY, pointer, button);
+        if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
+            goToFarmHouse(this);
+            return true;
+        }
+        if (button == Input.Buttons.RIGHT) {
+            // Check cabin clickf
+
+
+            // Check animals click
+            for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
+                Animal animal = farm.getAllFarmAnimals().get(i);
+                float scale = (animal.getAnimalType() == AnimalType.PIG) ? 3f : 1.25f;
+                if (clickedOnTexture(screenX, screenY, animalsTextures.get(i), animal.getPosition(), scale)) {
+                    goToAnimalMenu(this, animal);
+                    return true;
+                }
+            }
+
+            // Check greenhouse click
+            if (clickedOnTexture(screenX, screenY, greenhouseTexture, farm.getGreenhouse().getPosition(), 1f)) {
+                // Handle greenhouse click
+                return true;
+            }
+
+            // Add checks for other objects as needed...
         }
         return false;
     }
