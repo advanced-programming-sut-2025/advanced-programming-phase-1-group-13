@@ -30,6 +30,8 @@ public class Farm {
     private ArrayList<Tile> allTiles;
 
     public Farm(int mapNumberToFollow) {
+        this.random = new Random();
+
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
@@ -41,22 +43,18 @@ public class Farm {
         barn.addAnimal(new Animal("Gav", AnimalType.COW, barn));
         barn.addAnimal(new Animal("Morgh", AnimalType.CHICKEN, barn));
         barn.addAnimal(new Animal("Khook", AnimalType.PIG, barn));
-
-        Animal cow = barn.getAnimals().get(0);
-        cow.setOutside(true);
-        cow.setPosition(new Position(63, 10));
-
-        Animal chicken = barn.getAnimals().get(1);
-        chicken.setOutside(true);
-        chicken.setPosition(new Position(65, 15));
-
-        Animal pig = barn.getAnimals().get(2);
-        pig.setOutside(true);
-        pig.setPosition(new Position(64, 20));
+        barn.addAnimal(new Animal("Goosfand", AnimalType.SHEEP, barn));
+        barn.addAnimal(new Animal("Ordak", AnimalType.DUCK, barn));
+        barn.addAnimal(new Animal("Boz", AnimalType.GOAT, barn));
+        barn.addAnimal(new Animal("Khargoosh", AnimalType.RABBIT, barn));
+        barn.addAnimal(new Animal("Dino", AnimalType.DINOSAUR, barn));
+        for (Animal animal : barn.getAnimals()) {
+            animal.setOutside(true);
+            animal.setPosition(new Position(random.nextInt(10) + 60, random.nextInt(10) + 10));
+        }
 
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
-        this.random = new Random();
         this.stones = new ArrayList<>();
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();

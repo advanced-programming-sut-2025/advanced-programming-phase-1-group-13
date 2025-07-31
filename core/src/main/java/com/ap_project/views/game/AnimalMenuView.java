@@ -5,8 +5,10 @@ import com.ap_project.models.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -138,7 +140,28 @@ public class AnimalMenuView implements Screen, InputProcessor {
 
     public void addAnimalInfo() {
         Image animalImage = new Image(GameAssetManager.getGameAssetManager().getAnimal(animal.getAnimalType()));
-        animalImage.setPosition(window.getX(), window.getY() + window.getHeight());
+        animalImage.setPosition(
+            window.getX() + 55,
+            window.getY() + window.getHeight() - 140
+        );
         stage.addActor(animalImage);
+
+        Label name = new Label(animal.getName(), GameAssetManager.getGameAssetManager().getSkin());
+        name.setPosition(
+            window.getX() + 275,
+            window.getY() + window.getHeight() - 85
+        );
+        name.setColor(Color.BLACK);
+        name.setFontScale(0.8f);
+        stage.addActor(name);
+
+        Label friendshipLevel = new Label("" + animal.getFriendshipLevel(), GameAssetManager.getGameAssetManager().getSkin());
+        friendshipLevel.setPosition(
+            name.getX() + 125,
+            name.getY() - 60
+        );
+        friendshipLevel.setColor(Color.BLACK);
+        friendshipLevel.setFontScale(0.8f);
+        stage.addActor(friendshipLevel);
     }
 }
