@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static com.ap_project.views.game.GameMenuView.hoverOnImage;
 
-
 public class MapView implements Screen, InputProcessor {
     private Stage stage;
     private final Image map;

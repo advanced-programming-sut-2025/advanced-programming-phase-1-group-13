@@ -4,6 +4,7 @@ import com.ap_project.Main;
 import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
 import com.ap_project.models.enums.types.AnimalType;
+import com.ap_project.models.enums.types.FarmBuildingType;
 import com.ap_project.models.farming.ForagingCrop;
 import com.ap_project.models.farming.Tree;
 import com.badlogic.gdx.Input;
@@ -13,8 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
 
-import static com.ap_project.Main.goToAnimalMenu;
-import static com.ap_project.Main.goToFarmHouse;
+import static com.ap_project.Main.*;
 
 public class FarmView extends GameView {
     private final Texture cabinTexture;
@@ -200,6 +200,10 @@ public class FarmView extends GameView {
 
         if (keycode == Input.Keys.H) {
             goToFarmHouse(this);
+        }
+
+        if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
+            goToFarmOverview("Choose the position of the Barn", FarmBuildingType.BARN, this); // TODO
         }
         return false;
     }

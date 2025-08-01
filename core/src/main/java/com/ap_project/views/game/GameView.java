@@ -82,7 +82,7 @@ public abstract class GameView implements Screen, InputProcessor {
 
     public GameView(GameController controller, Skin skin) {
         this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
-        App.getCurrentGame().getGameState().setCurrentWeather(Weather.SUNNY);
+        App.getCurrentGame().getGameState().setCurrentWeather(Weather.SUNNY); // TODO: remove later
 
         this.date = new Label("", skin);
         date.setFontScale(0.90f);
@@ -455,7 +455,7 @@ public abstract class GameView implements Screen, InputProcessor {
             ));
         }
         playerSprite.draw(Main.getBatch());
-
+        renderDebugTiles();
         Main.getBatch().end();
     }
 

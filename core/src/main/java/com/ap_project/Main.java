@@ -8,6 +8,7 @@ import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.controllers.signup.*;
 import com.ap_project.models.Animal;
 import com.ap_project.models.GameAssetManager;
+import com.ap_project.models.enums.types.ItemType;
 import com.ap_project.views.*;
 import com.ap_project.views.game.*;
 import com.ap_project.views.login.*;
@@ -18,7 +19,9 @@ import com.ap_project.views.signup.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
+ */
 public class Main extends Game {
     private static Main main;
     private static SpriteBatch batch;
@@ -90,6 +93,10 @@ public class Main extends Game {
 
     public static void goToFarmHouse(GameView gameView) {
         Main.getMain().setScreen(new FarmHouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToFarmOverview(String description, ItemType itemType, GameView gameView) {
+        Main.getMain().setScreen(new FarmOverviewView(description, itemType, gameView));
     }
 
     public static void goToGameMenu(GameView gameView) {
