@@ -216,7 +216,7 @@ public abstract class GameView implements Screen, InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1f);
 
         renderGameWorld(fadeAlpha);
-        renderMap();
+        renderMap(delta);
         renderPlayer();
 
         Weather weather = App.getCurrentGame().getGameState().getCurrentWeather();
@@ -459,7 +459,7 @@ public abstract class GameView implements Screen, InputProcessor {
         Main.getBatch().end();
     }
 
-    protected void renderMap() {
+    protected void renderMap(float delta) {
 
     }
 
@@ -902,19 +902,15 @@ public abstract class GameView implements Screen, InputProcessor {
     }
 
     protected boolean clickedOnTexture(int screenX, int screenY, Texture texture, Position position, float scale) {
-        // Convert screen coordinates to world coordinates
         float worldX = camera.position.x - (camera.viewportWidth / 2) + screenX;
         float worldY = camera.position.y - (camera.viewportHeight / 2) + (Gdx.graphics.getHeight() - screenY);
 
-        // Calculate texture position in world coordinates
         float textureX = position.getX() * TILE_SIZE;
         float textureY = (originPosition.getY() - position.getY()) * TILE_SIZE;
 
-        // Calculate scaled dimensions
         float textureWidth = texture.getWidth() * scale;
         float textureHeight = texture.getHeight() * scale;
 
-        // Check if click is within texture bounds
         return worldX >= textureX &&
             worldX <= textureX + textureWidth &&
             worldY >= textureY &&

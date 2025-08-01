@@ -8,6 +8,7 @@ import com.ap_project.models.farming.ForagingCrop;
 import com.ap_project.models.farming.Tree;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
@@ -25,6 +26,16 @@ public class FarmView extends GameView {
     private final ArrayList<Texture> treesTextures;
     private final ArrayList<Texture> farmBuildingsTextures;
     private final ArrayList<Texture> animalsTextures;
+    private final Animation<Texture> pettingAnimation;
+    private boolean isPetting;
+    private Animal animalBeingPet;
+    private Texture pettingAnimationFrame;
+    private float pettingAnimationTime;
+    private final Animation<Texture> feedingAnimation;
+    private boolean isFeeding;
+    private Animal animalBeingFed;
+    private Texture feedingAnimationFrame;
+    private float feedingAnimationTime;
     private Farm farm;
 
     public FarmView(GameController controller, Skin skin) {
@@ -42,7 +53,7 @@ public class FarmView extends GameView {
             foragingCropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByForagingCrop(foragingCrop));
         }
 
-        this.stoneTexture =GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(null));
+        this.stoneTexture = GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(null));
 
         this.woodTexture = GameAssetManager.getGameAssetManager().getWood();
 
@@ -60,18 +71,72 @@ public class FarmView extends GameView {
         for (Animal animal : farm.getAllFarmAnimals()) {
             animalsTextures.add(GameAssetManager.getGameAssetManager().getAnimal(animal.getAnimalType()));
         }
+
+        this.pettingAnimation = GameAssetManager.getGameAssetManager().getPettingAnimation();
+        this.animalBeingPet = null;
+        this.isPetting = false;
+        this.pettingAnimationFrame = pettingAnimation.getKeyFrame(0);
+
+        this.feedingAnimation = GameAssetManager.getGameAssetManager().getFeedingAnimation();
+        this.animalBeingPet = null;
+        this.isFeeding = false;
+        this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
     }
 
     @Override
-    public void renderMap() {
+    public void renderMap(float delta) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
+
+        if (isPetting) {
+            float tempScale = scale;
+            scale = 1;
+            pettingAnimationTime += delta;
+
+            if (pettingAnimation.isAnimationFinished(pettingAnimationTime)) {
+                isPetting = false;
+                animalBeingPet = null;
+            } else {
+                pettingAnimationFrame = pettingAnimation.getKeyFrame(pettingAnimationTime, false);
+
+                if (animalBeingPet != null) {
+                    Position position = new Position(
+                        animalBeingPet.getPosition().getX(),
+                        animalBeingPet.getPosition().getY() - 1
+                    );
+                    draw(pettingAnimationFrame, position);
+                }
+            }
+            scale = tempScale;
+        }
+
+        if (isFeeding) {
+            float tempScale = scale;
+            scale = 1;
+            feedingAnimationTime += delta;
+
+            if (feedingAnimation.isAnimationFinished(feedingAnimationTime)) {
+                isFeeding = false;
+                animalBeingPet = null;
+            } else {
+                feedingAnimationFrame = feedingAnimation.getKeyFrame(feedingAnimationTime, false);
+
+                if (animalBeingPet != null) {
+                    Position position = new Position(
+                        animalBeingPet.getPosition().getX(),
+                        animalBeingPet.getPosition().getY() - 1
+                    );
+                    draw(feedingAnimationFrame, position);
+                }
+            }
+            scale = tempScale;
+        }
 
         draw(cabinTexture, farm.getCabin().getPosition());
         draw(lakeTexture, farm.getLake().getPosition());
         draw(greenhouseTexture, farm.getGreenhouse().getPosition());
 
-        try{
+        try {
             scale = 1f;
             for (int i = 0; i < foragingCropsTextures.size(); i++) {
                 Position position = farm.getforagingCrops().get(i).getPosition();
@@ -158,6 +223,18 @@ public class FarmView extends GameView {
             }
         }
         return false;
+    }
+
+    public void startPettingAnimation(Animal animal) {
+        isPetting = true;
+        animalBeingPet = animal;
+        pettingAnimationTime = 0;
+    }
+
+    public void startFeedingAnimation(Animal animal) {
+        isFeeding = true;
+        animalBeingPet = animal;
+        feedingAnimationTime = 0;
     }
 
     public Farm getFarm() {

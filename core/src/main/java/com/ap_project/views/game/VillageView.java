@@ -33,7 +33,7 @@ public class VillageView extends GameView {
     }
 
     @Override
-    public void renderMap() {
+    public void renderMap(float delta) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 

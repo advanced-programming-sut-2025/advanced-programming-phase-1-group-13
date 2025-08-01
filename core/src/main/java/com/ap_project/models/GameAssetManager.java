@@ -310,6 +310,24 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Animal/" + animalType.getName() + ".png"));
     }
 
+    public Animation<Texture> getPettingAnimation() {
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 10; i++) {
+            String path = "Images/Animal/PettingAnimation/Frame" + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.1f, frames);
+    }
+
+    public Animation<Texture> getFeedingAnimation() {
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 10; i++) {
+            String path = "Images/Animal/FeedingAnimation/Frame" + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.1f, frames);
+    }
+
     public Texture getAnimalMenu() {
         return new Texture(Gdx.files.internal("Images/Animal/AnimalMenu.png"));
     }

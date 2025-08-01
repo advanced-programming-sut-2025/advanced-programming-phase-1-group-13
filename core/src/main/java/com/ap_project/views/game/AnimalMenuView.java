@@ -124,6 +124,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
         );
         if (hoverOnImage(feedButton, screenX, convertedY)) {
             result = controller.feedHayToAnimal(animal.getName());
+            farmView.startFeedingAnimation(animal);
         }
 
         Image petButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -135,6 +136,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
         );
         if (hoverOnImage(petButton, screenX, convertedY)) {
             result = controller.pet(animal.getName());
+            farmView.startPettingAnimation(animal);
         }
 
         Image shepherdButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
