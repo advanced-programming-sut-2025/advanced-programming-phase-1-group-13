@@ -99,6 +99,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new FarmOverviewView(description, itemType, gameView));
     }
 
+    public static void goToBuyAnimalsMenu(GameView gameView) {
+        Main.getMain().setScreen(new BuyAnimalsMenuView(gameView));
+    }
+
     public static void goToGameMenu(GameView gameView) {
         Main.getMain().setScreen(new GameMenuView(gameView));
     }

@@ -294,7 +294,9 @@ public class GameAssetManager {
         return new Animation<>(0.15f, frames, Animation.PlayMode.LOOP);
     }
 
-
+    public Texture getBuyAnimalsMenu() {
+        return new Texture(Gdx.files.internal("Images/Animal/BuyAnimalsMenu.png"));
+    }
 
     public Texture getFarm(Game game, User user) {
         int index = game.getPlayers().indexOf(user) + 1;

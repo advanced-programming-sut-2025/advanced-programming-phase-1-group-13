@@ -38,8 +38,7 @@ public class FarmView extends GameView {
     private Farm farm;
     private Animation<Texture> animalAnimation;
     private float animalAnimationTimer = 0f;
-
-    Texture currentFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+    private Texture currentFrame;
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -85,7 +84,8 @@ public class FarmView extends GameView {
         this.isFeeding = false;
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
 
-
+        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", "Right"); // TODO
+        this.currentFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
 
     @Override
@@ -210,6 +210,10 @@ public class FarmView extends GameView {
         if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
             FarmBuildingType farmBuildingType = FarmBuildingType.COOP;
             goToFarmOverview("Choose the position of the " + farmBuildingType.getName(), farmBuildingType, this); // TODO
+        }
+
+        if (keycode == Input.Keys.I) { // TODO: move to Marnie's ranch
+            goToBuyAnimalsMenu(this);
         }
         return false;
     }
