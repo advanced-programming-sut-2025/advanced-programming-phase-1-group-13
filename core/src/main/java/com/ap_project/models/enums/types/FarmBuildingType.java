@@ -1,6 +1,6 @@
 package com.ap_project.models.enums.types;
 
-public enum FarmBuildingType {
+public enum FarmBuildingType implements ItemType {
     BARN("Barn", 7, 4, "Houses 4 barn-dwelling animals.", 350, 150, 6000, false, 4),
     BIG_BARN("Big Barn", 7, 4, "Houses 8 barn-dwelling animals. Unlocks goats.", 450, 200, 12000, false, 8),
     DELUXE_BARN("Deluxe Barn", 7, 4, "Houses 12 barn-dwelling animals. Unlocks sheep and pigs.", 550, 300, 25000, false, 12),
