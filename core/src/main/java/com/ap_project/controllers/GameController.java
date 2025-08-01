@@ -1357,12 +1357,16 @@ public class GameController {
         return new Result(true, message.toString());
     }
 
-    public Result collectProducts(String animalName) {
+    public Result collectProducts(String animalName) { // TODO: fix
         User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
         if (animal == null) {
             return new Result(false, "Animal not found.");
+        }
+
+        if (animal.getProducedProducts().isEmpty()) {
+            return new Result(false, animalName + " does not have any product to collect.");
         }
 
         AnimalType animalType = animal.getAnimalType();
@@ -1413,7 +1417,7 @@ public class GameController {
         } else {
             HashMap<Item, Integer> itemsHashMap = player.getBackpack().getItems();
             for (AnimalProduct item : animal.getProducedProducts()) {
-                player.getBackpack().getItems().put(item, itemsHashMap.getOrDefault(item, 0) + 1);
+                player.getBackpack().addToInventory(item, 1);
                 collectedProducts.put(item, collectedProducts.getOrDefault(item, 0) + 1);
             }
             animal.setProducedProducts(new ArrayList<>());

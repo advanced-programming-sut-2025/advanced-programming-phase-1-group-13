@@ -12,6 +12,14 @@ public class Time {
     private Weekday weekday;
     private int hour;
 
+    public Time(Time other) {
+        this.year = other.year;
+        this.season = other.season;
+        this.dayInSeason = other.dayInSeason;
+        this.weekday = other.weekday;
+        this.hour = other.hour;
+    }
+
     public Time() {
         this.year = 1;
         this.season = Season.SPRING;
@@ -122,5 +130,4 @@ public class Time {
                 time1.season == time2.season &&
                 time1.dayInSeason == time2.dayInSeason;
     }
-
 }

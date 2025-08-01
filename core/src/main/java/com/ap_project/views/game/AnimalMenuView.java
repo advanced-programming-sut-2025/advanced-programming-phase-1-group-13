@@ -1,6 +1,7 @@
 package com.ap_project.views.game;
 
 import com.ap_project.Main;
+import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -19,16 +20,26 @@ public class AnimalMenuView implements Screen, InputProcessor {
     private final Image window;
     private final Animal animal;
     private final Image closeButton;
-    private final GameView gameView;
+    private final Label errorMessageLabel;
+    private final FarmView farmView;
+    private final GameController controller;
 
-    public AnimalMenuView(GameView gameView, Animal animal) {
+    public AnimalMenuView(FarmView farmView, Animal animal) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getAnimalMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
+
         this.animal = animal;
+
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
-        this.gameView = gameView;
+
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+
+        this.farmView = farmView;
+        this.controller = new GameController();
     }
 
     @Override
@@ -36,6 +47,8 @@ public class AnimalMenuView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
         stage.addActor(window);
+
+        stage.addActor(errorMessageLabel);
 
         addCloseButton();
 
@@ -96,8 +109,78 @@ public class AnimalMenuView implements Screen, InputProcessor {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
-            Main.getMain().setScreen(gameView);
+            Main.getMain().setScreen(farmView);
             return true;
+        }
+
+        Result result = new Result(false, "");
+
+        Image feedButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        feedButton.setScaleY(1.75f);
+        feedButton.setScaleX(6.15f);
+        feedButton.setPosition(
+            window.getX() + 145,
+            window.getY() + window.getHeight() - 273
+        );
+        if (hoverOnImage(feedButton, screenX, convertedY)) {
+            result = controller.feedHayToAnimal(animal.getName());
+        }
+
+        Image petButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        petButton.setScaleY(1.75f);
+        petButton.setScaleX(6.15f);
+        petButton.setPosition(
+            window.getX() + 460,
+            window.getY() + window.getHeight() - 273
+        );
+        if (hoverOnImage(petButton, screenX, convertedY)) {
+            result = controller.pet(animal.getName());
+        }
+
+        Image shepherdButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        shepherdButton.setScaleY(1.75f);
+        shepherdButton.setScaleX(6.15f);
+        shepherdButton.setPosition(
+            window.getX() + 145,
+            window.getY() + window.getHeight() - 375
+        );
+        if (hoverOnImage(shepherdButton, screenX, convertedY)) {
+            result = controller.shepherdAnimal(animal.getName(), "50", "15"); // TODO
+        }
+
+        Image collectProductsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        collectProductsButton.setScaleY(1.75f);
+        collectProductsButton.setScaleX(6.15f);
+        collectProductsButton.setPosition(
+            window.getX() + 460,
+            window.getY() + window.getHeight() - 375
+        );
+        if (hoverOnImage(collectProductsButton, screenX, convertedY)) {
+            try {
+                result = controller.collectProducts(animal.getName());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        Image sellProductsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+        sellProductsButton.setScaleY(1.75f);
+        sellProductsButton.setScaleX(6.15f);
+        sellProductsButton.setPosition(
+            window.getX() + 310,
+            window.getY() + window.getHeight() - 495
+        );
+        if (hoverOnImage(sellProductsButton, screenX, convertedY)) {
+            int index = farmView.getFarm().getAllFarmAnimals().indexOf(animal);
+            result = controller.sellAnimal(animal.getName());
+            farmView.getAnimalsTextures().remove(index);
+        }
+
+        if (!result.success) {
+            errorMessageLabel.setText(result.message);
+        } else {
+            Main.getMain().setScreen(farmView);
         }
 
         return false;
@@ -163,5 +246,23 @@ public class AnimalMenuView implements Screen, InputProcessor {
         friendshipLevel.setColor(Color.BLACK);
         friendshipLevel.setFontScale(0.8f);
         stage.addActor(friendshipLevel);
+
+        if (animal.hasBeenFedToday()) {
+        Image checkedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+        checkedBox.setPosition(
+            window.getX() + 688,
+            window.getY() + window.getHeight() - 137
+        );
+        stage.addActor(checkedBox);
+        }
+
+        if (animal.hasBeenPetToday()) {
+            Image checkedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+            checkedBox.setPosition(
+                window.getX() + 760,
+                window.getY() + window.getHeight() - 137
+            );
+            stage.addActor(checkedBox);
+        }
     }
 }

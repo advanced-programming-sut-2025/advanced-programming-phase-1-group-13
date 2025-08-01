@@ -23,9 +23,9 @@ public class Animal {
         this.animalType = animalType;
         this.friendshipLevel = 0;
         Time now = App.getCurrentGame().getGameState().getTime();
-        this.lastPettingTime = now;
-        this.lastFeedingTime = now;
-        this.lastProductTime = now;
+        this.lastPettingTime = new Time(now);
+        this.lastFeedingTime = new Time(now);
+        this.lastProductTime = new Time(now);
         this.animalLivingSpace = animalLivingSpace;
     }
 
@@ -77,7 +77,7 @@ public class Animal {
     }
 
     public void setLastFeedingTime(Time lastFeedingTime) {
-        this.lastFeedingTime = lastFeedingTime;
+        this.lastFeedingTime = new Time(lastFeedingTime);
     }
 
     public void setLastPettingTime(Time lastPettingTime) {

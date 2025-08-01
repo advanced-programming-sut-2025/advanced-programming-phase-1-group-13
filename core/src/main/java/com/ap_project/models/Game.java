@@ -158,10 +158,9 @@ public class Game {
     public Result changeDay() {
         StringBuilder message = new StringBuilder("A new day has begun. Here are the updates for today:\n");
 
-//        for (Farm farm : this.getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm()) {
-//            message.append(farm.updateAnimals());
-//        }
-
+        for (User player : players) {
+            message.append(player.getFarm().updateAnimals());
+        }
 
         for (User player : this.players) {
 

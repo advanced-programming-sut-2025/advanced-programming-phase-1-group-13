@@ -108,8 +108,8 @@ public class Main extends Game {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
     }
 
-    public static void goToAnimalMenu(GameView gameView, Animal animal) {
-        Main.getMain().setScreen(new AnimalMenuView(gameView, animal));
+    public static void goToAnimalMenu(FarmView farmView, Animal animal) {
+        Main.getMain().setScreen(new AnimalMenuView(farmView, animal));
     }
 
     public static void goToCheatWindow(GameView gameView, GameController controller) {

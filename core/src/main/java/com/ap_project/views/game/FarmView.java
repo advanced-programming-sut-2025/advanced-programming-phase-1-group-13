@@ -6,7 +6,6 @@ import com.ap_project.models.*;
 import com.ap_project.models.enums.types.AnimalType;
 import com.ap_project.models.farming.ForagingCrop;
 import com.ap_project.models.farming.Tree;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -142,15 +141,13 @@ public class FarmView extends GameView {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
+
         if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
             goToFarmHouse(this);
             return true;
         }
+
         if (button == Input.Buttons.RIGHT) {
-            // Check cabin clickf
-
-
-            // Check animals click
             for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
                 Animal animal = farm.getAllFarmAnimals().get(i);
                 float scale = (animal.getAnimalType() == AnimalType.PIG) ? 3f : 1.25f;
@@ -159,15 +156,15 @@ public class FarmView extends GameView {
                     return true;
                 }
             }
-
-            // Check greenhouse click
-            if (clickedOnTexture(screenX, screenY, greenhouseTexture, farm.getGreenhouse().getPosition(), 1f)) {
-                // Handle greenhouse click
-                return true;
-            }
-
-            // Add checks for other objects as needed...
         }
         return false;
+    }
+
+    public Farm getFarm() {
+        return farm;
+    }
+
+    public ArrayList<Texture> getAnimalsTextures() {
+        return animalsTextures;
     }
 }
