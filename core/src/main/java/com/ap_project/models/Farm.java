@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Farm {
-    private ArrayList<Tile> farmTiles;
+    private final ArrayList<Tile> farmTiles;
     private Cabin cabin;
     private Greenhouse greenhouse;
     private Quarry quarry;
@@ -17,8 +17,8 @@ public class Farm {
     private final ArrayList<Crop> plantedCrops;
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
-    private final int height = 74;
-    private final int width = 55;
+    private final int height = 55;
+    private final int width = 74;
     private final ArrayList<Artisan> artisans;
     private ArrayList<ShippingBin> shippingBins;
     private final int mapNumber;
@@ -76,7 +76,6 @@ public class Farm {
     // GameMap Methods
     private void generateBaseMapTiles() {
         allTiles = new ArrayList<>(width * height);
-
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Position pos = new Position(x, y);
@@ -96,14 +95,14 @@ public class Farm {
     private void generateFixedElements() {
         if (mapNumber == 1) {
             this.lake = generateLake(20, 35, 10, 14);
-            this.cabin = generateCabin(63, 6, 9, 6);
+            this.cabin = generateCabin(63, 6);
             this.greenhouse = generateGreenhouse();
-            this.quarry = generateQuarry(20, 50, 10, 10);
+            this.quarry = generateQuarry(20, 50, 10);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 6, 6);
-            this.cabin = generateCabin(4, 4, 9, 6);
+            this.cabin = generateCabin(4, 4);
             this.greenhouse = generateGreenhouse();
-            this.quarry = generateQuarry(40, 30, 15, 10);
+            this.quarry = generateQuarry(40, 30, 15);
         }
     }
 
@@ -114,7 +113,7 @@ public class Farm {
     private void generateRandomElements() {
         ArrayList<Position> availablePositions = new ArrayList<>();
         for (Tile tile : allTiles) {
-            if (tile.getType() == TileType.NOT_PLOWED_SOIL && !isPositionOccupied(tile.getPosition())) {
+            if (tile.getType() == TileType.NOT_PLOWED_SOIL && isPositionEmpty(tile.getPosition())) {
                 availablePositions.add(tile.getPosition());
             }
         }
@@ -168,42 +167,42 @@ public class Farm {
             int y = random.nextInt(height);
             Position pos = new Position(x, y);
 
-            if (!isPositionOccupied(pos)) {
+            if (isPositionEmpty(pos)) {
                 return pos;
             }
         }
     }
 
-    private boolean isPositionOccupied(Position pos) {
+    private boolean isPositionEmpty(Position pos) {
         // First check if tile exists and is basic soil
         Tile tile = getTileByPosition(pos);
         if (tile == null || tile.getType() != TileType.NOT_PLOWED_SOIL) {
-            return true;
+            return false;
         }
 
         // Check fixed elements
-        if (lake != null && lake.getTiles().contains(pos)) return true;
+        if (lake != null && lake.getTiles().contains(pos)) return false;
         if (quarry != null && quarry.getTiles().stream()
-            .anyMatch(t -> t.getPosition().equals(pos))) return true;
+            .anyMatch(t -> t.getPosition().equals(pos))) return false;
         if (greenhouse != null && greenhouse.getTiles().stream()
-            .anyMatch(t -> t.getPosition().equals(pos))) return true;
-        if (cabin != null && cabin.getTiles().contains(pos)) return true;
+            .anyMatch(t -> t.getPosition().equals(pos))) return false;
+        if (cabin != null && cabin.getTiles().contains(getTileByPosition(pos))) return false;
 
         // Check dynamic elements
         for (Tree tree : trees) {
-            if (tree.getPosition().equals(pos)) return true;
+            if (tree.getPosition().equals(pos)) return false;
         }
         for (Mineral stone : stones) {
-            if (stone.getPosition().equals(pos)) return true;
+            if (stone.getPosition().equals(pos)) return false;
         }
         for (ForagingCrop crop : foragingCrops) {
-            if (crop.getPosition().equals(pos)) return true;
+            if (crop.getPosition().equals(pos)) return false;
         }
         for (Tile log : woodLogs) {
-            if (log.getPosition().equals(pos)) return true;
+            if (log.getPosition().equals(pos)) return false;
         }
 
-        return false;
+        return true;
     }
 
     private Lake generateLake(int x, int y, int width, int height) {
@@ -226,9 +225,9 @@ public class Farm {
         return lake;
     }
 
-    private Cabin generateCabin(int x, int y, int width, int height) {
+    private Cabin generateCabin(int x, int y) {
         Cabin cabin = new Cabin();
-        ArrayList<Position> positions = generateTilePositions(x, y, width, height);
+        ArrayList<Position> positions = generateTilePositions(x, y, 9, 6);
         cabin.setTiles(positions);
 
         for (Position pos : positions) {
@@ -266,13 +265,13 @@ public class Farm {
         this.greenhouse.setCanEnter(true);
     }
 
-    private Quarry generateQuarry(int x, int y, int width, int height) {
+    private Quarry generateQuarry(int x, int y, int width) {
         Quarry quarry = new Quarry();
         ArrayList<Tile> tiles = new ArrayList<>();
         ArrayList<Mineral> minerals = new ArrayList<>();
 
         for (int i = x; i < x + width; i++) {
-            for (int j = y; j < y + height; j++) {
+            for (int j = y; j < y + 10; j++) {
                 Tile tile = new Tile(new Position(i, j), TileType.QUARRY_GROUND);
                 tile.setPosition(new Position(i, j));
                 tile.setType(TileType.QUARRY_GROUND);
@@ -283,7 +282,7 @@ public class Farm {
         int mineralCount = 3 + random.nextInt(6);
         for (int i = 0; i < mineralCount; i++) {
             int mineralX = x + random.nextInt(width);
-            int mineralY = y + random.nextInt(height);
+            int mineralY = y + random.nextInt(10);
             minerals.add(new Mineral(new Position(mineralX, mineralY)));
         }
 
@@ -304,7 +303,7 @@ public class Farm {
         return stones;
     }
 
-    public ArrayList<ForagingCrop> getforagingCrops() {
+    public ArrayList<ForagingCrop> getForagingCrops() {
         return foragingCrops;
     }
 
@@ -349,7 +348,6 @@ public class Farm {
 //        }
     }
 
-
     public Tile getTileByPosition(Position position) {
         for (Tile tile : this.getAllTiles()) {
             if (tile.getPosition().getX() == position.getX() &&
@@ -367,7 +365,7 @@ public class Farm {
         }
         // Convert 2D coordinates to 1D index (row-major order)
         int index = y * width + x;
-        if (index >= 0 && index < farmTiles.size()) {
+        if (index < farmTiles.size()) {
             return farmTiles.get(index);
         }
         return null;
@@ -390,7 +388,7 @@ public class Farm {
     }
 
     public ArrayList<Tile> getFarmTiles() {
-        return this.getFarmTiles();
+        return this.farmTiles;
     }
 
     public Cabin getCabin() {
@@ -432,10 +430,18 @@ public class Farm {
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {
         int xTopLeft = position.getX();
         int yTopLeft = position.getY();
+
+        if (xTopLeft < 0 || yTopLeft < 0 ||
+            xTopLeft + farmBuildingType.getWidth() > width ||
+            yTopLeft + farmBuildingType.getLength() > height) {
+            return false;
+        }
+
         for (int i = 0; i < farmBuildingType.getWidth(); i++) {
             for (int j = 0; j < farmBuildingType.getLength(); j++) {
                 Position currentPosition = new Position(xTopLeft + i, yTopLeft + j);
-                if (!App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(currentPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
+                Tile tile = getTileByPosition(currentPosition);
+                if (!tile.getType().equals(TileType.NOT_PLOWED_SOIL)) {
                     return false;
                 }
             }
@@ -455,7 +461,6 @@ public class Farm {
                 }
             } catch (Exception e) {
                 System.out.println("Exception in getAllFarmAnimals: " + e.getMessage());
-                e.printStackTrace();
 
             }
         }

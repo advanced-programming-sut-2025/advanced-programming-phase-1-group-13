@@ -941,4 +941,7 @@ public abstract class GameView implements Screen, InputProcessor {
         }
         Main.getBatch().setColor(1, 1, 1, 1);
     }
+
+    public void updateFarmBuildings() {
+    }
 }
