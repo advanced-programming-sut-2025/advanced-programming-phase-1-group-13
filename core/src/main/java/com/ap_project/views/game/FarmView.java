@@ -160,9 +160,10 @@ public class FarmView extends GameView {
                 draw(treesTextures.get(i), position);
             }
 
+            scale = 4.400316f;
             for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
-                Position position = farm.getFarmBuildings().get(i).getPositionOfUpperLeftCorner();
-                position.setY(position.getY() + farm.getFarmBuildings().get(i).getWidth());
+                Position position = new Position(farm.getFarmBuildings().get(i).getPositionOfUpperLeftCorner());
+                position.setY(position.getY() + farm.getFarmBuildings().get(i).getLength());
                 draw(farmBuildingsTextures.get(i), position);
             }
 

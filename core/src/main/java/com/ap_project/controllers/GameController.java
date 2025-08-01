@@ -14,6 +14,8 @@ import java.util.*;
 
 import static com.ap_project.models.Greenhouse.canBuildGreenhouse;
 import static com.ap_project.models.Position.areClose;
+import static java.lang.Math.abs;
+import static java.lang.Math.pow;
 
 public class GameController {
     private GameView view;
@@ -1264,10 +1266,16 @@ public class GameController {
     }
 
     public Result shepherdAnimal(String animalName, String xString, String yString) {
-        Position newPosition = Position.getPositionByStrings(xString, yString);
+        return shepherdAnimal(animalName, Position.getPositionByStrings(xString, yString));
+    }
+
+
+    public Result shepherdAnimal(String animalName, Position newPosition) {
         if (newPosition == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
         }
+
+        System.out.println(newPosition);
 
         User player = App.getLoggedIn();
         Farm farm = player.getFarm();
@@ -1275,6 +1283,10 @@ public class GameController {
         if (animal == null) {
             return new Result(false, "Animal not found.");
         }
+
+//        if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 5) {
+//            return new Result(false, "Animal can't move more than 5 tiles at once.");
+//        }
 
         FarmBuilding farmBuildingInNewPosition = farm.getFarmBuildingByPosition(newPosition);
         if (animal.isOutside()) {

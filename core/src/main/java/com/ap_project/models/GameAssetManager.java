@@ -334,7 +334,7 @@ public class GameAssetManager {
 
     public Texture getFarmBuilding(FarmBuildingType farmBuildingType) {
         // TODO: return new Texture(Gdx.files.internal("Images/FarmBuilding/" + toPascalCase(farmBuildingType.getName()) + ".png"));
-        return new Texture(Gdx.files.internal("Images/Map/Farm/Cabin.png"));
+        return new Texture(Gdx.files.internal("Images/FarmBuilding/Barn.png"));
     }
 
     public Texture getCircle() {

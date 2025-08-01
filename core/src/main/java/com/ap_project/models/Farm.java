@@ -38,7 +38,7 @@ public class Farm {
 
         this.farmBuildings = new ArrayList<>();
         // TODO: remove later
-        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.BARN, new Position(0, 0)));
+        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.BARN, new Position(60, 10)));
         AnimalLivingSpace barn = (AnimalLivingSpace) farmBuildings.get(0);
         barn.addAnimal(new Animal("Gav", AnimalType.COW, barn));
         barn.addAnimal(new Animal("Morgh", AnimalType.CHICKEN, barn));
@@ -50,7 +50,7 @@ public class Farm {
         barn.addAnimal(new Animal("Dino", AnimalType.DINOSAUR, barn));
         for (Animal animal : barn.getAnimals()) {
             animal.setOutside(true);
-            animal.setPosition(new Position(random.nextInt(10) + 60, random.nextInt(10) + 10));
+            animal.setPosition(new Position(random.nextInt(10) + 60, random.nextInt(10) + 15));
         }
 
         this.artisans = new ArrayList<>();
