@@ -89,6 +89,10 @@ public class GameAssetManager {
     }
 
     public Texture getTextureByItem(Item item) {
+        if (item instanceof AnimalProduct) {
+            return getTextureByItem(item);
+        }
+
         if (item instanceof ForagingCrop) {
             return getTextureByForagingCrop((ForagingCrop) item);
         }
@@ -107,6 +111,10 @@ public class GameAssetManager {
 
         // TODO
         return null;
+    }
+
+    public Texture getTextureByAnimalProduct(AnimalProduct animalProduct) {
+        return new Texture(Gdx.files.internal("Images/AnimalProduct/" + toPascalCase(animalProduct.getName())) + ".png");
     }
 
     public Texture getTextureByForagingCrop(ForagingCrop foragingCrop) {

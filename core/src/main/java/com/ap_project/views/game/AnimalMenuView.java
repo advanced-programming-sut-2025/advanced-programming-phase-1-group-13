@@ -156,12 +156,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
             window.getY() + window.getHeight() - 375
         );
         if (hoverOnImage(collectProductsButton, screenX, convertedY)) {
-            try {
-                result = controller.collectProducts(animal.getName());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
+            result = controller.collectProducts(animal.getName()); // TODO: fix
         }
 
         Image sellProductsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -248,12 +243,12 @@ public class AnimalMenuView implements Screen, InputProcessor {
         stage.addActor(friendshipLevel);
 
         if (animal.hasBeenFedToday()) {
-        Image checkedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
-        checkedBox.setPosition(
-            window.getX() + 688,
-            window.getY() + window.getHeight() - 137
-        );
-        stage.addActor(checkedBox);
+            Image checkedBox = new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+            checkedBox.setPosition(
+                window.getX() + 688,
+                window.getY() + window.getHeight() - 137
+            );
+            stage.addActor(checkedBox);
         }
 
         if (animal.hasBeenPetToday()) {
@@ -263,6 +258,40 @@ public class AnimalMenuView implements Screen, InputProcessor {
                 window.getY() + window.getHeight() - 137
             );
             stage.addActor(checkedBox);
+        }
+
+        showProducedProducts();
+    }
+
+    public void showProducedProducts() {
+        if (animal.getProducedProducts().isEmpty()) {
+            Label uncollectedProducts = new Label("No Uncollected Products.", GameAssetManager.getGameAssetManager().getSkin());
+            uncollectedProducts.setPosition(
+                window.getX() + 50,
+                window.getY() + 30
+            );
+            uncollectedProducts.setColor(Color.BLACK);
+            uncollectedProducts.setFontScale(0.8f);
+            stage.addActor(uncollectedProducts);
+            return;
+        }
+
+        Label uncollectedProducts = new Label("Uncollected Products:", GameAssetManager.getGameAssetManager().getSkin());
+        uncollectedProducts.setPosition(
+            window.getX() + 50,
+            window.getY() + 30
+        );
+        uncollectedProducts.setColor(Color.BLACK);
+        uncollectedProducts.setFontScale(0.8f);
+        stage.addActor(uncollectedProducts);
+
+        for (AnimalProduct product : animal.getProducedProducts()) {
+            Image animalProduct = new Image(GameAssetManager.getGameAssetManager().getTextureByAnimalProduct(product));
+            animalProduct.setPosition(
+                uncollectedProducts.getX() + 270 + 60 * animal.getProducedProducts().indexOf(product),
+                uncollectedProducts.getY()
+            );
+            stage.addActor(animalProduct);
         }
     }
 }

@@ -498,6 +498,8 @@ public class Farm {
                 animal.produceProduct();
                 message.append(animal.getName()).append(" produced some products today.\n");
             }
+            animal.produceProduct();
+            // TODO
 
             if (!animal.hasBeenPetToday()) {
                 int amount = (animal.getFriendshipLevel() / 200) - 10;

@@ -127,7 +127,6 @@ public class Animal {
         double qualityNumber = (this.friendshipLevel / 1000.0) * (0.5 + 0.5 * Math.random());
         Quality quality = Quality.getQualityByNumber(qualityNumber);
 
-
         AnimalProduct product = new AnimalProduct(this.animalType.getAnimalProducts().get(productIndex), quality, this);
         this.producedProducts.add(product);
     }
