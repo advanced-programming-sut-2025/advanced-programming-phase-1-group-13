@@ -7,6 +7,11 @@ public class Position {
     public Position() {
     }
 
+    public Position(Position other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
     public Position(int x, int y) {
         this.x = x;
         this.y = y;

@@ -147,7 +147,13 @@ public class AnimalMenuView implements Screen, InputProcessor {
             window.getY() + window.getHeight() - 375
         );
         if (hoverOnImage(shepherdButton, screenX, convertedY)) {
-            result = controller.shepherdAnimal(animal.getName(), "50", "15"); // TODO
+            try {
+                result = controller.shepherdAnimal(animal.getName(),
+                    new Position(animal.getPosition().getX() + 1, animal.getPosition().getY() + 1)); // TODO
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
         }
 
         Image collectProductsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
