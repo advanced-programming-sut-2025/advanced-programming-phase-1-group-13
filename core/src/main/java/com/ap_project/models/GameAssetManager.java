@@ -285,6 +285,17 @@ public class GameAssetManager {
         return new Animation<>(0.5f, frames);
     }
 
+    public Animation<Texture> loadAnimalAnimation(String animalName, String direction) {
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 4; i++) {
+            String path = "Images/Animal/" + animalName+"s" + "/" + animalName + "Sprite" + direction + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.15f, frames, Animation.PlayMode.LOOP);
+    }
+
+
+
     public Texture getFarm(Game game, User user) {
         int index = game.getPlayers().indexOf(user) + 1;
         String season = game.getGameState().getTime().getSeason().getName();

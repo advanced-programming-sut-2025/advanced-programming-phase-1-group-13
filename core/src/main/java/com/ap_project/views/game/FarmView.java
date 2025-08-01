@@ -37,6 +37,10 @@ public class FarmView extends GameView {
     private Texture feedingAnimationFrame;
     private float feedingAnimationTime;
     private Farm farm;
+    private Animation<Texture> animalAnimation;
+    private float animalAnimationTimer = 0f;
+
+    Texture currentFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -81,6 +85,8 @@ public class FarmView extends GameView {
         this.animalBeingPet = null;
         this.isFeeding = false;
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
+
+
     }
 
     @Override
