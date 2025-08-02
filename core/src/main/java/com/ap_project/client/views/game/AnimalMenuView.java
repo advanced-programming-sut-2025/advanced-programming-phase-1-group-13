@@ -154,6 +154,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
+            farmView.startWalkingAnimation(animal);
         }
 
         Image collectProductsButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());

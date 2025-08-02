@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.ap_project.Main.*;
 
@@ -28,22 +29,26 @@ public class FarmView extends GameView {
     private final ArrayList<Texture> treesTextures;
     private final ArrayList<Texture> farmBuildingsTextures;
     private final ArrayList<Texture> animalsTextures;
+
     private final Animation<Texture> pettingAnimation;
     private boolean isPetting;
     private Animal animalBeingPet;
     private Texture pettingAnimationFrame;
     private float pettingAnimationTime;
+
     private final Animation<Texture> feedingAnimation;
     private boolean isFeeding;
     private Texture feedingAnimationFrame;
     private float feedingAnimationTime;
-    private Farm farm;
-    private Animal walkingAnimal = null;
-    private final Animation<Texture> animalAnimation;
+
+    private Animal walkingAnimal;
+    private Animation<Texture> animalAnimation;
     private float animalAnimationTimer = 0f;
     private Texture currentWalkingAnimalFrame;
-    private final Vector2 walkingAnimalPosition;
-    private final Direction walkingAnimalDirection;
+    private Vector2 walkingAnimalPosition;
+    private Direction walkingAnimalDirection;
+
+    private Farm farm;
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -89,22 +94,17 @@ public class FarmView extends GameView {
         this.isFeeding = false;
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
 
-        this.walkingAnimal = farm.getAllFarmAnimals().get(0);
-        this.walkingAnimalDirection = Direction.DOWN;
-        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", walkingAnimalDirection.toString()); // TODO
-        walkingAnimalPosition = new Vector2(
-            walkingAnimal.getPosition().getX() * TILE_SIZE,
-            walkingAnimal.getPosition().getY() * TILE_SIZE
-        );
-        System.out.println(walkingAnimalPosition);
-        this.currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+        this.walkingAnimalPosition = new Vector2();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        animalAnimationTimer += delta;
-        currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+
+        if (walkingAnimal != null) {
+            animalAnimationTimer += delta;
+            currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+        }
     }
 
     @Override
@@ -112,8 +112,10 @@ public class FarmView extends GameView {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
-        draw(currentWalkingAnimalFrame, walkingAnimalPosition);
-        moveAnimal();
+        if (walkingAnimal != null) {
+            draw(currentWalkingAnimalFrame, walkingAnimalPosition);
+            moveAnimal();
+        }
 
         if (isPetting) {
             float tempScale = scale;
@@ -196,8 +198,6 @@ public class FarmView extends GameView {
 
             scale = 1.25f;
             for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
-                if (farm.getAllFarmAnimals().get(i).getAnimalType() == AnimalType.PIG) scale = 3; // TODO: resize asset
-                else scale = 1.25f;
                 Position position = farm.getAllFarmAnimals().get(i).getPosition();
                 if (!farm.getAllFarmAnimals().get(i).equals(walkingAnimal)) draw(animalsTextures.get(i), position);
             }
@@ -273,6 +273,18 @@ public class FarmView extends GameView {
         isFeeding = true;
         animalBeingPet = animal;
         feedingAnimationTime = 0;
+    }
+
+    public void startWalkingAnimation(Animal animal) {
+        animalAnimationTimer = 0;
+        walkingAnimal = animal;
+        walkingAnimalDirection = Direction.values()[(new Random().nextInt(Direction.values().length))];
+        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString()); // TODO
+        walkingAnimalPosition = new Vector2(
+            walkingAnimal.getPosition().getX() * TILE_SIZE,
+            walkingAnimal.getPosition().getY() * TILE_SIZE
+        );
+        currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
 
     public Farm getFarm() {

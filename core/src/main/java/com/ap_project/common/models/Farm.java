@@ -18,7 +18,7 @@ public class Farm {
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
     private final int height = 55;
-    private final int width = 50;
+    private final int width = 74;
     private final ArrayList<Artisan> artisans;
     private ArrayList<ShippingBin> shippingBins;
     private final int mapNumber;
