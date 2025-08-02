@@ -114,8 +114,9 @@ public class FarmView extends GameView {
 
         if (walkingAnimal != null) {
             draw(currentWalkingAnimalFrame, walkingAnimalPosition);
-            moveAnimal();
         }
+
+        moveAnimal();
 
         if (isPetting) {
             float tempScale = scale;
@@ -279,6 +280,7 @@ public class FarmView extends GameView {
         animalAnimationTimer = 0;
         walkingAnimal = animal;
         walkingAnimalDirection = Direction.values()[(new Random().nextInt(Direction.values().length))];
+        if (walkingAnimalDirection == Direction.LEFT) walkingAnimalDirection = Direction.RIGHT;
         this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString()); // TODO
         walkingAnimalPosition = new Vector2(
             walkingAnimal.getPosition().getX() * TILE_SIZE,
