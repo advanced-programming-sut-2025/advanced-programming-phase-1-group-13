@@ -1,7 +1,7 @@
 package com.ap_project.client.views.signup;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.signup.SecurityQuestionMenuController;
+import com.ap_project.client.controllers.signup.SecurityQuestionMenuController;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.enums.SecurityQuestion;
 import com.badlogic.gdx.Gdx;

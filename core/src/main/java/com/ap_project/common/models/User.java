@@ -1,5 +1,6 @@
 package com.ap_project.common.models;
 
+import com.ap_project.client.controllers.*;
 import com.ap_project.common.models.enums.SecurityQuestion;
 import com.ap_project.common.models.enums.Skill;
 import com.ap_project.common.models.enums.SkillLevel;
@@ -17,7 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import static com.ap_project.controllers.login.LoginController.hashSha256;
+import static com.ap_project.client.controllers.login.LoginController.hashSha256;
 
 public class User {
     private String username;

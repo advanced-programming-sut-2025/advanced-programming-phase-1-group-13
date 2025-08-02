@@ -1,7 +1,7 @@
 package com.ap_project.client.views.pregame;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.pregame.PreGameMenuController;
+import com.ap_project.client.controllers.pregame.PreGameMenuController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.enums.environment.Time;

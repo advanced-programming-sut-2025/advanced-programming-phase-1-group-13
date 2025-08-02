@@ -1,6 +1,5 @@
 package com.ap_project.common.models.tools;
 
-import com.ap_project.controllers.GameController;
 import com.ap_project.common.models.Mineral;
 import com.ap_project.common.models.Tile;
 import com.ap_project.common.models.User;

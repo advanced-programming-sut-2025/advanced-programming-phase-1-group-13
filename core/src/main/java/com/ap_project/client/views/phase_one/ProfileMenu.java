@@ -1,6 +1,6 @@
 package com.ap_project.client.views.phase_one;
 
-import com.ap_project.controllers.ProfileMenuController;
+import com.ap_project.client.controllers.ProfileMenuController;
 import com.ap_project.common.models.enums.commands.ProfileCommands;
 
 import java.util.Scanner;

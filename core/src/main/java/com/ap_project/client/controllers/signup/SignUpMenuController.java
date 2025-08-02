@@ -1,4 +1,4 @@
-package com.ap_project.controllers.signup;
+package com.ap_project.client.controllers.signup;
 
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.Result;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 import static com.ap_project.Main.goToSecurityQuestionMenu;
 import static com.ap_project.Main.goToTitleMenu;
-import static com.ap_project.controllers.login.LoginController.randomPasswordGenerator;
+import static com.ap_project.client.controllers.login.LoginController.randomPasswordGenerator;
 import static com.ap_project.common.models.App.getUserByEmail;
 import static com.ap_project.common.models.App.getUserByUsername;
 

@@ -1,4 +1,4 @@
-package com.ap_project.network;
+package com.ap_project.client.network;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -1,7 +1,7 @@
 package com.ap_project.client.views;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.MainMenuController;
+import com.ap_project.client.controllers.MainMenuController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;

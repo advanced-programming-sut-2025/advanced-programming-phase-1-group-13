@@ -1,4 +1,4 @@
-package com.ap_project.controllers;
+package com.ap_project.client.controllers;
 
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Menu;

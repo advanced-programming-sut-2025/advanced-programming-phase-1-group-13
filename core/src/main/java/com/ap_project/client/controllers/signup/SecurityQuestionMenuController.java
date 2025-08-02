@@ -1,4 +1,4 @@
-package com.ap_project.controllers.signup;
+package com.ap_project.client.controllers.signup;
 
 import com.ap_project.common.models.Result;
 import com.ap_project.common.models.User;

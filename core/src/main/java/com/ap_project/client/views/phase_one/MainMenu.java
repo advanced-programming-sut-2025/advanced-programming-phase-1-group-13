@@ -1,6 +1,6 @@
 package com.ap_project.client.views.phase_one;
 
-import com.ap_project.controllers.MainMenuController;
+import com.ap_project.client.controllers.MainMenuController;
 import com.ap_project.common.models.enums.commands.MainMenuCommands;
 
 import java.util.Scanner;

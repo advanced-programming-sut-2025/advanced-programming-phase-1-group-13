@@ -1,4 +1,4 @@
-package com.ap_project.controllers.login;
+package com.ap_project.client.controllers.login;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

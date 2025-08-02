@@ -1,6 +1,6 @@
-package com.ap_project.network;
+package com.ap_project.client.network;
 
-import com.ap_project.controllers.pregame.LobbyMenuController;
+import com.ap_project.client.controllers.pregame.LobbyMenuController;
 
 import java.io.*;
 import java.net.Socket;
