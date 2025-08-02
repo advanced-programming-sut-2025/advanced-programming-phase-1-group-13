@@ -1,12 +1,12 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.Quality;
-import com.ap_project.models.enums.types.*;
-import com.ap_project.models.farming.Crop;
-import com.ap_project.models.farming.ForagingCrop;
-import com.ap_project.models.farming.PlantSource;
-import com.ap_project.models.farming.Tree;
-import com.ap_project.models.tools.*;
+import com.ap_project.common.models.enums.Quality;
+import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.Crop;
+import com.ap_project.common.models.farming.ForagingCrop;
+import com.ap_project.common.models.farming.PlantSource;
+import com.ap_project.common.models.farming.Tree;
+import com.ap_project.common.models.tools.*;
 
 public abstract class Item {
     private boolean isSellable;

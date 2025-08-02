@@ -1,7 +1,7 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.*;
-import com.ap_project.models.farming.*;
+import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

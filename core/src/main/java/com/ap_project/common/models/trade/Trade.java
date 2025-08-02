@@ -1,9 +1,9 @@
-package com.ap_project.models.trade;
+package com.ap_project.common.models.trade;
 
-import com.ap_project.models.App;
-import com.ap_project.models.Game;
-import com.ap_project.models.Item;
-import com.ap_project.models.User;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Game;
+import com.ap_project.common.models.Item;
+import com.ap_project.common.models.User;
 
 public abstract class Trade {
     private final int id;

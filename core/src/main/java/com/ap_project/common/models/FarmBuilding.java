@@ -1,6 +1,6 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.FarmBuildingType;
+import com.ap_project.common.models.enums.types.FarmBuildingType;
 
 public class FarmBuilding {
     private final FarmBuildingType farmBuildingType;

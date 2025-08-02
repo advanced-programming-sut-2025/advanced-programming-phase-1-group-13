@@ -1,20 +1,20 @@
-package com.ap_project.views.phase_one;
+package com.ap_project.client.views.phase_one;
 
-import com.ap_project.models.Result;
-import com.ap_project.models.enums.commands.LoginCommands;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.enums.commands.LoginCommands;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.ap_project.models.App;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.Menu;
-import com.ap_project.models.enums.SecurityQuestion;
-import com.ap_project.models.enums.types.Gender;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.Menu;
+import com.ap_project.common.models.enums.SecurityQuestion;
+import com.ap_project.common.models.enums.types.Gender;
 
-import static com.ap_project.models.App.getUserByEmail;
-import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.common.models.App.getUserByEmail;
+import static com.ap_project.common.models.App.getUserByUsername;
 
 public class PhaseOneLoginController {
     public Result registerUser(String username,

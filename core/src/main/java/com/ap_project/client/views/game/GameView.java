@@ -1,14 +1,14 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
-import com.ap_project.models.*;
-import com.ap_project.models.enums.environment.Season;
-import com.ap_project.models.enums.environment.Time;
-import com.ap_project.models.enums.environment.Weather;
-import com.ap_project.models.enums.environment.Direction;
+import com.ap_project.client.controllers.GameController;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Time;
+import com.ap_project.common.models.enums.environment.Weather;
+import com.ap_project.common.models.enums.environment.Direction;
 
-import com.ap_project.models.tools.Tool;
+import com.ap_project.common.models.tools.Tool;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;

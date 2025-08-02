@@ -1,7 +1,7 @@
-package com.ap_project.controllers.pregame;
+package com.ap_project.client.controllers.pregame;
 
-import com.ap_project.models.Farm;
-import com.ap_project.views.pregame.ChooseMapMenuView;
+import com.ap_project.common.models.Farm;
+import com.ap_project.client.views.pregame.ChooseMapMenuView;
 
 public class ChooseMapMenuController {
     private ChooseMapMenuView view;

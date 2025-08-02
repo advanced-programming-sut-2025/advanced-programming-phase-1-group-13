@@ -1,8 +1,8 @@
-package com.ap_project.models.farming;
+package com.ap_project.common.models.farming;
 
-import com.ap_project.models.Item;
-import com.ap_project.models.Position;
-import com.ap_project.models.enums.types.ForagingCropType;
+import com.ap_project.common.models.Item;
+import com.ap_project.common.models.Position;
+import com.ap_project.common.models.enums.types.ForagingCropType;
 
 public class ForagingCrop extends Item implements ForagingStuff {
     private Position position;

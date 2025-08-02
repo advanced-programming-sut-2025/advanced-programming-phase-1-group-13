@@ -1,7 +1,7 @@
-package com.ap_project.views.phase_one;
+package com.ap_project.client.views.phase_one;
 
-import com.ap_project.models.Result;
-import com.ap_project.models.enums.commands.LoginCommands;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.enums.commands.LoginCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

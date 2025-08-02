@@ -1,4 +1,4 @@
-package com.ap_project.models.enums;
+package com.ap_project.common.models.enums;
 
 public enum SkillLevel {
     LEVEL_ONE(1),

@@ -1,10 +1,10 @@
-package com.ap_project.controllers;
+package com.ap_project.client.controllers;
 
-import com.ap_project.models.*;
-import com.ap_project.models.enums.Menu;
-import com.ap_project.models.trade.Trade;
-import com.ap_project.models.trade.TradeWithItem;
-import com.ap_project.models.trade.TradeWithMoney;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Menu;
+import com.ap_project.common.models.trade.Trade;
+import com.ap_project.common.models.trade.TradeWithItem;
+import com.ap_project.common.models.trade.TradeWithMoney;
 
 public class TradeController {
     public Result trade(String username, String typeStr, String itemName, String amountStr, String priceStr,

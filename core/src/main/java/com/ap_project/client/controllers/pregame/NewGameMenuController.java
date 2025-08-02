@@ -1,14 +1,14 @@
-package com.ap_project.controllers.pregame;
+package com.ap_project.client.controllers.pregame;
 
-import com.ap_project.models.*;
-import com.ap_project.views.pregame.NewGameMenuView;
+import com.ap_project.common.models.*;
+import com.ap_project.client.views.pregame.NewGameMenuView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.ap_project.Main.goToChooseMapMenu;
 import static com.ap_project.Main.goToPreGameMenu;
-import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.common.models.App.getUserByUsername;
 
 public class NewGameMenuController {
     private NewGameMenuView view;

@@ -1,8 +1,8 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.models.*;
-import com.ap_project.models.enums.types.AnimalType;
+import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.enums.types.AnimalType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -15,16 +15,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import static com.ap_project.views.game.GameMenuView.hoverOnImage;
+import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class BuyAnimalsMenuView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
     private final float windowX;
     private final float windowY;
+    private final Label description;
+    private final TextField nameField;
+    private final TextButton enterButton;
     private final GameView gameView;
 
     public BuyAnimalsMenuView(GameView gameView) {
@@ -32,6 +34,10 @@ public class BuyAnimalsMenuView implements Screen, InputProcessor {
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
+
+        this.description = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        this.nameField = new TextField("", GameAssetManager.getGameAssetManager().getSkin());
+        this.enterButton = new TextButton("", GameAssetManager.getGameAssetManager().getSkin());
 
         this.gameView = gameView;
     }
@@ -41,6 +47,25 @@ public class BuyAnimalsMenuView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
         stage.addActor(window);
+
+        description.setPosition(
+            (Gdx.graphics.getWidth() - description.getWidth()) / 2,
+            100
+        );
+        stage.addActor(description);
+
+        nameField.setWidth(200);
+        nameField.setPosition(
+            (Gdx.graphics.getWidth() - nameField.getWidth()) / 2,
+            50
+        );
+        stage.addActor(nameField);
+
+        enterButton.setPosition(
+            nameField.getX() + nameField.getWidth() + 20,
+            50
+        );
+        stage.addActor(enterButton);
     }
 
     @Override
@@ -152,22 +177,7 @@ public class BuyAnimalsMenuView implements Screen, InputProcessor {
     }
 
     public String askAnimalName(AnimalType animal) {
-        Label description = new Label("Enter a name for your " + animal.getName() + ":",
-            GameAssetManager.getGameAssetManager().getSkin());
-        stage.addActor(description);
-
-        TextField nameField = new TextField("", GameAssetManager.getGameAssetManager().getSkin());
-        stage.addActor(nameField);
-
-        TextButton enterButton = new TextButton("Enter", GameAssetManager.getGameAssetManager().getSkin());
-        stage.addActor(enterButton);
-
-        while (true) {
-            if (enterButton.isChecked()) {
-                return nameField.getText();
-            } else {
-                enterButton.setChecked(false);
-            }
-        }
+        description.setText( "Enter a name for your " + animal.getName() + ":");
+        return nameField.getText();
     }
 }

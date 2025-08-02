@@ -1,14 +1,14 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.environment.Direction;
-import com.ap_project.models.enums.environment.Season;
-import com.ap_project.models.enums.environment.Weather;
-import com.ap_project.models.enums.types.*;
-import com.ap_project.models.farming.ForagingCrop;
-import com.ap_project.models.farming.Tree;
-import com.ap_project.models.tools.Scythe;
-import com.ap_project.models.tools.Tool;
-import com.ap_project.models.tools.WateringCan;
+import com.ap_project.common.models.enums.environment.Direction;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Weather;
+import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.ForagingCrop;
+import com.ap_project.common.models.farming.Tree;
+import com.ap_project.common.models.tools.Scythe;
+import com.ap_project.common.models.tools.Tool;
+import com.ap_project.common.models.tools.WateringCan;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

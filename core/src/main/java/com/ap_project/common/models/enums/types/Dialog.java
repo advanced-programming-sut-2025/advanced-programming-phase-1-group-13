@@ -1,7 +1,7 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
-import com.ap_project.models.enums.environment.Season;
-import com.ap_project.models.enums.environment.Weather;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Weather;
 
 public enum Dialog {
     DIALOG_1(NPCType.CLINT, "Morning. If you need ores smelted, just leave 'em with me. Got plenty of work to do.", 8, Season.SPRING, Weather.SUNNY, 0),

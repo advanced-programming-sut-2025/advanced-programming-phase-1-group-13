@@ -1,17 +1,17 @@
-package com.ap_project.controllers.login;
+package com.ap_project.client.controllers.login;
 
-import com.ap_project.models.Result;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.SecurityQuestion;
-import com.ap_project.views.login.ForgetPasswordMenuView;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.SecurityQuestion;
+import com.ap_project.client.views.login.ForgetPasswordMenuView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static com.ap_project.Main.goToChangePasswordMenu;
 import static com.ap_project.Main.goToLoginMenu;
-import static com.ap_project.controllers.login.LoginController.randomPasswordGenerator;
-import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.client.controllers.login.LoginController.randomPasswordGenerator;
+import static com.ap_project.common.models.App.getUserByUsername;
 
 public class ForgetPasswordMenuController {
     private ForgetPasswordMenuView view;

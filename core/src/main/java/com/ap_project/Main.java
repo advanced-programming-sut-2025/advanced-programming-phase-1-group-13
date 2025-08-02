@@ -1,27 +1,18 @@
 package com.ap_project;
 
-import com.ap_project.controllers.*;
-import com.ap_project.controllers.login.*;
-import com.ap_project.controllers.pregame.ChooseMapMenuController;
-import com.ap_project.controllers.pregame.LobbyMenuController;
-import com.ap_project.controllers.pregame.NewGameMenuController;
-import com.ap_project.controllers.pregame.PreGameMenuController;
-import com.ap_project.controllers.signup.*;
-import com.ap_project.lobby.Lobby;
-import com.ap_project.models.Animal;
-import com.ap_project.models.GameAssetManager;
-import com.ap_project.models.enums.types.ItemType;
-import com.ap_project.network.GameClient;
-import com.ap_project.views.*;
-import com.ap_project.views.game.*;
-import com.ap_project.views.game.CookingMenuView;
-import com.ap_project.views.game.RefrigeratorMenuView;
-import com.ap_project.views.login.*;
-import com.ap_project.views.pregame.ChooseMapMenuView;
-import com.ap_project.views.pregame.LobbyMenuView;
-import com.ap_project.views.pregame.NewGameMenuView;
-import com.ap_project.views.pregame.PreGameMenuView;
-import com.ap_project.views.signup.*;
+import com.ap_project.client.controllers.*;
+import com.ap_project.client.controllers.login.*;
+import com.ap_project.client.controllers.pregame.*;
+import com.ap_project.client.controllers.signup.*;
+import com.ap_project.client.network.*;
+import com.ap_project.client.views.*;
+import com.ap_project.client.views.game.*;
+import com.ap_project.client.views.login.*;
+import com.ap_project.client.views.pregame.*;
+import com.ap_project.client.views.signup.*;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.types.*;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

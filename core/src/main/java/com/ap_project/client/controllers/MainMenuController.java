@@ -1,8 +1,8 @@
-package com.ap_project.controllers;
+package com.ap_project.client.controllers;
 
-import com.ap_project.models.*;
-import com.ap_project.models.enums.Menu;
-import com.ap_project.views.MainMenuView;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Menu;
+import com.ap_project.client.views.MainMenuView;
 
 import static com.ap_project.Main.*;
 

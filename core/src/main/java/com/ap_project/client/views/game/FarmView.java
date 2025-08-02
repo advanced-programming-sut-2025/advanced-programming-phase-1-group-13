@@ -1,12 +1,12 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
-import com.ap_project.models.*;
-import com.ap_project.models.enums.types.AnimalType;
-import com.ap_project.models.enums.types.FarmBuildingType;
-import com.ap_project.models.farming.ForagingCrop;
-import com.ap_project.models.farming.Tree;
+import com.ap_project.client.controllers.GameController;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.types.AnimalType;
+import com.ap_project.common.models.enums.types.FarmBuildingType;
+import com.ap_project.common.models.farming.ForagingCrop;
+import com.ap_project.common.models.farming.Tree;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -216,7 +216,7 @@ public class FarmView extends GameView {
         super.keyDown(keycode);
 
         if (keycode == Input.Keys.H) {
-            goToFarmHouse();
+            goToFarmHouse(this);
         }
 
         if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
@@ -235,7 +235,7 @@ public class FarmView extends GameView {
         super.touchDown(screenX, screenY, pointer, button);
 
         if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
-            goToFarmHouse();
+            goToFarmHouse(this);
             return true;
         }
 

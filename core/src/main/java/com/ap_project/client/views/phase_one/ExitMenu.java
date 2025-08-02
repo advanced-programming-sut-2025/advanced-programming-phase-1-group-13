@@ -1,4 +1,4 @@
-package com.ap_project.views.phase_one;
+package com.ap_project.client.views.phase_one;
 
 import java.util.Scanner;
 

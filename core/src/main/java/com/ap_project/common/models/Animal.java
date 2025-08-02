@@ -1,8 +1,8 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.Quality;
-import com.ap_project.models.enums.environment.Time;
-import com.ap_project.models.enums.types.AnimalType;
+import com.ap_project.common.models.enums.Quality;
+import com.ap_project.common.models.enums.environment.Time;
+import com.ap_project.common.models.enums.types.AnimalType;
 
 import java.util.ArrayList;
 

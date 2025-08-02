@@ -1,10 +1,10 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
-import com.ap_project.models.*;
-import com.ap_project.models.enums.Skill;
-import com.ap_project.models.enums.types.GameMenuType;
+import com.ap_project.client.controllers.GameController;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Skill;
+import com.ap_project.common.models.enums.types.GameMenuType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ap_project.Main.*;
-import static com.ap_project.models.GameAssetManager.toPascalCase;
+import static com.ap_project.common.models.GameAssetManager.toPascalCase;
 
 public class GameMenuView implements Screen, InputProcessor {
     private Stage stage;

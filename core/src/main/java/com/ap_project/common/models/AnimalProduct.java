@@ -1,8 +1,8 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.Item;
-import com.ap_project.models.enums.Quality;
-import com.ap_project.models.enums.types.AnimalProductType;
+import com.ap_project.common.models.Item;
+import com.ap_project.common.models.enums.Quality;
+import com.ap_project.common.models.enums.types.AnimalProductType;
 
 public class AnimalProduct extends Item {
     private final AnimalProductType type;

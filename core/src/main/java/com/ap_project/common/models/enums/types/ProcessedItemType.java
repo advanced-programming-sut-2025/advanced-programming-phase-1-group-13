@@ -1,7 +1,7 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
-import com.ap_project.models.*;
-import com.ap_project.models.farming.Crop;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.farming.Crop;
 
 import java.util.ArrayList;
 import java.util.HashMap;

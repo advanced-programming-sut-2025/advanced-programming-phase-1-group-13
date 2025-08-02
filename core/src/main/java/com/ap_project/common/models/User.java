@@ -1,24 +1,24 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.controllers.*;
-import com.ap_project.models.enums.SecurityQuestion;
-import com.ap_project.models.enums.Skill;
-import com.ap_project.models.enums.SkillLevel;
-import com.ap_project.models.enums.environment.Direction;
-import com.ap_project.models.enums.environment.Time;
-import com.ap_project.models.enums.types.*;
-import com.ap_project.models.inventory.Backpack;
-import com.ap_project.models.tools.*;
-import com.ap_project.models.trade.Trade;
-import com.ap_project.models.trade.TradeWithItem;
-import com.ap_project.models.trade.TradeWithMoney;
+import com.ap_project.client.controllers.*;
+import com.ap_project.common.models.enums.SecurityQuestion;
+import com.ap_project.common.models.enums.Skill;
+import com.ap_project.common.models.enums.SkillLevel;
+import com.ap_project.common.models.enums.environment.Direction;
+import com.ap_project.common.models.enums.environment.Time;
+import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.inventory.Backpack;
+import com.ap_project.common.models.tools.*;
+import com.ap_project.common.models.trade.Trade;
+import com.ap_project.common.models.trade.TradeWithItem;
+import com.ap_project.common.models.trade.TradeWithMoney;
 import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import static com.ap_project.controllers.login.LoginController.hashSha256;
+import static com.ap_project.client.controllers.login.LoginController.hashSha256;
 
 public class User {
     private String username;

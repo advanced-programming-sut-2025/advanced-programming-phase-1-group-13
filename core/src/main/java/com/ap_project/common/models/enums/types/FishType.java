@@ -1,6 +1,6 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
-import com.ap_project.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Season;
 
 import java.util.Random;
 

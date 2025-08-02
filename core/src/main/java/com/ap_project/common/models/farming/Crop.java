@@ -1,9 +1,9 @@
-package com.ap_project.models.farming;
+package com.ap_project.common.models.farming;
 
-import com.ap_project.models.Item;
-import com.ap_project.models.enums.environment.Season;
-import com.ap_project.models.enums.types.CropType;
-import com.ap_project.models.enums.types.SeedType;
+import com.ap_project.common.models.Item;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.types.CropType;
+import com.ap_project.common.models.enums.types.SeedType;
 
 import java.util.ArrayList;
 

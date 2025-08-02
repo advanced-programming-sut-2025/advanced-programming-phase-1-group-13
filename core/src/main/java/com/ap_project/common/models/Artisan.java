@@ -1,6 +1,6 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.ArtisanType;
+import com.ap_project.common.models.enums.types.ArtisanType;
 
 public class Artisan {
     private final ArtisanType type;

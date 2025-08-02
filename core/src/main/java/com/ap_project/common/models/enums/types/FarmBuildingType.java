@@ -1,4 +1,4 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
 public enum FarmBuildingType implements ItemType {
     BARN("Barn", 7, 4, "Houses 4 barn-dwelling animals.", 350, 150, 6000, false, 4),

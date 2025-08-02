@@ -1,13 +1,13 @@
-package com.ap_project.controllers.login;
+package com.ap_project.client.controllers.login;
 
-import com.ap_project.models.App;
-import com.ap_project.models.Result;
-import com.ap_project.models.User;
-import com.ap_project.views.login.ChangePasswordMenuView;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.User;
+import com.ap_project.client.views.login.ChangePasswordMenuView;
 
 import static com.ap_project.Main.goToLoginMenu;
-import static com.ap_project.controllers.login.LoginController.hashSha256;
-import static com.ap_project.controllers.login.LoginController.randomPasswordGenerator;
+import static com.ap_project.client.controllers.login.LoginController.hashSha256;
+import static com.ap_project.client.controllers.login.LoginController.randomPasswordGenerator;
 
 public class ChangePasswordMenuController {
     private final String username;

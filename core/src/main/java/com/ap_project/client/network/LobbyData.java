@@ -1,4 +1,4 @@
-package com.ap_project.network;
+package com.ap_project.client.network;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ap_project.network;
+package com.ap_project.client.network;
 
 import java.io.*;
 import java.net.Socket;
@@ -23,13 +23,14 @@ public class ClientHandler implements Runnable {
             in = new ObjectInputStream(socket.getInputStream());
 
             GameServer.clients.add(this);
+            System.out.println("client handler");
+
 
             while (true) {
                 String command = (String) in.readObject();
                 Object data = in.readObject();
 
                 System.out.println("[Server] Received command: " + command);
-
                 handleCommand(command, data);
             }
         } catch (IOException | ClassNotFoundException e) {
@@ -45,9 +46,14 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleCommand(String command, Object data) {
+        System.out.println("Command: " + command);
         switch (command.toUpperCase()) {
             case "CREATE_LOBBY":
+                System.out.println("LINE 50");
+
                 if (data instanceof String[]) {
+                    System.out.println("Creating lobby");
+
                     String[] argsCreate = (String[]) data;
                     if (argsCreate.length >= 3) {
                         handleCreateLobby(argsCreate);

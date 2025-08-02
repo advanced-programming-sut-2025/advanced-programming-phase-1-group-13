@@ -1,7 +1,7 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
-import com.ap_project.models.enums.environment.Season;
-import com.ap_project.models.farming.Tree;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.farming.Tree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
