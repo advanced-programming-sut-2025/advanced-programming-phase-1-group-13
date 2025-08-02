@@ -1,7 +1,7 @@
-package com.ap_project.views.pregame;
+package com.ap_project.client.views.pregame;
 
 import com.ap_project.controllers.pregame.LobbyMenuController;
-import com.ap_project.models.GameAssetManager;
+import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

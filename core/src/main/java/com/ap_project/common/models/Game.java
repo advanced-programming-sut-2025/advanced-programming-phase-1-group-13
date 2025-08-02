@@ -1,14 +1,14 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.FriendshipLevel;
-import com.ap_project.models.enums.environment.Time;
-import com.ap_project.models.enums.types.ItemType;
-import com.ap_project.models.enums.types.NPCType;
-import com.ap_project.models.enums.types.ShopType;
-import com.ap_project.models.enums.types.TileType;
-import com.ap_project.models.farming.Crop;
-import com.ap_project.models.farming.Tree;
-import com.ap_project.models.trade.Trade;
+import com.ap_project.common.models.enums.FriendshipLevel;
+import com.ap_project.common.models.enums.environment.Time;
+import com.ap_project.common.models.enums.types.ItemType;
+import com.ap_project.common.models.enums.types.NPCType;
+import com.ap_project.common.models.enums.types.ShopType;
+import com.ap_project.common.models.enums.types.TileType;
+import com.ap_project.common.models.farming.Crop;
+import com.ap_project.common.models.farming.Tree;
+import com.ap_project.common.models.trade.Trade;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;

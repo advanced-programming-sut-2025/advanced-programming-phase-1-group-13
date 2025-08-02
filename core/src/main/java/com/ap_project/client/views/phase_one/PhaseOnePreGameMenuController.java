@@ -1,12 +1,12 @@
-package com.ap_project.views.phase_one;
+package com.ap_project.client.views.phase_one;
 
-import com.ap_project.models.*;
-import com.ap_project.models.enums.Menu;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.ap_project.models.App.*;
+import static com.ap_project.common.models.App.*;
 
 public class PhaseOnePreGameMenuController {
     public Result gameNew(String usernamesStr) {

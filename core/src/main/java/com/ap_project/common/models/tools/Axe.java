@@ -1,10 +1,10 @@
-package com.ap_project.models.tools;
+package com.ap_project.common.models.tools;
 
-import com.ap_project.models.*;
-import com.ap_project.models.enums.Skill;
-import com.ap_project.models.enums.SkillLevel;
-import com.ap_project.models.enums.types.*;
-import com.ap_project.models.farming.Tree;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Skill;
+import com.ap_project.common.models.enums.SkillLevel;
+import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.Tree;
 
 import java.util.HashMap;
 

@@ -1,9 +1,9 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
-import com.ap_project.models.App;
-import com.ap_project.models.Good;
-import com.ap_project.models.Shop;
-import com.ap_project.models.enums.environment.Season;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Good;
+import com.ap_project.common.models.Shop;
+import com.ap_project.common.models.enums.environment.Season;
 
 import java.util.ArrayList;
 import java.util.List;

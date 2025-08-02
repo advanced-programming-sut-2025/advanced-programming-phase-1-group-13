@@ -1,8 +1,8 @@
-package com.ap_project.views.login;
+package com.ap_project.client.views.login;
 
 import com.ap_project.Main;
 import com.ap_project.controllers.login.ForgetPasswordMenuController;
-import com.ap_project.models.GameAssetManager;
+import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;

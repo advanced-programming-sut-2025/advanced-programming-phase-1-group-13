@@ -1,19 +1,19 @@
 package com.ap_project.controllers;
 
-import com.ap_project.models.*;
-import com.ap_project.models.enums.environment.*;
-import com.ap_project.models.enums.*;
-import com.ap_project.models.enums.types.*;
-import com.ap_project.models.farming.*;
-import com.ap_project.models.inventory.*;
-import com.ap_project.models.tools.*;
-import com.ap_project.models.trade.*;
-import com.ap_project.views.game.GameView;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.environment.*;
+import com.ap_project.common.models.enums.*;
+import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.*;
+import com.ap_project.common.models.inventory.*;
+import com.ap_project.common.models.tools.*;
+import com.ap_project.common.models.trade.*;
+import com.ap_project.client.views.game.GameView;
 
 import java.util.*;
 
-import static com.ap_project.models.Greenhouse.canBuildGreenhouse;
-import static com.ap_project.models.Position.areClose;
+import static com.ap_project.common.models.Greenhouse.canBuildGreenhouse;
+import static com.ap_project.common.models.Position.areClose;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 

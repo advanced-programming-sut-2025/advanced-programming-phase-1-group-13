@@ -1,6 +1,6 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.FoodType;
+import com.ap_project.common.models.enums.types.FoodType;
 
 public class Food extends Item {
     private final FoodType foodType;

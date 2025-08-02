@@ -1,6 +1,6 @@
-package com.ap_project.models.enums.environment;
+package com.ap_project.common.models.enums.environment;
 
-import com.ap_project.models.Position;
+import com.ap_project.common.models.Position;
 
 public enum Direction {
     UP("up", -1, 0),

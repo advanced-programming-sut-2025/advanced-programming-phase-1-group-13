@@ -1,13 +1,13 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
-import com.ap_project.models.App;
-import com.ap_project.models.GameAssetManager;
-import com.ap_project.models.NPCVillage;
-import com.ap_project.models.Shop;
-import com.ap_project.models.enums.types.NPCType;
-import com.ap_project.models.enums.types.ShopType;
+import com.ap_project.client.controllerss.GameController;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.NPCVillage;
+import com.ap_project.common.models.Shop;
+import com.ap_project.common.models.enums.types.NPCType;
+import com.ap_project.common.models.enums.types.ShopType;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 

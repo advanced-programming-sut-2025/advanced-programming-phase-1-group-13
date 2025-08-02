@@ -1,11 +1,11 @@
-package com.ap_project.views.phase_one;
+package com.ap_project.client.views.phase_one;
 
-import com.ap_project.models.App;
-import com.ap_project.models.Game;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.Menu;
-import com.ap_project.models.enums.commands.PreGameMenuCommands;
-import com.ap_project.models.enums.commands.ProfileCommands;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Game;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.Menu;
+import com.ap_project.common.models.enums.commands.PreGameMenuCommands;
+import com.ap_project.common.models.enums.commands.ProfileCommands;
 
 import java.util.ArrayList;
 import java.util.Arrays;

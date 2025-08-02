@@ -1,15 +1,15 @@
-package com.ap_project.models.tools;
+package com.ap_project.common.models.tools;
 
-import com.ap_project.models.Item;
-import com.ap_project.models.Tile;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.Skill;
-import com.ap_project.models.enums.SkillLevel;
-import com.ap_project.models.enums.types.TileType;
-import com.ap_project.models.enums.types.ToolMaterial;
-import com.ap_project.models.enums.types.ToolType;
-import com.ap_project.models.farming.Crop;
-import com.ap_project.models.farming.Tree;
+import com.ap_project.common.models.Item;
+import com.ap_project.common.models.Tile;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.Skill;
+import com.ap_project.common.models.enums.SkillLevel;
+import com.ap_project.common.models.enums.types.TileType;
+import com.ap_project.common.models.enums.types.ToolMaterial;
+import com.ap_project.common.models.enums.types.ToolType;
+import com.ap_project.common.models.farming.Crop;
+import com.ap_project.common.models.farming.Tree;
 
 import java.util.HashMap;
 

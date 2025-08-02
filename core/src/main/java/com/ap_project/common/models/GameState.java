@@ -1,8 +1,8 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.environment.Time;
-import com.ap_project.models.enums.environment.Weather;
-import com.ap_project.models.enums.types.TileType;
+import com.ap_project.common.models.enums.environment.Time;
+import com.ap_project.common.models.enums.environment.Weather;
+import com.ap_project.common.models.enums.types.TileType;
 
 import java.io.FileWriter;
 import java.io.IOException;

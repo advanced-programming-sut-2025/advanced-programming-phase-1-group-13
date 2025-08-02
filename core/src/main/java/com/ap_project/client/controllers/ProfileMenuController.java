@@ -1,14 +1,14 @@
 package com.ap_project.controllers;
 
-import com.ap_project.models.App;
-import com.ap_project.models.Result;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.Menu;
-import com.ap_project.views.ProfileMenuView;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.Menu;
+import com.ap_project.client.views.ProfileMenuView;
 
 import static com.ap_project.Main.goToMainMenu;
-import static com.ap_project.models.App.getUserByEmail;
-import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.common.models.App.getUserByEmail;
+import static com.ap_project.common.models.App.getUserByUsername;
 
 public class ProfileMenuController {
     private ProfileMenuView view;

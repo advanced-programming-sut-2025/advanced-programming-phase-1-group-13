@@ -1,8 +1,8 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
-import com.ap_project.models.enums.Skill;
-import com.ap_project.models.inventory.Backpack;
-import com.ap_project.models.tools.*;
+import com.ap_project.common.models.enums.Skill;
+import com.ap_project.common.models.inventory.Backpack;
+import com.ap_project.common.models.tools.*;
 
 public enum ToolType implements ItemType {
     HOE("Hoe", Skill.FARMING),

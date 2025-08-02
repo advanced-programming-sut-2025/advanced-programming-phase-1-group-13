@@ -1,12 +1,12 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
-import com.ap_project.models.*;
-import com.ap_project.models.enums.types.AnimalType;
-import com.ap_project.models.enums.types.FarmBuildingType;
-import com.ap_project.models.farming.ForagingCrop;
-import com.ap_project.models.farming.Tree;
+import com.ap_project.client.controllerss.GameController;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.types.AnimalType;
+import com.ap_project.common.models.enums.types.FarmBuildingType;
+import com.ap_project.common.models.farming.ForagingCrop;
+import com.ap_project.common.models.farming.Tree;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

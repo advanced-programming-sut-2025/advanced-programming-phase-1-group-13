@@ -1,10 +1,10 @@
 package com.ap_project.controllers.pregame;
 
 import com.ap_project.Main;
-import com.ap_project.models.GameAssetManager;
-import com.ap_project.views.pregame.LobbyMenuView;
+import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.client.views.pregame.LobbyMenuView;
 import com.ap_project.network.GameClient;
-import com.ap_project.views.pregame.LobbyRoomView;
+import com.ap_project.client.views.pregame.LobbyRoomView;
 
 import java.util.List;
 

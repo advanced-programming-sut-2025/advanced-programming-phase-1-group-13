@@ -1,9 +1,9 @@
 package com.ap_project.controllers;
 
-import com.ap_project.models.App;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.types.Gender;
-import com.ap_project.views.TitleMenuView;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.types.Gender;
+import com.ap_project.client.views.TitleMenuView;
 import com.badlogic.gdx.Gdx;
 
 import static com.ap_project.Main.goToLoginMenu;

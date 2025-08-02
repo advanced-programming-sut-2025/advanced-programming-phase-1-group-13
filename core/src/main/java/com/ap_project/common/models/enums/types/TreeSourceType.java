@@ -1,4 +1,4 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
 public enum TreeSourceType implements ItemType {
     APRICOT_SAPLING("Apricot Sapling"),

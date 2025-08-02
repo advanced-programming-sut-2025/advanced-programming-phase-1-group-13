@@ -1,11 +1,11 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.controllers.GameController;
-import com.ap_project.models.App;
-import com.ap_project.models.GameAssetManager;
-import com.ap_project.models.Result;
-import com.ap_project.models.enums.commands.GameCommands;
+import com.ap_project.client.controllerss.GameController;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.enums.commands.GameCommands;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;

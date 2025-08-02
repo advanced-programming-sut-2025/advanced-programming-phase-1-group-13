@@ -1,6 +1,6 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.FriendshipLevel;
+import com.ap_project.common.models.enums.FriendshipLevel;
 
 public class Friendship {
     private FriendshipLevel level;

@@ -1,7 +1,7 @@
-package com.ap_project.views.game;
+package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.models.*;
+import com.ap_project.common.models.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.ap_project.views.game.GameMenuView.hoverOnImage;
+import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class JournalView implements Screen, InputProcessor {
     private Stage stage;

@@ -1,6 +1,6 @@
-package com.ap_project.models.enums;
+package com.ap_project.common.models.enums;
 
-import com.ap_project.views.phase_one.*;
+import com.ap_project.client.views.phase_one.*;
 
 import java.util.Scanner;
 

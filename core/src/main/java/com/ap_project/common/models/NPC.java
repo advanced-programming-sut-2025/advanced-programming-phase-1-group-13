@@ -1,15 +1,15 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.Dialog;
-import com.ap_project.models.enums.types.ItemType;
-import com.ap_project.models.enums.types.NPCType;
-import com.ap_project.models.enums.types.Role;
+import com.ap_project.common.models.enums.types.Dialog;
+import com.ap_project.common.models.enums.types.ItemType;
+import com.ap_project.common.models.enums.types.NPCType;
+import com.ap_project.common.models.enums.types.Role;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import static com.ap_project.models.Item.getItemTypeByItemName;
+import static com.ap_project.common.models.Item.getItemTypeByItemName;
 
 public class NPC {
     private final NPCType type;

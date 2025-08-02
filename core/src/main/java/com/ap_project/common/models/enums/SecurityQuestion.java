@@ -1,4 +1,4 @@
-package com.ap_project.models.enums;
+package com.ap_project.common.models.enums;
 
 public enum SecurityQuestion {
     FAVORITE_PLANET("What's your favorite planet?", 1),

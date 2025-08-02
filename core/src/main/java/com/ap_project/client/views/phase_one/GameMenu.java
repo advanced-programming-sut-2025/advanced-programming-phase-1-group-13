@@ -1,8 +1,8 @@
-package com.ap_project.views.phase_one;
+package com.ap_project.client.views.phase_one;
 
 import com.ap_project.controllers.*;
-import com.ap_project.models.*;
-import com.ap_project.models.enums.commands.*;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.commands.*;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

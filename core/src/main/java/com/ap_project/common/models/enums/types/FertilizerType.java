@@ -1,4 +1,4 @@
-package com.ap_project.models.enums.types;
+package com.ap_project.common.models.enums.types;
 
 public enum FertilizerType implements ItemType {
     BASIC_FERTILIZER("Basic Fertilizer"),

@@ -1,4 +1,4 @@
-package com.ap_project.models.enums.environment;
+package com.ap_project.common.models.enums.environment;
 
 public enum Weekday {
     MERCDAY("Mercday"),

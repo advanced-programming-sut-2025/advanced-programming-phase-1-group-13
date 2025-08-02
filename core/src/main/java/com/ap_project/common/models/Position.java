@@ -1,4 +1,4 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
 public class Position {
     private int x;

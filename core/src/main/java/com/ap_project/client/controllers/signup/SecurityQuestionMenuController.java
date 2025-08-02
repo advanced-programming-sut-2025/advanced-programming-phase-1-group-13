@@ -1,12 +1,12 @@
 package com.ap_project.controllers.signup;
 
-import com.ap_project.models.Result;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.SecurityQuestion;
-import com.ap_project.views.signup.SecurityQuestionMenuView;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.SecurityQuestion;
+import com.ap_project.client.views.signup.SecurityQuestionMenuView;
 
 import static com.ap_project.Main.goToTitleMenu;
-import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.common.models.App.getUserByUsername;
 
 public class SecurityQuestionMenuController {
     private final String username;

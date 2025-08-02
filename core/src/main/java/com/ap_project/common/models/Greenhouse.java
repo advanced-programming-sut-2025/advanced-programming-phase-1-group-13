@@ -1,6 +1,6 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.TileType;
+import com.ap_project.common.models.enums.types.TileType;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.ProcessedItemType;
+import com.ap_project.common.models.enums.types.ProcessedItemType;
 
 public class ProcessedItem extends Item {
     private final ProcessedItemType type;

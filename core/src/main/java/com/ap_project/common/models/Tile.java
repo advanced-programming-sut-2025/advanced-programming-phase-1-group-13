@@ -1,11 +1,11 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.CropType;
-import com.ap_project.models.enums.types.GoodsType;
-import com.ap_project.models.enums.types.TileType;
-import com.ap_project.models.farming.Crop;
-import com.ap_project.models.farming.PlantSource;
-import com.ap_project.models.farming.Tree;
+import com.ap_project.common.models.enums.types.CropType;
+import com.ap_project.common.models.enums.types.GoodsType;
+import com.ap_project.common.models.enums.types.TileType;
+import com.ap_project.common.models.farming.Crop;
+import com.ap_project.common.models.farming.PlantSource;
+import com.ap_project.common.models.farming.Tree;
 
 public class Tile {
     private TileType type;

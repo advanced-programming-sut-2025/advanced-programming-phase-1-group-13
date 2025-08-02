@@ -3,14 +3,14 @@ package com.ap_project.controllers.login;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import com.ap_project.models.App;
-import com.ap_project.models.Result;
-import com.ap_project.models.User;
-import com.ap_project.models.enums.Menu;
-import com.ap_project.views.login.LoginMenuView;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Result;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.Menu;
+import com.ap_project.client.views.login.LoginMenuView;
 
 import static com.ap_project.Main.*;
-import static com.ap_project.models.App.getUserByUsername;
+import static com.ap_project.common.models.App.getUserByUsername;
 
 public class LoginController {
     private LoginMenuView view;

@@ -1,7 +1,7 @@
-package com.ap_project.models;
+package com.ap_project.common.models;
 
-import com.ap_project.models.enums.types.CraftType;
-import com.ap_project.models.enums.types.IngredientType;
+import com.ap_project.common.models.enums.types.CraftType;
+import com.ap_project.common.models.enums.types.IngredientType;
 
 import java.util.HashMap;
 
