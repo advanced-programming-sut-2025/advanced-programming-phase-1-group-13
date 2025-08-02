@@ -28,12 +28,12 @@ public class PreGameMenuController {
                 }
             } else if (view.getLobbyButton().isChecked()) {
                 goToLobbyMenu();
-            } else if (view.getBackButton().isChecked()) {
+            }
+            else if (view.getBackButton().isChecked()) {
                 goToMainMenu();
             }
             view.getNewGameButton().setChecked(false);
             view.getLoadGameButton().setChecked(false);
-            view.getLobbyButton().setChecked(false);
             view.getBackButton().setChecked(false);
         }
     }

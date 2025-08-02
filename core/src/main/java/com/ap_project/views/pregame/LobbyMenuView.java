@@ -10,11 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.w3c.dom.Text;
 
 import java.util.List;
-
-import static com.ap_project.Main.goToPreGameMenu;
 
 public class LobbyMenuView implements Screen {
     private final Stage stage;
@@ -27,7 +24,6 @@ public class LobbyMenuView implements Screen {
     private final TextField passwordField;
     private final TextButton createLobbyButton;
     private final TextButton refreshButton;
-    private final TextButton backButton;
     private final ScrollPane lobbyListScroll;
     private final VerticalGroup lobbyList;
     private final Label errorLabel;
@@ -55,7 +51,6 @@ public class LobbyMenuView implements Screen {
 
         createLobbyButton = new TextButton("Create Lobby", skin);
         refreshButton = new TextButton("Refresh", skin);
-        backButton = new TextButton("Back", skin);
 
         errorLabel = new Label("", skin);
         errorLabel.setColor(1, 0, 0, 1);
@@ -67,29 +62,6 @@ public class LobbyMenuView implements Screen {
 
         layoutUI();
         addListeners();
-    }
-    public void promptPasswordAndJoin(String lobbyId) {
-        TextField passwordField = new TextField("", skin);
-
-        Dialog dialog = new Dialog("Enter Password", skin) {
-            @Override
-            protected void result(Object object) {
-                boolean confirmed = (boolean) object;
-                if (confirmed) {
-                    String password = passwordField.getText();
-                    controller.joinLobbyWithPassword(lobbyId, password);
-                }
-            }
-        };
-
-        dialog.text("This lobby is private. Enter the password:");
-        dialog.getContentTable().row();
-        dialog.getContentTable().add(passwordField).width(200).pad(10);
-        dialog.button("Join", true);
-        dialog.button("Cancel", false);
-        dialog.key(com.badlogic.gdx.Input.Keys.ENTER, true);
-        dialog.key(com.badlogic.gdx.Input.Keys.ESCAPE, false);
-        dialog.show(stage);
     }
 
     private void layoutUI() {
@@ -103,8 +75,7 @@ public class LobbyMenuView implements Screen {
 
         table.add(new Label("Available Lobbies:", skin)).colspan(2).padTop(40).row();
         table.add(lobbyListScroll).colspan(2).width(500).height(300).row();
-        table.add(refreshButton).colspan(2).padTop(10);
-        table.add(backButton).colspan(2).padTop(10).row();
+        table.add(refreshButton).colspan(2).padTop(10).row();
         table.add(errorLabel).colspan(2).padTop(10);
 
         stage.addActor(table);
@@ -134,13 +105,6 @@ public class LobbyMenuView implements Screen {
                 controller.refreshLobbyList();
             }
         });
-
-        backButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                goToPreGameMenu();
-            }
-        });
     }
 
     public void updateLobbyList(List<String> lobbies) {
@@ -148,7 +112,7 @@ public class LobbyMenuView implements Screen {
 
         for (String rawLobbyInfo : lobbies) {
             String[] parts = rawLobbyInfo.split(",");
-            if (parts.length < 4) continue;
+            if (parts.length < 4) continue; // skip invalid entries
 
             String lobbyId = parts[0];
             String name = parts[1];
@@ -156,7 +120,7 @@ public class LobbyMenuView implements Screen {
             boolean isPrivate = Boolean.parseBoolean(parts[3]);
 
             String display = String.format("Lobby: %s (%s) | Players: %s | %s",
-                name, lobbyId, players, isPrivate ? "Private" : "Public");
+                name, lobbyId, players, isPrivate ? "Private 🔒" : "Public");
 
             Label infoLabel = new Label(display, skin);
             TextButton joinBtn = new TextButton("Join", skin);
