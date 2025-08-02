@@ -7,11 +7,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
@@ -147,12 +151,12 @@ public class AnimalMenuView implements Screen, InputProcessor {
             window.getY() + window.getHeight() - 375
         );
         if (hoverOnImage(shepherdButton, screenX, convertedY)) {
-            try {
-                result = controller.shepherdAnimal(animal.getName(),
-                    new Position(animal.getPosition().getX() + 1, animal.getPosition().getY() + 1)); // TODO
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+            Position previousPosition = animal.getPosition();
+            Position newPosition = new Position(animal.getPosition().getX() + 2, animal.getPosition().getY() + 3);
+            result = controller.shepherdAnimal(animal.getName(), newPosition); // TODO
+            if (result.success) {
+                farmView.setAnimalDestination(new Vector2(newPosition.getX(), newPosition.getY()), newPosition);
+                animal.setPosition(previousPosition);
             }
             farmView.startWalkingAnimation(animal);
         }

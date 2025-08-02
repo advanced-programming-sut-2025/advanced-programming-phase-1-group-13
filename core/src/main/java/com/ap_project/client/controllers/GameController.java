@@ -1298,13 +1298,13 @@ public class GameController {
                     + ", is already at " + newPosition.toString());
             }
 
-            if (!App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(newPosition).getType().equals(TileType.GRASS)) {
-                return new Result(false, "Your animal can only go on grass.");
+            if (!App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(newPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {
+                return new Result(false, "Your animal can't go to this position.");
             }
 
             if (farmBuildingInNewPosition != null) {
                 if (!farmBuildingInNewPosition.equals(animal.getAnimalLivingSpace())) {
-                    return new Result(false, "Your animal can only go on grass.");
+                    return new Result(false, "Your animal can't go to this position.");
                 }
 
                 animal.setPosition(newPosition);
@@ -1337,7 +1337,7 @@ public class GameController {
         animal.setLastFeedingTime(App.getCurrentGame().getGameState().getTime());
         animal.changeFriendship(8);
         return new Result(true, "Your " + animal.getAnimalType().getName() + ", " + animalName
-            + ", has been moved to " + newPosition.toString() + " and is now outside. Its' friendship level is now "
+            + ", has been moved to " + newPosition + " and is now outside. Its' friendship level is now "
             + animal.getFriendshipLevel() + ".");
     }
 

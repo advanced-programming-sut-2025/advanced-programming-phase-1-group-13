@@ -47,6 +47,9 @@ public class FarmView extends GameView {
     private Texture currentWalkingAnimalFrame;
     private Vector2 walkingAnimalPosition;
     private Direction walkingAnimalDirection;
+    private Vector2 animalDestination;
+    private Position animalDestinationPosition;
+    private boolean isAnimalWalking;
 
     private Farm farm;
 
@@ -101,7 +104,7 @@ public class FarmView extends GameView {
     public void render(float delta) {
         super.render(delta);
 
-        if (walkingAnimal != null) {
+        if (isAnimalWalking) {
             animalAnimationTimer += delta;
             currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
         }
@@ -112,7 +115,7 @@ public class FarmView extends GameView {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
-        if (walkingAnimal != null) {
+        if (isAnimalWalking) {
             draw(currentWalkingAnimalFrame, walkingAnimalPosition);
         }
 
@@ -200,7 +203,8 @@ public class FarmView extends GameView {
             scale = 1.25f;
             for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
                 Position position = farm.getAllFarmAnimals().get(i).getPosition();
-                if (!farm.getAllFarmAnimals().get(i).equals(walkingAnimal)) draw(animalsTextures.get(i), position);
+                if (farm.getAllFarmAnimals().get(i).equals(walkingAnimal) && isAnimalWalking) continue;
+                draw(animalsTextures.get(i), position);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -277,11 +281,12 @@ public class FarmView extends GameView {
     }
 
     public void startWalkingAnimation(Animal animal) {
+        isAnimalWalking = true;
         animalAnimationTimer = 0;
         walkingAnimal = animal;
-        walkingAnimalDirection = Direction.values()[(new Random().nextInt(Direction.values().length))];
-        if (walkingAnimalDirection == Direction.LEFT) walkingAnimalDirection = Direction.RIGHT;
-        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString()); // TODO
+        if (animalDestination.x > walkingAnimal.getPosition().getX()) walkingAnimalDirection = Direction.RIGHT;
+        else walkingAnimalDirection = Direction.LEFT;
+        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
         walkingAnimalPosition = new Vector2(
             walkingAnimal.getPosition().getX() * TILE_SIZE,
             walkingAnimal.getPosition().getY() * TILE_SIZE
@@ -299,9 +304,53 @@ public class FarmView extends GameView {
 
     public void moveAnimal() {
         float displacement = 1f;
-        if (walkingAnimalDirection == Direction.RIGHT) walkingAnimalPosition.x += displacement;
-        if (walkingAnimalDirection == Direction.LEFT) walkingAnimalPosition.x -= displacement;
-        if (walkingAnimalDirection == Direction.UP) walkingAnimalPosition.y -= displacement;
-        if (walkingAnimalDirection == Direction.DOWN) walkingAnimalPosition.y += displacement;
+        if (walkingAnimalDirection == Direction.RIGHT) {
+            walkingAnimalPosition.x += displacement;
+            if (animalDestination.x <= walkingAnimalPosition.x) {
+                if (animalDestination.y > walkingAnimalPosition.y) {
+                    walkingAnimalDirection = Direction.DOWN;
+                    try {
+                        animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else walkingAnimalDirection = Direction.UP;
+            }
+        }
+        if (walkingAnimalDirection == Direction.LEFT) {
+            walkingAnimalPosition.x -= displacement;
+            if (animalDestination.x <= walkingAnimalPosition.x) {
+                if (animalDestination.y > walkingAnimalPosition.y) {
+                    walkingAnimalDirection = Direction.DOWN;
+                    try {
+                        animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else walkingAnimalDirection = Direction.UP;
+            }
+        }
+        if (walkingAnimalDirection == Direction.UP) {
+            walkingAnimalPosition.y -= displacement;
+            if (animalDestination.y >= walkingAnimalPosition.y) {
+                walkingAnimal.setPosition(animalDestinationPosition);
+                isAnimalWalking = false;
+            }
+        }
+        if (walkingAnimalDirection == Direction.DOWN) {
+            walkingAnimalPosition.y += displacement;
+            if (animalDestination.y <= walkingAnimalPosition.y) {
+                walkingAnimal.setPosition(animalDestinationPosition);
+                isAnimalWalking = false;
+            }
+        }
+    }
+
+    public void setAnimalDestination(Vector2 animalDestination, Position position) {
+        this.animalDestination = animalDestination;
+        animalDestination.x *= TILE_SIZE;
+        animalDestination.y *= TILE_SIZE;
+        this.animalDestinationPosition = position;
     }
 }
