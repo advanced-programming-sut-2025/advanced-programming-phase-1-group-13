@@ -86,14 +86,13 @@ public class FarmView extends GameView {
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
 
         this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", "Right"); // TODO
-        currentlyWalking = farm.getAllAnimals().get(0);
+        currentlyWalking = farm.getAllFarmAnimals().get(0);
         this.currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
 
     @Override
     public void render(float delta) {
-        super(delta);
-
+        super.render(delta);
         animalAnimationTimer += delta;
         currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
@@ -103,7 +102,7 @@ public class FarmView extends GameView {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
-        draw(currentWalkingAnimalFrame, currentlyWalking);
+        draw(currentWalkingAnimalFrame, currentlyWalking.getPosition());
 
         if (isPetting) {
             float tempScale = scale;
@@ -189,7 +188,7 @@ public class FarmView extends GameView {
                 if (farm.getAllFarmAnimals().get(i).getAnimalType() == AnimalType.PIG) scale = 3; // TODO: resize asset
                 else scale = 1.25f;
                 Position position = farm.getAllFarmAnimals().get(i).getPosition();
-                draw(animalsTextures.get(i), position);
+                if (!farm.getAllFarmAnimals().get(i).equals(currentlyWalking)) draw(animalsTextures.get(i), position);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
