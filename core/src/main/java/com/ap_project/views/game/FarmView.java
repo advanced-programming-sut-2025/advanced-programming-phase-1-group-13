@@ -33,14 +33,12 @@ public class FarmView extends GameView {
     private float pettingAnimationTime;
     private final Animation<Texture> feedingAnimation;
     private boolean isFeeding;
-    private Animal animalBeingFed;
     private Texture feedingAnimationFrame;
     private float feedingAnimationTime;
     private Farm farm;
     private Animation<Texture> animalAnimation;
     private float animalAnimationTimer = 0f;
-
-    Texture currentFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+    private Texture currentFrame;
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -53,7 +51,7 @@ public class FarmView extends GameView {
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
 
         this.foragingCropsTextures = new ArrayList<>();
-        for (ForagingCrop foragingCrop : farm.getforagingCrops()) {
+        for (ForagingCrop foragingCrop : farm.getForagingCrops()) {
             foragingCropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByForagingCrop(foragingCrop));
         }
 
@@ -86,7 +84,8 @@ public class FarmView extends GameView {
         this.isFeeding = false;
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
 
-
+        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", "Right"); // TODO
+        this.currentFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
 
     @Override
@@ -145,7 +144,7 @@ public class FarmView extends GameView {
         try {
             scale = 1f;
             for (int i = 0; i < foragingCropsTextures.size(); i++) {
-                Position position = farm.getforagingCrops().get(i).getPosition();
+                Position position = farm.getForagingCrops().get(i).getPosition();
                 draw(foragingCropsTextures.get(i), position);
             }
 
@@ -209,7 +208,12 @@ public class FarmView extends GameView {
         }
 
         if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
-            goToFarmOverview("Choose the position of the Barn", FarmBuildingType.BARN, this); // TODO
+            FarmBuildingType farmBuildingType = FarmBuildingType.COOP;
+            goToFarmOverview("Choose the position of the " + farmBuildingType.getName(), farmBuildingType, this); // TODO
+        }
+
+        if (keycode == Input.Keys.I) { // TODO: move to Marnie's ranch
+            goToBuyAnimalsMenu(this);
         }
         return false;
     }

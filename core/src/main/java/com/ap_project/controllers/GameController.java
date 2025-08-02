@@ -1091,23 +1091,26 @@ public class GameController {
     // === FARM BUILDINGS & ANIMALS === //
 
     public Result build(String farmBuildingTypeStr, String xString, String yString) {
-//        Shop shop = App.getCurrentShop();
-//        if (shop == null) {
-//            return new Result(false, "You must first enter Marnie's Ranch.");
-//        }
-//
-//        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-//            return new Result(false, "You must first enter Marnie's Ranch.");
-//        }
+        Shop shop = App.getCurrentShop();
+        if (shop == null) {
+            return new Result(false, "You must first enter Marnie's Ranch.");
+        }
 
-        FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
-        if (farmBuildingType == null) {
-            return new Result(false, "Enter a valid building name.");
+        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
+            return new Result(false, "You must first enter Marnie's Ranch.");
         }
 
         Position position = Position.getPositionByStrings(xString, yString);
         if (position == null) {
             return new Result(false, "Enter two valid numbers for x and y.");
+        }
+        return build(farmBuildingTypeStr, position);
+    }
+
+    public Result build(String farmBuildingTypeStr, Position position) {
+        FarmBuildingType farmBuildingType = FarmBuildingType.getFarmBuildingTypeByName(farmBuildingTypeStr);
+        if (farmBuildingType == null) {
+            return new Result(false, "Enter a valid building name.");
         }
 
         User player = App.getLoggedIn();

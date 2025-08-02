@@ -1,5 +1,7 @@
 package com.ap_project.views.game;
 
+import com.ap_project.Main;
+import com.ap_project.controllers.GameController;
 import com.ap_project.models.*;
 import com.ap_project.models.enums.types.AnimalType;
 import com.ap_project.models.enums.types.FarmBuildingType;
@@ -9,6 +11,7 @@ import com.ap_project.models.farming.Tree;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -28,7 +31,11 @@ public class FarmOverviewView implements Screen, InputProcessor {
     private final Label descriptionLabel;
     private final Farm farm;
     private final Image itemImage;
+    private final ItemType itemType;
     private final GameView gameView;
+    private final Label positionLabel;
+    private final Label errorMessageLabel;
+    private final GameController controller;
 
     public FarmOverviewView(String description, ItemType itemType, GameView gameView) {
         this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
@@ -39,25 +46,34 @@ public class FarmOverviewView implements Screen, InputProcessor {
 
         farmImage.setSize(farmImage.getWidth() * scale, farmImage.getHeight() * scale);
         farmImage.setPosition(
-                (Gdx.graphics.getWidth() - farmImage.getWidth()) / 2f,
-                (Gdx.graphics.getHeight() - farmImage.getHeight()) / 2f - 40
+            (Gdx.graphics.getWidth() - farmImage.getWidth()) / 2f,
+            (Gdx.graphics.getHeight() - farmImage.getHeight()) / 2f - 40
         );
 
         this.descriptionLabel = new Label(description, GameAssetManager.getGameAssetManager().getSkin());
         descriptionLabel.setPosition(
-                (Gdx.graphics.getWidth() - descriptionLabel.getWidth()) / 2f,
-                Gdx.graphics.getHeight() - 50
+            (Gdx.graphics.getWidth() - descriptionLabel.getWidth()) / 2f,
+            Gdx.graphics.getHeight() - 50
         );
 
         this.farm = App.getLoggedIn().getFarm();
 
+        this.itemType = itemType;
         if (itemType instanceof FarmBuildingType) {
             this.itemImage = new Image(GameAssetManager.getGameAssetManager().getFarmBuilding((FarmBuildingType) itemType));
         } else {
             this.itemImage = new Image(); // TODO
         }
 
+        this.positionLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        positionLabel.setPosition(50, 50);
+
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+
         this.gameView = gameView;
+        this.controller = new GameController();
     }
 
     @Override
@@ -66,9 +82,6 @@ public class FarmOverviewView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         stage.addActor(farmImage);
         stage.addActor(descriptionLabel);
-
-        Image chicken = new Image(GameAssetManager.getGameAssetManager().getAnimal(AnimalType.CHICKEN));
-        addImage(chicken, new Position(5, 5), 0.3f);
 
         Image cabinImage = new Image(GameAssetManager.getGameAssetManager().getCabin());
         addImage(cabinImage, farm.getCabin().getPosition(), scale);
@@ -80,11 +93,11 @@ public class FarmOverviewView implements Screen, InputProcessor {
         addImage(greenhouseImage, farm.getGreenhouse().getPosition(), scale);
 
         ArrayList<Image> foragingCropsImages = new ArrayList<>();
-        for (ForagingCrop foragingCrop : farm.getforagingCrops()) {
+        for (ForagingCrop foragingCrop : farm.getForagingCrops()) {
             foragingCropsImages.add(new Image(GameAssetManager.getGameAssetManager().getTextureByForagingCrop(foragingCrop)));
         }
-        for (int i = 0; i < farm.getforagingCrops().size(); i++) {
-            Position position = farm.getforagingCrops().get(i).getPosition();
+        for (int i = 0; i < farm.getForagingCrops().size(); i++) {
+            Position position = farm.getForagingCrops().get(i).getPosition();
             addImage(foragingCropsImages.get(i), position, 0.3f);
         }
 
@@ -128,6 +141,8 @@ public class FarmOverviewView implements Screen, InputProcessor {
             addImage(animalsImages.get(i), position, 0.3f);
         }
 
+        stage.addActor(positionLabel);
+        stage.addActor(errorMessageLabel);
     }
 
     @Override
@@ -174,6 +189,30 @@ public class FarmOverviewView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Position position = new Position(
+            (screenX - 355) / (int) TILE_SIZE,
+            (screenY - 155) / (int) TILE_SIZE
+        );
+
+        Tile tile = farm.getTileByPosition(position);
+        if (tile == null) {
+            errorMessageLabel.setText("Choose a position inside the farm.");
+        } else {
+            errorMessageLabel.setText("");
+        }
+
+        Result result = new Result(false, "");
+        if (itemType instanceof FarmBuildingType) {
+            FarmBuildingType farmBuildingType = (FarmBuildingType) itemType;
+            result = controller.build(farmBuildingType.getName(), position);
+        }
+
+        if (!result.success) {
+            errorMessageLabel.setText(result.message);
+        } else {
+            Main.getMain().setScreen(gameView);
+        }
+
         return false;
     }
 
@@ -195,8 +234,8 @@ public class FarmOverviewView implements Screen, InputProcessor {
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         itemImage.setPosition(
-                screenX,
-                Gdx.graphics.getHeight() - screenY
+            screenX,
+            Gdx.graphics.getHeight() - screenY - itemImage.getHeight()
         );
         stage.addActor(itemImage);
         return false;
@@ -207,39 +246,10 @@ public class FarmOverviewView implements Screen, InputProcessor {
         return false;
     }
 
-    protected void renderDebugTiles() {
-        float startX = 355;
-        float startY = 816;
-        int rows = 18;
-        int cols = 18;
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                // Alternate colors for checker pattern
-                boolean isDark = (row + col) % 2 == 0;
-
-                // Create a new image for each tile
-                Image tile = new Image(tileMarkerTexture);
-                tile.setPosition(startX + col * TILE_SIZE, startY - row * TILE_SIZE);
-                tile.setSize(TILE_SIZE, TILE_SIZE);
-
-                // Set color - dark gray for dark squares, light gray for light squares
-                if (isDark) {
-                    tile.setColor(0.3f, 0.3f, 0.3f, 0.01f); // Dark gray with some transparency
-                } else {
-                    tile.setColor(0.7f, 0.7f, 0.7f, 0.01f); // Light gray with some transparency
-                }
-
-                // Draw the tile
-                stage.addActor(tile);
-            }
-        }
-    }
-
     private void addImage(Image image, Position position, float scale) {
         image.setPosition(
-                355 + position.getX() * TILE_SIZE,
-                816 - position.getY() * TILE_SIZE
+            355 + position.getX() * TILE_SIZE,
+            816 - position.getY() * TILE_SIZE
         );
         image.setSize(scale * image.getWidth(), scale * image.getHeight());
         stage.addActor(image);
