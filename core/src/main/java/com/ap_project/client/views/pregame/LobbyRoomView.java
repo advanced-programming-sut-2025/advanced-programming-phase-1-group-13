@@ -58,14 +58,14 @@ public class LobbyRoomView extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.leaveLobby(lobbyId);
-                controller.backToLobbyMenu();  // Return to lobby list after leaving
+                controller.backToLobbyMenu();
             }
         });
 
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.startGame(lobbyId);  // Only admin should see this as active
+                controller.startGame(lobbyId);
             }
         });
     }
