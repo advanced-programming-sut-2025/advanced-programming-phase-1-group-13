@@ -26,7 +26,10 @@ public class PreGameMenuController {
                 if (!result.success) {
                     view.getErrorMessageLabel().setText(result.message);
                 }
-            } else if (view.getBackButton().isChecked()) {
+            } else if (view.getLobbyButton().isChecked()) {
+                goToLobbyMenu();
+            }
+            else if (view.getBackButton().isChecked()) {
                 goToMainMenu();
             }
             view.getNewGameButton().setChecked(false);
