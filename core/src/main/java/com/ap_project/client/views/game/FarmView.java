@@ -3,6 +3,7 @@ package com.ap_project.client.views.game;
 import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.types.AnimalType;
 import com.ap_project.common.models.enums.types.FarmBuildingType;
 import com.ap_project.common.models.farming.ForagingCrop;
@@ -10,6 +11,7 @@ import com.ap_project.common.models.farming.Tree;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
@@ -36,10 +38,12 @@ public class FarmView extends GameView {
     private Texture feedingAnimationFrame;
     private float feedingAnimationTime;
     private Farm farm;
-    private Animal currentlyWalking = null;
-    private Animation<Texture> animalAnimation;
+    private Animal walkingAnimal = null;
+    private final Animation<Texture> animalAnimation;
     private float animalAnimationTimer = 0f;
     private Texture currentWalkingAnimalFrame;
+    private final Vector2 walkingAnimalPosition;
+    private final Direction walkingAnimalDirection;
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -85,8 +89,14 @@ public class FarmView extends GameView {
         this.isFeeding = false;
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
 
-        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", "Right"); // TODO
-        currentlyWalking = farm.getAllFarmAnimals().get(0);
+        this.walkingAnimal = farm.getAllFarmAnimals().get(0);
+        this.walkingAnimalDirection = Direction.DOWN;
+        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", walkingAnimalDirection.toString()); // TODO
+        walkingAnimalPosition = new Vector2(
+            walkingAnimal.getPosition().getX() * TILE_SIZE,
+            walkingAnimal.getPosition().getY() * TILE_SIZE
+        );
+        System.out.println(walkingAnimalPosition);
         this.currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
 
@@ -102,7 +112,8 @@ public class FarmView extends GameView {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
-        draw(currentWalkingAnimalFrame, currentlyWalking.getPosition());
+        draw(currentWalkingAnimalFrame, walkingAnimalPosition);
+        moveAnimal();
 
         if (isPetting) {
             float tempScale = scale;
@@ -188,7 +199,7 @@ public class FarmView extends GameView {
                 if (farm.getAllFarmAnimals().get(i).getAnimalType() == AnimalType.PIG) scale = 3; // TODO: resize asset
                 else scale = 1.25f;
                 Position position = farm.getAllFarmAnimals().get(i).getPosition();
-                if (!farm.getAllFarmAnimals().get(i).equals(currentlyWalking)) draw(animalsTextures.get(i), position);
+                if (!farm.getAllFarmAnimals().get(i).equals(walkingAnimal)) draw(animalsTextures.get(i), position);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -233,6 +244,7 @@ public class FarmView extends GameView {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
 
+
         if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
             goToFarmHouse(this);
             return true;
@@ -269,5 +281,13 @@ public class FarmView extends GameView {
 
     public ArrayList<Texture> getAnimalsTextures() {
         return animalsTextures;
+    }
+
+    public void moveAnimal() {
+        float displacement = 1f;
+        if (walkingAnimalDirection == Direction.RIGHT) walkingAnimalPosition.x += displacement;
+        if (walkingAnimalDirection == Direction.LEFT) walkingAnimalPosition.x -= displacement;
+        if (walkingAnimalDirection == Direction.UP) walkingAnimalPosition.y -= displacement;
+        if (walkingAnimalDirection == Direction.DOWN) walkingAnimalPosition.y += displacement;
     }
 }

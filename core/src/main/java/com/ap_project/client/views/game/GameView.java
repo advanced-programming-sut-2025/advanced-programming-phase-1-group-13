@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -455,7 +456,6 @@ public abstract class GameView implements Screen, InputProcessor {
             ));
         }
         playerSprite.draw(Main.getBatch());
-        renderDebugTiles();
         Main.getBatch().end();
     }
 
@@ -892,6 +892,18 @@ public abstract class GameView implements Screen, InputProcessor {
     protected void draw(Texture texture, Position position) {
         float tileX = position.getX() * TILE_SIZE;
         float tileY = (originPosition.getY() - position.getY()) * TILE_SIZE;
+        Main.getBatch().draw(
+            texture,
+            tileX,
+            tileY,
+            texture.getWidth() * scale,
+            texture.getHeight() * scale
+        );
+    }
+
+    protected void draw(Texture texture, Vector2 position) {
+        float tileX = position.x;
+        float tileY = originPosition.getY() * TILE_SIZE - position.y;
         Main.getBatch().draw(
             texture,
             tileX,
