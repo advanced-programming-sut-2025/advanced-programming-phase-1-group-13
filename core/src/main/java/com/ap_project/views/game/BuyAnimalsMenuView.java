@@ -2,13 +2,21 @@ package com.ap_project.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.models.*;
+import com.ap_project.models.enums.types.AnimalType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.ap_project.views.game.GameMenuView.hoverOnImage;
 
@@ -99,6 +107,22 @@ public class BuyAnimalsMenuView implements Screen, InputProcessor {
             return true;
         }
 
+        ArrayList<AnimalType> animals = new ArrayList<>(List.of(AnimalType.CHICKEN, AnimalType.COW, AnimalType.GOAT,
+            AnimalType.DUCK, AnimalType.SHEEP, AnimalType.RABBIT, AnimalType.PIG, AnimalType.DINOSAUR));
+        for (int i = 0; i < 8; i++) {
+            Image animal = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            animal.setSize(100, 80);
+            animal.setPosition(
+                windowX + 30 + 120 * (i % 3),
+                windowY + 220 - 95 * (i / 3)
+            );
+            stage.addActor(animal);
+            if (hoverOnImage(animal, screenX, convertedY)) {
+                String name = askAnimalName(animals.get(i));
+                System.out.println(name);
+            }
+        }
+
         return false;
     }
 
@@ -125,5 +149,25 @@ public class BuyAnimalsMenuView implements Screen, InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+
+    public String askAnimalName(AnimalType animal) {
+        Label description = new Label("Enter a name for your " + animal.getName() + ":",
+            GameAssetManager.getGameAssetManager().getSkin());
+        stage.addActor(description);
+
+        TextField nameField = new TextField("", GameAssetManager.getGameAssetManager().getSkin());
+        stage.addActor(nameField);
+
+        TextButton enterButton = new TextButton("Enter", GameAssetManager.getGameAssetManager().getSkin());
+        stage.addActor(enterButton);
+
+        while (true) {
+            if (enterButton.isChecked()) {
+                return nameField.getText();
+            } else {
+                enterButton.setChecked(false);
+            }
+        }
     }
 }

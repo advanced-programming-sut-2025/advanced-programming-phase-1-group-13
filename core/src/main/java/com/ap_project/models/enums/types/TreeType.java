@@ -4,6 +4,7 @@ import com.ap_project.models.enums.environment.Season;
 import com.ap_project.models.farming.Tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum TreeType implements ItemType {
@@ -86,6 +87,11 @@ public enum TreeType implements ItemType {
 
     public static TreeType getRandomTreeType() {
         return TreeType.values()[(int) (Math.random() * TreeType.values().length)];
+    }
+
+    public static TreeType getRandomForagingTreeType() {
+        ArrayList<TreeType> treeTypes = new ArrayList<>(List.of(TreeType.MAPLE_TREE, TreeType.OAK_TREE, TreeType.PINE_TREE, TreeType.MAHOGANY_TREE));
+        return treeTypes.get((int) (Math.random() * treeTypes.size()));
     }
 
     public static TreeType getTreeTypeByName(String name) {
