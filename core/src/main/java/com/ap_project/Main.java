@@ -3,25 +3,29 @@ package com.ap_project;
 import com.ap_project.controllers.*;
 import com.ap_project.controllers.login.*;
 import com.ap_project.controllers.pregame.ChooseMapMenuController;
+import com.ap_project.controllers.pregame.LobbyMenuController;
 import com.ap_project.controllers.pregame.NewGameMenuController;
 import com.ap_project.controllers.pregame.PreGameMenuController;
 import com.ap_project.controllers.signup.*;
-import com.ap_project.models.Animal;
+import com.ap_project.lobby.Lobby;
 import com.ap_project.models.GameAssetManager;
-import com.ap_project.models.enums.types.ItemType;
+import com.ap_project.network.GameClient;
 import com.ap_project.views.*;
 import com.ap_project.views.game.*;
+import com.ap_project.views.game.CookingMenuView;
+import com.ap_project.views.game.RefrigeratorMenuView;
 import com.ap_project.views.login.*;
 import com.ap_project.views.pregame.ChooseMapMenuView;
+import com.ap_project.views.pregame.LobbyMenuView;
 import com.ap_project.views.pregame.NewGameMenuView;
 import com.ap_project.views.pregame.PreGameMenuView;
 import com.ap_project.views.signup.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
- */
+import java.io.IOException;
+
+/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
     private static Main main;
     private static SpriteBatch batch;
@@ -67,6 +71,19 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+    public static void goToLobbyMenu() {
+        try {
+            GameClient client = new GameClient("127.0.0.1", 9999);
+            LobbyMenuController controller = new LobbyMenuController(client);
+            client.setLobbyMenuController(controller);
+            Main.getMain().setScreen(new LobbyMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+        } catch (IOException e) {
+            System.out.println("Failed to connect to lobby server: " + e.getMessage());
+        }
+    }
+
+
+
     public static void goToMainMenu() {
         Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
@@ -95,10 +112,6 @@ public class Main extends Game {
         Main.getMain().setScreen(new FarmHouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-    public static void goToFarmOverview(String description, ItemType itemType, GameView gameView) {
-        Main.getMain().setScreen(new FarmOverviewView(description, itemType, gameView));
-    }
-
     public static void goToGameMenu(GameView gameView) {
         Main.getMain().setScreen(new GameMenuView(gameView));
     }
@@ -113,10 +126,6 @@ public class Main extends Game {
 
     public static void goToRefrigeratorMenu(GameView gameView) {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
-    }
-
-    public static void goToAnimalMenu(FarmView farmView, Animal animal) {
-        Main.getMain().setScreen(new AnimalMenuView(farmView, animal));
     }
 
     public static void goToCheatWindow(GameView gameView, GameController controller) {

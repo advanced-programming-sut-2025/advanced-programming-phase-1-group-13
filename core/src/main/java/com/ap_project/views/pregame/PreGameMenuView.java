@@ -24,6 +24,7 @@ public class PreGameMenuView implements Screen {
     private final TextButton newGameButton;
     private final TextButton loadGameButton;
     private final TextButton backButton;
+    private final TextButton lobbyButton;
     private final Image savedGame;
     private final Label errorMessageLabel;
     private final Table table;
@@ -38,6 +39,7 @@ public class PreGameMenuView implements Screen {
         this.newGameButton = new TextButton("New Game", skin);
         this.loadGameButton = new TextButton("Load Game", skin);
         this.backButton = new TextButton("Back", skin);
+        this.lobbyButton = new TextButton("Lobby", skin);
 
         this.savedGame = new Image(GameAssetManager.getGameAssetManager().getSavedGame());
         savedGame.setPosition(
@@ -75,6 +77,7 @@ public class PreGameMenuView implements Screen {
         float buttonWidth = 425f;
         table.add(newGameButton).width(buttonWidth).padBottom(30).row();
         table.add(loadGameButton).width(buttonWidth).padBottom(30).row();
+        table.add(lobbyButton).width(buttonWidth).padBottom(30).row();
         table.add(backButton).width(buttonWidth).padBottom(30).row();
 
         table.padRight(500f);
@@ -171,5 +174,9 @@ public class PreGameMenuView implements Screen {
 
     public Label getErrorMessageLabel() {
         return errorMessageLabel;
+    }
+
+    public TextButton getLobbyButton() {
+        return lobbyButton;
     }
 }
