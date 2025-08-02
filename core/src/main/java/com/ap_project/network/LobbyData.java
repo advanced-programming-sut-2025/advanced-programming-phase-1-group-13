@@ -8,7 +8,7 @@ public class LobbyData {
     private final String lobbyName;
     private final String password;
     private final boolean isPrivate;
-    private final ClientHandler admin;
+    private  ClientHandler admin;
     private final List<ClientHandler> players = new ArrayList<>();
     private static final int MAX_CAPACITY = 4;
 
@@ -28,6 +28,10 @@ public class LobbyData {
         if (!players.contains(player) && !isFull()) {
             players.add(player);
         }
+    }
+
+    public void setAdmin(ClientHandler newAdmin) {
+        this.admin = newAdmin;
     }
 
     public void removePlayer(ClientHandler player) {
