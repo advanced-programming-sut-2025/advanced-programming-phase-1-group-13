@@ -204,7 +204,7 @@ public class FarmView extends GameView {
         super.keyDown(keycode);
 
         if (keycode == Input.Keys.H) {
-            goToFarmHouse();
+            goToFarmHouse(this);
         }
 
         if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
@@ -223,7 +223,7 @@ public class FarmView extends GameView {
         super.touchDown(screenX, screenY, pointer, button);
 
         if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
-            goToFarmHouse();
+            goToFarmHouse(this);
             return true;
         }
 
