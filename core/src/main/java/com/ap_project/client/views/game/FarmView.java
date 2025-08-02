@@ -36,9 +36,10 @@ public class FarmView extends GameView {
     private Texture feedingAnimationFrame;
     private float feedingAnimationTime;
     private Farm farm;
+    private Animal currentlyWalking = null;
     private Animation<Texture> animalAnimation;
     private float animalAnimationTimer = 0f;
-    private Texture currentFrame;
+    private Texture currentWalkingAnimalFrame;
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -85,13 +86,24 @@ public class FarmView extends GameView {
         this.feedingAnimationFrame = feedingAnimation.getKeyFrame(0);
 
         this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation("Cow", "Right"); // TODO
-        this.currentFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+        currentlyWalking = farm.getAllAnimals().get(0);
+        this.currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
+    }
+
+    @Override
+    public void render(float delta) {
+        super(delta);
+
+        animalAnimationTimer += delta;
+        currentWalkingAnimalFrame = animalAnimation.getKeyFrame(animalAnimationTimer, true);
     }
 
     @Override
     public void renderMap(float delta) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
+
+        draw(currentWalkingAnimalFrame, currentlyWalking);
 
         if (isPetting) {
             float tempScale = scale;
