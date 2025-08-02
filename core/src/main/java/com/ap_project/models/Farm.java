@@ -125,7 +125,7 @@ public class Farm {
             Position pos = availablePositions.get(i);
             Tile tile = getTileByPosition(pos);
             if (tile != null) {
-                TreeType treeType = TreeType.getRandomTreeType();
+                TreeType treeType = TreeType.getRandomForagingTreeType();
                 Tree tree = new Tree(treeType, tile, 5);
                 trees.add(tree);  // Add to trees list
                 tile.setType(TileType.TREE);
