@@ -18,7 +18,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.IOException;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
+ */
 public class Main extends Game {
     private static Main main;
     private static SpriteBatch batch;
@@ -74,7 +76,6 @@ public class Main extends Game {
             System.out.println("Failed to connect to lobby server: " + e.getMessage());
         }
     }
-
 
 
     public static void goToMainMenu() {

@@ -1,8 +1,9 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
+import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
-import com.ap_project.common.models.NPC;
+import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -11,7 +12,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -31,9 +31,8 @@ public class JournalView implements Screen, InputProcessor {
     private Image sliderTrack;
     private int currentIndex;
     private final GameView gameView;
-    private final List<Map.Entry<HashMap<?, Integer>, HashMap<?, Integer>>> quests;
+    private final List<HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>> quests;
     private final ArrayList<Label> questLabels = new ArrayList<>();
-    private final Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
     public JournalView(GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getJournal());
@@ -43,9 +42,13 @@ public class JournalView implements Screen, InputProcessor {
 
         this.slider = new Image(GameAssetManager.getGameAssetManager().getSlider());
         // adjust slider height based on total number of quests
-        HashMap<HashMap<?, Integer>, HashMap<?, Integer>> rawQuests =
-            gameView.getNpc().getType().getQuests();
-        this.quests = new ArrayList<>(rawQuests.entrySet());
+
+        this.quests = new ArrayList<>();
+        for (NPCType type : NPCType.values()) {
+            HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> rawQuests =
+                App.getCurrentGame().getNPCByName(type.getName()).getType().getQuests();
+            if (!rawQuests.isEmpty()) quests.add(rawQuests);
+        }
 
         this.currentIndex = 0;
 
@@ -98,15 +101,22 @@ public class JournalView implements Screen, InputProcessor {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
     }
 
     @Override
-    public boolean keyDown(int keycode) { return false; }
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
     @Override
-    public boolean keyUp(int keycode) { return false; }
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
     @Override
-    public boolean keyTyped(char character) { return false; }
+    public boolean keyTyped(char character) {
+        return false;
+    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -123,10 +133,27 @@ public class JournalView implements Screen, InputProcessor {
         }
         return false;
     }
-    @Override public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
-    @Override public boolean touchCancelled(int screenX, int screenY, int pointer, int button) { return false; }
-    @Override public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
-    @Override public boolean mouseMoved(int screenX, int screenY) { return false; }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
     @Override
     public boolean scrolled(float amountX, float amountY) {
         if (amountY > 0) changeIndex(1);
@@ -142,12 +169,12 @@ public class JournalView implements Screen, InputProcessor {
         if (quests.isEmpty()) return;
 
         // get current quest
-        Map.Entry<HashMap<?, Integer>, HashMap<?, Integer>> entry = quests.get(currentIndex);
-        HashMap<?, Integer> requests = entry.getKey();
-        HashMap<?, Integer> rewards = entry.getValue();
+        Map.Entry<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> entry = quests.get(0).entrySet().iterator().next();
+        HashMap<ItemType, Integer> requests = entry.getKey();
+        HashMap<ItemType, Integer> rewards = entry.getValue();
 
         // title label
-        Label title = new Label("Quest " + (currentIndex + 1), skin);
+        Label title = new Label("Quest " + (currentIndex + 1), GameAssetManager.getGameAssetManager().getSkin());
         title.setColor(Color.WHITE);
         title.setPosition(windowX + 20, windowY + window.getHeight() - 60);
         stage.addActor(title);
@@ -155,11 +182,11 @@ public class JournalView implements Screen, InputProcessor {
 
         // display requests
         int offsetY = 100;
-        for (Map.Entry<?, Integer> req : requests.entrySet()) {
+        for (Map.Entry<ItemType, Integer> req : requests.entrySet()) {
             Label reqLabel = new Label(
-                "Bring " + req.getValue() + "× " + req.getKey(), skin
+                "Bring x" + req.getValue() + req.getKey(), GameAssetManager.getGameAssetManager().getSkin()
             );
-            reqLabel.setColor(Color.YELLOW);
+            reqLabel.setColor(Color.BLACK);
             reqLabel.setPosition(windowX + 20, windowY + window.getHeight() - offsetY);
             stage.addActor(reqLabel);
             questLabels.add(reqLabel);
@@ -169,10 +196,11 @@ public class JournalView implements Screen, InputProcessor {
         // display rewards
         offsetY += 20;
         for (Map.Entry<?, Integer> rew : rewards.entrySet()) {
+            System.out.println("Reward: x" + rew.getValue() + rew.getKey());
             Label rewLabel = new Label(
-                "Reward: " + rew.getValue() + "× " + rew.getKey(), skin
+                "Reward: x" + rew.getValue() + rew.getKey(), GameAssetManager.getGameAssetManager().getSkin()
             );
-            rewLabel.setColor(Color.GREEN);
+            rewLabel.setColor(Color.BLACK);
             rewLabel.setPosition(windowX + 20, windowY + window.getHeight() - offsetY);
             stage.addActor(rewLabel);
             questLabels.add(rewLabel);
