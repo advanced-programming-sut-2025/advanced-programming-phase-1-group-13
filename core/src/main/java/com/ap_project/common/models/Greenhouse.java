@@ -60,7 +60,7 @@ public class Greenhouse {
         boolean hasEnoughResources = App.getLoggedIn().getWoodCount() >= requiredWood &&
                 App.getLoggedIn().getStoneCount() >= requiredStone;
 
-        boolean greenhouseExists = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getGreenhouse() != null;
+        boolean greenhouseExists = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getGreenhouse().canEnter;
 
         return hasEnoughResources && !greenhouseExists;
     }

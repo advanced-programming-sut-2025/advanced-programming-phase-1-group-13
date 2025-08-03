@@ -98,6 +98,16 @@ public class AnimalLivingSpaceMenuView implements Screen, InputProcessor {
             );
         }
 
+        if (animalLivingSpace.getAnimals().isEmpty()) {
+            Label noAnimals = new Label("No animals live in this " + animalLivingSpace.getFarmBuildingType().getName(), GameAssetManager.getGameAssetManager().getSkin());
+            noAnimals.setColor(Color.BLACK);
+            noAnimals.setPosition(
+                window.getX() + (window.getWidth() - noAnimals.getWidth()) / 2,
+                window.getY() + (window.getHeight() - noAnimals.getHeight()) / 2
+            );
+            stage.addActor(noAnimals);
+        }
+
         addCloseButton();
     }
 

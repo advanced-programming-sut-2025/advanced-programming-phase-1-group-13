@@ -33,8 +33,6 @@ public class Farm {
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
-        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.DELUXE_BARN, new Position(60, 10)));
-
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
         this.stones = new ArrayList<>();

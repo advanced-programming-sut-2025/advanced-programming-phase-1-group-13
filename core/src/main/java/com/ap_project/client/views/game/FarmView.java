@@ -265,10 +265,17 @@ public class FarmView extends GameView {
             return true;
         }
 
+        if (clickedOnTexture(screenX, screenY, greenhouseTexture, farm.getGreenhouse().getPosition(), 1f)) {
+            Result result = controller.buildGreenhouse();
+            if (result.success) greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
+            return true;
+        }
+
+
         for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
             FarmBuilding farmBuilding = farm.getFarmBuildings().get(i);
             Position farmBuildingPosition = new Position(farmBuilding.getPositionOfUpperLeftCorner());
-            if (clickedOnTexture(screenX, screenY, animalsTextures.get(i), farmBuildingPosition, scale)) {
+            if (clickedOnTexture(screenX, screenY, farmBuildingsTextures.get(i), farmBuildingPosition, scale)) {
                 if (farmBuilding.getFarmBuildingType().getCapacity() != 0) {
                     AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
                     goToAnimalLivingSpaceMenu(this, animalLivingSpace);
@@ -296,7 +303,8 @@ public class FarmView extends GameView {
         setInsideWhenReachingDestination = goingInside;
         animalAnimationTimer = 0;
         walkingAnimal = animal;
-        if (animalDestination.x >= walkingAnimal.getPosition().getX() * TILE_SIZE) walkingAnimalDirection = Direction.RIGHT;
+        if (animalDestination.x >= walkingAnimal.getPosition().getX() * TILE_SIZE)
+            walkingAnimalDirection = Direction.RIGHT;
         else walkingAnimalDirection = Direction.LEFT;
         this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
         walkingAnimalPosition = new Vector2(
