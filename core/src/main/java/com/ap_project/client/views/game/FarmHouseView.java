@@ -15,7 +15,6 @@ public class FarmHouseView extends GameView {
 
     @Override
     public void renderGameWorld(float delta) {
-        scale = 0.5f;
         super.renderGameWorld(delta);
     }
 

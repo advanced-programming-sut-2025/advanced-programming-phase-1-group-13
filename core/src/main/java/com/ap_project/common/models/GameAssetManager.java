@@ -320,7 +320,7 @@ public class GameAssetManager {
     }
 
     public Texture getAnimal(AnimalType animalType) {
-        return new Texture(Gdx.files.internal("Images/Animal/" + animalType.getName() + ".png"));
+        return new Texture(Gdx.files.internal("Images/Animal/Idle/" + animalType.getName() + ".png"));
     }
 
     public Animation<Texture> getPettingAnimation() {
@@ -347,6 +347,10 @@ public class GameAssetManager {
 
     public Texture getFarmBuilding(FarmBuildingType farmBuildingType) {
         return new Texture(Gdx.files.internal("Images/FarmBuilding/" + toPascalCase(farmBuildingType.getName()) + ".png"));
+    }
+
+    public Texture getAnimalLivingSpaceMenu() {
+        return new Texture("Images/FarmBuilding/AnimalLivingSpaceMenu.png");
     }
 
     public Texture getCircle() {

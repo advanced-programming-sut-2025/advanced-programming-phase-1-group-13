@@ -49,6 +49,7 @@ public class FarmView extends GameView {
     private Vector2 animalDestination;
     private Position animalDestinationPosition;
     private boolean isAnimalWalking;
+    private boolean setInsideWhenReachingDestination;
 
     private Farm farm;
 
@@ -113,10 +114,6 @@ public class FarmView extends GameView {
     public void renderMap(float delta) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
-
-        if (isAnimalWalking) {
-            draw(currentWalkingAnimalFrame, walkingAnimalPosition);
-        }
 
         moveAnimal();
 
@@ -186,24 +183,29 @@ public class FarmView extends GameView {
                 draw(woodTexture, position);
             }
 
-            scale = 2;
-            for (int i = 0; i < farm.getTrees().size(); i++) {
-                Position position = farm.getTrees().get(i).getPosition();
-                draw(treesTextures.get(i), position);
+            scale = 1.4f;
+            for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
+                Animal animal = farm.getAllFarmAnimals().get(i);
+                Position position = animal.getPosition();
+                if (animal.equals(walkingAnimal) && isAnimalWalking) continue;
+                if (animal.isOutside()) draw(animalsTextures.get(i), position);
             }
 
             scale = 4.400316f;
+            if (isAnimalWalking) {
+                draw(currentWalkingAnimalFrame, walkingAnimalPosition);
+            }
+
             for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
                 Position position = new Position(farm.getFarmBuildings().get(i).getPositionOfUpperLeftCorner());
                 position.setY(position.getY() + farm.getFarmBuildings().get(i).getLength());
                 draw(farmBuildingsTextures.get(i), position);
             }
 
-            scale = 1.25f;
-            for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
-                Position position = farm.getAllFarmAnimals().get(i).getPosition();
-                if (farm.getAllFarmAnimals().get(i).equals(walkingAnimal) && isAnimalWalking) continue;
-                draw(animalsTextures.get(i), position);
+            scale = 2;
+            for (int i = 0; i < farm.getTrees().size(); i++) {
+                Position position = farm.getTrees().get(i).getPosition();
+                draw(treesTextures.get(i), position);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -247,13 +249,6 @@ public class FarmView extends GameView {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
-
-
-        if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
-            goToFarmHouse(this);
-            return true;
-        }
-
         if (button == Input.Buttons.RIGHT) {
             for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
                 Animal animal = farm.getAllFarmAnimals().get(i);
@@ -262,6 +257,23 @@ public class FarmView extends GameView {
                     goToAnimalMenu(this, animal);
                     return true;
                 }
+            }
+        }
+
+        if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
+            goToFarmHouse(this);
+            return true;
+        }
+
+        for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
+            FarmBuilding farmBuilding = farm.getFarmBuildings().get(i);
+            Position farmBuildingPosition = new Position(farmBuilding.getPositionOfUpperLeftCorner());
+            if (clickedOnTexture(screenX, screenY, animalsTextures.get(i), farmBuildingPosition, scale)) {
+                if (farmBuilding.getFarmBuildingType().getCapacity() != 0) {
+                    AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
+                    goToAnimalLivingSpaceMenu(this, animalLivingSpace);
+                }
+                return true;
             }
         }
         return false;
@@ -279,11 +291,12 @@ public class FarmView extends GameView {
         feedingAnimationTime = 0;
     }
 
-    public void startWalkingAnimation(Animal animal) {
+    public void startWalkingAnimation(Animal animal, boolean goingInside) {
         isAnimalWalking = true;
+        setInsideWhenReachingDestination = goingInside;
         animalAnimationTimer = 0;
         walkingAnimal = animal;
-        if (animalDestination.x > walkingAnimal.getPosition().getX()) walkingAnimalDirection = Direction.RIGHT;
+        if (animalDestination.x >= walkingAnimal.getPosition().getX() * TILE_SIZE) walkingAnimalDirection = Direction.RIGHT;
         else walkingAnimalDirection = Direction.LEFT;
         this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
         walkingAnimalPosition = new Vector2(
@@ -306,23 +319,17 @@ public class FarmView extends GameView {
         if (walkingAnimalDirection == Direction.RIGHT) {
             walkingAnimalPosition.x += displacement;
             if (animalDestination.x <= walkingAnimalPosition.x) {
-                if (animalDestination.y > walkingAnimalPosition.y) {
-                    walkingAnimalDirection = Direction.DOWN;
-                    
-                        animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
-
-                } else walkingAnimalDirection = Direction.UP;
+                if (animalDestination.y > walkingAnimalPosition.y) walkingAnimalDirection = Direction.DOWN;
+                else walkingAnimalDirection = Direction.UP;
+                animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
             }
         }
         if (walkingAnimalDirection == Direction.LEFT) {
             walkingAnimalPosition.x -= displacement;
-            if (animalDestination.x <= walkingAnimalPosition.x) {
-                if (animalDestination.y > walkingAnimalPosition.y) {
-                    walkingAnimalDirection = Direction.DOWN;
-
-                        animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
-
-                } else walkingAnimalDirection = Direction.UP;
+            if (animalDestination.x >= walkingAnimalPosition.x) {
+                if (animalDestination.y > walkingAnimalPosition.y) walkingAnimalDirection = Direction.DOWN;
+                else walkingAnimalDirection = Direction.UP;
+                animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
             }
         }
         if (walkingAnimalDirection == Direction.UP) {
@@ -330,6 +337,7 @@ public class FarmView extends GameView {
             if (animalDestination.y >= walkingAnimalPosition.y) {
                 walkingAnimal.setPosition(animalDestinationPosition);
                 isAnimalWalking = false;
+                if (setInsideWhenReachingDestination) walkingAnimal.setOutside(false);
             }
         }
         if (walkingAnimalDirection == Direction.DOWN) {
@@ -337,6 +345,7 @@ public class FarmView extends GameView {
             if (animalDestination.y <= walkingAnimalPosition.y) {
                 walkingAnimal.setPosition(animalDestinationPosition);
                 isAnimalWalking = false;
+                if (setInsideWhenReachingDestination) walkingAnimal.setOutside(false);
             }
         }
     }

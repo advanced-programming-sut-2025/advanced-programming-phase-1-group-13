@@ -3,10 +3,7 @@ package com.ap_project.common.models;
 import com.ap_project.common.models.enums.types.*;
 import com.ap_project.common.models.farming.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Farm {
     private final ArrayList<Tile> farmTiles;
@@ -35,23 +32,8 @@ public class Farm {
         this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
-
         this.farmBuildings = new ArrayList<>();
-        // TODO: remove later
-        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.BARN, new Position(60, 10)));
-        AnimalLivingSpace barn = (AnimalLivingSpace) farmBuildings.get(0);
-        barn.addAnimal(new Animal("Gav", AnimalType.COW, barn));
-        barn.addAnimal(new Animal("Morgh", AnimalType.CHICKEN, barn));
-        barn.addAnimal(new Animal("Khook", AnimalType.PIG, barn));
-        barn.addAnimal(new Animal("Goosfand", AnimalType.SHEEP, barn));
-        barn.addAnimal(new Animal("Ordak", AnimalType.DUCK, barn));
-        barn.addAnimal(new Animal("Boz", AnimalType.GOAT, barn));
-        barn.addAnimal(new Animal("Khargoosh", AnimalType.RABBIT, barn));
-        barn.addAnimal(new Animal("Dino", AnimalType.DINOSAUR, barn));
-        for (Animal animal : barn.getAnimals()) {
-            animal.setOutside(true);
-            animal.setPosition(new Position(random.nextInt(10) + 60, random.nextInt(10) + 15));
-        }
+        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.DELUXE_BARN, new Position(60, 10)));
 
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
@@ -132,6 +114,12 @@ public class Farm {
                 tile.pLaceItemOnTile(tree);
             }
         }
+        Collections.sort(trees, new Comparator<Tree>() {
+            @Override
+            public int compare(Tree t1, Tree t2) {
+                return Double.compare(t1.getPosition().getY(), t2.getPosition().getY());
+            }
+        });
 
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
         for (int i = 0; i < stoneCount; i++) {

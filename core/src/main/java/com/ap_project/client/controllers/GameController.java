@@ -1272,7 +1272,6 @@ public class GameController {
         return shepherdAnimal(animalName, Position.getPositionByStrings(xString, yString));
     }
 
-
     public Result shepherdAnimal(String animalName, Position newPosition) {
         if (newPosition == null) {
             return new Result(false, "Enter two valid numbers for x and y.");

@@ -77,7 +77,6 @@ public class Main extends Game {
         }
     }
 
-
     public static void goToMainMenu() {
         Main.getMain().setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
@@ -128,6 +127,10 @@ public class Main extends Game {
 
     public static void goToAnimalMenu(FarmView farmView, Animal animal) {
         Main.getMain().setScreen(new AnimalMenuView(farmView, animal));
+    }
+
+    public static void goToAnimalLivingSpaceMenu(FarmView farmView, AnimalLivingSpace animalLivingSpace) {
+        Main.getMain().setScreen(new AnimalLivingSpaceMenuView(farmView, animalLivingSpace));
     }
 
     public static void goToBuyAnimalsMenu(FarmView farmView) {
