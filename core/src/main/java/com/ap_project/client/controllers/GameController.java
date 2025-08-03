@@ -1176,7 +1176,7 @@ public class GameController {
 
         AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
         if (animalType == null) {
-            return new Result(false, "Animal not found.");
+            return new Result(false, "Animal not found: " + animalTypeStr);
         }
 
         User player = App.getLoggedIn();

@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static com.ap_project.Main.*;
 
@@ -309,11 +308,9 @@ public class FarmView extends GameView {
             if (animalDestination.x <= walkingAnimalPosition.x) {
                 if (animalDestination.y > walkingAnimalPosition.y) {
                     walkingAnimalDirection = Direction.DOWN;
-                    try {
+                    
                         animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+
                 } else walkingAnimalDirection = Direction.UP;
             }
         }
@@ -322,12 +319,9 @@ public class FarmView extends GameView {
             if (animalDestination.x <= walkingAnimalPosition.x) {
                 if (animalDestination.y > walkingAnimalPosition.y) {
                     walkingAnimalDirection = Direction.DOWN;
-                    try {
+
                         animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        e.printStackTrace();
-                    }
+
                 } else walkingAnimalDirection = Direction.UP;
             }
         }
