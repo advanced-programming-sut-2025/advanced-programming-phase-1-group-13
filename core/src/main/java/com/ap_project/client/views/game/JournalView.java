@@ -174,7 +174,30 @@ public class JournalView implements Screen, InputProcessor {
                 windowY + 474 - 90 * (i % 6)
             );
             stage.addActor(quest);
+
+            Image status = getStatus(App.getCurrentGame().getQuestById(currentIndex + i + 1));
+            status.setPosition(
+                windowX + 740,
+                quest.getY() + 18
+            );
+            stage.addActor(status);
         }
+    }
+
+    public Image getStatus(Quest quest) {
+        if (!quest.isUnlocked(App.getLoggedIn())) {
+            return new Image(GameAssetManager.getGameAssetManager().getLock());
+        }
+
+        if (!quest.isFinished()) {
+            return new Image(GameAssetManager.getGameAssetManager().getUncheckedBox());
+        }
+
+        if (quest.getFinisher().equals(App.getLoggedIn())) {
+            return new Image(GameAssetManager.getGameAssetManager().getCheckedBox());
+        }
+
+        return new Image(GameAssetManager.getGameAssetManager().getRedCheckedBox());
     }
 
     private void updateScrollSlider() {
