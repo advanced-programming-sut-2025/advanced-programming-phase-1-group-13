@@ -4,11 +4,13 @@ import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.AnimalType;
+import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.FarmBuildingType;
 import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -61,6 +63,8 @@ public class FarmOverviewView implements Screen, InputProcessor {
         this.itemType = itemType;
         if (itemType instanceof FarmBuildingType) {
             this.itemImage = new Image(GameAssetManager.getGameAssetManager().getFarmBuilding((FarmBuildingType) itemType));
+        } else if (itemType instanceof CraftType) {
+            this.itemImage = new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(itemType.getName()));
         } else {
             this.itemImage = new Image(); // TODO
         }
@@ -141,6 +145,14 @@ public class FarmOverviewView implements Screen, InputProcessor {
             addImage(animalsImages.get(i), position, 0.3f);
         }
 
+        // todo: hmm
+        for (CraftType craftType : farm.getCraftsInFarm().keySet()) {
+            addImage(
+                new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(craftType.getName())),
+                farm.getCraftsInFarm().get(craftType),
+                0.3f);
+        }
+
         stage.addActor(positionLabel);
         stage.addActor(errorMessageLabel);
     }
@@ -174,6 +186,10 @@ public class FarmOverviewView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.ESCAPE) {
+            Main.getMain().setScreen(gameView);
+            return true;
+        }
         return false;
     }
 
@@ -205,8 +221,14 @@ public class FarmOverviewView implements Screen, InputProcessor {
         if (itemType instanceof FarmBuildingType) {
             FarmBuildingType farmBuildingType = (FarmBuildingType) itemType;
             result = controller.build(farmBuildingType.getName(), position);
-        }
+        } else if (itemType instanceof CraftType) {
+            CraftType craftType = (CraftType) itemType;
+//            result = controller.craft(craftType.getName()); todo
+            result = new Result(true, "");
 
+            farm.addCraftToFarm(craftType, position);
+
+        }
         if (!result.success) {
             errorMessageLabel.setText(result.message);
         } else {

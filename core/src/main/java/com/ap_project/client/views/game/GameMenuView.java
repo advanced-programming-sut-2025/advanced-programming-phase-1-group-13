@@ -4,6 +4,7 @@ import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Skill;
+import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.GameMenuType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -38,6 +39,8 @@ public class GameMenuView implements Screen, InputProcessor {
     private int socialMenuPageIndex;
     private final Image closeButton;
     private final GameView gameView;
+    private final Label errorMessageLabel;
+
 
     public GameMenuView(GameView gameView) {
         Image blackScreen = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -63,6 +66,9 @@ public class GameMenuView implements Screen, InputProcessor {
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
         this.gameView = gameView;
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        this.errorMessageLabel.setColor(Color.RED);
+        this.errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
     }
 
     @Override
@@ -135,6 +141,8 @@ public class GameMenuView implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         float convertedY = Gdx.graphics.getHeight() - screenY;
+//        errorMessageLabel.remove();
+        errorMessageLabel.setText("");
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
             Main.getMain().setScreen(gameView);
@@ -293,6 +301,52 @@ public class GameMenuView implements Screen, InputProcessor {
                     errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
                     errorMessageLabel.setText("Only the creator of the game can exit it.");
                     stage.addActor(errorMessageLabel);
+                }
+            }
+        }
+
+        if (currentTab == GameMenuType.CRAFTING) {
+            String[] craftingItemNames = createCraftingItemsNamesList();
+
+            float startX = windowX + 50;
+            float startY = windowY + window.getHeight() - 190;
+            float xSpacing = 30;
+            float ySpacing = 50;
+            int itemsPerRow = 10;
+            float currentX = startX;
+            float currentY = startY;
+
+            for (int i = 0; i < craftingItemNames.length; i++) {
+                String itemName = craftingItemNames[i];
+                if (itemName.contains("Locked")) {
+                    errorMessageLabel.setText("You have not learnt the recipe yet!");
+                } else {
+                    Image itemImage = new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(itemName));
+                    itemImage.setPosition(currentX, currentY);
+
+                    if (hoverOnImage(itemImage, screenX, convertedY)) {
+                        String craftName = itemName.replace("Locked", "");
+                        CraftType craftType = CraftType.getCraftByName(craftName);
+
+                        if (craftType != null) {
+                            // Result result = GameController.canCraft(craftType);
+                            Result result = new Result(true, "");
+
+                            if (result.success) {
+                                Main.goToFarmOverview("Choose a spot to place your " + craftName, craftType, gameView);
+                                return true;
+                            } else {
+                                errorMessageLabel.setText(result.message);
+                                return true;
+                            }
+                        }
+                    }
+
+                    currentX += itemImage.getWidth() + xSpacing;
+                    if ((i + 1) % itemsPerRow == 0) {
+                        currentX = startX;
+                        currentY -= itemImage.getHeight() + ySpacing;
+                    }
                 }
             }
         }
@@ -696,24 +750,7 @@ public class GameMenuView implements Screen, InputProcessor {
     public void showCraftingMenu() {
         updateWindow();
         addCloseButton();
-        String[] craftingItemNames = {
-            "BeeHouse", "Bomb", "CharcoalKiln", "CheesePress", "CherryBomb",
-            "FishSmoker", "Furnace", "GrassStarter", "Scarecrow",
-            "DeluxeScarecrow", "Sprinkler", "QualitySprinkler", "IridiumSprinkler",
-            "Keg", "Loom", "MayonnaiseMachine", "MegaBomb", "MysticTreeSeed", "OilMaker", "PreservesJar"
-        };
-
-        ArrayList<CraftRecipe> learntRecipes = App.getLoggedIn().getLearntCraftRecipes();
-        ArrayList<String> learntRecipesNamesPascalCase = new ArrayList<>();
-        for (CraftRecipe cr : learntRecipes) {
-            learntRecipesNamesPascalCase.add(toPascalCase(cr.getName()));
-        }
-
-        for (int i = 0; i < craftingItemNames.length; i++) {
-            if (!learntRecipesNamesPascalCase.contains(craftingItemNames[i])) {
-                craftingItemNames[i] = craftingItemNames[i] + "Locked";
-            }
-        }
+        String[] craftingItemNames = createCraftingItemsNamesList();
 
         float startX = windowX + 50;
         float startY = windowY + window.getHeight() - 190;
@@ -741,6 +778,28 @@ public class GameMenuView implements Screen, InputProcessor {
         }
 
         addItemsToInventory(-320);
+    }
+
+    private static String[] createCraftingItemsNamesList() {
+        String[] craftingItemNames = {
+            "BeeHouse", "Bomb", "CharcoalKiln", "CheesePress", "CherryBomb",
+            "FishSmoker", "Furnace", "GrassStarter", "Scarecrow",
+            "DeluxeScarecrow", "Sprinkler", "QualitySprinkler", "IridiumSprinkler",
+            "Keg", "Loom", "MayonnaiseMachine", "MegaBomb", "MysticTreeSeed", "OilMaker", "PreservesJar"
+        };
+
+        ArrayList<CraftRecipe> learntRecipes = App.getLoggedIn().getLearntCraftRecipes();
+        ArrayList<String> learntRecipesNamesPascalCase = new ArrayList<>();
+        for (CraftRecipe cr : learntRecipes) {
+            learntRecipesNamesPascalCase.add(toPascalCase(cr.getName()));
+        }
+
+        for (int i = 0; i < craftingItemNames.length; i++) {
+            if (!learntRecipesNamesPascalCase.contains(craftingItemNames[i])) {
+                craftingItemNames[i] = craftingItemNames[i] + "Locked";
+            }
+        }
+        return craftingItemNames;
     }
 
     public void forceTerminateGame() {

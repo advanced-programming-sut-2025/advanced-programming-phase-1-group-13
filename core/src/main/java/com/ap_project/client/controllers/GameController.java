@@ -523,6 +523,7 @@ public class GameController {
         return inventory.getItems().get(specificItem) >= requiredAmount;
     }
 
+
     public Result eat(String foodName) {
         FoodType foodType = FoodType.getFoodTypeByName(foodName);
         Food food = new Food(foodType);
@@ -552,25 +553,34 @@ public class GameController {
         return new Result(true, message);
     }
 
-    private Result canCraftResult(CraftType craftType) {
-        CraftRecipe recipe = new CraftRecipe(craftType);
-        User player = App.getLoggedIn();
-        if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
-            return new Result(false, "Your backpack is full.");
-        } else if (player.getLearntCraftRecipes() == null ||
-            player.getLearntCraftRecipes().isEmpty() ||
-            !player.getLearntCraftRecipes().contains(recipe)) {
-            return new Result(false, "You should learn the recipe first.");
-        }
-        HashMap<IngredientType, Integer> neededIngredients = craftType.getIngredients();
-        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
-            IngredientType ingredientType = entry.getKey();
-            int requiredAmount = entry.getValue();
+    public static Result canCraft(CraftType craftType) {
 
-            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
-                return new Result(false, "You don't have enough " + ingredientType.getName());
-            }
-        }
+        return new GameController().canCraftResult(craftType);
+    }
+
+    private Result canCraftResult(CraftType craftType) {
+        // todo: fix later
+//        CraftRecipe recipe = new CraftRecipe(craftType);
+//        User player = App.getLoggedIn();
+//        if (player.getBackpack().getCapacity() <= player.getBackpack().getItems().size()) {
+//            return new Result(false, "Your backpack is full.");
+//        } else if (player.getLearntCraftRecipes() == null) {
+//            return new Result(false, "Learnt Craft Recipes is NULL");
+//        } else if (player.getLearntCraftRecipes().isEmpty()) {
+//            return new Result(false, "Learnt Craft Recipes is EMPTY");
+//        } else if (
+//            !player.getLearntCraftRecipes().contains(recipe)) {
+//            return new Result(false, "You should learn the recipe first.");
+//        }
+//        HashMap<IngredientType, Integer> neededIngredients = craftType.getIngredients();
+//        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
+//            IngredientType ingredientType = entry.getKey();
+//            int requiredAmount = entry.getValue();
+//
+//            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
+//                return new Result(false, "You don't have enough " + ingredientType.getName());
+//            }
+//        }
         return new Result(true, "");
     }
 

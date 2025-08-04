@@ -5,6 +5,7 @@ import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.types.AnimalType;
+import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.FarmBuildingType;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.ap_project.Main.*;
 
@@ -27,6 +29,7 @@ public class FarmView extends GameView {
     private final Texture woodTexture;
     private final ArrayList<Texture> treesTextures;
     private final ArrayList<Texture> farmBuildingsTextures;
+    private final HashMap<CraftType, Texture> craftsInFarmTextures;
     private final ArrayList<Texture> animalsTextures;
 
     private final Animation<Texture> pettingAnimation;
@@ -80,6 +83,12 @@ public class FarmView extends GameView {
         this.farmBuildingsTextures = new ArrayList<>();
         for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
             farmBuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
+        }
+
+        this.craftsInFarmTextures = new HashMap<>();
+        for (CraftType craftType : farm.getCraftsInFarm().keySet()) {
+            craftsInFarmTextures.put(craftType,
+                GameAssetManager.getGameAssetManager().getCraftingItemTexture(craftType.getName()));
         }
 
         this.animalsTextures = new ArrayList<>();
@@ -202,6 +211,12 @@ public class FarmView extends GameView {
                 draw(farmBuildingsTextures.get(i), position);
             }
 
+            // todo: wtf.
+            scale = 0.9f;
+            for (CraftType craftType : craftsInFarmTextures.keySet()) {
+                draw(craftsInFarmTextures.get(craftType), farm.getCraftsInFarm().get(craftType));
+            }
+
             scale = 2;
             for (int i = 0; i < farm.getTrees().size(); i++) {
                 Position position = farm.getTrees().get(i).getPosition();
@@ -267,7 +282,8 @@ public class FarmView extends GameView {
 
         if (clickedOnTexture(screenX, screenY, greenhouseTexture, farm.getGreenhouse().getPosition(), scale)) {
             Result result = controller.buildGreenhouse();
-            if (result.success) greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
+            if (result.success)
+                greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
             return true;
         }
 

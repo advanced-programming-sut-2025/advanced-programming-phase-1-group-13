@@ -25,6 +25,7 @@ public class Farm {
     private final ArrayList<ForagingCrop> foragingCrops;
     private final transient Random random;
     private ArrayList<Tile> allTiles;
+    private HashMap<CraftType, Position> craftsInFarm;
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
@@ -33,6 +34,7 @@ public class Farm {
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
+        this.craftsInFarm = new HashMap<>();
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
         this.stones = new ArrayList<>();
@@ -550,5 +552,13 @@ public class Farm {
             }
         }
         return null;
+    }
+
+    public HashMap<CraftType, Position> getCraftsInFarm() {
+        return craftsInFarm;
+    }
+
+    public void addCraftToFarm(CraftType craftType, Position position) {
+        this.craftsInFarm.put(craftType, position);
     }
 }
