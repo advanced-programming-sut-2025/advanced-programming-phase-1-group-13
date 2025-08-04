@@ -24,13 +24,13 @@ public class FarmView extends GameView {
     private final Texture cabinTexture;
     private Texture lakeTexture;
     private Texture greenhouseTexture;
-    private final ArrayList<Texture> foragingCropsTextures;
-    private final Texture stoneTexture;
-    private final Texture woodTexture;
-    private final ArrayList<Texture> treesTextures;
-    private final ArrayList<Texture> farmBuildingsTextures;
-    private final HashMap<CraftType, Texture> craftsInFarmTextures;
-    private final ArrayList<Texture> animalsTextures;
+    private ArrayList<Texture> foragingCropsTextures;
+    private Texture stoneTexture;
+    private Texture woodTexture;
+    private ArrayList<Texture> treesTextures;
+    private ArrayList<Texture> farmBuildingsTextures;
+    private HashMap<CraftType, Texture> craftsInFarmTextures;
+    private ArrayList<Texture> animalsTextures;
 
     private final Animation<Texture> pettingAnimation;
     private boolean isPetting;
@@ -66,35 +66,7 @@ public class FarmView extends GameView {
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
 
-        this.foragingCropsTextures = new ArrayList<>();
-        for (ForagingCrop foragingCrop : farm.getForagingCrops()) {
-            foragingCropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByForagingCrop(foragingCrop));
-        }
-
-        this.stoneTexture = GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(null));
-
-        this.woodTexture = GameAssetManager.getGameAssetManager().getWood();
-
-        this.treesTextures = new ArrayList<>();
-        for (Tree tree : farm.getTrees()) {
-            treesTextures.add(GameAssetManager.getGameAssetManager().getTextureByTree(tree));
-        }
-
-        this.farmBuildingsTextures = new ArrayList<>();
-        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
-            farmBuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
-        }
-
-        this.craftsInFarmTextures = new HashMap<>();
-        for (CraftType craftType : farm.getCraftsInFarm().keySet()) {
-            craftsInFarmTextures.put(craftType,
-                GameAssetManager.getGameAssetManager().getCraftingItemTexture(craftType.getName()));
-        }
-
-        this.animalsTextures = new ArrayList<>();
-        for (Animal animal : farm.getAllFarmAnimals()) {
-            animalsTextures.add(GameAssetManager.getGameAssetManager().getAnimal(animal.getAnimalType()));
-        }
+        updateTextures();
 
         this.pettingAnimation = GameAssetManager.getGameAssetManager().getPettingAnimation();
         this.animalBeingPet = null;
@@ -212,7 +184,7 @@ public class FarmView extends GameView {
             }
 
             // todo: wtf.
-            scale = 0.9f;
+            scale = 1.5f;
             for (CraftType craftType : craftsInFarmTextures.keySet()) {
                 draw(craftsInFarmTextures.get(craftType), farm.getCraftsInFarm().get(craftType));
             }
@@ -379,5 +351,37 @@ public class FarmView extends GameView {
         animalDestination.x *= TILE_SIZE;
         animalDestination.y *= TILE_SIZE;
         this.animalDestinationPosition = position;
+    }
+
+    public void updateTextures() {
+        this.foragingCropsTextures = new ArrayList<>();
+        for (ForagingCrop foragingCrop : farm.getForagingCrops()) {
+            foragingCropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByForagingCrop(foragingCrop));
+        }
+
+        this.stoneTexture = GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(null));
+
+        this.woodTexture = GameAssetManager.getGameAssetManager().getWood();
+
+        this.treesTextures = new ArrayList<>();
+        for (Tree tree : farm.getTrees()) {
+            treesTextures.add(GameAssetManager.getGameAssetManager().getTextureByTree(tree));
+        }
+
+        this.farmBuildingsTextures = new ArrayList<>();
+        for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
+            farmBuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
+        }
+
+        this.craftsInFarmTextures = new HashMap<>();
+        for (CraftType craftType : farm.getCraftsInFarm().keySet()) {
+            craftsInFarmTextures.put(craftType,
+                GameAssetManager.getGameAssetManager().getCraftingItemTexture(craftType.getName()));
+        }
+
+        this.animalsTextures = new ArrayList<>();
+        for (Animal animal : farm.getAllFarmAnimals()) {
+            animalsTextures.add(GameAssetManager.getGameAssetManager().getAnimal(animal.getAnimalType()));
+        }
     }
 }

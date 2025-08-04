@@ -8,10 +8,18 @@ import java.util.HashMap;
 public class Craft extends Item {
     private final CraftType craftType;
     private final String name;
+    private final Position position;
 
-    public Craft(CraftType craftType) {
+    public Craft(CraftType craftType) { // TODO: remove later
         this.craftType = craftType;
         this.name = craftType.getName();
+        this.position = new Position();
+    }
+
+    public Craft(CraftType craftType, Position position) {
+        this.craftType = craftType;
+        this.name = craftType.getName();
+        this.position = position;
     }
 
     public HashMap<IngredientType, Integer> ingredients() {

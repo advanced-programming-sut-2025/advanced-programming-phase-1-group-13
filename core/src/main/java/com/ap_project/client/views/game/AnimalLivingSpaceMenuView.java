@@ -165,6 +165,7 @@ public class AnimalLivingSpaceMenuView implements Screen, InputProcessor {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
+            farmView.updateTextures();
             Main.getMain().setScreen(farmView);
             return true;
         }
@@ -186,6 +187,7 @@ public class AnimalLivingSpaceMenuView implements Screen, InputProcessor {
                         animal.setPosition(previousPosition);
                         animal.setOutside(true);
                         farmView.startWalkingAnimation(animal, false);
+                        farmView.updateTextures();
                         Main.getMain().setScreen(farmView);
                     }
                 }

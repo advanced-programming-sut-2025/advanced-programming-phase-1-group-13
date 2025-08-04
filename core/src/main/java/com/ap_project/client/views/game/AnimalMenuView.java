@@ -109,6 +109,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
                     animal.setPosition(previousPosition);
                     errorMessageLabel.setText("");
                     farmView.startWalkingAnimation(animal, false);
+                    farmView.updateTextures();
                     Main.getMain().setScreen(farmView);
                 }
 
@@ -167,6 +168,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
+            farmView.updateTextures();
             Main.getMain().setScreen(farmView);
             return true;
         }
@@ -243,6 +245,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
                 farmView.setAnimalDestination(new Vector2(newPosition.getX(), newPosition.getY()), newPosition);
                 animal.setPosition(previousPosition);
                 farmView.startWalkingAnimation(animal, true);
+                farmView.updateTextures();
                 Main.getMain().setScreen(farmView);
             }
         }
@@ -263,6 +266,7 @@ public class AnimalMenuView implements Screen, InputProcessor {
         if (!result.success) {
             errorMessageLabel.setText(result.message);
         } else {
+            farmView.updateTextures();
             Main.getMain().setScreen(farmView);
         }
 

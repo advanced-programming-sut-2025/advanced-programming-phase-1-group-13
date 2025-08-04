@@ -156,6 +156,10 @@ public class BuyAnimalsMenuView implements Screen, InputProcessor {
             windowY + window.getHeight() - 390
         );
         if (hoverOnImage(closeButton, screenX, convertedY)) {
+            if (gameView instanceof FarmView) {
+                FarmView farmView = (FarmView) gameView;
+                farmView.updateTextures();
+            }
             Main.getMain().setScreen(gameView);
             return true;
         }

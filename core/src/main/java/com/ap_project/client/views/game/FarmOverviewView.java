@@ -3,7 +3,6 @@ package com.ap_project.client.views.game;
 import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
-import com.ap_project.common.models.enums.types.AnimalType;
 import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.FarmBuildingType;
 import com.ap_project.common.models.enums.types.ItemType;
@@ -187,6 +186,10 @@ public class FarmOverviewView implements Screen, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.ESCAPE) {
+            if (gameView instanceof FarmView) {
+                FarmView farmView = (FarmView) gameView;
+                farmView.updateTextures();
+            }
             Main.getMain().setScreen(gameView);
             return true;
         }
@@ -232,6 +235,10 @@ public class FarmOverviewView implements Screen, InputProcessor {
         if (!result.success) {
             errorMessageLabel.setText(result.message);
         } else {
+            if (gameView instanceof FarmView) {
+                FarmView farmView = (FarmView) gameView;
+                farmView.updateTextures();
+            }
             Main.getMain().setScreen(gameView);
         }
 
@@ -255,9 +262,10 @@ public class FarmOverviewView implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        if (itemType instanceof CraftType) itemImage.setScale(0.3f);
         itemImage.setPosition(
             screenX,
-            Gdx.graphics.getHeight() - screenY - itemImage.getHeight()
+            Gdx.graphics.getHeight() - screenY - itemImage.getHeight() * itemImage.getScaleY()
         );
         stage.addActor(itemImage);
         return false;

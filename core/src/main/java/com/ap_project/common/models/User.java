@@ -543,6 +543,15 @@ public class User {
         return false;
     }
 
+    public boolean hasLearntCraftRecipe(CraftType craftType) {
+        for (CraftRecipe craftRecipe : learntCraftRecipes) {
+            if (craftRecipe.getCraftType() == craftType) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Map<SecurityQuestion, String> getQAndA() {
         return qAndA;
     }

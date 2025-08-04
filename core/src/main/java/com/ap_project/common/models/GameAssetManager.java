@@ -451,7 +451,7 @@ public class GameAssetManager {
     }
 
     public Texture getCraftingItemTexture(String itemName) {
-        itemName = toPascalCase(itemName);
+        itemName = itemName.replaceAll(" ", "");
         String path = "Images/Craft/" + itemName + ".png";
         return new Texture(Gdx.files.internal(path));
     }

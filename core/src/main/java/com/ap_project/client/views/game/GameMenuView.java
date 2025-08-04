@@ -41,7 +41,6 @@ public class GameMenuView implements Screen, InputProcessor {
     private final GameView gameView;
     private final Label errorMessageLabel;
 
-
     public GameMenuView(GameView gameView) {
         Image blackScreen = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
         blackScreen.setColor(0, 0, 0, 0.2f);
@@ -75,6 +74,7 @@ public class GameMenuView implements Screen, InputProcessor {
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
+        stage.addActor(errorMessageLabel);
         updateWindow();
         showInventoryMenu();
         addCloseButton();
@@ -318,35 +318,28 @@ public class GameMenuView implements Screen, InputProcessor {
 
             for (int i = 0; i < craftingItemNames.length; i++) {
                 String itemName = craftingItemNames[i];
-                if (itemName.contains("Locked")) {
-                    errorMessageLabel.setText("You have not learnt the recipe yet!");
-                } else {
-                    Image itemImage = new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(itemName));
-                    itemImage.setPosition(currentX, currentY);
+                Image itemImage = new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(itemName));
+                itemImage.setPosition(currentX, currentY);
+                if (hoverOnImage(itemImage, screenX, convertedY)) {
+                    String craftName = itemName.replace("Locked", "");
+                    CraftType craftType = CraftType.getCraftByName(craftName);
 
-                    if (hoverOnImage(itemImage, screenX, convertedY)) {
-                        String craftName = itemName.replace("Locked", "");
-                        CraftType craftType = CraftType.getCraftByName(craftName);
+                    if (craftType != null) {
+                        Result result = GameController.canCraft(craftType);
 
-                        if (craftType != null) {
-                            // Result result = GameController.canCraft(craftType);
-                            Result result = new Result(true, "");
-
-                            if (result.success) {
-                                Main.goToFarmOverview("Choose a spot to place your " + craftName, craftType, gameView);
-                                return true;
-                            } else {
-                                errorMessageLabel.setText(result.message);
-                                return true;
-                            }
+                        if (result.success) {
+                            Main.goToFarmOverview("Choose a spot to place your " + craftName, craftType, gameView);
+                            return true;
+                        } else {
+                            errorMessageLabel.setText(result.message);
+                            return true;
                         }
                     }
-
-                    currentX += itemImage.getWidth() + xSpacing;
-                    if ((i + 1) % itemsPerRow == 0) {
-                        currentX = startX;
-                        currentY -= itemImage.getHeight() + ySpacing;
-                    }
+                }
+                currentX += itemImage.getWidth() + xSpacing;
+                if ((i + 1) % itemsPerRow == 0) {
+                    currentX = startX;
+                    currentY -= itemImage.getHeight() + ySpacing;
                 }
             }
         }
