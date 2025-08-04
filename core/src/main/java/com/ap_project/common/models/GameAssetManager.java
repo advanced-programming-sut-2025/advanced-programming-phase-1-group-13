@@ -102,7 +102,7 @@ public class GameAssetManager {
 
     public Texture getTextureByItem(Item item) {
         if (item instanceof AnimalProduct) {
-            return getTextureByItem(item);
+            return getTextureByAnimalProduct((AnimalProduct) item);
         }
 
         if (item instanceof ForagingCrop) {

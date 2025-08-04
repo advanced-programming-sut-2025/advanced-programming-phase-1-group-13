@@ -235,9 +235,6 @@ public class GameController {
         if (tile == null) {
             return new Result(false, failingMessage);
         }
-        if (tool == null) {
-            return new Result(false, "You should equip tool first.");
-        }
         if (tool.getToolType() == ToolType.MILK_PAIL) {
             return new Result(false, "Use the command below to use milk pail:\n" +
                 "collect produce -n <animal's name>");
@@ -545,6 +542,7 @@ public class GameController {
                     "Go there and enjoy your " + food.getName() + "!"
             );
         }
+        assert foodType != null;
         player.increaseEnergyBy(foodType.getEnergy());
         FoodBuff buff = foodType.getBuff();
         player.activateFoodBuff(buff);
@@ -569,14 +567,14 @@ public class GameController {
         }
 
         HashMap<IngredientType, Integer> neededIngredients = craftType.getIngredients();
-//        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
-//            IngredientType ingredientType = entry.getKey();
-//            int requiredAmount = entry.getValue();
-//
-//            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
-//                return new Result(false, "You don't have enough " + ingredientType.getName());
-//            }
-//        }
+        for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
+            IngredientType ingredientType = entry.getKey();
+            int requiredAmount = entry.getValue();
+
+            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
+                return new Result(false, "You don't have enough " + ingredientType.getName());
+            }
+        }
         return new Result(true, "");
     }
 
@@ -1292,9 +1290,9 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
-//        if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 5) {
-//            return new Result(false, "Animal can't move more than 5 tiles at once.");
-//        }
+        if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 5) {
+            return new Result(false, "Animal can't move more than 5 tiles at once.");
+        }
 
         FarmBuilding farmBuildingInNewPosition = farm.getFarmBuildingByPosition(newPosition);
         if (animal.isOutside()) {
@@ -1681,7 +1679,7 @@ public class GameController {
 
         Good good = (Good) product;
 
-        if (!good.getType().getShopType().equals(shop.getType())) {
+        if (!good.getType().getShopType().equals(shop.getType().getName())) {
             return new Result(false, shop.getName() + " does not sell this product.");
         }
 
@@ -2003,6 +2001,7 @@ public class GameController {
         }
 
         CropType cropType = CropType.getCropTypeByName(flowerName);
+        assert cropType != null;
         Crop flower = new Crop(cropType);
         Result result = player.getBackpack().removeFromInventory(flower, 1);
         if (!result.success) {
@@ -2173,8 +2172,7 @@ public class GameController {
         }
 
         User player = App.getLoggedIn();
-//        if (areClose(player.getPosition(), npc.getPosition())) {
-        if (true) {
+        if (areClose(player.getPosition(), npc.getPosition())) {
             int timeOfDay = game.getGameState().getTime().getHour();
             Season season = game.getGameState().getTime().getSeason();
             Weather weather = game.getGameState().getCurrentWeather();

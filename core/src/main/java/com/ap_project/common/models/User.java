@@ -112,10 +112,6 @@ public class User {
         this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Pickaxe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Scythe(ToolMaterial.BASIC), 1);
-        // TODO: remove later
-        for (GoodsType goodsType : GoodsType.values()) {
-            this.backpack.addToInventory(new Good(goodsType), 1);
-        }
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
         this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);

@@ -9,8 +9,8 @@ public enum NPCType {
     CLINT(
             "Clint",
             Role.SHOPKEEPER,
-            new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>(),
+            new HashMap<>(),
+            new ArrayList<>(),
             14,
             new ArrayList<ItemType>() {{
                 add(GoodsType.IRON_ORE);
@@ -21,8 +21,8 @@ public enum NPCType {
     MORRIS(
             "Morris",
             Role.SHOPKEEPER,
-            new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>(),
+            new HashMap<>(),
+            new ArrayList<>(),
             10,
             new ArrayList<ItemType>() {{
                 add(GoodsType.COFFEE);
@@ -33,8 +33,8 @@ public enum NPCType {
     PIERRE(
             "Pierre",
             Role.SHOPKEEPER,
-            new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>(),
+            new HashMap<>(),
+            new ArrayList<>(),
             20,
             new ArrayList<ItemType>() {{
                 add(GoodsType.STARFRUIT_SEEDS);
@@ -50,7 +50,7 @@ public enum NPCType {
                         new HashMap<ItemType, Integer>() {{
                             put(MaterialType.WOOD, 80);
                             put(IngredientType.IRON_BAR, 10);
-                            put(MaterialType.WOOD, 1000);
+                            put(MaterialType.HARD_WOOD, 1000);
                         }},
                         new HashMap<ItemType, Integer>() {{
                             put(MoneyType.GOLD_COIN, 1000);
@@ -73,8 +73,8 @@ public enum NPCType {
     WILLY(
             "Willy",
             Role.SHOPKEEPER,
-            new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>(),
+            new HashMap<>(),
+            new ArrayList<>(),
             25,
             new ArrayList<ItemType>() {{
                 add(FishType.GLACIERFISH);
@@ -85,8 +85,8 @@ public enum NPCType {
     MARNIE(
             "Marnie",
             Role.SHOPKEEPER,
-            new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>(),
+            new HashMap<>(),
+            new ArrayList<>(),
             15,
             new ArrayList<ItemType>() {{
                 add(AnimalProductType.CHICKEN_EGG);
@@ -97,8 +97,8 @@ public enum NPCType {
     GUS(
             "Gus",
             Role.SHOPKEEPER,
-            new HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>(),
-            new ArrayList<ItemType>(),
+            new HashMap<>(),
+            new ArrayList<>(),
             20,
             new ArrayList<ItemType>() {{
                 add(FoodType.DISH_O_THE_SEA);

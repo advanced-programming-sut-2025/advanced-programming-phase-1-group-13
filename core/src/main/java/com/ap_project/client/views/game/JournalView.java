@@ -3,6 +3,7 @@ package com.ap_project.client.views.game;
 import com.ap_project.Main;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.NPC;
 import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
@@ -41,7 +42,6 @@ public class JournalView implements Screen, InputProcessor {
         window.setPosition(windowX, windowY);
 
         this.slider = new Image(GameAssetManager.getGameAssetManager().getSlider());
-        // adjust slider height based on total number of quests
 
         this.quests = new ArrayList<>();
         for (NPCType type : NPCType.values()) {
@@ -65,7 +65,6 @@ public class JournalView implements Screen, InputProcessor {
         sliderTrack.setPosition(windowX + window.getWidth() + 20, windowY + 20);
         stage.addActor(sliderTrack);
 
-        // adjust y based on currentIndex
         updateScrollSlider();
         stage.addActor(slider);
     }
@@ -162,25 +161,21 @@ public class JournalView implements Screen, InputProcessor {
     }
 
     private void updateQuestLabels() {
-        // remove old labels
         for (Label lbl : questLabels) lbl.remove();
         questLabels.clear();
 
         if (quests.isEmpty()) return;
 
-        // get current quest
         Map.Entry<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> entry = quests.get(0).entrySet().iterator().next();
         HashMap<ItemType, Integer> requests = entry.getKey();
         HashMap<ItemType, Integer> rewards = entry.getValue();
 
-        // title label
         Label title = new Label("Quest " + (currentIndex + 1), GameAssetManager.getGameAssetManager().getSkin());
         title.setColor(Color.WHITE);
         title.setPosition(windowX + 20, windowY + window.getHeight() - 60);
         stage.addActor(title);
         questLabels.add(title);
 
-        // display requests
         int offsetY = 100;
         for (Map.Entry<ItemType, Integer> req : requests.entrySet()) {
             Label reqLabel = new Label(
@@ -193,10 +188,8 @@ public class JournalView implements Screen, InputProcessor {
             offsetY += 30;
         }
 
-        // display rewards
         offsetY += 20;
         for (Map.Entry<?, Integer> rew : rewards.entrySet()) {
-            System.out.println("Reward: x" + rew.getValue() + rew.getKey());
             Label rewLabel = new Label(
                 "Reward: x" + rew.getValue() + rew.getKey(), GameAssetManager.getGameAssetManager().getSkin()
             );
@@ -215,12 +208,12 @@ public class JournalView implements Screen, InputProcessor {
         float th = sliderTrack.getHeight();
 
         if (quests.size() < 2) {
-            slider.setPosition(tx, ty);
+            slider.setPosition(tx, ty + th - slider.getHeight());
             return;
         }
 
         float step = (th - slider.getHeight()) / (quests.size() - 1);
-        float knobY = ty + step * currentIndex;
+        float knobY = ty + th - slider.getHeight() - (step * currentIndex);
         slider.setPosition(tx, knobY);
     }
 

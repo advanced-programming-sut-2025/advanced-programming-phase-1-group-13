@@ -25,7 +25,7 @@ public class Farm {
     private final ArrayList<ForagingCrop> foragingCrops;
     private final transient Random random;
     private ArrayList<Tile> allTiles;
-    private HashMap<CraftType, Position> craftsInFarm;
+    private HashMap<CraftType, Position> craftsInFarm; // TODO: fix
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
@@ -41,7 +41,7 @@ public class Farm {
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
 
-        for (ArtisanType artisanType : ArtisanType.values()) {
+        for (ArtisanType artisanType : ArtisanType.values()) { // TODO: remove later
             this.artisans.add(new Artisan(artisanType));
         }
 
@@ -114,7 +114,7 @@ public class Farm {
                 tile.pLaceItemOnTile(tree);
             }
         }
-        Collections.sort(trees, new Comparator<Tree>() {
+        trees.sort(new Comparator<Tree>() {
             @Override
             public int compare(Tree t1, Tree t2) {
                 return Double.compare(t1.getPosition().getY(), t2.getPosition().getY());

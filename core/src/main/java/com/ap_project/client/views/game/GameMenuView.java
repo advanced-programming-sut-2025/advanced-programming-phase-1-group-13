@@ -36,6 +36,8 @@ public class GameMenuView implements Screen, InputProcessor {
     private final float windowX;
     private final float windowY;
     private int inventoryFirstRow;
+    private ArrayList<Image> inventoryItemsImages;
+    private ArrayList<Item> inventoryItems;
     private int socialMenuPageIndex;
     private final Image closeButton;
     private final GameView gameView;
@@ -141,7 +143,6 @@ public class GameMenuView implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         float convertedY = Gdx.graphics.getHeight() - screenY;
-//        errorMessageLabel.remove();
         errorMessageLabel.setText("");
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
@@ -149,18 +150,37 @@ public class GameMenuView implements Screen, InputProcessor {
             return true;
         }
 
-        if (hoverOnImage(trashCan, screenX, convertedY)) {
-            isTrashCanOpen = !isTrashCanOpen;
-            if (trashCan.getStage() != null) {
-                trashCan.remove();
+        if (currentTab == GameMenuType.INVENTORY) {
+            if (hoverOnImage(trashCan, screenX, convertedY)) {
+                isTrashCanOpen = !isTrashCanOpen;
+                if (trashCan.getStage() != null) {
+                    trashCan.remove();
+                }
+                trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan(isTrashCanOpen));
+                trashCan.setPosition(
+                    (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
+                    Gdx.graphics.getHeight() / 2f - 65
+                );
+                stage.addActor(trashCan);
+                return true;
             }
-            trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan(isTrashCanOpen));
-            trashCan.setPosition(
-                (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
-                Gdx.graphics.getHeight() / 2f - 65
-            );
-            stage.addActor(trashCan);
-            return true;
+
+            for (Image image : inventoryItemsImages) {
+                if (hoverOnImage(image, screenX, convertedY)) {
+                    if (isTrashCanOpen) {
+                        Item item = inventoryItems.get(inventoryItemsImages.indexOf(image));
+                        Result result = App.getLoggedIn().getBackpack().removeFromInventoryToTrash(item, 1, App.getLoggedIn());
+                        if (result.success) {
+                            updateWindow();
+                            showInventoryMenu();
+                            addItemsToInventory(0);
+                            errorMessageLabel.setText("");
+                        } else {
+                            errorMessageLabel.setText(result.message);
+                        }
+                    }
+                }
+            }
         }
 
         Image inventoryButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -329,11 +349,10 @@ public class GameMenuView implements Screen, InputProcessor {
 
                         if (result.success) {
                             Main.goToFarmOverview("Choose a spot to place your " + craftName, craftType, gameView);
-                            return true;
                         } else {
                             errorMessageLabel.setText(result.message);
-                            return true;
                         }
+                        return true;
                     }
                 }
                 currentX += itemImage.getWidth() + xSpacing;
@@ -674,6 +693,8 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void addItemsToInventory(float initialY) {
+        inventoryItemsImages = new ArrayList<>();
+        inventoryItems = new ArrayList<>();
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
@@ -688,6 +709,8 @@ public class GameMenuView implements Screen, InputProcessor {
                         + column * (itemImage.getWidth() + 15.0f),
                     initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f - 75 * visibleRow
                 );
+                inventoryItemsImages.add(itemImage);
+                inventoryItems.add(entry.getKey());
                 stage.addActor(itemImage);
             }
             count++;

@@ -21,7 +21,7 @@ public class NPC {
             > quests;
     private final ArrayList<ItemType> favorites;
     private ArrayList<Dialog> dialogs;
-    private Position position;
+    private final Position position;
     private final HashMap<User, Boolean> giftReceivedToday;
     private final HashMap<User, Boolean> talkedToToday;
     private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
