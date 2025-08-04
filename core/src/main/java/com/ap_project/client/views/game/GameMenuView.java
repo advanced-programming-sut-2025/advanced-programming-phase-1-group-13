@@ -29,10 +29,12 @@ public class GameMenuView implements Screen, InputProcessor {
     private GameMenuType currentTab;
     private Image window;
     private Image page;
-    private final Image trashCan;
+    private Image trashCan;
+    private boolean isTrashCanOpen;
     private Image skillHoverImage;
     private final float windowX;
     private final float windowY;
+    private int inventoryFirstRow;
     private int socialMenuPageIndex;
     private final Image closeButton;
     private final GameView gameView;
@@ -45,7 +47,7 @@ public class GameMenuView implements Screen, InputProcessor {
         this.currentTab = GameMenuType.INVENTORY;
 
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
-        this.trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan());
+        this.trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan(isTrashCanOpen));
         trashCan.setPosition(
             (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
             Gdx.graphics.getHeight() / 2f - 65
@@ -56,6 +58,7 @@ public class GameMenuView implements Screen, InputProcessor {
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
 
+        inventoryFirstRow = 0;
         this.socialMenuPageIndex = 1;
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
@@ -135,6 +138,20 @@ public class GameMenuView implements Screen, InputProcessor {
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
             Main.getMain().setScreen(gameView);
+            return true;
+        }
+
+        if (hoverOnImage(trashCan, screenX, convertedY)) {
+            isTrashCanOpen = !isTrashCanOpen;
+            if (trashCan.getStage() != null) {
+                trashCan.remove();
+            }
+            trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan(isTrashCanOpen));
+            trashCan.setPosition(
+                (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
+                Gdx.graphics.getHeight() / 2f - 65
+            );
+            stage.addActor(trashCan);
             return true;
         }
 
@@ -366,6 +383,14 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
+        if (currentTab == GameMenuType.INVENTORY) {
+            if (amountY > 0) changeInventoryFirstRow(1);
+            if (amountY < 0) changeInventoryFirstRow(-1);
+            updateWindow();
+            showInventoryMenu();
+            addItemsToInventory(0);
+        }
+
         if (currentTab == GameMenuType.SOCIAL) {
             if (amountY > 0) changeSocialMenuPageIndex(1);
             if (amountY < 0) changeSocialMenuPageIndex(-1);
@@ -426,7 +451,7 @@ public class GameMenuView implements Screen, InputProcessor {
 
         stage.addActor(trashCan);
 
-        addItemsToInventory(-5);
+        addItemsToInventory(0);
     }
 
     public void showSkillsMenu() {
@@ -605,18 +630,19 @@ public class GameMenuView implements Screen, InputProcessor {
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
-            if (count > 11) {
-                break;
+            int row = count / 12;
+
+            if (row >= inventoryFirstRow && row < inventoryFirstRow + 3) {
+                Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
+                int visibleRow = row - inventoryFirstRow;
+                int column = count % 12;
+                itemImage.setPosition(
+                    ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
+                        + column * (itemImage.getWidth() + 15.0f),
+                    initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f - 75 * visibleRow
+                );
+                stage.addActor(itemImage);
             }
-
-            Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
-            itemImage.setPosition(
-                ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
-                    + count * (itemImage.getWidth() + 15.0f),
-                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
-            );
-            stage.addActor(itemImage);
-
             count++;
         }
     }
@@ -641,6 +667,20 @@ public class GameMenuView implements Screen, InputProcessor {
                 x <= imageX + width &&
                 y >= imageY &&
                 y <= imageY + height;
+    }
+
+    public void changeInventoryFirstRow(int amount) {
+        inventoryFirstRow += amount;
+        if (inventoryFirstRow < 0) {
+            inventoryFirstRow = 0;
+        }
+
+        int itemCount = App.getLoggedIn().getBackpack().getItems().size();
+        int numOfRows = (itemCount + 11) / 12;
+        int maxFirstRow = Math.max(0, numOfRows - 3);
+        if (inventoryFirstRow > maxFirstRow) {
+            inventoryFirstRow = maxFirstRow;
+        }
     }
 
     public void changeSocialMenuPageIndex(int amount) {
@@ -700,7 +740,7 @@ public class GameMenuView implements Screen, InputProcessor {
             }
         }
 
-        addItemsToInventory(-327);
+        addItemsToInventory(-320);
     }
 
     public void forceTerminateGame() {

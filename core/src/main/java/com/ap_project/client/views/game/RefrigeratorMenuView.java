@@ -34,7 +34,7 @@ public class RefrigeratorMenuView implements Screen, InputProcessor {
             Gdx.graphics.getHeight() / 2f - inventoryWindow.getHeight() - 25
         );
 
-        this.trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan());
+        this.trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan(false));
         trashCan.setPosition(
             Gdx.graphics.getWidth() / 2f + 500,
             Gdx.graphics.getHeight() / 2f - 150

@@ -109,6 +109,10 @@ public class GameAssetManager {
             return getTextureByForagingCrop((ForagingCrop) item);
         }
 
+        if (item instanceof Good) {
+            return getTextureByGood((Good) item);
+        }
+
         if (item instanceof Mineral) {
             return getTextureByMineral((Mineral) item);
         }
@@ -131,6 +135,10 @@ public class GameAssetManager {
 
     public Texture getTextureByForagingCrop(ForagingCrop foragingCrop) {
         return new Texture(Gdx.files.internal("Images/ForagingCrop/" + toPascalCase(foragingCrop.getForagingCropType().getName()) + ".png"));
+    }
+
+    public Texture getTextureByGood(Good good) {
+        return new Texture(Gdx.files.internal("Images/Goods/" + good.getName().replaceAll(" ", "_") + ".png"));
     }
 
     public Texture getTextureByMineral(Mineral mineral) {
@@ -170,8 +178,8 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal(path));
     }
 
-    public Texture getTrashCan() {
-        return new Texture(Gdx.files.internal("Images/Menu/TrashCan.png"));
+    public Texture getTrashCan(boolean isOpen) {
+        return new Texture(Gdx.files.internal("Images/Menu/TrashCan" + (isOpen ? "Open" : "") + ".png"));
     }
 
     public Texture getBlackScreen() {
@@ -300,7 +308,7 @@ public class GameAssetManager {
     public Animation<Texture> loadAnimalAnimation(String animalName, String direction) {
         Array<Texture> frames = new Array<>();
         for (int i = 1; i <= 4; i++) {
-            String path = "Images/Animal/" + animalName+"s" + "/" + animalName + "Sprite" + direction + i + ".png";
+            String path = "Images/Animal/" + animalName + "s" + "/" + animalName + "Sprite" + direction + i + ".png";
             frames.add(new Texture(Gdx.files.internal(path)));
         }
         return new Animation<>(0.15f, frames, Animation.PlayMode.LOOP);

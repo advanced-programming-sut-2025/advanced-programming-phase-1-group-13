@@ -1,6 +1,5 @@
 package com.ap_project.common.models.inventory;
 
-import com.ap_project.common.models.AnimalProduct;
 import com.ap_project.common.models.Item;
 import com.ap_project.common.models.Result;
 import com.ap_project.common.models.User;

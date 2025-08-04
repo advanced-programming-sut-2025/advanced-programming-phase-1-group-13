@@ -3,7 +3,7 @@ package com.ap_project.common.models.enums.types;
 public enum BackpackType {
     INITIAL(12, false),
     LARGE(24, false),
-    DELUXE(null, true);
+    DELUXE(Integer.MAX_VALUE, true);
 
     private final Integer capacity;
     private final boolean isUnlimited;
