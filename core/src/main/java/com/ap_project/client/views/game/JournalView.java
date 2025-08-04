@@ -1,25 +1,19 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
+import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
-import com.ap_project.common.models.NPC;
-import com.ap_project.common.models.enums.types.ItemType;
-import com.ap_project.common.models.enums.types.NPCType;
+import com.ap_project.common.models.Quest;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
@@ -31,9 +25,9 @@ public class JournalView implements Screen, InputProcessor {
     private final Image slider;
     private Image sliderTrack;
     private int currentIndex;
+    private final ArrayList<Image> quests;
     private final GameView gameView;
-    private final List<HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>>> quests;
-    private final ArrayList<Label> questLabels = new ArrayList<>();
+    private final GameController controller;
 
     public JournalView(GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getJournal());
@@ -44,15 +38,14 @@ public class JournalView implements Screen, InputProcessor {
         this.slider = new Image(GameAssetManager.getGameAssetManager().getSlider());
 
         this.quests = new ArrayList<>();
-        for (NPCType type : NPCType.values()) {
-            HashMap<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> rawQuests =
-                App.getCurrentGame().getNPCByName(type.getName()).getType().getQuests();
-            if (!rawQuests.isEmpty()) quests.add(rawQuests);
+        for (int i = 0; i < App.getCurrentGame().getQuests().size(); i++) {
+            quests.add(new Image(GameAssetManager.getGameAssetManager().getQuest(i + 1)));
         }
 
         this.currentIndex = 0;
 
         this.gameView = gameView;
+        this.controller = new GameController();
     }
 
     @Override
@@ -64,7 +57,7 @@ public class JournalView implements Screen, InputProcessor {
         sliderTrack = new Image(GameAssetManager.getGameAssetManager().getSliderTrack());
         sliderTrack.setPosition(windowX + window.getWidth() + 20, windowY + 20);
         stage.addActor(sliderTrack);
-
+        updateQuests();
         updateScrollSlider();
         stage.addActor(slider);
     }
@@ -78,7 +71,6 @@ public class JournalView implements Screen, InputProcessor {
         stage.draw();
 
         updateScrollSlider();
-        updateQuestLabels();
     }
 
     @Override
@@ -120,6 +112,7 @@ public class JournalView implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         float convertedY = Gdx.graphics.getHeight() - screenY;
+
         Image closeButton = new Image(GameAssetManager.getGameAssetManager().getWhiteScreen());
         closeButton.setSize(40, 40);
         closeButton.setPosition(
@@ -130,6 +123,13 @@ public class JournalView implements Screen, InputProcessor {
             Main.getMain().setScreen(gameView);
             return true;
         }
+
+        for (Quest quest : App.getCurrentGame().getQuests()) {
+            if (hoverOnImage(quests.get(quest.getId() - 1), screenX, convertedY)) {
+                controller.finishQuest(quest.getId() + "");
+            }
+        }
+
         return false;
     }
 
@@ -157,47 +157,23 @@ public class JournalView implements Screen, InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         if (amountY > 0) changeIndex(1);
         else changeIndex(-1);
+        updateQuests();
         return false;
     }
 
-    private void updateQuestLabels() {
-        for (Label lbl : questLabels) lbl.remove();
-        questLabels.clear();
-
-        if (quests.isEmpty()) return;
-
-        Map.Entry<HashMap<ItemType, Integer>, HashMap<ItemType, Integer>> entry = quests.get(0).entrySet().iterator().next();
-        HashMap<ItemType, Integer> requests = entry.getKey();
-        HashMap<ItemType, Integer> rewards = entry.getValue();
-
-        Label title = new Label("Quest " + (currentIndex + 1), GameAssetManager.getGameAssetManager().getSkin());
-        title.setColor(Color.WHITE);
-        title.setPosition(windowX + 20, windowY + window.getHeight() - 60);
-        stage.addActor(title);
-        questLabels.add(title);
-
-        int offsetY = 100;
-        for (Map.Entry<ItemType, Integer> req : requests.entrySet()) {
-            Label reqLabel = new Label(
-                "Bring x" + req.getValue() + req.getKey(), GameAssetManager.getGameAssetManager().getSkin()
-            );
-            reqLabel.setColor(Color.BLACK);
-            reqLabel.setPosition(windowX + 20, windowY + window.getHeight() - offsetY);
-            stage.addActor(reqLabel);
-            questLabels.add(reqLabel);
-            offsetY += 30;
+    private void updateQuests() {
+        for (Image quest : quests) {
+            quest.remove();
         }
-
-        offsetY += 20;
-        for (Map.Entry<?, Integer> rew : rewards.entrySet()) {
-            Label rewLabel = new Label(
-                "Reward: x" + rew.getValue() + rew.getKey(), GameAssetManager.getGameAssetManager().getSkin()
+        stage.addActor(window);
+        for (int i = 0; i < 6; i++) {
+            int questIndex = currentIndex + i;
+            Image quest = quests.get(questIndex);
+            quest.setPosition(
+                windowX + 25,
+                windowY + 474 - 90 * (i % 6)
             );
-            rewLabel.setColor(Color.BLACK);
-            rewLabel.setPosition(windowX + 20, windowY + window.getHeight() - offsetY);
-            stage.addActor(rewLabel);
-            questLabels.add(rewLabel);
-            offsetY += 30;
+            stage.addActor(quest);
         }
     }
 
@@ -212,13 +188,13 @@ public class JournalView implements Screen, InputProcessor {
             return;
         }
 
-        float step = (th - slider.getHeight()) / (quests.size() - 1);
+        float step = (th - slider.getHeight()) / (quests.size() - 6);
         float knobY = ty + th - slider.getHeight() - (step * currentIndex);
         slider.setPosition(tx, knobY);
     }
 
     private void changeIndex(int amount) {
-        int maxIndex = quests.size() - 1;
+        int maxIndex = quests.size() - 6;
         currentIndex += amount;
         if (currentIndex < 0) currentIndex = 0;
         if (currentIndex > maxIndex) currentIndex = maxIndex;

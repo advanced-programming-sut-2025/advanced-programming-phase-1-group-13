@@ -520,7 +520,6 @@ public class GameController {
         return inventory.getItems().get(specificItem) >= requiredAmount;
     }
 
-
     public Result eat(String foodName) {
         FoodType foodType = FoodType.getFoodTypeByName(foodName);
         Food food = new Food(foodType);
@@ -2242,69 +2241,64 @@ public class GameController {
 
     public Result showQuestsList() {
         Game game = App.getCurrentGame();
-        User player = App.getLoggedIn();
         StringBuilder message = new StringBuilder("NPC quests:\n");
-        for (NPC npc : game.getNpcs()) {
-            int friendshipLevel = game.getNpcFriendshipPoints(player, npc) / 200;
-            message.append("-----------------------\n")
-                .append(npc.getName()).append(" (").append(friendshipLevel).append("):\n");
-            if (npc.getQuests().isEmpty()) {
-                message.append("No quests.\n");
-            } else {
-                for (int i = 0; i < npc.getQuests().size(); i++) {
-                    if (game.isQuestUnlocked(npc, player, i)) {
-                        message.append(NPCType.questString(i, npc.getType(), friendshipLevel)).append("\n\n");
-                    }
-                }
-            }
-        }
+        for (Quest quest : game.getQuests()) message.append(quest.toString()).append("\n");
         return new Result(true, message.toString());
     }
 
-    public Result finishQuest(String npcName, String indexStr) {
-        Game game = App.getCurrentGame();
-        NPC npc = game.getNPCByName(npcName);
-        if (npc == null) {
-            return new Result(false, "Npc not found.");
-        }
-
-        int index = Integer.parseInt(indexStr) - 1;
-        if (index > npc.getQuests().size()) {
+    public Result finishQuest(String indexStr) {
+        int index = Integer.parseInt(indexStr);
+        if (index > 15) {
             return new Result(false, "Quest not found");
         }
 
-        ItemType itemType = npc.getType().getRequestItemType(index);
-        Item item = Item.getItemByItemType(itemType);
-        int requestQuantity = npc.getType().getRequestQuantity(index);
+        Quest quest = App.getCurrentGame().getQuestById(index);
 
-        if (npc.isQuestFinished(index)) {
+        if (!quest.isUnlocked(App.getLoggedIn())) {
+            return new Result(false, "Quest is not unlocked for you");
+        }
+
+        ItemType requestItemType = quest.getRequest();
+        Item requestItem = Item.getItemByItemType(requestItemType);
+        int requestQuantity = quest.getRequestQuantity();
+
+        if (quest.isFinished()) {
             return new Result(false, "This quest is already finished.");
         }
 
         User player = App.getLoggedIn();
-        Item rewardItem = Item.getItemByItemType(npc.getType().getRewardItemType(index));
-        int rewardQuantity = npc.getType().getRewardQuantity(index);
-        Result rewardResult = player.getBackpack().addToInventory(rewardItem, rewardQuantity);
-        if (!rewardResult.success) {
-            return new Result(false,
-                "You do not have enough space in your inventory for this quest's reward.");
+        ItemType rewardItemType = quest.getReward();
+        int rewardQuantity = quest.getRewardQuantity();
+        String rewardName;
+        if (rewardItemType == null) {
+            App.getCurrentGame().changeFriendship(player, quest.getNpc(), rewardQuantity);
+            rewardName = "Friendship Level";
+        } else {
+            Item rewardItem = Item.getItemByItemType(rewardItemType);
+            rewardName = rewardItem.getName();
+            Result rewardResult = player.getBackpack().addToInventory(rewardItem, rewardQuantity);
+            if (!rewardResult.success) {
+                return new Result(false,
+                    "You do not have enough space in your inventory for this quest's reward.");
+            }
         }
 
-        Result requestResult = player.getBackpack().removeFromInventory(item, requestQuantity);
-        if (!requestResult.success) {
-            assert itemType != null;
-            return new Result(false, "You don't have enough of " + itemType.getName() +
-                " to finish quest.");
+        if (requestItemType instanceof MoneyType) {
+            player.changeBalance(rewardQuantity);
+        } else {
+            Result requestResult = player.getBackpack().removeFromInventory(requestItem, requestQuantity);
+            if (!requestResult.success) {
+                return new Result(false, "You don't have enough of " + requestItemType.getName() +
+                    " to finish quest.");
+            }
         }
 
-        if (index == 1) {
-            npc.startThirdQuestCountdown(player);
-        }
+        // if (index == 1) npc.startThirdQuestCountdown(player); TODO: start third quest countdown after unlocking quest 2
 
-        npc.setQuestFinished(true, index);
-        assert rewardItem != null;
-        return new Result(true, "You finished quest number " + index + " of " + npcName +
-            ". They gave you " + rewardQuantity + " of " + rewardItem.getName() + " as reward.");
+        quest.finish(player);
+        assert false;
+        return new Result(true, "You finished quest number " + index + ". " + quest.getNpc().getName() +
+            " gave you " + rewardQuantity + " of " + rewardName + " as reward.");
     }
 
     public Result exitGame() {

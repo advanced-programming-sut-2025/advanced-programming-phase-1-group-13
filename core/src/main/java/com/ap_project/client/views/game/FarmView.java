@@ -7,6 +7,7 @@ import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.types.AnimalType;
 import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.FarmBuildingType;
+import com.ap_project.common.models.enums.types.MineralType;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.badlogic.gdx.Input;
@@ -359,7 +360,7 @@ public class FarmView extends GameView {
             foragingCropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByForagingCrop(foragingCrop));
         }
 
-        this.stoneTexture = GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(null));
+        this.stoneTexture = GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(MineralType.STONE));
 
         this.woodTexture = GameAssetManager.getGameAssetManager().getWood();
 

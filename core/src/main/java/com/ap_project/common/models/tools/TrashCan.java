@@ -46,7 +46,7 @@ public class TrashCan extends Tool {
             case COPPER:
                 moneyToEarn = (0.15 * numOfItemToThrowAway * itemPrice);
                 break;
-            case IRON:
+            case IRON_ORE:
                 moneyToEarn = (0.3 * numOfItemToThrowAway * itemPrice);
                 break;
             case GOLD:

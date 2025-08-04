@@ -3,7 +3,7 @@ package com.ap_project.common.models.enums.types;
 public enum ToolMaterial {
     BASIC("Basic", 2000, IngredientType.COPPER_BAR, 5),
     COPPER("Copper", 5000, IngredientType.IRON_BAR, 5),
-    IRON("Iron", 10000, IngredientType.GOLD_BAR, 5),
+    IRON_ORE("Iron Ore", 10000, IngredientType.GOLD_BAR, 5),
     GOLD("Gold", 25000, IngredientType.IRIDIUM_BAR, 5),
     IRIDIUM("Iridium", 0, null, 5);
 

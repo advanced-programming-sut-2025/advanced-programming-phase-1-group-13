@@ -233,6 +233,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Journal/Journal.png"));
     }
 
+    public Texture getQuest(int id) {
+        return new Texture(Gdx.files.internal("Images/Journal/Quest" + id + ".png"));
+    }
+
     public Texture getSlider() {
         return new Texture(Gdx.files.internal("Images/Journal/Slider.png"));
     }

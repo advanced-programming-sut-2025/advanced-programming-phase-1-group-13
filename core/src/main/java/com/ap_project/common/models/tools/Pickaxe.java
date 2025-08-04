@@ -106,14 +106,14 @@ public class Pickaxe extends Tool {
                 switch (mineralType) {
                     case STONE:
                     case COPPER:
-                    case IRON:
+                    case IRON_ORE:
                         result = true;
                         break;
                     default:
                         result = false;
                 }
                 break;
-            case IRON:
+            case IRON_ORE:
                 result = mineralType != MineralType.IRIDIUM;
                 break;
             case GOLD:

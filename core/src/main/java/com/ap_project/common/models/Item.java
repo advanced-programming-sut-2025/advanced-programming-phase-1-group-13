@@ -179,7 +179,7 @@ public abstract class Item {
         }
 
         if (itemType instanceof MineralType) {
-            return new Mineral(null);
+            return new Mineral((MineralType) itemType);
         }
 
         if (itemType instanceof ProcessedItemType) {

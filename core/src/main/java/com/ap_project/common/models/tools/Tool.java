@@ -45,7 +45,7 @@ public abstract class Tool extends Item {
             case COPPER:
                 energy = 4;
                 break;
-            case IRON:
+            case IRON_ORE:
                 energy = 3;
                 break;
             case GOLD:
@@ -75,9 +75,9 @@ public abstract class Tool extends Item {
                 this.toolMaterial = ToolMaterial.COPPER;
                 break;
             case COPPER:
-                this.toolMaterial = ToolMaterial.IRON;
+                this.toolMaterial = ToolMaterial.IRON_ORE;
                 break;
-            case IRON:
+            case IRON_ORE:
                 this.toolMaterial = ToolMaterial.GOLD;
                 break;
             case GOLD:

@@ -4,25 +4,25 @@ import com.ap_project.common.models.enums.types.MineralType;
 import com.ap_project.common.models.farming.ForagingStuff;
 
 public class Mineral extends Item implements ForagingStuff {
-    private int sellPrice;
-    private MineralType mineralType;
+    private final MineralType mineralType;
     private Position position;
-    private String name;
 
-    public Mineral(Position position) {
-        // todo:
+    public Mineral(MineralType mineralType, Position position) {
         this.position = position;
-        this.mineralType = MineralType.STONE;
-        this.name = (this.mineralType).getName();
+        this.mineralType = mineralType;
+        this.setPrice(mineralType.getSellPrice());
+        this.name = mineralType.getName();
+    }
+
+    public Mineral(MineralType mineralType) {
+        this.mineralType = mineralType;
+        this.setPrice(mineralType.getSellPrice());
+        this.name = mineralType.getName();
     }
 
     @Override
     public void generate() {
 
-    }
-
-    public void setMineralType(MineralType mineralType) {
-        this.mineralType = mineralType;
     }
 
     public MineralType getMineralType() {
@@ -31,10 +31,5 @@ public class Mineral extends Item implements ForagingStuff {
 
     public Position getPosition() {
         return position;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
     }
 }

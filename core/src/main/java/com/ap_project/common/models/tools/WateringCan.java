@@ -31,7 +31,7 @@ public class WateringCan extends Tool {
             case COPPER:
                 this.waterCapacity = 55;
                 break;
-            case IRON:
+            case IRON_ORE:
                 this.waterCapacity = 70;
                 break;
             case GOLD:

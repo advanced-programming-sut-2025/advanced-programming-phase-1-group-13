@@ -41,7 +41,7 @@ public enum MineralType implements ItemType {
     COPPER("Copper",
             "A common ore that can be smelted into bars.",
             5),
-    IRON("Iron",
+    IRON_ORE("Iron Ore",
             "A fairly common ore that can be smelted into bars.",
             10),
     GOLD("Gold",

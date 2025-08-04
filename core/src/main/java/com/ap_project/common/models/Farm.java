@@ -45,6 +45,8 @@ public class Farm {
             this.artisans.add(new Artisan(artisanType));
         }
 
+        this.shippingBins = new ArrayList<>();
+
         this.cabin = new Cabin();
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
@@ -124,7 +126,7 @@ public class Farm {
         int stoneCount = Math.min(50 + random.nextInt(11), availablePositions.size() - treeCount);
         for (int i = 0; i < stoneCount; i++) {
             Position pos = availablePositions.get(treeCount + i);
-            Mineral stone = new Mineral(pos);
+            Mineral stone = new Mineral(MineralType.STONE, pos);
             stones.add(stone);
             Tile tile = getTileByPosition(pos);
             tile.pLaceItemOnTile(stone);
@@ -271,7 +273,7 @@ public class Farm {
         for (int i = 0; i < mineralCount; i++) {
             int mineralX = x + random.nextInt(width);
             int mineralY = y + random.nextInt(10);
-            minerals.add(new Mineral(new Position(mineralX, mineralY)));
+            minerals.add(new Mineral(MineralType.STONE, new Position(mineralX, mineralY)));
         }
 
         quarry.setTiles(tiles);

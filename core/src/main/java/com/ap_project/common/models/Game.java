@@ -16,15 +16,15 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Game {
-    private final ArrayList<User> players; // The 3 players
+    private final ArrayList<User> players;
     private final NPCVillage village;
     private boolean isInNPCVillage;
     private final GameState gameState;
     private final ArrayList<NPC> npcs;
+    private final ArrayList<Quest> quests;
     private final HashMap<User, HashMap<User, Friendship>> userFriendships;
     private final HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
@@ -41,6 +41,69 @@ public class Game {
 
         for (NPCType npcType : NPCType.values()) {
             this.npcs.add(new NPC(npcType));
+        }
+
+        this.quests = new ArrayList<>();
+        int questId = 1;
+
+        Map<NPCType, List<Quest>> npcQuestMap = new LinkedHashMap<>();
+
+        for (NPCType npcType : NPCType.values()) {
+            NPC npc = getNPCByName(npcType.getName());
+            if (npc == null) continue;
+
+            List<Quest> npcQuests = new ArrayList<>();
+
+            for (Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>> questEntry : npcType.getQuests()) {
+                Map<ItemType, Integer> requestMap = questEntry.getKey();
+                Map<ItemType, Integer> rewardMap = questEntry.getValue();
+
+                Iterator<Map.Entry<ItemType, Integer>> requestIt = requestMap.entrySet().iterator();
+                Iterator<Map.Entry<ItemType, Integer>> rewardIt = rewardMap.entrySet().iterator();
+
+                while (requestIt.hasNext() && rewardIt.hasNext()) {
+                    Map.Entry<ItemType, Integer> request = requestIt.next();
+                    Map.Entry<ItemType, Integer> reward = rewardIt.next();
+
+                    Quest quest = new Quest(
+                        -1,
+                        npc,
+                        request.getKey(),
+                        request.getValue(),
+                        reward.getKey(),
+                        reward.getValue(),
+                        this
+                    );
+                    npcQuests.add(quest);
+                }
+            }
+
+
+            npcQuestMap.put(npcType, npcQuests);
+        }
+
+        boolean moreToAdd = true;
+        int index = 0;
+
+        while (moreToAdd) {
+            moreToAdd = false;
+            for (List<Quest> npcQuests : npcQuestMap.values()) {
+                if (index < npcQuests.size()) {
+                    Quest q = npcQuests.get(index);
+                    Quest newQuest = new Quest(
+                        questId++,
+                        q.getNpc(),
+                        q.getRequest(),
+                        q.getRequestQuantity(),
+                        q.getReward(),
+                        q.getRewardQuantity(),
+                        this
+                    );
+                    quests.add(newQuest);
+                    moreToAdd = true;
+                }
+            }
+            index++;
         }
 
         this.userFriendships = new HashMap<>();
@@ -79,17 +142,6 @@ public class Game {
                 talkHistory.put(sender, talkMap);
             }
         }
-
-        for (NPC npc : this.npcs) {
-            HashMap<User, Integer> thirdQuestTimeMap = new HashMap<>();
-            HashMap<User, Boolean> thirdQuestBooleanMap = new HashMap<>();
-            for (User player : this.players) {
-                thirdQuestTimeMap.put(player, null);
-                thirdQuestBooleanMap.put(player, false);
-            }
-            npc.setDaysLeftToUnlockThirdQuest(thirdQuestTimeMap);
-            npc.setThirdQuestUnlocked(thirdQuestBooleanMap);
-        }
     }
 
     public NPCVillage getVillage() {
@@ -114,6 +166,10 @@ public class Game {
 
     public ArrayList<NPC> getNpcs() {
         return npcs;
+    }
+
+    public ArrayList<Quest> getQuests() {
+        return quests;
     }
 
     public HashMap<User, HashMap<User, HashMap<String, Boolean>>> getTalkHistory() {
@@ -200,14 +256,7 @@ public class Game {
                     }
                 }
 
-                if (npc.getDaysLeftToUnlockThirdQuest().get(player) != null) {
-                    npc.changeThirdQuestTime(player, -1);
-                    if (npc.getDaysLeftToUnlockThirdQuest().get(player) == 0) {
-                        npc.unlockThirdQuest(player);
-                        message.append(npc.getName()).append("'s third quest unlocked for ")
-                            .append(player.getUsername()).append(".\n");
-                    }
-                }
+                // TODO: update third quests
             }
         }
 
@@ -217,17 +266,17 @@ public class Game {
             }
         }
 
-//        for (User player : this.players) {
-//            int income = 0;
-//            for (ShippingBin shippingBin : player.getFarm().getShippingBins()) {
-//                for (Item item : shippingBin.getItemsToShip()) {
-//                    income += item.getSellPrice();
-//                }
-//            }
-//            player.changeBalance(income);
-//            message.append(player.getUsername()).append("'s shipping bins have been emptied, and they earned ")
-//                    .append(income).append("g.\n");
-//        }
+        for (User player : this.players) {
+            int income = 0;
+            for (ShippingBin shippingBin : player.getFarm().getShippingBins()) {
+                for (Item item : shippingBin.getItemsToShip()) {
+                    income += item.getSellPrice();
+                }
+            }
+            player.changeBalance(income);
+            message.append(player.getUsername()).append("'s shipping bins have been emptied, and they earned ")
+                    .append(income).append("g.\n");
+        }
 
         for (Tile tile : getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getAllTiles()) {
             if (tile.getType() == TileType.TREE) {
@@ -267,6 +316,15 @@ public class Game {
         for (NPC npc : this.getNpcs()) {
             if (npc.getName().equals(name)) {
                 return npc;
+            }
+        }
+        return null;
+    }
+
+    public Quest getQuestById(int id) {
+        for (Quest quest : this.quests) {
+            if (quest.getId() == id) {
+                return quest;
             }
         }
         return null;
@@ -354,22 +412,6 @@ public class Game {
         }
     }
 
-    public boolean isQuestUnlocked(NPC npc, User user, int index) {
-        if (index == 0) {
-            return true;
-        }
-
-        if (index == 1) {
-            return this.getNpcFriendshipPoints(user, npc) / 200 >= 1;
-        }
-
-        if (index == 2) {
-            return npc.getThirdQuestUnlocked().get(user);
-        }
-
-        return false;
-    }
-
     public Trade getTradeById(int id) {
         for (Trade trade : this.getTrades()) {
             if (trade.getId() == id) {
@@ -378,5 +420,4 @@ public class Game {
         }
         return null;
     }
-
 }

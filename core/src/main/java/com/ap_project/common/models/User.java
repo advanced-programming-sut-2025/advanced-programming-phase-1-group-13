@@ -107,6 +107,7 @@ public class User {
         learnNewCookingRecipe(new CookingRecipe(FoodType.SPAGHETTI));
         learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
         this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later
+        this.backpack.addToInventory(new Mineral(MineralType.IRON_ORE), 100);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);

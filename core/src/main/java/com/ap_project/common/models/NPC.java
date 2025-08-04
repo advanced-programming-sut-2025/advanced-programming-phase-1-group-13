@@ -16,17 +16,12 @@ public class NPC {
     private final String name;
     private final Role role;
     private final ArrayList<String> dialog;
-    private final HashMap<HashMap<ItemType, Integer>, // requests
-            HashMap<ItemType, Integer> // rewards
-            > quests;
     private final ArrayList<ItemType> favorites;
     private ArrayList<Dialog> dialogs;
     private final Position position;
     private final HashMap<User, Boolean> giftReceivedToday;
     private final HashMap<User, Boolean> talkedToToday;
     private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
-    private HashMap<User, Boolean> thirdQuestUnlocked;
-    private final ArrayList<Boolean> questsFinished;
 
     public NPC(NPCType type) {
         this.type = type;
@@ -34,17 +29,10 @@ public class NPC {
         this.role = type.getRole();
         this.position = new Position((new Random()).nextInt(30), (new Random()).nextInt(30));
         this.dialog = new ArrayList<>();
-        this.quests = type.getQuests();
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();
         this.daysLeftToUnlockThirdQuest = new HashMap<>();
-        this.thirdQuestUnlocked = new HashMap<>();
-        this.questsFinished = new ArrayList<>();
-    }
-
-    public void setQuestFinished(Boolean value, int index) {
-        this.questsFinished.set(index, value);
     }
 
     public NPCType getType() {
@@ -61,12 +49,6 @@ public class NPC {
 
     public ArrayList<String> getDialog() {
         return dialog;
-    }
-
-    public HashMap<HashMap<ItemType, Integer>, // requests
-            HashMap<ItemType, Integer> // rewards
-            > getQuests() {
-        return quests;
     }
 
     public ArrayList<ItemType> getFavorites() {
@@ -107,38 +89,5 @@ public class NPC {
 
     public boolean isFavourite(String itemName) {
         return this.getType().getFavorites().contains(getItemTypeByItemName(itemName));
-    }
-
-    public HashMap<User, Integer> getDaysLeftToUnlockThirdQuest() {
-        return daysLeftToUnlockThirdQuest;
-    }
-
-    public void setDaysLeftToUnlockThirdQuest(HashMap<User, Integer> daysLeftToUnlockThirdQuest) {
-        this.daysLeftToUnlockThirdQuest = daysLeftToUnlockThirdQuest;
-    }
-
-    public void startThirdQuestCountdown(User user) {
-        this.daysLeftToUnlockThirdQuest.put(user, this.type.getDaysToUnlockThirdQuest());
-    }
-
-    public void changeThirdQuestTime(User user, int amount) {
-        int currentAmount = this.daysLeftToUnlockThirdQuest.get(user);
-        this.daysLeftToUnlockThirdQuest.put(user, currentAmount + amount);
-    }
-
-    public HashMap<User, Boolean> getThirdQuestUnlocked() {
-        return thirdQuestUnlocked;
-    }
-
-    public void setThirdQuestUnlocked(HashMap<User, Boolean> thirdQuestUnlocked) {
-        this.thirdQuestUnlocked = thirdQuestUnlocked;
-    }
-
-    public void unlockThirdQuest(User user) {
-        this.thirdQuestUnlocked.put(user, true);
-    }
-
-    public boolean isQuestFinished(int index) {
-        return this.questsFinished.get(index);
     }
 }
