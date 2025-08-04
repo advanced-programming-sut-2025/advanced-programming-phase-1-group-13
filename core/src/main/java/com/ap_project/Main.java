@@ -101,8 +101,8 @@ public class Main extends Game {
         Main.getMain().setScreen(gameView);
     }
 
-    public static void goToFarmHouse(GameView gameView) {
-        Main.getMain().setScreen(new FarmHouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+    public static void goToFarmhouse(GameView gameView) {
+        Main.getMain().setScreen(new FarmhouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToFarmOverview(String description, ItemType itemType, GameView gameView) {

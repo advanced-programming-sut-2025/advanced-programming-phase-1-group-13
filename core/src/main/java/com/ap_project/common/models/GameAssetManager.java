@@ -38,6 +38,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png"));
     }
 
+    public Texture getRefrigeratorMenu() {
+        return new Texture(Gdx.files.internal("Images/Cooking/RefrigeratorMenu.png"));
+    }
+
+    public Texture getRefrigeratorMenuInventory() {
+        return new Texture(Gdx.files.internal("Images/Cooking/Inventory.png"));
+    }
+
+    public Texture getOkButton() {
+        return new Texture(Gdx.files.internal("Images/Cooking/OkButton.png"));
+    }
+
     public Texture getAvatarBackground() {
         return new Texture(Gdx.files.internal("Images/Avatars/AvatarBackground.png"));
     }
@@ -380,8 +392,12 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Map" + season + numberOfPlayers + ".png"));
     }
 
-    public Texture getFarmHouse() {
-        return new Texture(Gdx.files.internal("Images/Map/FarmHouse/Indoors.png"));
+    public Texture getFarmhouse() {
+        return new Texture(Gdx.files.internal("Images/Map/Farmhouse/Indoors.png"));
+    }
+
+    public Texture getRefrigerator() {
+        return new Texture(Gdx.files.internal("Images/Map/Farmhouse/Refrigerator.png"));
     }
 
     public Texture getPlayerIcon(Gender gender) {

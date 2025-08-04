@@ -232,7 +232,7 @@ public class FarmView extends GameView {
         super.keyDown(keycode);
 
         if (keycode == Input.Keys.H) {
-            goToFarmHouse(this);
+            goToFarmhouse(this);
         }
 
         if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
@@ -260,12 +260,12 @@ public class FarmView extends GameView {
             }
         }
 
-        if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), 1f)) {
-            goToFarmHouse(this);
+        if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), scale)) {
+            goToFarmhouse(this);
             return true;
         }
 
-        if (clickedOnTexture(screenX, screenY, greenhouseTexture, farm.getGreenhouse().getPosition(), 1f)) {
+        if (clickedOnTexture(screenX, screenY, greenhouseTexture, farm.getGreenhouse().getPosition(), scale)) {
             Result result = controller.buildGreenhouse();
             if (result.success) greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
             return true;
