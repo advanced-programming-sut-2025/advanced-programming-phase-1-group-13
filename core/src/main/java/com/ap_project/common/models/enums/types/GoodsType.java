@@ -73,7 +73,7 @@ public enum GoodsType implements ItemType {
     CRANBERRY_SEEDS("Cranberry Seeds", "Plant these in the fall. Takes 7 days to mature, and continues to produce after first harvest.", 300, 5, "Jojamart", new ArrayList<>(List.of(Season.FALL))),
     FAIRY_SEEDS("Fairy Seeds", "Plant in fall. Takes 12 days to produce a mysterious flower. Assorted colors.", 250, 5, "Jojamart", new ArrayList<>(List.of(Season.FALL))),
     RARE_SEED("Rare Seed", "Sow in fall. Takes all season to grow.", 1000, 1, "Jojamart", new ArrayList<>(List.of(Season.FALL))),
-    WHAT_SEEDS("Wheat Seeds", "Plant these in the summer or fall. Takes 4 days to mature. Harvest with the scythe.", 12, 5, "Jojamart", new ArrayList<>(List.of(Season.FALL))),
+    WHEAT_SEEDS("Wheat Seeds", "Plant these in the summer or fall. Takes 4 days to mature. Harvest with the scythe.", 12, 5, "Jojamart", new ArrayList<>(List.of(Season.FALL))),
     POWDERMELON_SEEDS("Powdermelon Seeds", "This special melon grows in the winter. Takes 7 days to grow.", 20, 10, "Jojamart", new ArrayList<>(List.of(Season.WINTER))),
     RICE("Rice", "A basic grain often served under vegetables.", 200, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
     WHEAT_FLOUR_PIERRE("Wheat Flour", "A common cooking ingredient made from crushed wheat seeds.", 100, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),

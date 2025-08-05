@@ -248,6 +248,11 @@ public class FarmView extends GameView {
             }
         }
 
+        if(clickedOnTexture(screenX, screenY, lakeTexture, farm.getLake().getPosition(), scale)) {
+            goToFishingMiniGameMenu(this);
+            return true;
+        }
+
         if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), scale)) {
             goToFarmhouse(this);
             return true;

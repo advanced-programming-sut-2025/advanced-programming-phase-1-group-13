@@ -449,6 +449,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + ".png"));
     }
 
+    public Texture getNPCPortrait(NPCType npcType) {
+        return new Texture(Gdx.files.internal("Images/NPC/Portrait/" + npcType.getName() + ".png"));
+    }
+
+    public Texture getDialogIcon() {
+        return new Texture(Gdx.files.internal("Images/NPC/Dialog.png"));
+    }
+
+    public Texture getDialogBox() {
+        return new Texture(Gdx.files.internal("Images/NPC/DialogBox.png"));
+    }
+
     public static String toPascalCase(String input) {
         if (input == null || input.isEmpty()) return "";
 
@@ -470,5 +482,9 @@ public class GameAssetManager {
         itemName = itemName.replaceAll(" ", "");
         String path = "Images/Craft/" + itemName + ".png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getFishingMiniGameWindow() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingMiniGameWindow.png"));
     }
 }
