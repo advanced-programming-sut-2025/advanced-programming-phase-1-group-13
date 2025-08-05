@@ -9,7 +9,8 @@ public enum FlowerType implements ItemType {
     SUMMER_SPANGLE("Summer spangle", false),
     POPPY("Poppy", false),
     SUNFLOWER("Sunflower", false),
-    FAIRY_ROSE("Fairy rose", false);
+    FAIRY_ROSE("Fairy rose", false),
+    BOUQUET("Bouquet", false);
 
     private final String name;
     private final Boolean isForaging;

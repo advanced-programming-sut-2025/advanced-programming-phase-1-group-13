@@ -313,7 +313,7 @@ public abstract class GameView implements Screen, InputProcessor {
             return;
         }
 
-        float displacement = 400f * delta;
+        float displacement = 800f * delta;
         isMoving = false;
 
         float backgroundWidth = scale * background.getWidth();
