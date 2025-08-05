@@ -1,5 +1,7 @@
 package com.ap_project.common.models;
 
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.enums.types.NPCType;
@@ -15,7 +17,6 @@ public class NPC {
     private final NPCType type;
     private final String name;
     private final Role role;
-    private final ArrayList<String> dialog;
     private final ArrayList<ItemType> favorites;
     private ArrayList<Dialog> dialogs;
     private final Position position;
@@ -28,7 +29,6 @@ public class NPC {
         this.name = type.getName();
         this.role = type.getRole();
         this.position = new Position((new Random()).nextInt(30), (new Random()).nextInt(30));
-        this.dialog = new ArrayList<>();
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();
@@ -45,10 +45,6 @@ public class NPC {
 
     public Role getRole() {
         return role;
-    }
-
-    public ArrayList<String> getDialog() {
-        return dialog;
     }
 
     public ArrayList<ItemType> getFavorites() {
@@ -89,5 +85,19 @@ public class NPC {
 
     public boolean isFavourite(String itemName) {
         return this.getType().getFavorites().contains(getItemTypeByItemName(itemName));
+    }
+
+    public Dialog getDialog() {
+        Game game = App.getCurrentGame();
+        int timeOfDay = game.getGameState().getTime().getHour();
+        Season season = game.getGameState().getTime().getSeason();
+        Weather weather = game.getGameState().getCurrentWeather();
+        int friendshipLevel = game.getNpcFriendshipPoints(App.getLoggedIn(), this);
+        Dialog dialog = Dialog.getDialogBySituation(type, timeOfDay, season, weather, friendshipLevel);
+        return dialog;
+    }
+
+    public boolean hasDialog() {
+        return this.getDialog() != null;
     }
 }
