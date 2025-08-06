@@ -5,8 +5,8 @@ import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.NPCType;
-import com.ap_project.common.models.enums.types.ShopType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -41,14 +41,11 @@ public class VillageView extends GameView {
         Main.getBatch().begin();
 
         for (int i = 0; i < shopTextures.size(); i++) {
-            if (ShopType.values()[i] == ShopType.MARNIE_RANCH) {
-                scale = 1f;
-            } else {
-                scale = 4.400316f;
-            }
+            scale = 4.400316f;
             draw(shopTextures.get(i), NPCVillage.getShops().get(i).getPosition());
         }
 
+        scale = 4;
         for (int i = 0; i < npcTextures.size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
             draw(npcTextures.get(i), npc.getPosition());
@@ -61,6 +58,7 @@ public class VillageView extends GameView {
                 scale = temp;
             }
         }
+        scale = 4.400316f;
 
         Main.getBatch().end();
     }
@@ -69,50 +67,25 @@ public class VillageView extends GameView {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
 
+        if (button == Input.Buttons.RIGHT) {
+            for (int i = 0; i < npcTextures.size(); i++) {
+                NPC npc = App.getCurrentGame().getNpcs().get(i);
+                if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
+                    Texture npcOptions = GameAssetManager.getGameAssetManager().getNPCOptions();
+                    Main.getBatch().begin();
+                    draw(npcOptions, npc.getPosition());
+                    Main.getBatch().end();
+                }
+            }
+        }
+
         for (int i = 0; i < npcTextures.size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
-            if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
+            Position position = new Position(npc.getPosition());
+            position.setY(position.getY() - 2);
+            if (clickedOnTexture(screenX, screenY, GameAssetManager.getGameAssetManager().getDialogIcon(), position, scale)) {
                 if (npc.hasDialog()) {
-                    Image dialogBox = new Image(GameAssetManager.getGameAssetManager().getDialogBox());
-                    dialogBox.setScale(1.2f);
-                    dialogBox.setPosition(
-                        (Gdx.graphics.getWidth() - dialogBox.getScaleX()*dialogBox.getWidth()) /2,
-                        10
-                    );
-                    stage.addActor(dialogBox);
-
-                    Image npcPortrait = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(npc.getType()));
-                    npcPortrait.setScale(1.7f);
-                    npcPortrait.setPosition(
-                        (Gdx.graphics.getWidth() - dialogBox.getWidth()) /2 + 730,
-                        130
-                    );
-                    stage.addActor(npcPortrait);
-
-                    Label name = new Label(npc.getName(), GameAssetManager.getGameAssetManager().getSkin());
-                    name.setColor(Color.BLACK);
-                    name.setFontScale(1.3f);
-                    name.setPosition(
-                        npcPortrait.getX() + 50,
-                        55
-                    );
-                    stage.addActor(name);
-
-                    Dialog dialog = npc.getDialog();
-                    Label dialogLabel = new Label(dialog.getMessage(), GameAssetManager.getGameAssetManager().getSkin());
-                    dialogLabel.setColor(Color.BLACK);
-                    dialogLabel.setFontScale(1.3f);
-                    dialogLabel.setWrap(true);
-                    dialogLabel.setAlignment(Align.topLeft);
-
-                    dialogLabel.setSize(dialogBox.getWidth() * 0.65f, dialogBox.getHeight() * 0.5f);
-
-                    dialogLabel.setPosition(
-                        dialogBox.getX() + dialogBox.getWidth() * 0.1f - 60,
-                        dialogBox.getY() + dialogBox.getHeight() * 0.4f + 70
-                    );
-
-                    stage.addActor(dialogLabel);
+                    addDialogBox(npc);
                 }
                 return true;
             }
@@ -121,5 +94,46 @@ public class VillageView extends GameView {
         show();
 
         return false;
+    }
+
+    public void addDialogBox(NPC npc) {
+        Image dialogBox = new Image(GameAssetManager.getGameAssetManager().getDialogBox());
+        dialogBox.setScale(1.15f);
+        dialogBox.setPosition(
+            (Gdx.graphics.getWidth() - dialogBox.getScaleX() * dialogBox.getWidth()) / 2,
+            10
+        );
+        stage.addActor(dialogBox);
+
+        Image npcPortrait = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(npc.getType()));
+        npcPortrait.setScale(2f);
+        npcPortrait.setPosition(
+            (Gdx.graphics.getWidth() - dialogBox.getWidth()) / 2 + 950,
+            170
+        );
+        stage.addActor(npcPortrait);
+
+        Label name = new Label(npc.getName(), GameAssetManager.getGameAssetManager().getSkin());
+        name.setColor(Color.BLACK);
+        name.setFontScale(1.3f);
+        name.setPosition(
+            npcPortrait.getX() + 40 + name.getWidth() / 2,
+            80
+        );
+        stage.addActor(name);
+
+        Dialog dialog = npc.getDialog();
+        Label dialogLabel = new Label(dialog.getMessage(), GameAssetManager.getGameAssetManager().getSkin());
+        dialogLabel.setColor(Color.BLACK);
+        dialogLabel.setFontScale(1.3f);
+        dialogLabel.setWrap(true);
+        dialogLabel.setAlignment(Align.topLeft);
+        dialogLabel.setSize(dialogBox.getWidth() * 0.6f, dialogBox.getHeight() * 0.5f);
+        dialogLabel.setPosition(
+            dialogBox.getX() + dialogBox.getWidth() * 0.1f - 60,
+            dialogBox.getY() + dialogBox.getHeight() * 0.4f + 70
+        );
+
+        stage.addActor(dialogLabel);
     }
 }

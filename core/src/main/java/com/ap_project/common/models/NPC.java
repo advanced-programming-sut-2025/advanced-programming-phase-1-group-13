@@ -28,7 +28,7 @@ public class NPC {
         this.type = type;
         this.name = type.getName();
         this.role = type.getRole();
-        this.position = new Position((new Random()).nextInt(30), (new Random()).nextInt(30));
+        this.position = new Position(70, (new Random()).nextInt(30));
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();
