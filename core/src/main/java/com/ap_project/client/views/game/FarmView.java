@@ -308,6 +308,15 @@ public class FarmView extends GameView {
                 return true;
             }
         }
+
+        for (int i = 0; i < artisansTextures.size(); i++) {
+            Artisan artisan = farm.getArtisans().get(i);
+            Position position = artisan.getPosition();
+            if (clickedOnTexture(screenX, screenY, artisansTextures.get(i), position, scale)) {
+                goToArtisanMenu(this, artisan);
+            }
+        }
+
         return false;
     }
 
@@ -417,7 +426,7 @@ public class FarmView extends GameView {
 
         this.artisansTextures = new ArrayList<>();
         for (Artisan artisan : farm.getArtisans()) {
-            artisansTextures.add(GameAssetManager.getGameAssetManager().getArtisan(artisan.getType(), artisan.getItemPending() != null));
+            artisansTextures.add(GameAssetManager.getGameAssetManager().getArtisan(artisan));
         }
 
         this.animalsTextures = new ArrayList<>();

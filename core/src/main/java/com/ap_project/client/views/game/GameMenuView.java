@@ -84,7 +84,7 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 1); // TODO
         Main.getBatch().begin();
         Main.getBatch().end();
 

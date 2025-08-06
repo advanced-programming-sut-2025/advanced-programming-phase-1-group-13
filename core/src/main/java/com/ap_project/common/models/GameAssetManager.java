@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import org.w3c.dom.Text;
 
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
@@ -519,8 +520,21 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobberWindow.png"));
     }
 
-    public Texture getArtisan(ArtisanType artisanType, boolean isFull) {
-        return new Texture(Gdx.files.internal("Images/Artisan/" + toPascalCase(artisanType.getName()) + (isFull ? "Full" : "") + ".png"));
+    public Texture getArtisan(Artisan artisan) {
+        return new Texture(Gdx.files.internal("Images/Artisan/" + toPascalCase(artisan.getType().getName()) +
+            (artisan.getItemPending() != null ? "Full" : "") + ".png"));
+    }
+
+    public Texture getArtisanMenu() {
+        return new Texture(Gdx.files.internal("Images/Artisan/ArtisanMenu.png"));
+    }
+
+    public Texture getStartButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/StartButton.png"));
+    }
+
+    public Texture getEmptySlot() {
+        return new Texture(Gdx.files.internal("Images/Artisan/EmptySlot.png"));
     }
 
     public static String toPascalCase(String input) {

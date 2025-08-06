@@ -2,8 +2,6 @@ package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.common.models.*;
-import com.ap_project.common.models.enums.types.FoodType;
-import com.ap_project.common.models.enums.types.IngredientType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -11,57 +9,104 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
-public class CookingMenuView implements Screen, InputProcessor {
+public class ArtisanMenuView implements Screen, InputProcessor {
     private Stage stage;
-    private Image window;
+    private final Image window;
     private final float windowX;
     private final float windowY;
-    private final ArrayList<Image> foodImages;
-    private final Image foodHoverImage;
+    private final Image emptySlot;
+    private final Image startButton;
+    private Image itemInArtisan;
     private final Image closeButton;
-    private final GameView gameView;
+    private final Artisan artisan;
+    private final FarmView farmView;
 
-    public CookingMenuView(GameView gameView) {
-        this.window = new Image(GameAssetManager.getGameAssetManager().getCookingMenu());
+    public ArtisanMenuView(FarmView farmView, Artisan artisan) {
+        this.window = new Image(GameAssetManager.getGameAssetManager().getArtisanMenu());
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
+        window.setPosition(windowX, windowY);
 
-        this.foodImages = new ArrayList<>();
+        this.emptySlot = new Image(GameAssetManager.getGameAssetManager().getEmptySlot());
 
-        this.foodHoverImage = new Image(GameAssetManager.getGameAssetManager().getCookingMenuHover());
+        this.startButton = new Image(GameAssetManager.getGameAssetManager().getStartButton());
+
+        this.itemInArtisan = null;
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
-        this.gameView = gameView;
+
+        this.artisan = artisan;
+        this.farmView = farmView;
     }
 
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
-        updateWindow();
-        addCloseButton();
 
-        this.window = new Image(GameAssetManager.getGameAssetManager().getCookingMenu());
-        window.setPosition(windowX, windowY);
         stage.addActor(window);
-
         addItemsToInventory(-windowY - 70);
-        addFoodToMenu();
+
+        Image artisanImage = new Image(GameAssetManager.getGameAssetManager().getArtisan(artisan));
+        artisanImage.setScale(2);
+        artisanImage.setPosition(
+            windowX + 200,
+            windowY + 300
+        );
+        stage.addActor(artisanImage);
+
+        Label name = new Label(artisan.getType().getName(), GameAssetManager.getGameAssetManager().getSkin());
+        name.setColor(Color.BLACK);
+        name.setFontScale(1.25f);
+        name.setPosition(
+            windowX + 400,
+            windowY + 500
+        );
+        stage.addActor(name);
+
+        Label status = new Label(
+            artisan.getItemPending() == null ? "Ready to use" : "Making " + artisan.getItemPending().getName(),
+            GameAssetManager.getGameAssetManager().getSkin() );
+        status.setColor(Color.BLACK);
+        status.setPosition(
+            name.getX() + (name.getWidth() - status.getWidth()) / 2,
+            name.getY() - 50
+        );
+        stage.addActor(status);
+
+        emptySlot.setPosition(
+            name.getX() + (name.getWidth() - emptySlot.getWidth()) / 2,
+            status.getY() - 100
+        );
+        stage.addActor(emptySlot);
+
+
+        startButton.setPosition(
+            name.getX() + (name.getWidth() - startButton.getWidth()) / 2,
+            status.getY() - 180
+        );
+        stage.addActor(startButton);
+
+        addCloseButton();
     }
 
     @Override
     public void render(float delta) {
         Main.getBatch().begin();
         Main.getBatch().end();
+
+        if (artisan.getItemPending() != null) {
+            itemInArtisan = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(artisan.getItemPending()));
+            stage.addActor(itemInArtisan);
+        }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -111,7 +156,7 @@ public class CookingMenuView implements Screen, InputProcessor {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
-            Main.getMain().setScreen(gameView);
+            Main.getMain().setScreen(farmView);
             return true;
         }
 
@@ -135,29 +180,12 @@ public class CookingMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        if (foodHoverImage != null && foodHoverImage.getStage() != null) {
-            foodHoverImage.remove();
-        }
-
-        for (Image image : foodImages) {
-            if (hoverOnImage(image, screenX, Gdx.graphics.getHeight() - screenY)) {
-                FoodType foodType = FoodType.values()[foodImages.indexOf(image)];
-                if (App.getLoggedIn().hasLearntCookingRecipe(foodType)) showFoodHover(foodType, screenX, screenY);
-            }
-        }
         return false;
     }
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
-    }
-
-    public void updateWindow() {
-        if (this.window != null) {
-            this.window.remove();
-        }
-
     }
 
     public void addCloseButton() {
@@ -185,64 +213,6 @@ public class CookingMenuView implements Screen, InputProcessor {
                 initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
             );
             stage.addActor(itemImage);
-
-            count++;
-        }
-    }
-
-    public void addFoodToMenu() {
-        int count = 0;
-        for (FoodType food : FoodType.values()) {
-            boolean isLearnt = App.getLoggedIn().hasLearntCookingRecipe(food);
-
-            foodImages.add(new Image(GameAssetManager.getGameAssetManager().getFood(food, !isLearnt)));
-            foodImages.get(count).setPosition(
-                count % 10 * 80f + 550,
-                -count / 10 * 80f + 700
-            );
-            stage.addActor(foodImages.get(count));
-            count++;
-        }
-    }
-
-    public void showFoodHover(FoodType foodType, float screenX, float screenY) {
-        foodHoverImage.setPosition(
-            screenX,
-            Gdx.graphics.getHeight() - screenY - foodHoverImage.getHeight()
-        );
-        stage.addActor(foodHoverImage);
-
-        Label name = new Label(foodType.getName(), GameAssetManager.getGameAssetManager().getSkin());
-        name.setColor(Color.BLACK);
-        name.setPosition(
-            foodHoverImage.getX(),
-            foodHoverImage.getY()
-        ); // TODO
-        stage.addActor(name);
-
-        int count = 0;
-        for (IngredientType ingredient : foodType.getIngredients().keySet()) {
-            Image ingredientImage = new Image(GameAssetManager.getGameAssetManager().getTextureByIngredient(new Ingredient(ingredient)));
-            ingredientImage.setPosition( // TODO
-              foodHoverImage.getX(),
-              foodHoverImage.getY() + count * 20
-            );
-            stage.addActor(ingredientImage);
-
-            Label quantity = new Label(foodType.getIngredients().get(ingredient) + "", GameAssetManager.getGameAssetManager().getSkin());
-            quantity.setColor(Color.BLACK);
-            quantity.setPosition( // TODO
-                ingredientImage.getX() + 5,
-                ingredientImage.getY()
-            );
-
-            Label energy = new Label(foodType.getEnergy() + "", GameAssetManager.getGameAssetManager().getSkin());
-            energy.setColor(Color.BLACK);
-            energy.setPosition( // TODO
-                ingredientImage.getX(),
-                ingredientImage.getY() + 50
-            );
-            stage.addActor(energy);
 
             count++;
         }
