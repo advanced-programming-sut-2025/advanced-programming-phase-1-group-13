@@ -105,6 +105,10 @@ public class GameAssetManager {
             return getTextureByAnimalProduct((AnimalProduct) item);
         }
 
+        if (item instanceof Fish) {
+            return getTextureByFish((Fish) item);
+        }
+
         if (item instanceof ForagingCrop) {
             return getTextureByForagingCrop((ForagingCrop) item);
         }
@@ -131,6 +135,10 @@ public class GameAssetManager {
 
     public Texture getTextureByAnimalProduct(AnimalProduct animalProduct) {
         return new Texture(Gdx.files.internal("Images/AnimalProduct/" + toPascalCase(animalProduct.getName())) + ".png");
+    }
+
+    public Texture getTextureByFish(Fish fish) {
+        return new Texture(Gdx.files.internal("Images/Fish/" + toPascalCase(fish.getName()) + ".png"));
     }
 
     public Texture getTextureByForagingCrop(ForagingCrop foragingCrop) {
@@ -486,5 +494,17 @@ public class GameAssetManager {
 
     public Texture getFishingMiniGameWindow() {
         return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingMiniGameWindow.png"));
+    }
+
+    public Texture getFishingGreenBar() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingGreenBar.png"));
+    }
+
+    public Texture getFishIcon() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishIcon.png"));
+    }
+
+    public Texture getCrown() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png"));
     }
 }
