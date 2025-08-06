@@ -38,6 +38,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png"));
     }
 
+    public Texture getCookingMenuHover() {
+        return new Texture(Gdx.files.internal("Images/Cooking/CookingMenuHover.png"));
+    }
+
     public Texture getRefrigeratorMenu() {
         return new Texture(Gdx.files.internal("Images/Cooking/RefrigeratorMenu.png"));
     }
@@ -117,6 +121,10 @@ public class GameAssetManager {
             return getTextureByGood((Good) item);
         }
 
+        if (item instanceof Ingredient) {
+            return getTextureByIngredient((Ingredient) item);
+        }
+
         if (item instanceof Mineral) {
             return getTextureByMineral((Mineral) item);
         }
@@ -147,6 +155,10 @@ public class GameAssetManager {
 
     public Texture getTextureByGood(Good good) {
         return new Texture(Gdx.files.internal("Images/Goods/" + good.getName().replaceAll(" ", "_") + ".png"));
+    }
+
+    public Texture getTextureByIngredient(Ingredient ingredient) {
+        return new Texture(Gdx.files.internal("Images/Ingredient/" + toPascalCase(ingredient.getIngredientType().getName()) + ".png"));
     }
 
     public Texture getTextureByMineral(Mineral mineral) {
@@ -231,6 +243,16 @@ public class GameAssetManager {
         }
         String path = "Images/Menu/PlayerFriendship" + genderStr + ".png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getCraftingItemTexture(String itemName) {
+        itemName = itemName.replaceAll(" ", "");
+        String path = "Images/Craft/" + itemName + ".png";
+        return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getCraftingMenuHover() {
+        return new Texture(Gdx.files.internal("Images/Menu/CraftingMenuHover.png"));
     }
 
     public Texture getCloseButton() {
@@ -471,12 +493,6 @@ public class GameAssetManager {
 
     public Texture getDialogBox() {
         return new Texture(Gdx.files.internal("Images/NPC/DialogBox.png"));
-    }
-
-    public Texture getCraftingItemTexture(String itemName) {
-        itemName = itemName.replaceAll(" ", "");
-        String path = "Images/Craft/" + itemName + ".png";
-        return new Texture(Gdx.files.internal(path));
     }
 
     public Texture getFishingMiniGameWindow() {
