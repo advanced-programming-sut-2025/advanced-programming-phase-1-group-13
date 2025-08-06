@@ -1,8 +1,6 @@
 package com.ap_project.common.models.enums.types;
 
 import com.ap_project.common.models.*;
-import com.ap_project.common.models.farming.Crop;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,7 +53,7 @@ public enum ProcessedItemType implements ItemType {
     SMOKED_FISH("Smoked Fish", "A whole fish, smoked to perfection.", 0, 1,
             null, 0), // TODO
     METAL_BAR("Any metal bar", "Turns ore and coal into metal bars.", 0, 4,
-            null, 10 * 0); // TODO
+            null, 10); // TODO
 
     final String name;
     final String description;

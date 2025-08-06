@@ -16,6 +16,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class FarmView extends GameView {
     private ArrayList<Texture> craftsTextures;
     private ArrayList<Texture> artisansTextures;
     private ArrayList<Texture> animalsTextures;
+
+    private Artisan artisanWithMenu;
+    private Texture threeOptionMenu;
 
     private final Animation<Texture> pettingAnimation;
     private boolean isPetting;
@@ -68,6 +73,8 @@ public class FarmView extends GameView {
         this.cabinTexture = GameAssetManager.getGameAssetManager().getCabin();
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
+
+        this.threeOptionMenu = null;
 
         updateTextures();
 
@@ -208,6 +215,14 @@ public class FarmView extends GameView {
             System.out.println(e.getMessage());
         }
 
+        if (threeOptionMenu != null) {
+            scale = 1f;
+            Position position = new Position(artisanWithMenu.getPosition());
+            position.setY(position.getY() + 3);
+            position.setX(position.getX() + 1);
+            draw(threeOptionMenu, position);
+        }
+
         scale = 4.400316f;
 
         Main.getBatch().end();
@@ -312,8 +327,17 @@ public class FarmView extends GameView {
         for (int i = 0; i < artisansTextures.size(); i++) {
             Artisan artisan = farm.getArtisans().get(i);
             Position position = artisan.getPosition();
+
             if (clickedOnTexture(screenX, screenY, artisansTextures.get(i), position, scale)) {
-                goToArtisanMenu(this, artisan);
+                if (button == Input.Buttons.RIGHT) {
+                    if (threeOptionMenu == null) {
+                        threeOptionMenu = GameAssetManager.getGameAssetManager().getThreeOptions();
+                        artisanWithMenu = artisan;
+                    }
+                } else {
+                    goToArtisanMenu(this, artisan);
+                }
+                return true;
             }
         }
 

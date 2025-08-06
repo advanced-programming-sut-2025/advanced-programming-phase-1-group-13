@@ -225,6 +225,7 @@ public enum CraftType implements ItemType {
     }
 
     public ArtisanType getArtisanType() {
+        if (this == BEE_HOUSE) return ArtisanType.BEE_HOUSE;
         if (this == KEG) return ArtisanType.KEG;
         if (this == CHEESE_PRESS) return ArtisanType.CHEESE_PRESS;
         if (this == LOOM) return ArtisanType.LOOM;

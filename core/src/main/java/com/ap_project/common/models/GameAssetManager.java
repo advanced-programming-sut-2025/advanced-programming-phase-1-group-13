@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
-import org.w3c.dom.Text;
 
 public class GameAssetManager {
     private static final GameAssetManager gameAssetManager = new GameAssetManager();
@@ -286,6 +285,10 @@ public class GameAssetManager {
 
     public Texture getSliderTrack() {
         return new Texture(Gdx.files.internal("Images/Journal/SliderTrack.png"));
+    }
+
+    public Texture getThreeOptions() {
+        return new Texture(Gdx.files.internal("Images/Menu/ThreeOptions.png"));
     }
 
     public Texture getIdlePlayer(Gender gender, Direction direction) {

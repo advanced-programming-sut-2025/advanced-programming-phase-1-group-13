@@ -141,6 +141,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new FishingMiniGameView(farmView, fish));
     }
 
+    public static void goToArtisanInfo(FarmView farmView, Artisan artisan) {
+        Main.getMain().setScreen(new ArtisanInfoView(farmView, artisan));
+    }
+
     public static void goToArtisanMenu(FarmView farmView, Artisan artisan) {
         Main.getMain().setScreen(new ArtisanMenuView(farmView, artisan));
     }

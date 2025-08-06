@@ -17,7 +17,7 @@ public class Farm {
     private final int height = 55;
     private final int width = 74;
     private final ArrayList<Artisan> artisans;
-    private ArrayList<ShippingBin> shippingBins;
+    private final ArrayList<ShippingBin> shippingBins;
     private final int mapNumber;
     private Lake lake;
     private final ArrayList<Mineral> stones;
@@ -411,10 +411,6 @@ public class Farm {
 
     public ArrayList<Artisan> getArtisans() {
         return artisans;
-    }
-
-    public void addArtisans(Artisan artisan) {
-        this.artisans.add(artisan);
     }
 
     public ArrayList<Craft> getCrafts() {
