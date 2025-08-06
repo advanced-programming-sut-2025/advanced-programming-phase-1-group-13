@@ -6,10 +6,18 @@ public class Artisan {
     private final ArtisanType type;
     private Item itemPending;
     private int timeLeft; // in hours
+    private final Position position;
 
     public Artisan(ArtisanType type) {
         this.type = type;
         this.itemPending = null;
+        this.position = null;
+    }
+
+    public Artisan(ArtisanType type, Position position) {
+        this.type = type;
+        this.itemPending = null;
+        this.position = position;
     }
 
     public ArtisanType getType() {
@@ -30,5 +38,9 @@ public class Artisan {
 
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

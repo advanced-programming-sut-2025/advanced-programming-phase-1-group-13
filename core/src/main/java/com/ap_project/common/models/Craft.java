@@ -30,6 +30,10 @@ public class Craft extends Item {
         return this.craftType;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     @Override
     public String getName() {
         return this.name;

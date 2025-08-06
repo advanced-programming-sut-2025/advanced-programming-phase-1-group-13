@@ -223,4 +223,20 @@ public enum CraftType implements ItemType {
     private static HashMap<IngredientType, Integer> createIngredientsMap(Object... items) {
         return FoodType.createIngredientsMap(items); // same functionality
     }
+
+    public ArtisanType getArtisanType() {
+        if (this == KEG) return ArtisanType.KEG;
+        if (this == CHEESE_PRESS) return ArtisanType.CHEESE_PRESS;
+        if (this == LOOM) return ArtisanType.LOOM;
+        if (this == MAYONNAISE_MACHINE) return ArtisanType.MAYONNAISE_MACHINE;
+        if (this == OIL_MAKER) return ArtisanType.OIL_MAKER;
+        if (this == PRESERVES_JAR) return ArtisanType.PRESERVES_JAR;
+        if (this == DEHYDRATOR) return ArtisanType.DEHYDRATOR;
+        if (this == FISH_SMOKER) return ArtisanType.FISH_SMOKER;
+        return null;
+    }
+
+    public boolean isArtisan() {
+        return this.getArtisanType() != null;
+    }
 }

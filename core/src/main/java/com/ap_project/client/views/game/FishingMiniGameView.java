@@ -2,19 +2,21 @@ package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.client.controllers.FishingController;
+import com.ap_project.common.models.App;
 import com.ap_project.common.models.Fish;
 import com.ap_project.common.models.GameAssetManager;
-import com.ap_project.common.models.enums.Quality;
-import com.ap_project.common.models.enums.types.FishType;
+import com.ap_project.common.models.enums.Skill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.util.Random;
+import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class FishingMiniGameView implements Screen, InputProcessor {
     private Stage stage;
@@ -27,18 +29,19 @@ public class FishingMiniGameView implements Screen, InputProcessor {
     private float greenBarY;
     private final Image scoreBar;
     private float score;
+    private final Image sonarBobber;
+    private boolean isPerfect;
+    private boolean waitingForClick;
     private final GameView gameView;
     private final FishingController controller;
 
-    public FishingMiniGameView(GameView gameView) {
+    public FishingMiniGameView(GameView gameView, Fish fish) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getFishingMiniGameWindow());
         float windowX = Gdx.graphics.getWidth() / 2f + 50;
         this.windowY = Gdx.graphics.getHeight() / 2f - 300;
         window.setPosition(windowX, windowY);
 
-        // TODO: get random fishing type based on season and skill and add sonar bobber
-        this.fish = new Fish(FishType.values()[(new Random()).nextInt(FishType.values().length)], Quality.NORMAL);
-        // TODO: add orange crown if it's legendary
+        this.fish = fish;
         this.fishImage = new Image(GameAssetManager.getGameAssetManager().getFishIcon());
         fishImage.setPosition(
             windowX + 80,
@@ -46,7 +49,7 @@ public class FishingMiniGameView implements Screen, InputProcessor {
         );
 
         this.greenBar = new Image(GameAssetManager.getGameAssetManager().getFishingGreenBar());
-        greenBarY = windowY + window.getHeight() / 2;
+        greenBarY = windowY + (window.getHeight() - greenBar.getHeight()) / 2;
         greenBar.setPosition(
             windowX + 81,
             greenBarY
@@ -64,6 +67,16 @@ public class FishingMiniGameView implements Screen, InputProcessor {
             windowY + 20
         );
 
+        this.sonarBobber = new Image(GameAssetManager.getGameAssetManager().getSonarBobber());
+        sonarBobber.setPosition(
+          windowX + 155,
+          windowY + 35
+        );
+
+        this.isPerfect = true;
+
+        this.waitingForClick = false;
+
         this.controller = new FishingController(this);
         this.gameView = gameView;
     }
@@ -77,6 +90,7 @@ public class FishingMiniGameView implements Screen, InputProcessor {
         stage.addActor(greenBar);
         stage.addActor(fishImage);
         stage.addActor(scoreBar);
+        stage.addActor(sonarBobber);
         if (fish.getType().isLegendary()) {
             stage.addActor(crown);
         }
@@ -90,8 +104,33 @@ public class FishingMiniGameView implements Screen, InputProcessor {
         greenBar.setY(greenBarY);
         scoreBar.setHeight(score);
 
-        score++; // TODO: change based on if fish is on green bar or not and finish mini game if its 0 or full
-        // TODO: track if fishing was perfect and after winning, show on top of the screen if it is and increase quality and fishing skill
+        if (isFishOnGreenBar()) score++;
+        else {
+            score--;
+            isPerfect = false;
+        }
+
+        if (score == 0) Main.getMain().setScreen(gameView);
+        if (score > 430) {
+            if (isPerfect) {
+                Label perfect = new Label("Perfect!", GameAssetManager.getGameAssetManager().getSkin());
+                perfect.setColor(Color.BLACK);
+                perfect.setPosition(
+                    Gdx.graphics.getWidth() / 2f + 80,
+                    Gdx.graphics.getHeight() / 2f + 170
+                );
+                stage.addActor(perfect);
+
+                fish.setQuality(fish.getQuality().getNextQuality());
+
+                int previousSkillPoints = App.getLoggedIn().getSkillPoints().get(Skill.FISHING);
+                App.getLoggedIn().updateSkillPoints(Skill.FISHING, (int) (1.4 * previousSkillPoints));
+            }
+
+            waitingForClick = true;
+            score = 430;
+            return;
+        }
 
         stage.act(Math.min(delta, 1 / 30f));
         stage.draw();
@@ -129,13 +168,14 @@ public class FishingMiniGameView implements Screen, InputProcessor {
             return true;
         }
 
-        // TODO: restrict greenBarY
         if (keycode == Input.Keys.UP) {
             greenBarY += 10;
+            if (greenBarY > 550) greenBarY = 550;
         }
 
         if (keycode == Input.Keys.DOWN) {
             greenBarY -= 10;
+            if (greenBarY < 230) greenBarY = 230;
         }
 
         return false;
@@ -153,6 +193,28 @@ public class FishingMiniGameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (waitingForClick) {
+            App.getLoggedIn().getBackpack().addToInventory(fish, 1);
+            Main.getMain().setScreen(gameView);
+            return true;
+        }
+
+        if (hoverOnImage(sonarBobber, screenX, Gdx.graphics.getHeight() - screenY)) {
+            Image sonarBobberWindow = new Image(GameAssetManager.getGameAssetManager().getSonarBobberWindow());
+            sonarBobberWindow.setPosition(
+                sonarBobber.getX(),
+                windowY + 350
+            );
+            sonarBobberWindow.setScale(0.9f);
+            stage.addActor(sonarBobberWindow);
+
+            Image fishType = new Image(GameAssetManager.getGameAssetManager().getTextureByFish(fish));
+            fishType.setPosition(
+                sonarBobber.getX() + 35,
+                sonarBobberWindow.getY() + 12
+            );
+            stage.addActor(fishType);
+        }
         return false;
     }
 
@@ -183,5 +245,10 @@ public class FishingMiniGameView implements Screen, InputProcessor {
 
     public Image getWindow() {
         return window;
+    }
+
+    public boolean isFishOnGreenBar() {
+        return (fishImage.getY() + fishImage.getHeight()) < (greenBarY + greenBar.getHeight())
+            && fishImage.getY() > greenBarY;
     }
 }

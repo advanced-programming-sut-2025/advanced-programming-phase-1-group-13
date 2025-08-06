@@ -473,23 +473,6 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/NPC/DialogBox.png"));
     }
 
-    public static String toPascalCase(String input) {
-        if (input == null || input.isEmpty()) return "";
-
-        input = input.replaceAll("'", "");
-
-        StringBuilder pascal = new StringBuilder();
-        for (String word : input.trim().split("\\s+")) {
-            if (!word.isEmpty()) {
-                pascal.append(Character.toUpperCase(word.charAt(0)));
-                if (word.length() > 1) {
-                    pascal.append(word.substring(1).toLowerCase());
-                }
-            }
-        }
-        return pascal.toString();
-    }
-
     public Texture getCraftingItemTexture(String itemName) {
         itemName = itemName.replaceAll(" ", "");
         String path = "Images/Craft/" + itemName + ".png";
@@ -510,5 +493,34 @@ public class GameAssetManager {
 
     public Texture getCrown() {
         return new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png"));
+    }
+
+    public Texture getSonarBobber() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobber.png"));
+    }
+
+    public Texture getSonarBobberWindow() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobberWindow.png"));
+    }
+
+    public Texture getArtisan(ArtisanType artisanType, boolean isFull) {
+        return new Texture(Gdx.files.internal("Images/Artisan/" + toPascalCase(artisanType.getName()) + (isFull ? "Full" : "") + ".png"));
+    }
+
+    public static String toPascalCase(String input) {
+        if (input == null || input.isEmpty()) return "";
+
+        input = input.replaceAll("'", "");
+
+        StringBuilder pascal = new StringBuilder();
+        for (String word : input.trim().split("\\s+")) {
+            if (!word.isEmpty()) {
+                pascal.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) {
+                    pascal.append(word.substring(1).toLowerCase());
+                }
+            }
+        }
+        return pascal.toString();
     }
 }

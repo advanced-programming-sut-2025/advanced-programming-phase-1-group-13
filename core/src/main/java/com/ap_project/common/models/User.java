@@ -346,6 +346,10 @@ public class User {
         return skillLevels;
     }
 
+    public HashMap<Skill, Integer> getSkillPoints() {
+        return skillPoints;
+    }
+
     public ArrayList<CraftRecipe> getLearntCraftRecipes() {
         return learntCraftRecipes;
     }

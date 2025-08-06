@@ -3,13 +3,15 @@ package com.ap_project.client.views.game;
 import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Quality;
+import com.ap_project.common.models.enums.Skill;
 import com.ap_project.common.models.enums.environment.Direction;
-import com.ap_project.common.models.enums.types.AnimalType;
-import com.ap_project.common.models.enums.types.CraftType;
-import com.ap_project.common.models.enums.types.FarmBuildingType;
-import com.ap_project.common.models.enums.types.MineralType;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Weather;
+import com.ap_project.common.models.enums.types.*;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
+import com.ap_project.common.models.tools.FishingRod;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -17,7 +19,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.ap_project.Main.*;
 
@@ -30,7 +31,8 @@ public class FarmView extends GameView {
     private Texture woodTexture;
     private ArrayList<Texture> treesTextures;
     private ArrayList<Texture> farmBuildingsTextures;
-    private HashMap<CraftType, Texture> craftsInFarmTextures;
+    private ArrayList<Texture> craftsTextures;
+    private ArrayList<Texture> artisansTextures;
     private ArrayList<Texture> animalsTextures;
 
     private final Animation<Texture> pettingAnimation;
@@ -184,10 +186,17 @@ public class FarmView extends GameView {
                 draw(farmBuildingsTextures.get(i), position);
             }
 
-            // todo: wtf.
             scale = 1.5f;
-            for (CraftType craftType : craftsInFarmTextures.keySet()) {
-                draw(craftsInFarmTextures.get(craftType), farm.getCraftsInFarm().get(craftType));
+            for (int i = 0; i < farm.getCrafts().size(); i++) {
+                if (!farm.getCrafts().get(i).getCraftType().isArtisan()) {
+                    Position position = farm.getCrafts().get(i).getPosition();
+                    draw(craftsTextures.get(i), position);
+                }
+            }
+
+            for (int i = 0; i < farm.getArtisans().size(); i++) {
+                Position position = farm.getArtisans().get(i).getPosition();
+                draw(artisansTextures.get(i), position);
             }
 
             scale = 2;
@@ -248,8 +257,31 @@ public class FarmView extends GameView {
             }
         }
 
-        if(clickedOnTexture(screenX, screenY, lakeTexture, farm.getLake().getPosition(), scale)) {
-            goToFishingMiniGameMenu(this);
+        if (clickedOnTexture(screenX, screenY, lakeTexture, farm.getLake().getPosition(), scale)) {
+            FishingRod fishingRod;
+            if (App.getLoggedIn().getCurrentTool() instanceof FishingRod) {
+                fishingRod = (FishingRod) App.getLoggedIn().getCurrentTool();
+            } else return false;
+
+            double M;
+            Weather currentWeather = App.getCurrentGame().getGameState().getCurrentWeather();
+            if (currentWeather.equals(Weather.SUNNY)) M = 1.5;
+            else if (currentWeather.equals(Weather.RAINY)) M = 1.2;
+            else M = 0.5;
+
+            Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
+            int fishingSkillLevel = App.getLoggedIn().getSkillLevels().get(Skill.FISHING).getNumber();
+            double poleNumber = fishingRod.getRodType().getQualityNumber();
+            double qualityNumber = (Math.random() * (fishingSkillLevel + 2) * poleNumber) / (7 - M);
+            boolean canCatchLegendary = fishingSkillLevel == 4;
+
+            FishType fishType = FishType.getRandomFishType(currentSeason, canCatchLegendary, fishingRod.getRodType());
+            Quality quality = Quality.getQualityByNumber(qualityNumber);
+
+            Fish fish = new Fish(fishType, quality);
+            goToFishingMiniGameMenu(this, fish);
+            fishingRod.useTool(null, App.getLoggedIn());
+
             return true;
         }
 
@@ -264,7 +296,6 @@ public class FarmView extends GameView {
                 greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
             return true;
         }
-
 
         for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
             FarmBuilding farmBuilding = farm.getFarmBuildings().get(i);
@@ -379,10 +410,14 @@ public class FarmView extends GameView {
             farmBuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
         }
 
-        this.craftsInFarmTextures = new HashMap<>();
-        for (CraftType craftType : farm.getCraftsInFarm().keySet()) {
-            craftsInFarmTextures.put(craftType,
-                GameAssetManager.getGameAssetManager().getCraftingItemTexture(craftType.getName()));
+        this.craftsTextures = new ArrayList<>();
+        for (Craft craft : farm.getCrafts()) {
+            craftsTextures.add(GameAssetManager.getGameAssetManager().getCraftingItemTexture(craft.getCraftType().getName()));
+        }
+
+        this.artisansTextures = new ArrayList<>();
+        for (Artisan artisan : farm.getArtisans()) {
+            artisansTextures.add(GameAssetManager.getGameAssetManager().getArtisan(artisan.getType(), artisan.getItemPending() != null));
         }
 
         this.animalsTextures = new ArrayList<>();

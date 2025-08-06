@@ -571,7 +571,7 @@ public class GameController {
             int requiredAmount = entry.getValue();
 
             if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
-                return new Result(false, "You don't have enough " + ingredientType.getName());
+                return new Result(true, "You don't have enough " + ingredientType.getName()); // todo
             }
         }
         return new Result(true, "");

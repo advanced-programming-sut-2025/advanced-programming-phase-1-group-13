@@ -136,8 +136,9 @@ public class Main extends Game {
     public static void goToBuyAnimalsMenu(FarmView farmView) {
         Main.getMain().setScreen(new BuyAnimalsMenuView(farmView));
     }
-    public static void goToFishingMiniGameMenu(FarmView farmView) {
-        Main.getMain().setScreen(new FishingMiniGameView(farmView));
+
+    public static void goToFishingMiniGameMenu(FarmView farmView, Fish fish) {
+        Main.getMain().setScreen(new FishingMiniGameView(farmView, fish));
     }
 
     public static void goToCheatWindow(GameView gameView, GameController controller) {

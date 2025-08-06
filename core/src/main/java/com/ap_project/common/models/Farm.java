@@ -25,7 +25,7 @@ public class Farm {
     private final ArrayList<ForagingCrop> foragingCrops;
     private final transient Random random;
     private ArrayList<Tile> allTiles;
-    private HashMap<CraftType, Position> craftsInFarm; // TODO: fix
+    private final ArrayList<Craft> crafts;
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
@@ -34,7 +34,7 @@ public class Farm {
         this.plantedCrops = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
-        this.craftsInFarm = new HashMap<>();
+        crafts = new ArrayList<>();
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
         this.stones = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Farm {
         this.woodLogs = new ArrayList<>();
 
         for (ArtisanType artisanType : ArtisanType.values()) { // TODO: remove later
-            this.artisans.add(new Artisan(artisanType));
+            this.artisans.add(new Artisan(artisanType, new Position(60, (new Random()).nextInt(50))));
         }
 
         this.shippingBins = new ArrayList<>();
@@ -417,6 +417,10 @@ public class Farm {
         this.artisans.add(artisan);
     }
 
+    public ArrayList<Craft> getCrafts() {
+        return crafts;
+    }
+
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {
         int xTopLeft = position.getX();
         int yTopLeft = position.getY();
@@ -537,7 +541,6 @@ public class Farm {
         return farmTiles.get(random.nextInt(farmTiles.size())).getPosition();
     }
 
-
     public Artisan getFullArtisanByArtisanType(ArtisanType artisanType) {
         for (Artisan artisan : this.artisans) {
             if (artisan.getType().equals(artisanType) && artisan.getItemPending() != null) {
@@ -556,11 +559,8 @@ public class Farm {
         return null;
     }
 
-    public HashMap<CraftType, Position> getCraftsInFarm() {
-        return craftsInFarm;
-    }
-
     public void addCraftToFarm(CraftType craftType, Position position) {
-        this.craftsInFarm.put(craftType, position);
+        crafts.add(new Craft(craftType, position));
+        if (craftType.isArtisan()) artisans.add(new Artisan(craftType.getArtisanType(), position));
     }
 }
