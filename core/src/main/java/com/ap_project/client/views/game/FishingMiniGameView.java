@@ -14,12 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.Random;
+
 public class FishingMiniGameView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
     private final float windowY;
-    private final Image fish;
+    private final Fish fish;
+    private final Image fishImage;
     private final Image greenBar;
+    private final Image crown;
     private float greenBarY;
     private final Image scoreBar;
     private float score;
@@ -33,12 +37,12 @@ public class FishingMiniGameView implements Screen, InputProcessor {
         window.setPosition(windowX, windowY);
 
         // TODO: get random fishing type based on season and skill and add sonar bobber
+        this.fish = new Fish(FishType.values()[(new Random()).nextInt(FishType.values().length)], Quality.NORMAL);
         // TODO: add orange crown if it's legendary
-        this.fish = new Image(GameAssetManager.getGameAssetManager().getTextureByFish(new Fish(FishType.SUNFISH, Quality.NORMAL)));
-        fish.setScale(0.65f);
-        fish.setPosition(
+        this.fishImage = new Image(GameAssetManager.getGameAssetManager().getFishIcon());
+        fishImage.setPosition(
             windowX + 80,
-            windowY + (window.getHeight() / 2) - (fish.getHeight() / 2)
+            windowY + (window.getHeight() / 2) - (fishImage.getHeight() / 2)
         );
 
         this.greenBar = new Image(GameAssetManager.getGameAssetManager().getFishingGreenBar());
@@ -47,6 +51,10 @@ public class FishingMiniGameView implements Screen, InputProcessor {
             windowX + 81,
             greenBarY
         );
+
+        this.crown = new Image(GameAssetManager.getGameAssetManager().getCrown());
+        crown.setScale(0.65f);
+        crown.setPosition(fishImage.getX(), fishImage.getY());
 
         score = 0;
         this.scoreBar = new Image(GameAssetManager.getGameAssetManager().getGreenBar());
@@ -67,13 +75,18 @@ public class FishingMiniGameView implements Screen, InputProcessor {
 
         stage.addActor(window);
         stage.addActor(greenBar);
-        stage.addActor(fish);
+        stage.addActor(fishImage);
         stage.addActor(scoreBar);
+        if (fish.getType().isLegendary()) {
+            stage.addActor(crown);
+        }
     }
 
     @Override
     public void render(float delta) {
-        fish.setY(windowY + controller.getFishYOffset(delta));
+        fishImage.setY(windowY + controller.getFishYOffset(delta));
+        crown.setY(fishImage.getY() + 20);
+
         greenBar.setY(greenBarY);
         scoreBar.setHeight(score);
 

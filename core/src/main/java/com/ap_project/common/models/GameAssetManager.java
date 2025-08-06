@@ -499,4 +499,12 @@ public class GameAssetManager {
     public Texture getFishingGreenBar() {
         return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingGreenBar.png"));
     }
+
+    public Texture getFishIcon() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishIcon.png"));
+    }
+
+    public Texture getCrown() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png"));
+    }
 }
