@@ -255,5 +255,4 @@ public class ArtisanMenuView implements Screen, InputProcessor {
             count++;
         }
     }
-
 }

@@ -26,6 +26,7 @@ public class Farm {
     private final transient Random random;
     private ArrayList<Tile> allTiles;
     private final ArrayList<Craft> crafts;
+    private Position crow;
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
@@ -413,6 +414,14 @@ public class Farm {
 
     public ArrayList<Craft> getCrafts() {
         return crafts;
+    }
+
+    public Position getCrow() {
+        return crow;
+    }
+
+    public void setCrow(Position crow) {
+        this.crow = crow;
     }
 
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {

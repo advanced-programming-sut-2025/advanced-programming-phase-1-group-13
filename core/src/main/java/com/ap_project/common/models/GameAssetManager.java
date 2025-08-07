@@ -113,6 +113,10 @@ public class GameAssetManager {
             return getTextureByFish((Fish) item);
         }
 
+        if (item instanceof Food) {
+            return getFood(((Food) item).getFoodType(), false);
+        }
+
         if (item instanceof ForagingCrop) {
             return getTextureByForagingCrop((ForagingCrop) item);
         }

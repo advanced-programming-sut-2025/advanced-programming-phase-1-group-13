@@ -258,6 +258,9 @@ public class Game {
 
                 // TODO: update third quests
             }
+            for (int i = 0; i < 3; i++) {
+
+            }
         }
 
         for (Shop shop : NPCVillage.getShops()) {

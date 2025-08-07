@@ -1,5 +1,6 @@
 package com.ap_project.client.views.game;
 
+import com.ap_project.Main;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.Item;
@@ -52,7 +53,7 @@ public  class ToolMenuView implements Screen, InputProcessor {
         stage.addActor(window);
 
         for (int i = 0; i < toolImages.size(); i++) {
-            toolImages.get(i).setPosition( // TODO
+            toolImages.get(i).setPosition(
                 window.getX()+ 45 + 120f * i,
                 window.getY() - 140+ window.getHeight() + i % 5
             );
@@ -118,6 +119,16 @@ public  class ToolMenuView implements Screen, InputProcessor {
         if (hoverOnImage(closeButton, screenX, convertedY)) {
             getMain().setScreen(gameView);
             return true;
+        }
+
+        for (int i = 0; i < toolImages.size(); i++) {
+            if (hoverOnImage(toolImages.get(i), screenX, convertedY)) {
+                App.getLoggedIn().setCurrentTool(tools.get(i));
+                gameView.show();
+                gameView.setSelectedSlotIndex(i);
+                Main.getMain().setScreen(gameView);
+                return true;
+            }
         }
 
         return false;
