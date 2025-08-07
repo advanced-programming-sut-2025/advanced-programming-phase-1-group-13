@@ -22,7 +22,7 @@ public class ArtisanInfoView implements Screen, InputProcessor {
     private final FarmView farmView;
 
     public ArtisanInfoView(FarmView farmView, Artisan artisan) {
-        this.window = new Image(GameAssetManager.getGameAssetManager().getRefrigeratorMenu());
+        this.window = new Image(GameAssetManager.getGameAssetManager().getArtisanInfo(artisan.getType()));
         this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);

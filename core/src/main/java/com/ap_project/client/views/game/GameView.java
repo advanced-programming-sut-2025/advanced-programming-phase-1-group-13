@@ -936,6 +936,22 @@ public abstract class GameView implements Screen, InputProcessor {
             worldY <= textureY + textureHeight;
     }
 
+    protected boolean clickedOnTexture(int screenX, int screenY, Texture texture, Vector2 position, float scale) {
+        float worldX = camera.position.x - (camera.viewportWidth / 2) + screenX;
+        float worldY = camera.position.y - (camera.viewportHeight / 2) + (Gdx.graphics.getHeight() - screenY);
+
+        float textureX = position.x;
+        float textureY = originPosition.getY() * TILE_SIZE - position.y;
+
+        float textureWidth = texture.getWidth() * scale;
+        float textureHeight = texture.getHeight() * scale;
+
+        return worldX >= textureX &&
+            worldX <= textureX + textureWidth &&
+            worldY >= textureY &&
+            worldY <= textureY + textureHeight;
+    }
+
     protected void renderDebugTiles() {
         Position debugTilePosition = originPosition;
         for (int x = 0; x < 5; x++) {

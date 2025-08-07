@@ -37,9 +37,12 @@ public class FarmView extends GameView {
 
     private Artisan artisanWithMenu;
     private Texture threeOptionMenu;
-    private Texture informationButton;
-    private Texture cancelButton;
-    private Texture cheatButton;
+    private final Texture informationButton;
+    private Vector2 informationButtonPosition;
+    private final Texture cancelButton;
+    private Vector2 cancelButtonPosition;
+    private final Texture cheatButton;
+    private Vector2 cheatButtonPosition;
 
     private final Animation<Texture> pettingAnimation;
     private boolean isPetting;
@@ -227,9 +230,13 @@ public class FarmView extends GameView {
             position.setX(position.getX() + 1);
             draw(threeOptionMenu, position);
 
-            draw(informationButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 3)));
-            draw(cancelButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 2)));
-            draw(cheatButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 1)));
+            informationButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 3));
+            cancelButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 2));
+            cheatButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 1));
+
+            draw(informationButton, informationButtonPosition);
+            draw(cancelButton, cancelButtonPosition);
+            draw(cheatButton, cheatButtonPosition);
         }
 
         scale = 4.400316f;
@@ -334,17 +341,21 @@ public class FarmView extends GameView {
         }
 
         if (threeOptionMenu != null) {
-            Position position = new Position(artisanWithMenu.getPosition());
-            position.setY(position.getY() + 3);
-            position.setX(position.getX() + 1);
-            if (clickedOnTexture(screenX, screenY, threeOptionMenu, position, scale)) {
-                Result result;
-                // cancel
+            Result result;
+
+            if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition, scale)) {
+                goToArtisanInfo(this, artisanWithMenu);
+                return true;
+            }
+
+            if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, scale)) {
                 result = artisanWithMenu.cancel();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
+                return true;
+            }
 
-                // cheat
+            if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, scale)) {
                 result = artisanWithMenu.cheat();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
