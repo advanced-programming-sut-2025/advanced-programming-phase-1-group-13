@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,9 @@ public class ArtisanMenuView implements Screen, InputProcessor {
     private Image itemInArtisan;
     private final Image closeButton;
     private final Artisan artisan;
+    private ArrayList<Image> inventoryItemsImages;
+    private ArrayList<Item> inventoryItems;
+    private final Label errorMessageLabel;
     private final FarmView farmView;
 
     public ArtisanMenuView(FarmView farmView, Artisan artisan) {
@@ -41,6 +46,10 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         this.itemInArtisan = null;
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
+
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.artisan = artisan;
         this.farmView = farmView;
@@ -73,7 +82,7 @@ public class ArtisanMenuView implements Screen, InputProcessor {
 
         Label status = new Label(
             artisan.getItemPending() == null ? "Ready to use" : "Making " + artisan.getItemPending().getName(),
-            GameAssetManager.getGameAssetManager().getSkin() );
+            GameAssetManager.getGameAssetManager().getSkin());
         status.setColor(Color.BLACK);
         status.setPosition(
             name.getX() + (name.getWidth() - status.getWidth()) / 2,
@@ -94,22 +103,24 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         );
         stage.addActor(startButton);
 
+        stage.addActor(errorMessageLabel);
+
         addCloseButton();
     }
 
     @Override
     public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
         Main.getBatch().end();
 
         if (artisan.getItemPending() != null) {
-            try {
-                itemInArtisan = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(artisan.getItemPending()));
-                stage.addActor(itemInArtisan);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
+            itemInArtisan = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(artisan.getItemPending()));
+            stage.addActor(itemInArtisan);
+            itemInArtisan.setPosition(
+                916,
+                572
+            );
         }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -165,6 +176,26 @@ public class ArtisanMenuView implements Screen, InputProcessor {
             return true;
         }
 
+        for (Image image : inventoryItemsImages) {
+            if (hoverOnImage(image, screenX, convertedY)) {
+                if (artisan.getItemPending() != null) {
+                    errorMessageLabel.setText("This " + artisan.getType().getName() + " is not empty.");
+                    return false;
+                }
+
+                Item item = inventoryItems.get(inventoryItemsImages.indexOf(image));
+                Result result = artisan.startProcessing(item.getName());
+                if (result.success) {
+                    show();
+                    addItemsToInventory(-windowY - 70);
+                    errorMessageLabel.setText("");
+                } else {
+                    errorMessageLabel.setText(result.message);
+                }
+            }
+        }
+
+        errorMessageLabel.setText("");
         return false;
     }
 
@@ -204,22 +235,25 @@ public class ArtisanMenuView implements Screen, InputProcessor {
     }
 
     public void addItemsToInventory(float initialY) {
+        inventoryItemsImages = new ArrayList<>();
+        inventoryItems = new ArrayList<>();
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
-            if (count > 11) {
-                break;
-            }
-            Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
+            int row = count / 12;
 
+            Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
+            int column = count % 12;
             itemImage.setPosition(
                 ((Gdx.graphics.getWidth() - window.getWidth()) / 2 + 53.0f)
-                    + count * (itemImage.getWidth() + 15.0f),
-                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f
+                    + column * (itemImage.getWidth() + 15.0f),
+                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f - 75 * row
             );
+            inventoryItemsImages.add(itemImage);
+            inventoryItems.add(entry.getKey());
             stage.addActor(itemImage);
-
             count++;
         }
     }
+
 }

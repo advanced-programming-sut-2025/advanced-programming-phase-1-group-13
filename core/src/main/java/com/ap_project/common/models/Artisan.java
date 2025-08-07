@@ -89,16 +89,12 @@ public class Artisan {
                 }
                 return new Result(false, "You don't have enough ingredients.");
             }
-            System.out.println(itemType instanceof ProcessedItemType);
         }
 
         int processingTime = processedItemType.getProcessingTime();
         itemPending = Item.getItemByItemType(processedItemType);
         timeLeft = processingTime;
         totalTime = processingTime;
-
-        System.out.println(itemPending.getName());
-        System.out.println(itemPending instanceof ProcessedItem);
 
         return new Result(true, "Started producing " + itemPending.getName());
     }

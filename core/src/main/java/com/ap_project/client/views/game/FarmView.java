@@ -80,9 +80,9 @@ public class FarmView extends GameView {
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
 
-        for (Artisan artisan : farm.getArtisans()) {
+        for (Artisan artisan : farm.getArtisans()) { // TODO: remove later
             if (artisan.getType() == ArtisanType.LOOM) {
-                System.out.println(artisan.startProcessing("Wool"));
+                artisan.startProcessing("Wool");
             }
         }
 
@@ -398,6 +398,7 @@ public class FarmView extends GameView {
                 result = artisanWithMenu.cancel();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else {
+                    updateTextures();
                     optionsMenu = null;
                     errorMessageLabel.setText("");
                 }
