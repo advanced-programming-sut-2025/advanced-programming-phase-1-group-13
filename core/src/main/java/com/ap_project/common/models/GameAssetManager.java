@@ -508,10 +508,6 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/NPC/Portrait/" + npcType.getName() + ".png"));
     }
 
-    public Texture getNPCOptions() {
-        return new Texture(Gdx.files.internal("Images/NPC/ThreeOptions.png"));
-    }
-
     public Texture getDialogIcon() {
         return new Texture(Gdx.files.internal("Images/NPC/Dialog.png"));
     }

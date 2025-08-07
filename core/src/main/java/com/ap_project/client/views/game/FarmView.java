@@ -80,12 +80,6 @@ public class FarmView extends GameView {
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
 
-        for (Artisan artisan : farm.getArtisans()) { // TODO: remove later
-            if (artisan.getType() == ArtisanType.LOOM) {
-                artisan.startProcessing("Wool");
-            }
-        }
-
         this.optionsMenu = null;
 
         updateTextures();

@@ -25,7 +25,8 @@ public class ArtisanMenuView implements Screen, InputProcessor {
     private final float windowY;
     private final Image emptySlot;
     private final Image startButton;
-    private Image itemInArtisan;
+    private Item itemInArtisan;
+    private Image itemInArtisanImage;
     private final Image closeButton;
     private final Artisan artisan;
     private ArrayList<Image> inventoryItemsImages;
@@ -43,7 +44,7 @@ public class ArtisanMenuView implements Screen, InputProcessor {
 
         this.startButton = new Image(GameAssetManager.getGameAssetManager().getStartButton());
 
-        this.itemInArtisan = null;
+        this.itemInArtisanImage = null;
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
 
@@ -52,6 +53,8 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.artisan = artisan;
+        this.itemInArtisan = artisan.getItemPending();
+
         this.farmView = farmView;
     }
 
@@ -114,10 +117,10 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         Main.getBatch().begin();
         Main.getBatch().end();
 
-        if (artisan.getItemPending() != null) {
-            itemInArtisan = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(artisan.getItemPending()));
-            stage.addActor(itemInArtisan);
-            itemInArtisan.setPosition(
+        if (itemInArtisan != null) {
+            itemInArtisanImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(itemInArtisan));
+            stage.addActor(itemInArtisanImage);
+            itemInArtisanImage.setPosition(
                 916,
                 572
             );
@@ -179,20 +182,33 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         for (Image image : inventoryItemsImages) {
             if (hoverOnImage(image, screenX, convertedY)) {
                 if (artisan.getItemPending() != null) {
+                    System.out.println(artisan.getTimeLeft());
+                    System.out.println(artisan.getItemPending());
                     errorMessageLabel.setText("This " + artisan.getType().getName() + " is not empty.");
                     return false;
                 }
 
-                Item item = inventoryItems.get(inventoryItemsImages.indexOf(image));
-                Result result = artisan.startProcessing(item.getName());
-                if (result.success) {
-                    show();
-                    addItemsToInventory(-windowY - 70);
-                    errorMessageLabel.setText("");
-                } else {
-                    errorMessageLabel.setText(result.message);
-                }
+                itemInArtisan = inventoryItems.get(inventoryItemsImages.indexOf(image));
+                show();
+                return true;
             }
+        }
+
+        if (hoverOnImage(startButton, screenX, convertedY)) {
+            if (itemInArtisan == null) {
+                errorMessageLabel.setText("Put an item in the " + artisan.getType().getName() + " to start.");
+                return false;
+            }
+            Result result = artisan.startProcessing(itemInArtisan.getName());
+            if (result.success) {
+                errorMessageLabel.setText("");
+            } else {
+                errorMessageLabel.setText(result.message);
+                itemInArtisan = null;
+            }
+            show();
+            System.out.println("Clicked on start button: " + result.message);
+            return true;
         }
 
         errorMessageLabel.setText("");
