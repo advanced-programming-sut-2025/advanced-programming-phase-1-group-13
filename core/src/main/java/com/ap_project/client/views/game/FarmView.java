@@ -218,14 +218,6 @@ public class FarmView extends GameView {
             for (int i = 0; i < farm.getArtisans().size(); i++) {
                 Position position = farm.getArtisans().get(i).getPosition();
                 draw(artisansTextures.get(i), position);
-                if (farm.getArtisans().get(i).getItemPending() != null) {
-                    Texture progressBarWindow = GameAssetManager.getGameAssetManager().getProgressBarWindow();
-                    scale = 0.4f;
-                    Position progressBarPosition = new Position(farm.getArtisans().get(i).getPosition());
-                    progressBarPosition.setY(progressBarPosition.getY() - 2);
-                    draw(progressBarWindow, progressBarPosition);
-                    scale = 1.5f;
-                }
             }
 
             scale = 2;

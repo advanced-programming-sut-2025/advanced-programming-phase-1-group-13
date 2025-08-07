@@ -84,6 +84,7 @@ public class Artisan {
                 }
                 return new Result(false, "You don't have enough ingredients.");
             }
+            System.out.println(itemType instanceof ProcessedItemType);
         }
 
         int processingTime = processedItemType.getProcessingTime();
@@ -119,6 +120,7 @@ public class Artisan {
         }
         itemPending = null;
         timeLeft = -1;
+        System.out.println(itemPending);
         return new Result(true, "");
     }
 }

@@ -41,8 +41,7 @@ public class Farm {
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
 
-        this.artisans.add(new Artisan(ArtisanType.LOOM, new Position(74, 5)));
-// TODO: remove later
+        this.artisans.add(new Artisan(ArtisanType.LOOM, new Position(74, 5))); // TODO: remove later
 
         this.shippingBins = new ArrayList<>();
 
