@@ -1,5 +1,7 @@
 package com.ap_project.client.controllers;
 
+import com.ap_project.Main;
+import com.ap_project.client.views.game.FarmhouseView;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.environment.*;
 import com.ap_project.common.models.enums.*;
@@ -418,9 +420,9 @@ public class GameController {
 
     public Result prepareCook(String foodName) {
         User player = App.getLoggedIn();
-        if (App.getCurrentGame().getPlayerByUsername(player.getUsername()).getFarm().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
-            return new Result(false, "You can cook inside your cabin only.");
-        }
+//        if (!(Main.getMain().getScreen() instanceof FarmhouseView)) {
+//            return new Result(false, "You can cook inside your cabin only.");
+//        }
 
         CookingRecipe cookingRecipe = CookingRecipe.getCookingRecipe(foodName);
         if (cookingRecipe == null) {
@@ -437,6 +439,11 @@ public class GameController {
             homeRefrigerator,
             backpack,
             cookingRecipe.getFoodType().getIngredients());
+
+        if (!result.success){
+            return result;
+        }
+
         homeRefrigerator.addToInventory(new Food(cookingRecipe), 1);
         return new Result(true, "Yummy! Your fresh " + foodName + " added to the refrigerator.");
     }
@@ -488,28 +495,35 @@ public class GameController {
         HashMap<IngredientType, Integer> neededIngredients
     ) {
         HashMap<Item, Boolean> enoughItemInRefrigerator = new HashMap<>();
+
         for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
             Item ingredientItem = Item.getItemByItemType(entry.getKey());
             int requiredAmount = entry.getValue();
-            if (!refrigerator.getItems().containsKey(ingredientItem) && !backpack.getItems().containsKey(ingredientItem)) {
-                return new Result(false, "You don't have " + ingredientItem.getName() + " at all.");
-            }
-            if (refrigerator.getItems().get(ingredientItem) + backpack.getItems().get(ingredientItem) < requiredAmount) {
+
+            int fridgeAmount = refrigerator.getItems().getOrDefault(ingredientItem, 0);
+            int backpackAmount = backpack.getItems().getOrDefault(ingredientItem, 0);
+
+            if (fridgeAmount + backpackAmount < requiredAmount) {
                 return new Result(false, "You don't have enough " + ingredientItem.getName() + ".");
             }
-            enoughItemInRefrigerator.put(ingredientItem, refrigerator.getItems().get(ingredientItem) >= requiredAmount);
+
+            enoughItemInRefrigerator.put(ingredientItem, fridgeAmount >= requiredAmount);
         }
-        for (ItemType itemType : neededIngredients.keySet()) {
+
+        for (IngredientType itemType : neededIngredients.keySet()) {
             Item ingredientItem = Item.getItemByItemType(itemType);
             int requiredAmount = neededIngredients.get(itemType);
+            int fridgeAmount = refrigerator.getItems().getOrDefault(ingredientItem, 0);
+
             if (enoughItemInRefrigerator.get(ingredientItem)) {
                 refrigerator.removeFromInventory(ingredientItem, requiredAmount);
             } else {
-                int neededAmountFromBackpack = requiredAmount - refrigerator.getItems().get(ingredientItem);
-                refrigerator.removeFromInventory(ingredientItem, null);
+                int neededAmountFromBackpack = requiredAmount - fridgeAmount;
+                refrigerator.removeFromInventory(ingredientItem, fridgeAmount);
                 backpack.removeFromInventory(ingredientItem, neededAmountFromBackpack);
             }
         }
+
         return new Result(true, "");
     }
 

@@ -1,5 +1,6 @@
 package com.ap_project.client.views.game;
 
+import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.Artisan;
@@ -42,6 +43,10 @@ public class FarmhouseView extends GameView {
     public boolean keyDown(int keycode) {
         super.keyDown(keycode);
 
+        if (keycode == Input.Keys.R) {
+            goToRefrigeratorMenu(this);
+        }
+
         if (keycode == Input.Keys.J) {
             goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
         }
@@ -53,7 +58,12 @@ public class FarmhouseView extends GameView {
         Position refrigeratorPosition;
         if (App.getLoggedIn().getFarm().getMapNumber() == 1) refrigeratorPosition = new Position(54, 2);
         else refrigeratorPosition = new Position(8, 2);
-        if (clickedOnTexture(screenX, screenY, refrigeratorTexture, refrigeratorPosition, scale)) {
+
+        Main.getBatch().begin();
+        Main.getBatch().draw(refrigeratorTexture, refrigeratorPosition.getX(), refrigeratorPosition.getY());
+        Main.getBatch().end();
+
+        if (clickedOnTexture(screenX, screenY, refrigeratorTexture, refrigeratorPosition, scale)) { // TODO
             goToRefrigeratorMenu(this);
             return true;
         }
