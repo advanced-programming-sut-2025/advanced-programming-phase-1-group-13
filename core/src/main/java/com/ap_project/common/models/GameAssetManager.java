@@ -7,6 +7,7 @@ import com.ap_project.common.models.enums.types.*;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
+import com.ap_project.common.models.tools.FishingRod;
 import com.ap_project.common.models.tools.Scythe;
 import com.ap_project.common.models.tools.Tool;
 import com.ap_project.common.models.tools.WateringCan;
@@ -206,10 +207,15 @@ public class GameAssetManager {
 
 
     public Texture getTextureByTool(Tool tool) {
+        if (tool instanceof FishingRod) return getTextureByFishingRod((FishingRod) tool);
         String name = toPascalCase(tool.getName());
         String material = toPascalCase(tool.getToolMaterial().getName());
         String path = "Images/Tool/" + name + "/" + material + name + ".png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getTextureByFishingRod(FishingRod fishingRod) {
+        return new Texture("Images/Tool/FishingRod/" + toPascalCase(fishingRod.getType().getName()) + "FishingRod.png");
     }
 
     public Texture getTextureByTree(Tree tree) {

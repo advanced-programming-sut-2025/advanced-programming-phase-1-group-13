@@ -13,10 +13,13 @@ import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.tools.FishingRod;
+import com.ap_project.common.models.tools.Tool;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
@@ -70,18 +73,20 @@ public class FarmView extends GameView {
     private Position animalDestinationPosition;
     private boolean isAnimalWalking;
     private boolean setInsideWhenReachingDestination;
+    private  Image fishingRodImage;
 
     private Farm farm;
 
     public FarmView(GameController controller, Skin skin) {
         super(controller, skin);
-
         this.background = GameAssetManager.getGameAssetManager().getFarm(App.getCurrentGame(), App.getLoggedIn());
 
         this.farm = App.getLoggedIn().getFarm();
         this.cabinTexture = GameAssetManager.getGameAssetManager().getCabin();
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
+
+        this.fishingRodImage = null;
 
         this.optionsMenu = null;
 
@@ -330,10 +335,14 @@ public class FarmView extends GameView {
         }
 
         if (clickedOnTexture(screenX, screenY, lakeTexture, farm.getLake().getPosition(), scale)) {
-            FishingRod fishingRod;
-            if (App.getLoggedIn().getCurrentTool() instanceof FishingRod) {
-                fishingRod = (FishingRod) App.getLoggedIn().getCurrentTool();
-            } else return false;
+            FishingRod fishingRod = null;
+
+            for (Item item : App.getLoggedIn().getBackpack().getItems().keySet()) {
+                if (item instanceof FishingRod) fishingRod = (FishingRod) item;
+            }
+
+
+            if (fishingRod == null) return false;
 
             double M;
             Weather currentWeather = App.getCurrentGame().getGameState().getCurrentWeather();
@@ -351,6 +360,10 @@ public class FarmView extends GameView {
             Quality quality = Quality.getQualityByNumber(qualityNumber);
 
             Fish fish = new Fish(fishType, quality);
+
+            fishingRodImage = new Image(GameAssetManager.getGameAssetManager().getTextureByTool(fishingRod));
+            fishingRodImage.setPosition(screenX, screenY);
+            stage.addActor(fishingRodImage);
             goToFishingMiniGameMenu(this, fish);
             fishingRod.useTool(null, App.getLoggedIn());
 

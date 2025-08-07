@@ -117,8 +117,7 @@ public class User {
         this.backpack.addToInventory(new Ingredient(IngredientType.WHEAT_FLOUR),10);
         this.backpack.addToInventory(new Ingredient(IngredientType.CHEESE),10);
         this.backpack.addToInventory(new Ingredient(IngredientType.TOMATO),10);
-
-        this.backpack = new Backpack(BackpackType.INITIAL); // TODO: change to INITIAL later
+        this.backpack.addToInventory(new FishingRod(ToolMaterial.BASIC),1);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.WOOL, Quality.NORMAL, null), 10);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.COW_MILK, Quality.NORMAL, null), 10);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.CHICKEN_EGG, Quality.NORMAL, null), 10);
