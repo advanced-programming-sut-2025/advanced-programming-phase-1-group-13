@@ -218,6 +218,21 @@ public class FarmView extends GameView {
             for (int i = 0; i < farm.getArtisans().size(); i++) {
                 Position position = farm.getArtisans().get(i).getPosition();
                 draw(artisansTextures.get(i), position);
+                Artisan artisan = farm.getArtisans().get(i);
+                if (artisan.getItemPending() != null) {
+                    Texture progressBarWindow = GameAssetManager.getGameAssetManager().getProgressBarWindow();
+                    Position progressBarPosition = new Position(farm.getArtisans().get(i).getPosition());
+                    progressBarPosition.setY(progressBarPosition.getY() - 2);
+                    scale = 0.5f;
+                    draw(progressBarWindow, progressBarPosition);
+
+                    Texture progressBar = GameAssetManager.getGameAssetManager().getProgressBar();
+                    float width = (1 - (float) artisan.getTimeLeft() / artisan.getTotalTime()) * progressBarWindow.getWidth();
+                    drawProgressBar(progressBar, progressBarPosition, width);
+
+                    scale = 1.5f;
+
+                }
             }
 
             scale = 2;
@@ -356,7 +371,6 @@ public class FarmView extends GameView {
 
             if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, 1)) {
                 result = artisanWithMenu.cancel();
-                updateTextures();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
                 return true;
