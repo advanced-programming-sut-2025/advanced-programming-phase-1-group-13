@@ -103,8 +103,13 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         Main.getBatch().end();
 
         if (artisan.getItemPending() != null) {
-            itemInArtisan = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(artisan.getItemPending()));
-            stage.addActor(itemInArtisan);
+            try {
+                itemInArtisan = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(artisan.getItemPending()));
+                stage.addActor(itemInArtisan);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
         }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

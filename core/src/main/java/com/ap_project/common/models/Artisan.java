@@ -1,6 +1,11 @@
 package com.ap_project.common.models;
 
 import com.ap_project.common.models.enums.types.ArtisanType;
+import com.ap_project.common.models.enums.types.ItemType;
+import com.ap_project.common.models.enums.types.ProcessedItemType;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Artisan {
     private final ArtisanType type;
@@ -44,6 +49,51 @@ public class Artisan {
         return position;
     }
 
+    public Result startProcessing(String itemNamesString) {
+        ArrayList<String> itemNames = new ArrayList<>(Arrays.asList(itemNamesString.split("\\s+")));
+        ArrayList<ItemType> itemTypes = new ArrayList<>();
+        for (String itemName : itemNames) {
+            ItemType itemType = Item.getItemTypeByItemName(itemName);
+            if (itemType == null) {
+                return new Result(false, itemName + " is not a valid item.");
+            }
+
+            itemTypes.add(itemType);
+        }
+
+        User player = App.getLoggedIn();
+
+        if (itemPending != null) {
+            return new Result(false, "This " + type.getName() + " is already making another product.");
+        }
+
+        ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes, type);
+        if (processedItemType == null) {
+            return new Result(false, type.getName() + " does not produce any items with these ingredients.");
+        }
+
+        for (ItemType itemType : itemTypes) {
+            int quantity = processedItemType.getIngredients().get(itemType);
+            Item item = Item.getItemByItemType(itemType);
+            Result result = player.getBackpack().removeFromInventory(item, quantity);
+            if (!result.success) {
+                for (int i = 0; i < itemTypes.indexOf(itemType); i++) {
+                    Item itemToRemove = Item.getItemByItemType(itemTypes.get(i));
+                    player.getBackpack().addToInventory(itemToRemove,
+                        processedItemType.getIngredients().get(itemTypes.get(i)));
+                }
+                return new Result(false, "You don't have enough ingredients.");
+            }
+        }
+
+        int processingTime = processedItemType.getProcessingTime();
+        itemPending = Item.getItemByItemType(processedItemType);
+        timeLeft = processingTime;
+
+        return new Result(true, "Started producing " + itemPending.getName());
+    }
+
+
     public Result cancel() {
         if (itemPending == null) {
             return new Result(false, "No process to be cancelled.");
@@ -52,7 +102,7 @@ public class Artisan {
         itemPending = null;
         timeLeft = -1;
 
-        return new Result (true, "");
+        return new Result(true, "");
     }
 
     public Result cheat() {

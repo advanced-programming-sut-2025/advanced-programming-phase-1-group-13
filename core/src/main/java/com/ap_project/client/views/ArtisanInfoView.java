@@ -16,15 +16,13 @@ import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 public class ArtisanInfoView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
-    private final float windowX;
-    private final float windowY;
     private final Image closeButton;
     private final FarmView farmView;
 
     public ArtisanInfoView(FarmView farmView, Artisan artisan) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getArtisanInfo(artisan.getType()));
-        this.windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
-        this.windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
+        float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
+        float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
 
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
@@ -127,7 +125,7 @@ public class ArtisanInfoView implements Screen, InputProcessor {
 
     public void addCloseButton() {
         float buttonX = Gdx.graphics.getWidth() / 2f + 400f;
-        float buttonY = Gdx.graphics.getHeight() / 2f + 300f;
+        float buttonY = window.getY() + window.getHeight() + 20f;
 
         closeButton.setPosition(buttonX, buttonY);
         closeButton.setSize(closeButton.getWidth(), closeButton.getHeight());

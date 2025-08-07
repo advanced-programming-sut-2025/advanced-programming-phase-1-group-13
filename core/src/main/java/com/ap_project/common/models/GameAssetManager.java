@@ -129,6 +129,10 @@ public class GameAssetManager {
             return getTextureByMineral((Mineral) item);
         }
 
+        if (item instanceof ProcessedItem) {
+
+        }
+
         if (item instanceof Tool) {
             return getTextureByTool((Tool) item);
         }
@@ -138,7 +142,7 @@ public class GameAssetManager {
         }
 
         // TODO
-        return null;
+        return getLock();
     }
 
     public Texture getTextureByAnimalProduct(AnimalProduct animalProduct) {
@@ -163,6 +167,10 @@ public class GameAssetManager {
 
     public Texture getTextureByMineral(Mineral mineral) {
         return new Texture(Gdx.files.internal("Images/Mineral/" + toPascalCase(mineral.getMineralType().getName()) + ".png"));
+    }
+
+    public Texture getTextureByProcessedItem(ProcessedItem processedItem) {
+        return new Texture(Gdx.files.internal("Images/ProcessedItem/" + toPascalCase(processedItem.getName()) + ".png"));
     }
 
     public Texture getTextureByTool(Tool tool) {
@@ -530,7 +538,7 @@ public class GameAssetManager {
 
     public Texture getArtisanInfo(ArtisanType artisanType) {
         if (artisanType != ArtisanType.BEE_HOUSE) return new Texture(Gdx.files.internal("Images/Artisan/KegInfo.png"));
-        return new Texture(Gdx.files.internal("Images/Artisan/" + artisanType.getName() + "info.png"));
+        return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseinfo.png"));
     }
 
     public Texture getInformationButton() {

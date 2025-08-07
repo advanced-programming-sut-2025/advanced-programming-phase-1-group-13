@@ -1,6 +1,7 @@
 package com.ap_project.common.models;
 
 import com.ap_project.client.controllers.*;
+import com.ap_project.common.models.enums.Quality;
 import com.ap_project.common.models.enums.SecurityQuestion;
 import com.ap_project.common.models.enums.Skill;
 import com.ap_project.common.models.enums.SkillLevel;
@@ -107,6 +108,7 @@ public class User {
         learnNewCookingRecipe(new CookingRecipe(FoodType.SPAGHETTI));
         learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
         this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.WOOL, Quality.NORMAL, null), 1);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);

@@ -78,6 +78,17 @@ public class FarmView extends GameView {
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
 
+        try {
+            for (Artisan artisan : farm.getArtisans()) {
+                if (artisan.getType() == ArtisanType.LOOM) {
+                    System.out.println(artisan.startProcessing("Wool"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
         this.threeOptionMenu = null;
 
         updateTextures();
@@ -343,25 +354,26 @@ public class FarmView extends GameView {
         if (threeOptionMenu != null) {
             Result result;
 
-            if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition, scale)) {
+            if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition, 1)) {
                 goToArtisanInfo(this, artisanWithMenu);
                 return true;
             }
 
-            if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, scale)) {
+            if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, 1)) {
                 result = artisanWithMenu.cancel();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
                 return true;
             }
 
-            if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, scale)) {
+            if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, 1)) {
                 result = artisanWithMenu.cheat();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
                 return true;
             }
         }
+        threeOptionMenu = null;
         errorMessageLabel.setText("");
 
         for (int i = 0; i < artisansTextures.size(); i++) {
