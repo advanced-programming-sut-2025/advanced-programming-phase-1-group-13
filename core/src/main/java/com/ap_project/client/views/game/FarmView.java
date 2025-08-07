@@ -197,12 +197,6 @@ public class FarmView extends GameView {
                 draw(cropsTextures.get(i), position);
             }
 
-            for (int i = 0; i < farm.getPlantedTrees().size(); i++) {
-                Tree tree = farm.getPlantedTrees().get(i);
-                Position position = tree.getPosition();
-                draw(plantedTreesTextures.get(i), position);
-            }
-
             scale = 1.4f;
             for (int i = 0; i < farm.getAllFarmAnimals().size(); i++) {
                 Animal animal = farm.getAllFarmAnimals().get(i);
@@ -211,8 +205,10 @@ public class FarmView extends GameView {
                 if (animal.isOutside()) draw(animalsTextures.get(i), position);
             }
 
-            for (Position position : farm.getCrows()) {
-                draw(GameAssetManager.getGameAssetManager().getCrow(), position);
+            if (App.getCurrentGame().getGameState().getTime().getHour() == 9) {
+                for (Position position : farm.getCrows()) {
+                    draw(GameAssetManager.getGameAssetManager().getCrow(), position);
+                }
             }
 
             scale = 4.400316f;
@@ -265,8 +261,14 @@ public class FarmView extends GameView {
                 Position position = farm.getTrees().get(i).getPosition();
                 draw(treesTextures.get(i), position);
             }
+
+            for (int i = 0; i < farm.getPlantedTrees().size(); i++) {
+                Tree tree = farm.getPlantedTrees().get(i);
+                Position position = tree.getPosition();
+                draw(plantedTreesTextures.get(i), position);
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage()); e.printStackTrace();
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -446,21 +448,21 @@ public class FarmView extends GameView {
         errorMessageLabel.setText("");
 
         for (int i = 0; i < cropsTextures.size(); i++) {
-            if (clickedOnTexture(screenX, screenY, cropsTextures.get(i), farm.getPlantedCrops().get(i).getPosition(), scale)) {
+            if (clickedOnTexture(screenX, screenY, cropsTextures.get(i), farm.getPlantedCrops().get(i).getPosition(), 1.5f)) {
                 goToCropInfoMenu(this, farm.getPlantedCrops().get(i).getName());
                 return true;
             }
         }
 
         for (int i = 0; i < treesTextures.size(); i++) {
-            if (clickedOnTexture(screenX, screenY, treesTextures.get(i), farm.getTrees().get(i).getPosition(), scale)) {
+            if (clickedOnTexture(screenX, screenY, treesTextures.get(i), farm.getTrees().get(i).getPosition(), 2)) {
                 goToCropInfoMenu(this, farm.getTrees().get(i).getName());
                 return true;
             }
         }
 
         for (int i = 0; i < plantedTreesTextures.size(); i++) {
-            if (clickedOnTexture(screenX, screenY, plantedTreesTextures.get(i), farm.getPlantedTrees().get(i).getPosition(), scale)) {
+            if (clickedOnTexture(screenX, screenY, plantedTreesTextures.get(i), farm.getPlantedTrees().get(i).getPosition(), 2)) {
                 goToCropInfoMenu(this, farm.getPlantedTrees().get(i).getName());
                 return true;
             }

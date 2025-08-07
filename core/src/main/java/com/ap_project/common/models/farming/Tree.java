@@ -25,7 +25,7 @@ public class Tree extends Item implements Harvestable {
     private boolean isBurnt;
     private int stage;
     private int dayInStage;
-    private Integer daySinceLastHarvest;
+    private int daySinceLastHarvest;
     private boolean hasBeenWateredToday;
     private boolean hasBeenFertilizedToday;
 
@@ -145,13 +145,14 @@ public class Tree extends Item implements Harvestable {
     }
 
     public int getStage() {
+        if (stage > 5) stage = 5;
         return stage;
     }
 
     public void incrementStage() {
         this.stage++;
-        if (this.stage > this.numOfStages) {
-            this.stage = this.numOfStages;
+        if (this.stage > 5) {
+            this.stage = 5;
         }
     }
 
@@ -178,9 +179,7 @@ public class Tree extends Item implements Harvestable {
     }
 
     public void incrementDaySinceLastHarvest() {
-        if (daySinceLastHarvest != null) {
-            this.daySinceLastHarvest++;
-        }
+        this.daySinceLastHarvest++;
     }
 
     public boolean hasBeenWateredToday() {

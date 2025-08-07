@@ -280,12 +280,10 @@ public class Game {
             for (int i = 0; i < player.getFarm().getCropCount(); i++) {
                 if ((i % 16) == 0) {
                     if ((new Random()).nextInt(4) == 0) {
-                        Crop randomCrop = player.getFarm().getPlantedCrops().get(player.getFarm().getPlantedCrops().size() - 1);
-                        player.getFarm().getPlantedCrops().remove(randomCrop);
+                        int lastIndex = (new Random()).nextInt(player.getFarm().getPlantedCrops().size() - 1);
+                        Crop randomCrop = player.getFarm().getPlantedCrops().remove(lastIndex); // Removes AND gets in one step
                         Position crowPosition = new Position(randomCrop.getPosition());
                         crows.add(crowPosition);
-                        System.out.println("Crow attack at " + crowPosition);
-                        System.out.println("removed "+randomCrop+" at " + randomCrop.getPosition());
                     }
                 }
             }
@@ -300,6 +298,7 @@ public class Game {
         for (Tree tree : App.getLoggedIn().getFarm().getPlantedTrees()) {
             tree.incrementDaySinceLastHarvest();
             tree.incrementDayInStage();
+            System.out.println("STAGE: " + tree.getDayInStage() + "/7 in stage" + tree.getStage() + " - day since last harvest:" + tree.getDaySinceLastHarvest());
         }
 
         return new Result(true, message.toString());
