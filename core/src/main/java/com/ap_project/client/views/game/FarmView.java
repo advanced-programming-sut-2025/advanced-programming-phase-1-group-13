@@ -36,7 +36,9 @@ public class FarmView extends GameView {
     private ArrayList<Texture> animalsTextures;
 
     private Artisan artisanWithMenu;
-    private Texture threeOptionMenu;
+    private Texture optionsMenu;
+    private final Texture getItemButton;
+    private Vector2 getItemButtonPosition;
     private final Texture informationButton;
     private Vector2 informationButtonPosition;
     private final Texture cancelButton;
@@ -84,10 +86,11 @@ public class FarmView extends GameView {
             }
         }
 
-        this.threeOptionMenu = null;
+        this.optionsMenu = null;
 
         updateTextures();
 
+        this.getItemButton = GameAssetManager.getGameAssetManager().getGetItemButton();
         this.informationButton = GameAssetManager.getGameAssetManager().getInformationButton();
         this.cancelButton = GameAssetManager.getGameAssetManager().getCancelButton();
         this.cheatButton = GameAssetManager.getGameAssetManager().getCheatButton();
@@ -221,13 +224,19 @@ public class FarmView extends GameView {
                 Artisan artisan = farm.getArtisans().get(i);
                 if (artisan.getItemPending() != null) {
                     Texture progressBarWindow = GameAssetManager.getGameAssetManager().getProgressBarWindow();
-                    Position progressBarPosition = new Position(farm.getArtisans().get(i).getPosition());
-                    progressBarPosition.setY(progressBarPosition.getY() - 2);
-                    scale = 0.5f;
-                    draw(progressBarWindow, progressBarPosition);
+                    Vector2 progressBarWindowPosition = new Vector2(
+                        position.getX() * TILE_SIZE - 35,
+                        (position.getY() - 2) * TILE_SIZE
+                    );
+                    scale = 0.75f;
+                    draw(progressBarWindow, progressBarWindowPosition);
 
                     Texture progressBar = GameAssetManager.getGameAssetManager().getProgressBar();
-                    float width = (1 - (float) artisan.getTimeLeft() / artisan.getTotalTime()) * progressBarWindow.getWidth();
+                    Vector2 progressBarPosition = new Vector2(
+                        position.getX() * TILE_SIZE - 30,
+                        (position.getY() - 2) * TILE_SIZE
+                    );
+                    float width = (1 - (float) artisan.getTimeLeft() / artisan.getTotalTime()) * 140;
                     drawProgressBar(progressBar, progressBarPosition, width);
 
                     scale = 1.5f;
@@ -244,13 +253,14 @@ public class FarmView extends GameView {
             System.out.println(e.getMessage());
         }
 
-        if (threeOptionMenu != null) {
+        if (optionsMenu != null) {
             scale = 1f;
             Position position = new Position(artisanWithMenu.getPosition());
             position.setY(position.getY() + 3);
             position.setX(position.getX() + 1);
-            draw(threeOptionMenu, position);
+            draw(optionsMenu, position);
 
+            getItemButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 3.4f));
             informationButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 2.4f));
             cancelButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 1.4f));
             cheatButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 0.4f));
@@ -258,6 +268,7 @@ public class FarmView extends GameView {
             draw(informationButton, informationButtonPosition);
             draw(cancelButton, cancelButtonPosition);
             draw(cheatButton, cheatButtonPosition);
+            if (artisanWithMenu.getTimeLeft() == 0) draw(getItemButton, getItemButtonPosition);
         }
 
         scale = 4.400316f;
@@ -361,8 +372,22 @@ public class FarmView extends GameView {
             }
         }
 
-        if (threeOptionMenu != null) {
+        if (optionsMenu != null) {
             Result result;
+
+            if (artisanWithMenu.getTimeLeft() == 0) {
+                if (clickedOnTexture(screenX, screenY, getItemButton, getItemButtonPosition, 1)) {
+                    result = artisanWithMenu.collectItem();
+                    updateTextures();
+                    show();
+                    if (!result.success) errorMessageLabel.setText(result.message);
+                    else {
+                        optionsMenu = null;
+                        errorMessageLabel.setText("");
+                    }
+                    return true;
+                }
+            }
 
             if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition, 1)) {
                 goToArtisanInfo(this, artisanWithMenu);
@@ -372,20 +397,26 @@ public class FarmView extends GameView {
             if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, 1)) {
                 result = artisanWithMenu.cancel();
                 if (!result.success) errorMessageLabel.setText(result.message);
-                else errorMessageLabel.setText("");
+                else {
+                    optionsMenu = null;
+                    errorMessageLabel.setText("");
+                }
                 return true;
             }
 
             if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, 1)) {
-                result = artisanWithMenu.cheat();
+                result = artisanWithMenu.collectItem();
                 updateTextures();
                 show();
                 if (!result.success) errorMessageLabel.setText(result.message);
-                else errorMessageLabel.setText("");
+                else {
+                    optionsMenu = null;
+                    errorMessageLabel.setText("");
+                }
                 return true;
             }
         }
-        threeOptionMenu = null;
+        optionsMenu = null;
         errorMessageLabel.setText("");
 
         for (int i = 0; i < artisansTextures.size(); i++) {
@@ -394,8 +425,12 @@ public class FarmView extends GameView {
 
             if (clickedOnTexture(screenX, screenY, artisansTextures.get(i), position, scale)) {
                 if (button == Input.Buttons.RIGHT) {
-                    if (threeOptionMenu == null) {
-                        threeOptionMenu = GameAssetManager.getGameAssetManager().getThreeOptions();
+                    if (optionsMenu == null) {
+                        if (artisan.getTimeLeft() == 0) {
+                            optionsMenu = GameAssetManager.getGameAssetManager().getFourOptions();
+                        } else {
+                            optionsMenu = GameAssetManager.getGameAssetManager().getThreeOptions();
+                        }
                         artisanWithMenu = artisan;
                     }
                 } else {

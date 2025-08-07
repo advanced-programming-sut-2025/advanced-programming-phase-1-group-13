@@ -299,6 +299,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/ThreeOptions.png"));
     }
 
+    public Texture getFourOptions() {
+        return new Texture(Gdx.files.internal("Images/Menu/FourOptions.png"));
+    }
+
     public Texture getIdlePlayer(Gender gender, Direction direction) {
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {
@@ -563,6 +567,10 @@ public class GameAssetManager {
 
     public Texture getArtisanMenu() {
         return new Texture(Gdx.files.internal("Images/Artisan/ArtisanMenu.png"));
+    }
+
+    public Texture getGetItemButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/GetItemButton.png"));
     }
 
     public Texture getStartButton() {

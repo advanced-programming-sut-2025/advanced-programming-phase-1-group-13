@@ -116,7 +116,7 @@ public class Artisan {
         return new Result(true, "");
     }
 
-    public Result cheat() {
+    public Result collectItem() {
         if (itemPending == null) {
             return new Result(false, "No item is being made.");
         }
