@@ -61,6 +61,7 @@ public class User {
     private User spouse;
     private boolean isDepressed;
     private Time rejectionTime;
+    private ArrayList<Position> crows;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -152,6 +153,7 @@ public class User {
         this.currentFoodBuff = null;
         this.buffRelatedSkill = null;
         this.hoursLeftTillBuffVanishes = null;
+        this.crows = new ArrayList<>();
     }
 
     public void setPosition(Position position) {
@@ -500,6 +502,10 @@ public class User {
 
     public Time getRejectionTime() {
         return rejectionTime;
+    }
+
+    public void setCrows(ArrayList<Position> crows) {
+        this.crows = crows;
     }
 
     public void faint() {

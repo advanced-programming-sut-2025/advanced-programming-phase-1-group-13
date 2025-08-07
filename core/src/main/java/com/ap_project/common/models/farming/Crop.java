@@ -162,6 +162,14 @@ public class Crop extends Item implements Harvestable {
         if (dayInStage > stagesTimes.get(stage)) {
             dayInStage = 0;
             stage++;
+            if (this.stage >= this.numOfStages) {
+                this.stage = this.numOfStages;
+                if (!this.oneTime) {
+                    this.daySinceLastHarvest = 0;
+                } else {
+                    daySinceLastHarvest = -Integer.MAX_VALUE;
+                }
+            }
         }
     }
 
@@ -183,18 +191,6 @@ public class Crop extends Item implements Harvestable {
 
     public void setHasBeenWateredToday(boolean hasBeenWateredToday) {
         this.hasBeenWateredToday = hasBeenWateredToday;
-    }
-
-    public void incrementStage() {
-        this.stage++;
-        if (this.stage >= this.numOfStages) {
-            this.stage = this.numOfStages;
-            if (!this.oneTime) {
-                this.daySinceLastHarvest = 0;
-            } else {
-                daySinceLastHarvest = -Integer.MAX_VALUE;
-            }
-        }
     }
 
     public void setStage(Integer stage) {

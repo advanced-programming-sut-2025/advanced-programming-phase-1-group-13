@@ -13,8 +13,6 @@ import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.tools.FishingRod;
-import com.ap_project.common.models.tools.Tool;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -444,7 +442,21 @@ public class FarmView extends GameView {
 
         for (int i = 0; i < cropsTextures.size(); i++) {
             if (clickedOnTexture(screenX, screenY, cropsTextures.get(i), farm.getPlantedCrops().get(i).getPosition(), scale)) {
-                goToCropInfoMenu(this, farm.getPlantedCrops().get(i));
+                goToCropInfoMenu(this, farm.getPlantedCrops().get(i).getName());
+                return true;
+            }
+        }
+
+        for (int i = 0; i < treesTextures.size(); i++) {
+            if (clickedOnTexture(screenX, screenY, treesTextures.get(i), farm.getTrees().get(i).getPosition(), scale)) {
+                goToCropInfoMenu(this, farm.getTrees().get(i).getName());
+                return true;
+            }
+        }
+
+        for (int i = 0; i < plantedTreesTextures.size(); i++) {
+            if (clickedOnTexture(screenX, screenY, plantedTreesTextures.get(i), farm.getPlantedTrees().get(i).getPosition(), scale)) {
+                goToCropInfoMenu(this, farm.getPlantedTrees().get(i).getName());
                 return true;
             }
         }

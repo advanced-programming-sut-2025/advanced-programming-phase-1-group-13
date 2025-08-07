@@ -18,13 +18,13 @@ import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public  class CropInfoView implements Screen, InputProcessor {
     private Stage stage;
-    private final Crop crop;
+    private final String crop;
     private final Image window;
     private final Image closeButton;
     private final GameView gameView;
     private final GameController controller;
 
-    public CropInfoView(GameView gameView, Crop crop) {
+    public CropInfoView(GameView gameView, String crop) {
         this.gameView = gameView;
         this.crop = crop;
         this.window = new Image(GameAssetManager.getGameAssetManager().getCropInfoMenu());
@@ -40,11 +40,11 @@ public  class CropInfoView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
-        Label info = new Label(controller.showCraftInfo(crop.getName()).message, GameAssetManager.getGameAssetManager().getSkin());
+        Label info = new Label(controller.showCraftInfo(crop).message, GameAssetManager.getGameAssetManager().getSkin());
         info.setColor(Color.BLACK);
         info.setFontScale(0.9f);
         info.setWrap(true);
-        info.setPosition(Gdx.graphics.getWidth() / 2 - 165, Gdx.graphics.getHeight() / 2 - 215);
+        info.setPosition(Gdx.graphics.getWidth() / 2f - 165, Gdx.graphics.getHeight() / 2f - 215);
         stage.addActor(window);
         stage.addActor(info);
 

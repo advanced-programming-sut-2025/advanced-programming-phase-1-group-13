@@ -129,7 +129,7 @@ public class Main extends Game {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
     }
 
-    public static void goToCropInfoMenu(GameView gameView, Crop crop) {
+    public static void goToCropInfoMenu(GameView gameView, String crop) {
         Main.getMain().setScreen(new CropInfoView(gameView, crop));
     }
 

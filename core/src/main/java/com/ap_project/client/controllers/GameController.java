@@ -316,7 +316,7 @@ public class GameController {
             } else {
                 StringBuilder message =
                     new StringBuilder("Name: " + treeType.getName() + "\n" +
-                        "Source: " + treeType.getSource() + "\n" +
+                        "Source: " + treeType.getSource().getName() + "\n" +
                         "Stages: ");
 
                 message.append("7-7-7-7");

@@ -193,7 +193,7 @@ public abstract class Item {
             return new Fruit((FruitType) itemType);
         }
 
-        if (itemType instanceof MixedSeedsType || itemType instanceof SeedType || itemType instanceof TreeSourceType) {
+        if (itemType instanceof MixedSeedsType || itemType instanceof TreeSourceType) {
             return new PlantSource(itemType);
         }
 

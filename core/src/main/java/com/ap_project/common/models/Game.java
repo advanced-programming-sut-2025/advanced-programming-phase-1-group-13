@@ -5,7 +5,6 @@ import com.ap_project.common.models.enums.environment.Time;
 import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.ap_project.common.models.enums.types.ShopType;
-import com.ap_project.common.models.enums.types.TileType;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.trade.Trade;
@@ -194,7 +193,7 @@ public class Game {
         }
 
         StringBuilder resultMessage = new StringBuilder("New messages:\n");
-        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(newPlayer); // todo: previousPlayer OR newPlayer ?!
+        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(newPlayer);
         for (User sender : hashmap1.keySet()) {
             resultMessage.append("------------------------------------------------------------\n");
             resultMessage.append("  From ").append(sender.getUsername()).append(":\n");
@@ -258,9 +257,6 @@ public class Game {
 
                 // TODO: update third quests
             }
-            for (int i = 0; i < 3; i++) {
-
-            }
         }
 
         for (Shop shop : NPCVillage.getShops()) {
@@ -279,6 +275,19 @@ public class Game {
             player.changeBalance(income);
             message.append(player.getUsername()).append("'s shipping bins have been emptied, and they earned ")
                 .append(income).append("g.\n");
+
+
+            ArrayList<Position> crows = new ArrayList<>();
+            for (int i = 0; i < player.getFarm().getCropCount(); i++) {
+                if ((i % 16) == 0) {
+                    if ((new Random()).nextInt(4) == 0) {
+                        Crop randomCrop = player.getFarm().getPlantedCrops().get(player.getFarm().getPlantedCrops().size());
+                        Position crowPosition = new Position(randomCrop.getPosition());
+                        crows.add(crowPosition);
+                    }
+                }
+            }
+            player.setCrows(crows);
         }
 
         for (Crop crop : App.getLoggedIn().getFarm().getPlantedCrops()) {
