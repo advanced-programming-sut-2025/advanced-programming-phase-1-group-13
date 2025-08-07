@@ -18,6 +18,7 @@ public class Artisan {
         this.type = type;
         this.itemPending = null;
         this.position = null;
+        this.timeLeft = -1;
     }
 
     public Artisan(ArtisanType type, Position position) {
@@ -67,10 +68,6 @@ public class Artisan {
         }
 
         User player = App.getLoggedIn();
-
-        if (itemPending != null) {
-            return new Result(false, "This " + type.getName() + " is already making another product.");
-        }
 
         ProcessedItemType processedItemType = ProcessedItemType.getProcessedItemTypeByIngredients(itemTypes, type);
         if (processedItemType == null) {

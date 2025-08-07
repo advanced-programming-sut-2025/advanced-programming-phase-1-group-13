@@ -71,7 +71,7 @@ public class VillageView extends GameView {
             for (int i = 0; i < npcTextures.size(); i++) {
                 NPC npc = App.getCurrentGame().getNpcs().get(i);
                 if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
-                    Texture npcOptions = GameAssetManager.getGameAssetManager().getNPCOptions();
+                    Texture npcOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
                     Main.getBatch().begin();
                     draw(npcOptions, npc.getPosition());
                     Main.getBatch().end();
