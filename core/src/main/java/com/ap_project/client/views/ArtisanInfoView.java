@@ -91,6 +91,7 @@ public class ArtisanInfoView implements Screen, InputProcessor {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
+            farmView.updateTextures();
             Main.getMain().setScreen(farmView);
             return true;
         }

@@ -90,6 +90,9 @@ public class Artisan {
         itemPending = Item.getItemByItemType(processedItemType);
         timeLeft = processingTime;
 
+        System.out.println(itemPending.getName());
+        System.out.println(itemPending instanceof ProcessedItem);
+
         return new Result(true, "Started producing " + itemPending.getName());
     }
 

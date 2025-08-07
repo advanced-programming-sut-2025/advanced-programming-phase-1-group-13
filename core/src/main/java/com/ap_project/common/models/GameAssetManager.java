@@ -130,7 +130,7 @@ public class GameAssetManager {
         }
 
         if (item instanceof ProcessedItem) {
-
+            return getTextureByProcessedItem((ProcessedItem) item);
         }
 
         if (item instanceof Tool) {
@@ -539,6 +539,14 @@ public class GameAssetManager {
     public Texture getArtisanInfo(ArtisanType artisanType) {
         if (artisanType != ArtisanType.BEE_HOUSE) return new Texture(Gdx.files.internal("Images/Artisan/KegInfo.png"));
         return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseInfo.png"));
+    }
+
+    public Texture getProgressBarWindow() {
+        return new Texture(Gdx.files.internal("Images/Artisan/ProgressBarWindow.png"));
+    }
+
+    public Texture getProgressBar() {
+        return new Texture(Gdx.files.internal("Images/Artisan/ProgressBar.png"));
     }
 
     public Texture getInformationButton() {

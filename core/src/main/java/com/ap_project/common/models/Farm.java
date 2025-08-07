@@ -41,9 +41,8 @@ public class Farm {
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
 
-        for (ArtisanType artisanType : ArtisanType.values()) { // TODO: remove later
-            this.artisans.add(new Artisan(artisanType, new Position(74, (new Random()).nextInt(50))));
-        }
+        this.artisans.add(new Artisan(ArtisanType.LOOM, new Position(74, 5)));
+// TODO: remove later
 
         this.shippingBins = new ArrayList<>();
 
