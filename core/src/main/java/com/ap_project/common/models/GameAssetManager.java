@@ -538,7 +538,7 @@ public class GameAssetManager {
 
     public Texture getArtisanInfo(ArtisanType artisanType) {
         if (artisanType != ArtisanType.BEE_HOUSE) return new Texture(Gdx.files.internal("Images/Artisan/KegInfo.png"));
-        return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseinfo.png"));
+        return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseInfo.png"));
     }
 
     public Texture getInformationButton() {
