@@ -10,7 +10,8 @@ import java.util.Arrays;
 public class Artisan {
     private final ArtisanType type;
     private Item itemPending;
-    private int timeLeft; // in hours
+    private int timeLeft;
+    private int totalTime;
     private final Position position;
 
     public Artisan(ArtisanType type) {
@@ -43,6 +44,10 @@ public class Artisan {
 
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
     }
 
     public Position getPosition() {
@@ -84,15 +89,12 @@ public class Artisan {
                 }
                 return new Result(false, "You don't have enough ingredients.");
             }
-            System.out.println(itemType instanceof ProcessedItemType);
         }
 
         int processingTime = processedItemType.getProcessingTime();
         itemPending = Item.getItemByItemType(processedItemType);
         timeLeft = processingTime;
-
-        System.out.println(itemPending.getName());
-        System.out.println(itemPending instanceof ProcessedItem);
+        totalTime = processingTime;
 
         return new Result(true, "Started producing " + itemPending.getName());
     }
@@ -105,11 +107,12 @@ public class Artisan {
 
         itemPending = null;
         timeLeft = -1;
+        totalTime = -1;
 
         return new Result(true, "");
     }
 
-    public Result cheat() {
+    public Result collectItem() {
         if (itemPending == null) {
             return new Result(false, "No item is being made.");
         }
@@ -120,7 +123,7 @@ public class Artisan {
         }
         itemPending = null;
         timeLeft = -1;
-        System.out.println(itemPending);
+        totalTime = -1;
         return new Result(true, "");
     }
 }

@@ -911,6 +911,18 @@ public abstract class GameView implements Screen, InputProcessor {
         );
     }
 
+    protected void drawProgressBar(Texture texture, Vector2 position, float width) {
+        float tileX = position.x;
+        float tileY = originPosition.getY() * TILE_SIZE - position.y;
+        Main.getBatch().draw(
+            texture,
+            tileX,
+            tileY,
+            width,
+            texture.getHeight() * scale
+        );
+    }
+
     protected void draw(Texture texture, Vector2 position) {
         float tileX = position.x;
         float tileY = originPosition.getY() * TILE_SIZE - position.y;
