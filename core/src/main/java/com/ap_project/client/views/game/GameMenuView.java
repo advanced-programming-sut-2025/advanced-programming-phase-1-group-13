@@ -93,7 +93,7 @@ public class GameMenuView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1); // TODO
+        ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
         Main.getBatch().end();
 
@@ -455,8 +455,7 @@ public class GameMenuView implements Screen, InputProcessor {
                     try {
                         showCraftHover(CraftType.values()[i], screenX, screenY);
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        e.printStackTrace();
+                        System.out.println(e.getMessage()); e.printStackTrace();
                     }
                 }
             }
@@ -843,56 +842,53 @@ public class GameMenuView implements Screen, InputProcessor {
     }
 
     public void showCraftHover(CraftType craftType, float screenX, float screenY) {
-        float posX = screenX;
         float posY = Gdx.graphics.getHeight() - screenY - craftHoverImage.getHeight();
-        if (!App.getLoggedIn().hasLearntCraftRecipe(craftType)) {
-            return;
-        }
-        craftHoverImage.setPosition(posX, posY);
-        if (craftHoverImage.getStage() == null) stage.addActor(craftHoverImage);
+        if (App.getLoggedIn().hasLearntCraftRecipe(craftType)) {
+            craftHoverImage.setPosition(screenX, posY);
+            if (craftHoverImage.getStage() == null) stage.addActor(craftHoverImage);
 
-        if (craftNameLabel == null) {
-            craftNameLabel = new Label(craftType.getName(), GameAssetManager.getGameAssetManager().getSkin());
-            craftNameLabel.setColor(Color.BLACK);
-            stage.addActor(craftNameLabel);
-        } else {
-            craftNameLabel.setText(craftType.getName());
-        }
-        craftNameLabel.setPosition(posX + 20, posY + craftHoverImage.getHeight() - 68);
+            if (craftNameLabel == null) {
+                craftNameLabel = new Label(craftType.getName(), GameAssetManager.getGameAssetManager().getSkin());
+                craftNameLabel.setColor(Color.BLACK);
+                stage.addActor(craftNameLabel);
+            } else {
+                craftNameLabel.setText(craftType.getName());
+            }
+            craftNameLabel.setPosition(screenX + 20, posY + craftHoverImage.getHeight() - 68);
 
-        for (Image img : craftIngredientImages) img.remove();
-        for (Label lbl : craftIngredientQuantities) lbl.remove();
-        for (Label lbl : craftIngredientNameLabels) lbl.remove();
-        craftIngredientImages.clear();
-        craftIngredientQuantities.clear();
-        craftIngredientNameLabels.clear();
+            for (Image img : craftIngredientImages) img.remove();
+            for (Label lbl : craftIngredientQuantities) lbl.remove();
+            for (Label lbl : craftIngredientNameLabels) lbl.remove();
+            craftIngredientImages.clear();
+            craftIngredientQuantities.clear();
+            craftIngredientNameLabels.clear();
 
-        int count = 0;
-        for (Map.Entry<IngredientType, Integer> entry : craftType.getIngredients().entrySet()) {
-            Ingredient ingredient = new Ingredient(entry.getKey());
+            int count = 0;
+            for (Map.Entry<IngredientType, Integer> entry : craftType.getIngredients().entrySet()) {
+                Ingredient ingredient = new Ingredient(entry.getKey());
 
-            Image ingredientImage = new Image(GameAssetManager.getGameAssetManager().getTextureByIngredient(ingredient));
-            ingredientImage.setPosition(posX + 10, posY + craftHoverImage.getHeight() - 200 - (count * 50));
-            stage.addActor(ingredientImage);
-            craftIngredientImages.add(ingredientImage);
+                Image ingredientImage = new Image(GameAssetManager.getGameAssetManager().getTextureByIngredient(ingredient));
+                ingredientImage.setPosition(screenX + 10, posY + craftHoverImage.getHeight() - 200 - (count * 50));
+                stage.addActor(ingredientImage);
+                craftIngredientImages.add(ingredientImage);
 
-            Label quantityLabel = new Label("x" + entry.getValue(), GameAssetManager.getGameAssetManager().getSkin());
-            quantityLabel.setColor(Color.BLACK);
-            quantityLabel.setPosition(ingredientImage.getX() + 40, ingredientImage.getY());
-            stage.addActor(quantityLabel);
-            craftIngredientQuantities.add(quantityLabel);
+                Label quantityLabel = new Label("x" + entry.getValue(), GameAssetManager.getGameAssetManager().getSkin());
+                quantityLabel.setColor(Color.BLACK);
+                quantityLabel.setPosition(ingredientImage.getX() + 40, ingredientImage.getY());
+                stage.addActor(quantityLabel);
+                craftIngredientQuantities.add(quantityLabel);
 
-            Label nameLabel = new Label(ingredient.getName(), GameAssetManager.getGameAssetManager().getSkin());
-            nameLabel.setColor(Color.BLACK);
-            nameLabel.setPosition(quantityLabel.getX() + quantityLabel.getWidth() + 5, quantityLabel.getY());
-            stage.addActor(nameLabel);
-            craftIngredientNameLabels.add(nameLabel);
-            nameLabel.setFontScale(0.89f);
+                Label nameLabel = new Label(ingredient.getName(), GameAssetManager.getGameAssetManager().getSkin());
+                nameLabel.setColor(Color.BLACK);
+                nameLabel.setPosition(quantityLabel.getX() + quantityLabel.getWidth() + 5, quantityLabel.getY());
+                stage.addActor(nameLabel);
+                craftIngredientNameLabels.add(nameLabel);
+                nameLabel.setFontScale(0.89f);
 
-            count++;
+                count++;
+            }
         }
     }
-
 
     public void forceTerminateGame() {
         for (User player : App.getCurrentGame().getPlayers()) {

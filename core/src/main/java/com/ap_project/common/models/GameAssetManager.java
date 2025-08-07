@@ -619,6 +619,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Artisan/EmptySlot.png"));
     }
 
+    public Texture getCrow() {
+        return new Texture(Gdx.files.internal("Images/Animal/Crow.png"));
+    }
+
     public static String toPascalCase(String input) {
         if (input == null || input.isEmpty()) return "";
 

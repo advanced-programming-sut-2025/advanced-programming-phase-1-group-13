@@ -13,7 +13,6 @@ import com.ap_project.client.views.signup.*;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.*;
 
-import com.ap_project.common.models.farming.Crop;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -102,7 +101,7 @@ public class Main extends Game {
         Main.getMain().setScreen(gameView);
     }
 
-    public static void goToFarmhouse(GameView gameView) {
+    public static void goToFarmhouse() {
         Main.getMain().setScreen(new FarmhouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 

@@ -26,7 +26,7 @@ public class Farm {
     private final transient Random random;
     private ArrayList<Tile> allTiles;
     private final ArrayList<Craft> crafts;
-    private Position crow;
+    private ArrayList<Position> crows;
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
@@ -59,6 +59,7 @@ public class Farm {
         this.cabin = new Cabin();
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
+        this.crows = new ArrayList<>();
 
         generateBaseMapTiles();
         generateFixedElements();
@@ -426,12 +427,12 @@ public class Farm {
         return crafts;
     }
 
-    public Position getCrow() {
-        return crow;
+    public ArrayList<Position> getCrows() {
+        return crows;
     }
 
-    public void setCrow(Position crow) {
-        this.crow = crow;
+    public void setCrows(ArrayList<Position> crows) {
+        this.crows = crows;
     }
 
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {

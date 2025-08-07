@@ -218,7 +218,6 @@ public class Game {
         }
 
         for (User player : this.players) {
-
             if (player.isDepressed()) {
                 int days = Time.differenceInDays(player.getRejectionTime(), this.getGameState().getTime());
                 message.append(player.getUsername()).append("'s marriage proposal was rejected ").append(days)
@@ -281,26 +280,26 @@ public class Game {
             for (int i = 0; i < player.getFarm().getCropCount(); i++) {
                 if ((i % 16) == 0) {
                     if ((new Random()).nextInt(4) == 0) {
-                        Crop randomCrop = player.getFarm().getPlantedCrops().get(player.getFarm().getPlantedCrops().size());
+                        Crop randomCrop = player.getFarm().getPlantedCrops().get(player.getFarm().getPlantedCrops().size() - 1);
+                        player.getFarm().getPlantedCrops().remove(randomCrop);
                         Position crowPosition = new Position(randomCrop.getPosition());
                         crows.add(crowPosition);
+                        System.out.println("Crow attack at " + crowPosition);
+                        System.out.println("removed "+randomCrop+" at " + randomCrop.getPosition());
                     }
                 }
             }
-            player.setCrows(crows);
+            player.getFarm().setCrows(crows);
         }
 
         for (Crop crop : App.getLoggedIn().getFarm().getPlantedCrops()) {
             crop.incrementDaySinceLastHarvest();
             crop.incrementDayInStage();
-            //System.out.println("status of # " + App.getLoggedIn().getFarm().getPlantedCrops().indexOf(crop) + " at day " + App.getCurrentGame().getGameState().getTime().getDayInSeason() + ": " + crop.getDayInStage() + "/" + crop.getStage());
         }
 
         for (Tree tree : App.getLoggedIn().getFarm().getPlantedTrees()) {
             tree.incrementDaySinceLastHarvest();
             tree.incrementDayInStage();
-            System.out.println("status of apple tree at day " + App.getCurrentGame().getGameState().getTime().getDayInSeason() + ": " +
-                tree.getDayInStage() + "/" + tree.getStage());
         }
 
         return new Result(true, message.toString());

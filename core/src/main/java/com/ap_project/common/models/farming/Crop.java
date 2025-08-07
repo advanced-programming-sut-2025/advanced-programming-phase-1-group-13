@@ -159,7 +159,7 @@ public class Crop extends Item implements Harvestable {
 
     public void incrementDayInStage() {
         this.dayInStage++;
-        if (dayInStage > stagesTimes.get(stage)) {
+        if (dayInStage > stagesTimes.get(stage - 1)) {
             dayInStage = 0;
             stage++;
             if (this.stage >= this.numOfStages) {

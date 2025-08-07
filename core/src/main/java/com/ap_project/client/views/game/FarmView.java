@@ -211,6 +211,10 @@ public class FarmView extends GameView {
                 if (animal.isOutside()) draw(animalsTextures.get(i), position);
             }
 
+            for (Position position : farm.getCrows()) {
+                draw(GameAssetManager.getGameAssetManager().getCrow(), position);
+            }
+
             scale = 4.400316f;
             if (isAnimalWalking) {
                 draw(currentWalkingAnimalFrame, walkingAnimalPosition);
@@ -262,7 +266,8 @@ public class FarmView extends GameView {
                 draw(treesTextures.get(i), position);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()); e.printStackTrace();
+            e.printStackTrace();
         }
 
         if (optionsMenu != null) {
@@ -304,7 +309,7 @@ public class FarmView extends GameView {
         super.keyDown(keycode);
 
         if (keycode == Input.Keys.H) {
-            goToFarmhouse(this);
+            goToFarmhouse();
         }
 
         if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
@@ -369,7 +374,7 @@ public class FarmView extends GameView {
         }
 
         if (clickedOnTexture(screenX, screenY, cabinTexture, farm.getCabin().getPosition(), scale)) {
-            goToFarmhouse(this);
+            goToFarmhouse();
             return true;
         }
 

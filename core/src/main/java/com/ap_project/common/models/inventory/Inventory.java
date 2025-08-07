@@ -28,10 +28,8 @@ public abstract class Inventory {
         if (isCapacityUnlimited || this.getItems().size() < this.capacity) {
             if (this.getItems().containsKey(item)) {
                 items.put(item, this.getItems().get(item) + n);
-                System.out.println(item.getName() + " added to the inventory.");
             } else {
                 items.put(item, n);
-                System.out.println(item.getName() + " added to the inventory for the first time.");
             }
             return new Result(true, "Successfully added " + n + " of " + item.getName() + " to the inventory.");
         }

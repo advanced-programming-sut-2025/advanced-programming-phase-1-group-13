@@ -61,7 +61,6 @@ public class User {
     private User spouse;
     private boolean isDepressed;
     private Time rejectionTime;
-    private ArrayList<Position> crows;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -153,7 +152,6 @@ public class User {
         this.currentFoodBuff = null;
         this.buffRelatedSkill = null;
         this.hoursLeftTillBuffVanishes = null;
-        this.crows = new ArrayList<>();
     }
 
     public void setPosition(Position position) {
@@ -504,10 +502,6 @@ public class User {
         return rejectionTime;
     }
 
-    public void setCrows(ArrayList<Position> crows) {
-        this.crows = crows;
-    }
-
     public void faint() {
         this.energy = (int) (0.75 * this.maxEnergy);
         System.out.println("You fainted! Your energy falls to 75% of max-energy, when you wake up in the next turn.");
@@ -680,7 +674,7 @@ public class User {
         try (FileWriter writer = new FileWriter("users.json")) {
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()); e.printStackTrace();
         }
     }
 }
