@@ -541,6 +541,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/NPC/Portrait/" + npcType.getName() + ".png"));
     }
 
+    public Texture getGiveGiftButton() {
+        return new Texture(Gdx.files.internal("Images/NPC/GiveGiftButton.png"));
+    }
+
+    public Texture getFriendshipLevelButton() {
+        return new Texture(Gdx.files.internal("Images/NPC/FriendshipLevelButton.png"));
+    }
+
+    public Texture getQuestsListButton() {
+        return new Texture(Gdx.files.internal("Images/NPC/QuestsListButton.png"));
+    }
+
     public Texture getDialogIcon() {
         return new Texture(Gdx.files.internal("Images/NPC/Dialog.png"));
     }
