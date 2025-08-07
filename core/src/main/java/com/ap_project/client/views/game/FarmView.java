@@ -236,9 +236,9 @@ public class FarmView extends GameView {
             position.setX(position.getX() + 1);
             draw(threeOptionMenu, position);
 
-            informationButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 3));
-            cancelButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 2));
-            cheatButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 1));
+            informationButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 2.4f));
+            cancelButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 1.4f));
+            cheatButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 0.4f));
 
             draw(informationButton, informationButtonPosition);
             draw(cancelButton, cancelButtonPosition);

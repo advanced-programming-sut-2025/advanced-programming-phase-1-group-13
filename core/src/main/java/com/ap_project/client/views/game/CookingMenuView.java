@@ -29,6 +29,12 @@ public class CookingMenuView implements Screen, InputProcessor {
     private final Image foodHoverImage;
     private final Image closeButton;
     private final GameView gameView;
+    private Label foodNameLabel;
+    private final ArrayList<Image> ingredientImages = new ArrayList<>();
+    private final ArrayList<Label> ingredientQuantities = new ArrayList<>();
+    private final ArrayList<Label> ingredientNameLabels = new ArrayList<>();
+    private Label foodEnergyLabel;
+
 
     public CookingMenuView(GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getCookingMenu());
@@ -60,6 +66,7 @@ public class CookingMenuView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        ScreenUtils.clear(Color.BLACK);
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -135,16 +142,33 @@ public class CookingMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        if (foodHoverImage != null && foodHoverImage.getStage() != null) {
-            foodHoverImage.remove();
-        }
+        boolean hovering = false;
 
         for (Image image : foodImages) {
             if (hoverOnImage(image, screenX, Gdx.graphics.getHeight() - screenY)) {
                 FoodType foodType = FoodType.values()[foodImages.indexOf(image)];
-                if (App.getLoggedIn().hasLearntCookingRecipe(foodType)) showFoodHover(foodType, screenX, screenY);
+                if (App.getLoggedIn().hasLearntCookingRecipe(foodType)) {
+                    showFoodHover(foodType, screenX, screenY);
+                    hovering = true;
+                    break;
+                }
             }
         }
+        if (!hovering) {
+            if (foodHoverImage.getStage() != null) foodHoverImage.remove();
+            if (foodNameLabel != null) foodNameLabel.remove();
+            if (foodEnergyLabel != null) foodEnergyLabel.remove();
+            if(!ingredientNameLabels.isEmpty()) {
+                for (Label label : ingredientNameLabels) {
+                    label.remove();
+                }
+            }
+            for (Image img : ingredientImages) img.remove();
+            for (Label lbl : ingredientQuantities) lbl.remove();
+            ingredientImages.clear();
+            ingredientQuantities.clear();
+        }
+
         return false;
     }
 
@@ -206,45 +230,61 @@ public class CookingMenuView implements Screen, InputProcessor {
     }
 
     public void showFoodHover(FoodType foodType, float screenX, float screenY) {
-        foodHoverImage.setPosition(
-            screenX,
-            Gdx.graphics.getHeight() - screenY - foodHoverImage.getHeight()
-        );
-        stage.addActor(foodHoverImage);
+        float posX = screenX;
+        float posY = Gdx.graphics.getHeight() - screenY - foodHoverImage.getHeight();
 
-        Label name = new Label(foodType.getName(), GameAssetManager.getGameAssetManager().getSkin());
-        name.setColor(Color.BLACK);
-        name.setPosition(
-            foodHoverImage.getX(),
-            foodHoverImage.getY()
-        ); // TODO
-        stage.addActor(name);
+        foodHoverImage.setPosition(posX, posY);
+        if (foodHoverImage.getStage() == null) stage.addActor(foodHoverImage);
+
+        if (foodNameLabel == null) {
+            foodNameLabel = new Label(foodType.getName(), GameAssetManager.getGameAssetManager().getSkin());
+            foodNameLabel.setColor(Color.BLACK);
+            stage.addActor(foodNameLabel);
+        } else {
+            foodNameLabel.setText(foodType.getName());
+        }
+        stage.addActor(foodNameLabel);
+        foodNameLabel.setPosition(posX + 20, posY + foodHoverImage.getHeight() - 68);
+
+        for (Image img : ingredientImages) img.remove();
+        for (Label lbl : ingredientQuantities) lbl.remove();
+        for (Label lbl : ingredientNameLabels) lbl.remove();
+        ingredientImages.clear();
+        ingredientQuantities.clear();
+        ingredientNameLabels.clear();
 
         int count = 0;
-        for (IngredientType ingredient : foodType.getIngredients().keySet()) {
-            Image ingredientImage = new Image(GameAssetManager.getGameAssetManager().getTextureByIngredient(new Ingredient(ingredient)));
-            ingredientImage.setPosition( // TODO
-              foodHoverImage.getX(),
-              foodHoverImage.getY() + count * 20
-            );
+        for (Map.Entry<IngredientType, Integer> entry : foodType.getIngredients().entrySet()) {
+            Ingredient ingredient = new Ingredient(entry.getKey());
+
+            Image ingredientImage = new Image(GameAssetManager.getGameAssetManager().getTextureByIngredient(ingredient));
+            ingredientImage.setPosition(posX + 10, posY + foodHoverImage.getHeight() - 200 - (count * 45));
             stage.addActor(ingredientImage);
+            ingredientImages.add(ingredientImage);
 
-            Label quantity = new Label(foodType.getIngredients().get(ingredient) + "", GameAssetManager.getGameAssetManager().getSkin());
-            quantity.setColor(Color.BLACK);
-            quantity.setPosition( // TODO
-                ingredientImage.getX() + 5,
-                ingredientImage.getY()
-            );
+            Label quantityLabel = new Label("x" + entry.getValue(), GameAssetManager.getGameAssetManager().getSkin());
+            quantityLabel.setColor(Color.BLACK);
+            quantityLabel.setPosition(ingredientImage.getX() + 40, ingredientImage.getY());
+            stage.addActor(quantityLabel);
+            ingredientQuantities.add(quantityLabel);
 
-            Label energy = new Label(foodType.getEnergy() + "", GameAssetManager.getGameAssetManager().getSkin());
-            energy.setColor(Color.BLACK);
-            energy.setPosition( // TODO
-                ingredientImage.getX(),
-                ingredientImage.getY() + 50
-            );
-            stage.addActor(energy);
+            Label nameLabel = new Label(ingredient.getName(), GameAssetManager.getGameAssetManager().getSkin());
+            nameLabel.setColor(Color.BLACK);
+            nameLabel.setPosition(quantityLabel.getX() + quantityLabel.getWidth() + 5, quantityLabel.getY());
+            stage.addActor(nameLabel);
+            ingredientNameLabels.add(nameLabel);
+            nameLabel.setFontScale(0.89f);
 
             count++;
         }
-    }
-}
+
+        if (foodEnergyLabel == null) {
+            foodEnergyLabel = new Label("" + foodType.getEnergy(), GameAssetManager.getGameAssetManager().getSkin());
+            foodEnergyLabel.setColor(Color.BLACK);
+        } else {
+            foodEnergyLabel.setText("" + foodType.getEnergy());
+        }
+        stage.addActor(foodEnergyLabel);
+        foodEnergyLabel.setPosition(posX + 70, posY + 30);
+    }}
+

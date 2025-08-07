@@ -162,7 +162,7 @@ public class GameAssetManager {
     }
 
     public Texture getTextureByIngredient(Ingredient ingredient) {
-        return new Texture(Gdx.files.internal("Images/Ingredient/" + toPascalCase(ingredient.getIngredientType().getName()) + ".png"));
+        return new Texture(Gdx.files.internal("Images/Ingredient/" + ingredient.getIngredientType().getName().replaceAll(" ", "_") + ".png"));
     }
 
     public Texture getTextureByMineral(Mineral mineral) {
@@ -496,7 +496,7 @@ public class GameAssetManager {
     }
 
     public Texture getNPCOptions() {
-        return new Texture(Gdx.files.internal("Images/NPC/Options.png"));
+        return new Texture(Gdx.files.internal("Images/NPC/ThreeOptions.png"));
     }
 
     public Texture getDialogIcon() {
@@ -538,7 +538,7 @@ public class GameAssetManager {
 
     public Texture getArtisanInfo(ArtisanType artisanType) {
         if (artisanType != ArtisanType.BEE_HOUSE) return new Texture(Gdx.files.internal("Images/Artisan/KegInfo.png"));
-        return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseinfo.png"));
+        return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseInfo.png"));
     }
 
     public Texture getInformationButton() {
