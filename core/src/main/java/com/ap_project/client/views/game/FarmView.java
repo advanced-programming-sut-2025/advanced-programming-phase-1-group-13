@@ -9,6 +9,7 @@ import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.tools.FishingRod;
@@ -34,6 +35,7 @@ public class FarmView extends GameView {
     private ArrayList<Texture> craftsTextures;
     private ArrayList<Texture> artisansTextures;
     private ArrayList<Texture> animalsTextures;
+    private ArrayList<Texture> cropsTextures;
 
     private Artisan artisanWithMenu;
     private Texture optionsMenu;
@@ -183,6 +185,12 @@ public class FarmView extends GameView {
             for (Tile tile : farm.getWoodLogs()) {
                 Position position = tile.getPosition();
                 draw(woodTexture, position);
+            }
+
+            for (int i = 0; i < farm.getPlantedCrops().size(); i++) {
+                Crop crop = farm.getPlantedCrops().get(i);
+                Position position = crop.getPosition();
+                draw(cropsTextures.get(i), position);
             }
 
             scale = 1.4f;
@@ -550,6 +558,11 @@ public class FarmView extends GameView {
         this.animalsTextures = new ArrayList<>();
         for (Animal animal : farm.getAllFarmAnimals()) {
             animalsTextures.add(GameAssetManager.getGameAssetManager().getAnimal(animal.getAnimalType()));
+        }
+
+        this.cropsTextures = new ArrayList<>();
+        for (Crop crop : farm.getPlantedCrops()) {
+            cropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByCrop(crop));
         }
     }
 }

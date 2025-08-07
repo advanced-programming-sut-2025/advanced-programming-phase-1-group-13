@@ -4,6 +4,7 @@ import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.tools.Scythe;
@@ -109,6 +110,14 @@ public class GameAssetManager {
             return getTextureByAnimalProduct((AnimalProduct) item);
         }
 
+        if (item instanceof Craft) {
+            return getTextureByCraft((Craft) item);
+        }
+
+        if (item instanceof Crop) {
+            return getTextureByCrop((Crop) item);
+        }
+
         if (item instanceof Fish) {
             return getTextureByFish((Fish) item);
         }
@@ -151,6 +160,16 @@ public class GameAssetManager {
 
     public Texture getTextureByAnimalProduct(AnimalProduct animalProduct) {
         return new Texture(Gdx.files.internal("Images/AnimalProduct/" + toPascalCase(animalProduct.getName())) + ".png");
+    }
+
+    public Texture getTextureByCraft(Craft craft) {
+        return new Texture(Gdx.files.internal("Images/Craft/" + toPascalCase(craft.getName())) + ".png");
+    }
+
+    public Texture getTextureByCrop(Crop crop) {
+        return new Texture(Gdx.files.internal("Images/Crop/" + toPascalCase(crop.getName())+ "/"+
+            crop.getName().replaceAll(" ", "_") + "_Stage_" + crop.getStage()
+            + ".png"));
     }
 
     public Texture getTextureByFish(Fish fish) {

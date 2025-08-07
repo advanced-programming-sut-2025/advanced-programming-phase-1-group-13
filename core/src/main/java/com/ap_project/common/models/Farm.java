@@ -10,7 +10,6 @@ public class Farm {
     private Cabin cabin;
     private Greenhouse greenhouse;
     private Quarry quarry;
-    private int cropCount;
     private final ArrayList<Crop> plantedCrops;
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
@@ -30,9 +29,19 @@ public class Farm {
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
-
-        this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
+        // TODO: remove later
+        for (CropType cropType : CropType.values()) {
+            try {
+                Crop crop = new Crop(cropType, new Position(random.nextInt(width), random.nextInt(height)));
+                crop.setStage((new Random()).nextInt(cropType.getNumberOfStages()) + 1);
+                plantedCrops.add(crop);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
         crafts = new ArrayList<>();
@@ -41,11 +50,7 @@ public class Farm {
         this.stones = new ArrayList<>();
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
-
-        this.artisans.add(new Artisan(ArtisanType.LOOM, new Position(74, 5))); // TODO: remove later
-
         this.shippingBins = new ArrayList<>();
-
         this.cabin = new Cabin();
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
@@ -360,10 +365,6 @@ public class Farm {
         return null;
     }
 
-    public void setCropCount(int cropCount) {
-        this.cropCount = cropCount;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -401,7 +402,7 @@ public class Farm {
     }
 
     public int getCropCount() {
-        return cropCount;
+        return plantedCrops.size();
     }
 
     public ArrayList<FarmBuilding> getFarmBuildings() {
