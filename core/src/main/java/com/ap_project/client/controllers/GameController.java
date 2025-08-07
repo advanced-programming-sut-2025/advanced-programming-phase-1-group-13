@@ -445,6 +445,8 @@ public class GameController {
         }
 
         homeRefrigerator.addToInventory(new Food(cookingRecipe), 1);
+        System.out.println(homeRefrigerator.getItems().entrySet().size());
+
         return new Result(true, "Yummy! Your fresh " + foodName + " added to the refrigerator.");
     }
 

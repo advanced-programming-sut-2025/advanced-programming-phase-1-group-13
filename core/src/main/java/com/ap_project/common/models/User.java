@@ -110,6 +110,14 @@ public class User {
         learnNewCookingRecipe(new CookingRecipe(FoodType.COOKIE));
         learnNewCookingRecipe(new CookingRecipe(FoodType.SPAGHETTI));
         learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
+
+        this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later
+        this.backpack.addToInventory(new Ingredient(IngredientType.CORN),10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.OIL),10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.WHEAT_FLOUR),10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.CHEESE),10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.TOMATO),10);
+
         this.backpack = new Backpack(BackpackType.INITIAL); // TODO: change to INITIAL later
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.WOOL, Quality.NORMAL, null), 10);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.COW_MILK, Quality.NORMAL, null), 10);

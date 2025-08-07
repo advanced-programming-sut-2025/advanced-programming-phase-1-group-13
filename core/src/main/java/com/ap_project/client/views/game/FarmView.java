@@ -429,6 +429,13 @@ public class FarmView extends GameView {
         optionsMenu = null;
         errorMessageLabel.setText("");
 
+        for (int i = 0; i < cropsTextures.size(); i++) {
+            if (clickedOnTexture(screenX, screenY, cropsTextures.get(i), farm.getPlantedCrops().get(i).getPosition(), scale)) {
+                goToCropInfoMenu(this, farm.getPlantedCrops().get(i));
+                return true;
+            }
+        }
+
         for (int i = 0; i < artisansTextures.size(); i++) {
             Artisan artisan = farm.getArtisans().get(i);
             Position position = artisan.getPosition();

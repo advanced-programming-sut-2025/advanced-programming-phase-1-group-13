@@ -172,8 +172,8 @@ public class RefrigeratorMenuView implements Screen, InputProcessor {
             int column = count % 12;
             itemImage.setPosition(
                 ((Gdx.graphics.getWidth() - refrigeratorWindow.getWidth()) / 2 + 53.0f)
-                    + column * (itemImage.getWidth() + 15.0f),
-                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f - 75 * row
+                    + column * (itemImage.getWidth() + 15.0f) + 57,
+                initialY + 3 * Gdx.graphics.getHeight() / 4f - 90.0f - 75 * row + 28
             );
             refrigeratorItemsImages.add(itemImage);
             refrigeratorItems.add(entry.getKey());

@@ -46,6 +46,9 @@ public class GameAssetManager {
     public Texture getRefrigeratorMenu() {
         return new Texture(Gdx.files.internal("Images/Cooking/RefrigeratorMenu.png"));
     }
+    public Texture getCropInfoMenu(){
+        return new Texture(Gdx.files.internal("Images/Crop/CropInfoMenu.png"));
+    }
 
     public Texture getRefrigeratorMenuInventory() {
         return new Texture(Gdx.files.internal("Images/Cooking/Inventory.png"));
