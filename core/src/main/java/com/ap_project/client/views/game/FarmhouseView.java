@@ -2,14 +2,22 @@ package com.ap_project.client.views.game;
 
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.App;
+import com.ap_project.common.models.Artisan;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.Position;
 import com.ap_project.common.models.enums.environment.Direction;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static com.ap_project.Main.*;
+import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class FarmhouseView extends GameView {
     private final Texture refrigeratorTexture;

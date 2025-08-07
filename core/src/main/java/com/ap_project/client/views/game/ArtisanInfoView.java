@@ -1,7 +1,5 @@
-package com.ap_project.client.views;
+package com.ap_project.client.views.game;
 
-import com.ap_project.Main;
-import com.ap_project.client.views.game.FarmView;
 import com.ap_project.common.models.Artisan;
 import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
@@ -11,9 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import static com.ap_project.Main.getBatch;
+import static com.ap_project.Main.getMain;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
-public class ArtisanInfoView implements Screen, InputProcessor {
+public  class ArtisanInfoView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
     private final Image closeButton;
@@ -40,8 +40,8 @@ public class ArtisanInfoView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        Main.getBatch().begin();
-        Main.getBatch().end();
+        getBatch().begin();
+        getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -92,7 +92,7 @@ public class ArtisanInfoView implements Screen, InputProcessor {
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
             farmView.updateTextures();
-            Main.getMain().setScreen(farmView);
+            getMain().setScreen(farmView);
             return true;
         }
 

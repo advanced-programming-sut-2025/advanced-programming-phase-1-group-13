@@ -565,6 +565,9 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.M) {
             goToMap(this);
         }
+        if(keycode == Input.Keys.T) {
+            goToToolMenu(this);
+        }
 
         if (keycode == Input.Keys.R) {
             controller.cheatAdvanceTime("1");
