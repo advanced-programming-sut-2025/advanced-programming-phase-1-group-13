@@ -13,6 +13,7 @@ import com.ap_project.client.views.signup.*;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.*;
 
+import com.ap_project.common.models.farming.Crop;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -126,6 +127,10 @@ public class Main extends Game {
 
     public static void goToRefrigeratorMenu(GameView gameView) {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
+    }
+
+    public static void goToCropInfoMenu(GameView gameView, Crop crop) {
+        Main.getMain().setScreen(new CropInfoView(gameView, crop));
     }
 
     public static void goToAnimalMenu(FarmView farmView, Animal animal) {

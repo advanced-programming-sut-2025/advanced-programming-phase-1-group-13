@@ -1,18 +1,16 @@
  package com.ap_project.client.views.game;
 
-import com.ap_project.Main;
-import com.ap_project.common.models.App;
+import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.GameAssetManager;
-import com.ap_project.common.models.Item;
-import com.ap_project.common.models.tools.Tool;
+import com.ap_project.common.models.farming.Crop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import java.util.ArrayList;
 
 import static com.ap_project.Main.getBatch;
 import static com.ap_project.Main.getMain;
@@ -20,29 +18,21 @@ import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public  class CropInfoView implements Screen, InputProcessor {
     private Stage stage;
+    private final Crop crop;
     private final Image window;
-    private final ArrayList<Tool> tools;
-    private final ArrayList<Image> toolImages;
     private final Image closeButton;
     private final GameView gameView;
+    private final GameController controller;
 
-    public CropInfoView(GameView gameView) {
+    public CropInfoView(GameView gameView, Crop crop) {
         this.gameView = gameView;
-        this.window = new Image(GameAssetManager.getGameAssetManager().getToolMenu());
+        this.crop = crop;
+        this.window = new Image(GameAssetManager.getGameAssetManager().getCropInfoMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
-
-        this.tools = new ArrayList<>();
-        this.toolImages = new ArrayList<>();
-        for (Item item : App.getLoggedIn().getBackpack().getItems().keySet()) {
-            if (item instanceof Tool) {
-                tools.add((Tool) item);
-                toolImages.add(new Image(GameAssetManager.getGameAssetManager().getTextureByTool((Tool) item)));
-            }
-        }
-
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
+        this.controller = new GameController();
     }
 
     @Override
@@ -50,16 +40,13 @@ public  class CropInfoView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
+        Label info = new Label(controller.showCraftInfo(crop.getName()).message, GameAssetManager.getGameAssetManager().getSkin());
+        info.setColor(Color.BLACK);
+        info.setFontScale(0.9f);
+        info.setWrap(true);
+        info.setPosition(Gdx.graphics.getWidth() / 2 - 165, Gdx.graphics.getHeight() / 2 - 215);
         stage.addActor(window);
-
-        for (int i = 0; i < toolImages.size(); i++) {
-            toolImages.get(i).setPosition(
-                window.getX()+ 45 + 120f * i,
-                window.getY() - 140+ window.getHeight() + i % 5
-            );
-            toolImages.get(i).setScale(1.8f);
-            stage.addActor(toolImages.get(i));
-        }
+        stage.addActor(info);
 
         addCloseButton();
     }
@@ -121,15 +108,6 @@ public  class CropInfoView implements Screen, InputProcessor {
             return true;
         }
 
-        for (int i = 0; i < toolImages.size(); i++) {
-            if (hoverOnImage(toolImages.get(i), screenX, convertedY)) {
-                App.getLoggedIn().setCurrentTool(tools.get(i));
-                gameView.show();
-                gameView.setSelectedSlotIndex(i);
-                Main.getMain().setScreen(gameView);
-                return true;
-            }
-        }
 
         return false;
     }
@@ -160,8 +138,8 @@ public  class CropInfoView implements Screen, InputProcessor {
     }
 
     public void addCloseButton() {
-        float buttonX = Gdx.graphics.getWidth() / 2f + 400f;
-        float buttonY = window.getY() + window.getHeight() + 20f;
+        float buttonX = Gdx.graphics.getWidth() / 2f + 180f;
+        float buttonY = window.getY() + window.getHeight() + 3f;
 
         closeButton.setPosition(buttonX, buttonY);
         closeButton.setSize(closeButton.getWidth(), closeButton.getHeight());
