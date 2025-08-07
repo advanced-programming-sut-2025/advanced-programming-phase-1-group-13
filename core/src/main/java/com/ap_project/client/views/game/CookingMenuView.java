@@ -136,7 +136,6 @@ public class CookingMenuView implements Screen, InputProcessor {
                         Result result = gameController.prepareCook(foodType.getName());
                         if (result.success) {
                             errorLabel.setVisible(false);
-                            // inventory update she
                             Main.getMain().setScreen(gameView);
                         } else {
                             errorLabel.setText(result.message);
@@ -144,7 +143,6 @@ public class CookingMenuView implements Screen, InputProcessor {
                         }
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
-                        e.printStackTrace();
                         e.printStackTrace();
                     }
                 }
