@@ -120,6 +120,9 @@ public class Main extends Game {
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
     }
+    public static void goToToolMenu(GameView gameView) {
+        Main.getMain().setScreen(new ToolMenuView(gameView));
+    }
 
     public static void goToRefrigeratorMenu(GameView gameView) {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
@@ -152,6 +155,7 @@ public class Main extends Game {
     public static void goToCheatWindow(GameView gameView, GameController controller) {
         Main.getMain().setScreen(new CheatView(gameView, controller));
     }
+
 
     public static void goToMap(GameView gameView) {
         Main.getMain().setScreen(new MapView(gameView));

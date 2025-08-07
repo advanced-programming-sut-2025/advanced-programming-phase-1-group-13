@@ -173,6 +173,7 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/ProcessedItem/" + toPascalCase(processedItem.getName()) + ".png"));
     }
 
+
     public Texture getTextureByTool(Tool tool) {
         String name = toPascalCase(tool.getName());
         String material = toPascalCase(tool.getToolMaterial().getName());
@@ -425,6 +426,10 @@ public class GameAssetManager {
 
     public Texture getFarmBuilding(FarmBuildingType farmBuildingType) {
         return new Texture(Gdx.files.internal("Images/FarmBuilding/" + toPascalCase(farmBuildingType.getName()) + ".png"));
+    }
+
+    public Texture getToolMenu() {
+        return new Texture("Images/Tool/ToolMenu.png");
     }
 
     public Texture getAnimalLivingSpaceMenu() {
