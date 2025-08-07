@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,9 +17,20 @@ import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 
+import static com.ap_project.Main.goToGameMenu;
+import static com.ap_project.Main.goToJournal;
+
 public class VillageView extends GameView {
     private final ArrayList<Texture> shopTextures;
     private final ArrayList<Texture> npcTextures;
+    private NPC npcWithMenu;
+    private Texture npcOptions;
+    private final Texture giveGiftButton;
+    private Vector2 giveGiftPosition;
+    private final Texture QuestsListButton;
+    private Vector2 QuestsListPosition;
+    private final Texture friendshipLevelButton;
+    private Vector2 FriendshipLevelPosition;
 
     public VillageView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -33,6 +45,12 @@ public class VillageView extends GameView {
         for (NPCType npcType : NPCType.values()) {
             npcTextures.add(GameAssetManager.getGameAssetManager().getNPC(npcType));
         }
+
+        this.npcOptions = null;
+
+        this.friendshipLevelButton = GameAssetManager.getGameAssetManager().getFriendshipLevelButton();
+        this.giveGiftButton = GameAssetManager.getGameAssetManager().getGiveGiftButton();
+        this.QuestsListButton = GameAssetManager.getGameAssetManager().getQuestsListButton();
     }
 
     @Override
@@ -58,6 +76,24 @@ public class VillageView extends GameView {
                 scale = temp;
             }
         }
+
+        if (npcOptions != null) {
+            scale = 1f;
+            Position position = new Position(npcWithMenu.getPosition());
+            position.setY(position.getY() + 3);
+            position.setX(position.getX() + 1);
+            draw(npcOptions, position);
+
+            // todo
+            giveGiftPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 2.4f));
+            QuestsListPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 1.4f));
+            FriendshipLevelPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 0.4f));
+
+            draw(giveGiftButton, giveGiftPosition);
+            draw(QuestsListButton, QuestsListPosition);
+            draw(friendshipLevelButton, FriendshipLevelPosition);
+        }
+
         scale = 4.400316f;
 
         Main.getBatch().end();
@@ -71,10 +107,8 @@ public class VillageView extends GameView {
             for (int i = 0; i < npcTextures.size(); i++) {
                 NPC npc = App.getCurrentGame().getNpcs().get(i);
                 if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
-                    Texture npcOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
-                    Main.getBatch().begin();
-                    draw(npcOptions, npc.getPosition());
-                    Main.getBatch().end();
+                    npcOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
+                    npcWithMenu = npc;
                 }
             }
         }
@@ -89,6 +123,18 @@ public class VillageView extends GameView {
                 }
                 return true;
             }
+        }
+
+        if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition, scale)) {
+            // todo
+        }
+
+        if (clickedOnTexture(screenX, screenY, friendshipLevelButton, FriendshipLevelPosition,scale)) {
+            goToGameMenu(this);
+        }
+
+        if (clickedOnTexture(screenX, screenY, QuestsListButton, QuestsListPosition, scale)) {
+            goToJournal(this);
         }
 
         show();
