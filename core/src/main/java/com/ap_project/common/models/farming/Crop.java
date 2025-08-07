@@ -159,6 +159,10 @@ public class Crop extends Item implements Harvestable {
 
     public void incrementDayInStage() {
         this.dayInStage++;
+        if (dayInStage > stagesTimes.get(stage)) {
+            dayInStage = 0;
+            stage++;
+        }
     }
 
     public void setDaySinceLastHarvest(Integer daySinceLastHarvest) {
@@ -187,6 +191,8 @@ public class Crop extends Item implements Harvestable {
             this.stage = this.numOfStages;
             if (!this.oneTime) {
                 this.daySinceLastHarvest = 0;
+            } else {
+                daySinceLastHarvest = -Integer.MAX_VALUE;
             }
         }
     }

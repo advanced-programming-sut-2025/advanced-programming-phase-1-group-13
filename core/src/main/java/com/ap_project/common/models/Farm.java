@@ -11,6 +11,7 @@ public class Farm {
     private Greenhouse greenhouse;
     private Quarry quarry;
     private final ArrayList<Crop> plantedCrops;
+    private final ArrayList<Tree> plantedTrees;
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
     private final int height = 55;
@@ -30,17 +31,21 @@ public class Farm {
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
         this.plantedCrops = new ArrayList<>();
+        this.plantedTrees = new ArrayList<>();
         // TODO: remove later
-        for (CropType cropType : CropType.values()) {
-            try {
-                Crop crop = new Crop(cropType, new Position(random.nextInt(width), random.nextInt(height)));
-                crop.setStage((new Random()).nextInt(cropType.getNumberOfStages()) + 1);
-                plantedCrops.add(crop);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
+//        for (CropType cropType : CropType.values()) {
+//            for (int i = 1; i <= cropType.getNumberOfStages() ; i++) {
+//                Crop crop = new Crop(cropType, new Position(random.nextInt(width), random.nextInt(height)));
+//                crop.setStage((new Random()).nextInt(cropType.getNumberOfStages()) + 1);
+//                plantedCrops.add(crop);
+//                if (crop.getStage() == cropType.getNumberOfStages()) {
+//                    if (crop.isCanBecomeGiant()) crop.setGiant(true);
+//                }
+//            }
+//        }
+        Crop crop = new Crop(CropType.BLUEBERRY, new Position(73, 6));
+        plantedCrops.add(crop);
+        plantedTrees.add(new Tree(TreeType.APPLE_TREE, new Tile(new Position(72, 10))));
 
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
@@ -395,6 +400,10 @@ public class Farm {
 
     public ArrayList<Crop> getPlantedCrops() {
         return this.plantedCrops;
+    }
+
+    public ArrayList<Tree> getPlantedTrees() {
+        return plantedTrees;
     }
 
     public ArrayList<Tree> getTrees() {

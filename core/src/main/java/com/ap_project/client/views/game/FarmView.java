@@ -36,6 +36,7 @@ public class FarmView extends GameView {
     private ArrayList<Texture> artisansTextures;
     private ArrayList<Texture> animalsTextures;
     private ArrayList<Texture> cropsTextures;
+    private ArrayList<Texture> plantedTreesTextures;
 
     private Artisan artisanWithMenu;
     private Texture optionsMenu;
@@ -191,6 +192,12 @@ public class FarmView extends GameView {
                 Crop crop = farm.getPlantedCrops().get(i);
                 Position position = crop.getPosition();
                 draw(cropsTextures.get(i), position);
+            }
+
+            for (int i = 0; i < farm.getPlantedTrees().size(); i++) {
+                Tree tree = farm.getPlantedTrees().get(i);
+                Position position = tree.getPosition();
+                draw(plantedTreesTextures.get(i), position);
             }
 
             scale = 1.4f;
@@ -563,6 +570,11 @@ public class FarmView extends GameView {
         this.cropsTextures = new ArrayList<>();
         for (Crop crop : farm.getPlantedCrops()) {
             cropsTextures.add(GameAssetManager.getGameAssetManager().getTextureByCrop(crop));
+        }
+
+        this.plantedTreesTextures = new ArrayList<>();
+        for (Tree tree : farm.getPlantedTrees()) {
+            plantedTreesTextures.add(GameAssetManager.getGameAssetManager().getTextureByTree(tree));
         }
     }
 }

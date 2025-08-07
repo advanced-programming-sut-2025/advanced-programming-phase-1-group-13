@@ -278,29 +278,20 @@ public class Game {
             }
             player.changeBalance(income);
             message.append(player.getUsername()).append("'s shipping bins have been emptied, and they earned ")
-                    .append(income).append("g.\n");
+                .append(income).append("g.\n");
         }
 
-        for (Tile tile : getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getAllTiles()) {
-            if (tile.getType() == TileType.TREE) {
-                Tree tree = (Tree) tile.getItemPlacedOnTile();
-                tree.incrementDaySinceLastHarvest();
+        for (Crop crop : App.getLoggedIn().getFarm().getPlantedCrops()) {
+            crop.incrementDaySinceLastHarvest();
+            crop.incrementDayInStage();
+            //System.out.println("status of # " + App.getLoggedIn().getFarm().getPlantedCrops().indexOf(crop) + " at day " + App.getCurrentGame().getGameState().getTime().getDayInSeason() + ": " + crop.getDayInStage() + "/" + crop.getStage());
+        }
 
-                tree.incrementDayInStage();
-                if (tree.getDayInStage() == tree.getStage()) {
-                    tree.incrementStage();
-                }
-
-            } else if (tile.getType() == TileType.GROWING_CROP) {
-                Crop crop = (Crop) tile.getItemPlacedOnTile();
-                crop.incrementDaySinceLastHarvest();
-
-                crop.incrementDayInStage();
-                if (crop.getDayInStage() == crop.getStagesTimes().get(crop.getStage())) {
-                    crop.incrementStage();
-                }
-
-            }
+        for (Tree tree : App.getLoggedIn().getFarm().getPlantedTrees()) {
+            tree.incrementDaySinceLastHarvest();
+            tree.incrementDayInStage();
+            System.out.println("status of apple tree at day " + App.getCurrentGame().getGameState().getTime().getDayInSeason() + ": " +
+                tree.getDayInStage() + "/" + tree.getStage());
         }
 
         return new Result(true, message.toString());
@@ -388,19 +379,19 @@ public class Game {
 
     private void saveGameState() {
         Gson gson = new GsonBuilder()
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        return f.getName().equals("activeGame");
-                    }
+            .setExclusionStrategies(new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().equals("activeGame");
+                }
 
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
-                .setPrettyPrinting()
-                .create();
+                @Override
+                public boolean shouldSkipClass(Class<?> clazz) {
+                    return false;
+                }
+            })
+            .setPrettyPrinting()
+            .create();
 
         try (FileWriter writer = new FileWriter("games.json")) {
             writer.write(gson.toJson(App.getGames()));

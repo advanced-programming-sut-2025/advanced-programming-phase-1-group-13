@@ -452,7 +452,6 @@ public class GameMenuView implements Screen, InputProcessor {
         if (currentTab == GameMenuType.CRAFTING) {
             for (int i = 0; i < craftImages.size(); i++) {
                 if (hoverOnImage(craftImages.get(i), screenX, Gdx.graphics.getHeight() - screenY)) {
-                    System.out.println("Hovered");
                     try {
                         showCraftHover(CraftType.values()[i], screenX, screenY);
                     } catch (Exception e) {

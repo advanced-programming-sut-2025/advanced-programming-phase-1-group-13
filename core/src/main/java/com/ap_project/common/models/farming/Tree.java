@@ -14,10 +14,8 @@ public class Tree extends Item implements Harvestable {
     private TreeType type;
     private PlantSource source;
     private String name;
-
     private int numOfStages;
     private int totalHarvestTime;
-
     private int baseSellPrice;
     private boolean isEdible;
     private Integer energy;
@@ -62,10 +60,9 @@ public class Tree extends Item implements Harvestable {
 
         this.isBurnt = false;
         this.dayInStage = 0;
-        this.stage = 0;
+        this.stage = 1;
 
         this.hasBeenWateredToday = false;
-
     }
 
     public Tree(TreeType type, Tile tile, int stage) {
@@ -169,6 +166,12 @@ public class Tree extends Item implements Harvestable {
 
     public void incrementDayInStage() {
         this.dayInStage++;
+        if (dayInStage > 7) {
+            dayInStage = 0;
+            stage++;
+        }
+
+        if (stage == 5) daySinceLastHarvest = fruitHarvestCycle;
     }
 
     public Integer getDaySinceLastHarvest() {
@@ -202,7 +205,7 @@ public class Tree extends Item implements Harvestable {
     }
 
     public boolean hasFruits() {
-        return (stage == 5) && (daySinceLastHarvest == fruitHarvestCycle);
+        return (stage == 5) && (daySinceLastHarvest >= fruitHarvestCycle);
     }
 
     @Override

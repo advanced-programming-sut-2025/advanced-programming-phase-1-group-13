@@ -167,7 +167,12 @@ public class GameAssetManager {
     }
 
     public Texture getTextureByCrop(Crop crop) {
-        return new Texture(Gdx.files.internal("Images/Crop/" + toPascalCase(crop.getName())+ "/"+
+        if (crop.isGiant()) {
+            return new Texture(Gdx.files.internal(
+                "Images/Crop/" + toPascalCase(crop.getName()) + "/Giant_" + toPascalCase(crop.getName())) + ".png");
+        }
+
+        return new Texture(Gdx.files.internal("Images/Crop/" + toPascalCase(crop.getName()) + "/" +
             crop.getName().replaceAll(" ", "_") + "_Stage_" + crop.getStage()
             + ".png"));
     }
