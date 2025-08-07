@@ -528,6 +528,22 @@ public class GameAssetManager {
             (artisan.getItemPending() != null ? "Full" : "") + ".png"));
     }
 
+    public Texture getArtisanInfo(ArtisanType artisanType) {
+        return new Texture(Gdx.files.internal("Images/Artisan/" + artisanType.getName() + "info.png"));
+    }
+
+    public Texture getInformationButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/InformationButton.png"));
+    }
+
+    public Texture getCancelButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/CancelButton.png"));
+    }
+
+    public Texture getCheatButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/CheatButton.png"));
+    }
+
     public Texture getArtisanMenu() {
         return new Texture(Gdx.files.internal("Images/Artisan/ArtisanMenu.png"));
     }

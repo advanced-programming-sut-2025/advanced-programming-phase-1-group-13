@@ -16,8 +16,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
@@ -39,6 +37,9 @@ public class FarmView extends GameView {
 
     private Artisan artisanWithMenu;
     private Texture threeOptionMenu;
+    private Texture informationButton;
+    private Texture cancelButton;
+    private Texture cheatButton;
 
     private final Animation<Texture> pettingAnimation;
     private boolean isPetting;
@@ -77,6 +78,10 @@ public class FarmView extends GameView {
         this.threeOptionMenu = null;
 
         updateTextures();
+
+        this.informationButton = GameAssetManager.getGameAssetManager().getInformationButton();
+        this.cancelButton = GameAssetManager.getGameAssetManager().getCancelButton();
+        this.cheatButton = GameAssetManager.getGameAssetManager().getCheatButton();
 
         this.pettingAnimation = GameAssetManager.getGameAssetManager().getPettingAnimation();
         this.animalBeingPet = null;
@@ -221,6 +226,10 @@ public class FarmView extends GameView {
             position.setY(position.getY() + 3);
             position.setX(position.getX() + 1);
             draw(threeOptionMenu, position);
+
+            draw(informationButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 3)));
+            draw(cancelButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 2)));
+            draw(cheatButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 1)));
         }
 
         scale = 4.400316f;
@@ -323,6 +332,26 @@ public class FarmView extends GameView {
                 return true;
             }
         }
+
+        if (threeOptionMenu != null) {
+            Position position = new Position(artisanWithMenu.getPosition());
+            position.setY(position.getY() + 3);
+            position.setX(position.getX() + 1);
+            if (clickedOnTexture(screenX, screenY, threeOptionMenu, position, scale)) {
+                Result result;
+                // cancel
+                result = artisanWithMenu.cancel();
+                if (!result.success) errorMessageLabel.setText(result.message);
+                else errorMessageLabel.setText("");
+
+                // cheat
+                result = artisanWithMenu.cheat();
+                if (!result.success) errorMessageLabel.setText(result.message);
+                else errorMessageLabel.setText("");
+                return true;
+            }
+        }
+        errorMessageLabel.setText("");
 
         for (int i = 0; i < artisansTextures.size(); i++) {
             Artisan artisan = farm.getArtisans().get(i);

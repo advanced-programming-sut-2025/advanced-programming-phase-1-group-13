@@ -10,6 +10,7 @@ import com.ap_project.common.models.enums.environment.Direction;
 
 import com.ap_project.common.models.tools.Tool;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -80,6 +81,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected int lightningY;
     protected boolean hasTriggeredLightningTransition;
     protected final Image lightCircle;
+    protected final Label errorMessageLabel;
 
     public GameView(GameController controller, Skin skin) {
         this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
@@ -146,6 +148,10 @@ public abstract class GameView implements Screen, InputProcessor {
         this.lightCircle = new Image(GameAssetManager.getGameAssetManager().getCircle());
         this.lightCircle.setColor(1, 1, 1, 0.1f);
         this.lightCircle.setVisible(false);
+
+        this.errorMessageLabel = new Label("", skin);
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
     }
 
     @Override
@@ -160,6 +166,7 @@ public abstract class GameView implements Screen, InputProcessor {
         updateClockInfo();
         addInventoryHotbar();
         updateGreenBar();
+        stage.addActor(errorMessageLabel);
 
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();

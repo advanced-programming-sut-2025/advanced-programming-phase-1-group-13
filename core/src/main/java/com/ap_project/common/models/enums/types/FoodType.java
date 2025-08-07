@@ -11,7 +11,7 @@ public enum FoodType implements ItemType {
     SPAGHETTI("Spaghetti", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.TOMATO, 1), 75, FoodBuff.NOTHING, "Stardrop Saloon", 120),
     PIZZA("Pizza", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.TOMATO, 1, IngredientType.CHEESE, 1), 150, FoodBuff.NOTHING, "Stardrop Saloon", 300),
     TORTILLA("Tortilla", createIngredientsMap(IngredientType.CORN, 1), 50, FoodBuff.NOTHING, "Stardrop Saloon", 50),
-    MAKI_ROLL("Maki Roll", createIngredientsMap(IngredientType.ANY_FISH, 1, IngredientType.RICE, 1, IngredientType.FIBER, 1), 100, FoodBuff.NOTHING, "Stardrop Saloon", 220),
+    MAKI_ROLL("Maki Roll", createIngredientsMap(IngredientType.FISH, 1, IngredientType.RICE, 1, IngredientType.FIBER, 1), 100, FoodBuff.NOTHING, "Stardrop Saloon", 220),
     TRIPLE_SHOT_ESPRESSO("Triple Shot Espresso", createIngredientsMap(IngredientType.COFFEE, 3), 200, FoodBuff.MAX_ENERGY_PLUS_100, "Stardrop Saloon", 450),
     COOKIE("Cookie", createIngredientsMap(IngredientType.WHEAT_FLOUR, 1, IngredientType.SUGAR, 1, IngredientType.EGG, 1), 90, FoodBuff.NOTHING, "Stardrop Saloon", 140),
     HASHBROWNS("Hash Browns", createIngredientsMap(IngredientType.POTATO, 1, IngredientType.OIL, 1), 90, FoodBuff.FARMING_5_HOURS, "Stardrop Saloon", 120),

@@ -43,4 +43,29 @@ public class Artisan {
     public Position getPosition() {
         return position;
     }
+
+    public Result cancel() {
+        if (itemPending == null) {
+            return new Result(false, "No process to be cancelled.");
+        }
+
+        itemPending = null;
+        timeLeft = -1;
+
+        return new Result (true, "");
+    }
+
+    public Result cheat() {
+        if (itemPending == null) {
+            return new Result(false, "No item is being made.");
+        }
+
+        Result result = App.getLoggedIn().getBackpack().addToInventory(itemPending, 1);
+        if (!result.success) {
+            return new Result(false, "You don't have enough space in your backpack.");
+        }
+        itemPending = null;
+        timeLeft = -1;
+        return new Result(true, "");
+    }
 }

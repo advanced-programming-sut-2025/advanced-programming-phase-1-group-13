@@ -18,7 +18,7 @@ public enum IngredientType implements ItemType {
     OMELET("Omelet"),
     BREAD("Bread"),
     HASH_BROWNS("Hash browns"),
-    ANY_FISH("Any Fish"),
+    FISH("Fish"),
     RICE("Rice"),
     FIBER("Fiber"),
     COFFEE("Coffee"),
