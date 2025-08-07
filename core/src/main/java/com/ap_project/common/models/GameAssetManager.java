@@ -158,7 +158,7 @@ public class GameAssetManager {
     }
 
     public Texture getTextureByIngredient(Ingredient ingredient) {
-        return new Texture(Gdx.files.internal("Images/Ingredient/" + toPascalCase(ingredient.getIngredientType().getName()) + ".png"));
+        return new Texture(Gdx.files.internal("Images/Ingredient/" + ingredient.getIngredientType().getName().replaceAll(" ", "_") + ".png"));
     }
 
     public Texture getTextureByMineral(Mineral mineral) {
@@ -488,7 +488,7 @@ public class GameAssetManager {
     }
 
     public Texture getNPCOptions() {
-        return new Texture(Gdx.files.internal("Images/NPC/Options.png"));
+        return new Texture(Gdx.files.internal("Images/NPC/ThreeOptions.png"));
     }
 
     public Texture getDialogIcon() {

@@ -6,6 +6,7 @@ import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Skill;
 import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.GameMenuType;
+import com.ap_project.common.models.enums.types.IngredientType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -42,6 +43,12 @@ public class GameMenuView implements Screen, InputProcessor {
     private final Image closeButton;
     private final GameView gameView;
     private final Label errorMessageLabel;
+    private Image craftHoverImage;
+    private Label craftNameLabel;
+    private final ArrayList<Image> craftIngredientImages = new ArrayList<>();
+    private final ArrayList<Label> craftIngredientQuantities = new ArrayList<>();
+    private final ArrayList<Label> craftIngredientNameLabels = new ArrayList<>();
+    private final ArrayList<Image> craftImages = new ArrayList<>();
 
     public GameMenuView(GameView gameView) {
         Image blackScreen = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
@@ -56,6 +63,8 @@ public class GameMenuView implements Screen, InputProcessor {
             (Gdx.graphics.getWidth() + window.getWidth()) / 2f + 20,
             Gdx.graphics.getHeight() / 2f - 65
         );
+
+        this.craftHoverImage = new Image(GameAssetManager.getGameAssetManager().getCraftingMenuHover());
 
         this.skillHoverImage = null;
 
@@ -339,6 +348,7 @@ public class GameMenuView implements Screen, InputProcessor {
             for (int i = 0; i < craftingItemNames.length; i++) {
                 String itemName = craftingItemNames[i];
                 Image itemImage = new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(itemName));
+                craftImages.add(itemImage);
                 itemImage.setPosition(currentX, currentY);
                 if (hoverOnImage(itemImage, screenX, convertedY)) {
                     String craftName = itemName.replace("Locked", "");
@@ -361,6 +371,7 @@ public class GameMenuView implements Screen, InputProcessor {
                     currentY -= itemImage.getHeight() + ySpacing;
                 }
             }
+
         }
 
         return false;
@@ -437,10 +448,23 @@ public class GameMenuView implements Screen, InputProcessor {
                 );
                 stage.addActor(skillHoverImage);
             }
+        }
+        if (currentTab == GameMenuType.CRAFTING) {
+            for (int i = 0; i < craftImages.size(); i++) {
+                if (hoverOnImage(craftImages.get(i), screenX, Gdx.graphics.getHeight() - screenY)) {
+                    System.out.println("Hovered");
+                    try {
+                        showCraftHover(CraftType.values()[i], screenX, screenY);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
         } else {
-            if (skillHoverImage != null && skillHoverImage.getStage() != null) {
-                skillHoverImage.remove();
-                skillHoverImage = null;
+            if (craftHoverImage != null && craftHoverImage.getStage() != null) {
+                craftHoverImage.remove();
+                craftHoverImage = null;
             }
         }
 
@@ -799,9 +823,10 @@ public class GameMenuView implements Screen, InputProcessor {
     private static String[] createCraftingItemsNamesList() {
         String[] craftingItemNames = {
             "BeeHouse", "Bomb", "CharcoalKiln", "CheesePress", "CherryBomb",
-            "FishSmoker", "Furnace", "GrassStarter", "Scarecrow",
-            "DeluxeScarecrow", "Sprinkler", "QualitySprinkler", "IridiumSprinkler",
-            "Keg", "Loom", "MayonnaiseMachine", "MegaBomb", "MysticTreeSeed", "OilMaker", "PreservesJar"
+            "DeluxeScarecrow", "FishSmoker", "Furnace", "GrassStarter", "IridiumSprinkler",
+            "Keg", "Loom", "MayonnaiseMachine", "MegaBomb", "MysticTreeSeed", "OilMaker",
+            "PreservesJar", "QualitySprinkler", "Scarecrow", "Sprinkler"
+
         };
 
         ArrayList<CraftRecipe> learntRecipes = App.getLoggedIn().getLearntCraftRecipes();
@@ -817,6 +842,58 @@ public class GameMenuView implements Screen, InputProcessor {
         }
         return craftingItemNames;
     }
+
+    public void showCraftHover(CraftType craftType, float screenX, float screenY) {
+        float posX = screenX;
+        float posY = Gdx.graphics.getHeight() - screenY - craftHoverImage.getHeight();
+        if (!App.getLoggedIn().hasLearntCraftRecipe(craftType)) {
+            return;
+        }
+        craftHoverImage.setPosition(posX, posY);
+        if (craftHoverImage.getStage() == null) stage.addActor(craftHoverImage);
+
+        if (craftNameLabel == null) {
+            craftNameLabel = new Label(craftType.getName(), GameAssetManager.getGameAssetManager().getSkin());
+            craftNameLabel.setColor(Color.BLACK);
+            stage.addActor(craftNameLabel);
+        } else {
+            craftNameLabel.setText(craftType.getName());
+        }
+        craftNameLabel.setPosition(posX + 20, posY + craftHoverImage.getHeight() - 68);
+
+        for (Image img : craftIngredientImages) img.remove();
+        for (Label lbl : craftIngredientQuantities) lbl.remove();
+        for (Label lbl : craftIngredientNameLabels) lbl.remove();
+        craftIngredientImages.clear();
+        craftIngredientQuantities.clear();
+        craftIngredientNameLabels.clear();
+
+        int count = 0;
+        for (Map.Entry<IngredientType, Integer> entry : craftType.getIngredients().entrySet()) {
+            Ingredient ingredient = new Ingredient(entry.getKey());
+
+            Image ingredientImage = new Image(GameAssetManager.getGameAssetManager().getTextureByIngredient(ingredient));
+            ingredientImage.setPosition(posX + 10, posY + craftHoverImage.getHeight() - 200 - (count * 50));
+            stage.addActor(ingredientImage);
+            craftIngredientImages.add(ingredientImage);
+
+            Label quantityLabel = new Label("x" + entry.getValue(), GameAssetManager.getGameAssetManager().getSkin());
+            quantityLabel.setColor(Color.BLACK);
+            quantityLabel.setPosition(ingredientImage.getX() + 40, ingredientImage.getY());
+            stage.addActor(quantityLabel);
+            craftIngredientQuantities.add(quantityLabel);
+
+            Label nameLabel = new Label(ingredient.getName(), GameAssetManager.getGameAssetManager().getSkin());
+            nameLabel.setColor(Color.BLACK);
+            nameLabel.setPosition(quantityLabel.getX() + quantityLabel.getWidth() + 5, quantityLabel.getY());
+            stage.addActor(nameLabel);
+            craftIngredientNameLabels.add(nameLabel);
+            nameLabel.setFontScale(0.89f);
+
+            count++;
+        }
+    }
+
 
     public void forceTerminateGame() {
         for (User player : App.getCurrentGame().getPlayers()) {

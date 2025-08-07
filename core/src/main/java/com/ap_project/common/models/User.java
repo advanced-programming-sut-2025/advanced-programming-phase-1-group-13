@@ -104,6 +104,9 @@ public class User {
         learnNewCraftRecipe(new CraftRecipe(CraftType.CHEESE_PRESS));
         learnNewCraftRecipe(new CraftRecipe(CraftType.MEGA_BOMB));
         learnNewCookingRecipe(new CookingRecipe(FoodType.SALAD));
+        learnNewCookingRecipe(new CookingRecipe(FoodType.TORTILLA));
+        learnNewCookingRecipe(new CookingRecipe(FoodType.PIZZA));
+        learnNewCookingRecipe(new CookingRecipe(FoodType.COOKIE));
         learnNewCookingRecipe(new CookingRecipe(FoodType.SPAGHETTI));
         learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
         this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later

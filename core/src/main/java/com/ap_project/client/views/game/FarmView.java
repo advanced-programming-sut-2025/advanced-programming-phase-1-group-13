@@ -37,12 +37,9 @@ public class FarmView extends GameView {
 
     private Artisan artisanWithMenu;
     private Texture threeOptionMenu;
-    private final Texture informationButton;
-    private Vector2 informationButtonPosition;
-    private final Texture cancelButton;
-    private Vector2 cancelButtonPosition;
-    private final Texture cheatButton;
-    private Vector2 cheatButtonPosition;
+    private Texture informationButton;
+    private Texture cancelButton;
+    private Texture cheatButton;
 
     private final Animation<Texture> pettingAnimation;
     private boolean isPetting;
@@ -230,13 +227,9 @@ public class FarmView extends GameView {
             position.setX(position.getX() + 1);
             draw(threeOptionMenu, position);
 
-            informationButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 3));
-            cancelButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 2));
-            cheatButtonPosition = new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 1));
-
-            draw(informationButton, informationButtonPosition);
-            draw(cancelButton, cancelButtonPosition);
-            draw(cheatButton, cheatButtonPosition);
+            draw(informationButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 3)));
+            draw(cancelButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 2)));
+            draw(cheatButton, new Vector2(TILE_SIZE * (position.getX() + 1), TILE_SIZE * (position.getY() + 1)));
         }
 
         scale = 4.400316f;
@@ -341,21 +334,17 @@ public class FarmView extends GameView {
         }
 
         if (threeOptionMenu != null) {
-            Result result;
-
-            if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition, scale)) {
-                goToArtisanInfo(this, artisanWithMenu);
-                return true;
-            }
-
-            if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, scale)) {
+            Position position = new Position(artisanWithMenu.getPosition());
+            position.setY(position.getY() + 3);
+            position.setX(position.getX() + 1);
+            if (clickedOnTexture(screenX, screenY, threeOptionMenu, position, scale)) {
+                Result result;
+                // cancel
                 result = artisanWithMenu.cancel();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
-                return true;
-            }
 
-            if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, scale)) {
+                // cheat
                 result = artisanWithMenu.cheat();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
