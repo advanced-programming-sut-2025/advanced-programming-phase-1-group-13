@@ -110,8 +110,14 @@ public class User {
         learnNewCookingRecipe(new CookingRecipe(FoodType.COOKIE));
         learnNewCookingRecipe(new CookingRecipe(FoodType.SPAGHETTI));
         learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
-        this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later
+        this.backpack = new Backpack(BackpackType.INITIAL); // TODO: change to INITIAL later
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.WOOL, Quality.NORMAL, null), 10);
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.COW_MILK, Quality.NORMAL, null), 10);
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.CHICKEN_EGG, Quality.NORMAL, null), 10);
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.RABBIT_FOOT, Quality.NORMAL, null), 10);
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.DUCK_EGG, Quality.NORMAL, null), 10);
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.GOAT_MILK, Quality.NORMAL, null), 10);
+        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.DINOSAUR_EGG, Quality.NORMAL, null), 10);
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);

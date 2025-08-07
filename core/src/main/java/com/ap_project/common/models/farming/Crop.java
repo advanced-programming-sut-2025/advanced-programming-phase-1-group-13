@@ -1,6 +1,7 @@
 package com.ap_project.common.models.farming;
 
 import com.ap_project.common.models.Item;
+import com.ap_project.common.models.Position;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.types.CropType;
 import com.ap_project.common.models.enums.types.SeedType;
@@ -10,23 +11,24 @@ import java.util.ArrayList;
 public class Crop extends Item implements Harvestable {
     private final CropType type;
     private final SeedType source;
-    private final int numOfStages;
+    private final Integer numOfStages;
     private final ArrayList<Integer> stagesTimes;
-    private final int totalHarvestTime;
-    private final int baseSellPrice;
+    private final Integer totalHarvestTime;
+    private final Integer baseSellPrice;
     private final boolean isEdible;
-    private final int energy;
+    private final Integer energy;
     private final ArrayList<Season> seasons;
     private final boolean canBecomeGiant;
     private boolean isGiant;
     private final boolean oneTime;
-    private final int regrowthTime;
-    private int dayInStage;
-    private int stage;
+    private final Integer regrowthTime;
+    private Integer dayInStage;
+    private Integer stage;
     private Integer daySinceLastHarvest;
     private boolean hasBeenWateredToday;
     private boolean hasBeenFertilizedToday;
-    private String name;
+    private final String name;
+    private Position position;
 
     public Crop(CropType type) {
         this.type = type;
@@ -45,14 +47,21 @@ public class Crop extends Item implements Harvestable {
         this.daySinceLastHarvest = null;
         this.isGiant = false;
         this.dayInStage = 0;
-        this.stage = 0;
+        this.stage = 1;
         this.hasBeenWateredToday = false;
         this.hasBeenFertilizedToday = false;
+        this.position = null;
+    }
+
+    public Crop(CropType type, Position position) {
+        this(type);
+        this.position = position;
     }
 
     public Crop(SeedType source) {
         this.source = source;
         this.type = CropType.getCropTypeBySeedType(source);
+        assert this.type != null;
         this.name = (this.type).getName();
         this.numOfStages = (this.type).getNumberOfStages();
         this.stagesTimes = (this.type).getStages();
@@ -67,7 +76,7 @@ public class Crop extends Item implements Harvestable {
         this.daySinceLastHarvest = null;
         this.isGiant = false;
         this.dayInStage = 0;
-        this.stage = 0;
+        this.stage = 1;
         this.hasBeenWateredToday = false;
         this.hasBeenFertilizedToday = false;
     }
@@ -80,7 +89,7 @@ public class Crop extends Item implements Harvestable {
         return source;
     }
 
-    public int getNumOfStages() {
+    public Integer getNumOfStages() {
         return numOfStages;
     }
 
@@ -92,7 +101,7 @@ public class Crop extends Item implements Harvestable {
         return totalHarvestTime;
     }
 
-    public int getBaseSellPrice() {
+    public Integer getBaseSellPrice() {
         return baseSellPrice;
     }
 
@@ -100,7 +109,7 @@ public class Crop extends Item implements Harvestable {
         return isEdible;
     }
 
-    public int getEnergy() {
+    public Integer getEnergy() {
         return energy;
     }
 
@@ -124,19 +133,19 @@ public class Crop extends Item implements Harvestable {
         return oneTime;
     }
 
-    public int getRegrowthTime() {
+    public Integer getRegrowthTime() {
         return regrowthTime;
     }
 
-    public int getDayInStage() {
+    public Integer getDayInStage() {
         return dayInStage;
     }
 
-    public void setDayInStage(int dayInStage) {
+    public void setDayInStage(Integer dayInStage) {
         this.dayInStage = dayInStage;
     }
 
-    public int getStage() {
+    public Integer getStage() {
         return stage;
     }
 
@@ -182,6 +191,9 @@ public class Crop extends Item implements Harvestable {
         }
     }
 
+    public void setStage(Integer stage) {
+        this.stage = stage;
+    }
 
     public void incrementDaySinceLastHarvest() {
         if (this.daySinceLastHarvest == null) {
@@ -190,7 +202,7 @@ public class Crop extends Item implements Harvestable {
         this.daySinceLastHarvest++;
     }
 
-    public int getDaysLeftToHarvest() {
+    public Integer getDaysLeftToHarvest() {
         if (this.daySinceLastHarvest == null) {
             return this.totalHarvestTime - this.dayInStage;
         }
@@ -201,6 +213,9 @@ public class Crop extends Item implements Harvestable {
         return remainingTime;
     }
 
+    public Position getPosition() {
+        return position;
+    }
 
     @Override
     public String getName() {
