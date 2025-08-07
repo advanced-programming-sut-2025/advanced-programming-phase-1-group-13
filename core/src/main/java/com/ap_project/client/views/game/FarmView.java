@@ -78,15 +78,10 @@ public class FarmView extends GameView {
         this.lakeTexture = GameAssetManager.getGameAssetManager().getLake(farm.getMapNumber());
         this.greenhouseTexture = GameAssetManager.getGameAssetManager().getGreenhouse(farm.getGreenhouse().canEnter());
 
-        try {
-            for (Artisan artisan : farm.getArtisans()) {
-                if (artisan.getType() == ArtisanType.LOOM) {
-                    System.out.println(artisan.startProcessing("Wool"));
-                }
+        for (Artisan artisan : farm.getArtisans()) {
+            if (artisan.getType() == ArtisanType.LOOM) {
+                System.out.println(artisan.startProcessing("Wool"));
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         }
 
         this.threeOptionMenu = null;
@@ -361,6 +356,7 @@ public class FarmView extends GameView {
 
             if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, 1)) {
                 result = artisanWithMenu.cancel();
+                updateTextures();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
                 return true;
@@ -368,6 +364,7 @@ public class FarmView extends GameView {
 
             if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, 1)) {
                 result = artisanWithMenu.cheat();
+                updateTextures();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else errorMessageLabel.setText("");
                 return true;
