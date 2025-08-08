@@ -118,10 +118,13 @@ public class Main extends Game {
     }
 
     public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
-        Main.getMain().setScreen(new GiveGiftMenu(villageView, npc));
+        Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
     }
 
     public static void goToShopMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
+
+    public static void goToPurchaseMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
+
 
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));

@@ -17,7 +17,7 @@ import static com.ap_project.Main.getBatch;
 import static com.ap_project.Main.getMain;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
-public class GiveGiftMenu implements Screen, InputProcessor {
+public class GiveGiftMenuView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
     private final ArrayList<Item> items;
@@ -27,7 +27,7 @@ public class GiveGiftMenu implements Screen, InputProcessor {
     private final VillageView villageView;
     private final GameController controller;
 
-    public GiveGiftMenu(VillageView villageView, NPC npc) {
+    public GiveGiftMenuView(VillageView villageView, NPC npc) {
         this.villageView = villageView;
         this.window = new Image(GameAssetManager.getGameAssetManager().getGiftMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
