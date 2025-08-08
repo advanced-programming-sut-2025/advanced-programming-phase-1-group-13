@@ -1,5 +1,6 @@
 package com.ap_project.client.views.game;
 
+import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 
@@ -56,7 +57,7 @@ public class SellMenuView implements Screen, InputProcessor {
 
         this.sellButton = new TextButton("Sell", GameAssetManager.getGameAssetManager().getSkin());
 
-        this.emptySlot = new Image(GameAssetManager.getGameAssetManager().getEmptySlot());;
+        this.emptySlot = new Image(GameAssetManager.getGameAssetManager().getEmptySlot());
 
         this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
         errorMessageLabel.setColor(Color.RED);
@@ -118,7 +119,15 @@ public class SellMenuView implements Screen, InputProcessor {
 
             if (sellButton.isChecked()) {
                 int quantity = quantityBox.getSelected();
-                controller.sell(itemToSell, quantity);
+                Result result = controller.sell(itemToSell, quantity);
+                if (!result.success) {
+                    errorMessageLabel.setText(result.message);
+                    itemToSell = null;
+                } else {
+                    Main.getMain().setScreen(farmView);
+                }
+                System.out.println(result.message);
+                sellButton.setChecked(false);
             }
         } else {
             Gdx.input.setInputProcessor(this);
@@ -234,10 +243,11 @@ public class SellMenuView implements Screen, InputProcessor {
         float startY = window.getY() + window.getHeight() - 400;
 
         for (int i = 0; i < itemImages.size(); i++) {
+            int row = i / columns;
             Image image = itemImages.get(i);
             image.setSize(50, 55);
             float x = startX + (i % columns) * spacingX-13f ;
-            float y = startY - (i / columns) * spacingY -22;
+            float y = startY - row * spacingY -22;
             image.setPosition(x, y);
 
             stage.addActor(image);
