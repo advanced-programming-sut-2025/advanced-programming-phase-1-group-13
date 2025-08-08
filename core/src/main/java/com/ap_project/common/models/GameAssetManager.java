@@ -545,6 +545,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/NPC/Portrait/" + npcType.getName() + ".png"));
     }
 
+    public Texture getGift() {
+        return new Texture(Gdx.files.internal("Images/Interactions/Gift.png"));
+    }
+
     public Texture getGiveGiftButton() {
         return new Texture(Gdx.files.internal("Images/NPC/GiveGiftButton.png"));
     }

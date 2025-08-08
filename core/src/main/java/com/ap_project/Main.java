@@ -117,8 +117,8 @@ public class Main extends Game {
         Main.getMain().setScreen(new JournalView(gameView));
     }
 
-    public static void goToGiveGiftMenu(GameView gameView) {
-        Main.getMain().setScreen(new GiveGiftMenu(gameView));
+    public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
+        Main.getMain().setScreen(new GiveGiftMenu(villageView, npc));
     }
 
     public static void goToShopMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
