@@ -645,6 +645,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Artisan/CancelButton.png"));
     }
 
+    public Texture getBuyButton() {
+        return new Texture(Gdx.files.internal("Images/Shop/BuyButton.png"));
+    }
+
     public Texture getCheatButton() {
         return new Texture(Gdx.files.internal("Images/Artisan/CheatButton.png"));
     }

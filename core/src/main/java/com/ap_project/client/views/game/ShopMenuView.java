@@ -16,8 +16,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 
-import static com.ap_project.Main.getBatch;
-import static com.ap_project.Main.getMain;
+import static com.ap_project.Main.*;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class ShopMenuView implements Screen, InputProcessor {

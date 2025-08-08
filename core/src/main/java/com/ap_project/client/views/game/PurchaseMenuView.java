@@ -28,6 +28,7 @@ public class PurchaseMenuView implements Screen, InputProcessor {
     private final Image minus;
     private int quantity;
     private final Label quantityLabel;
+    private final Image buyButton;
 
     public PurchaseMenuView(GameView gameView, Shop shop, Good good) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getPurchaseMenu());
@@ -35,6 +36,7 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
+        this.buyButton = new Image(GameAssetManager.getGameAssetManager().getBuyButton());
 
         NPCPortraitImage = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(shop.getOwner().getType()));
         NPCPortraitImage.setSize(250, 250);
@@ -65,42 +67,48 @@ public class PurchaseMenuView implements Screen, InputProcessor {
 
         stage.addActor(window);
         stage.addActor(closeButton);
+        stage.addActor(buyButton);
         stage.addActor(NPCPortraitImage);
         stage.addActor(welcomeLabel);
+
+        buyButton.setPosition(100,199);
+
+        quantityLabel.setColor(Color.BLACK);
 
         Image productImage = new Image(GameAssetManager.getGameAssetManager().getTextureByGood(product));
         productImage.setScale(2);
         productImage.setPosition(
-            window.getX() + 500,
-            window.getY() + 500
+            window.getX() + 450,
+            window.getY() + 438
         );
         stage.addActor(productImage);
 
         Label name = new Label(product.getName(), GameAssetManager.getGameAssetManager().getSkin());
+        name.setColor(Color.BLACK);
         name.setFontScale(1.15f);
         name.setPosition(
-            productImage.getX(),
-            productImage.getY() - 20
+            productImage.getX()+115,
+            productImage.getY() +20
         );
         stage.addActor(name);
 
         quantityLabel.setPosition(
-            window.getX() + 800,
-            window.getY() + 500
+            window.getX() + 930,
+            window.getY() + 440
         );
         stage.addActor(quantityLabel);
 
         plus.setScale(1.5f);
         plus.setPosition(
-            quantityLabel.getX() + 50,
+            quantityLabel.getX() + 70,
             quantityLabel.getY()
         );
         stage.addActor(plus);
 
         minus.setScale(1.5f);
         minus.setPosition(
-            quantityLabel.getX() - 50,
-            quantityLabel.getY()
+            quantityLabel.getX() -125,
+            quantityLabel.getY()+10
         );
         stage.addActor(minus);
 
@@ -108,6 +116,7 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         addBalanceLabel();
         addCloseButton();
     }
+
 
     @Override
     public void render(float delta) {
@@ -232,6 +241,7 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         stage.addActor(closeButton);
     }
 
+
     public void addBalanceLabel() {
         int balance = (int) App.getLoggedIn().getBalance();
         boolean started = false;
@@ -244,8 +254,8 @@ public class PurchaseMenuView implements Screen, InputProcessor {
                 Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
                 digitLabel.setColor(128 / 255f, 0, 0, 1);
                 digitLabel.setPosition(
-                    600 - 24 * i,
-                    400
+                    773 - 24 * i,
+                    392
                 );
                 stage.addActor(digitLabel);
             }

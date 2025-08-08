@@ -170,6 +170,7 @@ public class SellMenuView implements Screen, InputProcessor {
         stage.addActor(closeButton);
     }
 
+
     @Override
     public void resize(int width, int height) {
 
