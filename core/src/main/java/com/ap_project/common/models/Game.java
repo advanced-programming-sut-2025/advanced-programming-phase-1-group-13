@@ -254,7 +254,8 @@ public class Game {
                     }
                 }
 
-                // TODO: update third quests
+                npc.setTalkedToToday(player, false);
+                npc.setReceivedGiftToday(player, false);
             }
         }
 

@@ -1,9 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.client.controllers.GameController;
-import com.ap_project.common.models.App;
-import com.ap_project.common.models.GameAssetManager;
-import com.ap_project.common.models.Item;
+import com.ap_project.common.models.*;
 
 
 import com.badlogic.gdx.Gdx;
@@ -25,19 +23,17 @@ public class GiveGiftMenu implements Screen, InputProcessor {
     private final ArrayList<Item> items;
     private final ArrayList<Image> itemImages;
     private final Image closeButton;
-    private final GameView gameView;
+    private final NPC npc;
+    private final VillageView villageView;
     private final GameController controller;
 
-
-
-    public GiveGiftMenu(GameView gameView) {
-        this.gameView = gameView;
+    public GiveGiftMenu(VillageView villageView, NPC npc) {
+        this.villageView = villageView;
         this.window = new Image(GameAssetManager.getGameAssetManager().getGiftMenu());
-
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
-
+        this.npc = npc;
         this.items = new ArrayList<>(App.getLoggedIn().getBackpack().getItems().keySet());
         this.itemImages = new ArrayList<>();
         for (Item item : items) {
@@ -46,8 +42,6 @@ public class GiveGiftMenu implements Screen, InputProcessor {
         this.controller = new GameController();
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
     }
-
-
 
     @Override
     public void show() {
@@ -75,8 +69,6 @@ public class GiveGiftMenu implements Screen, InputProcessor {
         addCloseButton();
     }
 
-
-
     @Override
     public void render(float delta) {
         getBatch().begin();
@@ -91,7 +83,7 @@ public class GiveGiftMenu implements Screen, InputProcessor {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
-            getMain().setScreen(gameView);
+            getMain().setScreen(villageView);
             return true;
         }
 
@@ -99,9 +91,14 @@ public class GiveGiftMenu implements Screen, InputProcessor {
             Image image = itemImages.get(i);
             if (hoverOnImage(image, screenX, convertedY)) {
                 Item selectedItem = items.get(i);
-                App.getLoggedIn().getBackpack().getItems().remove(selectedItem);
-                getMain().setScreen(gameView);
-                return true;
+                Result result = controller.giftNPC(npc.getName(), selectedItem.getName());
+                if (result.success) {
+                    villageView.setNpcWithGift(npc);
+                    getMain().setScreen(villageView);
+                    return true;
+                } else {
+                    System.out.println(result.message);
+                }
             }
         }
 
@@ -180,6 +177,4 @@ public class GiveGiftMenu implements Screen, InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
-
-
 }

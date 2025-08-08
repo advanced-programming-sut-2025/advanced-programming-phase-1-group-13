@@ -112,6 +112,7 @@ public class User {
         learnNewCookingRecipe(new CookingRecipe(FoodType.HASHBROWNS));
 
         this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later
+        this.backpack.addToInventory(new Mineral(MineralType.IRON_ORE), 100);
         this.backpack.addToInventory(new Ingredient(IngredientType.CORN),10);
         this.backpack.addToInventory(new Ingredient(IngredientType.OIL),10);
         this.backpack.addToInventory(new Ingredient(IngredientType.WHEAT_FLOUR),10);

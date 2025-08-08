@@ -27,6 +27,7 @@ public class VillageView extends GameView {
     private final ArrayList<Texture> npcTextures;
     private NPC npcWithMenu;
     private Texture npcOptions;
+    private NPC npcWithGift;
     private final Texture giveGiftButton;
     private Vector2 giveGiftPosition;
     private final Texture questsListButton;
@@ -51,6 +52,8 @@ public class VillageView extends GameView {
 
         this.npcOptions = null;
 
+        this.npcWithGift = null;
+
         this.friendshipLevelButton = GameAssetManager.getGameAssetManager().getFriendshipLevelButton();
         this.giveGiftButton = GameAssetManager.getGameAssetManager().getGiveGiftButton();
         this.questsListButton = GameAssetManager.getGameAssetManager().getQuestsListButton();
@@ -71,11 +74,18 @@ public class VillageView extends GameView {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
             draw(npcTextures.get(i), npc.getPosition());
 
+            float temp = scale;
             if (npc.hasDialog()) {
                 Texture dialogIcon = GameAssetManager.getGameAssetManager().getDialogIcon();
-                float temp = scale;
                 scale = 1f;
                 draw(dialogIcon, new Position(npc.getPosition().getX(), npc.getPosition().getY() - 2));
+                scale = temp;
+            }
+
+            if (npc == npcWithGift) {
+                Texture gift = GameAssetManager.getGameAssetManager().getGift();
+                scale = 0.5f;
+                draw(gift, npc.getPosition());
                 scale = temp;
             }
         }
@@ -121,7 +131,7 @@ public class VillageView extends GameView {
             for (int i = 0; i < shopTextures.size(); i++) {
                 Shop shop = NPCVillage.getShops().get(i);
                 if (clickedOnTexture(screenX, screenY, shopTextures.get(i), shop.getPosition(), 4.400316f)) {
-                    // toString();
+                    goToShopMenu(this, shop);
                 }
             }
 
@@ -143,6 +153,10 @@ public class VillageView extends GameView {
                 if (clickedOnTexture(screenX, screenY, GameAssetManager.getGameAssetManager().getDialogIcon(), position, 1)) {
                     if (npc.hasDialog()) {
                         addDialogBox(npc);
+                        if (!npc.hasTalkedToToday(App.getLoggedIn())) {
+                            App.getCurrentGame().changeFriendship(App.getLoggedIn(), npc, 20);
+                        }
+                        npc.setTalkedToToday(App.getLoggedIn(), true);
                     }
                     return true;
                 }
@@ -151,7 +165,7 @@ public class VillageView extends GameView {
             if (npcOptions != null) {
                 if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
                     if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
-                        goToGiveGiftMenu(this);
+                        goToGiveGiftMenu(this, npcWithMenu);
                         return true;
                     }
 
@@ -172,6 +186,7 @@ public class VillageView extends GameView {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        show();
         return false;
     }
 
@@ -214,5 +229,9 @@ public class VillageView extends GameView {
         );
 
         stage.addActor(dialogLabel);
+    }
+
+    public void setNpcWithGift(NPC npcWithGift) {
+        this.npcWithGift = npcWithGift;
     }
 }
