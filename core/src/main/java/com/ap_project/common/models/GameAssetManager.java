@@ -528,6 +528,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Village/" + shopName + seasonStr + ".png"));
     }
 
+    public Texture getShopMenu() {
+        return new Texture(Gdx.files.internal("Images/Shop/ShopMenu.png"));
+    }
+
     public Texture getVillage(Season season) {
         String seasonStr = season.getName();
         return new Texture(Gdx.files.internal("Images/Map/Village/Village" + seasonStr + ".png"));

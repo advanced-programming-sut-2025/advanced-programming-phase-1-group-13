@@ -116,13 +116,17 @@ public class Main extends Game {
     public static void goToJournal(GameView gameView) {
         Main.getMain().setScreen(new JournalView(gameView));
     }
+
     public static void goToGiveGiftMenu(GameView gameView) {
         Main.getMain().setScreen(new GiveGiftMenu(gameView));
     }
 
+    public static void goToShopMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
+
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
     }
+
     public static void goToToolMenu(GameView gameView) {
         Main.getMain().setScreen(new ToolMenuView(gameView));
     }

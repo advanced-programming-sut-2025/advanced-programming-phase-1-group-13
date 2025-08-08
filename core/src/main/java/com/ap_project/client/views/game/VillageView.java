@@ -6,6 +6,7 @@ import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.GameMenuType;
 import com.ap_project.common.models.enums.types.NPCType;
+import com.ap_project.common.models.enums.types.ShopType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.ap_project.Main.*;
 
@@ -100,6 +102,18 @@ public class VillageView extends GameView {
     }
 
     @Override
+    public boolean keyDown(int keycode) {
+        super.keyDown(keycode);
+
+        // TODO: change to clicking on shop
+        if (keycode == Input.Keys.U) {
+            goToShopMenu(this, App.getCurrentGame().getShopByShopType(ShopType.values()[(new Random()).nextInt(ShopType.values().length)]));
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         try {
             super.touchDown(screenX, screenY, pointer, button);
@@ -135,29 +149,28 @@ public class VillageView extends GameView {
             }
 
             if (npcOptions != null) {
-                if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition, 1)) {
                 if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
-                    // todo
-                    System.out.println("CLICKED ON GIVE GIFT");
-                    goToGiveGiftMenu(this);
-                    return true;
+                    if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
+                        goToGiveGiftMenu(this);
+                        return true;
+                    }
+
+                    if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition)) {
+                        goToGameMenu(this, GameMenuType.SOCIAL);
+                        return true;
+                    }
+
+                    if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition)) {
+                        goToJournal(this);
+                        return true;
+                    }
                 }
 
-                if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition)) {
-                    goToGameMenu(this, GameMenuType.SOCIAL);
-                    return true;
-                }
-
-                if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition)) {
-                    goToJournal(this);
-                    return true;
-                }
+                npcOptions = null;
+                show();
             }
-
-            show();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
         return false;
     }
