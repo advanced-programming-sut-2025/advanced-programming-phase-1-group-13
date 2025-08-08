@@ -6,7 +6,6 @@ import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.GameMenuType;
 import com.ap_project.common.models.enums.types.NPCType;
-import com.ap_project.common.models.enums.types.ShopType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -18,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static com.ap_project.Main.*;
 
@@ -112,18 +110,6 @@ public class VillageView extends GameView {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        super.keyDown(keycode);
-
-        // TODO: change to clicking on shop
-        if (keycode == Input.Keys.U) {
-            goToShopMenu(this, App.getCurrentGame().getShopByShopType(ShopType.values()[(new Random()).nextInt(ShopType.values().length)]));
-        }
-
-        return false;
-    }
-
-    @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         try {
             super.touchDown(screenX, screenY, pointer, button);
@@ -131,7 +117,8 @@ public class VillageView extends GameView {
             for (int i = 0; i < shopTextures.size(); i++) {
                 Shop shop = NPCVillage.getShops().get(i);
                 if (clickedOnTexture(screenX, screenY, shopTextures.get(i), shop.getPosition(), 4.400316f)) {
-                    goToShopMenu(this, shop);
+                    if (shop.isOpen()) goToShopMenu(this, shop);
+                    else errorMessageLabel.setText(shop.getName() + " Is closed.");
                 }
             }
 
