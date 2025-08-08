@@ -101,7 +101,7 @@ public class Main extends Game {
         Main.getMain().setScreen(gameView);
     }
 
-    public static void goToFarmhouse(GameView gameView) {
+    public static void goToFarmhouse() {
         Main.getMain().setScreen(new FarmhouseView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
@@ -109,20 +109,44 @@ public class Main extends Game {
         Main.getMain().setScreen(new FarmOverviewView(description, itemType, gameView));
     }
 
-    public static void goToGameMenu(GameView gameView) {
-        Main.getMain().setScreen(new GameMenuView(gameView));
+    public static void goToGameMenu(GameView gameView, GameMenuType gameMenuType) {
+        Main.getMain().setScreen(new GameMenuView(gameView, gameMenuType));
     }
 
     public static void goToJournal(GameView gameView) {
         Main.getMain().setScreen(new JournalView(gameView));
     }
 
+    public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
+        Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
+    }
+
+    public static void goToShopMenu(GameView gameView, Shop shop) {
+        Main.getMain().setScreen(new ShopMenuView(gameView, shop));
+    }
+
+    public static void goToPurchaseMenu(GameView gameView, Shop shop, Good good) {
+        Main.getMain().setScreen(new PurchaseMenuView(gameView, shop, good));
+    }
+
+    public static void goToSellMenu(FarmView farmView, FarmBuilding shippingBin) {
+        Main.getMain().setScreen(new SellMenuView(farmView, shippingBin));
+    }
+
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
     }
 
+    public static void goToToolMenu(GameView gameView) {
+        Main.getMain().setScreen(new ToolMenuView(gameView));
+    }
+
     public static void goToRefrigeratorMenu(GameView gameView) {
         Main.getMain().setScreen(new RefrigeratorMenuView(gameView));
+    }
+
+    public static void goToCropInfoMenu(GameView gameView, String crop) {
+        Main.getMain().setScreen(new CropInfoView(gameView, crop));
     }
 
     public static void goToAnimalMenu(FarmView farmView, Animal animal) {
@@ -137,9 +161,22 @@ public class Main extends Game {
         Main.getMain().setScreen(new BuyAnimalsMenuView(farmView));
     }
 
+    public static void goToFishingMiniGameMenu(FarmView farmView, Fish fish) {
+        Main.getMain().setScreen(new FishingMiniGameView(farmView, fish));
+    }
+
+    public static void goToArtisanInfo(FarmView farmView, Artisan artisan) {
+        Main.getMain().setScreen(new ArtisanInfoView(farmView, artisan));
+    }
+
+    public static void goToArtisanMenu(FarmView farmView, Artisan artisan) {
+        Main.getMain().setScreen(new ArtisanMenuView(farmView, artisan));
+    }
+
     public static void goToCheatWindow(GameView gameView, GameController controller) {
         Main.getMain().setScreen(new CheatView(gameView, controller));
     }
+
 
     public static void goToMap(GameView gameView) {
         Main.getMain().setScreen(new MapView(gameView));

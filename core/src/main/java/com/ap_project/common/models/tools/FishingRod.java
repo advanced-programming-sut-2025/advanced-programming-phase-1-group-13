@@ -23,6 +23,10 @@ public class FishingRod extends Tool {
         return type;
     }
 
+    public FishingRodType getType() {
+        return type;
+    }
+
     @Override
     public int calculateEnergyNeeded(HashMap<Skill, SkillLevel> playerSkills, Tool tool) {
         int energy = this.type.getEnergy();

@@ -33,7 +33,6 @@ public class CheatView implements Screen {
     public void show() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
         window.setSize(
             Gdx.graphics.getWidth() / 2f,
             Gdx.graphics.getHeight() / 2f
@@ -147,6 +146,7 @@ public class CheatView implements Screen {
         } else if ((GameCommands.CHEAT_FAINT.getMatcher(inputLine)) != null) {
             App.getLoggedIn().faint();
         } else if ((GameCommands.EXIT.getMatcher(inputLine)) != null) {
+            if (gameView instanceof FarmView) ((FarmView) gameView).updateTextures();
             Main.getMain().setScreen(gameView);
         } else {
             result = new Result(false, "Invalid Command. Please try again!");

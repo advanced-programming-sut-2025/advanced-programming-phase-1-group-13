@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ArtisanType {
+    BEE_HOUSE("Bee House", new ArrayList<>(Arrays.asList(ProcessedItemType.HONEY))),
     KEG("Keg", new ArrayList<>(Arrays.asList(ProcessedItemType.BEER, ProcessedItemType.VINEGAR, ProcessedItemType.JUICE,
             ProcessedItemType.PALE_ALE, ProcessedItemType.WINE))),
     CHEESE_PRESS("Cheese Press", new ArrayList<>(Arrays.asList(ProcessedItemType.CHEESE,

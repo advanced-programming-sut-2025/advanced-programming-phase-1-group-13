@@ -14,14 +14,11 @@ public class Shop {
     private final int startHour;
     private final int endHour;
     private final ArrayList<Tile> shopTiles;
-    private final Position position;  // Add position field to track shop location
+    private final Position position;
 
     public Shop(ShopType type, Position position, int width, int height) {
         this.type = type;
-        this.shopInventory = new ArrayList<>();
-        for (GoodsType goodType : GoodsType.values()) {
-            this.shopInventory.add(new Good(goodType));
-        }
+        this.shopInventory = type.getAllProducts();
         this.name = type.getName();
         this.owner = type.getOwner();
         this.startHour = type.getStartHour();

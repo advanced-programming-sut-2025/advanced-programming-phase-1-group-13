@@ -12,8 +12,7 @@ public enum MixedSeedsType implements ItemType {
             CropType.WHEAT, CropType.POPPY, CropType.SUNFLOWER, CropType.SUMMER_SPANGLE))),
     FALL_MIXED_SEED(new ArrayList<>(asList(CropType.ARTICHOKE, CropType.CORN, CropType.EGGPLANT,
             CropType.PUMPKIN, CropType.SUNFLOWER, CropType.FAIRY_ROSE))),
-    WINTER_MIXED_SEED(new ArrayList<>(List.of(CropType.POWDERMELON))),
-    ;
+    WINTER_MIXED_SEED(new ArrayList<>(List.of(CropType.POWDERMELON)));
 
     private final ArrayList<CropType> possibleCrops;
 

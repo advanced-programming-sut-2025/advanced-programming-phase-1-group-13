@@ -4,8 +4,10 @@ import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
+import com.ap_project.common.models.tools.FishingRod;
 import com.ap_project.common.models.tools.Scythe;
 import com.ap_project.common.models.tools.Tool;
 import com.ap_project.common.models.tools.WateringCan;
@@ -38,8 +40,16 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Cooking/CookingMenu.png"));
     }
 
+    public Texture getCookingMenuHover() {
+        return new Texture(Gdx.files.internal("Images/Cooking/CookingMenuHover.png"));
+    }
+
     public Texture getRefrigeratorMenu() {
         return new Texture(Gdx.files.internal("Images/Cooking/RefrigeratorMenu.png"));
+    }
+
+    public Texture getCropInfoMenu() {
+        return new Texture(Gdx.files.internal("Images/Crop/CropInfoMenu.png"));
     }
 
     public Texture getRefrigeratorMenuInventory() {
@@ -105,6 +115,22 @@ public class GameAssetManager {
             return getTextureByAnimalProduct((AnimalProduct) item);
         }
 
+        if (item instanceof Craft) {
+            return getTextureByCraft((Craft) item);
+        }
+
+        if (item instanceof Crop) {
+            return getTextureByCrop((Crop) item);
+        }
+
+        if (item instanceof Fish) {
+            return getTextureByFish((Fish) item);
+        }
+
+        if (item instanceof Food) {
+            return getFood(((Food) item).getFoodType(), false);
+        }
+
         if (item instanceof ForagingCrop) {
             return getTextureByForagingCrop((ForagingCrop) item);
         }
@@ -113,8 +139,16 @@ public class GameAssetManager {
             return getTextureByGood((Good) item);
         }
 
+        if (item instanceof Ingredient) {
+            return getTextureByIngredient((Ingredient) item);
+        }
+
         if (item instanceof Mineral) {
             return getTextureByMineral((Mineral) item);
+        }
+
+        if (item instanceof ProcessedItem) {
+            return getTextureByProcessedItem((ProcessedItem) item);
         }
 
         if (item instanceof Tool) {
@@ -126,11 +160,30 @@ public class GameAssetManager {
         }
 
         // TODO
-        return null;
+        return getLock();
     }
 
     public Texture getTextureByAnimalProduct(AnimalProduct animalProduct) {
         return new Texture(Gdx.files.internal("Images/AnimalProduct/" + toPascalCase(animalProduct.getName())) + ".png");
+    }
+
+    public Texture getTextureByCraft(Craft craft) {
+        return new Texture(Gdx.files.internal("Images/Craft/" + toPascalCase(craft.getName())) + ".png");
+    }
+
+    public Texture getTextureByCrop(Crop crop) {
+        if (crop.isGiant()) {
+            return new Texture(Gdx.files.internal(
+                "Images/Crop/" + toPascalCase(crop.getName()) + "/Giant_" + toPascalCase(crop.getName())) + ".png");
+        }
+
+        return new Texture(Gdx.files.internal("Images/Crop/" + toPascalCase(crop.getName()) + "/" +
+            crop.getName().replaceAll(" ", "_") + "_Stage_" + crop.getStage()
+            + ".png"));
+    }
+
+    public Texture getTextureByFish(Fish fish) {
+        return new Texture(Gdx.files.internal("Images/Fish/" + toPascalCase(fish.getName()) + ".png"));
     }
 
     public Texture getTextureByForagingCrop(ForagingCrop foragingCrop) {
@@ -141,15 +194,29 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Goods/" + good.getName().replaceAll(" ", "_") + ".png"));
     }
 
+    public Texture getTextureByIngredient(Ingredient ingredient) {
+        return new Texture(Gdx.files.internal("Images/Ingredient/" + ingredient.getIngredientType().getName().replaceAll(" ", "_") + ".png"));
+    }
+
     public Texture getTextureByMineral(Mineral mineral) {
         return new Texture(Gdx.files.internal("Images/Mineral/" + toPascalCase(mineral.getMineralType().getName()) + ".png"));
     }
 
+    public Texture getTextureByProcessedItem(ProcessedItem processedItem) {
+        return new Texture(Gdx.files.internal("Images/ProcessedItem/" + toPascalCase(processedItem.getName()) + ".png"));
+    }
+
+
     public Texture getTextureByTool(Tool tool) {
+        if (tool instanceof FishingRod) return getTextureByFishingRod((FishingRod) tool);
         String name = toPascalCase(tool.getName());
         String material = toPascalCase(tool.getToolMaterial().getName());
         String path = "Images/Tool/" + name + "/" + material + name + ".png";
         return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getTextureByFishingRod(FishingRod fishingRod) {
+        return new Texture("Images/Tool/FishingRod/" + toPascalCase(fishingRod.getType().getName()) + "FishingRod.png");
     }
 
     public Texture getTextureByTree(Tree tree) {
@@ -225,6 +292,16 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal(path));
     }
 
+    public Texture getCraftingItemTexture(String itemName) {
+        itemName = itemName.replaceAll(" ", "");
+        String path = "Images/Craft/" + itemName + ".png";
+        return new Texture(Gdx.files.internal(path));
+    }
+
+    public Texture getCraftingMenuHover() {
+        return new Texture(Gdx.files.internal("Images/Menu/CraftingMenuHover.png"));
+    }
+
     public Texture getCloseButton() {
         return new Texture(Gdx.files.internal("Images/Menu/CloseButton.png"));
     }
@@ -255,6 +332,14 @@ public class GameAssetManager {
 
     public Texture getSliderTrack() {
         return new Texture(Gdx.files.internal("Images/Journal/SliderTrack.png"));
+    }
+
+    public Texture getThreeOptions() {
+        return new Texture(Gdx.files.internal("Images/Menu/ThreeOptions.png"));
+    }
+
+    public Texture getFourOptions() {
+        return new Texture(Gdx.files.internal("Images/Menu/FourOptions.png"));
     }
 
     public Texture getIdlePlayer(Gender gender, Direction direction) {
@@ -385,6 +470,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/FarmBuilding/" + toPascalCase(farmBuildingType.getName()) + ".png"));
     }
 
+    public Texture getToolMenu() {
+        return new Texture("Images/Tool/ToolMenu.png");
+    }
+
     public Texture getAnimalLivingSpaceMenu() {
         return new Texture("Images/FarmBuilding/AnimalLivingSpaceMenu.png");
     }
@@ -440,6 +529,31 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Village/" + shopName + seasonStr + ".png"));
     }
 
+    public Texture getShopMenu() {
+        return new Texture(Gdx.files.internal("Images/Shop/ShopMenu.png"));
+    }
+
+    public Texture getGood(GoodsType good) {
+        String name = good.getName().replaceAll(" ", "_");
+        return new Texture(Gdx.files.internal("Images/Goods/" + name + (good.isAvailable() ? "" : "_Locked") + ".png"));
+    }
+
+    public Texture getPurchaseMenu() {
+        return new Texture(Gdx.files.internal("Images/Shop/PurchaseMenu.png"));
+    }
+
+    public Texture getPlus() {
+        return new Texture(Gdx.files.internal("Images/Shop/Plus.png"));
+    }
+
+    public Texture getMinus() {
+        return new Texture(Gdx.files.internal("Images/Shop/Minus.png"));
+    }
+
+    public Texture getSellMenu() {
+        return new Texture(Gdx.files.internal("Images/Shop/SellMenu.png"));
+    }
+
     public Texture getVillage(Season season) {
         String seasonStr = season.getName();
         return new Texture(Gdx.files.internal("Images/Map/Village/Village" + seasonStr + ".png"));
@@ -447,6 +561,116 @@ public class GameAssetManager {
 
     public Texture getNPC(NPCType npcType) {
         return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + ".png"));
+    }
+
+    public Texture getNPCPortrait(NPCType npcType) {
+        return new Texture(Gdx.files.internal("Images/NPC/Portrait/" + npcType.getName() + ".png"));
+    }
+
+    public Texture getGift() {
+        return new Texture(Gdx.files.internal("Images/Interactions/Gift.png"));
+    }
+
+    public Texture getGiveGiftButton() {
+        return new Texture(Gdx.files.internal("Images/NPC/GiveGiftButton.png"));
+    }
+
+    public Texture getFriendshipLevelButton() {
+        return new Texture(Gdx.files.internal("Images/NPC/FriendshipLevelButton.png"));
+    }
+
+    public Texture getQuestsListButton() {
+        return new Texture(Gdx.files.internal("Images/NPC/QuestsListButton.png"));
+    }
+
+    public Texture getDialogIcon() {
+        return new Texture(Gdx.files.internal("Images/NPC/Dialog.png"));
+    }
+
+    public Texture getGiftMenu() {
+        return new Texture(Gdx.files.internal("Images/NPC/GiveGiftMenu.png"));
+    }
+
+    public Texture getDialogBox() {
+        return new Texture(Gdx.files.internal("Images/NPC/DialogBox.png"));
+    }
+
+    public Texture getFishingMiniGameWindow() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingMiniGameWindow.png"));
+    }
+
+    public Texture getFishingGreenBar() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishingGreenBar.png"));
+    }
+
+    public Texture getFishIcon() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/FishIcon.png"));
+    }
+
+    public Texture getCrown() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/Crown.png"));
+    }
+
+    public Texture getSonarBobber() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobber.png"));
+    }
+
+    public Texture getSonarBobberWindow() {
+        return new Texture(Gdx.files.internal("Images/FishingMiniGame/SonarBobberWindow.png"));
+    }
+
+    public Texture getArtisan(Artisan artisan) {
+        return new Texture(Gdx.files.internal("Images/Artisan/" + toPascalCase(artisan.getType().getName()) +
+            (artisan.getItemPending() != null ? "Full" : "") + ".png"));
+    }
+
+    public Texture getArtisanInfo(ArtisanType artisanType) {
+        if (artisanType != ArtisanType.BEE_HOUSE) return new Texture(Gdx.files.internal("Images/Artisan/KegInfo.png"));
+        return new Texture(Gdx.files.internal("Images/Artisan/BeeHouseInfo.png"));
+    }
+
+    public Texture getProgressBarWindow() {
+        return new Texture(Gdx.files.internal("Images/Artisan/ProgressBarWindow.png"));
+    }
+
+    public Texture getProgressBar() {
+        return new Texture(Gdx.files.internal("Images/Artisan/ProgressBar.png"));
+    }
+
+    public Texture getInformationButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/InformationButton.png"));
+    }
+
+    public Texture getCancelButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/CancelButton.png"));
+    }
+
+    public Texture getBuyButton() {
+        return new Texture(Gdx.files.internal("Images/Shop/BuyButton.png"));
+    }
+
+    public Texture getCheatButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/CheatButton.png"));
+    }
+
+    public Texture getArtisanMenu() {
+        return new Texture(Gdx.files.internal("Images/Artisan/ArtisanMenu.png"));
+    }
+
+    public Texture getGetItemButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/GetItemButton.png"));
+    }
+
+    public Texture getStartButton() {
+        return new Texture(Gdx.files.internal("Images/Artisan/StartButton.png"));
+    }
+
+    public Texture getEmptySlot() {
+        return new Texture(Gdx.files.internal("Images/Artisan/EmptySlot.png"));
+    }
+
+    public Texture getCrow() {
+        return new Texture(Gdx.files.internal("Images/Animal/Crow.png"));
     }
 
     public static String toPascalCase(String input) {
@@ -464,11 +688,5 @@ public class GameAssetManager {
             }
         }
         return pascal.toString();
-    }
-
-    public Texture getCraftingItemTexture(String itemName) {
-        itemName = itemName.replaceAll(" ", "");
-        String path = "Images/Craft/" + itemName + ".png";
-        return new Texture(Gdx.files.internal(path));
     }
 }

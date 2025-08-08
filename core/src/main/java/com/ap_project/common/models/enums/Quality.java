@@ -25,6 +25,15 @@ public enum Quality {
             return Quality.GOLD;
         }
         return Quality.IRIDIUM;
+    }
 
+    public Quality getNextQuality() {
+        if (this == Quality.NORMAL) {
+            return Quality.SILVER;
+        }
+        if (this == Quality.SILVER) {
+            return Quality.GOLD;
+        }
+        return Quality.IRIDIUM;
     }
 }

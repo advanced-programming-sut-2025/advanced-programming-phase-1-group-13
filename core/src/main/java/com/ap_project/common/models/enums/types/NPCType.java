@@ -1,11 +1,14 @@
 package com.ap_project.common.models.enums.types;
 
+import com.ap_project.common.models.Position;
+
 import java.util.*;
 
 public enum NPCType {
     CLINT(
         "Clint",
         Role.SHOPKEEPER,
+        new Position(9, 25),
         Collections.emptyList(),
         new ArrayList<>(),
         14,
@@ -18,6 +21,7 @@ public enum NPCType {
     MORRIS(
         "Morris",
         Role.SHOPKEEPER,
+        new Position(38, 9),
         Collections.emptyList(),
         new ArrayList<>(),
         10,
@@ -30,6 +34,7 @@ public enum NPCType {
     PIERRE(
         "Pierre",
         Role.SHOPKEEPER,
+        new Position(70, 25),
         Collections.emptyList(),
         new ArrayList<>(),
         20,
@@ -42,6 +47,7 @@ public enum NPCType {
     WILLY(
         "Willy",
         Role.SHOPKEEPER,
+        new Position(29, 42),
         Collections.emptyList(),
         new ArrayList<>(),
         25,
@@ -54,6 +60,7 @@ public enum NPCType {
     MARNIE(
         "Marnie",
         Role.SHOPKEEPER,
+        new Position(9, 35),
         Collections.emptyList(),
         new ArrayList<>(),
         15,
@@ -66,6 +73,7 @@ public enum NPCType {
     GUS(
         "Gus",
         Role.SHOPKEEPER,
+        new Position(54, 41),
         Collections.emptyList(),
         new ArrayList<>(),
         20,
@@ -78,6 +86,7 @@ public enum NPCType {
     SEBASTIAN(
         "Sebastian",
         Role.VILLAGER,
+        new Position(45, 20),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -119,6 +128,7 @@ public enum NPCType {
     ABIGAIL(
         "Abigail",
         Role.VILLAGER,
+        new Position(35, 23),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -160,6 +170,7 @@ public enum NPCType {
     HARVEY(
         "Harvey",
         Role.VILLAGER,
+        new Position(15, 43),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -201,6 +212,7 @@ public enum NPCType {
     LEAH(
         "Leah",
         Role.VILLAGER,
+        new Position(55, 12),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -242,6 +254,7 @@ public enum NPCType {
     ROBIN(
         "Robin",
         Role.SHOPKEEPER,
+        new Position(65, 30),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -282,15 +295,17 @@ public enum NPCType {
 
     private final String name;
     private final Role role;
+    private final Position position;
     private final List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests;
     private final ArrayList<ItemType> favorites;
     private final int daysToUnlockThirdQuest;
     public final ArrayList<ItemType> gifts;
 
-    NPCType(String name, Role role, List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests,
+    NPCType(String name, Role role, Position position, List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests,
             ArrayList<ItemType> favorites, int daysToUnlockThirdQuest, ArrayList<ItemType> gifts) {
         this.name = name;
         this.role = role;
+        this.position = position;
         this.quests = quests;
         this.favorites = favorites;
         this.daysToUnlockThirdQuest = daysToUnlockThirdQuest;
@@ -303,6 +318,10 @@ public enum NPCType {
 
     public Role getRole() {
         return role;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     public List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> getQuests() {

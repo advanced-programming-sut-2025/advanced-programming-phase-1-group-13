@@ -96,7 +96,6 @@ public class App {
         return null;
     }
 
-
     public static User getUserByEmail(String email) {
         ArrayList<User> usersList = getUsers();
 

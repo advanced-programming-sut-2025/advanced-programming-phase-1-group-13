@@ -4,28 +4,26 @@ import com.ap_project.common.models.enums.types.ShopType;
 import com.ap_project.common.models.enums.types.TileType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NPCVillage {
     public static ArrayList<Shop> shops;
-    private ArrayList<Tile> villageTiles;
-    private final int width =74;
+    private final ArrayList<Tile> villageTiles;
+    private final int width = 74;
     private final int height = 55;
 
     public NPCVillage() {
-        this.shops = new ArrayList<>();
+        shops = new ArrayList<>();
         this.villageTiles = new ArrayList<>();
 
         initializeVillageTiles();
 
-        addShop(ShopType.BLACKSMITH, new Position(5, 5), 5, 6);              // Top-left corner
-        addShop(ShopType.JOJAMART, new Position(15, 8), 12, 10);             // Right of Blacksmith
-        addShop(ShopType.PIERRE_GENERAL_STORE, new Position(30, 3), 5, 5);   // Right of JojaMart
-        addShop(ShopType.CARPENTER_SHOP, new Position(50, 10), 16, 9);        // Right of Pierre's
-        addShop(ShopType.FISH_SHOP, new Position(5, 40), 9, 7);              // Below Blacksmith
-        addShop(ShopType.MARNIE_RANCH, new Position(20, 33), 22, 10);        // Below JojaMart
-        addShop(ShopType.THE_STARDROP_SALOON, new Position(65, 44), 6, 7);   // Right side
-
+        addShop(ShopType.BLACKSMITH, new Position(10, 25), 5, 6);
+        addShop(ShopType.JOJAMART, new Position(35, 8), 12, 10);
+        addShop(ShopType.PIERRE_GENERAL_STORE, new Position(60, 25), 5, 5);
+        addShop(ShopType.CARPENTER_SHOP, new Position(60, 8), 16, 9);
+        addShop(ShopType.FISH_SHOP, new Position(30, 42), 9, 7);
+        addShop(ShopType.MARNIE_RANCH, new Position(10, 35), 22, 10);
+        addShop(ShopType.THE_STARDROP_SALOON, new Position(55, 41), 6, 7);
     }
 
     private void initializeVillageTiles() {
@@ -64,32 +62,19 @@ public class NPCVillage {
         return null;
     }
 
-    public Shop getShopByType(ShopType type) {
-        for (Shop shop : shops) {
-            if (shop.getType() == type) {
-                return shop;
-            }
-        }
-        return null;
-    }
-
-    public boolean isPositionValid(Position pos) {
-        return pos.getX() >= 0 && pos.getX() < width &&
-                pos.getY() >= 0 && pos.getY() < height;
+    public boolean isPositionInvalid(Position pos) {
+        return pos.getX() < 0 || pos.getX() >= width ||
+            pos.getY() < 0 || pos.getY() >= height;
     }
 
     public Tile getTileByPosition(Position pos) {
-        if (!isPositionValid(pos)) return null;
+        if (isPositionInvalid(pos)) return null;
         for (Tile tile : villageTiles) {
             if (tile.getPosition().getY() == pos.getY() && tile.getPosition().getX() == pos.getX()) {
                 return tile;
             }
         }
         return null;
-    }
-
-    public List<Tile> getVillageTiles() {
-        return villageTiles;
     }
 
     public int getWidth() {

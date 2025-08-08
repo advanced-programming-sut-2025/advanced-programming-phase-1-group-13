@@ -6,6 +6,7 @@ import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.CraftType;
 import com.ap_project.common.models.enums.types.FarmBuildingType;
 import com.ap_project.common.models.enums.types.ItemType;
+import com.ap_project.common.models.enums.types.MineralType;
 import com.ap_project.common.models.farming.ForagingCrop;
 import com.ap_project.common.models.farming.Tree;
 import com.badlogic.gdx.Gdx;
@@ -105,7 +106,7 @@ public class FarmOverviewView implements Screen, InputProcessor {
         }
 
         for (int i = 0; i < farm.getStones().size(); i++) {
-            Image stoneImage = new Image(GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(null)));
+            Image stoneImage = new Image(GameAssetManager.getGameAssetManager().getTextureByMineral(new Mineral(MineralType.STONE)));
             Position position = farm.getStones().get(i).getPosition();
             addImage(stoneImage, position, 0.3f);
         }
@@ -144,11 +145,11 @@ public class FarmOverviewView implements Screen, InputProcessor {
             addImage(animalsImages.get(i), position, 0.3f);
         }
 
-        // todo: hmm
-        for (CraftType craftType : farm.getCraftsInFarm().keySet()) {
+        for (Craft craft : farm.getCrafts()) {
+            CraftType craftType = craft.getCraftType();
             addImage(
                 new Image(GameAssetManager.getGameAssetManager().getCraftingItemTexture(craftType.getName())),
-                farm.getCraftsInFarm().get(craftType),
+                craft.getPosition(),
                 0.3f);
         }
 
@@ -158,7 +159,7 @@ public class FarmOverviewView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(Color.BLACK);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }

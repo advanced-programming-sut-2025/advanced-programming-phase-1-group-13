@@ -1,6 +1,5 @@
 package com.ap_project.common.models;
 
-import com.ap_project.common.models.Item;
 import com.ap_project.common.models.enums.Quality;
 import com.ap_project.common.models.enums.types.AnimalProductType;
 

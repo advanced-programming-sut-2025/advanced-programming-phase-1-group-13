@@ -5,11 +5,14 @@ import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.Quest;
+import com.ap_project.common.models.Result;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -26,6 +29,7 @@ public class JournalView implements Screen, InputProcessor {
     private Image sliderTrack;
     private int currentIndex;
     private final ArrayList<Image> quests;
+    private final Label errorMessageLabel;
     private final GameView gameView;
     private final GameController controller;
 
@@ -44,6 +48,10 @@ public class JournalView implements Screen, InputProcessor {
 
         this.currentIndex = 0;
 
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+
         this.gameView = gameView;
         this.controller = new GameController();
     }
@@ -53,7 +61,7 @@ public class JournalView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
         stage.addActor(window);
-
+        stage.addActor(errorMessageLabel);
         sliderTrack = new Image(GameAssetManager.getGameAssetManager().getSliderTrack());
         sliderTrack.setPosition(windowX + window.getWidth() + 20, windowY + 20);
         stage.addActor(sliderTrack);
@@ -64,7 +72,7 @@ public class JournalView implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(Color.BLACK);
         Main.getBatch().begin();
         Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -126,10 +134,15 @@ public class JournalView implements Screen, InputProcessor {
 
         for (Quest quest : App.getCurrentGame().getQuests()) {
             if (hoverOnImage(quests.get(quest.getId() - 1), screenX, convertedY)) {
-                controller.finishQuest(quest.getId() + "");
+                Result result = controller.finishQuest(quest.getId() + "");
+                if (result.success) Main.getMain().setScreen(gameView);
+                else {
+                    errorMessageLabel.setText(result.message);
+                    return false;
+                }
             }
         }
-
+        errorMessageLabel.setText("");
         return false;
     }
 

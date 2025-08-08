@@ -10,14 +10,13 @@ public class Farm {
     private Cabin cabin;
     private Greenhouse greenhouse;
     private Quarry quarry;
-    private int cropCount;
     private final ArrayList<Crop> plantedCrops;
+    private final ArrayList<Tree> plantedTrees;
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
     private final int height = 55;
     private final int width = 74;
     private final ArrayList<Artisan> artisans;
-    private ArrayList<ShippingBin> shippingBins;
     private final int mapNumber;
     private Lake lake;
     private final ArrayList<Mineral> stones;
@@ -25,31 +24,26 @@ public class Farm {
     private final ArrayList<ForagingCrop> foragingCrops;
     private final transient Random random;
     private ArrayList<Tile> allTiles;
-    private HashMap<CraftType, Position> craftsInFarm; // TODO: fix
+    private final ArrayList<Craft> crafts;
+    private ArrayList<Position> crows;
 
     public Farm(int mapNumberToFollow) {
         this.random = new Random();
-
-        this.cropCount = 0;
         this.plantedCrops = new ArrayList<>();
+        this.plantedTrees = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
-        this.craftsInFarm = new HashMap<>();
+        farmBuildings.add(new FarmBuilding(FarmBuildingType.SHIPPING_BIN, new Position(73, 3)));
+        this.crafts = new ArrayList<>();
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
         this.stones = new ArrayList<>();
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
-
-        for (ArtisanType artisanType : ArtisanType.values()) { // TODO: remove later
-            this.artisans.add(new Artisan(artisanType));
-        }
-
-        this.shippingBins = new ArrayList<>();
-
         this.cabin = new Cabin();
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
+        this.crows = new ArrayList<>();
 
         generateBaseMapTiles();
         generateFixedElements();
@@ -79,12 +73,12 @@ public class Farm {
     private void generateFixedElements() {
         if (mapNumber == 1) {
             this.lake = generateLake(20, 35, 10, 14);
-            this.cabin = generateCabin(63, 6);
+            this.cabin = generateCabin(63);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 6, 6);
-            this.cabin = generateCabin(4, 4);
+            this.cabin = generateCabin(4);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15);
         }
@@ -215,9 +209,9 @@ public class Farm {
         return lake;
     }
 
-    private Cabin generateCabin(int x, int y) {
+    private Cabin generateCabin(int x) {
         Cabin cabin = new Cabin();
-        ArrayList<Position> positions = generateTilePositions(x, y, 9, 6);
+        ArrayList<Position> positions = generateTilePositions(x, 4, 9, 6);
         cabin.setTiles(positions);
 
         for (Position pos : positions) {
@@ -361,10 +355,6 @@ public class Farm {
         return null;
     }
 
-    public void setCropCount(int cropCount) {
-        this.cropCount = cropCount;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -374,6 +364,13 @@ public class Farm {
     }
 
     public ArrayList<ShippingBin> getShippingBins() {
+        ArrayList<ShippingBin> shippingBins = new ArrayList<>();
+        for (FarmBuilding farmBuilding : farmBuildings) {
+            if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
+                ShippingBin shippingBin = (ShippingBin) farmBuilding;
+                shippingBins.add(shippingBin);
+            }
+        }
         return shippingBins;
     }
 
@@ -397,12 +394,16 @@ public class Farm {
         return this.plantedCrops;
     }
 
+    public ArrayList<Tree> getPlantedTrees() {
+        return plantedTrees;
+    }
+
     public ArrayList<Tree> getTrees() {
         return trees;
     }
 
     public int getCropCount() {
-        return cropCount;
+        return plantedCrops.size() + plantedTrees.size();
     }
 
     public ArrayList<FarmBuilding> getFarmBuildings() {
@@ -413,8 +414,16 @@ public class Farm {
         return artisans;
     }
 
-    public void addArtisans(Artisan artisan) {
-        this.artisans.add(artisan);
+    public ArrayList<Craft> getCrafts() {
+        return crafts;
+    }
+
+    public ArrayList<Position> getCrows() {
+        return crows;
+    }
+
+    public void setCrows(ArrayList<Position> crows) {
+        this.crows = crows;
     }
 
     public boolean canPlaceBuilding(FarmBuildingType farmBuildingType, Position position) {
@@ -537,7 +546,6 @@ public class Farm {
         return farmTiles.get(random.nextInt(farmTiles.size())).getPosition();
     }
 
-
     public Artisan getFullArtisanByArtisanType(ArtisanType artisanType) {
         for (Artisan artisan : this.artisans) {
             if (artisan.getType().equals(artisanType) && artisan.getItemPending() != null) {
@@ -556,11 +564,8 @@ public class Farm {
         return null;
     }
 
-    public HashMap<CraftType, Position> getCraftsInFarm() {
-        return craftsInFarm;
-    }
-
     public void addCraftToFarm(CraftType craftType, Position position) {
-        this.craftsInFarm.put(craftType, position);
+        crafts.add(new Craft(craftType, position));
+        if (craftType.isArtisan()) artisans.add(new Artisan(craftType.getArtisanType(), position));
     }
 }

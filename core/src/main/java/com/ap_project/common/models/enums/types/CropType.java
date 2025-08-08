@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum CropType implements ItemType {
-
     BLUE_JAZZ("Blue Jazz", SeedType.JAZZ_SEEDS, new ArrayList<>(List.of(1, 2, 2, 2)), 7, true, null, 50, true, 45, new ArrayList<>(List.of(Season.SPRING)), false),
     CARROT("Carrot", SeedType.CARROT_SEEDS, new ArrayList<>(List.of(1, 1, 1)), 3, true, null, 35, true, 75, new ArrayList<>(List.of(Season.SPRING)), false),
     CAULIFLOWER("Cauliflower", SeedType.CAULIFLOWER_SEEDS, new ArrayList<>(List.of(1, 2, 4, 4, 1)), 12, true, null, 175, true, 75, new ArrayList<>(List.of(Season.SPRING)), true),

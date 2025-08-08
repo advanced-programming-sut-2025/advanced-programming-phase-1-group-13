@@ -67,9 +67,10 @@ public class Time {
             }
 
             try {
-                System.out.println(game.changeDay().message);
+                System.out.println(game.changeDay());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 

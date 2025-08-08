@@ -5,7 +5,6 @@ import com.ap_project.common.models.enums.environment.Time;
 import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.ap_project.common.models.enums.types.ShopType;
-import com.ap_project.common.models.enums.types.TileType;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.trade.Trade;
@@ -194,7 +193,7 @@ public class Game {
         }
 
         StringBuilder resultMessage = new StringBuilder("New messages:\n");
-        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(newPlayer); // todo: previousPlayer OR newPlayer ?!
+        HashMap<User, HashMap<String, Boolean>> hashmap1 = this.talkHistory.get(newPlayer);
         for (User sender : hashmap1.keySet()) {
             resultMessage.append("------------------------------------------------------------\n");
             resultMessage.append("  From ").append(sender.getUsername()).append(":\n");
@@ -219,7 +218,6 @@ public class Game {
         }
 
         for (User player : this.players) {
-
             if (player.isDepressed()) {
                 int days = Time.differenceInDays(player.getRejectionTime(), this.getGameState().getTime());
                 message.append(player.getUsername()).append("'s marriage proposal was rejected ").append(days)
@@ -256,7 +254,8 @@ public class Game {
                     }
                 }
 
-                // TODO: update third quests
+                npc.setTalkedToToday(player, false);
+                npc.setReceivedGiftToday(player, false);
             }
         }
 
@@ -275,29 +274,32 @@ public class Game {
             }
             player.changeBalance(income);
             message.append(player.getUsername()).append("'s shipping bins have been emptied, and they earned ")
-                    .append(income).append("g.\n");
+                .append(income).append("g.\n");
+
+
+            ArrayList<Position> crows = new ArrayList<>();
+            for (int i = 0; i < player.getFarm().getCropCount(); i++) {
+                if ((i % 16) == 0) {
+                    if ((new Random()).nextInt(4) == 0) {
+                        int lastIndex = (new Random()).nextInt(player.getFarm().getPlantedCrops().size() - 1);
+                        Crop randomCrop = player.getFarm().getPlantedCrops().remove(lastIndex); // Removes AND gets in one step
+                        Position crowPosition = new Position(randomCrop.getPosition());
+                        crows.add(crowPosition);
+                    }
+                }
+            }
+            player.getFarm().setCrows(crows);
         }
 
-        for (Tile tile : getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getAllTiles()) {
-            if (tile.getType() == TileType.TREE) {
-                Tree tree = (Tree) tile.getItemPlacedOnTile();
-                tree.incrementDaySinceLastHarvest();
+        for (Crop crop : App.getLoggedIn().getFarm().getPlantedCrops()) {
+            crop.incrementDaySinceLastHarvest();
+            crop.incrementDayInStage();
+        }
 
-                tree.incrementDayInStage();
-                if (tree.getDayInStage() == tree.getStage()) {
-                    tree.incrementStage();
-                }
-
-            } else if (tile.getType() == TileType.GROWING_CROP) {
-                Crop crop = (Crop) tile.getItemPlacedOnTile();
-                crop.incrementDaySinceLastHarvest();
-
-                crop.incrementDayInStage();
-                if (crop.getDayInStage() == crop.getStagesTimes().get(crop.getStage())) {
-                    crop.incrementStage();
-                }
-
-            }
+        for (Tree tree : App.getLoggedIn().getFarm().getPlantedTrees()) {
+            tree.incrementDaySinceLastHarvest();
+            tree.incrementDayInStage();
+            System.out.println("STAGE: " + tree.getDayInStage() + "/7 in stage" + tree.getStage() + " - day since last harvest:" + tree.getDaySinceLastHarvest());
         }
 
         return new Result(true, message.toString());
@@ -325,6 +327,15 @@ public class Game {
         for (Quest quest : this.quests) {
             if (quest.getId() == id) {
                 return quest;
+            }
+        }
+        return null;
+    }
+
+    public static Shop getShopByName(String name) {
+        for (Shop shop : NPCVillage.getShops()) {
+            if (shop.getName().equalsIgnoreCase(name)) {
+                return shop;
             }
         }
         return null;
@@ -385,19 +396,19 @@ public class Game {
 
     private void saveGameState() {
         Gson gson = new GsonBuilder()
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        return f.getName().equals("activeGame");
-                    }
+            .setExclusionStrategies(new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().equals("activeGame");
+                }
 
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
-                .setPrettyPrinting()
-                .create();
+                @Override
+                public boolean shouldSkipClass(Class<?> clazz) {
+                    return false;
+                }
+            })
+            .setPrettyPrinting()
+            .create();
 
         try (FileWriter writer = new FileWriter("games.json")) {
             writer.write(gson.toJson(App.getGames()));

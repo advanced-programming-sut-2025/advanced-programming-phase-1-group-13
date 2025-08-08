@@ -11,13 +11,10 @@ import com.ap_project.common.models.enums.types.TreeType;
 import java.util.ArrayList;
 
 public class Tree extends Item implements Harvestable {
-    private TreeType type;
+    private final TreeType type;
     private PlantSource source;
-    private String name;
-
     private int numOfStages;
-    private int totalHarvestTime;
-
+    private final int totalHarvestTime;
     private int baseSellPrice;
     private boolean isEdible;
     private Integer energy;
@@ -28,7 +25,7 @@ public class Tree extends Item implements Harvestable {
     private boolean isBurnt;
     private int stage;
     private int dayInStage;
-    private Integer daySinceLastHarvest;
+    private int daySinceLastHarvest;
     private boolean hasBeenWateredToday;
     private boolean hasBeenFertilizedToday;
 
@@ -44,7 +41,7 @@ public class Tree extends Item implements Harvestable {
 
     public Tree(TreeType type, Tile tile) {
         if (tile == null) {
-            throw new IllegalArgumentException("No tile found at position: " + tile.getPosition());
+            throw new IllegalArgumentException("No tile found at this position");
         }
         tile.setType(TileType.TREE);
         this.position = tile.getPosition();
@@ -62,15 +59,14 @@ public class Tree extends Item implements Harvestable {
 
         this.isBurnt = false;
         this.dayInStage = 0;
-        this.stage = 0;
+        this.stage = 1;
 
         this.hasBeenWateredToday = false;
-
     }
 
     public Tree(TreeType type, Tile tile, int stage) {
         if (tile == null) {
-            throw new IllegalArgumentException("No tile found at position: " + tile.getPosition());
+            throw new IllegalArgumentException("No tile found at this position");
         }
         tile.setType(TileType.TREE);
         this.position = tile.getPosition();
@@ -140,10 +136,6 @@ public class Tree extends Item implements Harvestable {
         return fruitType;
     }
 
-    public int getFruitHarvestCycle() {
-        return fruitHarvestCycle;
-    }
-
     public boolean isBurnt() {
         return isBurnt;
     }
@@ -153,13 +145,14 @@ public class Tree extends Item implements Harvestable {
     }
 
     public int getStage() {
+        if (stage > 5) stage = 5;
         return stage;
     }
 
     public void incrementStage() {
         this.stage++;
-        if (this.stage > this.numOfStages) {
-            this.stage = this.numOfStages;
+        if (this.stage > 5) {
+            this.stage = 5;
         }
     }
 
@@ -169,6 +162,12 @@ public class Tree extends Item implements Harvestable {
 
     public void incrementDayInStage() {
         this.dayInStage++;
+        if (dayInStage >= 7) {
+            dayInStage = 0;
+            stage++;
+        }
+
+        if (stage == 5) daySinceLastHarvest = fruitHarvestCycle;
     }
 
     public Integer getDaySinceLastHarvest() {
@@ -180,9 +179,7 @@ public class Tree extends Item implements Harvestable {
     }
 
     public void incrementDaySinceLastHarvest() {
-        if (daySinceLastHarvest != null) {
-            this.daySinceLastHarvest++;
-        }
+        this.daySinceLastHarvest++;
     }
 
     public boolean hasBeenWateredToday() {
@@ -202,7 +199,7 @@ public class Tree extends Item implements Harvestable {
     }
 
     public boolean hasFruits() {
-        return (stage == 5) && (daySinceLastHarvest == fruitHarvestCycle);
+        return (stage == 5) && (daySinceLastHarvest >= fruitHarvestCycle);
     }
 
     @Override

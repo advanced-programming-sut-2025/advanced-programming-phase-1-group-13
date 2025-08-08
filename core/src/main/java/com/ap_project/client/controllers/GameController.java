@@ -314,7 +314,7 @@ public class GameController {
             } else {
                 StringBuilder message =
                     new StringBuilder("Name: " + treeType.getName() + "\n" +
-                        "Source: " + treeType.getSource() + "\n" +
+                        "Source: " + treeType.getSource().getName() + "\n" +
                         "Stages: ");
 
                 message.append("7-7-7-7");
@@ -404,7 +404,7 @@ public class GameController {
             return new Result(false, "Rewrite the command; make sure you use \"put\" or \"pick\".");
         }
         if (isPut) {
-            int number = backpack.getItems().get(item);
+            Integer number = backpack.getItems().get(item);
             refrigerator.addToInventory(item, number);
             backpack.removeFromInventory(item, number);
             return new Result(true, number + " " + item.getName() + " has been transferred from backpack to refrigerator.");
@@ -416,11 +416,44 @@ public class GameController {
         }
     }
 
+    public Result putInRefrigerator(Item item) {
+        boolean isEdible = false;
+        if (item instanceof Crop) {
+            Crop crop = (Crop) item;
+            if (crop.isEdible()) {
+                isEdible = true;
+                System.out.println("EDIBLE CROP");
+            }
+        }
+        if (item instanceof Ingredient) {
+            isEdible = true;
+        }
+        if (item instanceof Fish) {
+            isEdible = true;
+            System.out.println("EDIBLE FISH");
+        }
+        if (item instanceof Food) {
+            isEdible = true;
+            System.out.println("EDIBLE FOOD");
+        }
+
+        if (!isEdible) return new Result(false, "You can only put edible items in refrigerator.");
+
+        User player = App.getLoggedIn();
+        Backpack backpack = player.getBackpack();
+        Refrigerator refrigerator = player.getFarm().getCabin().getRefrigerator();
+
+        Integer number = backpack.getItems().get(item);
+        refrigerator.addToInventory(item, number);
+        backpack.removeFromInventory(item, number);
+        return new Result(true, number + " " + item.getName() + " has been transferred from backpack to refrigerator.");
+    }
+
     public Result prepareCook(String foodName) {
         User player = App.getLoggedIn();
-        if (App.getCurrentGame().getPlayerByUsername(player.getUsername()).getFarm().getTileByPosition(player.getPosition()).getType() != TileType.CABIN) {
-            return new Result(false, "You can cook inside your cabin only.");
-        }
+//        if (!(Main.getMain().getScreen() instanceof FarmhouseView)) {
+//            return new Result(false, "You can cook inside your cabin only.");
+//        }
 
         CookingRecipe cookingRecipe = CookingRecipe.getCookingRecipe(foodName);
         if (cookingRecipe == null) {
@@ -437,7 +470,14 @@ public class GameController {
             homeRefrigerator,
             backpack,
             cookingRecipe.getFoodType().getIngredients());
+
+        if (!result.success) {
+            return result;
+        }
+
         homeRefrigerator.addToInventory(new Food(cookingRecipe), 1);
+        System.out.println(homeRefrigerator.getItems().entrySet().size());
+
         return new Result(true, "Yummy! Your fresh " + foodName + " added to the refrigerator.");
     }
 
@@ -488,28 +528,35 @@ public class GameController {
         HashMap<IngredientType, Integer> neededIngredients
     ) {
         HashMap<Item, Boolean> enoughItemInRefrigerator = new HashMap<>();
+
         for (Map.Entry<IngredientType, Integer> entry : neededIngredients.entrySet()) {
             Item ingredientItem = Item.getItemByItemType(entry.getKey());
             int requiredAmount = entry.getValue();
-            if (!refrigerator.getItems().containsKey(ingredientItem) && !backpack.getItems().containsKey(ingredientItem)) {
-                return new Result(false, "You don't have " + ingredientItem.getName() + " at all.");
-            }
-            if (refrigerator.getItems().get(ingredientItem) + backpack.getItems().get(ingredientItem) < requiredAmount) {
+
+            int fridgeAmount = refrigerator.getItems().getOrDefault(ingredientItem, 0);
+            int backpackAmount = backpack.getItems().getOrDefault(ingredientItem, 0);
+
+            if (fridgeAmount + backpackAmount < requiredAmount) {
                 return new Result(false, "You don't have enough " + ingredientItem.getName() + ".");
             }
-            enoughItemInRefrigerator.put(ingredientItem, refrigerator.getItems().get(ingredientItem) >= requiredAmount);
+
+            enoughItemInRefrigerator.put(ingredientItem, fridgeAmount >= requiredAmount);
         }
-        for (ItemType itemType : neededIngredients.keySet()) {
+
+        for (IngredientType itemType : neededIngredients.keySet()) {
             Item ingredientItem = Item.getItemByItemType(itemType);
             int requiredAmount = neededIngredients.get(itemType);
+            int fridgeAmount = refrigerator.getItems().getOrDefault(ingredientItem, 0);
+
             if (enoughItemInRefrigerator.get(ingredientItem)) {
                 refrigerator.removeFromInventory(ingredientItem, requiredAmount);
             } else {
-                int neededAmountFromBackpack = requiredAmount - refrigerator.getItems().get(ingredientItem);
-                refrigerator.removeFromInventory(ingredientItem, null);
+                int neededAmountFromBackpack = requiredAmount - fridgeAmount;
+                refrigerator.removeFromInventory(ingredientItem, fridgeAmount);
                 backpack.removeFromInventory(ingredientItem, neededAmountFromBackpack);
             }
         }
+
         return new Result(true, "");
     }
 
@@ -571,7 +618,7 @@ public class GameController {
             int requiredAmount = entry.getValue();
 
             if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
-                return new Result(false, "You don't have enough " + ingredientType.getName());
+                return new Result(true, "You don't have enough " + ingredientType.getName()); // todo
             }
         }
         return new Result(true, "");
@@ -731,7 +778,7 @@ public class GameController {
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
 
-        if (!App.getCurrentGame().getVillage().isPositionValid(new Position(x, y))) {
+        if (App.getCurrentGame().getVillage().isPositionInvalid(new Position(x, y))) {
             return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
         }
 
@@ -1774,6 +1821,34 @@ public class GameController {
             "You will get " + price + "g tomorrow.");
     }
 
+    public Result sell(Item item, int count) {
+        User player = App.getLoggedIn();
+        if (!player.getBackpack().getItems().containsKey(item)) {
+            return new Result(false, "Product not found.");
+        }
+
+        int numberInInventory = player.getBackpack().getItems().get(item);
+
+        if (!item.isSellable()) {
+            return new Result(false, "This product can not be sold.");
+        }
+
+
+        Result result = player.getBackpack().addToInventory(item, count);
+        if (!result.success) {
+            return new Result(false, "You don't have enough " + item + " to sell.");
+        }
+
+        for (int i = 0; i < count; i++) {
+            //shippingBin.addItemToShip(item); // TODO
+        }
+
+        int price = item.getPrice() * count;
+
+        return new Result(true, "You put " + count + " of " + item + " in the shipping bin. " +
+            "You will get " + price + "g tomorrow.");
+    }
+
     // === FRIENDSHIPS === //
 
     public Result showFriendshipLevels() {
@@ -2101,7 +2176,7 @@ public class GameController {
             NPCVillage village = App.getCurrentGame().getVillage();
             Position pos = new Position(x, y);
 
-            if (!village.isPositionValid(pos)) {
+            if (village.isPositionInvalid(pos)) {
                 return new Result(false, "Position (" + x + "," + y + ") is out of bounds.");
             }
 

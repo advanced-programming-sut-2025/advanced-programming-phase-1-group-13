@@ -8,8 +8,10 @@ import com.ap_project.common.models.enums.environment.Time;
 import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.environment.Direction;
 
+import com.ap_project.common.models.enums.types.GameMenuType;
 import com.ap_project.common.models.tools.Tool;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -59,7 +61,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected Texture background;
     protected final OrthographicCamera camera;
     protected static final float TILE_SIZE = 70.5f;
-    protected Position originPosition = new Position(2, 54);
+    protected Position originPosition;
     protected Texture tileMarkerTexture;
     protected float scale = 4.400316f;
     protected Image energyBar;
@@ -80,10 +82,14 @@ public abstract class GameView implements Screen, InputProcessor {
     protected int lightningY;
     protected boolean hasTriggeredLightningTransition;
     protected final Image lightCircle;
+    protected final Label errorMessageLabel;
 
     public GameView(GameController controller, Skin skin) {
         this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
         App.getCurrentGame().getGameState().setCurrentWeather(Weather.SUNNY); // TODO: remove later
+
+        if (this instanceof FarmView) this.originPosition = new Position(2, 51);
+        else this.originPosition = new Position(6, 51);
 
         this.date = new Label("", skin);
         date.setFontScale(0.90f);
@@ -146,6 +152,10 @@ public abstract class GameView implements Screen, InputProcessor {
         this.lightCircle = new Image(GameAssetManager.getGameAssetManager().getCircle());
         this.lightCircle.setColor(1, 1, 1, 0.1f);
         this.lightCircle.setVisible(false);
+
+        this.errorMessageLabel = new Label("", skin);
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
     }
 
     @Override
@@ -160,6 +170,7 @@ public abstract class GameView implements Screen, InputProcessor {
         updateClockInfo();
         addInventoryHotbar();
         updateGreenBar();
+        stage.addActor(errorMessageLabel);
 
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
@@ -313,7 +324,7 @@ public abstract class GameView implements Screen, InputProcessor {
             return;
         }
 
-        float displacement = 400f * delta;
+        float displacement = 800f * delta;
         isMoving = false;
 
         float backgroundWidth = scale * background.getWidth();
@@ -548,7 +559,7 @@ public abstract class GameView implements Screen, InputProcessor {
         }
 
         if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE) {
-            goToGameMenu(this);
+            goToGameMenu(this, GameMenuType.INVENTORY);
         }
 
         if (keycode == Input.Keys.Q) {
@@ -557,6 +568,9 @@ public abstract class GameView implements Screen, InputProcessor {
 
         if (keycode == Input.Keys.M) {
             goToMap(this);
+        }
+        if(keycode == Input.Keys.T) {
+            goToToolMenu(this);
         }
 
         if (keycode == Input.Keys.R) {
@@ -901,6 +915,18 @@ public abstract class GameView implements Screen, InputProcessor {
         );
     }
 
+    protected void drawProgressBar(Texture texture, Vector2 position, float width) {
+        float tileX = position.x;
+        float tileY = originPosition.getY() * TILE_SIZE - position.y;
+        Main.getBatch().draw(
+            texture,
+            tileX,
+            tileY,
+            width,
+            texture.getHeight() * scale
+        );
+    }
+
     protected void draw(Texture texture, Vector2 position) {
         float tileX = position.x;
         float tileY = originPosition.getY() * TILE_SIZE - position.y;
@@ -929,29 +955,24 @@ public abstract class GameView implements Screen, InputProcessor {
             worldY <= textureY + textureHeight;
     }
 
-    protected void renderDebugTiles() {
-        Position debugTilePosition = originPosition;
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                float tileX = debugTilePosition.getX() * TILE_SIZE + x * TILE_SIZE;
-                float tileY = debugTilePosition.getY() * TILE_SIZE + y * TILE_SIZE;
+    protected boolean clickedOnTexture(int screenX, int screenY, Texture texture, Vector2 position) {
+        float worldX = camera.position.x - (camera.viewportWidth / 2) + screenX;
+        float worldY = camera.position.y - (camera.viewportHeight / 2) + (Gdx.graphics.getHeight() - screenY);
 
-                if ((x + y) % 2 == 0) {
-                    Main.getBatch().setColor(1, 0, 0, 0.5f);
-                } else {
-                    Main.getBatch().setColor(0, 0, 1, 0.5f);
-                }
+        float textureX = position.x;
+        float textureY = originPosition.getY() * TILE_SIZE - position.y;
 
-                Main.getBatch().draw(
-                    tileMarkerTexture,
-                    tileX,
-                    tileY,
-                    TILE_SIZE,
-                    TILE_SIZE
-                );
-            }
-        }
-        Main.getBatch().setColor(1, 1, 1, 1);
+        float textureWidth = texture.getWidth();
+        float textureHeight = texture.getHeight();
+
+        return worldX >= textureX &&
+            worldX <= textureX + textureWidth &&
+            worldY >= textureY &&
+            worldY <= textureY + textureHeight;
+    }
+
+    public void setSelectedSlotIndex(int selectedSlotIndex) {
+        this.selectedSlotIndex = selectedSlotIndex;
     }
 
     public void updateFarmBuildings() {
