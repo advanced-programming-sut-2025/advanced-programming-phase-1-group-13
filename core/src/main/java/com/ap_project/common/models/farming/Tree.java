@@ -162,7 +162,7 @@ public class Tree extends Item implements Harvestable {
 
     public void incrementDayInStage() {
         this.dayInStage++;
-        if (dayInStage > 7) {
+        if (dayInStage >= 7) {
             dayInStage = 0;
             stage++;
         }

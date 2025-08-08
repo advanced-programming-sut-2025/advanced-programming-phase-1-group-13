@@ -50,12 +50,12 @@ public class GameMenuView implements Screen, InputProcessor {
     private final ArrayList<Label> craftIngredientNameLabels = new ArrayList<>();
     private final ArrayList<Image> craftImages = new ArrayList<>();
 
-    public GameMenuView(GameView gameView) {
+    public GameMenuView(GameView gameView, GameMenuType currentTab) {
         Image blackScreen = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
         blackScreen.setColor(0, 0, 0, 0.2f);
         blackScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        this.currentTab = GameMenuType.INVENTORY;
+        this.currentTab = currentTab;
 
         this.window = new Image(GameAssetManager.getGameAssetManager().getMenuWindowByType(currentTab));
         this.trashCan = new Image(GameAssetManager.getGameAssetManager().getTrashCan(isTrashCanOpen));
@@ -87,7 +87,11 @@ public class GameMenuView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         stage.addActor(errorMessageLabel);
         updateWindow();
-        showInventoryMenu();
+
+        if (currentTab == GameMenuType.INVENTORY) showInventoryMenu();
+
+        if (currentTab == GameMenuType.SOCIAL) showSocialMenu();
+
         addCloseButton();
     }
 

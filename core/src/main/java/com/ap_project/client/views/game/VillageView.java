@@ -4,6 +4,7 @@ import com.ap_project.Main;
 import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.Dialog;
+import com.ap_project.common.models.enums.types.GameMenuType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,8 +18,7 @@ import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 
-import static com.ap_project.Main.goToGameMenu;
-import static com.ap_project.Main.goToJournal;
+import static com.ap_project.Main.*;
 
 public class VillageView extends GameView {
     private final ArrayList<Texture> shopTextures;
@@ -27,10 +27,10 @@ public class VillageView extends GameView {
     private Texture npcOptions;
     private final Texture giveGiftButton;
     private Vector2 giveGiftPosition;
-    private final Texture QuestsListButton;
-    private Vector2 QuestsListPosition;
+    private final Texture questsListButton;
+    private Vector2 questsListPosition;
     private final Texture friendshipLevelButton;
-    private Vector2 FriendshipLevelPosition;
+    private Vector2 friendshipLevelPosition;
 
     public VillageView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -50,7 +50,7 @@ public class VillageView extends GameView {
 
         this.friendshipLevelButton = GameAssetManager.getGameAssetManager().getFriendshipLevelButton();
         this.giveGiftButton = GameAssetManager.getGameAssetManager().getGiveGiftButton();
-        this.QuestsListButton = GameAssetManager.getGameAssetManager().getQuestsListButton();
+        this.questsListButton = GameAssetManager.getGameAssetManager().getQuestsListButton();
     }
 
     @Override
@@ -84,14 +84,13 @@ public class VillageView extends GameView {
             position.setX(position.getX() + 1);
             draw(npcOptions, position);
 
-            // todo
             giveGiftPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 2.4f));
-            QuestsListPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 1.4f));
-            FriendshipLevelPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 0.4f));
+            questsListPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 1.4f));
+            friendshipLevelPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 0.4f));
 
             draw(giveGiftButton, giveGiftPosition);
-            draw(QuestsListButton, QuestsListPosition);
-            draw(friendshipLevelButton, FriendshipLevelPosition);
+            draw(questsListButton, questsListPosition);
+            draw(friendshipLevelButton, friendshipLevelPosition);
         }
 
         scale = 4.400316f;
@@ -101,44 +100,56 @@ public class VillageView extends GameView {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        super.touchDown(screenX, screenY, pointer, button);
+        try {
+            super.touchDown(screenX, screenY, pointer, button);
 
-        if (button == Input.Buttons.RIGHT) {
+            if (button == Input.Buttons.RIGHT) {
+                for (int i = 0; i < npcTextures.size(); i++) {
+                    NPC npc = App.getCurrentGame().getNpcs().get(i);
+                    if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
+                        npcOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
+                        npcWithMenu = npc;
+                    }
+                }
+            }
+
             for (int i = 0; i < npcTextures.size(); i++) {
                 NPC npc = App.getCurrentGame().getNpcs().get(i);
-                if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
-                    npcOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
-                    npcWithMenu = npc;
+                Position position = new Position(npc.getPosition());
+                position.setY(position.getY() - 2);
+                if (clickedOnTexture(screenX, screenY, GameAssetManager.getGameAssetManager().getDialogIcon(), position, 1)) {
+                    if (npc.hasDialog()) {
+                        addDialogBox(npc);
+                    }
+                    return true;
                 }
             }
-        }
 
-        for (int i = 0; i < npcTextures.size(); i++) {
-            NPC npc = App.getCurrentGame().getNpcs().get(i);
-            Position position = new Position(npc.getPosition());
-            position.setY(position.getY() - 2);
-            if (clickedOnTexture(screenX, screenY, GameAssetManager.getGameAssetManager().getDialogIcon(), position, scale)) {
-                if (npc.hasDialog()) {
-                    addDialogBox(npc);
+            if (npcOptions != null) {
+                if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition, 1)) {
+                    // todo
+                    System.out.println("CLICKED ON GIVE GIFT");
+                    return true;
                 }
-                return true;
+
+                if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition, 1)) {
+                    System.out.println("CLICKED ON FRIENDSHIP LEVEL");
+                    goToGameMenu(this, GameMenuType.SOCIAL);
+                    return true;
+                }
+
+                if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition, 1)) {
+                    System.out.println("CLICKED ON QUESTS LIST");
+                    goToJournal(this);
+                    return true;
+                }
             }
+
+            show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-
-        if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition, scale)) {
-            // todo
-        }
-
-        if (clickedOnTexture(screenX, screenY, friendshipLevelButton, FriendshipLevelPosition,scale)) {
-            goToGameMenu(this);
-        }
-
-        if (clickedOnTexture(screenX, screenY, QuestsListButton, QuestsListPosition, scale)) {
-            goToJournal(this);
-        }
-
-        show();
-
         return false;
     }
 

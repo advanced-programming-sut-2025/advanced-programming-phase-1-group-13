@@ -8,6 +8,7 @@ import com.ap_project.common.models.enums.environment.Time;
 import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.environment.Direction;
 
+import com.ap_project.common.models.enums.types.GameMenuType;
 import com.ap_project.common.models.tools.Tool;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -555,7 +556,7 @@ public abstract class GameView implements Screen, InputProcessor {
         }
 
         if (keycode == Input.Keys.E || keycode == Input.Keys.ESCAPE) {
-            goToGameMenu(this);
+            goToGameMenu(this, GameMenuType.INVENTORY);
         }
 
         if (keycode == Input.Keys.Q) {
