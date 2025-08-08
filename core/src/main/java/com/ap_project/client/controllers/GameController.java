@@ -404,7 +404,7 @@ public class GameController {
             return new Result(false, "Rewrite the command; make sure you use \"put\" or \"pick\".");
         }
         if (isPut) {
-            int number = backpack.getItems().get(item);
+            Integer number = backpack.getItems().get(item);
             refrigerator.addToInventory(item, number);
             backpack.removeFromInventory(item, number);
             return new Result(true, number + " " + item.getName() + " has been transferred from backpack to refrigerator.");
@@ -414,6 +414,39 @@ public class GameController {
             refrigerator.removeFromInventory(item, number);
             return new Result(true, number + " " + item.getName() + " has been transferred from refrigerator to backpack.");
         }
+    }
+
+    public Result putInRefrigerator(Item item) {
+        boolean isEdible = false;
+        if (item instanceof Crop) {
+            Crop crop = (Crop) item;
+            if (crop.isEdible()) {
+                isEdible = true;
+                System.out.println("EDIBLE CROP");
+            }
+        }
+        if (item instanceof Ingredient) {
+            isEdible = true;
+        }
+        if (item instanceof Fish) {
+            isEdible = true;
+            System.out.println("EDIBLE FISH");
+        }
+        if (item instanceof Food) {
+            isEdible = true;
+            System.out.println("EDIBLE FOOD");
+        }
+
+        if (!isEdible) return new Result(false, "You can only put edible items in refrigerator.");
+
+        User player = App.getLoggedIn();
+        Backpack backpack = player.getBackpack();
+        Refrigerator refrigerator = player.getFarm().getCabin().getRefrigerator();
+
+        Integer number = backpack.getItems().get(item);
+        refrigerator.addToInventory(item, number);
+        backpack.removeFromInventory(item, number);
+        return new Result(true, number + " " + item.getName() + " has been transferred from backpack to refrigerator.");
     }
 
     public Result prepareCook(String foodName) {
@@ -438,7 +471,7 @@ public class GameController {
             backpack,
             cookingRecipe.getFoodType().getIngredients());
 
-        if (!result.success){
+        if (!result.success) {
             return result;
         }
 

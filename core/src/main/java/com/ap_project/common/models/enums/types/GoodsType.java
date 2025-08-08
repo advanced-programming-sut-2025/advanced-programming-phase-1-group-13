@@ -63,7 +63,7 @@ public enum GoodsType implements ItemType {
     SUNFLOWER_SEEDS("Sunflower Seeds", "Plant in summer or fall. Takes 8 days to produce a large sunflower. Yields more seeds at harvest.", 125, 5, "Joja mart", new ArrayList<>(List.of(Season.SUMMER))),
     CORN_SEEDS("Corn Seeds", "Plant these in the summer or fall. Takes 14 days to mature, and continues to produce after first harvest.", 187, 5, "Joja mart", new ArrayList<>(List.of(Season.FALL))),
     EGGPLANT_SEEDS("Eggplant Seeds", "Plant these in the fall. Takes 5 days to mature, and continues to produce after first harvest.", 25, 5, "Joja mart", new ArrayList<>(List.of(Season.FALL))),
-    PUMPKIN_SEEDS("Pumpkin Seeds", "Plant these in the fall. Takes 13 days to mature.", 125, 5, "Joja mart",new ArrayList<>(List.of(Season.FALL))),
+    PUMPKIN_SEEDS("Pumpkin Seeds", "Plant these in the fall. Takes 13 days to mature.", 125, 5, "Joja mart", new ArrayList<>(List.of(Season.FALL))),
     BROCCOLI_SEEDS("Broccoli Seeds", "Plant in the fall. Takes 8 days to mature, and continues to produce after first harvest.", 15, 5, "Joja mart", new ArrayList<>(List.of(Season.FALL))),
     AMARANTH_SEEDS("Amaranth Seeds", "Plant these in the fall. Takes 7 days to grow. Harvest with the scythe.", 87, 5, "Joja mart", new ArrayList<>(List.of(Season.FALL))),
     GRAPE_STARTER("Grape Starter", "Plant these in the fall. Takes 10 days to grow, but keeps producing after that. Grows on a trellis.", 75, 5, "Joja mart", new ArrayList<>(List.of(Season.FALL))),
@@ -95,7 +95,13 @@ public enum GoodsType implements ItemType {
     PEACH_SAPLING("Peach Sapling", "Takes 28 days to produce a mature Peach tree. Bears fruit in the summer. Only grows if the 8 surrounding tiles are empty.", 6000, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
     POMEGRANATE_SAPLING("Pomegranate Sapling", "Takes 28 days to produce a mature Pomegranate tree. Bears fruit in the fall. Only grows if the 8 surrounding tiles are empty.", 6000, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
     BASIC_RETAINING_SOIL("Basic Retaining Soil", "This soil has a chance of staying watered overnight. Mix into tilled soil.", 100, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
-    QUALITY_RETAINING_SOIL("Quality Retaining Soil", "This soil has a good chance of staying watered overnight. Mix into tilled soil.", 150, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER)));
+    QUALITY_RETAINING_SOIL("Quality Retaining Soil", "This soil has a good chance of staying watered overnight. Mix into tilled soil.", 150, -1, "Pierre's General Store", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
+    FISH_SMOKER_RECIPE("Fish Smoker Recipe", "A recipe to make Fish Smoker", 10000, 1, "Fish Shop", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
+    TROUT_SOUP("Trout Soup", "Pretty salty.", 250, 1, "Fish Shop", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
+    BAMBOO_POLE("Bamboo Pole", "Use in the water to catch fish.", 500, 1, "Fish Shop", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
+    TRAINING_ROD("Training Rod", "It's a lot easier to use than other rods, but can only catch basic fish.", 25, 1, "Fish Shop", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
+    FIBERGLASS_ROD("Fiberglass Rod", "Use in the water to catch fish.", 1800, 1, "Fish Shop", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),
+    IRIDIUM_ROD("Iridium Rod", "Use in the water to catch fish.", 7500, 1, "Fish Shop", new ArrayList<>(List.of(Season.SPRING, Season.SUMMER, Season.FALL, Season.WINTER))),;
 
     private final String name;
     private final String description;
