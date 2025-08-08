@@ -18,10 +18,8 @@ public class Shop {
 
     public Shop(ShopType type, Position position, int width, int height) {
         this.type = type;
-        this.shopInventory = new ArrayList<>();
-        for (GoodsType goodType : GoodsType.values()) {
-            this.shopInventory.add(new Good(goodType));
-        }
+        this.shopInventory = type.getAllProducts();
+        System.out.println("Number of products for " + type.getName() + ": " + shopInventory.size());
         this.name = type.getName();
         this.owner = type.getOwner();
         this.startHour = type.getStartHour();

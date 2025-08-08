@@ -1,6 +1,9 @@
 package com.ap_project.common.models.enums.types;
 
+import com.ap_project.common.models.Good;
 import com.ap_project.common.models.NPC;
+
+import java.util.ArrayList;
 
 public enum ShopType {
     BLACKSMITH("Blacksmith", NPCType.CLINT, 9, 16),
@@ -46,5 +49,15 @@ public enum ShopType {
             }
         }
         return null;
+    }
+
+    public ArrayList<Good> getAllProducts() {
+        ArrayList<Good> products = new ArrayList<>();
+        for (GoodsType goodsType : GoodsType.values()) {
+            if (goodsType.getShopType().equalsIgnoreCase(this.getName())) {
+                products.add(new Good(goodsType));
+            }
+        }
+        return products;
     }
 }
