@@ -74,8 +74,8 @@ public class SellMenuView implements Screen, InputProcessor {
         stage.addActor(window);
 
         emptySlot.setPosition(
-            window.getX() + 200,
-            window.getY() + window.getHeight() - 200
+            window.getX() + 220,
+            window.getY() + window.getHeight() - 221
         );
         stage.addActor(emptySlot);
 
@@ -83,21 +83,21 @@ public class SellMenuView implements Screen, InputProcessor {
         quantityLabel.setColor(Color.BLACK);
         quantityLabel.setPosition(
             window.getX() + 300,
-            window.getY() + window.getHeight() - 200
+            window.getY() + window.getHeight() - 220
         );
         stage.addActor(quantityLabel);
 
         quantityBox.setPosition(
-            window.getX() + 700,
-            window.getY() + window.getHeight() - 200
+            window.getX() + 440,
+            window.getY() + window.getHeight() - 220
         );
         stage.addActor(quantityBox);
 
         addItemsToInventory();
 
         sellButton.setPosition(
-            window.getX() + window.getWidth() / 2,
-            window.getY() + window.getHeight() - 400
+            window.getX() + window.getWidth() / 2+250f,
+            window.getY() + window.getHeight() - 240
         );
         stage.addActor(sellButton);
 
@@ -229,15 +229,15 @@ public class SellMenuView implements Screen, InputProcessor {
     private void addItemsToInventory() {
         int columns = 12;
         float spacingX = 64;
-        float spacingY = 70;
+        float spacingY = 69;
         float startX = window.getX() + 60;
         float startY = window.getY() + window.getHeight() - 400;
 
         for (int i = 0; i < itemImages.size(); i++) {
             Image image = itemImages.get(i);
             image.setSize(50, 55);
-            float x = startX + (i % columns) * spacingX- 20f;
-            float y = startY - (i / columns) * spacingY + 50f;
+            float x = startX + (i % columns) * spacingX-13f ;
+            float y = startY - (i / columns) * spacingY -22;
             image.setPosition(x, y);
 
             stage.addActor(image);

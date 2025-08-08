@@ -64,7 +64,9 @@ public class ShopMenuView implements Screen, InputProcessor {
         filter.setItems(options);
 
         this.slider = new Image(GameAssetManager.getGameAssetManager().getSlider());
-        slider.setX(1600);
+        slider.setX(1725);
+        slider.setY(window.getY() + 445);
+
 
         this.firstRowIndex = 0;
 
@@ -96,7 +98,10 @@ public class ShopMenuView implements Screen, InputProcessor {
 
         System.out.println(firstRowIndex);
 
-        slider.setY(900 - firstRowIndex * 50);
+        //slider.setY(900 - firstRowIndex * 50);
+        float sliderBaseY = window.getY() + 445;
+        slider.setY(sliderBaseY - firstRowIndex * 50);
+
 
         addShopProducts();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -192,7 +197,6 @@ public class ShopMenuView implements Screen, InputProcessor {
         for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
             Image image = productsImages.get(firstRowIndex + i);
             image.setScale(1.25f);
-            // TODO
             image.setPosition(
                 600,
                 770 - 90 * i
