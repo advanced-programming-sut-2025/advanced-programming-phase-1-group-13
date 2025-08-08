@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static com.ap_project.Main.getBatch;
@@ -16,6 +17,7 @@ import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 public  class ShopMenuView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
+    private final Image closeButton;
     private final GameView gameView;
 
     public ShopMenuView(GameView gameView, Shop shop) {
@@ -23,6 +25,7 @@ public  class ShopMenuView implements Screen, InputProcessor {
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
+        this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
 
         this.gameView = gameView;
     }
@@ -32,11 +35,13 @@ public  class ShopMenuView implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this);
 
+        addCloseButton();
         stage.addActor(window);
     }
 
     @Override
     public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0, 1);
         getBatch().begin();
         getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -87,14 +92,6 @@ public  class ShopMenuView implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
-        Image closeButton = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
-        closeButton.setWidth(20);
-        closeButton.setHeight(20);
-        closeButton.setPosition(
-            window.getX() + window.getHeight(),
-            window.getY() + window.getHeight()
-        );
-        stage.addActor(closeButton);
         if (hoverOnImage(closeButton, screenX, convertedY)) {
             getMain().setScreen(gameView);
             return true;
@@ -126,5 +123,15 @@ public  class ShopMenuView implements Screen, InputProcessor {
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+
+    public void addCloseButton() {
+        float buttonX = Gdx.graphics.getWidth() / 2f + 400f;
+        float buttonY = window.getY() + window.getHeight() + 20f;
+
+        closeButton.setPosition(buttonX, buttonY);
+        closeButton.setSize(closeButton.getWidth(), closeButton.getHeight());
+
+        stage.addActor(closeButton);
     }
 }
