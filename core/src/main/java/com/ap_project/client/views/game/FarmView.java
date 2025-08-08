@@ -219,6 +219,8 @@ public class FarmView extends GameView {
             for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
                 Position position = new Position(farm.getFarmBuildings().get(i).getPositionOfUpperLeftCorner());
                 position.setY(position.getY() + farm.getFarmBuildings().get(i).getLength());
+                if (farm.getFarmBuildings().get(i).getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) scale = 1;
+                else scale = 4.400316f;
                 draw(farmBuildingsTextures.get(i), position);
             }
 
@@ -394,6 +396,10 @@ public class FarmView extends GameView {
                 if (farmBuilding.getFarmBuildingType().getCapacity() != 0) {
                     AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
                     goToAnimalLivingSpaceMenu(this, animalLivingSpace);
+                }
+
+                if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
+                    // goToSellMenu(); TODO
                 }
                 return true;
             }
