@@ -63,7 +63,7 @@ public class ShopMenuView implements Screen, InputProcessor {
         this.filterSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
         filterSelectBox.setWidth(600);
         filterSelectBox.setPosition(
-            windowX + 10, windowY + window.getHeight() - 600
+            windowX , windowY + window.getHeight() - 670
         );
         Array<String> options = new Array<>();
         options.add("Show all products");
@@ -326,8 +326,8 @@ public class ShopMenuView implements Screen, InputProcessor {
                 Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
                 digitLabel.setColor(128 / 255f, 0, 0, 1);
                 digitLabel.setPosition(
-                    600 - 24 * i,
-                    400
+                    773 - 24 * i,
+                    392
                 );
                 stage.addActor(digitLabel);
             }
