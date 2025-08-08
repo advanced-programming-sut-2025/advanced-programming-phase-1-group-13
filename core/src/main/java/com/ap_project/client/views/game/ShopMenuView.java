@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -21,18 +22,24 @@ import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class ShopMenuView implements Screen, InputProcessor {
     private Stage stage;
+    private final Shop shop;
     private final Image window;
     private final Image closeButton;
     private final GameView gameView;
     private final Label welcomeLabel;
     private final Image NPCPortraitImage;
-    private final ArrayList<Image> productsImages;
-    private final ArrayList<Good> products;
-    private final SelectBox<String> filter;
+    private ArrayList<Label> productNames;
+    private ArrayList<Label> productPrices;
+    private ArrayList<Image> productsImages;
+    private ArrayList<Good> products;
+    private final SelectBox<String> filterSelectBox;
+    private final TextButton filterButton;
     private final Image slider;
     private int firstRowIndex;
 
     public ShopMenuView(GameView gameView, Shop shop) {
+        this.shop = shop;
+
         this.window = new Image(GameAssetManager.getGameAssetManager().getShopMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
@@ -51,22 +58,26 @@ public class ShopMenuView implements Screen, InputProcessor {
         welcomeLabel.setPosition(windowX + 31, windowY + window.getHeight() - 510);
         welcomeLabel.setColor(Color.BLACK);
 
-        this.productsImages = new ArrayList<>();
-        this.products = shop.getShopInventory();
-        for (Good product : products) {
-            productsImages.add(new Image(GameAssetManager.getGameAssetManager().getTextureByGood(product)));
-        }
+        updateProductList(false);
 
-        this.filter = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
+        this.filterSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
+        filterSelectBox.setWidth(600);
+        filterSelectBox.setPosition(
+            windowX + 10, windowY + window.getHeight() - 600
+        );
         Array<String> options = new Array<>();
         options.add("Show all products");
         options.add("Show available products");
-        filter.setItems(options);
+        filterSelectBox.setItems(options);
+
+        this.filterButton = new TextButton("Filter", GameAssetManager.getGameAssetManager().getSkin());
+        filterButton.setPosition(
+            windowX + 150, windowY + window.getHeight() - 800
+        );
 
         this.slider = new Image(GameAssetManager.getGameAssetManager().getSlider());
         slider.setX(1725);
         slider.setY(window.getY() + 445);
-
 
         this.firstRowIndex = 0;
 
@@ -82,7 +93,8 @@ public class ShopMenuView implements Screen, InputProcessor {
         stage.addActor(closeButton);
         stage.addActor(NPCPortraitImage);
         stage.addActor(welcomeLabel);
-        stage.addActor(filter);
+        stage.addActor(filterSelectBox);
+        stage.addActor(filterButton);
         stage.addActor(slider);
         addBalanceLabel();
         addItemsToInventory();
@@ -96,9 +108,14 @@ public class ShopMenuView implements Screen, InputProcessor {
         getBatch().begin();
         getBatch().end();
 
-        //slider.setY(900 - firstRowIndex * 50);
         float sliderBaseY = window.getY() + 445;
         slider.setY(sliderBaseY - firstRowIndex * 50);
+
+        if (filterButton.isChecked()) {
+            Gdx.input.setInputProcessor(this);
+            updateProductList(filterSelectBox.getSelected().equals("Show available products"));
+            filterButton.setChecked(false);
+        }
 
         addShopProducts();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -147,7 +164,6 @@ public class ShopMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("CLICKED");
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
@@ -157,9 +173,18 @@ public class ShopMenuView implements Screen, InputProcessor {
 
         for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
             if (hoverOnImage(productsImages.get(firstRowIndex + i), screenX, convertedY)) {
-                System.out.println("going to buy menu for "+ products.get(firstRowIndex + i));
+                System.out.println("going to buy menu for " + products.get(firstRowIndex + i));
             }
+        }
 
+        Image selectBox = new Image(GameAssetManager.getGameAssetManager().getWhiteScreen());
+        selectBox.setPosition(filterSelectBox.getX(), filterSelectBox.getY());
+        selectBox.setSize(filterSelectBox.getWidth(), filterSelectBox.getHeight());
+//        stage.addActor(selectBox);
+        if (hoverOnImage(selectBox, screenX, convertedY)) {
+            Gdx.input.setInputProcessor(stage);
+            System.out.println("stage input processor set");
+            return true;
         }
 
         return false;
@@ -197,34 +222,48 @@ public class ShopMenuView implements Screen, InputProcessor {
     }
 
     private void addShopProducts() {
-        for (Image image : productsImages) {
-            image.remove();
-        }
+        try {
+            for (Image image : productsImages) {
+                image.remove();
+            }
 
-        for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
-            Image image = productsImages.get(firstRowIndex + i);
-            image.setScale(1.25f);
-            image.setPosition(
-                600,
-                770 - 90 * i
-            );
-            stage.addActor(image);
+            for (Label label : productNames) {
+                if (label.getStage() != null) label.remove();
+            }
 
-            Label name = new Label(products.get(i).getName(), GameAssetManager.getGameAssetManager().getSkin());
-            name.setColor(Color.BLACK);
-            name.setPosition(
-                image.getX() + 73,
-                image.getY()
-            );
-            stage.addActor(name);
+            for (Label label : productPrices) {
+                if (label.getStage() != null) label.remove();
+            }
 
-            Label price = new Label(products.get(i).getType().getPrice() + "", GameAssetManager.getGameAssetManager().getSkin());
-            price.setColor(Color.BLACK);
-            price.setPosition(
-                image.getX() + 915,
-                image.getY()
-            );
-            stage.addActor(price);
+            for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
+                Image image = productsImages.get(firstRowIndex + i);
+                image.setScale(1.25f);
+                image.setPosition(
+                    600,
+                    770 - 90 * i
+                );
+                stage.addActor(image);
+
+                Label name = productNames.get(firstRowIndex + i);
+                name.setColor(Color.BLACK);
+                name.setPosition(
+                    image.getX() + 73,
+                    image.getY()
+                );
+                productNames.add(name);
+                stage.addActor(name);
+
+                Label price = productPrices.get(firstRowIndex + i);
+                price.setColor(Color.BLACK);
+                price.setPosition(
+                    image.getX() + 915,
+                    image.getY()
+                );
+                productPrices.add(price);
+                stage.addActor(price);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -244,12 +283,13 @@ public class ShopMenuView implements Screen, InputProcessor {
 
         int maxItems = columns * maxRows;
         int displayCount = Math.min(itemImages.size(), maxItems);
-
         for (int i = 0; i < displayCount; i++) {
+            int row = i / columns;
+
             Image image = itemImages.get(i);
             image.setSize(50, 55);
             float x = startX + (i % columns) * spacingX - 20f;
-            float y = startY - (i / columns) * spacingY + 50f;
+            float y = startY - row * spacingY + 50f;
             image.setPosition(x, y);
 
             stage.addActor(image);
@@ -267,9 +307,11 @@ public class ShopMenuView implements Screen, InputProcessor {
     }
 
     public void changeFirstRowIndex(int amount) {
-        firstRowIndex += amount;
-        if (firstRowIndex < 0) firstRowIndex = 0;
-        if (firstRowIndex > products.size() - 4) firstRowIndex = products.size() - 4;
+        if (products.size() > 4) {
+            firstRowIndex += amount;
+            if (firstRowIndex < 0) firstRowIndex = 0;
+            if (firstRowIndex > products.size() - 4) firstRowIndex = products.size() - 4;
+        }
     }
 
     public void addBalanceLabel() {
@@ -284,11 +326,28 @@ public class ShopMenuView implements Screen, InputProcessor {
                 Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
                 digitLabel.setColor(128 / 255f, 0, 0, 1);
                 digitLabel.setPosition(
-                    600  - 24 * i,
+                    600 - 24 * i,
                     400
                 );
                 stage.addActor(digitLabel);
             }
+        }
+    }
+
+    public void updateProductList(boolean filter) {
+        productsImages = new ArrayList<>();
+        productNames = new ArrayList<>();
+        productPrices = new ArrayList<>();
+        products = new ArrayList<>();
+        for (Good product : shop.getShopInventory()) {
+            if (filter) {
+                if (!product.getType().isAvailable()) continue;
+            }
+            productsImages.add(new Image(GameAssetManager.getGameAssetManager().getGood(product.getType())));
+            products.add(product);
+            int i = products.indexOf(product);
+            productNames.add(new Label(products.get(i).getName(), GameAssetManager.getGameAssetManager().getSkin()));
+            productPrices.add(new Label(products.get(i).getType().getPrice() + "", GameAssetManager.getGameAssetManager().getSkin()));
         }
     }
 }

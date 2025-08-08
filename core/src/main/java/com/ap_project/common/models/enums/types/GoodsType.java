@@ -1,8 +1,7 @@
 package com.ap_project.common.models.enums.types;
 
-import com.ap_project.common.models.App;
-import com.ap_project.common.models.Good;
-import com.ap_project.common.models.Shop;
+import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.Skill;
 import com.ap_project.common.models.enums.environment.Season;
 
 import java.util.ArrayList;
@@ -159,12 +158,37 @@ public enum GoodsType implements ItemType {
     }
 
     public boolean isAvailable() {
-        Shop shop = App.getCurrentGame().getShopByShopType(ShopType.valueOf(shopType));
-        Good shopGood = shop.getGoodByType(this);
-        int numberOfBought = shopGood.getNumberSoldToUsersToday();
+        if (this == FIBERGLASS_ROD) return App.getLoggedIn().getSkillLevels().get(Skill.FISHING).getNumber() >= 2;
+
+        if (this == IRIDIUM_ROD) return App.getLoggedIn().getSkillLevels().get(Skill.FISHING).getNumber() >= 4;
+
+        if (this == WEDDING_RING) {
+            boolean available = false;
+            for (User player : App.getCurrentGame().getPlayers()) {
+                Friendship friendship = App.getCurrentGame().getUserFriendship(player, App.getLoggedIn());
+                if (friendship != null) {
+                    if (friendship.getLevel().getNumber() >= 3) {
+                        available = true;
+                    }
+                }
+            }
+            return available;
+        }
+
+        if (this == BOUQUET) {
+            boolean available = false;
+            for (User player : App.getCurrentGame().getPlayers()) {
+                Friendship friendship = App.getCurrentGame().getUserFriendship(player, App.getLoggedIn());
+                if (friendship != null) {
+                    if (friendship.getLevel().getNumber() >= 2) {
+                        available = true;
+                    }
+                }
+            }
+            return available;
+        }
 
         Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
-
-        return (this.seasonalStock.contains(currentSeason)) && (numberOfBought < this.dailyLimit);
+        return (this.seasonalStock.contains(currentSeason));
     }
 }

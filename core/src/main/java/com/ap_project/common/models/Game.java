@@ -332,6 +332,15 @@ public class Game {
         return null;
     }
 
+    public static Shop getShopByName(String name) {
+        for (Shop shop : NPCVillage.getShops()) {
+            if (shop.getName().equalsIgnoreCase(name)) {
+                return shop;
+            }
+        }
+        return null;
+    }
+
     public Shop getShopByShopType(ShopType shopType) {
         for (Shop shop : NPCVillage.getShops()) {
             if (shop.getType().equals(shopType)) {

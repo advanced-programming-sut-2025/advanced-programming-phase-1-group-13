@@ -173,6 +173,7 @@ public class VillageView extends GameView {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         show();
         return false;

@@ -47,7 +47,8 @@ public class GameAssetManager {
     public Texture getRefrigeratorMenu() {
         return new Texture(Gdx.files.internal("Images/Cooking/RefrigeratorMenu.png"));
     }
-    public Texture getCropInfoMenu(){
+
+    public Texture getCropInfoMenu() {
         return new Texture(Gdx.files.internal("Images/Crop/CropInfoMenu.png"));
     }
 
@@ -532,16 +533,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Shop/ShopMenu.png"));
     }
 
+    public Texture getGood(GoodsType good) {
+        String name = good.getName().replaceAll(" ", "_");
+        return new Texture(Gdx.files.internal("Images/Goods/" + name + (good.isAvailable() ? "" : "_Locked") + ".png"));
+    }
 
     public Texture getPurchaseMenu() {
         return new Texture(Gdx.files.internal("Images/Shop/PurchaseMenu.png"));
     }
 
-
-    public Texture getSellMenu(){
+    public Texture getSellMenu() {
         return new Texture(Gdx.files.internal("Images/Shop/SellMenu.png"));
     }
-
 
     public Texture getVillage(Season season) {
         String seasonStr = season.getName();
@@ -575,7 +578,8 @@ public class GameAssetManager {
     public Texture getDialogIcon() {
         return new Texture(Gdx.files.internal("Images/NPC/Dialog.png"));
     }
-    public Texture getGiftMenu(){
+
+    public Texture getGiftMenu() {
         return new Texture(Gdx.files.internal("Images/NPC/GiveGiftMenu.png"));
     }
 
