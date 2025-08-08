@@ -8,31 +8,29 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 
-import static com.ap_project.Main.getBatch;
 import static com.ap_project.Main.getMain;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public class PurchaseMenuView implements Screen, InputProcessor {
     private Stage stage;
+    private final Good product;
     private final Image window;
     private final Image closeButton;
     private final GameView gameView;
     private final Label welcomeLabel;
     private final Image NPCPortraitImage;
-    private final ArrayList<Image> productsImages;
-    private final ArrayList<Good> products;
-    private final SelectBox<String> filter;
-    private int firstRowIndex;
+    private final Image plus;
+    private final Image minus;
+    private int quantity;
+    private final Label quantityLabel;
 
-    public PurchaseMenuView(GameView gameView, Shop shop) {
-        this.window = new Image(GameAssetManager.getGameAssetManager().getShopMenu());
+    public PurchaseMenuView(GameView gameView, Shop shop, Good good) {
+        this.window = new Image(GameAssetManager.getGameAssetManager().getPurchaseMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
@@ -50,20 +48,12 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         welcomeLabel.setPosition(windowX + 31, windowY + window.getHeight() - 510);
         welcomeLabel.setColor(Color.BLACK);
 
-        this.productsImages = new ArrayList<>();
-        this.products = shop.getShopInventory();
-        for (Good product : products) {
-            productsImages.add(new Image(GameAssetManager.getGameAssetManager().getTextureByGood(product)));
-        }
+        this.plus = new Image(GameAssetManager.getGameAssetManager().getPlus());
+        this.minus = new Image(GameAssetManager.getGameAssetManager().getMinus());
 
-        this.filter = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
-        Array<String> options = new Array<>();
-        options.add("Show all products");
-        options.add("Show available products");
-        filter.setItems(options);
-        ;
+        this.quantityLabel = new Label("0", GameAssetManager.getGameAssetManager().getSkin());
 
-        this.firstRowIndex = 0;
+        this.product = good;
 
         this.gameView = gameView;
     }
@@ -77,19 +67,51 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         stage.addActor(closeButton);
         stage.addActor(NPCPortraitImage);
         stage.addActor(welcomeLabel);
-        stage.addActor(filter);
+
+        Image productImage = new Image(GameAssetManager.getGameAssetManager().getTextureByGood(product));
+        productImage.setScale(2);
+        productImage.setPosition(
+            window.getX() + 500,
+            window.getY() + 500
+        );
+        stage.addActor(productImage);
+
+        Label name = new Label(product.getName(), GameAssetManager.getGameAssetManager().getSkin());
+        name.setFontScale(1.15f);
+        name.setPosition(
+            productImage.getX(),
+            productImage.getY() - 20
+        );
+        stage.addActor(name);
+
+        quantityLabel.setPosition(
+            window.getX() + 800,
+            window.getY() + 500
+        );
+        stage.addActor(quantityLabel);
+
+        plus.setScale(1.5f);
+        plus.setPosition(
+            quantityLabel.getX() + 50,
+            quantityLabel.getY()
+        );
+        stage.addActor(plus);
+
+        minus.setScale(1.5f);
+        minus.setPosition(
+            quantityLabel.getX() - 50,
+            quantityLabel.getY()
+        );
+        stage.addActor(minus);
+
         addItemsToInventory();
-        addShopProducts();
+        addBalanceLabel();
         addCloseButton();
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-        getBatch().begin();
-        getBatch().end();
-        System.out.println(firstRowIndex);
-        addShopProducts();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -168,44 +190,7 @@ public class PurchaseMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
-        if (amountY >= 0) changeFirstRowIndex(1);
-
-        if (amountY < 0) changeFirstRowIndex(-1);
-
         return false;
-    }
-
-    private void addShopProducts() {
-        for (Image image : productsImages) {
-            image.remove();
-        }
-
-        for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
-            Image image = productsImages.get(firstRowIndex + i);
-            image.setScale(1.5f);
-            // TODO
-            image.setPosition(
-                600,
-                700 - 100 * i
-            );
-            stage.addActor(image);
-
-            Label name = new Label(products.get(i).getName(), GameAssetManager.getGameAssetManager().getSkin());
-            name.setColor(Color.BLACK);
-            name.setPosition(
-                image.getX() + 50,
-                image.getY()
-            );
-            stage.addActor(name);
-
-            Label price = new Label(products.get(i).getType().getPrice() + "", GameAssetManager.getGameAssetManager().getSkin());
-            price.setColor(Color.BLACK);
-            price.setPosition(
-                image.getX() + 700,
-                image.getY()
-            );
-            stage.addActor(price);
-        }
     }
 
     private void addItemsToInventory() {
@@ -226,10 +211,11 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         int displayCount = Math.min(itemImages.size(), maxItems);
 
         for (int i = 0; i < displayCount; i++) {
+            int row = i / columns;
             Image image = itemImages.get(i);
             image.setSize(50, 55);
             float x = startX + (i % columns) * spacingX - 20f;
-            float y = startY - (i / columns) * spacingY + 50f;
+            float y = startY - row * spacingY + 50f;
             image.setPosition(x, y);
 
             stage.addActor(image);
@@ -246,9 +232,23 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         stage.addActor(closeButton);
     }
 
-    public void changeFirstRowIndex(int amount) {
-        firstRowIndex += amount;
-        if (firstRowIndex < 0) firstRowIndex = 0;
-        if (firstRowIndex > products.size() - 4) firstRowIndex = products.size() - 4;
+    public void addBalanceLabel() {
+        int balance = (int) App.getLoggedIn().getBalance();
+        boolean started = false;
+        for (int i = 7; i >= 0; i--) {
+            int digit = balance / ((int) Math.pow(10, i));
+            balance %= ((int) Math.pow(10, i));
+            if (digit != 0 || i == 0 || started) {
+                started = true;
+                String digitString = Integer.toString(digit);
+                Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
+                digitLabel.setColor(128 / 255f, 0, 0, 1);
+                digitLabel.setPosition(
+                    600 - 24 * i,
+                    400
+                );
+                stage.addActor(digitLabel);
+            }
+        }
     }
 }

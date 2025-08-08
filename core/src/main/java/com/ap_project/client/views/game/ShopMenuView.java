@@ -36,6 +36,7 @@ public class ShopMenuView implements Screen, InputProcessor {
     private final TextButton filterButton;
     private final Image slider;
     private int firstRowIndex;
+    private final Label errorMessageLabel;
 
     public ShopMenuView(GameView gameView, Shop shop) {
         this.shop = shop;
@@ -63,6 +64,7 @@ public class ShopMenuView implements Screen, InputProcessor {
         this.filterSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
         filterSelectBox.setWidth(600);
         filterSelectBox.setPosition(
+           // windowX + 10, windowY + window.getHeight() - 650
             windowX , windowY + window.getHeight() - 670
         );
         Array<String> options = new Array<>();
@@ -81,6 +83,10 @@ public class ShopMenuView implements Screen, InputProcessor {
 
         this.firstRowIndex = 0;
 
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+
         this.gameView = gameView;
     }
 
@@ -96,6 +102,7 @@ public class ShopMenuView implements Screen, InputProcessor {
         stage.addActor(filterSelectBox);
         stage.addActor(filterButton);
         stage.addActor(slider);
+        stage.addActor(errorMessageLabel);
         addBalanceLabel();
         addItemsToInventory();
         addShopProducts();
@@ -173,7 +180,13 @@ public class ShopMenuView implements Screen, InputProcessor {
 
         for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
             if (hoverOnImage(productsImages.get(firstRowIndex + i), screenX, convertedY)) {
-                System.out.println("going to buy menu for " + products.get(firstRowIndex + i));
+                Good product = products.get(firstRowIndex + i);
+                if (!product.getType().isAvailable()) {
+                    errorMessageLabel.setText(product.getName() + " is not available to purchase.");
+                    return false;
+                }
+                goToPurchaseMenu(gameView, shop, product);
+                return true;
             }
         }
 
