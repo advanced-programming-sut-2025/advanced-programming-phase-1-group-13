@@ -113,12 +113,12 @@ public class User {
 
         this.backpack = new Backpack(BackpackType.DELUXE); // TODO: change to INITIAL later
         this.backpack.addToInventory(new Mineral(MineralType.IRON_ORE), 100);
-        this.backpack.addToInventory(new Ingredient(IngredientType.CORN),10);
-        this.backpack.addToInventory(new Ingredient(IngredientType.OIL),10);
-        this.backpack.addToInventory(new Ingredient(IngredientType.WHEAT_FLOUR),10);
-        this.backpack.addToInventory(new Ingredient(IngredientType.CHEESE),10);
-        this.backpack.addToInventory(new Ingredient(IngredientType.TOMATO),10);
-        this.backpack.addToInventory(new FishingRod(ToolMaterial.BASIC),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.CORN), 10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.OIL), 10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.WHEAT_FLOUR), 10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.CHEESE), 10);
+        this.backpack.addToInventory(new Ingredient(IngredientType.TOMATO), 10);
+        this.backpack.addToInventory(new FishingRod(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.WOOL, Quality.NORMAL, null), 10);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.COW_MILK, Quality.NORMAL, null), 10);
         this.backpack.addToInventory(new AnimalProduct(AnimalProductType.CHICKEN_EGG, Quality.NORMAL, null), 10);
@@ -675,7 +675,8 @@ public class User {
         try (FileWriter writer = new FileWriter("users.json")) {
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
         } catch (IOException e) {
-            System.out.println(e.getMessage()); e.printStackTrace();
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

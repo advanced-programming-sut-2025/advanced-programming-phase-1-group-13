@@ -29,6 +29,7 @@ public class ShopMenuView implements Screen, InputProcessor {
     private final ArrayList<Image> productsImages;
     private final ArrayList<Good> products;
     private final SelectBox<String> filter;
+    private final Image slider;
     private int firstRowIndex;
 
     public ShopMenuView(GameView gameView, Shop shop) {
@@ -61,7 +62,9 @@ public class ShopMenuView implements Screen, InputProcessor {
         options.add("Show all products");
         options.add("Show available products");
         filter.setItems(options);
-        ;
+
+        this.slider = new Image(GameAssetManager.getGameAssetManager().getSlider());
+        slider.setX(1600);
 
         this.firstRowIndex = 0;
 
@@ -78,6 +81,8 @@ public class ShopMenuView implements Screen, InputProcessor {
         stage.addActor(NPCPortraitImage);
         stage.addActor(welcomeLabel);
         stage.addActor(filter);
+        stage.addActor(slider);
+        addBalanceLabel();
         addItemsToInventory();
         addShopProducts();
         addCloseButton();
@@ -88,8 +93,11 @@ public class ShopMenuView implements Screen, InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1);
         getBatch().begin();
         getBatch().end();
+
         System.out.println(firstRowIndex);
-        changeFirstRowIndex(1); // TODO: scroll
+
+        slider.setY(900 - firstRowIndex * 50);
+
         addShopProducts();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -251,5 +259,25 @@ public class ShopMenuView implements Screen, InputProcessor {
         firstRowIndex += amount;
         if (firstRowIndex < 0) firstRowIndex = 0;
         if (firstRowIndex > products.size() - 4) firstRowIndex = products.size() - 4;
+    }
+
+    public void addBalanceLabel() {
+        int balance = (int) App.getLoggedIn().getBalance();
+        boolean started = false;
+        for (int i = 7; i >= 0; i--) {
+            int digit = balance / ((int) Math.pow(10, i));
+            balance %= ((int) Math.pow(10, i));
+            if (digit != 0 || i == 0 || started) {
+                started = true;
+                String digitString = Integer.toString(digit);
+                Label digitLabel = new Label(digitString, GameAssetManager.getGameAssetManager().getSkin());
+                digitLabel.setColor(128 / 255f, 0, 0, 1);
+                digitLabel.setPosition(
+                    600  - 24 * i,
+                    400
+                );
+                stage.addActor(digitLabel);
+            }
+        }
     }
 }

@@ -17,7 +17,6 @@ public class Farm {
     private final int height = 55;
     private final int width = 74;
     private final ArrayList<Artisan> artisans;
-    private final ArrayList<ShippingBin> shippingBins;
     private final int mapNumber;
     private Lake lake;
     private final ArrayList<Mineral> stones;
@@ -34,13 +33,13 @@ public class Farm {
         this.plantedTrees = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
-        crafts = new ArrayList<>();
+        farmBuildings.add(new FarmBuilding(FarmBuildingType.SHIPPING_BIN, new Position(73, 3)));
+        this.crafts = new ArrayList<>();
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
         this.stones = new ArrayList<>();
         this.foragingCrops = new ArrayList<>();
         this.woodLogs = new ArrayList<>();
-        this.shippingBins = new ArrayList<>();
         this.cabin = new Cabin();
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
@@ -74,12 +73,12 @@ public class Farm {
     private void generateFixedElements() {
         if (mapNumber == 1) {
             this.lake = generateLake(20, 35, 10, 14);
-            this.cabin = generateCabin(63, 6);
+            this.cabin = generateCabin(63);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(20, 50, 10);
         } else if (mapNumber == 2) {
             this.lake = generateLake(50, 10, 6, 6);
-            this.cabin = generateCabin(4, 4);
+            this.cabin = generateCabin(4);
             this.greenhouse = generateGreenhouse();
             this.quarry = generateQuarry(40, 30, 15);
         }
@@ -210,9 +209,9 @@ public class Farm {
         return lake;
     }
 
-    private Cabin generateCabin(int x, int y) {
+    private Cabin generateCabin(int x) {
         Cabin cabin = new Cabin();
-        ArrayList<Position> positions = generateTilePositions(x, y, 9, 6);
+        ArrayList<Position> positions = generateTilePositions(x, 4, 9, 6);
         cabin.setTiles(positions);
 
         for (Position pos : positions) {
@@ -365,6 +364,13 @@ public class Farm {
     }
 
     public ArrayList<ShippingBin> getShippingBins() {
+        ArrayList<ShippingBin> shippingBins = new ArrayList<>();
+        for (FarmBuilding farmBuilding : farmBuildings) {
+            if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
+                ShippingBin shippingBin = (ShippingBin) farmBuilding;
+                shippingBins.add(shippingBin);
+            }
+        }
         return shippingBins;
     }
 
