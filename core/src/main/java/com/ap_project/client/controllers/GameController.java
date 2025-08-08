@@ -1788,6 +1788,34 @@ public class GameController {
             "You will get " + price + "g tomorrow.");
     }
 
+    public Result sell(Item item, int count) {
+        User player = App.getLoggedIn();
+        if (!player.getBackpack().getItems().containsKey(item)) {
+            return new Result(false, "Product not found.");
+        }
+
+        int numberInInventory = player.getBackpack().getItems().get(item);
+
+        if (!item.isSellable()) {
+            return new Result(false, "This product can not be sold.");
+        }
+
+
+        Result result = player.getBackpack().addToInventory(item, count);
+        if (!result.success) {
+            return new Result(false, "You don't have enough " + item + " to sell.");
+        }
+
+        for (int i = 0; i < count; i++) {
+            //shippingBin.addItemToShip(item); // TODO
+        }
+
+        int price = item.getPrice() * count;
+
+        return new Result(true, "You put " + count + " of " + item + " in the shipping bin. " +
+            "You will get " + price + "g tomorrow.");
+    }
+
     // === FRIENDSHIPS === //
 
     public Result showFriendshipLevels() {

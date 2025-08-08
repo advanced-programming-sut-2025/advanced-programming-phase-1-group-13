@@ -121,13 +121,17 @@ public class Main extends Game {
         Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
     }
 
-    public static void goToShopMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
+    public static void goToShopMenu(GameView gameView, Shop shop) {
+        Main.getMain().setScreen(new ShopMenuView(gameView, shop));
+    }
 
-    public static void goToPurchaseMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
+    public static void goToPurchaseMenu(GameView gameView, Shop shop) {
+        Main.getMain().setScreen(new ShopMenuView(gameView, shop));
+    }
 
-    public static void goToSellMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
-
-
+    public static void goToSellMenu(FarmView farmView, FarmBuilding shippingBin) {
+        Main.getMain().setScreen(new SellMenuView(farmView, shippingBin));
+    }
 
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
@@ -168,6 +172,7 @@ public class Main extends Game {
     public static void goToArtisanMenu(FarmView farmView, Artisan artisan) {
         Main.getMain().setScreen(new ArtisanMenuView(farmView, artisan));
     }
+
     public static void goToCheatWindow(GameView gameView, GameController controller) {
         Main.getMain().setScreen(new CheatView(gameView, controller));
     }

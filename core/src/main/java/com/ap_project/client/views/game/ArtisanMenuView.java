@@ -99,7 +99,6 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         );
         stage.addActor(emptySlot);
 
-
         startButton.setPosition(
             name.getX() + (name.getWidth() - startButton.getWidth()) / 2,
             status.getY() - 180
