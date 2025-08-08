@@ -96,12 +96,9 @@ public class ShopMenuView implements Screen, InputProcessor {
         getBatch().begin();
         getBatch().end();
 
-        System.out.println(firstRowIndex);
-
         //slider.setY(900 - firstRowIndex * 50);
         float sliderBaseY = window.getY() + 445;
         slider.setY(sliderBaseY - firstRowIndex * 50);
-
 
         addShopProducts();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -150,11 +147,19 @@ public class ShopMenuView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("CLICKED");
         float convertedY = Gdx.graphics.getHeight() - screenY;
 
         if (hoverOnImage(closeButton, screenX, convertedY)) {
             getMain().setScreen(gameView);
             return true;
+        }
+
+        for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
+            if (hoverOnImage(productsImages.get(firstRowIndex + i), screenX, convertedY)) {
+                System.out.println("going to buy menu for "+ products.get(firstRowIndex + i));
+            }
+
         }
 
         return false;
@@ -185,6 +190,8 @@ public class ShopMenuView implements Screen, InputProcessor {
         if (amountY >= 0) changeFirstRowIndex(1);
 
         if (amountY < 0) changeFirstRowIndex(-1);
+
+        show();
 
         return false;
     }

@@ -119,6 +119,7 @@ public class VillageView extends GameView {
                 if (clickedOnTexture(screenX, screenY, shopTextures.get(i), shop.getPosition(), 4.400316f)) {
                     if (shop.isOpen()) goToShopMenu(this, shop);
                     else errorMessageLabel.setText(shop.getName() + " Is closed.");
+                    return true;
                 }
             }
 
