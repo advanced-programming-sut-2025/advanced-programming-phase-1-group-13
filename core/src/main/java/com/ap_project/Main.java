@@ -116,6 +116,9 @@ public class Main extends Game {
     public static void goToJournal(GameView gameView) {
         Main.getMain().setScreen(new JournalView(gameView));
     }
+    public static void goToGiveGiftMenu(GameView gameView) {
+        Main.getMain().setScreen(new GiveGiftMenu(gameView));
+    }
 
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));
@@ -155,7 +158,6 @@ public class Main extends Game {
     public static void goToArtisanMenu(FarmView farmView, Artisan artisan) {
         Main.getMain().setScreen(new ArtisanMenuView(farmView, artisan));
     }
-
     public static void goToCheatWindow(GameView gameView, GameController controller) {
         Main.getMain().setScreen(new CheatView(gameView, controller));
     }

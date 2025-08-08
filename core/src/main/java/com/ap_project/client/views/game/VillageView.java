@@ -127,8 +127,8 @@ public class VillageView extends GameView {
 
             if (npcOptions != null) {
                 if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition, 1)) {
-                    // todo
                     System.out.println("CLICKED ON GIVE GIFT");
+                    goToGiveGiftMenu(this);
                     return true;
                 }
 

@@ -556,6 +556,9 @@ public class GameAssetManager {
     public Texture getDialogIcon() {
         return new Texture(Gdx.files.internal("Images/NPC/Dialog.png"));
     }
+    public Texture getGiftMenu(){
+        return new Texture(Gdx.files.internal("Images/NPC/GiveGiftMenu.png"));
+    }
 
     public Texture getDialogBox() {
         return new Texture(Gdx.files.internal("Images/NPC/DialogBox.png"));
