@@ -71,7 +71,7 @@ public class FarmView extends GameView {
     private Position animalDestinationPosition;
     private boolean isAnimalWalking;
     private boolean setInsideWhenReachingDestination;
-    private  Image fishingRodImage;
+    private Image fishingRodImage;
 
     private Farm farm;
 
@@ -403,7 +403,7 @@ public class FarmView extends GameView {
             Result result;
 
             if (artisanWithMenu.getTimeLeft() == 0) {
-                if (clickedOnTexture(screenX, screenY, getItemButton, getItemButtonPosition, 1)) {
+                if (clickedOnTexture(screenX, screenY, getItemButton, getItemButtonPosition)) {
                     result = artisanWithMenu.collectItem();
                     updateTextures();
                     show();
@@ -416,12 +416,12 @@ public class FarmView extends GameView {
                 }
             }
 
-            if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition, 1)) {
+            if (clickedOnTexture(screenX, screenY, informationButton, informationButtonPosition)) {
                 goToArtisanInfo(this, artisanWithMenu);
                 return true;
             }
 
-            if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition, 1)) {
+            if (clickedOnTexture(screenX, screenY, cancelButton, cancelButtonPosition)) {
                 result = artisanWithMenu.cancel();
                 if (!result.success) errorMessageLabel.setText(result.message);
                 else {
@@ -432,7 +432,7 @@ public class FarmView extends GameView {
                 return true;
             }
 
-            if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition, 1)) {
+            if (clickedOnTexture(screenX, screenY, cheatButton, cheatButtonPosition)) {
                 result = artisanWithMenu.collectItem();
                 updateTextures();
                 show();

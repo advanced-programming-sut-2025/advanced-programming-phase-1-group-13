@@ -9,7 +9,6 @@ import com.ap_project.common.models.enums.types.Role;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import static com.ap_project.common.models.Item.getItemTypeByItemName;
 
@@ -28,7 +27,7 @@ public class NPC {
         this.type = type;
         this.name = type.getName();
         this.role = type.getRole();
-        this.position = new Position(70, (new Random()).nextInt(30));
+        this.position = type.getPosition();
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();

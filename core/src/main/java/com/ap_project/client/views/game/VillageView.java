@@ -34,6 +34,7 @@ public class VillageView extends GameView {
 
     public VillageView(GameController controller, Skin skin) {
         super(controller, skin);
+
         this.background = GameAssetManager.getGameAssetManager().getVillage(App.getCurrentGame().getGameState().getTime().getSeason());
 
         this.shopTextures = new ArrayList<>();
@@ -58,8 +59,8 @@ public class VillageView extends GameView {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
 
+        scale = 4.400316f;
         for (int i = 0; i < shopTextures.size(); i++) {
-            scale = 4.400316f;
             draw(shopTextures.get(i), NPCVillage.getShops().get(i).getPosition());
         }
 
@@ -103,12 +104,20 @@ public class VillageView extends GameView {
         try {
             super.touchDown(screenX, screenY, pointer, button);
 
+            for (int i = 0; i < shopTextures.size(); i++) {
+                Shop shop = NPCVillage.getShops().get(i);
+                if (clickedOnTexture(screenX, screenY, shopTextures.get(i), shop.getPosition(), 4.400316f)) {
+                    // toString();
+                }
+            }
+
             if (button == Input.Buttons.RIGHT) {
                 for (int i = 0; i < npcTextures.size(); i++) {
                     NPC npc = App.getCurrentGame().getNpcs().get(i);
                     if (clickedOnTexture(screenX, screenY, npcTextures.get(i), npc.getPosition(), scale)) {
                         npcOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
                         npcWithMenu = npc;
+                        return true;
                     }
                 }
             }
@@ -126,29 +135,27 @@ public class VillageView extends GameView {
             }
 
             if (npcOptions != null) {
-                if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition, 1)) {
+                if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
                     // todo
                     System.out.println("CLICKED ON GIVE GIFT");
                     return true;
                 }
 
-                if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition, 1)) {
-                    System.out.println("CLICKED ON FRIENDSHIP LEVEL");
+                if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition)) {
                     goToGameMenu(this, GameMenuType.SOCIAL);
                     return true;
                 }
 
-                if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition, 1)) {
-                    System.out.println("CLICKED ON QUESTS LIST");
+                if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition)) {
                     goToJournal(this);
                     return true;
                 }
             }
 
+            npcOptions = null;
             show();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
         return false;
     }

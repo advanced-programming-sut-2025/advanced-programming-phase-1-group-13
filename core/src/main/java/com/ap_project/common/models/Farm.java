@@ -32,19 +32,6 @@ public class Farm {
         this.random = new Random();
         this.plantedCrops = new ArrayList<>();
         this.plantedTrees = new ArrayList<>();
-        // TODO: remove later
-        for (CropType cropType : CropType.values()) {
-            for (int i = 1; i <= cropType.getNumberOfStages() ; i++) {
-                Crop crop = new Crop(cropType, new Position(random.nextInt(10) + 60, random.nextInt(height)));
-                crop.setStage((new Random()).nextInt(cropType.getNumberOfStages()) + 1);
-                plantedCrops.add(crop);
-                if (crop.getStage() == cropType.getNumberOfStages()) {
-                    if (crop.isCanBecomeGiant()) crop.setGiant(true);
-                }
-            }
-        }
-        plantedTrees.add(new Tree(TreeType.APPLE_TREE, new Tile(new Position(72, 10))));
-
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
         crafts = new ArrayList<>();
