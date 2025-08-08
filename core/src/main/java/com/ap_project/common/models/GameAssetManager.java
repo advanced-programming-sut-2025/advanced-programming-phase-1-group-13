@@ -531,8 +531,15 @@ public class GameAssetManager {
     public Texture getShopMenu() {
         return new Texture(Gdx.files.internal("Images/Shop/ShopMenu.png"));
     }
+
+
     public Texture getPurchaseMenu() {
         return new Texture(Gdx.files.internal("Images/Shop/PurchaseMenu.png"));
+    }
+
+
+    public Texture getSellMenu(){
+        return new Texture(Gdx.files.internal("Images/Shop/SellMenu.png"));
     }
 
 

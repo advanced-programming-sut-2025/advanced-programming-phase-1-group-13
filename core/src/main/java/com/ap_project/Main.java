@@ -125,6 +125,9 @@ public class Main extends Game {
 
     public static void goToPurchaseMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
 
+    public static void goToSellMenu(GameView gameView, Shop shop) {Main.getMain().setScreen(new ShopMenuView(gameView, shop));}
+
+
 
     public static void goToCookingMenu(GameView gameView) {
         Main.getMain().setScreen(new CookingMenuView(gameView));

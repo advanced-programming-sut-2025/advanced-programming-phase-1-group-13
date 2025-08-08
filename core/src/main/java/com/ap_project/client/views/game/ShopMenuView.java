@@ -183,18 +183,18 @@ public class ShopMenuView implements Screen, InputProcessor {
 
         for (int i = 0; i < 4 && (firstRowIndex + i) < products.size(); i++) {
             Image image = productsImages.get(firstRowIndex + i);
-            image.setScale(1.5f);
+            image.setScale(1.25f);
             // TODO
             image.setPosition(
                 600,
-                700 - 100 * i
+                770 - 90 * i
             );
             stage.addActor(image);
 
             Label name = new Label(products.get(i).getName(), GameAssetManager.getGameAssetManager().getSkin());
             name.setColor(Color.BLACK);
             name.setPosition(
-                image.getX() + 50,
+                image.getX() + 73,
                 image.getY()
             );
             stage.addActor(name);
@@ -202,7 +202,7 @@ public class ShopMenuView implements Screen, InputProcessor {
             Label price = new Label(products.get(i).getType().getPrice() + "", GameAssetManager.getGameAssetManager().getSkin());
             price.setColor(Color.BLACK);
             price.setPosition(
-                image.getX() + 700,
+                image.getX() + 915,
                 image.getY()
             );
             stage.addActor(price);
