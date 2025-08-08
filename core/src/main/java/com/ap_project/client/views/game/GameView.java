@@ -61,7 +61,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected Texture background;
     protected final OrthographicCamera camera;
     protected static final float TILE_SIZE = 70.5f;
-    protected Position originPosition = new Position(2, 54);
+    protected Position originPosition;
     protected Texture tileMarkerTexture;
     protected float scale = 4.400316f;
     protected Image energyBar;
@@ -87,6 +87,9 @@ public abstract class GameView implements Screen, InputProcessor {
     public GameView(GameController controller, Skin skin) {
         this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();
         App.getCurrentGame().getGameState().setCurrentWeather(Weather.SUNNY); // TODO: remove later
+
+        if (this instanceof FarmView) this.originPosition = new Position(2, 51);
+        else this.originPosition = new Position(6, 51);
 
         this.date = new Label("", skin);
         date.setFontScale(0.90f);
@@ -952,45 +955,20 @@ public abstract class GameView implements Screen, InputProcessor {
             worldY <= textureY + textureHeight;
     }
 
-    protected boolean clickedOnTexture(int screenX, int screenY, Texture texture, Vector2 position, float scale) {
+    protected boolean clickedOnTexture(int screenX, int screenY, Texture texture, Vector2 position) {
         float worldX = camera.position.x - (camera.viewportWidth / 2) + screenX;
         float worldY = camera.position.y - (camera.viewportHeight / 2) + (Gdx.graphics.getHeight() - screenY);
 
         float textureX = position.x;
         float textureY = originPosition.getY() * TILE_SIZE - position.y;
 
-        float textureWidth = texture.getWidth() * scale;
-        float textureHeight = texture.getHeight() * scale;
+        float textureWidth = texture.getWidth();
+        float textureHeight = texture.getHeight();
 
         return worldX >= textureX &&
             worldX <= textureX + textureWidth &&
             worldY >= textureY &&
             worldY <= textureY + textureHeight;
-    }
-
-    protected void renderDebugTiles() {
-        Position debugTilePosition = originPosition;
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                float tileX = debugTilePosition.getX() * TILE_SIZE + x * TILE_SIZE;
-                float tileY = debugTilePosition.getY() * TILE_SIZE + y * TILE_SIZE;
-
-                if ((x + y) % 2 == 0) {
-                    Main.getBatch().setColor(1, 0, 0, 0.5f);
-                } else {
-                    Main.getBatch().setColor(0, 0, 1, 0.5f);
-                }
-
-                Main.getBatch().draw(
-                    tileMarkerTexture,
-                    tileX,
-                    tileY,
-                    TILE_SIZE,
-                    TILE_SIZE
-                );
-            }
-        }
-        Main.getBatch().setColor(1, 1, 1, 1);
     }
 
     public void setSelectedSlotIndex(int selectedSlotIndex) {

@@ -1,7 +1,5 @@
 package com.ap_project.client.controllers;
 
-import com.ap_project.Main;
-import com.ap_project.client.views.game.FarmhouseView;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.environment.*;
 import com.ap_project.common.models.enums.*;
@@ -747,7 +745,7 @@ public class GameController {
         int y = Integer.parseInt(yString);
         int size = Integer.parseInt(sizeString);
 
-        if (!App.getCurrentGame().getVillage().isPositionValid(new Position(x, y))) {
+        if (App.getCurrentGame().getVillage().isPositionInvalid(new Position(x, y))) {
             return new Result(false, "Coordinates (" + x + "," + y + ") are out of bounds.");
         }
 
@@ -2117,7 +2115,7 @@ public class GameController {
             NPCVillage village = App.getCurrentGame().getVillage();
             Position pos = new Position(x, y);
 
-            if (!village.isPositionValid(pos)) {
+            if (village.isPositionInvalid(pos)) {
                 return new Result(false, "Position (" + x + "," + y + ") is out of bounds.");
             }
 
