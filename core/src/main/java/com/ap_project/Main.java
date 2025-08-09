@@ -129,7 +129,7 @@ public class Main extends Game {
         Main.getMain().setScreen(new PurchaseMenuView(gameView, shop, good));
     }
 
-    public static void goToSellMenu(FarmView farmView, FarmBuilding shippingBin) {
+    public static void goToSellMenu(FarmView farmView, ShippingBin shippingBin) {
         Main.getMain().setScreen(new SellMenuView(farmView, shippingBin));
     }
 

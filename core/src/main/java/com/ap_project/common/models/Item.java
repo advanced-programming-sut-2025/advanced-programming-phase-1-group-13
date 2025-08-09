@@ -11,9 +11,9 @@ import com.ap_project.common.models.tools.*;
 import java.util.Objects;
 
 public abstract class Item {
-    private boolean isSellable;
-    private boolean isPurchasable;
-    private int price;
+    protected boolean isSellable;
+    protected boolean isPurchasable;
+    protected int price;
     protected String name;
 
     public String getName() {

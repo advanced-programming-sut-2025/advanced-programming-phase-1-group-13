@@ -1,5 +1,7 @@
 package com.ap_project.client.views.game;
 
+import com.ap_project.Main;
+import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -19,9 +21,9 @@ import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 public class PurchaseMenuView implements Screen, InputProcessor {
     private Stage stage;
     private final Good product;
+    private final Shop shop;
     private final Image window;
     private final Image closeButton;
-    private final GameView gameView;
     private final Label welcomeLabel;
     private final Image NPCPortraitImage;
     private final Image plus;
@@ -29,13 +31,18 @@ public class PurchaseMenuView implements Screen, InputProcessor {
     private int quantity;
     private final Label quantityLabel;
     private final Image buyButton;
+    private final Label errorMessageLabel;
+    private final GameView gameView;
+    private final GameController controller;
 
     public PurchaseMenuView(GameView gameView, Shop shop, Good good) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getPurchaseMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
         window.setPosition(windowX, windowY);
+
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
+
         this.buyButton = new Image(GameAssetManager.getGameAssetManager().getBuyButton());
 
         NPCPortraitImage = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(shop.getOwner().getType()));
@@ -56,8 +63,14 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         this.quantityLabel = new Label("0", GameAssetManager.getGameAssetManager().getSkin());
 
         this.product = good;
+        this.shop = shop;
+
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
 
         this.gameView = gameView;
+        this.controller = new GameController();
     }
 
     @Override
@@ -67,11 +80,14 @@ public class PurchaseMenuView implements Screen, InputProcessor {
 
         stage.addActor(window);
         stage.addActor(closeButton);
-        stage.addActor(buyButton);
         stage.addActor(NPCPortraitImage);
         stage.addActor(welcomeLabel);
 
-        buyButton.setPosition(100,199);
+        buyButton.setPosition(
+            window.getX() + 1200,
+            window.getY() + 438
+        );
+        stage.addActor(buyButton);
 
         quantityLabel.setColor(Color.BLACK);
 
@@ -87,8 +103,8 @@ public class PurchaseMenuView implements Screen, InputProcessor {
         name.setColor(Color.BLACK);
         name.setFontScale(1.15f);
         name.setPosition(
-            productImage.getX()+115,
-            productImage.getY() +20
+            productImage.getX() + 115,
+            productImage.getY() + 20
         );
         stage.addActor(name);
 
@@ -107,10 +123,12 @@ public class PurchaseMenuView implements Screen, InputProcessor {
 
         minus.setScale(1.5f);
         minus.setPosition(
-            quantityLabel.getX() -125,
-            quantityLabel.getY()+10
+            quantityLabel.getX() - 110,
+            quantityLabel.getY() + 10
         );
         stage.addActor(minus);
+
+        stage.addActor(errorMessageLabel);
 
         addItemsToInventory();
         addBalanceLabel();
@@ -173,6 +191,30 @@ public class PurchaseMenuView implements Screen, InputProcessor {
             getMain().setScreen(gameView);
             return true;
         }
+
+        if (hoverOnImage(buyButton, screenX, convertedY)) {
+            Result result = controller.purchase(product, quantity, shop);
+            if (result.success) {
+                Main.getMain().setScreen(gameView);
+                return true;
+            } else {
+                errorMessageLabel.setText(result.message);
+                return false;
+            }
+        }
+
+        if (hoverOnImage(plus, screenX, convertedY)) {
+            quantity++;
+        }
+
+        if (hoverOnImage(minus, screenX, convertedY)) {
+            quantity--;
+            if (quantity < 0) quantity = 0;
+        }
+
+        quantityLabel.setText(String.valueOf(quantity));
+
+        errorMessageLabel.setText("");
 
         return false;
     }

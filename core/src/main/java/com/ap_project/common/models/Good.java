@@ -10,6 +10,7 @@ public class Good extends Item {
         this.type = type;
         this.numberSoldToUsersToday = 0;
         super.name = type.getName();
+        super.price = type.getPrice();
     }
 
     public GoodsType getType() {

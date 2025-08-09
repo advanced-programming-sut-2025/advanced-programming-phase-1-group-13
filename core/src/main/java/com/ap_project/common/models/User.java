@@ -630,7 +630,7 @@ public class User {
 
     public ShippingBin getCloseShippingBin() {
         for (ShippingBin shippingBin : this.farm.getShippingBins()) {
-            if (Position.areClose(shippingBin.getPosition(), this.getPosition())) {
+            if (Position.areClose(shippingBin.getPositionOfUpperLeftCorner(), this.getPosition())) {
                 return shippingBin;
             }
         }

@@ -476,7 +476,7 @@ public class GameController {
         }
 
         homeRefrigerator.addToInventory(new Food(cookingRecipe), 1);
-        System.out.println(homeRefrigerator.getItems().entrySet().size());
+        System.out.println(homeRefrigerator.getItems().size());
 
         return new Result(true, "Yummy! Your fresh " + foodName + " added to the refrigerator.");
     }
@@ -515,7 +515,7 @@ public class GameController {
             IngredientType ingredientType = entry.getKey();
             int requiredAmount = entry.getValue();
 
-            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, combinedInventory)) {
+            if (doesNotHaveEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, combinedInventory)) {
                 return new Result(false, "You don't have enough " + ingredientType.getName());
             }
         }
@@ -560,11 +560,11 @@ public class GameController {
         return new Result(true, "");
     }
 
-    private boolean hasEnoughOfThatItem(Item specificItem, int requiredAmount, Inventory inventory) {
+    private boolean doesNotHaveEnoughOfThatItem(Item specificItem, int requiredAmount, Inventory inventory) {
         if (!inventory.getItems().containsKey(specificItem)) {
-            return false;
+            return true;
         }
-        return inventory.getItems().get(specificItem) >= requiredAmount;
+        return inventory.getItems().get(specificItem) < requiredAmount;
     }
 
     public Result eat(String foodName) {
@@ -617,14 +617,14 @@ public class GameController {
             IngredientType ingredientType = entry.getKey();
             int requiredAmount = entry.getValue();
 
-            if (!hasEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
-                return new Result(true, "You don't have enough " + ingredientType.getName()); // todo
+            if (doesNotHaveEnoughOfThatItem(Item.getItemByItemType(ingredientType), requiredAmount, player.getBackpack())) {
+                return new Result(true, "You don't have enough " + ingredientType.getName());
             }
         }
         return new Result(true, "");
     }
 
-    private boolean canToolBeUsedHere(Tile tile, ToolType toolType) { // todo: check GREENHOUSE options.
+    private boolean canToolBeUsedHere(Tile tile, ToolType toolType) {
         TileType tileType = tile.getType();
         if (toolType == ToolType.HOE) {
             return tileType == TileType.PLOWED_SOIL ||
@@ -756,6 +756,7 @@ public class GameController {
             return new Result(false, "No valid path found to (" + x + "," + y + ")");
         }
 
+        assert yOrN != null;
         return pf.walk(path, yOrN);
     }
 
@@ -795,7 +796,7 @@ public class GameController {
                 } else if (pos.getX() == 15 && pos.getY() == 10) {
                     mapRepresentation.append("\uD83E\uDDD1\u200D\uD83C\uDFA4"); // Abigail
                 } else if (pos.getX() == 25 && pos.getY() == 5) {
-                    mapRepresentation.append("\uD83D\uDC68\u200D⚕\uFE0F"); // Harvey
+                    mapRepresentation.append("\uD83D\uDC68\u200D⚕️"); // Harvey
                 } else if (pos.getX() == 5 && pos.getY() == 20) {
                     mapRepresentation.append("\uD83D\uDC69\u200D\uD83C\uDF3E"); // Leah
                 } else if (pos.getX() == 20 && pos.getY() == 20) {
@@ -880,7 +881,7 @@ public class GameController {
                 return "📦";
             case SHOP:
                 String shopIcon;
-                switch (whichShop(tile)) {
+                switch (Objects.requireNonNull(whichShop(tile))) {
                     case JOJAMART:
                         shopIcon = "🏪"; // farming tools and seeds
                         break;
@@ -912,7 +913,7 @@ public class GameController {
     }
 
     public static ShopType whichShop(Tile tile) {
-        for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
+        for (Shop shop : NPCVillage.getShops()) {
             if (shop.containsPosition(tile.getPosition())) {
                 return shop.getType();
             }
@@ -920,7 +921,6 @@ public class GameController {
 
         return null;
     }
-
 
     public Result showHelpReadingMap() {
         String helpText = "=== Map Symbols Legend ===\n" +
@@ -963,7 +963,7 @@ public class GameController {
         view.setLightningPosition(position);
 
         if (tile != null) {
-            tile.setType(TileType.NOT_PLOWED_SOIL); // TODO: is it good?
+            tile.setType(TileType.NOT_PLOWED_SOIL);
             App.getCurrentGame().getGameState().triggerLightningStrike();
             return new Result(true, "Thor has struck (" + xString + ", " + yString + ")!");
         }
@@ -1030,7 +1030,7 @@ public class GameController {
             return new Result(true, seedName + " (crop seed) planted in position: " + tile.getPosition().toString());
         }
         if (treeSourceType != null) {
-            tile.pLaceItemOnTile(new Tree(TreeType.getTreeTypeBySourceType(treeSourceType)));
+            tile.pLaceItemOnTile(new Tree(Objects.requireNonNull(TreeType.getTreeTypeBySourceType(treeSourceType))));
             tile.setType(TileType.TREE);
             return new Result(true, seedName + " (tree source) planted in position: " + tile.getPosition().toString());
         }
@@ -1208,10 +1208,16 @@ public class GameController {
             player.getBackpack().removeFromInventory(stone, newStoneCount);
             methodOfPaymentDescription = "You used " + woodNeeded + " woods and " + stoneNeeded + " stones to build it";
         }
-        farm.getFarmBuildings().add(farmBuilding);
+
+        if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
+            ShippingBin shippingBin = new ShippingBin(FarmBuildingType.SHIPPING_BIN, position);
+            farm.getShippingBins().add(shippingBin);
+        } else {
+            farm.getFarmBuildings().add(farmBuilding);
+        }
 
         return new Result(true, "A " + farmBuildingType.getName() + " has been built in "
-            + position.toString() + ". " + methodOfPaymentDescription);
+            + position + ". " + methodOfPaymentDescription);
     }
 
     public Result buyAnimal(String animalTypeStr, String name) {
@@ -1421,7 +1427,7 @@ public class GameController {
         return new Result(true, message.toString());
     }
 
-    public Result collectProducts(String animalName) { // TODO: fix
+    public Result collectProducts(String animalName) {
         User player = App.getLoggedIn();
         Farm farm = player.getFarm();
         Animal animal = farm.getAnimalByName(animalName);
@@ -1774,6 +1780,45 @@ public class GameController {
         return new Result(true, "You bought " + count + " of " + productName + ".");
     }
 
+    public Result purchase(Good product, int count, Shop shop) {
+        if (!product.getType().isAvailable()) {
+            return new Result(false, product.getName() + " is not available to purchase right now.");
+        }
+
+        int price = product.getPrice() * count;
+
+        User player = App.getLoggedIn();
+        if (player.getBalance() < price) {
+            return new Result(false, "You don't have enough money.");
+        }
+
+        int dailyLimit = product.getType().getDailyLimit();
+        if (count > dailyLimit && dailyLimit >= 0) {
+            return new Result(false, "You can only buy " + product.getType().getDailyLimit() + " of " +
+                product.getType().getName() + " in a day.");
+        }
+
+        Good shopGood = shop.getGoodByType(product.getType());
+        int numberOfBought = shopGood.getNumberSoldToUsersToday();
+        if (numberOfBought >= dailyLimit && dailyLimit > 0) {
+            return new Result(false, "You have already bought " + numberOfBought + " of " + product.getType().getName()
+                + " and can not buy any more.");
+        }
+        Result result = player.getBackpack().addToInventory(product, count);
+        if (!result.success) {
+            return new Result(false, "You don't have enough space in your backpack.");
+        }
+
+        player.changeBalance(-product.getPrice());
+        try {
+            shopGood.setNumberSoldToUsersToday(numberOfBought + count);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return new Result(true, "You bought " + count + " of " + product.getType().getName() + ".");
+    }
+
     public Result cheatAddDollars(String countStr) {
         int count = Integer.parseInt(countStr);
         User player = App.getLoggedIn();
@@ -1821,26 +1866,23 @@ public class GameController {
             "You will get " + price + "g tomorrow.");
     }
 
-    public Result sell(Item item, int count) {
+    public Result sell(Item item, int count, ShippingBin shippingBin) {
         User player = App.getLoggedIn();
         if (!player.getBackpack().getItems().containsKey(item)) {
             return new Result(false, "Product not found.");
         }
 
-        int numberInInventory = player.getBackpack().getItems().get(item);
-
-        if (!item.isSellable()) {
+        if (item instanceof Tool) {
             return new Result(false, "This product can not be sold.");
         }
 
-
-        Result result = player.getBackpack().addToInventory(item, count);
+        Result result = player.getBackpack().removeFromInventory(item, count);
         if (!result.success) {
             return new Result(false, "You don't have enough " + item + " to sell.");
         }
 
         for (int i = 0; i < count; i++) {
-            //shippingBin.addItemToShip(item); // TODO
+            shippingBin.addItemToShip(item);
         }
 
         int price = item.getPrice() * count;
@@ -2367,8 +2409,6 @@ public class GameController {
                     " to finish quest.");
             }
         }
-
-        // if (index == 1) npc.startThirdQuestCountdown(player); TODO: start third quest countdown after unlocking quest 2
 
         quest.finish(player);
         assert false;
