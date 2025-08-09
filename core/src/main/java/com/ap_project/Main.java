@@ -4,7 +4,7 @@ import com.ap_project.client.controllers.*;
 import com.ap_project.client.controllers.login.*;
 import com.ap_project.client.controllers.pregame.*;
 import com.ap_project.client.controllers.signup.*;
-import com.ap_project.client.network.*;
+import com.ap_project.client.models.network.GameClient;
 import com.ap_project.client.views.*;
 import com.ap_project.client.views.game.*;
 import com.ap_project.client.views.login.*;
@@ -13,6 +13,7 @@ import com.ap_project.client.views.signup.*;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.*;
 
+import com.ap_project.server.controller.LobbyMenuController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -64,6 +65,10 @@ public class Main extends Game {
 
     public static void goToChangePasswordMenu(String username) {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToLobbyRoomView(LobbyMenuController controller, String lobbyId) {
+        Main.getMain().setScreen(new LobbyRoomView(controller, lobbyId));
     }
 
     public static void goToLobbyMenu() {

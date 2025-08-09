@@ -5,7 +5,7 @@ import com.ap_project.client.controllers.GameController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.Result;
-import com.ap_project.common.models.enums.commands.GameCommands;
+import com.ap_project.client.models.commands.GameCommands;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;

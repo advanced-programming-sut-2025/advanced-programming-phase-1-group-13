@@ -282,7 +282,7 @@ public class Game {
                 if ((i % 16) == 0) {
                     if ((new Random()).nextInt(4) == 0) {
                         int lastIndex = (new Random()).nextInt(player.getFarm().getPlantedCrops().size() - 1);
-                        Crop randomCrop = player.getFarm().getPlantedCrops().remove(lastIndex); // Removes AND gets in one step
+                        Crop randomCrop = player.getFarm().getPlantedCrops().remove(lastIndex);
                         Position crowPosition = new Position(randomCrop.getPosition());
                         crows.add(crowPosition);
                     }

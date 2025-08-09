@@ -1,7 +1,7 @@
 package com.ap_project.client.views.phase_one;
 
 import com.ap_project.common.models.Result;
-import com.ap_project.common.models.enums.commands.LoginCommands;
+import com.ap_project.client.models.commands.LoginCommands;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

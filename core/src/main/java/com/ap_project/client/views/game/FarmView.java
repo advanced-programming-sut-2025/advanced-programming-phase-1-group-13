@@ -307,6 +307,7 @@ public class FarmView extends GameView {
 
     @Override
     public void nextTurn() {
+        updateTextures();
         playerSprite.setPosition(
             (App.getLoggedIn().getPosition().getX()) * TILE_SIZE,
             (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE

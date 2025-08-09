@@ -1,4 +1,4 @@
-package com.ap_project.common.models.enums.commands;
+package com.ap_project.client.models.commands;
 
 import java.util.regex.*;
 
