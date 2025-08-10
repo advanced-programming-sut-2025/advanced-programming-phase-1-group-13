@@ -365,6 +365,14 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Reaction/ChangeDefaultReactionsButton.png"));
     }
 
+    public Texture getRadio() {
+        return new Texture(Gdx.files.internal("Images/Radio/Radio.png"));
+    }
+
+    public Texture getRadioMenu() {
+        return new Texture(Gdx.files.internal("Images/Radio/RadioMenu.png"));
+    }
+
     public Texture getIdlePlayer(Gender gender, Direction direction) {
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {

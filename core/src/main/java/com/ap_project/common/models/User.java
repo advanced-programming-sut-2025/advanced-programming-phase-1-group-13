@@ -13,6 +13,8 @@ import com.ap_project.common.models.tools.*;
 import com.ap_project.common.models.trade.Trade;
 import com.ap_project.common.models.trade.TradeWithItem;
 import com.ap_project.common.models.trade.TradeWithMoney;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
@@ -63,6 +65,7 @@ public class User {
     private Time rejectionTime;
     private ArrayList<Integer> defaultEmojis;
     private ArrayList<ReactionMessage> defaultReactions;
+    private ArrayList<String> music;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -168,6 +171,7 @@ public class User {
             defaultEmojis.add(i);
             defaultReactions.add(ReactionMessage.values()[i - 1]);
         }
+        this.music = new ArrayList<>();
     }
 
     public void setPosition(Position position) {
@@ -265,16 +269,12 @@ public class User {
         return defaultEmojis;
     }
 
-    public void setDefaultEmojis(ArrayList<Integer> defaultEmojis) {
-        this.defaultEmojis = defaultEmojis;
-    }
-
     public ArrayList<ReactionMessage> getDefaultReactions() {
         return defaultReactions;
     }
 
-    public void setDefaultReactions(ArrayList<ReactionMessage> defaultReactions) {
-        this.defaultReactions = defaultReactions;
+    public ArrayList<String> getMusic() {
+        return music;
     }
 
     public void setMostEarnedMoney(int mostEarnedMoney) {

@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.ap_project.Main.*;
+import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public abstract class GameView implements Screen, InputProcessor {
     protected Stage stage;
@@ -47,6 +48,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected final Image selectedSlotImage;
     protected int selectedSlotIndex;
     protected ArrayList<Item> inventory;
+    protected final Image radio;
     protected final GameController controller;
     protected Sprite playerSprite;
     protected Animation<Texture> playerUpAnimation;
@@ -120,6 +122,10 @@ public abstract class GameView implements Screen, InputProcessor {
         this.selectedSlotIndex = 0;
 
         this.inventory = new ArrayList<>(List.of(App.getLoggedIn().getBackpack().getItems().keySet().toArray(new Item[0])));
+
+        this.radio = new Image(GameAssetManager.getGameAssetManager().getRadio());
+        radio.setScale(1.25f);
+        radio.setPosition(5, 5);
 
         this.controller = controller;
         controller.setView(this);
@@ -311,6 +317,8 @@ public abstract class GameView implements Screen, InputProcessor {
         }
 
         reactionTimer += delta;
+
+        stage.addActor(radio);
 
         renderUI();
     }
@@ -636,6 +644,12 @@ public abstract class GameView implements Screen, InputProcessor {
             useTool(screenX, Gdx.graphics.getHeight() - screenY);
             return true;
         }
+
+        if (hoverOnImage(radio, screenX, Gdx.graphics.getHeight() - screenY)) {
+            goToRadioMenu(this);
+            return true;
+        }
+
         return false;
     }
 
