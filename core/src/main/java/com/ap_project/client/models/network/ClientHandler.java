@@ -1,6 +1,5 @@
 package com.ap_project.client.models.network;
 
-import com.ap_project.common.models.App;
 import com.ap_project.server.GameServer;
 import com.ap_project.server.models.LobbyData;
 
@@ -20,7 +19,7 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
-        this.nickname = App.getLoggedIn().getNickname();
+        this.nickname = "Nick";
     }
 
     @Override

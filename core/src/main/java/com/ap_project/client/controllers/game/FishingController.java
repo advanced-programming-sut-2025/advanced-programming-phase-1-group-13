@@ -1,4 +1,4 @@
-package com.ap_project.client.controllers;
+package com.ap_project.client.controllers.game;
 
 import com.ap_project.client.views.game.FishingMiniGameView;
 import com.ap_project.common.models.enums.types.FishMovementType;

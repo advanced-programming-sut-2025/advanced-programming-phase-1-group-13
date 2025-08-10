@@ -20,7 +20,6 @@ public class LobbyMenuView implements Screen {
     private final Stage stage;
     private final LobbyMenuController controller;
     private final Skin skin;
-
     private final Table table;
     private final TextField lobbyNameField;
     private final CheckBox privateCheckBox;

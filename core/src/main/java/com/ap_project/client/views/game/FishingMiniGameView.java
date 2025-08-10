@@ -1,7 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.client.controllers.FishingController;
+import com.ap_project.client.controllers.game.FishingController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.Fish;
 import com.ap_project.common.models.GameAssetManager;

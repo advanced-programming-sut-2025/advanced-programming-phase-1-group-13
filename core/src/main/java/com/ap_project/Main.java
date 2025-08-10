@@ -1,6 +1,7 @@
 package com.ap_project;
 
 import com.ap_project.client.controllers.*;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.client.controllers.login.*;
 import com.ap_project.client.controllers.pregame.*;
 import com.ap_project.client.controllers.signup.*;

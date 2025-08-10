@@ -1,6 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
+import com.ap_project.client.controllers.game.RadioController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
@@ -8,9 +9,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
@@ -23,9 +25,10 @@ public class RadioMenuView implements Screen {
     private final SelectBox<String> musicSelectBox;
     private final TextButton uploadButton;
     private final TextButton playButton;
+    private Music currentlyPlaying;
+    private boolean isPlaying;
     private final GameView gameView;
-    private Music currentlyPlaying = null;
-    private boolean isPlaying = false;
+    private final RadioController controller;
 
     public RadioMenuView(GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getRadioMenu());
@@ -37,13 +40,18 @@ public class RadioMenuView implements Screen {
 
         this.musicList = new ArrayList<>();
         for (String path : App.getLoggedIn().getMusic()) {
-            musicList.add(Gdx.audio.newMusic(Gdx.files.internal(path)));
+            musicList.add(Gdx.audio.newMusic(Gdx.files.local(path)));
         }
 
+        this.currentlyPlaying = null;
+        isPlaying = false;
+
         this.musicSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
-        this.uploadButton = new TextButton("Upload", GameAssetManager.getGameAssetManager().getSkin()); // TODO
+        this.uploadButton = new TextButton("Upload", GameAssetManager.getGameAssetManager().getSkin());
         this.playButton = new TextButton("Play", GameAssetManager.getGameAssetManager().getSkin());
+
         this.gameView = gameView;
+        this.controller = new RadioController();
     }
 
     @Override
@@ -66,6 +74,69 @@ public class RadioMenuView implements Screen {
             window.getY() + 20
         );
         stage.addActor(uploadButton);
+
+        updateMusicList();
+    }
+
+    @Override
+    public void render(float delta) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Main.getMain().setScreen(gameView);
+        }
+
+        if (uploadButton.isChecked()) {
+            controller.handleFileSelection(() -> {
+                musicList.clear();
+                for (String path : App.getLoggedIn().getMusic()) {
+                    musicList.add(Gdx.audio.newMusic(Gdx.files.local(path)));
+                }
+                updateMusicList();
+            });
+            uploadButton.setChecked(false);
+        }
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    public void updateMusicList() {
+        Array<Actor> actors = stage.getActors();
+        Array<Actor> toRemove = new Array<>();
+
+        for (Actor actor : actors) {
+            if (actor != window && actor != radioTitle && actor != uploadButton) {
+                toRemove.add(actor);
+            }
+        }
+
+        for (Actor actor : toRemove) {
+            stage.getActors().removeValue(actor, true);
+        }
 
         if (musicList.isEmpty()) {
             Label noMusic = new Label("You don't have any music yet.", GameAssetManager.getGameAssetManager().getSkin());
@@ -95,69 +166,14 @@ public class RadioMenuView implements Screen {
             );
             musicSelectBox.setWidth(500);
 
-            // Add change listener for music selection
-            musicSelectBox.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
-                    String selected = musicSelectBox.getSelected();
-                    if (!selected.equals("None")) {
-                        int index = musicSelectBox.getSelectedIndex() - 1;
-                        currentlyPlaying = musicList.get(index);
-                        currentlyPlaying.setVolume(0.5f); // Default volume
-                        if (isPlaying) {
-                            currentlyPlaying.play();
-                        }
-                    }
-                }
-            });
-
             stage.addActor(musicSelectBox);
 
-            // Play button setup
             playButton.setPosition(
                 window.getX() + (window.getWidth() / 2) - playButton.getWidth() - 10,
                 window.getY() + window.getHeight() / 2 - 40
             );
-            playButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
-                    if (currentlyPlaying != null && !isPlaying) {
-                        currentlyPlaying.play();
-                        isPlaying = true;
-                    }
-                }
-            });
+
             stage.addActor(playButton);
         }
-    }
-
-    @Override
-    public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Main.getMain().setScreen(gameView);
-        }
-
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
-    public void dispose() {
     }
 }

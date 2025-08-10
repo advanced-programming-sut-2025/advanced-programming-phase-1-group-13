@@ -1,4 +1,4 @@
-package com.ap_project.client.controllers;
+package com.ap_project.client.controllers.game;
 
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Menu;

@@ -36,7 +36,7 @@ public class LobbyRoomView extends ScreenAdapter {
     public LobbyRoomView(LobbyMenuController controller, String lobbyId) {
         this.controller = controller;
         this.lobbyId = lobbyId;
-        this.lobby = getLobby(lobbyId);
+        this.lobby = getLobby(lobbyId); // TODO
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 

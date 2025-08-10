@@ -1,6 +1,6 @@
 package com.ap_project.common.models;
 
-import com.ap_project.client.controllers.*;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.enums.Quality;
 import com.ap_project.common.models.enums.SecurityQuestion;
 import com.ap_project.common.models.enums.Skill;
@@ -13,8 +13,6 @@ import com.ap_project.common.models.tools.*;
 import com.ap_project.common.models.trade.Trade;
 import com.ap_project.common.models.trade.TradeWithItem;
 import com.ap_project.common.models.trade.TradeWithMoney;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
