@@ -26,6 +26,12 @@ public class PreGameMenuController {
                 if (!result.success) {
                     view.getErrorMessageLabel().setText(result.message);
                 }
+            } else if (view.getScoreboardButton().isChecked()) {
+                if (App.getLoggedIn().getActiveGame() == null) {
+                    view.getErrorMessageLabel().setText("You have no active games.");
+                } else {
+                    goToScoreboard();
+                }
             } else if (view.getLobbyButton().isChecked()) {
                 goToLobbyMenu();
             } else if (view.getBackButton().isChecked()) {
@@ -34,6 +40,7 @@ public class PreGameMenuController {
             view.getNewGameButton().setChecked(false);
             view.getLoadGameButton().setChecked(false);
             view.getLobbyButton().setChecked(false);
+            view.getScoreboardButton().setChecked(false);
             view.getBackButton().setChecked(false);
         }
     }

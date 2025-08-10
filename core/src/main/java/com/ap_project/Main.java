@@ -79,6 +79,7 @@ public class Main extends Game {
             Main.getMain().setScreen(new LobbyMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
         } catch (IOException e) {
             System.out.println("Failed to connect to lobby server: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -92,6 +93,10 @@ public class Main extends Game {
 
     public static void goToPreGameMenu() {
         Main.getMain().setScreen(new PreGameMenuView(new PreGameMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToScoreboard() {
+        Main.getMain().setScreen(new ScoreboardView(new ScoreboardController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToNewGameMenu() {

@@ -51,22 +51,19 @@ public class LobbyRoomView extends ScreenAdapter {
         playersList = new VerticalGroup();
 
         System.out.println("number of lobbies: " + lobbies.size());
-        try {
-            lobby = new LobbyData("check", "34afwarrg", "", true, new ClientHandler(new Socket()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (ClientHandler client : lobby.getPlayers()) {
-            Label playerInfo = new Label(client.getNickname(), skin);
+        if (lobby !=null) {
+            for (ClientHandler client : lobby.getPlayers()) {
+                Label playerInfo = new Label(client.getNickname(), skin);
 
-            HorizontalGroup row = new HorizontalGroup();
-            row.space(20);
-            row.space(20);
-            row.left();
-            row.left();
-            row.addActor(playerInfo);
+                HorizontalGroup row = new HorizontalGroup();
+                row.space(20);
+                row.space(20);
+                row.left();
+                row.left();
+                row.addActor(playerInfo);
 
-            playersList.addActor(row);
+                playersList.addActor(row);
+            }
         }
 
         leaveButton = new TextButton("Leave Lobby", skin);

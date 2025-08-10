@@ -346,8 +346,8 @@ public class User {
         return this.energy;
     }
 
-    public double getBalance() {
-        return balance;
+    public int getBalance() {
+        return (int) balance;
     }
 
     public double getSpentMoney() {
@@ -370,6 +370,26 @@ public class User {
 
     public int getMostEarnedMoney() {
         return mostEarnedMoney;
+    }
+
+    public int getNumberOfQuests() {
+        int count = 0;
+        for (Quest quest : activeGame.getQuests()) {
+            if (quest.isFinished()) {
+                if (quest.getFinisher().equals(this)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getTotalSkills() {
+        int totalSkillPoints = 0;
+        for (Skill skill : Skill.values()) {
+            totalSkillPoints += skillPoints.get(skill);
+        }
+        return totalSkillPoints;
     }
 
     public HashMap<Skill, SkillLevel> getSkillLevels() {

@@ -23,8 +23,9 @@ public class PreGameMenuView implements Screen {
     private final Label menuTitle;
     private final TextButton newGameButton;
     private final TextButton loadGameButton;
-    private final TextButton backButton;
+    private final TextButton scoreboardButton;
     private final TextButton lobbyButton;
+    private final TextButton backButton;
     private final Image savedGame;
     private final Label errorMessageLabel;
     private final Table table;
@@ -38,8 +39,9 @@ public class PreGameMenuView implements Screen {
 
         this.newGameButton = new TextButton("New Game", skin);
         this.loadGameButton = new TextButton("Load Game", skin);
-        this.backButton = new TextButton("Back", skin);
+        this.scoreboardButton = new TextButton("Scoreboard", skin);
         this.lobbyButton = new TextButton("Lobby", skin);
+        this.backButton = new TextButton("Back", skin);
 
         this.savedGame = new Image(GameAssetManager.getGameAssetManager().getSavedGame());
         savedGame.setPosition(
@@ -77,6 +79,7 @@ public class PreGameMenuView implements Screen {
         float buttonWidth = 425f;
         table.add(newGameButton).width(buttonWidth).padBottom(30).row();
         table.add(loadGameButton).width(buttonWidth).padBottom(30).row();
+        table.add(scoreboardButton).width(buttonWidth).padBottom(30).row();
         table.add(lobbyButton).width(buttonWidth).padBottom(30).row();
         table.add(backButton).width(buttonWidth).padBottom(30).row();
 
@@ -168,15 +171,19 @@ public class PreGameMenuView implements Screen {
         return loadGameButton;
     }
 
+    public TextButton getScoreboardButton() {
+        return scoreboardButton;
+    }
+
+    public TextButton getLobbyButton() {
+        return lobbyButton;
+    }
+
     public TextButton getBackButton() {
         return backButton;
     }
 
     public Label getErrorMessageLabel() {
         return errorMessageLabel;
-    }
-
-    public TextButton getLobbyButton() {
-        return lobbyButton;
     }
 }
