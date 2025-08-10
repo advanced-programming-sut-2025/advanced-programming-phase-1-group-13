@@ -19,7 +19,6 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
-        this.nickname = "Nick";
     }
 
     @Override
@@ -53,15 +52,19 @@ public class ClientHandler implements Runnable {
     private void handleCommand(String command, Object data) {
         System.out.println("Command: " + command);
         switch (command.toUpperCase()) {
-            case "CREATE_LOBBY":
-                System.out.println("LINE 50");
-
+            case "SET_USERNAME":
                 if (data instanceof String[]) {
-                    System.out.println("Creating lobby");
-
+                    this.nickname = ((String[]) data)[0];
+                    System.out.println("[Server] Username set to: " + this.nickname);
+                } else {
+                    sendError("Invalid data for SET_USERNAME");
+                }
+                break;
+            case "CREATE_LOBBY":
+                if (data instanceof String[]) {
                     String[] argsCreate = (String[]) data;
 
-                    if (argsCreate.length >= 3) {
+                    if (argsCreate.length >= 4) {
                         handleCreateLobby(argsCreate);
                     }
                 } else {
@@ -80,22 +83,76 @@ public class ClientHandler implements Runnable {
                     sendError("Invalid data for JOIN_LOBBY");
                 }
                 break;
+            case "LEAVE_LOBBY":
+                if (data instanceof String[]) {
+                    String[] argsJoin = (String[]) data;
+                    if (argsJoin.length >= 1)
+                        handleLeaveLobby(argsJoin);
+                } else {
+                    sendError("Invalid data for JOIN_LOBBY");
+                }
+                break;
+            case "START_GAME":
+                if (data instanceof String[]) {
+                    String[] argsJoin = (String[]) data;
+                    if (argsJoin.length >= 1)
+                        handleStartGame(argsJoin);
+                } else {
+                    sendError("Invalid data for JOIN_LOBBY");
+                }
+                break;
+            case "REQUEST_LOBBY_INFO":
+                if (data instanceof String[]) {
+                    String[] args = (String[]) data;
+                    if (args.length >= 1) {
+                        handleRequestLobbyInfo(args[0]);
+                    } else {
+                        sendError("No lobbyId provided");
+                    }
+                } else {
+                    sendError("Invalid data for REQUEST_LOBBY_INFO");
+                }
+                break;
             default:
                 sendError("Unknown command: " + command);
                 break;
         }
     }
 
+    private void handleRequestLobbyInfo(String lobbyId) {
+        LobbyData lobby = lobbies.get(lobbyId);
+        if (lobby == null) {
+            sendError("Lobby not found");
+            return;
+        }
+
+        StringBuilder players = new StringBuilder();
+        for (ClientHandler player : lobby.getPlayers()) {
+            players.append(player.getNickname()).append("|");
+        }
+        if (players.length() > 0) {
+            players.deleteCharAt(players.length() - 1);
+        }
+
+        String lobbyInfoString = lobby.getLobbyId() + "," +
+            lobby.getLobbyName() + "," +
+            players + "," +
+            lobby.isPrivate() + "," +
+            lobby.isVisible();
+
+        sendMessage("LOBBY_INFO", lobbyInfoString);
+    }
+
     private void handleCreateLobby(String[] parts) {
         String lobbyName = parts[0];
         String password = parts[1];
         boolean isPrivate = Boolean.parseBoolean(parts[2]);
+        boolean isVisible = Boolean.parseBoolean(parts[3]);
 
         String lobbyId = UUID.randomUUID().toString().substring(0, 8);
-        LobbyData lobby = new LobbyData(lobbyId, lobbyName, password, isPrivate, this);
+        LobbyData lobby = new LobbyData(lobbyId, lobbyName, password, isPrivate, isVisible, this);
 
         lobbies.put(lobbyId, lobby);
-        System.out.println("new lobby created and now we have :" + lobbies.size());
         lobby.addPlayer(this);
 
         sendMessage("LOBBY_CREATED", lobbyId);
@@ -114,9 +171,40 @@ public class ClientHandler implements Runnable {
         } else if (lobby.isPrivate() && !lobby.getPassword().equals(providedPassword)) {
             sendError("Wrong password");
         } else {
+            for (ClientHandler player : lobby.getPlayers()) {
+                if (player.getNickname().equals(nickname)) {
+                    sendError("You are already in this lobby.");
+                }
+            }
             lobby.addPlayer(this);
             sendMessage("JOIN_SUCCESS", lobbyId);
             sendLobbyListToAll();
+        }
+    }
+
+    private void handleLeaveLobby(String[] parts) {
+        String lobbyId = parts[0];
+
+        LobbyData lobby = lobbies.get(lobbyId);
+        if (lobby == null) {
+            sendError("Lobby not found");
+        } else {
+            lobby.removePlayer(this);
+            if (lobby.getPlayers().isEmpty()) {
+                lobbies.remove(lobbyId);
+            }
+            sendLobbyListToAll();
+        }
+    }
+
+    private void handleStartGame(String[] parts) {
+        String lobbyId = parts[0];
+
+        LobbyData lobby = lobbies.get(lobbyId);
+        if (lobby == null) {
+            sendError("Lobby not found");
+        } else {
+            // TODO
         }
     }
 
@@ -128,13 +216,35 @@ public class ClientHandler implements Runnable {
 
     public void sendLobbyList() {
         try {
+            List<String> notUsedLobbyIds = new ArrayList<>();
+            long now = System.currentTimeMillis();
+            for (LobbyData lobby : lobbies.values()) {
+                if (lobby.getPlayers().size() == 1 && (now - lobby.getLastJoinTime()) > 5 * 60 * 1000) {
+                    notUsedLobbyIds.add(lobby.getLobbyId());
+                }
+            }
+
+            for (String id : notUsedLobbyIds) {
+                lobbies.remove(id);
+            }
+
             out.writeObject("LOBBY_LIST");
             List<String> lobbyInfo = new ArrayList<>();
             for (LobbyData lobby : lobbies.values()) {
+                StringBuilder playersUsernames = new StringBuilder();
+                for (ClientHandler client : lobby.getPlayers()) {
+                    playersUsernames.append(client.getNickname()).append("-");
+                }
+                if (playersUsernames.length() > 0) {
+                    playersUsernames.deleteCharAt(playersUsernames.length() - 1);
+                }
+
                 lobbyInfo.add(lobby.getLobbyId() + "," +
                     lobby.getLobbyName() + "," +
-                    lobby.getPlayers().size() + "/4," +
-                    lobby.isPrivate());
+                    playersUsernames + "," +
+                    lobby.isPrivate() + "," +
+                    lobby.isVisible()
+                );
             }
             out.writeObject(lobbyInfo);
             out.flush();

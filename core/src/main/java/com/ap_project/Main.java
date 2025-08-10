@@ -68,10 +68,6 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-    public static void goToLobbyRoomView(LobbyMenuController controller, String lobbyId) {
-        Main.getMain().setScreen(new LobbyRoomView(controller, lobbyId));
-    }
-
     public static void goToLobbyMenu() {
         try {
             GameClient client = new GameClient("127.0.0.1", 9999);

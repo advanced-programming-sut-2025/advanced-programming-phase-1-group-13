@@ -25,8 +25,6 @@ public class RadioMenuView implements Screen {
     private final SelectBox<String> musicSelectBox;
     private final TextButton uploadButton;
     private final TextButton playButton;
-    private Music currentlyPlaying;
-    private boolean isPlaying;
     private final GameView gameView;
     private final RadioController controller;
 
@@ -42,9 +40,6 @@ public class RadioMenuView implements Screen {
         for (String path : App.getLoggedIn().getMusic()) {
             musicList.add(Gdx.audio.newMusic(Gdx.files.local(path)));
         }
-
-        this.currentlyPlaying = null;
-        isPlaying = false;
 
         this.musicSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
         this.uploadButton = new TextButton("Upload", GameAssetManager.getGameAssetManager().getSkin());

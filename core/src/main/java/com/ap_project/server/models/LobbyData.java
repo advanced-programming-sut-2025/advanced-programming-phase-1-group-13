@@ -10,17 +10,21 @@ public class LobbyData {
     private final String lobbyName;
     private final String password;
     private final boolean isPrivate;
+    private final boolean isVisible;
     private ClientHandler admin;
     private final List<ClientHandler> players = new ArrayList<>();
+    private long lastJoinTime;
     private static final int MAX_CAPACITY = 4;
 
-    public LobbyData(String lobbyId, String lobbyName, String password, boolean isPrivate, ClientHandler admin) {
+    public LobbyData(String lobbyId, String lobbyName, String password, boolean isPrivate, boolean isVisible, ClientHandler admin) {
         this.lobbyId = lobbyId;
         this.lobbyName = lobbyName;
         this.password = password;
         this.isPrivate = isPrivate;
+        this.isVisible = isVisible;
         this.admin = admin;
         this.players.add(admin);
+        this.lastJoinTime = System.currentTimeMillis();
     }
 
     public boolean isFull() {
@@ -31,6 +35,7 @@ public class LobbyData {
         if (!players.contains(player) && !isFull()) {
             players.add(player);
         }
+        this.lastJoinTime = System.currentTimeMillis();
     }
 
     public void setAdmin(ClientHandler newAdmin) {
@@ -57,11 +62,19 @@ public class LobbyData {
         return isPrivate;
     }
 
+    public boolean isVisible() {
+        return isVisible;
+    }
+
     public List<ClientHandler> getPlayers() {
         return players;
     }
 
     public ClientHandler getAdmin() {
         return admin;
+    }
+
+    public long getLastJoinTime() {
+        return lastJoinTime;
     }
 }

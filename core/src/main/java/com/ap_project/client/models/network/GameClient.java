@@ -1,17 +1,13 @@
 package com.ap_project.client.models.network;
 
-import com.ap_project.common.models.App;
-import com.ap_project.server.GameServer;
 import com.ap_project.server.controller.LobbyMenuController;
-import com.ap_project.server.models.Lobby;
 import com.ap_project.server.models.LobbyData;
+import com.badlogic.gdx.Gdx;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.ap_project.server.GameServer.lobbies;
 
 public class GameClient {
     private final Socket socket;
@@ -55,7 +51,6 @@ public class GameClient {
         }
     }
 
-
     private void listenToServer() {
         new Thread(() -> {
             try {
@@ -82,13 +77,24 @@ public class GameClient {
                             }
                             break;
                         case "LOBBY_CREATED":
-                            LobbyData lobby = new LobbyData("check", data.toString(), "", true, new ClientHandler(socket));
-                            lobbies.put(lobby.getLobbyId(), lobby);
                             System.out.println("[Client] Lobby created successfully. ID: " + data);
                             break;
                         case "JOIN_SUCCESS":
                             System.out.println("[Client] Joined lobby successfully. ID: " + data);
                             break;
+                        case "LOBBY_INFO":
+                            if (data instanceof String) {
+                                String lobbyInfoString = (String) data;
+                                System.out.println("[Client] Received lobby info: " + lobbyInfoString);
+
+                                if (lobbyMenuController != null) {
+                                    Gdx.app.postRunnable(() -> {
+                                        lobbyMenuController.openLobbyRoomView(lobbyInfoString);
+                                    });
+                                }
+                            }
+                            break;
+
                         default:
                             System.out.println("[Client] Unknown server command: " + command);
                     }
@@ -101,5 +107,4 @@ public class GameClient {
             }
         }).start();
     }
-
 }

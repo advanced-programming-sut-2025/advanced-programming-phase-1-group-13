@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.List;
 
-import static com.ap_project.Main.goToLobbyRoomView;
 import static com.ap_project.Main.goToPreGameMenu;
 
 public class LobbyMenuView implements Screen {
@@ -22,6 +21,7 @@ public class LobbyMenuView implements Screen {
     private final Skin skin;
     private final Table table;
     private final TextField lobbyNameField;
+    private final CheckBox visibleCheckBox;
     private final CheckBox privateCheckBox;
     private final TextField passwordField;
     private final TextButton createLobbyButton;
@@ -29,6 +29,9 @@ public class LobbyMenuView implements Screen {
     private final TextButton backButton;
     private final ScrollPane lobbyListScroll;
     private final VerticalGroup lobbyList;
+    private final TextField searchField;
+    private final TextButton searchButton;
+    private boolean showSearchedLobby;
     private final Label errorLabel;
 
     public LobbyMenuView(LobbyMenuController controller, Skin skin) {
@@ -46,11 +49,15 @@ public class LobbyMenuView implements Screen {
         table.setFillParent(true);
         table.top().padTop(30);
 
+        visibleCheckBox = new CheckBox(" Visible", skin);
+        visibleCheckBox.setChecked(true);
         lobbyNameField = new TextField("", skin);
-        privateCheckBox = new CheckBox(" Private Lobby", skin);
+        privateCheckBox = new CheckBox(" Private", skin);
         passwordField = new TextField("", skin);
         passwordField.setMessageText("Enter password");
         passwordField.setDisabled(true);
+        passwordField.setPasswordCharacter('*');
+        passwordField.setPasswordMode(true);
 
         createLobbyButton = new TextButton("Create Lobby", skin);
         refreshButton = new TextButton("Refresh", skin);
@@ -64,13 +71,22 @@ public class LobbyMenuView implements Screen {
         lobbyListScroll = new ScrollPane(lobbyList, skin);
         lobbyListScroll.setFadeScrollBars(false);
 
+        searchField = new TextField("", skin);
+        searchField.setMessageText("Search by ID");
+        searchField.setWidth(300);
+        searchButton = new TextButton("Search", skin);
+
         layoutUI();
         addListeners();
     }
-    public void promptPasswordAndJoin(String lobbyId) {
-        TextField passwordField = new TextField("", skin);
 
-        Dialog dialog = new Dialog("Enter Password", skin) {
+    public void promptPasswordAndJoin(String lobbyId) {
+        final TextField passwordField = new TextField("", skin);
+        passwordField.setMessageText("Enter password");
+        passwordField.setPasswordCharacter('*');
+        passwordField.setPasswordMode(true);
+
+        Dialog dialog = new Dialog("", skin) {
             @Override
             protected void result(Object object) {
                 boolean confirmed = (boolean) object;
@@ -81,33 +97,64 @@ public class LobbyMenuView implements Screen {
             }
         };
 
-        dialog.text("This lobby is private. Enter the password:");
-        dialog.getContentTable().row();
-        dialog.getContentTable().add(passwordField).width(200).pad(10);
+        dialog.setMovable(false);
+        dialog.setResizable(false);
+        dialog.setModal(true);
+
+        Table content = dialog.getContentTable();
+        content.pad(20);
+        content.defaults().pad(10);
+
+        content.add(new Label("This lobby is private. Enter the password:", skin)).colspan(2).row();
+        content.add(passwordField).width(350).colspan(2).center().row();
+
         dialog.button("Join", true);
-        dialog.button("Enter", true);
         dialog.button("Cancel", false);
         dialog.key(com.badlogic.gdx.Input.Keys.ENTER, true);
         dialog.key(com.badlogic.gdx.Input.Keys.ESCAPE, false);
+
         dialog.show(stage);
     }
 
     private void layoutUI() {
-        table.add(new Label("Create New Lobby", skin)).colspan(2).padBottom(10).row();
+        Label title = new Label("Create New Lobby", skin);
+        title.setFontScale(1.5f);
+        table.add(title).colspan(2).padBottom(10).row();
         table.add(new Label("Lobby Name:", skin)).left();
         table.add(lobbyNameField).width(300).row();
+        table.add(visibleCheckBox).colspan(2).left().row();
         table.add(privateCheckBox).colspan(2).left().row();
         table.add(new Label("Password:", skin)).left();
         table.add(passwordField).width(300).row();
         table.add(createLobbyButton).colspan(2).padTop(10).row();
 
         table.add(new Label("Available Lobbies:", skin)).colspan(2).padTop(40).row();
-        table.add(lobbyListScroll).colspan(2).width(500).height(300).row();
-        table.add(refreshButton).colspan(2).padTop(10);
-        table.add(backButton).colspan(2).padTop(10).row();
-        table.add(errorLabel).colspan(2).padTop(10);
+
+        table.add(backButton).colspan(1).padTop(300);
+        table.add(refreshButton).colspan(1).padTop(300);
 
         stage.addActor(table);
+
+        lobbyListScroll.setSize(1500, 250);
+        lobbyListScroll.setPosition(
+            Gdx.graphics.getWidth() / 2f - 700,
+            Gdx.graphics.getHeight() / 2f - 350
+        );
+        stage.addActor(lobbyListScroll);
+
+        searchField.setPosition(
+            Gdx.graphics.getWidth() / 2f - 800,
+            Gdx.graphics.getHeight() / 2f - 50
+        );
+        stage.addActor(searchField);
+        searchButton.setPosition(
+            searchField.getX() + 350,
+            searchField.getY() - 20
+        );
+        stage.addActor(searchButton);
+
+        errorLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+        stage.addActor(errorLabel);
     }
 
     private void addListeners() {
@@ -124,7 +171,8 @@ public class LobbyMenuView implements Screen {
                 String name = lobbyNameField.getText();
                 String password = privateCheckBox.isChecked() ? passwordField.getText() : null;
                 boolean isPrivate = privateCheckBox.isChecked();
-                controller.createLobby(name, password, isPrivate);
+                boolean isVisible = visibleCheckBox.isChecked();
+                controller.createLobby(name, password, isPrivate, isVisible);
             }
         });
 
@@ -132,6 +180,13 @@ public class LobbyMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.refreshLobbyList();
+            }
+        });
+
+        searchButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showSearchedLobby = true;
             }
         });
 
@@ -155,13 +210,16 @@ public class LobbyMenuView implements Screen {
             String players = parts[2];
             boolean isPrivate = Boolean.parseBoolean(parts[3]);
 
+            if (showSearchedLobby) {
+                if (!lobbyId.equals(searchField.getText())) continue;
+            } else if (!Boolean.parseBoolean(parts[4])) continue;
+
             String display = String.format("Lobby: %s (%s) | Players: %s | %s",
                 name, lobbyId, players, isPrivate ? "Private" : "Public");
 
             Label infoLabel = new Label(display, skin);
             TextButton joinBtn = new TextButton("Join", skin);
             TextButton enterBtn = new TextButton("Enter", skin);
-            TextButton leaveBtn = new TextButton("Leave", skin);
 
             HorizontalGroup row = new HorizontalGroup();
             row.space(20);
@@ -171,7 +229,6 @@ public class LobbyMenuView implements Screen {
             row.addActor(infoLabel);
             row.addActor(joinBtn);
             row.addActor(enterBtn);
-            row.addActor(leaveBtn);
 
             joinBtn.addListener(new ClickListener() {
                 @Override
@@ -183,7 +240,7 @@ public class LobbyMenuView implements Screen {
             enterBtn.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    goToLobbyRoomView(controller, lobbyId);
+                    controller.requestLobbyInfo(lobbyId);
                 }
             });
 
@@ -202,18 +259,30 @@ public class LobbyMenuView implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+
+        if (searchField.getText().isEmpty()) showSearchedLobby = false;
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
+
     @Override
-    public void pause() {}
+    public void pause() {
+    }
+
     @Override
-    public void resume() {}
+    public void resume() {
+    }
+
     @Override
-    public void hide() {}
+    public void hide() {
+    }
+
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 }
