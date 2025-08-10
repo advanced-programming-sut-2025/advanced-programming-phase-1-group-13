@@ -33,6 +33,7 @@ public class Crop extends Item implements Harvestable {
     public Crop(CropType type) {
         this.type = type;
         this.name = type.getName();
+        super.price = type.getSellPrice();
         this.source = type.getSource();
         this.numOfStages = type.getNumberOfStages();
         this.stagesTimes = type.getStages();

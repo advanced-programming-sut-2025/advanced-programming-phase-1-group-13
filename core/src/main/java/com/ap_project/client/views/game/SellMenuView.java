@@ -37,8 +37,9 @@ public class SellMenuView implements Screen, InputProcessor {
     private final Image emptySlot;
     private final TextButton sellButton;
     private final Label errorMessageLabel;
+    private final ShippingBin shippingBin;
 
-    public SellMenuView(FarmView farmView, FarmBuilding shippingBin) {
+    public SellMenuView(FarmView farmView, ShippingBin shippingBin) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getSellMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
@@ -62,6 +63,8 @@ public class SellMenuView implements Screen, InputProcessor {
         this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
         errorMessageLabel.setColor(Color.RED);
         errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+
+        this.shippingBin = shippingBin;
 
         this.controller = new GameController();
         this.farmView = farmView;
@@ -102,6 +105,8 @@ public class SellMenuView implements Screen, InputProcessor {
         );
         stage.addActor(sellButton);
 
+        stage.addActor(errorMessageLabel);
+
         addCloseButton();
     }
 
@@ -119,10 +124,12 @@ public class SellMenuView implements Screen, InputProcessor {
 
             if (sellButton.isChecked()) {
                 int quantity = quantityBox.getSelected();
-                Result result = controller.sell(itemToSell, quantity);
+                Result result = controller.sell(itemToSell, quantity, shippingBin);
                 if (!result.success) {
                     errorMessageLabel.setText(result.message);
                     itemToSell = null;
+                    itemToSellImage.remove();
+                    quantityBox.setItems(new Array<>());
                 } else {
                     Main.getMain().setScreen(farmView);
                 }
@@ -155,6 +162,7 @@ public class SellMenuView implements Screen, InputProcessor {
                 for (int j = 1; j < App.getLoggedIn().getBackpack().getItems().get(itemToSell); j++) {
                     options.add(j);
                 }
+                if (options.isEmpty()) options.add(1);
                 quantityBox.setItems(options);
             }
         }

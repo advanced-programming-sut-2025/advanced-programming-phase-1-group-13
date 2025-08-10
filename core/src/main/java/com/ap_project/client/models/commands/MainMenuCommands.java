@@ -1,18 +1,18 @@
-package com.ap_project.common.models.enums.commands;
+package com.ap_project.client.models.commands;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum PreGameMenuCommands implements Command {
-    GAME_NEW("^\\s*game\\s+new\\s*(?<usernames>.+)*\\s*$"),
-    GAME_MAP("^\\s*game\\s+map\\s+(?<mapNumber>\\d+)\\s+(?<username>\\S+)\\s*$"),
-    LOAD_GAME("^\\s*load\\s+game\\s*$"),
-    EXIT("^\\s*(menu)?\\s*exit\\s*$");
+public enum MainMenuCommands implements Command {
+    USER_LOGOUT("^\\s*(user\\s+)?logout\\s*$"),
+    MENU_EXIT("^\\s*(menu)?\\s*exit\\s*$"),
+    SHOW_CURRENT_MENU("\\s*show\\s+current\\s+menu\\s*"),
+    MENU_ENTER("^\\s*menu\\s+enter\\s+(?<newMenu>.+)\\s*$");
 
     private final String regex;
     private final Pattern pattern;
 
-    PreGameMenuCommands(String regex) {
+    MainMenuCommands(String regex) {
         this.regex = regex;
         this.pattern = Pattern.compile(this.regex);
     }
@@ -35,4 +35,5 @@ public enum PreGameMenuCommands implements Command {
         }
         return null;
     }
+
 }

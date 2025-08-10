@@ -1,7 +1,7 @@
 package com.ap_project.client.views.phase_one;
 
 import com.ap_project.client.controllers.ProfileMenuController;
-import com.ap_project.common.models.enums.commands.ProfileCommands;
+import com.ap_project.client.models.commands.ProfileCommands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

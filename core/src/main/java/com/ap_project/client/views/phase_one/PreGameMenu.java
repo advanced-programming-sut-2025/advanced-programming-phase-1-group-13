@@ -4,8 +4,8 @@ import com.ap_project.common.models.App;
 import com.ap_project.common.models.Game;
 import com.ap_project.common.models.User;
 import com.ap_project.common.models.enums.Menu;
-import com.ap_project.common.models.enums.commands.PreGameMenuCommands;
-import com.ap_project.common.models.enums.commands.ProfileCommands;
+import com.ap_project.client.models.commands.PreGameMenuCommands;
+import com.ap_project.client.models.commands.ProfileCommands;
 
 import java.util.ArrayList;
 import java.util.Arrays;

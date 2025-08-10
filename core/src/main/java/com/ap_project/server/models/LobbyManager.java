@@ -1,4 +1,4 @@
-package com.ap_project.lobby;
+package com.ap_project.server.models;
 
 import java.time.Duration;
 import java.time.Instant;

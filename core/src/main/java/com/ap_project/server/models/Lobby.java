@@ -1,10 +1,9 @@
-package com.ap_project.lobby;
+package com.ap_project.server.models;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 public class Lobby {
     private final int id;

@@ -14,6 +14,7 @@ public class Farm {
     private final ArrayList<Tree> plantedTrees;
     private final ArrayList<Tree> trees;
     private final ArrayList<FarmBuilding> farmBuildings;
+    private final ArrayList<ShippingBin> shippingBins;
     private final int height = 55;
     private final int width = 74;
     private final ArrayList<Artisan> artisans;
@@ -33,7 +34,8 @@ public class Farm {
         this.plantedTrees = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
-        farmBuildings.add(new FarmBuilding(FarmBuildingType.SHIPPING_BIN, new Position(73, 3)));
+        this.shippingBins = new ArrayList<>();
+        shippingBins.add(new ShippingBin(FarmBuildingType.SHIPPING_BIN, new Position(73, 3)));
         this.crafts = new ArrayList<>();
         this.artisans = new ArrayList<>();
         this.mapNumber = mapNumberToFollow;
@@ -364,13 +366,6 @@ public class Farm {
     }
 
     public ArrayList<ShippingBin> getShippingBins() {
-        ArrayList<ShippingBin> shippingBins = new ArrayList<>();
-        for (FarmBuilding farmBuilding : farmBuildings) {
-            if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
-                ShippingBin shippingBin = (ShippingBin) farmBuilding;
-                shippingBins.add(shippingBin);
-            }
-        }
         return shippingBins;
     }
 

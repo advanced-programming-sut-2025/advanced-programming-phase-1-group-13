@@ -33,6 +33,7 @@ public class FarmView extends GameView {
     private Texture woodTexture;
     private ArrayList<Texture> treesTextures;
     private ArrayList<Texture> farmBuildingsTextures;
+    private ArrayList<Texture> shippingBinsTextures;
     private ArrayList<Texture> craftsTextures;
     private ArrayList<Texture> artisansTextures;
     private ArrayList<Texture> animalsTextures;
@@ -232,6 +233,13 @@ public class FarmView extends GameView {
                 }
             }
 
+            scale = 1;
+            for (int i = 0; i < farm.getShippingBins().size(); i++) {
+                Position position = farm.getShippingBins().get(i).getPositionOfUpperLeftCorner();
+                draw(shippingBinsTextures.get(i), position);
+            }
+
+            scale = 1.5f;
             for (int i = 0; i < farm.getArtisans().size(); i++) {
                 Position position = farm.getArtisans().get(i).getPosition();
                 draw(artisansTextures.get(i), position);
@@ -299,6 +307,7 @@ public class FarmView extends GameView {
 
     @Override
     public void nextTurn() {
+        updateTextures();
         playerSprite.setPosition(
             (App.getLoggedIn().getPosition().getX()) * TILE_SIZE,
             (-App.getLoggedIn().getPosition().getY() + originPosition.getY()) * TILE_SIZE
@@ -392,19 +401,19 @@ public class FarmView extends GameView {
         for (int i = 0; i < farm.getFarmBuildings().size(); i++) {
             FarmBuilding farmBuilding = farm.getFarmBuildings().get(i);
             Position farmBuildingPosition = new Position(farmBuilding.getPositionOfUpperLeftCorner());
-            if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
-                if (clickedOnTexture(screenX, screenY, farmBuildingsTextures.get(i), farmBuildingPosition, 1)) {
-                    if (farmBuilding.getFarmBuildingType() == FarmBuildingType.SHIPPING_BIN) {
-                        goToSellMenu(this, farmBuilding);
-                    }
-                }
-            }
             if (clickedOnTexture(screenX, screenY, farmBuildingsTextures.get(i), farmBuildingPosition, scale)) {
                 if (farmBuilding.getFarmBuildingType().getCapacity() != 0) {
                     AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
                     goToAnimalLivingSpaceMenu(this, animalLivingSpace);
                 }
                 return true;
+            }
+        }
+
+        for (int i = 0; i < shippingBinsTextures.size(); i++) {
+            ShippingBin shippingBin = farm.getShippingBins().get(i);
+            if (clickedOnTexture(screenX, screenY, shippingBinsTextures.get(i), shippingBin.getPositionOfUpperLeftCorner(), 1)) {
+                goToSellMenu(this, shippingBin);
             }
         }
 
@@ -598,6 +607,11 @@ public class FarmView extends GameView {
         this.farmBuildingsTextures = new ArrayList<>();
         for (FarmBuilding farmBuilding : farm.getFarmBuildings()) {
             farmBuildingsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(farmBuilding.getFarmBuildingType()));
+        }
+
+        this.shippingBinsTextures = new ArrayList<>();
+        for (int i = 0; i < farm.getShippingBins().size(); i++) {
+            shippingBinsTextures.add(GameAssetManager.getGameAssetManager().getFarmBuilding(FarmBuildingType.SHIPPING_BIN));
         }
 
         this.craftsTextures = new ArrayList<>();

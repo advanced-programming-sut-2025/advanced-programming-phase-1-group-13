@@ -1,4 +1,7 @@
-package com.ap_project.client.network;
+package com.ap_project.server;
+
+import com.ap_project.client.models.network.ClientHandler;
+import com.ap_project.server.models.LobbyData;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -29,5 +32,9 @@ public class GameServer {
         } catch (IOException e) {
             System.err.println("[Server] Failed to start server: " + e.getMessage());
         }
+    }
+
+    public static LobbyData getLobby(String lobbyId) {
+        return lobbies.get(lobbyId);
     }
 }

@@ -1,20 +1,18 @@
-package com.ap_project.common.models.enums.commands;
+package com.ap_project.client.models.commands;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum TradeCommands implements Command {
-    TRADE("^\\s*trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>.+)" +
-            "\\s+((-p\\s+(?<price>\\d+))|-ti\\s+(?<targetItem>.+)\\s+-ta\\s+(?<targetAmount>.+))\\s*$"),
-    TRADE_LIST("^\\s*trade\\s+list\\s*$"),
-    TRADE_RESPONSE("^\\s*trade\\s+response\\s+(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
-    TRADE_HISTORY("^\\s*trade\\s+history\\s*$"),
-    EXIT_TRADE_MENU("^\\s*exit\\s+trade\\s+menu\\s*$");
+public enum PreGameMenuCommands implements Command {
+    GAME_NEW("^\\s*game\\s+new\\s*(?<usernames>.+)*\\s*$"),
+    GAME_MAP("^\\s*game\\s+map\\s+(?<mapNumber>\\d+)\\s+(?<username>\\S+)\\s*$"),
+    LOAD_GAME("^\\s*load\\s+game\\s*$"),
+    EXIT("^\\s*(menu)?\\s*exit\\s*$");
 
     private final String regex;
     private final Pattern pattern;
 
-    TradeCommands(String regex) {
+    PreGameMenuCommands(String regex) {
         this.regex = regex;
         this.pattern = Pattern.compile(this.regex);
     }

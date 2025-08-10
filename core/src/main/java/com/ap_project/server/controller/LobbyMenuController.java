@@ -1,9 +1,9 @@
-package com.ap_project.client.controllers.pregame;
+package com.ap_project.server.controller;
 
 import com.ap_project.Main;
+import com.ap_project.client.models.network.GameClient;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.client.views.pregame.LobbyMenuView;
-import com.ap_project.client.network.GameClient;
 import com.ap_project.client.views.pregame.LobbyRoomView;
 
 import java.util.List;
@@ -60,10 +60,6 @@ public class LobbyMenuController {
         if (view != null) {
             view.updateLobbyList(lobbyInfoList);
         }
-    }
-
-    public void enterLobbyRoom(String lobbyId) {
-        Main.getMain().setScreen(new LobbyRoomView(Main.getMain(), this, lobbyId));
     }
 
     public void leaveLobby(String lobbyId) {

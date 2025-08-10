@@ -1,4 +1,6 @@
-package com.ap_project.client.network;
+package com.ap_project.server.models;
+
+import com.ap_project.client.models.network.ClientHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ public class LobbyData {
     private final String lobbyName;
     private final String password;
     private final boolean isPrivate;
-    private  ClientHandler admin;
+    private ClientHandler admin;
     private final List<ClientHandler> players = new ArrayList<>();
     private static final int MAX_CAPACITY = 4;
 
@@ -18,6 +20,7 @@ public class LobbyData {
         this.password = password;
         this.isPrivate = isPrivate;
         this.admin = admin;
+        this.players.add(admin);
     }
 
     public boolean isFull() {

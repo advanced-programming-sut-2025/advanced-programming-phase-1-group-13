@@ -4,7 +4,7 @@ import com.ap_project.client.controllers.*;
 import com.ap_project.client.controllers.login.*;
 import com.ap_project.client.controllers.pregame.*;
 import com.ap_project.client.controllers.signup.*;
-import com.ap_project.client.network.*;
+import com.ap_project.client.models.network.GameClient;
 import com.ap_project.client.views.*;
 import com.ap_project.client.views.game.*;
 import com.ap_project.client.views.login.*;
@@ -13,6 +13,7 @@ import com.ap_project.client.views.signup.*;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.*;
 
+import com.ap_project.server.controller.LobbyMenuController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -66,6 +67,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+    public static void goToLobbyRoomView(LobbyMenuController controller, String lobbyId) {
+        Main.getMain().setScreen(new LobbyRoomView(controller, lobbyId));
+    }
+
     public static void goToLobbyMenu() {
         try {
             GameClient client = new GameClient("127.0.0.1", 9999);
@@ -74,6 +79,7 @@ public class Main extends Game {
             Main.getMain().setScreen(new LobbyMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
         } catch (IOException e) {
             System.out.println("Failed to connect to lobby server: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -87,6 +93,10 @@ public class Main extends Game {
 
     public static void goToPreGameMenu() {
         Main.getMain().setScreen(new PreGameMenuView(new PreGameMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToScoreboard() {
+        Main.getMain().setScreen(new ScoreboardView(new ScoreboardController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToNewGameMenu() {
@@ -129,7 +139,7 @@ public class Main extends Game {
         Main.getMain().setScreen(new PurchaseMenuView(gameView, shop, good));
     }
 
-    public static void goToSellMenu(FarmView farmView, FarmBuilding shippingBin) {
+    public static void goToSellMenu(FarmView farmView, ShippingBin shippingBin) {
         Main.getMain().setScreen(new SellMenuView(farmView, shippingBin));
     }
 

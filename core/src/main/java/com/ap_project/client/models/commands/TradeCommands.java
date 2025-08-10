@@ -1,18 +1,20 @@
-package com.ap_project.common.models.enums.commands;
+package com.ap_project.client.models.commands;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum MainMenuCommands implements Command {
-    USER_LOGOUT("^\\s*(user\\s+)?logout\\s*$"),
-    MENU_EXIT("^\\s*(menu)?\\s*exit\\s*$"),
-    SHOW_CURRENT_MENU("\\s*show\\s+current\\s+menu\\s*"),
-    MENU_ENTER("^\\s*menu\\s+enter\\s+(?<newMenu>.+)\\s*$");
+public enum TradeCommands implements Command {
+    TRADE("^\\s*trade\\s+-u\\s+(?<username>.+)\\s+-t\\s+(?<type>.+)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>.+)" +
+            "\\s+((-p\\s+(?<price>\\d+))|-ti\\s+(?<targetItem>.+)\\s+-ta\\s+(?<targetAmount>.+))\\s*$"),
+    TRADE_LIST("^\\s*trade\\s+list\\s*$"),
+    TRADE_RESPONSE("^\\s*trade\\s+response\\s+(?<response>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
+    TRADE_HISTORY("^\\s*trade\\s+history\\s*$"),
+    EXIT_TRADE_MENU("^\\s*exit\\s+trade\\s+menu\\s*$");
 
     private final String regex;
     private final Pattern pattern;
 
-    MainMenuCommands(String regex) {
+    TradeCommands(String regex) {
         this.regex = regex;
         this.pattern = Pattern.compile(this.regex);
     }
@@ -35,5 +37,4 @@ public enum MainMenuCommands implements Command {
         }
         return null;
     }
-
 }

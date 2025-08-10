@@ -1,6 +1,6 @@
 package com.ap_project.client.views.pregame;
 
-import com.ap_project.client.controllers.pregame.LobbyMenuController;
+import com.ap_project.server.controller.LobbyMenuController;
 import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
+import static com.ap_project.Main.goToLobbyRoomView;
 import static com.ap_project.Main.goToPreGameMenu;
 
 public class LobbyMenuView implements Screen {
@@ -86,6 +86,7 @@ public class LobbyMenuView implements Screen {
         dialog.getContentTable().row();
         dialog.getContentTable().add(passwordField).width(200).pad(10);
         dialog.button("Join", true);
+        dialog.button("Enter", true);
         dialog.button("Cancel", false);
         dialog.key(com.badlogic.gdx.Input.Keys.ENTER, true);
         dialog.key(com.badlogic.gdx.Input.Keys.ESCAPE, false);
@@ -160,16 +161,30 @@ public class LobbyMenuView implements Screen {
 
             Label infoLabel = new Label(display, skin);
             TextButton joinBtn = new TextButton("Join", skin);
+            TextButton enterBtn = new TextButton("Enter", skin);
+            TextButton leaveBtn = new TextButton("Leave", skin);
+
             HorizontalGroup row = new HorizontalGroup();
             row.space(20);
+            row.space(20);
+            row.left();
             row.left();
             row.addActor(infoLabel);
             row.addActor(joinBtn);
+            row.addActor(enterBtn);
+            row.addActor(leaveBtn);
 
             joinBtn.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     controller.joinLobbyFromList(rawLobbyInfo);
+                }
+            });
+
+            enterBtn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    goToLobbyRoomView(controller, lobbyId);
                 }
             });
 
