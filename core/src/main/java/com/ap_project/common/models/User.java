@@ -61,6 +61,8 @@ public class User {
     private User spouse;
     private boolean isDepressed;
     private Time rejectionTime;
+    private ArrayList<Integer> defaultEmojis;
+    private ArrayList<ReactionMessage> defaultReactions;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -138,10 +140,6 @@ public class User {
         this.backpack.addToInventory(new Good(GoodsType.WEDDING_RING), 1);
         this.backpack.addToInventory(new Good(GoodsType.CAULIFLOWER_SEEDS), 1);
 
-
-
-
-
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
         this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
@@ -164,6 +162,12 @@ public class User {
         this.currentFoodBuff = null;
         this.buffRelatedSkill = null;
         this.hoursLeftTillBuffVanishes = null;
+        this.defaultEmojis = new ArrayList<>();
+        this.defaultReactions = new ArrayList<>();
+        for (int i = 1; i <= 10 ; i++) {
+            defaultEmojis.add(i);
+            defaultReactions.add(ReactionMessage.values()[i - 1]);
+        }
     }
 
     public void setPosition(Position position) {
@@ -255,6 +259,22 @@ public class User {
                 this.hoursLeftTillBuffVanishes = 0;
             }
         }
+    }
+
+    public ArrayList<Integer> getDefaultEmojis() {
+        return defaultEmojis;
+    }
+
+    public void setDefaultEmojis(ArrayList<Integer> defaultEmojis) {
+        this.defaultEmojis = defaultEmojis;
+    }
+
+    public ArrayList<ReactionMessage> getDefaultReactions() {
+        return defaultReactions;
+    }
+
+    public void setDefaultReactions(ArrayList<ReactionMessage> defaultReactions) {
+        this.defaultReactions = defaultReactions;
     }
 
     public void setMostEarnedMoney(int mostEarnedMoney) {

@@ -206,7 +206,6 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/ProcessedItem/" + toPascalCase(processedItem.getName()) + ".png"));
     }
 
-
     public Texture getTextureByTool(Tool tool) {
         if (tool instanceof FishingRod) return getTextureByFishingRod((FishingRod) tool);
         String name = toPascalCase(tool.getName());
@@ -340,6 +339,30 @@ public class GameAssetManager {
 
     public Texture getFourOptions() {
         return new Texture(Gdx.files.internal("Images/Menu/FourOptions.png"));
+    }
+
+    public Texture getReactionMenu() {
+        return new Texture(Gdx.files.internal("Images/Reaction/ReactionMenu.png"));
+    }
+
+    public Texture getSpeechBubble() {
+        return new Texture(Gdx.files.internal("Images/Reaction/SpeechBubble.png"));
+    }
+
+    public Texture getEmoji(int i) {
+        return new Texture(Gdx.files.internal("Images/Reaction/Emoji/Emoji" + i + ".png"));
+    }
+
+    public Texture getTextButton() {
+        return new Texture(Gdx.files.internal("Images/Reaction/TextButton.png"));
+    }
+
+    public Texture getEmojiButton() {
+        return new Texture(Gdx.files.internal("Images/Reaction/EmojiButton.png"));
+    }
+
+    public Texture getChangeDefaultReactionsButton() {
+        return new Texture(Gdx.files.internal("Images/Reaction/ChangeDefaultReactionsButton.png"));
     }
 
     public Texture getIdlePlayer(Gender gender, Direction direction) {

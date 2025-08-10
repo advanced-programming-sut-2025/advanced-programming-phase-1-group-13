@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -82,6 +83,9 @@ public abstract class GameView implements Screen, InputProcessor {
     protected int lightningY;
     protected boolean hasTriggeredLightningTransition;
     protected final Image lightCircle;
+    protected float reactionTimer;
+    protected Image speechBubble;
+    protected Actor reaction;
     protected final Label errorMessageLabel;
 
     public GameView(GameController controller, Skin skin) {
@@ -152,6 +156,13 @@ public abstract class GameView implements Screen, InputProcessor {
         this.lightCircle = new Image(GameAssetManager.getGameAssetManager().getCircle());
         this.lightCircle.setColor(1, 1, 1, 0.1f);
         this.lightCircle.setVisible(false);
+
+        this.speechBubble = new Image(GameAssetManager.getGameAssetManager().getSpeechBubble());
+        speechBubble.setScale(1.2f);
+        speechBubble.setPosition(
+            Gdx.graphics.getWidth() / 2f - 35,
+            Gdx.graphics.getHeight() / 2f + 55
+        );
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
@@ -298,6 +309,8 @@ public abstract class GameView implements Screen, InputProcessor {
         } else {
             lightCircle.setVisible(false);
         }
+
+        reactionTimer += delta;
 
         renderUI();
     }
@@ -492,6 +505,28 @@ public abstract class GameView implements Screen, InputProcessor {
 
         updateGreenBar();
 
+        if (reactionTimer < 5){
+            if (reaction != null) {
+                stage.addActor(speechBubble);
+                if (reaction instanceof Label) ((Label) reaction).setFontScale(0.75f);
+                reaction.setScale(4);
+                reaction.setPosition(
+                    Gdx.graphics.getWidth() / 2f - 15,
+                    Gdx.graphics.getHeight() / 2f + 83
+                );
+                stage.addActor(reaction);
+            }
+        }
+        else {
+            if (reaction != null) {
+                if (reaction.getStage() != null) {
+                    reaction.remove();
+                }
+            }
+            reaction = null;
+            if (speechBubble.getStage() != null) speechBubble.remove();
+        }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -537,6 +572,10 @@ public abstract class GameView implements Screen, InputProcessor {
 
         if (keycode == Input.Keys.F) {
             goToJournal(this);
+        }
+
+        if (keycode == Input.Keys.Y) {
+            goToReactionMenu(this);
         }
 
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
@@ -976,5 +1015,10 @@ public abstract class GameView implements Screen, InputProcessor {
     }
 
     public void updateFarmBuildings() {
+    }
+
+    public void startReaction(Actor actor) {
+        reaction = actor;
+        reactionTimer = 0;
     }
 }
