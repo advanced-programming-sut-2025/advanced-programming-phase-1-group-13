@@ -84,11 +84,12 @@ public class VillageView extends GameView {
         scale = 4;
         for (int i = 0; i < npcTextures.size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
-            draw(npcTextures.get(i), npc.getPosition());
 
-           if (npc.getType().getHouse() != null) {
-               draw(npcHousesTextures.get(i), npc.getPosition());
-           }
+            if (npc.getType().getHouse() != null) {
+                draw(npcHousesTextures.get(i), npc.getPosition());
+            }
+
+            draw(npcTextures.get(i), npc.getPosition());
 
             float temp = scale;
             if (npc.hasDialog()) {
