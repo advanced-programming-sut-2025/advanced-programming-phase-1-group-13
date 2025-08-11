@@ -27,6 +27,7 @@ public class Game {
     private final HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
+    private String publicChat;
 
     public Game(ArrayList<User> players) {
         this.players = players;
@@ -139,6 +140,8 @@ public class Game {
                 talkHistory.put(sender, talkMap);
             }
         }
+
+        this.publicChat = "";
     }
 
     public NPCVillage getVillage() {
@@ -171,6 +174,14 @@ public class Game {
 
     public void addTrade(Trade trade) {
         this.trades.add(trade);
+    }
+
+    public String getPublicChat() {
+        return publicChat;
+    }
+
+    public void addMessage(String username, String message) {
+        publicChat += "\n\n" + username + ": " + message;
     }
 
     public String nextTurn(User previousPlayer) {
