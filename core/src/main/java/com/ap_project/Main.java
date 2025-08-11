@@ -139,6 +139,9 @@ public class Main extends Game {
     public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
         Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
     }
+    public static void goToVotingMenu(GameView gameView) {
+        Main.getMain().setScreen(new VotingMenuView(gameView));
+    }
 
     public static void goToShopMenu(GameView gameView, Shop shop) {
         Main.getMain().setScreen(new ShopMenuView(gameView, shop));
