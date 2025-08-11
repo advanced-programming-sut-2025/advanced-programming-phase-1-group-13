@@ -1,6 +1,8 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
+import com.ap_project.client.controllers.game.GameController;
+import com.ap_project.client.controllers.game.TradeController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.User;
@@ -8,12 +10,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -24,7 +23,7 @@ public class TradeMenuView implements Screen, InputProcessor {
     private final Image window;
     private final Image closeButton;
     private final GameView gameView;
-
+    private final TradeController controller;
     private Skin skin;
     private TextButton startTradeButton;
     private TextButton tradingHistoryButton;
@@ -37,6 +36,7 @@ public class TradeMenuView implements Screen, InputProcessor {
         window.setPosition(windowX, windowY);
         this.skin = GameAssetManager.getGameAssetManager().getSkin();
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
+        this.controller = new TradeController();
     }
 
     @Override
@@ -54,14 +54,52 @@ public class TradeMenuView implements Screen, InputProcessor {
 
         startTradeButton = new TextButton("Start Trade", skin);
         startTradeButton.addListener(e -> {
+            if (startTradeButton.isPressed()) {
+                window.remove();
+                stage.addActor(window);
+                Label title = new Label("Choose player to trade with: ", skin);
+                title.setColor(Color.BLACK);
+                title.setPosition(
+                    Gdx.graphics.getWidth() / 2f + 50,
+                    Gdx.graphics.getHeight() / 2f + 50
+                );
+                stage.addActor(title);
 
+                SelectBox<String> players = new SelectBox<>(skin);
+                Array<String> options = new Array<>();
+                for (User player : App.getCurrentGame().getPlayers()) {
+                    if (player.equals(App.getLoggedIn())) continue;
+                    options.add(player.getUsername());
+                }
+                players.setItems(options);
+                players.setPosition(
+                    Gdx.graphics.getWidth() / 2f - 50,
+                    Gdx.graphics.getHeight() / 2f
+                );
+                stage.addActor(players);
+
+                TextButton chooseButton = new TextButton("Choose Player", skin);
+                chooseButton.setPosition(
+                    Gdx.graphics.getWidth() / 2f,
+                    Gdx.graphics.getHeight() / 2f - 150
+                );
+                stage.addActor(chooseButton);
+            }
             return false;
         });
 
         tradingHistoryButton = new TextButton("Trading History", skin);
         tradingHistoryButton.addListener(e -> {
             if (tradingHistoryButton.isPressed()) {
-                System.out.println("Opening trading history...");
+                window.remove();
+                stage.addActor(window);
+                Label tradeHistory = new Label(controller.showTradeHistory().message, skin);
+                tradeHistory.setColor(Color.BLACK);
+                tradeHistory.setPosition( // TODO
+                    Gdx.graphics.getWidth() / 2f + 50,
+                    Gdx.graphics.getHeight() / 2f + 50
+                );
+                stage.addActor(tradeHistory);
                 return true;
             }
             return false;
