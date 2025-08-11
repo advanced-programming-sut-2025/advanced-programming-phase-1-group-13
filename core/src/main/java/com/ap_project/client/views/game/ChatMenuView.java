@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.ap_project.Main.getBatch;
 import static com.ap_project.Main.getMain;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
@@ -174,6 +173,7 @@ public  class ChatMenuView implements Screen, InputProcessor {
         }
 
         if (hoverOnImage(privateButton, screenX, convertedY)) {
+
         }
 
         return false;
