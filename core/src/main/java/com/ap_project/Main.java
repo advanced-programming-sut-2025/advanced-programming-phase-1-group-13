@@ -143,6 +143,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new VotingMenuView(gameView));
     }
 
+    public static void goToTradeMenu(GameView gameView) {
+        Main.getMain().setScreen(new TradeMenuView(gameView));
+    }
+
     public static void goToShopMenu(GameView gameView, Shop shop) {
         Main.getMain().setScreen(new ShopMenuView(gameView, shop));
     }
