@@ -581,12 +581,6 @@ public abstract class GameView implements Screen, InputProcessor {
             }
         }
 
-        if (keycode == Input.Keys.P) {
-            for (User player : App.getCurrentGame().getPlayers()) {
-                System.out.println(player.getUsername() + ": " + player.isInVillage());
-            }
-        }
-
         if (keycode == Input.Keys.C) {
             goToCookingMenu(this);
         }
@@ -595,8 +589,12 @@ public abstract class GameView implements Screen, InputProcessor {
             goToJournal(this);
         }
 
-        if (keycode == Input.Keys.Y) {
+        if (keycode == Input.Keys.R) {
             goToReactionMenu(this);
+        }
+
+        if (keycode == Input.Keys.P) {
+            goToChatMenu(this);
         }
 
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {

@@ -385,6 +385,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Radio/RadioMenu.png"));
     }
 
+    public Texture getChatMenu() {
+        return new Texture(Gdx.files.internal("Images/Chat/ChatMenu.png"));
+    }
+
+    public Texture getPrivateButton() {
+        return new Texture(Gdx.files.internal("Images/Chat/PrivateButton.png"));
+    }
+
+    public Texture getPublicButton() {
+        return new Texture(Gdx.files.internal("Images/Chat/PublicButton.png"));
+    }
+
     public Texture getIdlePlayer(Gender gender, Direction direction) {
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {
