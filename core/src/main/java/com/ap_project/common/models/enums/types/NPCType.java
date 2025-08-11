@@ -8,7 +8,7 @@ public enum NPCType {
     CLINT(
         "Clint",
         Role.SHOPKEEPER,
-        new Position(9, 25),
+        null,
         Collections.emptyList(),
         new ArrayList<>(),
         14,
@@ -21,7 +21,7 @@ public enum NPCType {
     MORRIS(
         "Morris",
         Role.SHOPKEEPER,
-        new Position(38, 9),
+        null,
         Collections.emptyList(),
         new ArrayList<>(),
         10,
@@ -34,7 +34,7 @@ public enum NPCType {
     PIERRE(
         "Pierre",
         Role.SHOPKEEPER,
-        new Position(70, 25),
+        null,
         Collections.emptyList(),
         new ArrayList<>(),
         20,
@@ -47,7 +47,7 @@ public enum NPCType {
     WILLY(
         "Willy",
         Role.SHOPKEEPER,
-        new Position(29, 42),
+        null,
         Collections.emptyList(),
         new ArrayList<>(),
         25,
@@ -60,7 +60,7 @@ public enum NPCType {
     MARNIE(
         "Marnie",
         Role.SHOPKEEPER,
-        new Position(9, 35),
+        null,
         Collections.emptyList(),
         new ArrayList<>(),
         15,
@@ -73,7 +73,7 @@ public enum NPCType {
     GUS(
         "Gus",
         Role.SHOPKEEPER,
-        new Position(54, 41),
+        null,
         Collections.emptyList(),
         new ArrayList<>(),
         20,
@@ -86,7 +86,7 @@ public enum NPCType {
     SEBASTIAN(
         "Sebastian",
         Role.VILLAGER,
-        new Position(45, 20),
+        new Position(10, 10),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -128,7 +128,7 @@ public enum NPCType {
     ABIGAIL(
         "Abigail",
         Role.VILLAGER,
-        new Position(35, 23),
+        new Position(50, 10),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -170,7 +170,7 @@ public enum NPCType {
     HARVEY(
         "Harvey",
         Role.VILLAGER,
-        new Position(15, 43),
+        new Position(30, 40),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -212,7 +212,7 @@ public enum NPCType {
     LEAH(
         "Leah",
         Role.VILLAGER,
-        new Position(55, 12),
+        new Position(50, 10),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -254,7 +254,7 @@ public enum NPCType {
     ROBIN(
         "Robin",
         Role.SHOPKEEPER,
-        new Position(65, 30),
+        new Position(10, 50),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -295,17 +295,17 @@ public enum NPCType {
 
     private final String name;
     private final Role role;
-    private final Position position;
+    private final Position house;
     private final List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests;
     private final ArrayList<ItemType> favorites;
     private final int daysToUnlockThirdQuest;
     public final ArrayList<ItemType> gifts;
 
-    NPCType(String name, Role role, Position position, List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests,
+    NPCType(String name, Role role, Position house, List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests,
             ArrayList<ItemType> favorites, int daysToUnlockThirdQuest, ArrayList<ItemType> gifts) {
         this.name = name;
         this.role = role;
-        this.position = position;
+        this.house = house;
         this.quests = quests;
         this.favorites = favorites;
         this.daysToUnlockThirdQuest = daysToUnlockThirdQuest;
@@ -320,10 +320,6 @@ public enum NPCType {
         return role;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
     public List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> getQuests() {
         return quests;
     }
@@ -334,6 +330,10 @@ public enum NPCType {
 
     public int getDaysToUnlockThirdQuest() {
         return daysToUnlockThirdQuest;
+    }
+
+    public Position getHouse() {
+        return house;
     }
 
     public ItemType getRandomGift() {

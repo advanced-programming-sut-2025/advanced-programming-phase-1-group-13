@@ -511,7 +511,7 @@ public class FarmView extends GameView {
         if (animalDestination.x >= walkingAnimal.getPosition().getX() * TILE_SIZE)
             walkingAnimalDirection = Direction.RIGHT;
         else walkingAnimalDirection = Direction.LEFT;
-        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
+        this.animalAnimation = GameAssetManager.getGameAssetManager().getAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
         walkingAnimalPosition = new Vector2(
             walkingAnimal.getPosition().getX() * TILE_SIZE,
             walkingAnimal.getPosition().getY() * TILE_SIZE
@@ -534,7 +534,7 @@ public class FarmView extends GameView {
             if (animalDestination.x <= walkingAnimalPosition.x) {
                 if (animalDestination.y > walkingAnimalPosition.y) walkingAnimalDirection = Direction.DOWN;
                 else walkingAnimalDirection = Direction.UP;
-                animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
+                animalAnimation = GameAssetManager.getGameAssetManager().getAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
             }
         }
         if (walkingAnimalDirection == Direction.LEFT) {
@@ -542,7 +542,7 @@ public class FarmView extends GameView {
             if (animalDestination.x >= walkingAnimalPosition.x) {
                 if (animalDestination.y > walkingAnimalPosition.y) walkingAnimalDirection = Direction.DOWN;
                 else walkingAnimalDirection = Direction.UP;
-                animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
+                animalAnimation = GameAssetManager.getGameAssetManager().getAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
             }
         }
         if (walkingAnimalDirection == Direction.UP) {

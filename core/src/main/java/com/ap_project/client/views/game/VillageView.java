@@ -23,6 +23,7 @@ import static com.ap_project.Main.*;
 public class VillageView extends GameView {
     private final ArrayList<Texture> shopTextures;
     private final ArrayList<Texture> npcTextures;
+    private final ArrayList<Texture> npcHousesTextures;
     private final ArrayList<Texture> otherPlayersTextures;
     private NPC npcWithMenu;
     private Texture npcOptions;
@@ -44,9 +45,15 @@ public class VillageView extends GameView {
             shopTextures.add(GameAssetManager.getGameAssetManager().getShop(shop.getType(), App.getCurrentGame().getGameState().getTime().getSeason()));
         }
 
+        this.npcHousesTextures = new ArrayList<>();
         this.npcTextures = new ArrayList<>();
         for (NPCType npcType : NPCType.values()) {
-            npcTextures.add(GameAssetManager.getGameAssetManager().getNPC(npcType));
+            npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npcType));
+            if (npcType.getHouse() != null) {
+                npcHousesTextures.add(GameAssetManager.getGameAssetManager().getNPCHouse(npcType));
+            } else {
+                npcHousesTextures.add(null);
+            }
         }
 
         this.otherPlayersTextures = new ArrayList<>();
@@ -78,6 +85,10 @@ public class VillageView extends GameView {
         for (int i = 0; i < npcTextures.size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
             draw(npcTextures.get(i), npc.getPosition());
+
+           if (npc.getType().getHouse() != null) {
+               draw(npcHousesTextures.get(i), npc.getPosition());
+           }
 
             float temp = scale;
             if (npc.hasDialog()) {
