@@ -9,6 +9,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -26,6 +30,9 @@ public  class ChatMenuView implements Screen, InputProcessor {
     private final TextField chatTextField;
     private final TextButton sendButton;
     private final GameView gameView;
+    private final ScrollPane chatScroll;
+    private final VerticalGroup scroll;
+
 
     public ChatMenuView(GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getChatMenu());
@@ -41,29 +48,34 @@ public  class ChatMenuView implements Screen, InputProcessor {
         this.publicChat = new TextArea(App.getCurrentGame().getPublicChat(), GameAssetManager.getGameAssetManager().getSkin());
         publicChat.setDisabled(true);
         publicChat.setPosition(
-            windowX + (window.getWidth() - publicChat.getWidth()) / 2,
-            windowY + (window.getHeight() - publicChat.getHeight()) / 2 + 100
+            windowX -240+ (window.getWidth() - publicChat.getWidth()) / 2,
+            windowY + (window.getHeight() - publicChat.getHeight()) / 2 -95
         );
         publicChat.setSize(
             window.getWidth() * 0.75f,
-            window.getHeight() * 0.75f
+            window.getHeight() * 0.66f
         );
 
         this.chatTextField = new TextField("", GameAssetManager.getGameAssetManager().getSkin());
         chatTextField.setMessageText("Enter your message");
-        chatTextField.setWidth(window.getWidth() * 0.75f);
+        chatTextField.setWidth(window.getWidth() * 0.65f);
         chatTextField.setPosition(
-            windowX + (window.getWidth() - chatTextField.getWidth()) / 2,
+            windowX -100+ (window.getWidth() - chatTextField.getWidth()) / 2,
             windowY + 50
         );
 
         this.sendButton = new TextButton("Send", GameAssetManager.getGameAssetManager().getSkin());
         sendButton.setPosition(
             chatTextField.getX() + chatTextField.getWidth() + 20,
-            chatTextField.getY()
+            chatTextField.getY()-15
         );
 
         this.gameView = gameView;
+
+        scroll = new VerticalGroup();
+        scroll.top().left().columnLeft();
+        chatScroll = new ScrollPane(scroll, GameAssetManager.getGameAssetManager().getSkin());
+        chatScroll.setFadeScrollBars(false);
     }
 
     @Override
@@ -74,24 +86,38 @@ public  class ChatMenuView implements Screen, InputProcessor {
         stage.addActor(window);
 
         Label title = new Label("Chat", GameAssetManager.getGameAssetManager().getSkin());
-        title.setFontScale(1.5f);
+        title.setFontScale(2f);
         title.setColor(Color.BLACK);
         title.setPosition(
-            window.getX() + (window.getWidth() - title.getWidth()) / 2,
-            window.getY() + window.getHeight() - 30
+            window.getX() -35 + (window.getWidth() - title.getWidth()) / 2,
+            window.getY() + window.getHeight() - 95
         );
         stage.addActor(title);
 
+        privateButton.setScale(2f);
+
         privateButton.setPosition(
-            window.getX() + (window.getWidth() - privateButton.getWidth()) / 2,
-            window.getY() + window.getHeight() / 2 + 50
+            window.getX() -68+ (window.getWidth() - privateButton.getWidth()) / 2,
+            window.getY() + window.getHeight() / 2 + 5
         );
         stage.addActor(privateButton);
+
+        publicButton.setScale(2f);
+
         publicButton.setPosition(
-            window.getX() + (window.getWidth() - privateButton.getWidth()) / 2,
-            window.getY() + window.getHeight() / 2 - 50
+            window.getX() -68+ (window.getWidth() - privateButton.getWidth()) / 2,
+            window.getY() + window.getHeight() / 2 - 145
         );
         stage.addActor(publicButton);
+
+
+        chatScroll.setSize(1500, 250);
+        chatScroll.setPosition(
+            Gdx.graphics.getWidth() / 2f - 700,
+            Gdx.graphics.getHeight() / 2f - 350
+        );
+        stage.addActor(chatScroll);
+
 
         addCloseButton();
     }
