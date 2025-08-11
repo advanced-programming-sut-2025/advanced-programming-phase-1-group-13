@@ -461,7 +461,7 @@ public class GameAssetManager {
         return new Animation<>(0.5f, frames);
     }
 
-    public Animation<Texture> loadAnimalAnimation(String animalName, String direction) {
+    public Animation<Texture> getAnimalAnimation(String animalName, String direction) {
         Array<Texture> frames = new Array<>();
         for (int i = 1; i <= 4; i++) {
             String path = "Images/Animal/" + animalName + "s" + "/" + animalName + "Sprite" + direction + i + ".png";
@@ -618,8 +618,21 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Village/Village" + seasonStr + ".png"));
     }
 
-    public Texture getNPC(NPCType npcType) {
+    public Texture getNPCHouse(NPCType npcType) {
+        return new Texture(Gdx.files.internal("Images/Map/Village/NPCHouses/" + npcType.getName() + "House.png"));
+    }
+
+    public Texture getNPCIdle(NPCType npcType) {
         return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + ".png"));
+    }
+
+    public Animation<Texture> getNPCAnimation(NPCType npcType, Direction direction) {
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 4; i++) {
+            String path = "Images/NPC/Animation/" + npcType.getName() + "s" + "/" + npcType + "Sprite" + direction + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.15f, frames, Animation.PlayMode.LOOP);
     }
 
     public Texture getNPCPortrait(NPCType npcType) {

@@ -191,7 +191,7 @@ public  class ChatMenuView implements Screen, InputProcessor {
             return true;
         }
 
-        if (hoverOnImage(privateButton, screenX, convertedY)) {
+        if (hoverOnImage(publicButton, screenX, convertedY)) {
             Gdx.input.setInputProcessor(stage);
             stage.addActor(publicChat);
             stage.addActor(chatTextField);
@@ -199,8 +199,7 @@ public  class ChatMenuView implements Screen, InputProcessor {
             return true;
         }
 
-        if (hoverOnImage(publicButton, screenX, convertedY)) {
-
+        if (hoverOnImage(privateButton, screenX, convertedY)) {
         }
 
         return false;

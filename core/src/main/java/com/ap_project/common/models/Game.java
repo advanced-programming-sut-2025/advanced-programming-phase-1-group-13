@@ -181,7 +181,7 @@ public class Game {
     }
 
     public void addMessage(String username, String message) {
-        publicChat += "\n\n" + username + ": " + message;
+        publicChat += username + ": " + message + "\n\n";
     }
 
     public String nextTurn(User previousPlayer) {
