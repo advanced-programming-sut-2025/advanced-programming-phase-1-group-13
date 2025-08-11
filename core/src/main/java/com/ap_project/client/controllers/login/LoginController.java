@@ -8,6 +8,8 @@ import com.ap_project.common.models.Result;
 import com.ap_project.common.models.User;
 import com.ap_project.common.models.enums.Menu;
 import com.ap_project.client.views.login.LoginMenuView;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 
 import static com.ap_project.Main.*;
 import static com.ap_project.common.models.App.getUserByUsername;
@@ -17,7 +19,7 @@ public class LoginController {
 
     public void handleLoginMenuButtons() {
         if (view != null) {
-            if (view.getLoginButton().isChecked()) {
+            if (view.getLoginButton().isChecked() || Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
                 String username = view.getUsernameField().getText();
                 String password = view.getPasswordField().getText();
                 Result result = login(username, password);

@@ -613,6 +613,13 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.P) {
             goToChatMenu(this);
         }
+        if(keycode == Input.Keys.K) {
+            goToVotingMenu(this);
+        }
+        if(keycode == Input.Keys.J) {
+            goToTradeMenu(this);
+        }
+
 
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
