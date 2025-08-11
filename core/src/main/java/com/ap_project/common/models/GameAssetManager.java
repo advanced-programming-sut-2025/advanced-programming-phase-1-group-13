@@ -389,6 +389,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Chat/ChatMenu.png"));
     }
 
+    public Texture getNotification() {
+        return new Texture(Gdx.files.internal("Images/Chat/Notification.png"));
+    }
+
     public Texture getPrivateButton() {
         return new Texture(Gdx.files.internal("Images/Chat/PrivateButton.png"));
     }

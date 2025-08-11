@@ -363,7 +363,6 @@ public abstract class GameView implements Screen, InputProcessor {
         float minY = playerHeight / 2;
         float maxY = backgroundHeight - playerHeight / 2;
 
-        // TODO: update position field in User
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             float newY = playerSprite.getY() + displacement;
             if (newY + playerHeight / 2 < maxY) {
@@ -539,6 +538,24 @@ public abstract class GameView implements Screen, InputProcessor {
             }
             reaction = null;
             if (speechBubble.getStage() != null) speechBubble.remove();
+        }
+
+        if (App.getLoggedIn().isTaggedInPublicChat()) {
+            Image notification = new Image(GameAssetManager.getGameAssetManager().getNotification());
+            notification.setScale(0.4f);
+            notification.setPosition(
+                15,
+                Gdx.graphics.getHeight() - 0.4f * notification.getHeight() - 15
+            );
+            stage.addActor(notification);
+
+            Label message = new Label(App.getLoggedIn().getNotificationMessage(), GameAssetManager.getGameAssetManager().getSkin());
+            message.setColor(Color.BLACK);
+            message.setPosition(
+                notification.getX() + 80,
+                notification.getY()+15
+            );
+            stage.addActor(message);
         }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

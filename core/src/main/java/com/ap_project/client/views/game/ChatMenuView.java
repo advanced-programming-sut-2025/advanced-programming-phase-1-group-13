@@ -3,23 +3,20 @@ package com.ap_project.client.views.game;
 import com.ap_project.Main;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static com.ap_project.Main.getMain;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
-public  class ChatMenuView implements Screen, InputProcessor {
+public class ChatMenuView implements Screen, InputProcessor {
     private Stage stage;
     private final Image window;
     private final Image closeButton;
@@ -29,11 +26,10 @@ public  class ChatMenuView implements Screen, InputProcessor {
     private final TextField chatTextField;
     private final TextButton sendButton;
     private final GameView gameView;
-    private final ScrollPane chatScroll;
-    private final VerticalGroup scroll;
-
 
     public ChatMenuView(GameView gameView) {
+        App.getLoggedIn().setTaggedInPublicChat(null);
+
         this.window = new Image(GameAssetManager.getGameAssetManager().getChatMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2;
@@ -47,8 +43,8 @@ public  class ChatMenuView implements Screen, InputProcessor {
         this.publicChat = new TextArea(App.getCurrentGame().getPublicChat(), GameAssetManager.getGameAssetManager().getSkin());
         publicChat.setDisabled(true);
         publicChat.setPosition(
-            windowX -240+ (window.getWidth() - publicChat.getWidth()) / 2,
-            windowY + (window.getHeight() - publicChat.getHeight()) / 2 -95
+            windowX - 240 + (window.getWidth() - publicChat.getWidth()) / 2,
+            windowY + (window.getHeight() - publicChat.getHeight()) / 2 - 95
         );
         publicChat.setSize(
             window.getWidth() * 0.75f,
@@ -57,24 +53,19 @@ public  class ChatMenuView implements Screen, InputProcessor {
 
         this.chatTextField = new TextField("", GameAssetManager.getGameAssetManager().getSkin());
         chatTextField.setMessageText("Enter your message");
-        chatTextField.setWidth(window.getWidth() * 0.65f);
+        chatTextField.setWidth(window.getWidth() * 0.75f);
         chatTextField.setPosition(
-            windowX -100+ (window.getWidth() - chatTextField.getWidth()) / 2,
+            windowX + (window.getWidth() - chatTextField.getWidth()) / 2,
             windowY + 50
         );
 
         this.sendButton = new TextButton("Send", GameAssetManager.getGameAssetManager().getSkin());
         sendButton.setPosition(
             chatTextField.getX() + chatTextField.getWidth() + 20,
-            chatTextField.getY()-15
+            chatTextField.getY()
         );
 
         this.gameView = gameView;
-
-        scroll = new VerticalGroup();
-        scroll.top().left().columnLeft();
-        chatScroll = new ScrollPane(scroll, GameAssetManager.getGameAssetManager().getSkin());
-        chatScroll.setFadeScrollBars(false);
     }
 
     @Override
@@ -109,15 +100,6 @@ public  class ChatMenuView implements Screen, InputProcessor {
         );
         stage.addActor(publicButton);
 
-
-        chatScroll.setSize(1500, 250);
-        chatScroll.setPosition(
-            Gdx.graphics.getWidth() / 2f - 700,
-            Gdx.graphics.getHeight() / 2f - 350
-        );
-        stage.addActor(chatScroll);
-
-
         addCloseButton();
     }
 
@@ -125,8 +107,13 @@ public  class ChatMenuView implements Screen, InputProcessor {
     public void render(float delta) {
         if (Gdx.input.getInputProcessor().equals(stage)) {
             if (sendButton.isChecked()) {
+                String message = App.getLoggedIn().getUsername() + ": " + chatTextField.getText();
                 App.getCurrentGame().addMessage(App.getLoggedIn().getUsername(), chatTextField.getText());
-                System.out.println("Sent message: " + chatTextField.getText());
+                for (User user : App.getCurrentGame().getPlayers()) {
+                    if (message.contains("@" + user.getUsername())) {
+                        user.setTaggedInPublicChat(message);
+                    }
+                }
                 publicChat.setText(App.getCurrentGame().getPublicChat());
             }
 

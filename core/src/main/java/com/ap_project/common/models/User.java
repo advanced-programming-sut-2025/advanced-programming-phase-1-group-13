@@ -65,6 +65,7 @@ public class User {
     private ArrayList<Integer> defaultEmojis;
     private ArrayList<ReactionMessage> defaultReactions;
     private ArrayList<String> music;
+    private String taggedInPublicChat;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -172,6 +173,7 @@ public class User {
             defaultReactions.add(ReactionMessage.values()[i - 1]);
         }
         this.music = new ArrayList<>();
+        this.taggedInPublicChat = null;
     }
 
     public void setPosition(Position position) {
@@ -315,6 +317,19 @@ public class User {
 
     public Backpack getBackpack() {
         return this.backpack;
+    }
+
+    public boolean isTaggedInPublicChat() {
+        return taggedInPublicChat != null;
+    }
+
+    public void setTaggedInPublicChat(String message) {
+        this.taggedInPublicChat = message;
+    }
+
+
+    public String getNotificationMessage() {
+        return taggedInPublicChat;
     }
 
     public String getUsername() {
