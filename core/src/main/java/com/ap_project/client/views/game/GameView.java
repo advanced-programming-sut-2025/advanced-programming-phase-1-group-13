@@ -564,7 +564,7 @@ public abstract class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.O) {
+        if (keycode == Input.Keys.V) {
             if (App.getCurrentGame().isInNPCVillage()) {
                 App.getCurrentGame().setInNPCVillage(false);
                 goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
@@ -616,13 +616,9 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.M) {
             goToMap(this);
         }
+
         if (keycode == Input.Keys.T) {
             goToToolMenu(this);
-        }
-
-        if (keycode == Input.Keys.R) {
-            controller.cheatAdvanceTime("1");
-            updateClockInfo();
         }
 
         return false;

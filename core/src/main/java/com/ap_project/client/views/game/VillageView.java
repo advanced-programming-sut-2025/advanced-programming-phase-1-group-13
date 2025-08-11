@@ -23,6 +23,7 @@ import static com.ap_project.Main.*;
 public class VillageView extends GameView {
     private final ArrayList<Texture> shopTextures;
     private final ArrayList<Texture> npcTextures;
+    private final ArrayList<Texture> otherPlayersTextures;
     private NPC npcWithMenu;
     private Texture npcOptions;
     private NPC npcWithGift;
@@ -46,6 +47,11 @@ public class VillageView extends GameView {
         this.npcTextures = new ArrayList<>();
         for (NPCType npcType : NPCType.values()) {
             npcTextures.add(GameAssetManager.getGameAssetManager().getNPC(npcType));
+        }
+
+        this.otherPlayersTextures = new ArrayList<>();
+        for (User player : App.getCurrentGame().getPlayers()) {
+            otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(player.getGender(), player.getDirection()));
         }
 
         this.npcOptions = null;
@@ -85,6 +91,15 @@ public class VillageView extends GameView {
                 scale = 0.5f;
                 draw(gift, npc.getPosition());
                 scale = temp;
+            }
+        }
+
+        for (int i = 0; i < otherPlayersTextures.size(); i++) {
+            User player = App.getCurrentGame().getPlayers().get(i);
+            if (player.equals(App.getLoggedIn())) {
+                if (player.getActiveGame().isInNPCVillage()) {
+                    draw(otherPlayersTextures.get(i), player.getPosition());
+                }
             }
         }
 

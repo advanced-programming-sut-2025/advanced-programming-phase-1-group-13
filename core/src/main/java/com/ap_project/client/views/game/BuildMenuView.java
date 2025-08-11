@@ -101,7 +101,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 30,
             window.getY() + window.getHeight() - 160
         );
-        stage.addActor(barn);
         if (hoverOnImage(barn, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.BARN;
         }
@@ -112,7 +111,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 30,
             window.getY() + window.getHeight() - 300
         );
-        stage.addActor(bigBarn);
         if (hoverOnImage(bigBarn, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.BIG_BARN;
         }
@@ -123,7 +121,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 30,
             window.getY() + window.getHeight() - 440
         );
-        stage.addActor(deluxeBarn);
         if (hoverOnImage(deluxeBarn, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.DELUXE_BARN;
         }
@@ -134,7 +131,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 30,
             window.getY() + 50
         );
-        stage.addActor(shippingBin);
         if (hoverOnImage(shippingBin, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.SHIPPING_BIN;
         }
@@ -145,7 +141,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 550,
             window.getY() + window.getHeight() - 160
         );
-        stage.addActor(coop);
         if (hoverOnImage(coop, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.COOP;
         }
@@ -156,7 +151,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 550,
             window.getY() + window.getHeight() - 300
         );
-        stage.addActor(bigCoop);
         if (hoverOnImage(bigCoop, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.BIG_COOP;
         }
@@ -167,7 +161,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 550,
             window.getY() + window.getHeight() - 440
         );
-        stage.addActor(deluxeCoop);
         if (hoverOnImage(deluxeBarn, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.DELUXE_COOP;
         }
@@ -178,7 +171,6 @@ public class BuildMenuView implements Screen, InputProcessor {
             window.getX() + 550,
             window.getY() + 50
         );
-        stage.addActor(well);
         if (hoverOnImage(well, screenX, convertedY)) {
             farmBuildingType = FarmBuildingType.WELL;
         }

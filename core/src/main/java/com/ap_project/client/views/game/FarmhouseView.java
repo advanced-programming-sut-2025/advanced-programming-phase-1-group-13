@@ -39,7 +39,7 @@ public class FarmhouseView extends GameView {
             goToRefrigeratorMenu(this);
         }
 
-        if (keycode == Input.Keys.J) {
+        if (keycode == Input.Keys.E) {
             goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
         }
         return false;

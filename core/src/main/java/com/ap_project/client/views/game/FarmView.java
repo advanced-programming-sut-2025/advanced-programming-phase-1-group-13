@@ -318,17 +318,6 @@ public class FarmView extends GameView {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        super.keyDown(keycode);
-
-        if (keycode == Input.Keys.H) {
-            goToFarmhouse();
-        }
-
-        return false;
-    }
-
-    @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
         if (button == Input.Buttons.RIGHT) {
