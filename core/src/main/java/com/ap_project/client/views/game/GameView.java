@@ -340,7 +340,11 @@ public abstract class GameView implements Screen, InputProcessor {
             stateTime += delta;
             if (playerFaintAnimation.isAnimationFinished(stateTime)) {
                 App.getLoggedIn().faint();
-                nextTurn();
+                if (!App.getLoggedIn().isInVillage()) {
+                    goToGame(new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+                } else {
+                    goToGame(new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+                }
                 return;
             }
             return;
@@ -393,6 +397,8 @@ public abstract class GameView implements Screen, InputProcessor {
             App.getLoggedIn().setDirection(Direction.RIGHT);
             walk();
         }
+
+        App.getLoggedIn().setPosition(new Position((int) (playerSprite.getX() / TILE_SIZE),originPosition.getY() + 55 - (int) (playerSprite.getY() / TILE_SIZE)));
 
         if (isMoving) {
             displacementInTile += displacement;
@@ -565,12 +571,19 @@ public abstract class GameView implements Screen, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.V) {
-            if (App.getCurrentGame().isInNPCVillage()) {
-                App.getCurrentGame().setInNPCVillage(false);
+            if (App.getLoggedIn().isInVillage()) {
+                App.getLoggedIn().setInVillage(false);
                 goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
             } else {
-                App.getCurrentGame().setInNPCVillage(true);
+                App.getLoggedIn().setPosition(new Position(37, 0));
+                App.getLoggedIn().setInVillage(true);
                 goToGame(new VillageView(controller, GameAssetManager.getGameAssetManager().getSkin()));
+            }
+        }
+
+        if (keycode == Input.Keys.P) {
+            for (User player : App.getCurrentGame().getPlayers()) {
+                System.out.println(player.getUsername() + ": " + player.isInVillage());
             }
         }
 
@@ -827,7 +840,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected void useTool(int x, int y) {
         Tool tool = App.getLoggedIn().getCurrentTool();
         if (tool != null && !isUsingTool) {
-            Direction direction = getClickedDirection(x, y); // TODO: fix
+            Direction direction = getClickedDirection(x, y);
             isUsingTool = true;
             toolUsageTimer = 0f;
             currentToolTexture = GameAssetManager.getGameAssetManager().getPlayerUsingTool(
@@ -843,7 +856,6 @@ public abstract class GameView implements Screen, InputProcessor {
     }
 
     private Direction getClickedDirection(int screenX, int screenY) {
-        // Unproject screen coordinates to world coordinates
         Vector3 worldCoords = new Vector3(screenX, screenY, 0);
         camera.unproject(worldCoords);
 
@@ -857,14 +869,12 @@ public abstract class GameView implements Screen, InputProcessor {
         float deltaY = clickY - playerCenterY;
 
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            // Horizontal direction
             if (deltaX > 0) {
                 return Direction.RIGHT;
             } else {
                 return Direction.LEFT;
             }
         } else {
-            // Vertical direction
             if (deltaY < 0) {
                 return Direction.UP;
             } else {

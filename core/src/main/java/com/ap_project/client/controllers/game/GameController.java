@@ -2253,14 +2253,14 @@ public class GameController {
         Game currentGame = App.getCurrentGame();
         User player = App.getLoggedIn();
 
-        if (currentGame.isInNPCVillage()) {
+        if (App.getLoggedIn().isInVillage()) {
             return new Result(false, "You are already in the village!");
         }
 
         Position villageEntrance = new Position(1, 1);
         player.setPosition(villageEntrance);
 
-        currentGame.setInNPCVillage(true);
+        App.getLoggedIn().setInVillage(true);
 
         return new Result(true, "You have entered the village. Welcome!");
     }
@@ -2269,12 +2269,12 @@ public class GameController {
         Game currentGame = App.getCurrentGame();
         User player = App.getLoggedIn();
 
-        if (!currentGame.isInNPCVillage()) {
+        if (!player.isInVillage()) {
             return new Result(false, "You are not in the village!");
         }
         Position villageExit = new Position(1, 1); // Example position
         player.setPosition(villageExit);
-        currentGame.setInNPCVillage(false);
+        player.setInVillage(false);
 
         return new Result(true, "You have left the village and returned to your farm.");
     }

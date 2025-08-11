@@ -61,6 +61,7 @@ public class User {
     private User spouse;
     private boolean isDepressed;
     private Time rejectionTime;
+    private boolean isInVillage;
     private ArrayList<Integer> defaultEmojis;
     private ArrayList<ReactionMessage> defaultReactions;
     private ArrayList<String> music;
@@ -163,6 +164,7 @@ public class User {
         this.currentFoodBuff = null;
         this.buffRelatedSkill = null;
         this.hoursLeftTillBuffVanishes = null;
+        this.isInVillage = false;
         this.defaultEmojis = new ArrayList<>();
         this.defaultReactions = new ArrayList<>();
         for (int i = 1; i <= 10 ; i++) {
@@ -622,6 +624,14 @@ public class User {
 
     public Map<SecurityQuestion, String> getQAndA() {
         return qAndA;
+    }
+
+    public boolean isInVillage() {
+        return isInVillage;
+    }
+
+    public void setInVillage(boolean inVillage) {
+        isInVillage = inVillage;
     }
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {

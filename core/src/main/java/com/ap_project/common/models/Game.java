@@ -20,7 +20,6 @@ import java.util.*;
 public class Game {
     private final ArrayList<User> players;
     private final NPCVillage village;
-    private boolean isInNPCVillage;
     private final GameState gameState;
     private final ArrayList<NPC> npcs;
     private final ArrayList<Quest> quests;
@@ -32,7 +31,6 @@ public class Game {
     public Game(ArrayList<User> players) {
         this.players = players;
         this.gameState = new GameState();
-        this.isInNPCVillage = false;
         this.village = new NPCVillage();
         App.setCurrentGame(this);
 
@@ -145,14 +143,6 @@ public class Game {
 
     public NPCVillage getVillage() {
         return village;
-    }
-
-    public boolean isInNPCVillage() {
-        return isInNPCVillage;
-    }
-
-    public void setInNPCVillage(boolean inNPCVillage) {
-        isInNPCVillage = inNPCVillage;
     }
 
     public ArrayList<User> getPlayers() {

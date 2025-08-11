@@ -53,7 +53,7 @@ public class PreGameMenuController {
         }
         App.setCurrentGame(game);
         GameView gameView;
-        if (game.isInNPCVillage()) {
+        if (player.isInVillage()) {
             gameView = new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin());
         } else {
             gameView = new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin());

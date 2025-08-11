@@ -51,6 +51,7 @@ public class VillageView extends GameView {
 
         this.otherPlayersTextures = new ArrayList<>();
         for (User player : App.getCurrentGame().getPlayers()) {
+            if (player.equals(App.getLoggedIn())) continue;
             otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(player.getGender(), player.getDirection()));
         }
 
@@ -94,12 +95,13 @@ public class VillageView extends GameView {
             }
         }
 
+        scale = 1;
         for (int i = 0; i < otherPlayersTextures.size(); i++) {
             User player = App.getCurrentGame().getPlayers().get(i);
-            if (player.equals(App.getLoggedIn())) {
-                if (player.getActiveGame().isInNPCVillage()) {
-                    draw(otherPlayersTextures.get(i), player.getPosition());
-                }
+            if (player.equals(App.getLoggedIn())) continue;
+
+            if (player.isInVillage()) {
+                draw(otherPlayersTextures.get(i), player.getPosition());
             }
         }
 
@@ -188,7 +190,6 @@ public class VillageView extends GameView {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
         show();
         return false;
