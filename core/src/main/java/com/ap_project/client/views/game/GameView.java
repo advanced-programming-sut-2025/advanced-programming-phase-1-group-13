@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -513,7 +514,7 @@ public abstract class GameView implements Screen, InputProcessor {
 
         updateGreenBar();
 
-        if (reactionTimer < 5){
+        if (reactionTimer < 5) {
             if (reaction != null) {
                 stage.addActor(speechBubble);
                 if (reaction instanceof Label) ((Label) reaction).setFontScale(0.75f);
@@ -524,8 +525,7 @@ public abstract class GameView implements Screen, InputProcessor {
                 );
                 stage.addActor(reaction);
             }
-        }
-        else {
+        } else {
             if (reaction != null) {
                 if (reaction.getStage() != null) {
                     reaction.remove();
@@ -616,7 +616,7 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.M) {
             goToMap(this);
         }
-        if(keycode == Input.Keys.T) {
+        if (keycode == Input.Keys.T) {
             goToToolMenu(this);
         }
 
@@ -846,22 +846,35 @@ public abstract class GameView implements Screen, InputProcessor {
         }
     }
 
-    private Direction getClickedDirection(int x, int y) {
-        Direction direction;
-        if (y < playerSprite.getY() + TILE_SIZE / 2f && y > playerSprite.getY() - TILE_SIZE / 2f) {
-            if (x < playerSprite.getX()) {
-                direction = Direction.LEFT;
+    private Direction getClickedDirection(int screenX, int screenY) {
+        // Unproject screen coordinates to world coordinates
+        Vector3 worldCoords = new Vector3(screenX, screenY, 0);
+        camera.unproject(worldCoords);
+
+        float clickX = worldCoords.x;
+        float clickY = worldCoords.y;
+
+        float playerCenterX = playerSprite.getX() + playerSprite.getWidth() / 2f;
+        float playerCenterY = playerSprite.getY() + playerSprite.getHeight() / 2f;
+
+        float deltaX = clickX - playerCenterX;
+        float deltaY = clickY - playerCenterY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // Horizontal direction
+            if (deltaX > 0) {
+                return Direction.RIGHT;
             } else {
-                direction = Direction.RIGHT;
+                return Direction.LEFT;
             }
         } else {
-            if (y > playerSprite.getY()) {
-                direction = Direction.UP;
+            // Vertical direction
+            if (deltaY < 0) {
+                return Direction.UP;
             } else {
-                direction = Direction.DOWN;
+                return Direction.DOWN;
             }
         }
-        return direction;
     }
 
     private Position getPositionByDirection(Direction direction) {

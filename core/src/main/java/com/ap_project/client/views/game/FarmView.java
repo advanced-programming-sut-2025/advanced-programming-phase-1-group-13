@@ -325,14 +325,6 @@ public class FarmView extends GameView {
             goToFarmhouse();
         }
 
-        if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
-            FarmBuildingType farmBuildingType = FarmBuildingType.COOP;
-            goToFarmOverview("Choose the position of the " + farmBuildingType.getName(), farmBuildingType, this); // TODO
-        }
-
-        if (keycode == Input.Keys.I) { // TODO: move to Marnie's ranch
-            goToBuyAnimalsMenu(this);
-        }
         return false;
     }
 

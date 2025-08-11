@@ -1214,7 +1214,12 @@ public class GameController {
             ShippingBin shippingBin = new ShippingBin(FarmBuildingType.SHIPPING_BIN, position);
             farm.getShippingBins().add(shippingBin);
         } else {
-            farm.getFarmBuildings().add(farmBuilding);
+            if (farmBuilding.getFarmBuildingType().getCapacity() != 0) {
+                AnimalLivingSpace animalLivingSpace = new AnimalLivingSpace(farmBuildingType, position);
+                farm.getFarmBuildings().add(animalLivingSpace);
+            } else {
+                farm.getFarmBuildings().add(farmBuilding);
+            }
         }
 
         return new Result(true, "A " + farmBuildingType.getName() + " has been built in "
@@ -1222,15 +1227,6 @@ public class GameController {
     }
 
     public Result buyAnimal(String animalTypeStr, String name) {
-//        Shop shop = App.getCurrentShop();
-//        if (shop == null) {
-//            return new Result(false, "You Must first enter Marnie's Ranch.");
-//        }
-//
-//        if (!shop.getType().equals(ShopType.MARNIE_RANCH)) {
-//            return new Result(false, "You Must first enter Marnie's Ranch.");
-//        }
-
         AnimalType animalType = AnimalType.getAnimalTypeByName(animalTypeStr);
         if (animalType == null) {
             return new Result(false, "Animal not found: " + animalTypeStr);
@@ -1343,15 +1339,17 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
-        if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 5) {
-            return new Result(false, "Animal can't move more than 5 tiles at once.");
+        if (animal.getPosition() != null) {
+            if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 5) {
+                return new Result(false, "Animal can't move more than 5 tiles at once.");
+            }
         }
 
         FarmBuilding farmBuildingInNewPosition = farm.getFarmBuildingByPosition(newPosition);
         if (animal.isOutside()) {
             if (animal.getPosition().equals(newPosition)) {
                 return new Result(false, "Your " + animal.getAnimalType().getName() + ", " + animalName
-                    + ", is already at " + newPosition.toString());
+                    + ", is already at " + newPosition);
             }
 
             if (!App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(newPosition).getType().equals(TileType.NOT_PLOWED_SOIL)) {

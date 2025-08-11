@@ -6,6 +6,7 @@ import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.*;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
+import com.ap_project.common.models.farming.PlantSource;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.tools.FishingRod;
 import com.ap_project.common.models.tools.Scythe;
@@ -151,6 +152,10 @@ public class GameAssetManager {
             return getTextureByProcessedItem((ProcessedItem) item);
         }
 
+        if (item instanceof PlantSource) {
+            return getTextureByPlantSource((PlantSource) item);
+        }
+
         if (item instanceof Tool) {
             return getTextureByTool((Tool) item);
         }
@@ -200,6 +205,13 @@ public class GameAssetManager {
 
     public Texture getTextureByMineral(Mineral mineral) {
         return new Texture(Gdx.files.internal("Images/Mineral/" + toPascalCase(mineral.getMineralType().getName()) + ".png"));
+    }
+
+    public Texture getTextureByPlantSource(PlantSource plantSource) {
+        if (plantSource.getSeedType() != null) {
+            return new Texture(Gdx.files.internal("Images/PlantSource/Mixed_Seeds.png"));
+        }
+        return new Texture(Gdx.files.internal("Images/ProcessedItem/" + plantSource.getName().replaceAll(" ", "_") + ".png"));
     }
 
     public Texture getTextureByProcessedItem(ProcessedItem processedItem) {
@@ -562,6 +574,10 @@ public class GameAssetManager {
 
     public Texture getShopMenu() {
         return new Texture(Gdx.files.internal("Images/Shop/ShopMenu.png"));
+    }
+
+    public Texture getBuildMenu() {
+        return new Texture(Gdx.files.internal("Images/Shop/BuildMenu.png"));
     }
 
     public Texture getGood(GoodsType good) {

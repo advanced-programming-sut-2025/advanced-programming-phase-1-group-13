@@ -169,26 +169,31 @@ public class AnimalLivingSpaceMenuView implements Screen, InputProcessor {
         }
 
         for (int i = 0; i < animalLivingSpace.getAnimals().size(); i++) {
-            if (hoverOnImage(buttons.get(i), screenX, convertedY)) {
-                Animal animal = animalLivingSpace.getAnimals().get(i);
-                if (!animal.isOutside()) {
-                    Position previousPosition = new Position(animal.getAnimalLivingSpace().getPositionOfUpperLeftCorner());
-                    previousPosition.setX(previousPosition.getX() + animalLivingSpace.getFarmBuildingType().getDoorX());
-                    previousPosition.setY(previousPosition.getY() + animal.getAnimalLivingSpace().getLength());
+            try {
+                if (hoverOnImage(buttons.get(i), screenX, convertedY)) {
+                    Animal animal = animalLivingSpace.getAnimals().get(i);
+                    if (!animal.isOutside()) {
+                        Position previousPosition = new Position(animal.getAnimalLivingSpace().getPositionOfUpperLeftCorner());
+                        previousPosition.setX(previousPosition.getX() + animalLivingSpace.getFarmBuildingType().getDoorX());
+                        previousPosition.setY(previousPosition.getY() + animal.getAnimalLivingSpace().getLength());
 
-                    Position newPosition = new Position(previousPosition);
-                    newPosition.setY(newPosition.getY() + 3);
+                        Position newPosition = new Position(previousPosition);
+                        newPosition.setY(newPosition.getY() + 3);
 
-                    Result result = controller.shepherdAnimal(animal.getName(), newPosition);
-                    if (result.success) {
-                        farmView.setAnimalDestination(new Vector2(newPosition.getX(), newPosition.getY()), newPosition);
-                        animal.setPosition(previousPosition);
-                        animal.setOutside(true);
-                        farmView.startWalkingAnimation(animal, false);
-                        farmView.updateTextures();
-                        Main.getMain().setScreen(farmView);
+                        Result result = controller.shepherdAnimal(animal.getName(), newPosition);
+                        if (result.success) {
+                            farmView.setAnimalDestination(new Vector2(newPosition.getX(), newPosition.getY()), newPosition);
+                            animal.setPosition(previousPosition);
+                            animal.setOutside(true);
+                            farmView.startWalkingAnimation(animal, false);
+                            farmView.updateTextures();
+                            Main.getMain().setScreen(farmView);
+                        }
                     }
                 }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 

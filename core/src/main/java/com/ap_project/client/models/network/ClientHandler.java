@@ -89,7 +89,7 @@ public class ClientHandler implements Runnable {
                     if (argsJoin.length >= 1)
                         handleLeaveLobby(argsJoin);
                 } else {
-                    sendError("Invalid data for JOIN_LOBBY");
+                    sendError("Invalid data for LEAVE_LOBBY");
                 }
                 break;
             case "START_GAME":
@@ -98,7 +98,7 @@ public class ClientHandler implements Runnable {
                     if (argsJoin.length >= 1)
                         handleStartGame(argsJoin);
                 } else {
-                    sendError("Invalid data for JOIN_LOBBY");
+                    sendError("Invalid data for START_GAME");
                 }
                 break;
             case "REQUEST_LOBBY_INFO":

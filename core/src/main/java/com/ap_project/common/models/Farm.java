@@ -472,7 +472,8 @@ public class Farm {
     }
 
     public AnimalLivingSpace getAvailableLivingSpace(List<FarmBuildingType> livingSpaceTypes) {
-        for (FarmBuilding farmBuilding : this.getFarmBuildings()) {
+        System.out.println(farmBuildings.size());
+        for (FarmBuilding farmBuilding : farmBuildings) {
             if (livingSpaceTypes.contains(farmBuilding.getFarmBuildingType())) {
                 if (farmBuilding instanceof AnimalLivingSpace) {
                     AnimalLivingSpace animalLivingSpace = (AnimalLivingSpace) farmBuilding;
