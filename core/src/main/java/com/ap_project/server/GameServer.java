@@ -1,6 +1,6 @@
 package com.ap_project.server;
 
-import com.ap_project.client.models.network.ClientHandler;
+import com.ap_project.server.controller.ClientHandler;
 import com.ap_project.server.models.LobbyData;
 
 import java.io.IOException;

@@ -1,14 +1,17 @@
-package com.ap_project.server.controller;
+package com.ap_project.client.controllers.pregame;
 
 import com.ap_project.Main;
-import com.ap_project.client.models.network.GameClient;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.client.views.pregame.LobbyMenuView;
 import com.ap_project.client.views.pregame.LobbyRoomView;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class LobbyMenuController {
@@ -22,7 +25,10 @@ public class LobbyMenuController {
     public void setView(LobbyMenuView view) {
         this.view = view;
         try {
-            client.sendMessage("SET_USERNAME", new String[]{App.getLoggedIn().getUsername()});
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("username", App.getLoggedIn().getUsername());
+            Message message = new Message(body, MessageType.SET_USERNAME);
+            client.sendMessage(JSONUtils.toJson(message));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,12 +42,19 @@ public class LobbyMenuController {
             return;
         }
 
-        client.sendMessage("CREATE_LOBBY", new String[]{name, password != null ? password : "", Boolean.toString(isPrivate), Boolean.toString(isVisible)});
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("name", name);
+        body.put("password", password != null ? password : "");
+        body.put("isPrivate", isPrivate);
+        body.put("isVisible", isVisible);
+
+        Message message = new Message(body, MessageType.CREATE_LOBBY);
+        client.sendMessage(JSONUtils.toJson(message));
     }
 
-
     public void refreshLobbyList() {
-        client.sendMessage("REFRESH_LOBBIES", new String[]{});
+        Message message = new Message(new HashMap<>(), MessageType.REFRESH_LOBBIES);
+        client.sendMessage(JSONUtils.toJson(message));
     }
 
     public void joinLobbyFromList(String lobbyInfoString) {
@@ -53,7 +66,7 @@ public class LobbyMenuController {
             if (isPrivate) {
                 view.promptPasswordAndJoin(lobbyId);
             } else {
-                client.sendMessage("JOIN_LOBBY", new String[]{lobbyId});
+                joinLobbyWithPassword(lobbyId, "");
             }
         } else {
             view.showError("Invalid lobby data.");
@@ -61,7 +74,12 @@ public class LobbyMenuController {
     }
 
     public void joinLobbyWithPassword(String lobbyId, String password) {
-        client.sendMessage("JOIN_LOBBY", new String[]{lobbyId, password});
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("lobbyId", lobbyId);
+        body.put("password", password);
+
+        Message message = new Message(body, MessageType.JOIN_LOBBY);
+        client.sendMessage(JSONUtils.toJson(message));
     }
 
     public void updateLobbyListFromServer(List<String> lobbyInfoList) {
@@ -71,11 +89,19 @@ public class LobbyMenuController {
     }
 
     public void leaveLobby(String lobbyId) {
-        client.sendMessage("LEAVE_LOBBY", new String[]{lobbyId});
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("lobbyId", lobbyId);
+
+        Message message = new Message(body, MessageType.LEAVE_LOBBY);
+        client.sendMessage(JSONUtils.toJson(message));
     }
 
     public void startGame(String lobbyId) {
-        client.sendMessage("START_GAME", new String[]{lobbyId});
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("lobbyId", lobbyId);
+
+        Message message = new Message(body, MessageType.START_GAME);
+        client.sendMessage(JSONUtils.toJson(message));
     }
 
     public void backToLobbyMenu() {
@@ -87,7 +113,11 @@ public class LobbyMenuController {
     }
 
     public void requestLobbyInfo(String lobbyId) {
-        client.sendMessage("REQUEST_LOBBY_INFO", new String[]{lobbyId});
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("lobbyId", lobbyId);
+
+        Message message = new Message(body, MessageType.REQUEST_LOBBY_INFO);
+        client.sendMessage(JSONUtils.toJson(message));
     }
 
     public void openLobbyRoomView(String lobbyInfoString) {
@@ -101,5 +131,4 @@ public class LobbyMenuController {
         LobbyRoomView lobbyRoomView = new LobbyRoomView(this, lobbyId, lobbyName, players);
         Main.getMain().setScreen(lobbyRoomView);
     }
-
 }

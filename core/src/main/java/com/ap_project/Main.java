@@ -5,7 +5,7 @@ import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.client.controllers.login.*;
 import com.ap_project.client.controllers.pregame.*;
 import com.ap_project.client.controllers.signup.*;
-import com.ap_project.client.models.network.GameClient;
+import com.ap_project.client.controllers.pregame.GameClient;
 import com.ap_project.client.views.*;
 import com.ap_project.client.views.game.*;
 import com.ap_project.client.views.login.*;
@@ -14,7 +14,7 @@ import com.ap_project.client.views.signup.*;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.*;
 
-import com.ap_project.server.controller.LobbyMenuController;
+import com.ap_project.client.controllers.pregame.LobbyMenuController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
