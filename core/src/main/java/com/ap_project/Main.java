@@ -52,6 +52,17 @@ public class Main extends Game {
         Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+    public static void goToKickMenu() {
+        Main.getMain().setScreen(new KickMenuView( GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToTerminateMenu() {
+        Main.getMain().setScreen(new TerminateMenuView( GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+
+
+
 
     public static void goToUsersMenu() {
         Main.getMain().setScreen(new UsersMenuView( GameAssetManager.getGameAssetManager().getSkin()));

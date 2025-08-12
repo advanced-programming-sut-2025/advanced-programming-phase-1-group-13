@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.ap_project.Main.getBatch;
+import static com.ap_project.Main.*;
 
 public class VotingMenuView implements Screen, InputProcessor {
     private Stage stage;
@@ -69,6 +69,7 @@ public class VotingMenuView implements Screen, InputProcessor {
             if (kickButton.isPressed()) {
                 String selected = playerSelectBox.getSelected();
                 System.out.println("Kicking: " + selected);
+                goToKickMenu();
                 return true;
             }
             return false;
@@ -79,6 +80,7 @@ public class VotingMenuView implements Screen, InputProcessor {
             if (forceTerminateButton.isPressed()) {
                 String selected = playerSelectBox.getSelected();
                 System.out.println("Force Terminating: " + selected);
+                goToTerminateMenu();
                 return true;
             }
             return false;
