@@ -128,7 +128,7 @@ public enum NPCType {
     ABIGAIL(
         "Abigail",
         Role.VILLAGER,
-        new Position(50, 10),
+        new Position(10, 50),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -170,7 +170,7 @@ public enum NPCType {
     HARVEY(
         "Harvey",
         Role.VILLAGER,
-        new Position(30, 40),
+        new Position(50, 10),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -212,7 +212,7 @@ public enum NPCType {
     LEAH(
         "Leah",
         Role.VILLAGER,
-        new Position(50, 10),
+        new Position(50, -100),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{
@@ -254,7 +254,7 @@ public enum NPCType {
     ROBIN(
         "Robin",
         Role.SHOPKEEPER,
-        new Position(10, 50),
+        new Position(10, 100),
         Arrays.asList(
             new AbstractMap.SimpleEntry<>(
                 new LinkedHashMap<ItemType, Integer>() {{

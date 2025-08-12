@@ -38,7 +38,7 @@ public class Game {
         this.npcs = new ArrayList<>();
 
         for (NPCType npcType : NPCType.values()) {
-            this.npcs.add(new NPC(npcType));
+            this.npcs.add(new NPC(npcType, this));
         }
 
         this.quests = new ArrayList<>();
@@ -242,6 +242,8 @@ public class Game {
 //            }
 
             for (NPC npc : this.npcs) {
+                npc.resetPosition(App.getCurrentGame());
+
                 if (this.getNpcFriendshipPoints(player, npc) / 200 >= 3) {
                     if (Math.random() < 0.5) {
                         ItemType itemType = npc.getType().getRandomGift();

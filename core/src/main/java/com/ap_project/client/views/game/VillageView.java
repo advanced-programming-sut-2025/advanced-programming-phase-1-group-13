@@ -22,7 +22,7 @@ import static com.ap_project.Main.*;
 
 public class VillageView extends GameView {
     private final ArrayList<Texture> shopTextures;
-    private final ArrayList<Texture> npcTextures;
+    private ArrayList<Texture> npcTextures;
     private final ArrayList<Texture> npcHousesTextures;
     private final ArrayList<Texture> otherPlayersTextures;
     private NPC npcWithMenu;
@@ -48,7 +48,7 @@ public class VillageView extends GameView {
         this.npcHousesTextures = new ArrayList<>();
         this.npcTextures = new ArrayList<>();
         for (NPCType npcType : NPCType.values()) {
-            npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npcType));
+            npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npcType, App.getCurrentGame().getNpcs().get(npcType.ordinal()).getDirection()));
             if (npcType.getHouse() != null) {
                 npcHousesTextures.add(GameAssetManager.getGameAssetManager().getNPCHouse(npcType));
             } else {
@@ -75,6 +75,15 @@ public class VillageView extends GameView {
     public void renderMap(float delta) {
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
+
+        this.npcTextures = new ArrayList<>();
+        for (int i = 0; i < App.getCurrentGame().getNpcs().size(); i++) {
+            NPC npc = App.getCurrentGame().getNpcs().get(i);
+            if (App.getCurrentGame().getGameState().getTime().getHour() == npc.getStartOfFreeTime()) {
+                npc.changeToRandomDirection();
+            }
+            npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npc.getType(), npc.getDirection()));
+        }
 
         scale = 4.400316f;
         for (int i = 0; i < shopTextures.size(); i++) {

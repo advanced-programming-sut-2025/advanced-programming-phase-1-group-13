@@ -35,7 +35,6 @@ public class UsersMenuView implements Screen {
         table.setFillParent(true);
         table.top().padTop(30);
 
-
         backButton = new TextButton("Back", skin);
 
         userList = new VerticalGroup();
@@ -43,12 +42,9 @@ public class UsersMenuView implements Screen {
         userListScroll = new ScrollPane(userList, skin);
         userListScroll.setFadeScrollBars(false);
 
-
         layoutUI();
         addListeners();
     }
-
-
 
     private void layoutUI() {
         Label title = new Label("Users List", skin);
@@ -79,30 +75,9 @@ public class UsersMenuView implements Screen {
         });
     }
 
-    public void updateUserList(List<String> users) {
-        userList.clear();
-
-        for (String rawLobbyInfo : users) {
-            String[] parts = rawLobbyInfo.split(",");
-            if (parts.length < 4) continue;
-
-            String name = parts[1];
-            String players = parts[2];
-
-            HorizontalGroup row = new HorizontalGroup();
-            row.space(20);
-            row.space(20);
-            row.left();
-            row.left();
-
-
-            userList.addActor(row);
-        }
-    }
-
-
     @Override
     public void show() {
+
     }
 
     @Override

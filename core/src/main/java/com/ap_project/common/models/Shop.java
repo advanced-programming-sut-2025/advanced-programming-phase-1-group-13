@@ -1,6 +1,7 @@
 package com.ap_project.common.models;
 
 import com.ap_project.common.models.enums.types.GoodsType;
+import com.ap_project.common.models.enums.types.NPCType;
 import com.ap_project.common.models.enums.types.ShopType;
 import com.ap_project.common.models.enums.types.TileType;
 
@@ -10,7 +11,7 @@ public class Shop {
     private final String name;
     private final ShopType type;
     private final ArrayList<Good> shopInventory;
-    private final NPC owner;
+    private final NPCType owner;
     private final int startHour;
     private final int endHour;
     private final ArrayList<Tile> shopTiles;
@@ -78,7 +79,7 @@ public class Shop {
         return null;
     }
 
-    public NPC getOwner() {
+    public NPCType getOwner() {
         return owner;
     }
 
