@@ -22,18 +22,17 @@ import static com.ap_project.common.models.App.getUserByUsername;
 
 public class LoginController {
     private LoginMenuView view;
+    private boolean waitingForResponse = false;
 
     public void handleLoginMenuButtons() {
+        if (waitingForResponse) return;
+
         if (view != null) {
             if (view.getLoginButton().isChecked() || Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
                 String username = view.getUsernameField().getText();
                 String password = view.getPasswordField().getText();
-                Result result = login(username, password);
-                if (result.success) {
-                    goToMainMenu();
-                } else {
-                    view.setErrorMessage(result.message);
-                }
+                waitingForResponse = true;
+                login(username, password);
             } else if (view.getForgotPasswordButton().isChecked()) {
                 goToForgetPasswordMenu();
             } else if (view.getBackButton().isChecked()) {
@@ -49,24 +48,29 @@ public class LoginController {
         this.view = view;
     }
 
-    public Result login(String username, String password) {
-        User user = getUserByUsername(username);
-        if (user == null) {
-            return new Result(false, "User not found.");
-        }
-
-        String hashedPassword = hashSha256(password);
-        if (!hashedPassword.equals(user.getPassword())) {
-            return new Result(false, "Incorrect password.");
-        }
-
+    public void handleLoginSuccess(User user) {
+        waitingForResponse = false;
+        System.out.println(user);
         App.setLoggedIn(user);
-        App.setCurrentMenu(Menu.MAIN_MENU);
+        goToMainMenu();
+    }
+
+    public void handleLoginError(String error) {
+        waitingForResponse = false;
+        System.out.println("Error that should be in View" + error);
+        view.setErrorMessage(error);
+        if (view != null) {
+            view.setErrorMessage(error);
+        }
+    }
+
+    public void login(String username, String password) {
         HashMap<String, Object> body = new HashMap<>();
         body.put("username", username);
+        body.put("password", hashSha256(password));
+
         Message message = new Message(body, MessageType.LOGIN);
         Main.getClient().sendMessage(JSONUtils.toJson(message));
-        return new Result(true, "Login successful. You are now in Main Menu.");
     }
 
     public static String hashSha256(String input) {

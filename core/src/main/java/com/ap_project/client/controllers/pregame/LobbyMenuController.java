@@ -101,6 +101,11 @@ public class LobbyMenuController {
     }
 
     public void showError(String message) {
+        System.out.println("Setting Error: " + message);
+        if (Main.getMain().getScreen() instanceof LobbyRoomView) {
+            LobbyRoomView roomView = (LobbyRoomView) Main.getMain().getScreen();
+            roomView.getErrorMessageLabel().setText(message);
+        }
         if (view != null) view.showError(message);
     }
 

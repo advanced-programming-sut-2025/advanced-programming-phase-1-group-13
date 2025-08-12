@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Game {
+    private final String id;
     private final ArrayList<User> players;
     private final NPCVillage village;
     private final GameState gameState;
@@ -29,7 +30,9 @@ public class Game {
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
     private String publicChat;
 
-    public Game(ArrayList<User> players) {
+    public Game(ArrayList<User> players, String id, boolean isServerSide) {
+        this.id = id;
+
         this.players = players;
         this.gameState = new GameState();
         this.village = new NPCVillage();
@@ -37,8 +40,10 @@ public class Game {
 
         this.npcs = new ArrayList<>();
 
-        for (NPCType npcType : NPCType.values()) {
-            this.npcs.add(new NPC(npcType, this));
+        if (!isServerSide) {
+            for (NPCType npcType : NPCType.values()) {
+                this.npcs.add(new NPC(npcType, this));
+            }
         }
 
         this.quests = new ArrayList<>();
@@ -142,6 +147,10 @@ public class Game {
         }
 
         this.publicChat = "";
+    }
+
+    public String getId() {
+        return id;
     }
 
     public NPCVillage getVillage() {

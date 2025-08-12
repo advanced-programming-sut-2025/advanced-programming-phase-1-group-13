@@ -250,6 +250,7 @@ public class LobbyMenuView implements Screen {
 
     public void showError(String message) {
         errorLabel.setText(message);
+        stage.addActor(errorLabel);
     }
 
     @Override

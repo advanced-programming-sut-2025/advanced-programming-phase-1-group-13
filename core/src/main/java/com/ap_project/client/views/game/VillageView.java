@@ -157,6 +157,22 @@ public class VillageView extends GameView {
         try {
             super.touchDown(screenX, screenY, pointer, button);
 
+            for (int i = 0; i < npcTextures.size(); i++) {
+                NPC npc = App.getCurrentGame().getNpcs().get(i);
+                Position position = new Position(npc.getPosition());
+                position.setY(position.getY() - 2);
+                if (clickedOnTexture(screenX, screenY, GameAssetManager.getGameAssetManager().getDialogIcon(), position, 1)) {
+                    if (npc.hasDialog()) {
+                        addDialogBox(npc);
+                        if (!npc.hasTalkedToToday(App.getLoggedIn())) {
+                            App.getCurrentGame().changeFriendship(App.getLoggedIn(), npc, 20);
+                        }
+                        npc.setTalkedToToday(App.getLoggedIn(), true);
+                    }
+                    return true;
+                }
+            }
+
             for (int i = 0; i < shopTextures.size(); i++) {
                 Shop shop = NPCVillage.getShops().get(i);
                 if (clickedOnTexture(screenX, screenY, shopTextures.get(i), shop.getPosition(), 4.400316f)) {
@@ -174,22 +190,6 @@ public class VillageView extends GameView {
                         npcWithMenu = npc;
                         return true;
                     }
-                }
-            }
-
-            for (int i = 0; i < npcTextures.size(); i++) {
-                NPC npc = App.getCurrentGame().getNpcs().get(i);
-                Position position = new Position(npc.getPosition());
-                position.setY(position.getY() - 2);
-                if (clickedOnTexture(screenX, screenY, GameAssetManager.getGameAssetManager().getDialogIcon(), position, 1)) {
-                    if (npc.hasDialog()) {
-                        addDialogBox(npc);
-                        if (!npc.hasTalkedToToday(App.getLoggedIn())) {
-                            App.getCurrentGame().changeFriendship(App.getLoggedIn(), npc, 20);
-                        }
-                        npc.setTalkedToToday(App.getLoggedIn(), true);
-                    }
-                    return true;
                 }
             }
 

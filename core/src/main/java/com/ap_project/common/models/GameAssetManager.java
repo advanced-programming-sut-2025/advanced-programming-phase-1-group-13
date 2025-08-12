@@ -480,6 +480,10 @@ public class GameAssetManager {
 
     public Texture getFarm(Game game, User user) {
         int index = game.getPlayers().indexOf(user) + 1;
+        if (index == 0) index = 1;
+        for (User user1 : game.getPlayers()) {
+            System.out.println(user1.getUsername()+ ", ");
+        }
         String season = game.getGameState().getTime().getSeason().getName();
         return new Texture(Gdx.files.internal("Images/Map/Farm/Farm" + season + index + ".png"));
     }

@@ -40,7 +40,7 @@ public class PhaseOnePreGameMenuController {
             }
         }
 
-        Game game = new Game(players);
+        Game game = new Game(players, "", false);
         for (User user : players) {
             user.setActiveGame(game);
         }

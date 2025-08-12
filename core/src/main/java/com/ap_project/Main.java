@@ -68,9 +68,6 @@ public class Main extends Game {
     }
 
 
-
-
-
     public static void goToUsersMenu(ArrayList<String> usersInfo) {
         Main.getMain().setScreen(new UsersMenuView(usersInfo, GameAssetManager.getGameAssetManager().getSkin()));
     }
@@ -120,6 +117,10 @@ public class Main extends Game {
 
     public static void goToChooseMapMenu() {
         Main.getMain().setScreen(new ChooseMapMenuView(new ChooseMapMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
+    public static void goToMultiplayerChooseMapMenuView() {
+        Main.getMain().setScreen(new MultiplayerChooseMapMenuView(GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToGame(GameView gameView) {

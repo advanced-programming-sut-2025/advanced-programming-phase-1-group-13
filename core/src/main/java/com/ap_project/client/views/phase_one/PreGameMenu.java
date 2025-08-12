@@ -31,7 +31,6 @@ public class PreGameMenu implements AppMenu {
                 pendingUsernames = new ArrayList<>(Arrays.asList(usernamesInput.trim().split("\\s+")));
                 pendingUsernames.add(App.getLoggedIn().getUsername());
 
-                // Convert pendingUsernames to usersInGame
                 usersInGame.clear();
                 for (String username : pendingUsernames) {
                     User user = App.getUserByUsername(username);
@@ -73,7 +72,7 @@ public class PreGameMenu implements AppMenu {
 
             if (pendingUsernames.isEmpty()) {
                 System.out.println("All players have selected their maps. Switching to GAME MENU...");
-                App.setCurrentGame(new Game(usersInGame));
+                App.setCurrentGame(new Game(usersInGame, "", false));
                 App.setCurrentMenu(Menu.GAME_MENU);
             } else {
                 System.out.println("Remaining users: " + String.join(", ", pendingUsernames));

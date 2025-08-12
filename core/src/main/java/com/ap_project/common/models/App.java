@@ -109,4 +109,13 @@ public class App {
         }
         return null;
     }
+
+    public static Game getGameById(String id) {
+        for (Game game : games) {
+            if (game.getId().equals(id)) {
+                return game;
+            }
+        }
+        return null;
+    }
 }

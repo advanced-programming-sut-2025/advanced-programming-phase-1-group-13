@@ -1,5 +1,7 @@
 package com.ap_project.server.controller;
 
+import com.ap_project.common.models.Farm;
+import com.ap_project.common.models.Game;
 import com.ap_project.common.models.User;
 import com.ap_project.common.models.enums.types.Gender;
 import com.ap_project.common.models.network.Message;
@@ -10,6 +12,7 @@ import com.ap_project.server.models.Lobby;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.*;
 
 import static com.ap_project.server.GameServer.*;
@@ -22,6 +25,11 @@ public class ClientHandler implements Runnable {
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
+        try {
+            this.socket.setSoTimeout(300000);
+        } catch (SocketException e) {
+            System.out.println("[Server] Failed to set socket timeout: " + e.getMessage());
+        }
     }
 
     @Override
@@ -59,6 +67,7 @@ public class ClientHandler implements Runnable {
                                 handleCommand(message);
                             } catch (Exception e) {
                                 System.out.println("[Server] Error parsing JSON: " + e.getMessage());
+                                e.printStackTrace();
                                 sendError("Invalid JSON format");
                             }
 
@@ -101,9 +110,10 @@ public class ClientHandler implements Runnable {
             }
 
             case LOGIN: {
-                String username = body.get("username").toString();
+                String username = message.getBody().get("username").toString();
+                String passwordHash = message.getBody().get("password").toString();
 
-                handleLogin(username);
+                handleLogin(username, passwordHash);
                 break;
             }
 
@@ -138,13 +148,38 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
+            case REQUEST_LOBBY_INFO: {
+                handleRequestLobbyInfo((String) body.get("lobbyId"));
+                break;
+            }
+
             case START_GAME: {
                 handleStartGame((String) body.get("lobbyId"));
                 break;
             }
 
-            case REQUEST_LOBBY_INFO: {
-                handleRequestLobbyInfo((String) body.get("lobbyId"));
+            case CHOSE_MAP: {
+                String username = (String) body.get("username");
+                String id = (String) body.get("id");
+                Integer mapNumber = Integer.parseInt((String) body.get("mapNumber"));
+
+                Game game = getGameById(id);
+                if (game == null) {
+                    sendError("Invalid game ID: " + id);
+                }
+                boolean haveAllPlayersChosenMap = true;
+                for (User user : game.getPlayers()) {
+                    if (user.getUsername().equals(username)) {
+                        user.setFarm(new Farm(mapNumber));
+                    }
+                    if (user.getFarm() == null) haveAllPlayersChosenMap = false;
+                }
+
+                if (haveAllPlayersChosenMap) {
+                    Message error = new Message(body, MessageType.GO_TO_GAME);
+                    sendMessage(JSONUtils.toJson(error));
+                }
+
                 break;
             }
 
@@ -164,9 +199,35 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private void handleLogin(String username) {
-        this.user = getUserByUsername(username);
-        System.out.println("[server]: client logged in: " + username);
+    private void handleLogin(String username, String passwordHash) {
+        HashMap<String, Object> body = new HashMap<>();
+
+        User user = GameServer.getUserByUsername(username);
+        if (user == null) {
+            body.put("data", "User not found");
+            Message error = new Message(body, MessageType.LOGIN_ERROR);
+            sendMessage(JSONUtils.toJson(error));
+            return;
+        }
+
+        if (!user.getPassword().equals(passwordHash)) {
+            body.put("data", "Incorrect password");
+            Message error = new Message(body, MessageType.LOGIN_ERROR);
+            sendMessage(JSONUtils.toJson(error));
+            return;
+        }
+
+        body = new HashMap<>();
+        body.put("username", user.getUsername());
+        body.put("password", user.getPassword());
+        body.put("nickname", user.getNickname());
+        body.put("email", user.getEmail());
+        body.put("gender", user.getGender());
+
+        Message success = new Message(body, MessageType.LOGIN_SUCCESS);
+        this.user = user;
+        sendMessage(JSONUtils.toJson(success));
+        System.out.println("[Server]: Client logged in: " + username);
     }
 
     private void handleRequestUsersInfo() {
@@ -271,9 +332,63 @@ public class ClientHandler implements Runnable {
         Lobby lobby = lobbies.get(lobbyId);
         if (lobby == null) {
             sendError("Lobby not found");
-        } else {
-            // TODO
+            return;
         }
+
+        if (lobby.getPlayers().size() < 2) {
+            sendError("There must be at least two players to start the game");
+            return;
+        }
+
+        if (!lobby.getAdmin().equals(this)) {
+            sendError("Only the admin can start the game.");
+            return;
+        }
+
+        List<ClientHandler> disconnectedPlayers = new ArrayList<>();
+        for (ClientHandler client : lobby.getPlayers()) {
+            if (!client.isConnected()) {
+                disconnectedPlayers.add(client);
+            }
+        }
+
+        if (!disconnectedPlayers.isEmpty()) {
+            StringBuilder errorMsg = new StringBuilder();
+            for (ClientHandler client : disconnectedPlayers) {
+                errorMsg.append(client.getNickname()).append(", ");
+                lobby.removePlayer(client);
+            }
+            errorMsg.delete(errorMsg.length()-2, errorMsg.length());
+            errorMsg.append(" not online.");
+            sendError(errorMsg.toString());
+            return;
+        }
+
+        ArrayList<User> users = new ArrayList<>();
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", lobbyId);
+
+        for (ClientHandler client : lobby.getPlayers()) {
+            User player = client.user;
+
+            HashMap<String, Object> playerData = new HashMap<>();
+            playerData.put("username", player.getUsername());
+            playerData.put("password", player.getPassword());
+            playerData.put("nickname", player.getNickname());
+            playerData.put("email", player.getEmail());
+            playerData.put("gender", player.getGender());
+
+            String index = String.valueOf(lobby.getPlayers().indexOf(client));
+            body.put("player" + index, playerData);
+
+            users.add(player);
+        }
+
+        games.add(new Game(users, lobbyId, true));
+
+        Message message = new Message(body, MessageType.START_CHOOSE_MAP);
+        sendMessageToAllInLobby(lobby, JSONUtils.toJson(message));
     }
 
     private void sendLobbyListToAll() {
@@ -321,6 +436,14 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void sendMessageToAllInLobby(Lobby lobby, String message) {
+
+        System.out.println("LINE 439 BEFORE THE EXCEPTION");
+        for (ClientHandler client : lobby.getPlayers()) {
+            client.sendMessage(message);
+        }
+    }
+
     public void sendMessage(MessageType type, Object data) {
         try {
             Message message = new Message();
@@ -339,6 +462,17 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public void sendMessage(String jsonMessage) {
+        try {
+            out.write(jsonMessage);
+            out.newLine();
+            out.flush();
+            System.out.println("[Server] Sent message: " + jsonMessage);
+        } catch (IOException e) {
+            System.out.println("[Server] Failed to send message: " + e.getMessage());
+        }
+    }
+
     public User getUser() {
         return user;
     }
@@ -349,6 +483,19 @@ public class ClientHandler implements Runnable {
     }
 
     public void sendError(String message) {
-        sendMessage(MessageType.ERROR, message);
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("data", message);
+        sendMessage(JSONUtils.toJson(new Message(body, MessageType.ERROR)));
+    }
+
+    public boolean isConnected() {
+        if (socket.isClosed()) return false;
+
+        try {
+            socket.sendUrgentData(0xFF);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

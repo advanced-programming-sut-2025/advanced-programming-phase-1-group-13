@@ -1,0 +1,165 @@
+package com.ap_project.client.views.pregame;
+
+import com.ap_project.Main;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Farm;
+import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.HashMap;
+
+import static com.ap_project.Main.getClient;
+
+public class MultiplayerChooseMapMenuView implements Screen {
+    private Stage stage;
+    private final Texture background;
+    private final Label menuTitle;
+    private final Label description;
+    private final Image map1;
+    private final Image map2;
+    private final Label mapNumber;
+    private final SelectBox<String> mapOptions;
+    private final TextButton chooseButton;
+    private final Table table;
+
+    public MultiplayerChooseMapMenuView(Skin skin) {
+        this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
+
+        this.menuTitle = new Label("Choose Map", skin);
+        menuTitle.setFontScale(1.5f);
+
+        this.description = new Label(App.getLoggedIn().getUsername() + ", please choose a map for your farm", skin);
+        description.setFontScale(1.5f);
+
+        int currentPlayerIndex = App.getCurrentGame().getPlayers().indexOf(App.getLoggedIn()) + 1;
+
+        this.map1 = new Image(GameAssetManager.getGameAssetManager().getMapPreview(1, currentPlayerIndex + 1));
+        map1.setScale(0.3f);
+        this.map2 = new Image(GameAssetManager.getGameAssetManager().getMapPreview(2, currentPlayerIndex + 1));
+        map2.setScale(0.3f);
+
+        this.mapNumber = new Label("Map Number", skin);
+        this.mapNumber.setFontScale(1.5f);
+        this.mapOptions = new SelectBox<>(skin);
+
+        this.chooseButton = new TextButton("Choose", skin);
+
+        this.table = new Table();
+    }
+
+    @Override
+    public void show() {
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        Array<String> numbers = new Array<>();
+        numbers.add("1");
+        numbers.add("2");
+        mapOptions.setItems(numbers);
+
+        Image backgroundImage = new Image(background);
+        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.addActor(backgroundImage);
+
+        table.clear();
+        table.setFillParent(true);
+        table.center();
+
+        table.add(menuTitle).align(Align.center).colspan(3).padBottom(20).center().row();
+
+        table.add(description).align(Align.center).colspan(3).padBottom(450).center().row();
+
+        map1.setPosition(
+            Gdx.graphics.getWidth() / 2f - 450,
+            Gdx.graphics.getHeight() / 2f - 100
+        );
+        stage.addActor(map1);
+        Label map1Label = new Label("Map 1", GameAssetManager.getGameAssetManager().getSkin());
+        map1Label.setFontScale(1.25f);
+        map1Label.setPosition(
+            map1.getX() + map1.getWidth() / 8f - map1Label.getWidth() / 2f,
+            map1.getY() - 50
+        );
+        stage.addActor(map1Label);
+
+        map2.setPosition(
+            Gdx.graphics.getWidth() / 2f + 50,
+            Gdx.graphics.getHeight() / 2f - 100
+        );
+        stage.addActor(map2);
+        Label map2Label = new Label("Map 2", GameAssetManager.getGameAssetManager().getSkin());
+        map2Label.setFontScale(1.25f);
+        map2Label.setPosition(
+            map2.getX() + map2.getWidth() / 8f - map2Label.getWidth() / 2f,
+            map2.getY() - 50
+        );
+        stage.addActor(map2Label);
+
+        table.add(mapNumber).align(Align.right).padBottom(20).padRight(20);
+        table.add(mapOptions).width(750).padBottom(20).row();
+
+        table.setPosition(table.getX(), table.getY() + 50);
+        stage.addActor(table);
+
+        chooseButton.setPosition(800, 100);
+        stage.addActor(chooseButton);
+    }
+
+    @Override
+    public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0, 1f);
+
+        if (chooseButton.isChecked()) {
+            String mapNumberString = mapOptions.getSelected();
+            int mapNumber = Integer.parseInt(mapNumberString);
+            App.getLoggedIn().setFarm(new Farm(mapNumber));
+
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", App.getLoggedIn().getActiveGame().getId());
+            body.put("username", App.getLoggedIn().getUsername());
+            body.put("mapNumber", String.valueOf(mapNumber));
+            Message message = new Message(body, MessageType.CHOSE_MAP);
+            getClient().sendMessage(JSONUtils.toJson(message));
+        }
+        chooseButton.setChecked(false);
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+}

@@ -4,6 +4,7 @@ import com.ap_project.client.controllers.pregame.LobbyMenuController;
 import com.ap_project.common.models.GameAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -19,6 +20,7 @@ public class LobbyRoomView extends ScreenAdapter {
     private final TextButton leaveButton;
     private final TextButton startButton;
     private final TextButton backButton;
+    private final Label errorMessageLabel;
 
     public LobbyRoomView(LobbyMenuController controller, String lobbyId, String lobbyName, ArrayList<String> players) {
         this.controller = controller;
@@ -68,6 +70,11 @@ public class LobbyRoomView extends ScreenAdapter {
         table.add(startButton).width(400).row();
         table.add(backButton).width(400).row();
 
+        this.errorMessageLabel = new Label("", skin);
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
+        stage.addActor(errorMessageLabel);
+
         setupListeners();
     }
 
@@ -109,5 +116,9 @@ public class LobbyRoomView extends ScreenAdapter {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public Label getErrorMessageLabel() {
+        return errorMessageLabel;
     }
 }

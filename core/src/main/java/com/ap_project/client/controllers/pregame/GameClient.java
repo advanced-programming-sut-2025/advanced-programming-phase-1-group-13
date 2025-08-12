@@ -1,5 +1,15 @@
 package com.ap_project.client.controllers.pregame;
 
+import com.ap_project.Main;
+import com.ap_project.client.controllers.game.GameController;
+import com.ap_project.client.controllers.login.LoginController;
+import com.ap_project.client.views.game.FarmView;
+import com.ap_project.client.views.login.LoginMenuView;
+import com.ap_project.common.models.App;
+import com.ap_project.common.models.Game;
+import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.types.Gender;
 import com.ap_project.common.models.network.Message;
 import com.ap_project.common.models.network.MessageType;
 import com.ap_project.common.utils.JSONUtils;
@@ -10,8 +20,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.ap_project.Main.goToUsersMenu;
+import static com.ap_project.Main.*;
 
 public class GameClient {
     private final Socket socket;
@@ -120,6 +131,31 @@ public class GameClient {
         System.out.println("[Client] Handling message: " + message);
 
         switch (message.getType()) {
+            case LOGIN_SUCCESS:
+                System.out.println(message.getBody());
+                String username = message.getFromBody("username");
+                String password = message.getFromBody("password");
+                String nickname = message.getFromBody("nickname");
+                String email = message.getFromBody("email");
+                Gender gender = Gender.valueOf(message.getFromBody("gender"));
+                Gdx.app.postRunnable(() -> {
+                    if (Main.getMain().getScreen() instanceof LoginMenuView) {
+                        LoginMenuView loginMenuView = (LoginMenuView) Main.getMain().getScreen();
+                        loginMenuView.getController().handleLoginSuccess(new User(username, password, nickname, email, gender));
+                    }
+                });
+                break;
+
+            case LOGIN_ERROR:
+                String errorMessage = message.getFromBody("data");
+                Gdx.app.postRunnable(() -> {
+                    if (Main.getMain().getScreen() instanceof LoginMenuView) {
+                        LoginMenuView loginMenuView = (LoginMenuView) Main.getMain().getScreen();
+                        loginMenuView.getController().handleLoginError(errorMessage);
+                    }
+                });
+                break;
+
             case LOBBY_LIST:
                 List<String> lobbies = message.<List<String>>getFromBody("data");
                 if (lobbyMenuController != null) {
@@ -130,6 +166,7 @@ public class GameClient {
             case ERROR:
                 String errorMsg = message.<String>getFromBody("data");
                 if (lobbyMenuController != null) {
+                    System.out.println("[Client] Error: " + errorMsg);
                     lobbyMenuController.showError(errorMsg);
                 }
                 break;
@@ -156,7 +193,52 @@ public class GameClient {
                 ArrayList<String> usersInfo = message.getFromBody("data");
                 System.out.println("[Client] Received users info: " + usersInfo);
                 Gdx.app.postRunnable(() -> goToUsersMenu(usersInfo));
+                break;
 
+            case START_CHOOSE_MAP:
+                Map<String, Object> bodyMap = message.getBody();
+                ArrayList<User> players = new ArrayList<>();
+
+                Gdx.app.postRunnable(() -> {
+                try {
+                    for (int i = 1; i <= 4; i++) {
+                        String playerKey = "player" + i;
+                        if (bodyMap.containsKey(playerKey)) {
+                            Map<String, Object> playerData = (Map<String, Object>) bodyMap.get(playerKey);
+
+                            String playerUsername = (String) playerData.get("username");
+                            String playerPassword = (String) playerData.get("password");
+                            String playerNickname = (String) playerData.get("nickname");
+                            String playerEmail = (String) playerData.get("email");
+                            Gender playerGender = Gender.valueOf((String) playerData.get("gender"));
+
+                            User player = App.getUserByUsername(playerUsername);
+                            if (player == null) {
+                                player = new User(playerUsername, playerPassword, playerNickname, playerEmail, playerGender);
+                                App.addUser(player);
+                            }
+
+                            players.add(player);
+                        }
+                    }
+
+                    Game game = new Game(players, (String) bodyMap.get("id"), false);
+                    for (User user : players) {
+                        user.setActiveGame(game);
+                    }
+                    App.addGame(game);
+                    App.getLoggedIn().setActiveGame(game);
+                    Main.goToMultiplayerChooseMapMenuView();
+                } catch (Exception e) {
+                    System.out.println("[Client] Error: " + e.getMessage());
+                    e.printStackTrace();
+                }
+                });
+                break;
+
+            case GO_TO_GAME:
+                App.getLoggedIn().resetPlayer();
+                Gdx.app.postRunnable(() -> goToGame(new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin())));
                 break;
 
             default:

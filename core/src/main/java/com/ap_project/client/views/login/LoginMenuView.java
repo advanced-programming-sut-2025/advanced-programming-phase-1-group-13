@@ -162,4 +162,8 @@ public class LoginMenuView implements Screen {
     public void setErrorMessage(String message) {
         errorMessageLabel.setText(message);
     }
+
+    public LoginController getController() {
+        return controller;
+    }
 }
