@@ -1,6 +1,6 @@
 package com.ap_project.server.models;
 
-import com.ap_project.client.models.network.ClientHandler;
+import com.ap_project.server.controller.ClientHandler;
 
 import java.util.ArrayList;
 import java.util.List;
