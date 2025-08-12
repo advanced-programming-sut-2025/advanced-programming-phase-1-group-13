@@ -20,6 +20,7 @@ public class MainMenuView implements Screen {
     private final TextButton preGameMenuButton;
     private final TextButton profileMenuButton;
     private final TextButton logoutButton;
+    private final TextButton UsersMenuButton;
     private final Table table;
     private final MainMenuController controller;
 
@@ -32,6 +33,7 @@ public class MainMenuView implements Screen {
         this.preGameMenuButton = new TextButton("Pre Game Menu", skin);
         this.profileMenuButton = new TextButton("Profile Menu", skin);
         this.logoutButton = new TextButton("Logout", skin);
+        this.UsersMenuButton = new TextButton("Users Menu", skin);
 
         this.table = new Table();
 
@@ -86,6 +88,7 @@ public class MainMenuView implements Screen {
         float buttonWidth = 425f;
         table.add(preGameMenuButton).width(buttonWidth).padBottom(30).row();
         table.add(profileMenuButton).width(buttonWidth).padBottom(30).row();
+        table.add(UsersMenuButton).width(buttonWidth).padBottom(30).row();
         table.add(logoutButton).width(buttonWidth).padBottom(30).row();
 
         table.padRight(500f);
@@ -127,5 +130,9 @@ public class MainMenuView implements Screen {
 
     public TextButton getLogoutButton() {
         return logoutButton;
+    }
+
+    public TextButton getUsersMenuButton() {
+        return UsersMenuButton;
     }
 }

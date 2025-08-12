@@ -5,7 +5,7 @@ import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.client.controllers.login.*;
 import com.ap_project.client.controllers.pregame.*;
 import com.ap_project.client.controllers.signup.*;
-import com.ap_project.client.models.network.GameClient;
+import com.ap_project.client.controllers.pregame.GameClient;
 import com.ap_project.client.views.*;
 import com.ap_project.client.views.game.*;
 import com.ap_project.client.views.login.*;
@@ -14,7 +14,7 @@ import com.ap_project.client.views.signup.*;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.*;
 
-import com.ap_project.server.controller.LobbyMenuController;
+import com.ap_project.client.controllers.pregame.LobbyMenuController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -51,6 +51,12 @@ public class Main extends Game {
     public static void goToSignUpMenu() {
         Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
+
+
+    public static void goToUsersMenu() {
+        Main.getMain().setScreen(new UsersMenuView( GameAssetManager.getGameAssetManager().getSkin()));
+    }
+
 
     public static void goToSecurityQuestionMenu(String username) {
         Main.getMain().setScreen(new SecurityQuestionMenuView(new SecurityQuestionMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));

@@ -19,6 +19,8 @@ public class MainMenuController {
                 goToPreGameMenu();
             } else if (view.getProfileMenuButton().isChecked()) {
                 goToProfileMenu();
+            } else if (view.getUsersMenuButton().isChecked()) {
+                goToUsersMenu();
             } else if (view.getLogoutButton().isChecked()) {
                 goToTitleMenu();
             }

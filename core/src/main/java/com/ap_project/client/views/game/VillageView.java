@@ -181,20 +181,18 @@ public class VillageView extends GameView {
 
             if (npcOptions != null) {
                 if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
-                    if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
-                        goToGiveGiftMenu(this, npcWithMenu);
-                        return true;
-                    }
+                    goToGiveGiftMenu(this, npcWithMenu);
+                    return true;
+                }
 
-                    if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition)) {
-                        goToGameMenu(this, GameMenuType.SOCIAL);
-                        return true;
-                    }
+                if (clickedOnTexture(screenX, screenY, friendshipLevelButton, friendshipLevelPosition)) {
+                    goToGameMenu(this, GameMenuType.SOCIAL);
+                    return true;
+                }
 
-                    if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition)) {
-                        goToJournal(this);
-                        return true;
-                    }
+                if (clickedOnTexture(screenX, screenY, questsListButton, questsListPosition)) {
+                    goToJournal(this);
+                    return true;
                 }
 
                 npcOptions = null;
