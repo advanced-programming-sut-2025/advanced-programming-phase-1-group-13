@@ -59,9 +59,22 @@ public class Main extends Game {
         Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+    public static void goToKickMenu(GameView gameView) {
+        Main.getMain().setScreen(new KickMenuView(GameAssetManager.getGameAssetManager().getSkin(), gameView));
+    }
+
+    public static void goToTerminateMenu(GameView gameView) {
+        Main.getMain().setScreen(new TerminateMenuView(GameAssetManager.getGameAssetManager().getSkin(), gameView));
+    }
+
+
+
+
+
     public static void goToUsersMenu(ArrayList<String> usersInfo) {
         Main.getMain().setScreen(new UsersMenuView(usersInfo, GameAssetManager.getGameAssetManager().getSkin()));
     }
+
 
     public static void goToSecurityQuestionMenu(String username) {
         Main.getMain().setScreen(new SecurityQuestionMenuView(new SecurityQuestionMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
