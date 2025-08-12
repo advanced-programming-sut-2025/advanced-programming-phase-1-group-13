@@ -162,7 +162,7 @@ public class TradeController {
         User player = App.getLoggedIn();
 
         StringBuilder message = new StringBuilder("Trade History:\n" +
-            "---------------------------------------------------------------------\n" +
+            "----------------------------------------------\n" +
             "    Trades Submitted by You:\n");
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (trade.getCreator().equals(player)) {
@@ -170,7 +170,7 @@ public class TradeController {
             }
         }
 
-        message.append("---------------------------------------------------------------------\n" +
+        message.append("----------------------------------------------\n" +
             "    Trades accepted by You:\n");
         for (Trade trade : App.getCurrentGame().getTrades()) {
             if (!trade.getCreator().equals(player) && trade.isAccepted()) {

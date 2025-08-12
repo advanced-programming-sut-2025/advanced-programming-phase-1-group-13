@@ -60,12 +60,13 @@ public class TradeMenuView implements Screen, InputProcessor {
                 Label title = new Label("Choose player to trade with: ", skin);
                 title.setColor(Color.BLACK);
                 title.setPosition(
-                    Gdx.graphics.getWidth() / 2f + 50,
-                    Gdx.graphics.getHeight() / 2f + 50
+                    Gdx.graphics.getWidth() / 2f + -388,
+                    Gdx.graphics.getHeight() / 2f +20
                 );
                 stage.addActor(title);
 
                 SelectBox<String> players = new SelectBox<>(skin);
+                players.setWidth(380);
                 Array<String> options = new Array<>();
                 for (User player : App.getCurrentGame().getPlayers()) {
                     if (player.equals(App.getLoggedIn())) continue;
@@ -73,7 +74,7 @@ public class TradeMenuView implements Screen, InputProcessor {
                 }
                 players.setItems(options);
                 players.setPosition(
-                    Gdx.graphics.getWidth() / 2f - 50,
+                    Gdx.graphics.getWidth() / 2f +10,
                     Gdx.graphics.getHeight() / 2f
                 );
                 stage.addActor(players);
@@ -96,8 +97,8 @@ public class TradeMenuView implements Screen, InputProcessor {
                 Label tradeHistory = new Label(controller.showTradeHistory().message, skin);
                 tradeHistory.setColor(Color.BLACK);
                 tradeHistory.setPosition( // TODO
-                    Gdx.graphics.getWidth() / 2f + 50,
-                    Gdx.graphics.getHeight() / 2f + 50
+                    Gdx.graphics.getWidth() / 2f + -400,
+                    Gdx.graphics.getHeight() / 2f + 25
                 );
                 stage.addActor(tradeHistory);
                 return true;
