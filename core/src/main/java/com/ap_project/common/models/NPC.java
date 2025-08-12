@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import static com.ap_project.common.models.Item.getItemTypeByItemName;
 
@@ -31,6 +32,9 @@ public class NPC {
     private Animation<Texture> downAnimation;
     private Animation<Texture> leftAnimation;
     private Animation<Texture> rightAnimation;
+    private float stateTime;
+    private float x;
+    private float y;
 
     public NPC(NPCType type, Game game) {
         this.type = type;
@@ -135,14 +139,67 @@ public class NPC {
         }
         this.position.setX(position.getX() - 2);
 
+        x = position.getX();
+        y = position.getY();
     }
 
     public Direction getDirection() {
         return direction;
     }
 
-    public void changeToRandomDirection() {
-        direction = Direction.values()[(int) (Math.random() * Direction.values().length)];
+    public void moveRandomly() {
+        Random random = new Random();
+        if (random.nextFloat() > 0.01f && direction != null) {
+            isWalking = true;
+        } else {
+            Direction[] directions = Direction.values();
+            int currentOrdinal = direction != null ? direction.ordinal() : 0;
+            float rand = random.nextFloat();
+            if (rand < 0.5f) {
+                int newOrdinal = currentOrdinal + (random.nextBoolean() ? 1 : -1);
+                if (newOrdinal < 0) newOrdinal = directions.length - 1;
+                if (newOrdinal >= directions.length) newOrdinal = 0;
+                direction = directions[newOrdinal];
+            } else {
+                direction = directions[random.nextInt(directions.length)];
+            }
+            isWalking = true;
+        }
+    }
+
+    public Texture getTexture() {
+        Texture texture = downAnimation.getKeyFrame(stateTime);
+        if (isWalking) {
+            if (direction == Direction.UP) {
+                y -= 0.1f;
+                texture = upAnimation.getKeyFrame(stateTime);
+            }
+
+            if (direction == Direction.DOWN) {
+                y += 0.1f;
+                texture = downAnimation.getKeyFrame(stateTime);
+            }
+
+            if (direction == Direction.LEFT) {
+                x -= 0.1f;
+                texture = leftAnimation.getKeyFrame(stateTime);
+            }
+
+            if (direction == Direction.RIGHT) {
+                x += 0.1f;
+                texture = rightAnimation.getKeyFrame(stateTime);
+            }
+
+            if (x < 0) x = 0;
+            if (x > 74) x = 74;
+            if (y < 0) y = 0;
+            if (y > 55) y = 55;
+
+            position = new Position((int) x, (int) y);
+            return texture;
+        };
+
+        return GameAssetManager.getGameAssetManager().getNPCIdle(type, direction);
     }
 
     public int getStartOfFreeTime() {
@@ -150,5 +207,17 @@ public class NPC {
             return App.getCurrentGame().getVillage().getShopByOwner(this).getType().getEndHour();
         }
         return 16;
+    }
+
+    public void changeStateTime(float delta) {
+        this.stateTime += delta;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 }

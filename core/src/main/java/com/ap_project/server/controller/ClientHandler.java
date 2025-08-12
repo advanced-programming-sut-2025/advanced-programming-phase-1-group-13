@@ -1,22 +1,24 @@
 package com.ap_project.server.controller;
 
+import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.types.Gender;
 import com.ap_project.common.models.network.Message;
 import com.ap_project.common.models.network.MessageType;
 import com.ap_project.common.utils.JSONUtils;
 import com.ap_project.server.GameServer;
-import com.ap_project.server.models.LobbyData;
+import com.ap_project.server.models.Lobby;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
 
-import static com.ap_project.server.GameServer.lobbies;
+import static com.ap_project.server.GameServer.*;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
     private BufferedReader in;
     private BufferedWriter out;
-    private String nickname;
+    private User user;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -87,11 +89,27 @@ public class ClientHandler implements Runnable {
         }
 
         switch (command) {
-            case SET_USERNAME: {
-                this.nickname = (String) body.get("username");
-                System.out.println("[Server] Username set to: " + this.nickname);
+            case SIGNUP: {
+                String username = body.get("username").toString();
+                String password = body.get("password").toString();
+                String nickname = body.get("nickname").toString();
+                String email = body.get("email").toString();
+                Gender gender = Gender.getGenderByName(body.get("gender").toString());
+
+                handleSignup(username, password, nickname, email, gender);
                 break;
             }
+
+            case LOGIN: {
+                String username = body.get("username").toString();
+
+                handleLogin(username);
+                break;
+            }
+
+            case REQUESTS_USERS_INFO:
+                handleRequestUsersInfo();
+                break;
 
             case CREATE_LOBBY: {
                 String password = (String) body.get("password");
@@ -136,8 +154,50 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void handleSignup(String username, String password, String nickname, String email, Gender gender) {
+        try {
+            User user = new User(username, password, nickname, email, gender);
+            users.add(user);
+            System.out.println("[Server] Successfully added user: " + user.getUsername());
+        } catch (Exception e) {
+            System.out.println("[Server] Error creating user: " + e.getMessage());
+        }
+    }
+
+    private void handleLogin(String username) {
+        this.user = getUserByUsername(username);
+        System.out.println("[server]: client logged in: " + username);
+    }
+
+    private void handleRequestUsersInfo() {
+        try {
+            List<String> usersInfo = new ArrayList<>();
+            for (User user : users) {
+                usersInfo.add(user.getUsername() + "    Lobbies: " + getUsersLobbies(user));
+
+            }
+
+            sendMessage(MessageType.USERS_INFO, usersInfo);
+        } catch (Exception e) {
+            System.out.println("[Server] Failed to send lobby list: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private String getUsersLobbies(User user) {
+        StringBuilder lobbiesString = new StringBuilder();
+        for (Lobby lobby : lobbies.values()) {
+            for (ClientHandler client : clients) {
+                if (client.getUser().getUsername().equals(user.getUsername())) {
+                    lobbiesString.append(lobby.getLobbyName()).append("( ").append(lobby.getLobbyId()).append(" ), ");
+                }
+            }
+        }
+        return lobbiesString.toString();
+    }
+
     private void handleRequestLobbyInfo(String lobbyId) {
-        LobbyData lobby = lobbies.get(lobbyId);
+        Lobby lobby = lobbies.get(lobbyId);
         if (lobby == null) {
             sendError("Lobby not found");
             return;
@@ -160,7 +220,7 @@ public class ClientHandler implements Runnable {
 
     private void handleCreateLobby(String lobbyName, String password, boolean isPrivate, boolean isVisible) {
         String lobbyId = UUID.randomUUID().toString().substring(0, 8);
-        LobbyData lobby = new LobbyData(lobbyId, lobbyName, password, isPrivate, isVisible, this);
+        Lobby lobby = new Lobby(lobbyId, lobbyName, password, isPrivate, isVisible, this);
 
         lobbies.put(lobbyId, lobby);
         lobby.addPlayer(this);
@@ -170,20 +230,24 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleJoinLobby(String lobbyId, String providedPassword) {
-        LobbyData lobby = lobbies.get(lobbyId);
+        Lobby lobby = lobbies.get(lobbyId);
         if (lobby == null) {
             sendError("Lobby not found");
-        } else if (lobby.isFull()) {
+            return;
+        }
+
+        for (ClientHandler client : lobby.getPlayers()) {
+            if (client.user.equals(user)) {
+                sendError("You are already in this lobby.");
+                return;
+            }
+        }
+
+        if (lobby.isFull()) {
             sendError("Lobby is full");
         } else if (lobby.isPrivate() && !lobby.getPassword().equals(providedPassword)) {
             sendError("Wrong password");
         } else {
-            for (ClientHandler player : lobby.getPlayers()) {
-                if (player.getNickname().equals(nickname)) {
-                    sendError("You are already in this lobby.");
-                    return;
-                }
-            }
             lobby.addPlayer(this);
             sendMessage(MessageType.JOIN_SUCCESS, lobbyId);
             sendLobbyListToAll();
@@ -191,7 +255,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleLeaveLobby(String lobbyId) {
-        LobbyData lobby = lobbies.get(lobbyId);
+        Lobby lobby = lobbies.get(lobbyId);
         if (lobby == null) {
             sendError("Lobby not found");
         } else {
@@ -204,7 +268,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleStartGame(String lobbyId) {
-        LobbyData lobby = lobbies.get(lobbyId);
+        Lobby lobby = lobbies.get(lobbyId);
         if (lobby == null) {
             sendError("Lobby not found");
         } else {
@@ -222,7 +286,7 @@ public class ClientHandler implements Runnable {
         try {
             List<String> notUsedLobbyIds = new ArrayList<>();
             long now = System.currentTimeMillis();
-            for (LobbyData lobby : lobbies.values()) {
+            for (Lobby lobby : lobbies.values()) {
                 if (lobby.getPlayers().size() == 1 && (now - lobby.getLastJoinTime()) > 5 * 60 * 1000) {
                     notUsedLobbyIds.add(lobby.getLobbyId());
                 }
@@ -233,7 +297,7 @@ public class ClientHandler implements Runnable {
             }
 
             List<String> lobbyInfo = new ArrayList<>();
-            for (LobbyData lobby : lobbies.values()) {
+            for (Lobby lobby : lobbies.values()) {
                 StringBuilder playersUsernames = new StringBuilder();
                 for (ClientHandler client : lobby.getPlayers()) {
                     playersUsernames.append(client.getNickname()).append("-");
@@ -253,6 +317,7 @@ public class ClientHandler implements Runnable {
             sendMessage(MessageType.LOBBY_LIST, lobbyInfo);
         } catch (Exception e) {
             System.out.println("[Server] Failed to send lobby list: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -274,8 +339,13 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String getNickname() {
-        return nickname;
+        if (user == null) return "null";
+        return user.getNickname();
     }
 
     public void sendError(String message) {

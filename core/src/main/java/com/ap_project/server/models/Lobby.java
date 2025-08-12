@@ -5,7 +5,7 @@ import com.ap_project.server.controller.ClientHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LobbyData {
+public class Lobby {
     private final String lobbyId;
     private final String lobbyName;
     private final String password;
@@ -16,7 +16,7 @@ public class LobbyData {
     private long lastJoinTime;
     private static final int MAX_CAPACITY = 4;
 
-    public LobbyData(String lobbyId, String lobbyName, String password, boolean isPrivate, boolean isVisible, ClientHandler admin) {
+    public Lobby(String lobbyId, String lobbyName, String password, boolean isPrivate, boolean isVisible, ClientHandler admin) {
         this.lobbyId = lobbyId;
         this.lobbyName = lobbyName;
         this.password = password;

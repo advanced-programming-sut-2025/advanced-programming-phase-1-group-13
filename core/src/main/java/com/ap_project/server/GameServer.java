@@ -1,21 +1,19 @@
 package com.ap_project.server;
 
+import com.ap_project.common.models.User;
 import com.ap_project.server.controller.ClientHandler;
-import com.ap_project.server.models.LobbyData;
+import com.ap_project.server.models.Lobby;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class GameServer {
     public static final int PORT = 9999;
 
-    public static final Map<String, LobbyData> lobbies = Collections.synchronizedMap(new HashMap<>());
+    public static final ArrayList<User> users = new ArrayList<>();
+    public static final Map<String, Lobby> lobbies = Collections.synchronizedMap(new HashMap<>());
     public static final Set<ClientHandler> clients = Collections.synchronizedSet(new HashSet<>());
 
     public static void main(String[] args) {
@@ -34,7 +32,12 @@ public class GameServer {
         }
     }
 
-    public static LobbyData getLobby(String lobbyId) {
-        return lobbies.get(lobbyId);
+    public static User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

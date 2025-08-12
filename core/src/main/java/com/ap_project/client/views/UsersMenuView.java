@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ap_project.Main.goToPreGameMenu;
@@ -21,11 +22,14 @@ public class UsersMenuView implements Screen {
     private final TextButton backButton;
     private final ScrollPane userListScroll;
     private final VerticalGroup userList;
+    private final ArrayList<String> usersInfo;
 
-    public UsersMenuView( Skin skin) {
+    public UsersMenuView(ArrayList<String> usersInfo, Skin skin) {
         this.skin = skin;
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
+        this.usersInfo = usersInfo;
 
         Image backgroundImage = new Image(GameAssetManager.getGameAssetManager().getMenuBackground());
         backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -39,6 +43,7 @@ public class UsersMenuView implements Screen {
 
         userList = new VerticalGroup();
         userList.top().left().columnLeft();
+        userList.space(20);
         userListScroll = new ScrollPane(userList, skin);
         userListScroll.setFadeScrollBars(false);
 
@@ -51,19 +56,34 @@ public class UsersMenuView implements Screen {
         title.setFontScale(1.6f);
         table.add(title).colspan(2).padBottom(10).row();
 
+        for (String rawUsersInfo : usersInfo) {
+            String[] parts = rawUsersInfo.split(",");
 
-        table.add(backButton).colspan(1).padTop(600);
+            String username = parts[0];
+            Label infoLabel = new Label(username, skin);
 
-        stage.addActor(table);
+            HorizontalGroup row = new HorizontalGroup();
+            row.space(30);
+            row.space(30);
+            row.left();
+            row.left();
+            row.addActor(infoLabel);
+
+            userList.addActor(row);
+        }
 
         userListScroll.setSize(1500, 250);
         userListScroll.setPosition(
             Gdx.graphics.getWidth() / 2f - 700,
             Gdx.graphics.getHeight() / 2f - 350
         );
-        stage.addActor(userListScroll);
 
 
+        table.add(userListScroll).row();
+
+        table.add(backButton).colspan(1).padTop(300);
+
+        stage.addActor(table);
     }
 
     private void addListeners() {
@@ -77,7 +97,6 @@ public class UsersMenuView implements Screen {
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -90,21 +109,26 @@ public class UsersMenuView implements Screen {
 
     @Override
     public void resize(int width, int height) {
+
     }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void hide() {
+
     }
 
     @Override
     public void dispose() {
+
     }
 }

@@ -34,6 +34,7 @@ public class VillageView extends GameView {
     private Vector2 questsListPosition;
     private final Texture friendshipLevelButton;
     private Vector2 friendshipLevelPosition;
+    private final ArrayList<Position> housePositions;
 
     public VillageView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -45,21 +46,24 @@ public class VillageView extends GameView {
             shopTextures.add(GameAssetManager.getGameAssetManager().getShop(shop.getType(), App.getCurrentGame().getGameState().getTime().getSeason()));
         }
 
+        this.housePositions = new ArrayList<>();
         this.npcHousesTextures = new ArrayList<>();
         this.npcTextures = new ArrayList<>();
         for (NPCType npcType : NPCType.values()) {
             npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npcType, App.getCurrentGame().getNpcs().get(npcType.ordinal()).getDirection()));
             if (npcType.getHouse() != null) {
                 npcHousesTextures.add(GameAssetManager.getGameAssetManager().getNPCHouse(npcType));
-            } else {
-                npcHousesTextures.add(null);
+                housePositions.add(npcType.getHouse());
             }
         }
 
         this.otherPlayersTextures = new ArrayList<>();
         for (User player : App.getCurrentGame().getPlayers()) {
             if (player.equals(App.getLoggedIn())) continue;
-            otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(player.getGender(), player.getDirection()));
+            otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(
+                player.getGender(),
+                player.getDirection())
+            );
         }
 
         this.npcOptions = null;
@@ -79,10 +83,11 @@ public class VillageView extends GameView {
         this.npcTextures = new ArrayList<>();
         for (int i = 0; i < App.getCurrentGame().getNpcs().size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
-            if (App.getCurrentGame().getGameState().getTime().getHour() == npc.getStartOfFreeTime()) {
-                npc.changeToRandomDirection();
+            if (App.getCurrentGame().getGameState().getTime().getHour() >= npc.getStartOfFreeTime()) {
+                npc.moveRandomly();
             }
-            npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npc.getType(), npc.getDirection()));
+            npc.changeStateTime(delta);
+            npcTextures.add(npc.getTexture());
         }
 
         scale = 4.400316f;
@@ -90,13 +95,13 @@ public class VillageView extends GameView {
             draw(shopTextures.get(i), NPCVillage.getShops().get(i).getPosition());
         }
 
+        for (int i = 0; i < npcHousesTextures.size(); i++) {
+            draw(npcHousesTextures.get(i), housePositions.get(i));
+        }
+
         scale = 4;
         for (int i = 0; i < npcTextures.size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
-
-            if (npc.getType().getHouse() != null) {
-                draw(npcHousesTextures.get(i), npc.getPosition());
-            }
 
             draw(npcTextures.get(i), npc.getPosition());
 

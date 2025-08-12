@@ -3,11 +3,17 @@ package com.ap_project.client.controllers.login;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.HashMap;
+
+import com.ap_project.Main;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.Result;
 import com.ap_project.common.models.User;
 import com.ap_project.common.models.enums.Menu;
 import com.ap_project.client.views.login.LoginMenuView;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
@@ -56,6 +62,10 @@ public class LoginController {
 
         App.setLoggedIn(user);
         App.setCurrentMenu(Menu.MAIN_MENU);
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("username", username);
+        Message message = new Message(body, MessageType.LOGIN);
+        Main.getClient().sendMessage(JSONUtils.toJson(message));
         return new Result(true, "Login successful. You are now in Main Menu.");
     }
 
