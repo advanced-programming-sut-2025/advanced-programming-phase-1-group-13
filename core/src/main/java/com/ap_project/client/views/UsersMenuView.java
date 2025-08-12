@@ -95,8 +95,6 @@ public class UsersMenuView implements Screen {
         });
     }
 
-
-
     @Override
     public void show() {
     }
