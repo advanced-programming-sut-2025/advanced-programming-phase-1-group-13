@@ -45,7 +45,7 @@ public class PurchaseMenuView implements Screen, InputProcessor {
 
         this.buyButton = new Image(GameAssetManager.getGameAssetManager().getBuyButton());
 
-        NPCPortraitImage = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(shop.getOwner().getType()));
+        NPCPortraitImage = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(shop.getOwner()));
         NPCPortraitImage.setSize(250, 250);
         NPCPortraitImage.setPosition(windowX + 98, windowY + window.getHeight() - 281);
 

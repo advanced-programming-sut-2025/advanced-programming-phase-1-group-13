@@ -626,18 +626,19 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Village/NPCHouses/" + npcType.getName() + "House.png"));
     }
 
-    public Texture getNPCIdle(NPCType npcType) {
-        return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + ".png"));
+    public Texture getNPCIdle(NPCType npcType, Direction direction) {
+        return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + "/" + direction + ".png"));
     }
 
     public Animation<Texture> getNPCAnimation(NPCType npcType, Direction direction) {
         Array<Texture> frames = new Array<>();
         for (int i = 1; i <= 4; i++) {
-            String path = "Images/NPC/Animation/" + npcType.getName() + "s" + "/" + npcType + "Sprite" + direction + i + ".png";
+            String path = "Images/NPC/Animation/" + npcType.getName() + "/" + direction + i + ".png";
             frames.add(new Texture(Gdx.files.internal(path)));
         }
         return new Animation<>(0.15f, frames, Animation.PlayMode.LOOP);
     }
+
 
     public Texture getNPCPortrait(NPCType npcType) {
         return new Texture(Gdx.files.internal("Images/NPC/Portrait/" + npcType.getName() + ".png"));
@@ -650,6 +651,19 @@ public class GameAssetManager {
     public Texture getGiveGiftButton() {
         return new Texture(Gdx.files.internal("Images/NPC/GiveGiftButton.png"));
     }
+
+    public Texture getHugButton() {
+        return new Texture(Gdx.files.internal("Images/Interactions/HugButton.png"));
+    }
+
+    public Texture getProposeButton() {
+        return new Texture(Gdx.files.internal("Images/Interactions/ProposeButton.png"));
+    }
+
+    public Texture getGiveFlowerButton() {
+        return new Texture(Gdx.files.internal("Images/Interactions/GiveFlowerButton.png"));
+    }
+
 
     public Texture getFriendshipLevelButton() {
         return new Texture(Gdx.files.internal("Images/NPC/FriendshipLevelButton.png"));

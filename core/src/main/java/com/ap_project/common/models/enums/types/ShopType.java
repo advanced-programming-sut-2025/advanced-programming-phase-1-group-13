@@ -30,8 +30,8 @@ public enum ShopType {
         return name;
     }
 
-    public NPC getOwner() {
-        return new NPC(ownerType);
+    public NPCType getOwner() {
+        return ownerType;
     }
 
     public int getStartHour() {

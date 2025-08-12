@@ -7,6 +7,8 @@ import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.ItemType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.ap_project.common.models.enums.types.Role;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,24 +27,27 @@ public class NPC {
     private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
     private Direction direction;
     private boolean isWalking;
+    private Animation<Texture> upAnimation;
+    private Animation<Texture> downAnimation;
+    private Animation<Texture> leftAnimation;
+    private Animation<Texture> rightAnimation;
 
-    public NPC(NPCType type) {
+    public NPC(NPCType type, Game game) {
         this.type = type;
         this.name = type.getName();
         this.role = type.getRole();
-
-        if (type.getHouse() != null) {
-            this.position = new Position(type.getHouse());
-        }
-        else {
-            position = new Position(10, 0);
-        }
-        this.position.setX(position.getX() - 2);
+        resetPosition(game);
+        this.direction = Direction.DOWN;
 
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();
         this.daysLeftToUnlockThirdQuest = new HashMap<>();
+
+        this.upAnimation = GameAssetManager.getGameAssetManager().getNPCAnimation(type, Direction.UP);
+        this.downAnimation = GameAssetManager.getGameAssetManager().getNPCAnimation(type, Direction.DOWN);
+        this.leftAnimation = GameAssetManager.getGameAssetManager().getNPCAnimation(type, Direction.LEFT);
+        this.rightAnimation = GameAssetManager.getGameAssetManager().getNPCAnimation(type, Direction.RIGHT);
     }
 
     public NPCType getType() {
@@ -109,5 +114,41 @@ public class NPC {
 
     public boolean hasDialog() {
         return this.getDialog() != null;
+    }
+
+    public boolean isWalking() {
+        return isWalking;
+    }
+
+    public void resetPosition(Game game) {
+        if (type.getHouse() != null) {
+            this.position = new Position(type.getHouse());
+        }
+        else {
+            try {
+                position = game.getVillage().getShopByOwner(this).getPosition();
+            } catch (Exception e) {
+                System.out.println(name + " doesn't have a shop" + e.getMessage());
+                e.printStackTrace();
+                position = new Position(10, 10);
+            }
+        }
+        this.position.setX(position.getX() - 2);
+
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void changeToRandomDirection() {
+        direction = Direction.values()[(int) (Math.random() * Direction.values().length)];
+    }
+
+    public int getStartOfFreeTime() {
+        if (App.getCurrentGame().getVillage().getShopByOwner(this) != null) {
+            return App.getCurrentGame().getVillage().getShopByOwner(this).getType().getEndHour();
+        }
+        return 16;
     }
 }

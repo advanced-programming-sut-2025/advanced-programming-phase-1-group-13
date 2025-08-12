@@ -49,7 +49,7 @@ public class ShopMenuView implements Screen, InputProcessor {
         window.setPosition(windowX, windowY);
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
 
-        NPCPortraitImage = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(shop.getOwner().getType()));
+        NPCPortraitImage = new Image(GameAssetManager.getGameAssetManager().getNPCPortrait(shop.getOwner()));
         NPCPortraitImage.setSize(250, 250);
         NPCPortraitImage.setPosition(windowX + 98, windowY + window.getHeight() - 281);
 

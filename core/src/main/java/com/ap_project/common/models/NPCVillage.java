@@ -62,6 +62,15 @@ public class NPCVillage {
         return null;
     }
 
+    public Shop getShopByOwner(NPC npc) {
+        for (Shop shop : shops) {
+            if (shop.getOwner().getName().equalsIgnoreCase(npc.getName())) {
+                return shop;
+            }
+        }
+        return null;
+    }
+
     public boolean isPositionInvalid(Position pos) {
         return pos.getX() < 0 || pos.getX() >= width ||
             pos.getY() < 0 || pos.getY() >= height;

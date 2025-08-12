@@ -66,6 +66,8 @@ public class User {
     private ArrayList<ReactionMessage> defaultReactions;
     private ArrayList<String> music;
     private String taggedInPublicChat;
+    private HashMap<String, String> privateChats = new HashMap<>();
+    private HashMap<String, Boolean> hasUnreadPrivateMessages = new HashMap<>();
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -168,7 +170,7 @@ public class User {
         this.isInVillage = false;
         this.defaultEmojis = new ArrayList<>();
         this.defaultReactions = new ArrayList<>();
-        for (int i = 1; i <= 10 ; i++) {
+        for (int i = 1; i <= 10; i++) {
             defaultEmojis.add(i);
             defaultReactions.add(ReactionMessage.values()[i - 1]);
         }
@@ -391,6 +393,41 @@ public class User {
 
     public Game getActiveGame() {
         return activeGame;
+    }
+
+    public String getPrivateChat(String username) {
+        return privateChats.get(username);
+    }
+
+    public HashMap<String, Boolean> getUnreadPrivateMessagesMap() {
+        return hasUnreadPrivateMessages;
+    }
+
+    public void sendPrivateMessage(String receiverUsername, String message) {
+        String previousMessages = this.privateChats.get(receiverUsername);
+        String updatedMessages;
+        if (previousMessages != null && !previousMessages.isEmpty()) {
+            updatedMessages = previousMessages + username + ": " + message + "\n\n";
+        } else {
+            updatedMessages = username + ": " + message + "\n\n";
+        }
+        privateChats.put(receiverUsername, updatedMessages);
+    }
+
+    public void receivePrivateMessage(String senderUsername, String message) {
+        String previousMessages = this.privateChats.get(senderUsername);
+        String updatedMessages;
+        if (previousMessages != null && !previousMessages.isEmpty()) {
+            updatedMessages = previousMessages + senderUsername + ": " + message + "\n\n";
+        } else {
+            updatedMessages = senderUsername + ": " + message + "\n\n";
+        }
+        privateChats.put(senderUsername, updatedMessages);
+        hasUnreadPrivateMessages.put(senderUsername, true);
+    }
+
+    public void readPrivateMessage(String senderUsername) {
+        hasUnreadPrivateMessages.put(senderUsername, false);
     }
 
     public void setActiveGame(Game activeGame) {
