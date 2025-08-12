@@ -1,7 +1,10 @@
 package com.ap_project.common.models.network;
 
 public enum MessageType {
-    SET_USERNAME,
+    SIGNUP,
+    LOGIN,
+    REQUESTS_USERS_INFO,
+    USERS_INFO,
     CREATE_LOBBY,
     REFRESH_LOBBIES,
     JOIN_LOBBY,

@@ -3,6 +3,11 @@ package com.ap_project.client.controllers;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Menu;
 import com.ap_project.client.views.MainMenuView;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
+
+import java.util.HashMap;
 
 import static com.ap_project.Main.*;
 
@@ -20,7 +25,8 @@ public class MainMenuController {
             } else if (view.getProfileMenuButton().isChecked()) {
                 goToProfileMenu();
             } else if (view.getUsersMenuButton().isChecked()) {
-                goToUsersMenu();
+                Message message = new Message(new HashMap<>(), MessageType.REQUESTS_USERS_INFO);
+                getClient().sendMessage(JSONUtils.toJson(message));
             } else if (view.getLogoutButton().isChecked()) {
                 goToTitleMenu();
             }

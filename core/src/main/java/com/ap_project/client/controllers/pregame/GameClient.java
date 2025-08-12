@@ -7,8 +7,11 @@ import com.badlogic.gdx.Gdx;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.ap_project.Main.goToUsersMenu;
 
 public class GameClient {
     private final Socket socket;
@@ -147,6 +150,13 @@ public class GameClient {
                 if (lobbyMenuController != null) {
                     Gdx.app.postRunnable(() -> lobbyMenuController.openLobbyRoomView(lobbyInfoString));
                 }
+                break;
+
+            case USERS_INFO:
+                ArrayList<String> usersInfo = message.getFromBody("data");
+                System.out.println("[Client] Received users info: " + usersInfo);
+                Gdx.app.postRunnable(() -> goToUsersMenu(usersInfo));
+
                 break;
 
             default:

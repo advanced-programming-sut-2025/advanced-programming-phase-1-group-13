@@ -59,7 +59,10 @@ public class VillageView extends GameView {
         this.otherPlayersTextures = new ArrayList<>();
         for (User player : App.getCurrentGame().getPlayers()) {
             if (player.equals(App.getLoggedIn())) continue;
-            otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(player.getGender(), player.getDirection()));
+            otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(
+                player.getGender(),
+                player.getDirection())
+            );
         }
 
         this.npcOptions = null;

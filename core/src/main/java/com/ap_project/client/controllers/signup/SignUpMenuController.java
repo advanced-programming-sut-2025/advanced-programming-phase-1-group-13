@@ -1,11 +1,16 @@
 package com.ap_project.client.controllers.signup;
 
+import com.ap_project.Main;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.Result;
 import com.ap_project.common.models.User;
 import com.ap_project.common.models.enums.types.Gender;
 import com.ap_project.client.views.signup.SignUpMenuView;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import static com.ap_project.Main.goToSecurityQuestionMenu;
@@ -32,6 +37,15 @@ public class SignUpMenuController {
                 String genderString = view.getGenders().getSelected();
                 Result result = registerUser(username, password, repeatPassword, nickname, email, genderString);
                 if (result.success) {
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("username", username);
+                    body.put("password", password);
+                    body.put("nickname", nickname);
+                    body.put("email", email);
+                    body.put("gender", genderString);
+                    Message message = new Message(body, MessageType.SIGNUP);
+                    Main.getClient().sendMessage(JSONUtils.toJson(message));
+
                     goToSecurityQuestionMenu(username);
                 } else {
                     view.setErrorMessage(result.message);

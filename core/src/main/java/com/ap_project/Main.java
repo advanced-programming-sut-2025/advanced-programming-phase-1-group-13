@@ -19,16 +19,23 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
 public class Main extends Game {
+    private static GameClient client;
     private static Main main;
     private static SpriteBatch batch;
 
     @Override
     public void create() {
+        try {
+            client = new GameClient("127.0.0.1", 9999);
+        } catch (IOException e) {
+            System.out.println("Failed to connect to server: " + e.getMessage());
+        }
         main = this;
         batch = new SpriteBatch();
         main.setScreen(new TitleMenuView(new TitleMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
@@ -52,11 +59,9 @@ public class Main extends Game {
         Main.getMain().setScreen(new SignUpMenuView(new SignUpMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-
-    public static void goToUsersMenu() {
-        Main.getMain().setScreen(new UsersMenuView( GameAssetManager.getGameAssetManager().getSkin()));
+    public static void goToUsersMenu(ArrayList<String> usersInfo) {
+        Main.getMain().setScreen(new UsersMenuView(usersInfo, GameAssetManager.getGameAssetManager().getSkin()));
     }
-
 
     public static void goToSecurityQuestionMenu(String username) {
         Main.getMain().setScreen(new SecurityQuestionMenuView(new SecurityQuestionMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
@@ -75,15 +80,9 @@ public class Main extends Game {
     }
 
     public static void goToLobbyMenu() {
-        try {
-            GameClient client = new GameClient("127.0.0.1", 9999);
-            LobbyMenuController controller = new LobbyMenuController(client);
-            client.setLobbyMenuController(controller);
-            Main.getMain().setScreen(new LobbyMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
-        } catch (IOException e) {
-            System.out.println("Failed to connect to lobby server: " + e.getMessage());
-            e.printStackTrace();
-        }
+        LobbyMenuController controller = new LobbyMenuController(client);
+        client.setLobbyMenuController(controller);
+        Main.getMain().setScreen(new LobbyMenuView(controller, GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToMainMenu() {
@@ -145,6 +144,7 @@ public class Main extends Game {
     public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
         Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
     }
+
     public static void goToVotingMenu(GameView gameView) {
         Main.getMain().setScreen(new VotingMenuView(gameView));
     }
@@ -228,5 +228,9 @@ public class Main extends Game {
 
     public static SpriteBatch getBatch() {
         return batch;
+    }
+
+    public static GameClient getClient() {
+        return client;
     }
 }

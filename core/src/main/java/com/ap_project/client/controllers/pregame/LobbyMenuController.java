@@ -24,14 +24,6 @@ public class LobbyMenuController {
 
     public void setView(LobbyMenuView view) {
         this.view = view;
-        try {
-            HashMap<String, Object> body = new HashMap<>();
-            body.put("username", App.getLoggedIn().getUsername());
-            Message message = new Message(body, MessageType.SET_USERNAME);
-            client.sendMessage(JSONUtils.toJson(message));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void createLobby(String name, String password, boolean isPrivate, boolean isVisible) {
@@ -130,5 +122,9 @@ public class LobbyMenuController {
 
         LobbyRoomView lobbyRoomView = new LobbyRoomView(this, lobbyId, lobbyName, players);
         Main.getMain().setScreen(lobbyRoomView);
+    }
+
+    public GameClient getClient() {
+        return client;
     }
 }
