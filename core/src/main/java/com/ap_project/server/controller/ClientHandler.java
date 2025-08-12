@@ -173,7 +173,7 @@ public class ClientHandler implements Runnable {
         try {
             List<String> usersInfo = new ArrayList<>();
             for (User user : users) {
-                usersInfo.add(user.getUsername() + "    Lobbies: " + getUsersLobbies(user));
+                usersInfo.add(user.getUsername() + "    Lobbies: " + getUsersLobbies(user.getUsername()));
 
             }
 
@@ -184,11 +184,11 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private String getUsersLobbies(User user) {
+    private String getUsersLobbies(String username) {
         StringBuilder lobbiesString = new StringBuilder();
         for (Lobby lobby : lobbies.values()) {
             for (ClientHandler client : clients) {
-                if (client.getUser().getUsername().equals(user.getUsername())) {
+                if (client.getUser().getUsername().equals(username)) {
                     lobbiesString.append(lobby.getLobbyName()).append("( ").append(lobby.getLobbyId()).append(" ), ");
                 }
             }

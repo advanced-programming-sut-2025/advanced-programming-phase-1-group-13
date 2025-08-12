@@ -871,8 +871,7 @@ public abstract class GameView implements Screen, InputProcessor {
                 direction
             );
 
-            Tile tile = App.getLoggedIn().getFarm().getTileByPosition(getPositionByDirection(direction));
-            tool.useTool(tile, App.getLoggedIn());
+            App.getLoggedIn().decreaseEnergyBy(10);
             updateGreenBar();
         }
     }

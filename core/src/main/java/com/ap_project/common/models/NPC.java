@@ -28,10 +28,10 @@ public class NPC {
     private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
     private Direction direction;
     private boolean isWalking;
-    private Animation<Texture> upAnimation;
-    private Animation<Texture> downAnimation;
-    private Animation<Texture> leftAnimation;
-    private Animation<Texture> rightAnimation;
+    private final Animation<Texture> upAnimation;
+    private final Animation<Texture> downAnimation;
+    private final Animation<Texture> leftAnimation;
+    private final Animation<Texture> rightAnimation;
     private float stateTime;
     private float x;
     private float y;
@@ -112,8 +112,7 @@ public class NPC {
         Season season = game.getGameState().getTime().getSeason();
         Weather weather = game.getGameState().getCurrentWeather();
         int friendshipLevel = game.getNpcFriendshipPoints(App.getLoggedIn(), this);
-        Dialog dialog = Dialog.getDialogBySituation(type, timeOfDay, season, weather, friendshipLevel);
-        return dialog;
+        return Dialog.getDialogBySituation(type, timeOfDay, season, weather, friendshipLevel);
     }
 
     public boolean hasDialog() {
@@ -133,7 +132,6 @@ public class NPC {
                 position = game.getVillage().getShopByOwner(this).getPosition();
             } catch (Exception e) {
                 System.out.println(name + " doesn't have a shop" + e.getMessage());
-                e.printStackTrace();
                 position = new Position(10, 10);
             }
         }
