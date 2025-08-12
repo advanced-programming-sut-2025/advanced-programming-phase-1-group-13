@@ -1,7 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.client.controllers.GameController;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.GameMenuType;
@@ -23,6 +23,8 @@ import static com.ap_project.Main.*;
 public class VillageView extends GameView {
     private final ArrayList<Texture> shopTextures;
     private final ArrayList<Texture> npcTextures;
+    private final ArrayList<Texture> npcHousesTextures;
+    private final ArrayList<Texture> otherPlayersTextures;
     private NPC npcWithMenu;
     private Texture npcOptions;
     private NPC npcWithGift;
@@ -43,9 +45,21 @@ public class VillageView extends GameView {
             shopTextures.add(GameAssetManager.getGameAssetManager().getShop(shop.getType(), App.getCurrentGame().getGameState().getTime().getSeason()));
         }
 
+        this.npcHousesTextures = new ArrayList<>();
         this.npcTextures = new ArrayList<>();
         for (NPCType npcType : NPCType.values()) {
-            npcTextures.add(GameAssetManager.getGameAssetManager().getNPC(npcType));
+            npcTextures.add(GameAssetManager.getGameAssetManager().getNPCIdle(npcType));
+            if (npcType.getHouse() != null) {
+                npcHousesTextures.add(GameAssetManager.getGameAssetManager().getNPCHouse(npcType));
+            } else {
+                npcHousesTextures.add(null);
+            }
+        }
+
+        this.otherPlayersTextures = new ArrayList<>();
+        for (User player : App.getCurrentGame().getPlayers()) {
+            if (player.equals(App.getLoggedIn())) continue;
+            otherPlayersTextures.add(GameAssetManager.getGameAssetManager().getIdlePlayer(player.getGender(), player.getDirection()));
         }
 
         this.npcOptions = null;
@@ -70,6 +84,11 @@ public class VillageView extends GameView {
         scale = 4;
         for (int i = 0; i < npcTextures.size(); i++) {
             NPC npc = App.getCurrentGame().getNpcs().get(i);
+
+            if (npc.getType().getHouse() != null) {
+                draw(npcHousesTextures.get(i), npc.getPosition());
+            }
+
             draw(npcTextures.get(i), npc.getPosition());
 
             float temp = scale;
@@ -85,6 +104,16 @@ public class VillageView extends GameView {
                 scale = 0.5f;
                 draw(gift, npc.getPosition());
                 scale = temp;
+            }
+        }
+
+        scale = 1;
+        for (int i = 0; i < otherPlayersTextures.size(); i++) {
+            User player = App.getCurrentGame().getPlayers().get(i);
+            if (player.equals(App.getLoggedIn())) continue;
+
+            if (player.isInVillage()) {
+                draw(otherPlayersTextures.get(i), player.getPosition());
             }
         }
 
@@ -173,7 +202,6 @@ public class VillageView extends GameView {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
         show();
         return false;

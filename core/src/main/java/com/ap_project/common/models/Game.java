@@ -20,7 +20,6 @@ import java.util.*;
 public class Game {
     private final ArrayList<User> players;
     private final NPCVillage village;
-    private boolean isInNPCVillage;
     private final GameState gameState;
     private final ArrayList<NPC> npcs;
     private final ArrayList<Quest> quests;
@@ -28,11 +27,11 @@ public class Game {
     private final HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
+    private String publicChat;
 
     public Game(ArrayList<User> players) {
         this.players = players;
         this.gameState = new GameState();
-        this.isInNPCVillage = false;
         this.village = new NPCVillage();
         App.setCurrentGame(this);
 
@@ -141,18 +140,12 @@ public class Game {
                 talkHistory.put(sender, talkMap);
             }
         }
+
+        this.publicChat = "";
     }
 
     public NPCVillage getVillage() {
         return village;
-    }
-
-    public boolean isInNPCVillage() {
-        return isInNPCVillage;
-    }
-
-    public void setInNPCVillage(boolean inNPCVillage) {
-        isInNPCVillage = inNPCVillage;
     }
 
     public ArrayList<User> getPlayers() {
@@ -181,6 +174,14 @@ public class Game {
 
     public void addTrade(Trade trade) {
         this.trades.add(trade);
+    }
+
+    public String getPublicChat() {
+        return publicChat;
+    }
+
+    public void addMessage(String username, String message) {
+        publicChat += username + ": " + message + "\n\n";
     }
 
     public String nextTurn(User previousPlayer) {

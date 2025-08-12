@@ -1,7 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.client.controllers.GameController;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Skill;
 import com.ap_project.common.models.enums.types.CraftType;
@@ -282,7 +282,11 @@ public class GameMenuView implements Screen, InputProcessor {
             if (hoverOnImage(nextTurn, screenX, convertedY)) {
                 GameController.nextTurn();
                 gameView.nextTurn();
-                Main.getMain().setScreen(gameView);
+                if (App.getLoggedIn().isInVillage()) {
+                    goToGame(new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+                } else {
+                    goToGame(new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+                }
             }
 
             Image forceTerminateGame = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());

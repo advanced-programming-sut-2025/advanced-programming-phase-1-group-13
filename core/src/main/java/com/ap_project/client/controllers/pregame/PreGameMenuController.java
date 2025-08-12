@@ -1,6 +1,6 @@
 package com.ap_project.client.controllers.pregame;
 
-import com.ap_project.client.controllers.GameController;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Menu;
 import com.ap_project.client.views.game.FarmView;
@@ -53,7 +53,7 @@ public class PreGameMenuController {
         }
         App.setCurrentGame(game);
         GameView gameView;
-        if (game.isInNPCVillage()) {
+        if (player.isInVillage()) {
             gameView = new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin());
         } else {
             gameView = new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin());

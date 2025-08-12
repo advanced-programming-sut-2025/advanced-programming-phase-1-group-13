@@ -1,7 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.client.controllers.GameController;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
@@ -170,26 +169,31 @@ public class AnimalLivingSpaceMenuView implements Screen, InputProcessor {
         }
 
         for (int i = 0; i < animalLivingSpace.getAnimals().size(); i++) {
-            if (hoverOnImage(buttons.get(i), screenX, convertedY)) {
-                Animal animal = animalLivingSpace.getAnimals().get(i);
-                if (!animal.isOutside()) {
-                    Position previousPosition = new Position(animal.getAnimalLivingSpace().getPositionOfUpperLeftCorner());
-                    previousPosition.setX(previousPosition.getX() + animalLivingSpace.getFarmBuildingType().getDoorX());
-                    previousPosition.setY(previousPosition.getY() + animal.getAnimalLivingSpace().getLength());
+            try {
+                if (hoverOnImage(buttons.get(i), screenX, convertedY)) {
+                    Animal animal = animalLivingSpace.getAnimals().get(i);
+                    if (!animal.isOutside()) {
+                        Position previousPosition = new Position(animal.getAnimalLivingSpace().getPositionOfUpperLeftCorner());
+                        previousPosition.setX(previousPosition.getX() + animalLivingSpace.getFarmBuildingType().getDoorX());
+                        previousPosition.setY(previousPosition.getY() + animal.getAnimalLivingSpace().getLength());
 
-                    Position newPosition = new Position(previousPosition);
-                    newPosition.setY(newPosition.getY() + 3);
+                        Position newPosition = new Position(previousPosition);
+                        newPosition.setY(newPosition.getY() + 3);
 
-                    Result result = controller.shepherdAnimal(animal.getName(), newPosition);
-                    if (result.success) {
-                        farmView.setAnimalDestination(new Vector2(newPosition.getX(), newPosition.getY()), newPosition);
-                        animal.setPosition(previousPosition);
-                        animal.setOutside(true);
-                        farmView.startWalkingAnimation(animal, false);
-                        farmView.updateTextures();
-                        Main.getMain().setScreen(farmView);
+                        Result result = controller.shepherdAnimal(animal.getName(), newPosition);
+                        if (result.success) {
+                            farmView.setAnimalDestination(new Vector2(newPosition.getX(), newPosition.getY()), newPosition);
+                            animal.setPosition(previousPosition);
+                            animal.setOutside(true);
+                            farmView.startWalkingAnimation(animal, false);
+                            farmView.updateTextures();
+                            Main.getMain().setScreen(farmView);
+                        }
                     }
                 }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 

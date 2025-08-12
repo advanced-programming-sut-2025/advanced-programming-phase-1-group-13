@@ -1,7 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.client.controllers.GameController;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.Quality;
 import com.ap_project.common.models.enums.Skill;
@@ -318,25 +318,6 @@ public class FarmView extends GameView {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
-        super.keyDown(keycode);
-
-        if (keycode == Input.Keys.H) {
-            goToFarmhouse();
-        }
-
-        if (keycode == Input.Keys.P) { // TODO: move to carpenter's shop
-            FarmBuildingType farmBuildingType = FarmBuildingType.COOP;
-            goToFarmOverview("Choose the position of the " + farmBuildingType.getName(), farmBuildingType, this); // TODO
-        }
-
-        if (keycode == Input.Keys.I) { // TODO: move to Marnie's ranch
-            goToBuyAnimalsMenu(this);
-        }
-        return false;
-    }
-
-    @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
         if (button == Input.Buttons.RIGHT) {
@@ -530,7 +511,7 @@ public class FarmView extends GameView {
         if (animalDestination.x >= walkingAnimal.getPosition().getX() * TILE_SIZE)
             walkingAnimalDirection = Direction.RIGHT;
         else walkingAnimalDirection = Direction.LEFT;
-        this.animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
+        this.animalAnimation = GameAssetManager.getGameAssetManager().getAnimalAnimation(animal.getAnimalType().getName(), walkingAnimalDirection.toString());
         walkingAnimalPosition = new Vector2(
             walkingAnimal.getPosition().getX() * TILE_SIZE,
             walkingAnimal.getPosition().getY() * TILE_SIZE
@@ -553,7 +534,7 @@ public class FarmView extends GameView {
             if (animalDestination.x <= walkingAnimalPosition.x) {
                 if (animalDestination.y > walkingAnimalPosition.y) walkingAnimalDirection = Direction.DOWN;
                 else walkingAnimalDirection = Direction.UP;
-                animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
+                animalAnimation = GameAssetManager.getGameAssetManager().getAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
             }
         }
         if (walkingAnimalDirection == Direction.LEFT) {
@@ -561,7 +542,7 @@ public class FarmView extends GameView {
             if (animalDestination.x >= walkingAnimalPosition.x) {
                 if (animalDestination.y > walkingAnimalPosition.y) walkingAnimalDirection = Direction.DOWN;
                 else walkingAnimalDirection = Direction.UP;
-                animalAnimation = GameAssetManager.getGameAssetManager().loadAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
+                animalAnimation = GameAssetManager.getGameAssetManager().getAnimalAnimation(walkingAnimal.getAnimalType().getName(), walkingAnimalDirection.toString());
             }
         }
         if (walkingAnimalDirection == Direction.UP) {

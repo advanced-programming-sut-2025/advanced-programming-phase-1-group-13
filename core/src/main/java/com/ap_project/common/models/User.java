@@ -1,6 +1,6 @@
 package com.ap_project.common.models;
 
-import com.ap_project.client.controllers.*;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.enums.Quality;
 import com.ap_project.common.models.enums.SecurityQuestion;
 import com.ap_project.common.models.enums.Skill;
@@ -61,6 +61,11 @@ public class User {
     private User spouse;
     private boolean isDepressed;
     private Time rejectionTime;
+    private boolean isInVillage;
+    private ArrayList<Integer> defaultEmojis;
+    private ArrayList<ReactionMessage> defaultReactions;
+    private ArrayList<String> music;
+    private String taggedInPublicChat;
 
     public User(String username, String password, String nickname, String email, Gender gender) {
         this.username = username;
@@ -138,10 +143,6 @@ public class User {
         this.backpack.addToInventory(new Good(GoodsType.WEDDING_RING), 1);
         this.backpack.addToInventory(new Good(GoodsType.CAULIFLOWER_SEEDS), 1);
 
-
-
-
-
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
         this.skillLevels.put(Skill.FISHING, SkillLevel.LEVEL_ONE);
@@ -164,6 +165,15 @@ public class User {
         this.currentFoodBuff = null;
         this.buffRelatedSkill = null;
         this.hoursLeftTillBuffVanishes = null;
+        this.isInVillage = false;
+        this.defaultEmojis = new ArrayList<>();
+        this.defaultReactions = new ArrayList<>();
+        for (int i = 1; i <= 10 ; i++) {
+            defaultEmojis.add(i);
+            defaultReactions.add(ReactionMessage.values()[i - 1]);
+        }
+        this.music = new ArrayList<>();
+        this.taggedInPublicChat = null;
     }
 
     public void setPosition(Position position) {
@@ -257,6 +267,18 @@ public class User {
         }
     }
 
+    public ArrayList<Integer> getDefaultEmojis() {
+        return defaultEmojis;
+    }
+
+    public ArrayList<ReactionMessage> getDefaultReactions() {
+        return defaultReactions;
+    }
+
+    public ArrayList<String> getMusic() {
+        return music;
+    }
+
     public void setMostEarnedMoney(int mostEarnedMoney) {
         this.mostEarnedMoney = mostEarnedMoney;
     }
@@ -295,6 +317,19 @@ public class User {
 
     public Backpack getBackpack() {
         return this.backpack;
+    }
+
+    public boolean isTaggedInPublicChat() {
+        return taggedInPublicChat != null;
+    }
+
+    public void setTaggedInPublicChat(String message) {
+        this.taggedInPublicChat = message;
+    }
+
+
+    public String getNotificationMessage() {
+        return taggedInPublicChat;
     }
 
     public String getUsername() {
@@ -604,6 +639,14 @@ public class User {
 
     public Map<SecurityQuestion, String> getQAndA() {
         return qAndA;
+    }
+
+    public boolean isInVillage() {
+        return isInVillage;
+    }
+
+    public void setInVillage(boolean inVillage) {
+        isInVillage = inVillage;
     }
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {

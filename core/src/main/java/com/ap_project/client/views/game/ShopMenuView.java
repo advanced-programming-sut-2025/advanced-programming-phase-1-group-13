@@ -1,6 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.common.models.*;
+import com.ap_project.common.models.enums.types.ShopType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -35,6 +36,8 @@ public class ShopMenuView implements Screen, InputProcessor {
     private final TextButton filterButton;
     private final Image slider;
     private int firstRowIndex;
+    private final Label ranchLabel;
+    private final Label carpenterLabel;
     private final Label errorMessageLabel;
 
     public ShopMenuView(GameView gameView, Shop shop) {
@@ -63,7 +66,6 @@ public class ShopMenuView implements Screen, InputProcessor {
         this.filterSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
         filterSelectBox.setWidth(600);
         filterSelectBox.setPosition(
-           // windowX + 10, windowY + window.getHeight() - 650
             windowX , windowY + window.getHeight() - 670
         );
         Array<String> options = new Array<>();
@@ -81,6 +83,14 @@ public class ShopMenuView implements Screen, InputProcessor {
         slider.setY(window.getY() + 445);
 
         this.firstRowIndex = 0;
+
+        this.ranchLabel = new Label("Buy Animals", GameAssetManager.getGameAssetManager().getSkin());
+        ranchLabel.setColor(Color.BLACK);
+        ranchLabel.setPosition(600, 770 - 90 * 3);
+
+        this.carpenterLabel = new Label("Farm Buildings", GameAssetManager.getGameAssetManager().getSkin());
+        carpenterLabel.setColor(Color.BLACK);
+        carpenterLabel.setPosition(600, 770 - 90 * 2);
 
         this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
         errorMessageLabel.setColor(Color.RED);
@@ -106,6 +116,9 @@ public class ShopMenuView implements Screen, InputProcessor {
         addItemsToInventory();
         addShopProducts();
         addCloseButton();
+
+        if (shop.getType() == ShopType.CARPENTER_SHOP) stage.addActor(carpenterLabel);
+        if (shop.getType() == ShopType.MARNIE_RANCH) stage.addActor(ranchLabel);
     }
 
     @Override
@@ -192,11 +205,28 @@ public class ShopMenuView implements Screen, InputProcessor {
         Image selectBox = new Image(GameAssetManager.getGameAssetManager().getWhiteScreen());
         selectBox.setPosition(filterSelectBox.getX(), filterSelectBox.getY());
         selectBox.setSize(filterSelectBox.getWidth(), filterSelectBox.getHeight());
-//        stage.addActor(selectBox);
         if (hoverOnImage(selectBox, screenX, convertedY)) {
             Gdx.input.setInputProcessor(stage);
             System.out.println("stage input processor set");
             return true;
+        }
+
+        if (shop.getType() == ShopType.MARNIE_RANCH) {
+            Image buyAnimals = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            buyAnimals.setSize(ranchLabel.getWidth(), ranchLabel.getHeight());
+            buyAnimals.setPosition(ranchLabel.getX(), ranchLabel.getY());
+            if (hoverOnImage(buyAnimals, screenX, convertedY)) {
+                goToBuyAnimalsMenu(gameView);
+            }
+        }
+
+        if (shop.getType() == ShopType.CARPENTER_SHOP) {
+            Image farmBuildings = new Image(GameAssetManager.getGameAssetManager().getBlackScreen());
+            farmBuildings.setSize(carpenterLabel.getWidth(), carpenterLabel.getHeight());
+            farmBuildings.setPosition(carpenterLabel.getX(), carpenterLabel.getY());
+            if (hoverOnImage(farmBuildings, screenX, convertedY)) {
+                goToBuildMenu(gameView);
+            }
         }
 
         return false;

@@ -1,5 +1,6 @@
 package com.ap_project.common.models;
 
+import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.Dialog;
@@ -18,16 +19,26 @@ public class NPC {
     private final Role role;
     private final ArrayList<ItemType> favorites;
     private ArrayList<Dialog> dialogs;
-    private final Position position;
+    private Position position;
     private final HashMap<User, Boolean> giftReceivedToday;
     private final HashMap<User, Boolean> talkedToToday;
     private HashMap<User, Integer> daysLeftToUnlockThirdQuest;
+    private Direction direction;
+    private boolean isWalking;
 
     public NPC(NPCType type) {
         this.type = type;
         this.name = type.getName();
         this.role = type.getRole();
-        this.position = type.getPosition();
+
+        if (type.getHouse() != null) {
+            this.position = new Position(type.getHouse());
+        }
+        else {
+            position = new Position(10, 0);
+        }
+        this.position.setX(position.getX() - 2);
+
         this.favorites = type.getFavorites();
         this.giftReceivedToday = new HashMap<>();
         this.talkedToToday = new HashMap<>();

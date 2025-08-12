@@ -6,6 +6,7 @@ import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.*;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.ForagingCrop;
+import com.ap_project.common.models.farming.PlantSource;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.tools.FishingRod;
 import com.ap_project.common.models.tools.Scythe;
@@ -151,6 +152,10 @@ public class GameAssetManager {
             return getTextureByProcessedItem((ProcessedItem) item);
         }
 
+        if (item instanceof PlantSource) {
+            return getTextureByPlantSource((PlantSource) item);
+        }
+
         if (item instanceof Tool) {
             return getTextureByTool((Tool) item);
         }
@@ -202,10 +207,16 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Mineral/" + toPascalCase(mineral.getMineralType().getName()) + ".png"));
     }
 
+    public Texture getTextureByPlantSource(PlantSource plantSource) {
+        if (plantSource.getSeedType() != null) {
+            return new Texture(Gdx.files.internal("Images/PlantSource/Mixed_Seeds.png"));
+        }
+        return new Texture(Gdx.files.internal("Images/ProcessedItem/" + plantSource.getName().replaceAll(" ", "_") + ".png"));
+    }
+
     public Texture getTextureByProcessedItem(ProcessedItem processedItem) {
         return new Texture(Gdx.files.internal("Images/ProcessedItem/" + toPascalCase(processedItem.getName()) + ".png"));
     }
-
 
     public Texture getTextureByTool(Tool tool) {
         if (tool instanceof FishingRod) return getTextureByFishingRod((FishingRod) tool);
@@ -342,6 +353,54 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Menu/FourOptions.png"));
     }
 
+    public Texture getReactionMenu() {
+        return new Texture(Gdx.files.internal("Images/Reaction/ReactionMenu.png"));
+    }
+
+    public Texture getSpeechBubble() {
+        return new Texture(Gdx.files.internal("Images/Reaction/SpeechBubble.png"));
+    }
+
+    public Texture getEmoji(int i) {
+        return new Texture(Gdx.files.internal("Images/Reaction/Emoji/Emoji" + i + ".png"));
+    }
+
+    public Texture getTextButton() {
+        return new Texture(Gdx.files.internal("Images/Reaction/TextButton.png"));
+    }
+
+    public Texture getEmojiButton() {
+        return new Texture(Gdx.files.internal("Images/Reaction/EmojiButton.png"));
+    }
+
+    public Texture getChangeDefaultReactionsButton() {
+        return new Texture(Gdx.files.internal("Images/Reaction/ChangeDefaultReactionsButton.png"));
+    }
+
+    public Texture getRadio() {
+        return new Texture(Gdx.files.internal("Images/Radio/Radio.png"));
+    }
+
+    public Texture getRadioMenu() {
+        return new Texture(Gdx.files.internal("Images/Radio/RadioMenu.png"));
+    }
+
+    public Texture getChatMenu() {
+        return new Texture(Gdx.files.internal("Images/Chat/ChatMenu.png"));
+    }
+
+    public Texture getNotification() {
+        return new Texture(Gdx.files.internal("Images/Chat/Notification.png"));
+    }
+
+    public Texture getPrivateButton() {
+        return new Texture(Gdx.files.internal("Images/Chat/PrivateButton.png"));
+    }
+
+    public Texture getPublicButton() {
+        return new Texture(Gdx.files.internal("Images/Chat/PublicButton.png"));
+    }
+
     public Texture getIdlePlayer(Gender gender, Direction direction) {
         String genderStr;
         if (gender == Gender.RATHER_NOT_SAY) {
@@ -406,7 +465,7 @@ public class GameAssetManager {
         return new Animation<>(0.5f, frames);
     }
 
-    public Animation<Texture> loadAnimalAnimation(String animalName, String direction) {
+    public Animation<Texture> getAnimalAnimation(String animalName, String direction) {
         Array<Texture> frames = new Array<>();
         for (int i = 1; i <= 4; i++) {
             String path = "Images/Animal/" + animalName + "s" + "/" + animalName + "Sprite" + direction + i + ".png";
@@ -533,6 +592,10 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Shop/ShopMenu.png"));
     }
 
+    public Texture getBuildMenu() {
+        return new Texture(Gdx.files.internal("Images/Shop/BuildMenu.png"));
+    }
+
     public Texture getGood(GoodsType good) {
         String name = good.getName().replaceAll(" ", "_");
         return new Texture(Gdx.files.internal("Images/Goods/" + name + (good.isAvailable() ? "" : "_Locked") + ".png"));
@@ -559,8 +622,21 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Map/Village/Village" + seasonStr + ".png"));
     }
 
-    public Texture getNPC(NPCType npcType) {
+    public Texture getNPCHouse(NPCType npcType) {
+        return new Texture(Gdx.files.internal("Images/Map/Village/NPCHouses/" + npcType.getName() + "House.png"));
+    }
+
+    public Texture getNPCIdle(NPCType npcType) {
         return new Texture(Gdx.files.internal("Images/NPC/Idle/" + npcType.getName() + ".png"));
+    }
+
+    public Animation<Texture> getNPCAnimation(NPCType npcType, Direction direction) {
+        Array<Texture> frames = new Array<>();
+        for (int i = 1; i <= 4; i++) {
+            String path = "Images/NPC/Animation/" + npcType.getName() + "s" + "/" + npcType + "Sprite" + direction + i + ".png";
+            frames.add(new Texture(Gdx.files.internal(path)));
+        }
+        return new Animation<>(0.15f, frames, Animation.PlayMode.LOOP);
     }
 
     public Texture getNPCPortrait(NPCType npcType) {

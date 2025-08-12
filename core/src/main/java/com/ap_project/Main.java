@@ -1,6 +1,7 @@
 package com.ap_project;
 
 import com.ap_project.client.controllers.*;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.client.controllers.login.*;
 import com.ap_project.client.controllers.pregame.*;
 import com.ap_project.client.controllers.signup.*;
@@ -67,10 +68,6 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-    public static void goToLobbyRoomView(LobbyMenuController controller, String lobbyId) {
-        Main.getMain().setScreen(new LobbyRoomView(controller, lobbyId));
-    }
-
     public static void goToLobbyMenu() {
         try {
             GameClient client = new GameClient("127.0.0.1", 9999);
@@ -127,8 +124,27 @@ public class Main extends Game {
         Main.getMain().setScreen(new JournalView(gameView));
     }
 
+    public static void goToReactionMenu(GameView gameView) {
+        Main.getMain().setScreen(new ReactionMenuView(gameView));
+    }
+
+    public static void goToRadioMenu(GameView gameView) {
+        Main.getMain().setScreen(new RadioMenuView(gameView));
+    }
+
+    public static void goToChatMenu(GameView gameView) {
+        Main.getMain().setScreen(new ChatMenuView(gameView));
+    }
+
     public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
         Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
+    }
+    public static void goToVotingMenu(GameView gameView) {
+        Main.getMain().setScreen(new VotingMenuView(gameView));
+    }
+
+    public static void goToTradeMenu(GameView gameView) {
+        Main.getMain().setScreen(new TradeMenuView(gameView));
     }
 
     public static void goToShopMenu(GameView gameView, Shop shop) {
@@ -167,8 +183,12 @@ public class Main extends Game {
         Main.getMain().setScreen(new AnimalLivingSpaceMenuView(farmView, animalLivingSpace));
     }
 
-    public static void goToBuyAnimalsMenu(FarmView farmView) {
-        Main.getMain().setScreen(new BuyAnimalsMenuView(farmView));
+    public static void goToBuyAnimalsMenu(GameView gameView) {
+        Main.getMain().setScreen(new BuyAnimalsMenuView(gameView));
+    }
+
+    public static void goToBuildMenu(GameView gameView) {
+        Main.getMain().setScreen(new BuildMenuView(gameView));
     }
 
     public static void goToFishingMiniGameMenu(FarmView farmView, Fish fish) {

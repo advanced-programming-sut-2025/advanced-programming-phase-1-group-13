@@ -1,12 +1,11 @@
 package com.ap_project.client.controllers;
 
 import com.ap_project.common.models.*;
-import com.ap_project.common.models.enums.types.ShopType;
 import com.ap_project.common.models.enums.types.TileType;
 import java.util.*;
 
 public class PathFinder {
-    private User player;
+    private final User player;
     private boolean[][] visited;
     private Position[][] parent;
     private Tile[][] farmMap;
@@ -49,7 +48,7 @@ public class PathFinder {
         player.setEnergy(player.getEnergy() - energyCost);
         Position last = p.getPathTiles().get(p.getPathTiles().size() - 1).getPosition();
         player.changePosition(last);
-        if (App.getCurrentGame().isInNPCVillage()) {
+        if (App.getLoggedIn().isInVillage()) {
             Tile tile = App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().getTileByPosition(last);
             if (tile.getType().equals(TileType.SHOP)) {
                 App.setCurrentShop(whichShop(tile));
@@ -64,7 +63,7 @@ public class PathFinder {
 
 
     public static Shop whichShop(Tile tile) {
-        for (Shop shop : App.getCurrentGame().getVillage().getShops()) {
+        for (Shop shop : NPCVillage.getShops()) {
             if (shop.containsPosition(tile.getPosition())) {
                 return shop;
             }
@@ -142,7 +141,7 @@ public class PathFinder {
 
         int turns = calculateTurns(positions);
         Path path = new Path();
-        path.setPathTiles((ArrayList<Tile>) pathTiles);
+        path.setPathTiles(pathTiles);
         path.setDistanceInTiles(pathTiles.size() - 1);
         path.setNumOfTurns(turns);
         path.setEnergyNeeded((pathTiles.size() + (10 * turns)) / 20);

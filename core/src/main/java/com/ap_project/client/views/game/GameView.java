@@ -1,7 +1,7 @@
 package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
-import com.ap_project.client.controllers.GameController;
+import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Time;
@@ -18,6 +18,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -29,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.ap_project.Main.*;
+import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
 
 public abstract class GameView implements Screen, InputProcessor {
     protected Stage stage;
@@ -46,6 +49,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected final Image selectedSlotImage;
     protected int selectedSlotIndex;
     protected ArrayList<Item> inventory;
+    protected final Image radio;
     protected final GameController controller;
     protected Sprite playerSprite;
     protected Animation<Texture> playerUpAnimation;
@@ -82,6 +86,9 @@ public abstract class GameView implements Screen, InputProcessor {
     protected int lightningY;
     protected boolean hasTriggeredLightningTransition;
     protected final Image lightCircle;
+    protected float reactionTimer;
+    protected Image speechBubble;
+    protected Actor reaction;
     protected final Label errorMessageLabel;
 
     public GameView(GameController controller, Skin skin) {
@@ -116,6 +123,10 @@ public abstract class GameView implements Screen, InputProcessor {
         this.selectedSlotIndex = 0;
 
         this.inventory = new ArrayList<>(List.of(App.getLoggedIn().getBackpack().getItems().keySet().toArray(new Item[0])));
+
+        this.radio = new Image(GameAssetManager.getGameAssetManager().getRadio());
+        radio.setScale(1.25f);
+        radio.setPosition(5, 5);
 
         this.controller = controller;
         controller.setView(this);
@@ -152,6 +163,13 @@ public abstract class GameView implements Screen, InputProcessor {
         this.lightCircle = new Image(GameAssetManager.getGameAssetManager().getCircle());
         this.lightCircle.setColor(1, 1, 1, 0.1f);
         this.lightCircle.setVisible(false);
+
+        this.speechBubble = new Image(GameAssetManager.getGameAssetManager().getSpeechBubble());
+        speechBubble.setScale(1.2f);
+        speechBubble.setPosition(
+            Gdx.graphics.getWidth() / 2f - 35,
+            Gdx.graphics.getHeight() / 2f + 55
+        );
 
         this.errorMessageLabel = new Label("", skin);
         errorMessageLabel.setColor(Color.RED);
@@ -299,6 +317,10 @@ public abstract class GameView implements Screen, InputProcessor {
             lightCircle.setVisible(false);
         }
 
+        reactionTimer += delta;
+
+        stage.addActor(radio);
+
         renderUI();
     }
 
@@ -318,7 +340,11 @@ public abstract class GameView implements Screen, InputProcessor {
             stateTime += delta;
             if (playerFaintAnimation.isAnimationFinished(stateTime)) {
                 App.getLoggedIn().faint();
-                nextTurn();
+                if (!App.getLoggedIn().isInVillage()) {
+                    goToGame(new FarmView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+                } else {
+                    goToGame(new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin()));
+                }
                 return;
             }
             return;
@@ -337,7 +363,6 @@ public abstract class GameView implements Screen, InputProcessor {
         float minY = playerHeight / 2;
         float maxY = backgroundHeight - playerHeight / 2;
 
-        // TODO: update position field in User
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             float newY = playerSprite.getY() + displacement;
             if (newY + playerHeight / 2 < maxY) {
@@ -371,6 +396,8 @@ public abstract class GameView implements Screen, InputProcessor {
             App.getLoggedIn().setDirection(Direction.RIGHT);
             walk();
         }
+
+        App.getLoggedIn().setPosition(new Position((int) (playerSprite.getX() / TILE_SIZE),originPosition.getY() + 55 - (int) (playerSprite.getY() / TILE_SIZE)));
 
         if (isMoving) {
             displacementInTile += displacement;
@@ -492,6 +519,45 @@ public abstract class GameView implements Screen, InputProcessor {
 
         updateGreenBar();
 
+        if (reactionTimer < 5) {
+            if (reaction != null) {
+                stage.addActor(speechBubble);
+                if (reaction instanceof Label) ((Label) reaction).setFontScale(0.75f);
+                reaction.setScale(4);
+                reaction.setPosition(
+                    Gdx.graphics.getWidth() / 2f - 15,
+                    Gdx.graphics.getHeight() / 2f + 83
+                );
+                stage.addActor(reaction);
+            }
+        } else {
+            if (reaction != null) {
+                if (reaction.getStage() != null) {
+                    reaction.remove();
+                }
+            }
+            reaction = null;
+            if (speechBubble.getStage() != null) speechBubble.remove();
+        }
+
+        if (App.getLoggedIn().isTaggedInPublicChat()) {
+            Image notification = new Image(GameAssetManager.getGameAssetManager().getNotification());
+            notification.setScale(0.4f);
+            notification.setPosition(
+                15,
+                Gdx.graphics.getHeight() - 0.4f * notification.getHeight() - 15
+            );
+            stage.addActor(notification);
+
+            Label message = new Label(App.getLoggedIn().getNotificationMessage(), GameAssetManager.getGameAssetManager().getSkin());
+            message.setColor(Color.BLACK);
+            message.setPosition(
+                notification.getX() + 80,
+                notification.getY()+15
+            );
+            stage.addActor(message);
+        }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -521,12 +587,13 @@ public abstract class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.O) {
-            if (App.getCurrentGame().isInNPCVillage()) {
-                App.getCurrentGame().setInNPCVillage(false);
+        if (keycode == Input.Keys.V) {
+            if (App.getLoggedIn().isInVillage()) {
+                App.getLoggedIn().setInVillage(false);
                 goToGame(new FarmView(controller, GameAssetManager.getGameAssetManager().getSkin()));
             } else {
-                App.getCurrentGame().setInNPCVillage(true);
+                App.getLoggedIn().setPosition(new Position(37, 0));
+                App.getLoggedIn().setInVillage(true);
                 goToGame(new VillageView(controller, GameAssetManager.getGameAssetManager().getSkin()));
             }
         }
@@ -538,6 +605,21 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.F) {
             goToJournal(this);
         }
+
+        if (keycode == Input.Keys.R) {
+            goToReactionMenu(this);
+        }
+
+        if (keycode == Input.Keys.P) {
+            goToChatMenu(this);
+        }
+        if(keycode == Input.Keys.K) {
+            goToVotingMenu(this);
+        }
+        if(keycode == Input.Keys.J) {
+            goToTradeMenu(this);
+        }
+
 
         if (keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
             selectedSlotIndex = keycode - Input.Keys.NUM_1;
@@ -569,13 +651,9 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.M) {
             goToMap(this);
         }
-        if(keycode == Input.Keys.T) {
-            goToToolMenu(this);
-        }
 
-        if (keycode == Input.Keys.R) {
-            controller.cheatAdvanceTime("1");
-            updateClockInfo();
+        if (keycode == Input.Keys.T) {
+            goToToolMenu(this);
         }
 
         return false;
@@ -597,6 +675,12 @@ public abstract class GameView implements Screen, InputProcessor {
             useTool(screenX, Gdx.graphics.getHeight() - screenY);
             return true;
         }
+
+        if (hoverOnImage(radio, screenX, Gdx.graphics.getHeight() - screenY)) {
+            goToRadioMenu(this);
+            return true;
+        }
+
         return false;
     }
 
@@ -778,7 +862,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected void useTool(int x, int y) {
         Tool tool = App.getLoggedIn().getCurrentTool();
         if (tool != null && !isUsingTool) {
-            Direction direction = getClickedDirection(x, y); // TODO: fix
+            Direction direction = getClickedDirection(x, y);
             isUsingTool = true;
             toolUsageTimer = 0f;
             currentToolTexture = GameAssetManager.getGameAssetManager().getPlayerUsingTool(
@@ -793,22 +877,32 @@ public abstract class GameView implements Screen, InputProcessor {
         }
     }
 
-    private Direction getClickedDirection(int x, int y) {
-        Direction direction;
-        if (y < playerSprite.getY() + TILE_SIZE / 2f && y > playerSprite.getY() - TILE_SIZE / 2f) {
-            if (x < playerSprite.getX()) {
-                direction = Direction.LEFT;
+    private Direction getClickedDirection(int screenX, int screenY) {
+        Vector3 worldCoords = new Vector3(screenX, screenY, 0);
+        camera.unproject(worldCoords);
+
+        float clickX = worldCoords.x;
+        float clickY = worldCoords.y;
+
+        float playerCenterX = playerSprite.getX() + playerSprite.getWidth() / 2f;
+        float playerCenterY = playerSprite.getY() + playerSprite.getHeight() / 2f;
+
+        float deltaX = clickX - playerCenterX;
+        float deltaY = clickY - playerCenterY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > 0) {
+                return Direction.RIGHT;
             } else {
-                direction = Direction.RIGHT;
+                return Direction.LEFT;
             }
         } else {
-            if (y > playerSprite.getY()) {
-                direction = Direction.UP;
+            if (deltaY < 0) {
+                return Direction.UP;
             } else {
-                direction = Direction.DOWN;
+                return Direction.DOWN;
             }
         }
-        return direction;
     }
 
     private Position getPositionByDirection(Direction direction) {
@@ -976,5 +1070,10 @@ public abstract class GameView implements Screen, InputProcessor {
     }
 
     public void updateFarmBuildings() {
+    }
+
+    public void startReaction(Actor actor) {
+        reaction = actor;
+        reactionTimer = 0;
     }
 }
