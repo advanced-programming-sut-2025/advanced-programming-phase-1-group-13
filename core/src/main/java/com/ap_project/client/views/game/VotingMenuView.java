@@ -69,7 +69,7 @@ public class VotingMenuView implements Screen, InputProcessor {
             if (kickButton.isPressed()) {
                 String selected = playerSelectBox.getSelected();
                 System.out.println("Kicking: " + selected);
-                goToKickMenu();
+                goToKickMenu(gameView);
                 return true;
             }
             return false;
@@ -80,7 +80,7 @@ public class VotingMenuView implements Screen, InputProcessor {
             if (forceTerminateButton.isPressed()) {
                 String selected = playerSelectBox.getSelected();
                 System.out.println("Force Terminating: " + selected);
-                goToTerminateMenu();
+                goToTerminateMenu(gameView);
                 return true;
             }
             return false;

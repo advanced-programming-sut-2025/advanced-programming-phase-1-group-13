@@ -13,27 +13,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.ap_project.Main.getBatch;
-import static com.ap_project.Main.goToTerminateMenu;
+import static com.ap_project.Main.*;
 
 public class TerminateMenuView implements Screen {
     private Stage stage;
     private final Image window;
-    private final Image closeButton;
     private final TextButton yesButton;
     private final TextButton noButton;
     private final Label titleLabel;
+    private final GameView gameView;
 
-    public TerminateMenuView(Skin skin) {
+    public TerminateMenuView(Skin skin,GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getToolMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2f;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2f;
         window.setPosition(windowX, windowY);
 
-        this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
-
         this.yesButton = new TextButton("Yes", skin);
         this.noButton = new TextButton("No", skin);
+        this.gameView = gameView;
 
         this.titleLabel = new Label("Terminate the game?", skin);
         titleLabel.setColor(Color.BLACK);
@@ -45,26 +43,11 @@ public class TerminateMenuView implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(window);
-        addCloseButton();
         addTitleLabel();
         addOptionButtons();
     }
 
-    private void addCloseButton() {
-        float buttonX = window.getX() + window.getWidth() - closeButton.getWidth() - 10;
-        float buttonY = window.getY() + window.getHeight() - closeButton.getHeight() - 10;
 
-        closeButton.setPosition(buttonX, buttonY);
-
-        closeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Close button clicked");
-            }
-        });
-
-        stage.addActor(closeButton);
-    }
 
     private void addTitleLabel() {
         float titleX = window.getX() + (window.getWidth() - titleLabel.getWidth()) / 2f-50;
@@ -87,7 +70,7 @@ public class TerminateMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("YES clicked");
-                goToTerminateMenu();
+                goToVotingMenu(gameView);
             }
         });
 
@@ -95,7 +78,7 @@ public class TerminateMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("NO clicked");
-                goToTerminateMenu();
+                goToVotingMenu(gameView);
             }
         });
 
