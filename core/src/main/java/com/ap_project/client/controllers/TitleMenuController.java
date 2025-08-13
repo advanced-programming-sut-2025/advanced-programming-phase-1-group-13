@@ -1,10 +1,20 @@
 package com.ap_project.client.controllers;
 
+import com.ap_project.client.controllers.game.NPCDialogGenerator;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.User;
+import com.ap_project.common.models.enums.environment.Season;
+import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.types.Gender;
 import com.ap_project.client.views.TitleMenuView;
+import com.ap_project.common.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import java.util.List;
+import java.util.Random;
 
 import static com.ap_project.Main.goToLoginMenu;
 import static com.ap_project.Main.goToSignUpMenu;

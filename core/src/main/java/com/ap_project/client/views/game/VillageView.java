@@ -245,8 +245,8 @@ public class VillageView extends GameView {
         );
         stage.addActor(name);
 
-        Dialog dialog = npc.getDialog();
-        Label dialogLabel = new Label(dialog.getMessage(), GameAssetManager.getGameAssetManager().getSkin());
+        String dialog = npc.generateDialog();
+        Label dialogLabel = new Label(dialog, GameAssetManager.getGameAssetManager().getSkin());
         dialogLabel.setColor(Color.BLACK);
         dialogLabel.setFontScale(1.3f);
         dialogLabel.setWrap(true);

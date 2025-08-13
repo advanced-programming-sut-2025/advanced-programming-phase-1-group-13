@@ -1,5 +1,6 @@
 package com.ap_project.common.models;
 
+import com.ap_project.client.controllers.game.NPCDialogGenerator;
 import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Weather;
@@ -9,9 +10,13 @@ import com.ap_project.common.models.enums.types.NPCType;
 import com.ap_project.common.models.enums.types.Role;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import static com.ap_project.common.models.Item.getItemTypeByItemName;
@@ -113,6 +118,51 @@ public class NPC {
         Weather weather = game.getGameState().getCurrentWeather();
         int friendshipLevel = game.getNpcFriendshipPoints(App.getLoggedIn(), this);
         return Dialog.getDialogBySituation(type, timeOfDay, season, weather, friendshipLevel);
+    }
+
+    public String generateDialog() {
+        int currentHour = App.getCurrentGame().getGameState().getTime().getHour();
+        Season currentSeason = App.getCurrentGame().getGameState().getTime().getSeason();
+        Weather currentWeather = App.getCurrentGame().getGameState().getCurrentWeather();
+        List<String> previousDialogues = List.of(
+            "Good morning!",
+            "The crops look great this season."
+        );
+        try {
+            System.out.println("GENERATING DIALOGUE...");
+            String npcDialogue = NPCDialogGenerator.getDynamicDialogue(
+                this.type, currentHour, currentSeason, currentWeather, previousDialogues
+            );
+
+            System.out.println("NPC says: " + npcDialogue);
+
+            String[] lines = npcDialogue.split("\n");
+            StringBuilder fullDialogue = new StringBuilder();
+
+            Gson gson = new Gson();
+
+            for (String line : lines) {
+                if (line.trim().isEmpty()) continue;
+
+                try {
+                    JsonObject obj = gson.fromJson(line, JsonObject.class);
+                    if (obj.has("response")) {
+                        fullDialogue.append(obj.get("response").getAsString());
+                    }
+                    if (obj.has("done") && obj.get("done").getAsBoolean()) {
+                        break;
+                    }
+                } catch (JsonSyntaxException e) {
+                    System.err.println("Invalid JSON line: " + line);
+                }
+            }
+            System.out.println(name + ": " + fullDialogue);
+            return fullDialogue.toString();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return getDialog().getMessage();
+        }
     }
 
     public boolean hasDialog() {
