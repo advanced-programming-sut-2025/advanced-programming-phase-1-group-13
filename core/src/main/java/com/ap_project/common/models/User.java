@@ -377,6 +377,7 @@ public class User {
 
     public Position getPosition() {
         if (position.getY() > 40 && isInVillage) position.setY(40);
+
         return this.position;
     }
 

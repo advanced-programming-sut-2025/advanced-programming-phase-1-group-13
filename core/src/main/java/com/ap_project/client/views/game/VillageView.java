@@ -33,6 +33,7 @@ public class VillageView extends GameView {
     private Texture npcOptions;
     private NPC npcWithGift;
     private User playerWithFlower;
+    public User playerWithGift;
     private final Texture giveGiftButton;
     private Vector2 giveGiftPosition;
     private final Texture questsListButton;
@@ -253,7 +254,7 @@ public class VillageView extends GameView {
 
             if (npcOptions != null) {
                 if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
-                    goToGiveGiftMenu(this, npcWithMenu);
+                    goToGiftNpcMenu(this, npcWithMenu);
                     return true;
                 }
 
@@ -314,6 +315,16 @@ public class VillageView extends GameView {
         return false;
     }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        super.keyDown(keycode);
+        if (keycode == Input.Keys.G) {
+            goToGiftPlayerMenu(this);
+            return true;
+        }
+        return false;
+    }
+
     public void addDialogBox(NPC npc) {
         Image dialogBox = new Image(GameAssetManager.getGameAssetManager().getDialogBox());
         dialogBox.setScale(1.15f);
@@ -357,5 +368,13 @@ public class VillageView extends GameView {
 
     public void setNpcWithGift(NPC npcWithGift) {
         this.npcWithGift = npcWithGift;
+    }
+
+    public void setPlayerWithFlower(User playerWithFlower) {
+        this.playerWithFlower = playerWithFlower;
+    }
+
+    public void setPlayerWithGift(User playerWithGift) {
+        this.playerWithGift = playerWithGift;
     }
 }

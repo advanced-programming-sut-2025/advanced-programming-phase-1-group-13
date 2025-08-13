@@ -94,6 +94,9 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+
+
+
     public static void goToLobbyMenu() {
         LobbyMenuController controller = new LobbyMenuController(client);
         client.setLobbyMenuController(controller);
@@ -160,8 +163,12 @@ public class Main extends Game {
         Main.getMain().setScreen(new ChatMenuView(gameView));
     }
 
-    public static void goToGiveGiftMenu(VillageView villageView, NPC npc) {
-        Main.getMain().setScreen(new GiveGiftMenuView(villageView, npc));
+    public static void goToGiftNpcMenu(VillageView villageView, NPC npc) {
+        Main.getMain().setScreen(new GiftNpcMenuView(villageView, npc));
+    }
+    public static void goToGiftPlayerMenu(VillageView villageView) {
+        Main.getMain().setScreen(new GiftPlayerMenuView(villageView));
+
     }
 
     public static void goToVotingMenu(GameView gameView) {
