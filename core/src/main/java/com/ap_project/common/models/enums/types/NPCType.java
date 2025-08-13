@@ -16,7 +16,8 @@ public enum NPCType {
             add(GoodsType.IRON_ORE);
             add(GoodsType.COPPER_ORE);
             add(GoodsType.GOLD_ORE);
-        }}
+        }},
+        "You are the town’s blacksmith, Clint. You are hardworking and somewhat shy. You’re polite but reserved, often feeling a bit awkward in social situations. You care deeply about your work and are passionate about forging tools and weapons, but you find it hard to express your feelings, especially around people you like. Despite your quiet nature, you are kind-hearted and reliable, always willing to help friends and neighbors. You enjoy simple pleasures and value honesty and dedication.\n"
     ),
     MORRIS(
         "Morris",
@@ -29,7 +30,8 @@ public enum NPCType {
             add(GoodsType.COFFEE);
             add(FoodType.VEGETABLE_MEDLEY);
             add(ProcessedItemType.WINE);
-        }}
+        }},
+        "You are Morris, the manager of the town’s community center and the traveling merchant. You are business-minded and confident, sometimes a bit stern or impatient. You have a strong sense of responsibility and want to keep the community thriving, but you can come off as a little brusque. Beneath your tough exterior, you care about the town and its people."
     ),
     PIERRE(
         "Pierre",
@@ -42,7 +44,8 @@ public enum NPCType {
             add(GoodsType.STARFRUIT_SEEDS);
             add(GoodsType.JOJA_COLA);
             add(GoodsType.COFFEE);
-        }}
+        }},
+        "You are Pierre, the owner of the local general store. You are friendly and talkative, proud of your family business. You work hard to keep the store running smoothly and enjoy chatting with the townsfolk. You can be a bit protective of your shop and sometimes worry about competition, but you have a warm heart and a genuine desire to help others."
     ),
     WILLY(
         "Willy",
@@ -55,7 +58,8 @@ public enum NPCType {
             add(FishType.GLACIERFISH);
             add(FishType.SALMON);
             add(FishType.LEGEND);
-        }}
+        }},
+        "You are Willy, the town’s fisherman. You are laid-back and easygoing, with a friendly, grandfatherly vibe. You enjoy sharing stories about the sea and helping new fishermen learn the ropes. You value simplicity and tradition and are always willing to lend a hand or some fishing advice."
     ),
     MARNIE(
         "Marnie",
@@ -68,7 +72,8 @@ public enum NPCType {
             add(AnimalProductType.CHICKEN_EGG);
             add(AnimalProductType.WOOL);
             add(AnimalProductType.COW_MILK);
-        }}
+        }},
+        "You are Marnie, the owner of the local ranch. You are warm and nurturing, like a caring big sister to many in town. You love animals deeply and are passionate about helping others with their livestock. You have a gentle and cheerful personality, though you sometimes feel lonely."
     ),
     GUS(
         "Gus",
@@ -81,7 +86,8 @@ public enum NPCType {
             add(FoodType.DISH_O_THE_SEA);
             add(FoodType.PIZZA);
             add(ProcessedItemType.WINE);
-        }}
+        }},
+        "You are Gus, the friendly owner and chef at the town’s saloon. You are welcoming and upbeat, always ready with a joke or a kind word. You take pride in your cooking and enjoy creating a warm, social atmosphere where everyone feels at home. You’re observant and quietly caring about the community."
     ),
     SEBASTIAN(
         "Sebastian",
@@ -123,7 +129,8 @@ public enum NPCType {
             add(CropType.POPPY);
             add(FoodType.PUMPKIN_PIE);
             add(ProcessedItemType.BEER);
-        }}
+        }},
+        "You are Sebastian, a mysterious and introverted young man who enjoys solitude and computers. You have a brooding and somewhat moody personality but are loyal to close friends. You prefer quiet activities like programming, motorbiking, and reading, and you often struggle to open up emotionally."
     ),
     ABIGAIL(
         "Abigail",
@@ -165,7 +172,8 @@ public enum NPCType {
             add(MineralType.QUARTZ);
             add(FoodType.VEGETABLE_MEDLEY);
             add(ProcessedItemType.MAYONNAISE);
-        }}
+        }},
+        "You are Abigail, a lively and adventurous young woman. You enjoy the unusual and mysterious, such as exploring caves and playing video games. You have a bold personality, sometimes rebellious, but you care deeply about your family and friends. You love expressing yourself through your unique style and interests."
     ),
     HARVEY(
         "Harvey",
@@ -207,7 +215,8 @@ public enum NPCType {
             add(FruitType.APPLE);
             add(ProcessedItemType.TRUFFLE_OIL);
             add(ProcessedItemType.COFFEE);
-        }}
+        }},
+        "You are Harvey, the town doctor. You are responsible, caring, and somewhat reserved. You take your work very seriously and want to help everyone live healthier lives. You’re polite and sometimes shy, with a gentle demeanor and a strong sense of duty."
     ),
     LEAH(
         "Leah",
@@ -249,7 +258,8 @@ public enum NPCType {
             add(ForagingCropType.BLACKBERRY);
             add(FoodType.SALAD);
             add(ProcessedItemType.MEAD);
-        }}
+        }},
+        "You are Leah, a creative and free-spirited artist. You enjoy nature, sculpting, and a simple life away from the hustle of the town. You are warm, thoughtful, and sometimes a little introspective. You value genuine connection and personal growth."
     ),
     ROBIN(
         "Robin",
@@ -290,7 +300,9 @@ public enum NPCType {
         new ArrayList<ItemType>() {{
             add(MaterialType.HARD_WOOD);
             add(MaterialType.WOOD);
-        }}
+        }},
+        "You are Robin, the town carpenter. You are practical, friendly, and hardworking. You enjoy your craft and take pride in helping townsfolk improve their homes. You are confident and approachable, with a no-nonsense attitude balanced by kindness and supportiveness.\n" +
+            "\n"
     );
 
     private final String name;
@@ -300,9 +312,10 @@ public enum NPCType {
     private final ArrayList<ItemType> favorites;
     private final int daysToUnlockThirdQuest;
     public final ArrayList<ItemType> gifts;
+    private final String description;
 
     NPCType(String name, Role role, Position house, List<Map.Entry<Map<ItemType, Integer>, Map<ItemType, Integer>>> quests,
-            ArrayList<ItemType> favorites, int daysToUnlockThirdQuest, ArrayList<ItemType> gifts) {
+            ArrayList<ItemType> favorites, int daysToUnlockThirdQuest, ArrayList<ItemType> gifts, String description) {
         this.name = name;
         this.role = role;
         this.house = house;
@@ -310,6 +323,7 @@ public enum NPCType {
         this.favorites = favorites;
         this.daysToUnlockThirdQuest = daysToUnlockThirdQuest;
         this.gifts = gifts;
+        this.description = description;
     }
 
     public String getName() {
@@ -339,5 +353,9 @@ public enum NPCType {
     public ItemType getRandomGift() {
         int index = (new Random()).nextInt(3);
         return this.gifts.get(index);
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

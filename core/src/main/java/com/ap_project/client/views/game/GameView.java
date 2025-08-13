@@ -2,6 +2,7 @@ package com.ap_project.client.views.game;
 
 import com.ap_project.Main;
 import com.ap_project.client.controllers.game.GameController;
+import com.ap_project.client.controllers.game.NPCDialogGenerator;
 import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.environment.Season;
 import com.ap_project.common.models.enums.environment.Time;
@@ -9,6 +10,7 @@ import com.ap_project.common.models.enums.environment.Weather;
 import com.ap_project.common.models.enums.environment.Direction;
 
 import com.ap_project.common.models.enums.types.GameMenuType;
+import com.ap_project.common.models.enums.types.NPCType;
 import com.ap_project.common.models.tools.Tool;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -25,10 +27,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static com.ap_project.Main.*;
 import static com.ap_project.client.views.game.GameMenuView.hoverOnImage;
@@ -401,7 +401,7 @@ public abstract class GameView implements Screen, InputProcessor {
             walk();
         }
 
-        App.getLoggedIn().setPosition(new Position((int) (playerSprite.getX() / TILE_SIZE),originPosition.getY() + 55 - (int) (playerSprite.getY() / TILE_SIZE)));
+        App.getLoggedIn().setPosition(new Position((int) (playerSprite.getX() / TILE_SIZE), originPosition.getY() + 55 - (int) (playerSprite.getY() / TILE_SIZE)));
 
         if (isMoving) {
             displacementInTile += displacement;
@@ -557,7 +557,7 @@ public abstract class GameView implements Screen, InputProcessor {
             message.setColor(Color.BLACK);
             message.setPosition(
                 notification.getX() + 80,
-                notification.getY()+15
+                notification.getY() + 15
             );
             stage.addActor(message);
         }
@@ -617,10 +617,10 @@ public abstract class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.P) {
             goToChatMenu(this);
         }
-        if(keycode == Input.Keys.K) {
+        if (keycode == Input.Keys.K) {
             goToVotingMenu(this);
         }
-        if(keycode == Input.Keys.J) {
+        if (keycode == Input.Keys.J) {
             goToTradeMenu(this);
         }
 
