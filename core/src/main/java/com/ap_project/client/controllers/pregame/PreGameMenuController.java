@@ -30,7 +30,7 @@ public class PreGameMenuController {
                 if (App.getLoggedIn().getActiveGame() == null) {
                     view.getErrorMessageLabel().setText("You have no active games.");
                 } else {
-                    goToScoreboard();
+                    goToScoreboard(view);
                 }
             } else if (view.getLobbyButton().isChecked()) {
                 goToLobbyMenu();

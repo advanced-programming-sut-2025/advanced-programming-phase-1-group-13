@@ -19,6 +19,8 @@ public class GameServer {
     public static final Map<String, Lobby> lobbies = Collections.synchronizedMap(new HashMap<>());
     public static final ArrayList<ClientHandler> clients = new ArrayList<>();
     public static final ArrayList<Game> games = new ArrayList<>();
+    public static final Map<User, Long> disconnectedUsers = Collections.synchronizedMap(new HashMap<>());
+
 
     public static void main(String[] args) {
         // TODO: remove later

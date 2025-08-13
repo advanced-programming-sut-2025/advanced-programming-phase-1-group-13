@@ -1,5 +1,6 @@
 package com.ap_project.server.controller;
 
+import com.ap_project.common.models.App;
 import com.ap_project.common.models.Farm;
 import com.ap_project.common.models.Game;
 import com.ap_project.common.models.User;
@@ -81,7 +82,6 @@ public class ClientHandler implements Runnable {
         } finally {
             try {
                 socket.close();
-                GameServer.clients.remove(this);
             } catch (IOException e) {
                 System.out.println("[Server] Error closing client socket: " + e.getMessage());
             }
@@ -117,9 +117,10 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
-            case REQUESTS_USERS_INFO:
+            case REQUESTS_USERS_INFO: {
                 handleRequestUsersInfo();
                 break;
+            }
 
             case CREATE_LOBBY: {
                 String password = (String) body.get("password");
@@ -131,9 +132,10 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
-            case REFRESH_LOBBIES:
+            case REFRESH_LOBBIES: {
                 sendLobbyList();
                 break;
+            }
 
             case JOIN_LOBBY: {
                 String lobbyId = (String) body.get("lobbyId");
@@ -151,6 +153,32 @@ public class ClientHandler implements Runnable {
             case REQUEST_LOBBY_INFO: {
                 handleRequestLobbyInfo((String) body.get("lobbyId"));
                 break;
+            }
+
+            case REQUEST_SCOREBOARD_INFO: {
+                sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.UPDATE_SCOREBOARD_INFO)));
+                break;
+            }
+
+            case SCOREBOARD_INFO_FROM_CLIENT: {
+                String username = (String) body.get("username");
+                double money = Double.parseDouble((String) body.get("money"));
+
+                User userToUpdate = getUserByUsername(username);
+                if (userToUpdate == null) {
+                    System.out.println("[Server] User not found: " + username);
+                    return;
+                }
+
+                userToUpdate.setBalance(money);
+                System.out.println("RECEIVED SCOREBOARD: " + userToUpdate);
+
+                body = new HashMap<>();
+                body.put("username", username);
+                body.put("money", money);
+                sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.SCOREBOARD_INFO)));
+
+                break;  // <-- Add this missing break
             }
 
             case START_GAME: {
@@ -328,6 +356,12 @@ public class ClientHandler implements Runnable {
         this.user = user;
         sendMessage(JSONUtils.toJson(success));
         System.out.println("[Server]: Client logged in: " + username);
+
+        if (disconnectedUsers.containsKey(user)) {
+            if (disconnectedUsers.get(user) > 30000) {
+                System.out.println("YOU HAVE BEEN KICKED FROM YOUR ACTIVE GAME"); // TODO
+            }
+        }
     }
 
     private void handleRequestUsersInfo() {
@@ -542,6 +576,12 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    private void sendMessageToAll(String message) {
+        for (ClientHandler client : clients) {
+            client.sendMessage(message);
+        }
+    }
+
     public void sendMessage(MessageType type, Object data) {
         try {
             Message message = new Message();
@@ -555,6 +595,7 @@ public class ClientHandler implements Runnable {
             out.write(jsonString);
             out.newLine();
             out.flush();
+            System.out.println("[Server] Sent message: " + jsonString);
         } catch (IOException e) {
             System.out.println("[Server] Failed to send message: " + e.getMessage());
         }

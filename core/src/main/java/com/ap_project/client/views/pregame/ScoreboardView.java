@@ -4,6 +4,9 @@ import com.ap_project.Main;
 import com.ap_project.client.controllers.pregame.ScoreboardController;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.User;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +19,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static com.ap_project.Main.goToScoreboard;
 
 public class ScoreboardView implements Screen {
     private Stage stage;
@@ -26,8 +32,11 @@ public class ScoreboardView implements Screen {
     private final TextButton backButton;
     private final Table table;
     private final ScoreboardController controller;
+    private final Screen screen;
 
-    public ScoreboardView(ScoreboardController controller, Skin skin) {
+    public ScoreboardView(Screen screen, ScoreboardController controller, Skin skin) {
+        this.screen = screen;
+
         this.background = GameAssetManager.getGameAssetManager().getMenuBackground();
 
         this.scoreboardTitle = new Label("Scoreboard", skin);
@@ -86,6 +95,10 @@ public class ScoreboardView implements Screen {
         stage.addActor(table);
         stage.addActor(bottomTable);
 
+        HashMap<String, Object> body = new HashMap<>();
+        Message message = new Message(body, MessageType.REQUEST_SCOREBOARD_INFO);
+        Main.getClient().sendMessage(JSONUtils.toJson(message));
+
         updateScoreboard();
     }
 
@@ -140,6 +153,15 @@ public class ScoreboardView implements Screen {
         ScreenUtils.clear(39f / 255f, 33f / 255f, 48f / 255f, 1f);
         Main.getBatch().begin();
         Main.getBatch().end();
+
+        if ((int) System.currentTimeMillis() % 5000 < 100) {
+            HashMap<String, Object> body = new HashMap<>();
+            Message message = new Message(body, MessageType.REQUEST_SCOREBOARD_INFO);
+            Main.getClient().sendMessage(JSONUtils.toJson(message));
+        }
+
+        updateScoreboard(); // TODO
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         controller.handleButtons();
@@ -167,5 +189,9 @@ public class ScoreboardView implements Screen {
 
     public TextButton getBackButton() {
         return backButton;
+    }
+
+    public Screen getScreen() {
+        return screen;
     }
 }

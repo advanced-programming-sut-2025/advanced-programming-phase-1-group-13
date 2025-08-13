@@ -1,5 +1,6 @@
 package com.ap_project.client.controllers.pregame;
 
+import com.ap_project.Main;
 import com.ap_project.client.views.pregame.ScoreboardView;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.User;
@@ -7,15 +8,13 @@ import com.ap_project.common.models.User;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static com.ap_project.Main.goToMainMenu;
-
 public class ScoreboardController {
     private ScoreboardView view;
 
     public void handleButtons() {
         if (view != null) {
             if (view.getBackButton().isChecked()) {
-                goToMainMenu();
+                Main.getMain().setScreen(view.getScreen());
             }
             view.getBackButton().setChecked(false);
         }
