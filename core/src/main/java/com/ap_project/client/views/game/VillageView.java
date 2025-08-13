@@ -3,8 +3,8 @@ package com.ap_project.client.views.game;
 import com.ap_project.Main;
 import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.common.models.*;
-import com.ap_project.common.models.enums.types.Dialog;
 import com.ap_project.common.models.enums.types.GameMenuType;
+import com.ap_project.common.models.enums.types.GoodsType;
 import com.ap_project.common.models.enums.types.NPCType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -28,6 +28,7 @@ public class VillageView extends GameView {
     private NPC npcWithMenu;
     private Texture npcOptions;
     private NPC npcWithGift;
+    private User playerWithFlower;
     private final Texture giveGiftButton;
     private Vector2 giveGiftPosition;
     private final Texture questsListButton;
@@ -35,6 +36,16 @@ public class VillageView extends GameView {
     private final Texture friendshipLevelButton;
     private Vector2 friendshipLevelPosition;
     private final ArrayList<Position> housePositions;
+
+    private User playerWithMenu;
+    private Texture playerOptions;
+    private final Texture hugButton;
+    private Vector2 hugPosition;
+    private final Texture proposeButton;
+    private Vector2 proposePosition;
+    private final Texture giveFlowerButton;
+    private Vector2 giveFlowerPosition;
+
 
     public VillageView(GameController controller, Skin skin) {
         super(controller, skin);
@@ -70,9 +81,15 @@ public class VillageView extends GameView {
 
         this.npcWithGift = null;
 
+        this.playerWithFlower = null;
+
         this.friendshipLevelButton = GameAssetManager.getGameAssetManager().getFriendshipLevelButton();
         this.giveGiftButton = GameAssetManager.getGameAssetManager().getGiveGiftButton();
         this.questsListButton = GameAssetManager.getGameAssetManager().getQuestsListButton();
+
+        this.hugButton = GameAssetManager.getGameAssetManager().getHugButton();
+        this.proposeButton = GameAssetManager.getGameAssetManager().getProposeButton();
+        this.giveFlowerButton = GameAssetManager.getGameAssetManager().getGiveFlowerButton();
     }
 
     @Override
@@ -129,6 +146,16 @@ public class VillageView extends GameView {
             if (player.isInVillage()) {
                 draw(otherPlayersTextures.get(i), player.getPosition());
             }
+
+            float temp = scale;
+            if (player == playerWithFlower) {
+                Texture flower = GameAssetManager.getGameAssetManager().getFlower();
+                scale = 1.5f;
+                Position position = new Position(player.getPosition());
+                position.setX(position.getX() + 1);
+                draw(flower, position);
+                scale = temp;
+            }
         }
 
         if (npcOptions != null) {
@@ -145,6 +172,22 @@ public class VillageView extends GameView {
             draw(giveGiftButton, giveGiftPosition);
             draw(questsListButton, questsListPosition);
             draw(friendshipLevelButton, friendshipLevelPosition);
+        }
+
+        if (playerOptions != null) {
+            scale = 1f;
+            Position position = new Position(playerWithMenu.getPosition());
+            position.setY(position.getY() + 3);
+            position.setX(position.getX() + 1);
+            draw(playerOptions, position);
+
+            hugPosition= new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 2.4f));
+            proposePosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 1.4f));
+            giveFlowerPosition = new Vector2(TILE_SIZE * (position.getX() + 0.35f), TILE_SIZE * (position.getY() - 0.4f));
+
+            draw(hugButton, hugPosition);
+            draw(proposeButton, proposePosition);
+            draw(giveFlowerButton, giveFlowerPosition);
         }
 
         scale = 4.400316f;
@@ -192,6 +235,17 @@ public class VillageView extends GameView {
                     }
                 }
             }
+            if (button == Input.Buttons.RIGHT) {
+                for (int i = 0; i < otherPlayersTextures.size(); i++) {
+                    User user = App.getCurrentGame().getPlayers().get(i);
+                    if (user.equals(App.getLoggedIn())) continue;
+                    if (clickedOnTexture(screenX, screenY, otherPlayersTextures.get(i), App.getCurrentGame().getPlayers().get(i).getPosition(), scale)) {
+                        playerOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
+                        playerWithMenu = user;
+                        return true;
+                    }
+                }
+            }
 
             if (npcOptions != null) {
                 if (clickedOnTexture(screenX, screenY, giveGiftButton, giveGiftPosition)) {
@@ -210,6 +264,39 @@ public class VillageView extends GameView {
                 }
 
                 npcOptions = null;
+                show();
+            }
+            if (playerOptions != null) {
+                if (clickedOnTexture(screenX, screenY, hugButton, hugPosition)) {
+                    //todo
+                    System.out.println("hug button clicked");
+                    return true;
+                }
+
+                if (clickedOnTexture(screenX, screenY,proposeButton, proposePosition)) {
+                    //todo
+                    System.out.println("Propose button clicked");
+                    Result result = controller.askMarriage(playerWithMenu.getUsername());
+                    if (!result.success) {
+                        errorMessageLabel.setText(result.message);
+                        return true;
+                    }
+                    goToProposeMenu(this, App.getLoggedIn().getUsername(),playerWithMenu.getUsername());
+                    return true;
+                }
+
+                if (clickedOnTexture(screenX, screenY, giveFlowerButton, giveFlowerPosition)) {
+                    Result result = controller.giveFlowerToUser(playerWithMenu.getUsername(), new Good(GoodsType.BOUQUET));
+                    if (result.success) {
+                        playerWithFlower = playerWithMenu;
+                        return true;
+                    }
+                    errorMessageLabel.setText(result.message);
+                    return true;
+                }
+
+                npcOptions = null;
+                playerOptions = null;
                 show();
             }
         } catch (Exception e) {

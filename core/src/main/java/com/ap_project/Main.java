@@ -85,6 +85,10 @@ public class Main extends Game {
         Main.getMain().setScreen(new ForgetPasswordMenuView(new ForgetPasswordMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
+    public static void goToProposeMenu(GameView gameView, String username, String proposalReceiver) {
+        Main.getMain().setScreen(new ProposeMenuView(GameAssetManager.getGameAssetManager().getSkin(), gameView, username, proposalReceiver));
+
+    }
     public static void goToChangePasswordMenu(String username) {
         Main.getMain().setScreen(new ChangePasswordMenuView(new ChangePasswordMenuController(username), GameAssetManager.getGameAssetManager().getSkin()));
     }

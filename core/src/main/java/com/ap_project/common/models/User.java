@@ -147,10 +147,10 @@ public class User {
         }
 
         for (GoodsType type : GoodsType.values()) {
-            System.out.println(this.backpack.addToInventory(new Good(type), 10));
+            System.out.println(this.backpack.addToInventory(new Good(type), 1));
         }
 
-        this.backpack.addToInventory(new Good(GoodsType.BOUQUET), 1);
+        //this.backpack.addToInventory(new Good(GoodsType.BOUQUET), 1);
         this.backpack.addToInventory(new Good(GoodsType.SUGAR), 1);
         this.backpack.addToInventory(new Good(GoodsType.OIL), 1);
         this.backpack.addToInventory(new Good(GoodsType.WHEAT_FLOUR), 1);
@@ -169,7 +169,7 @@ public class User {
         this.backpack.addToInventory(new Good(GoodsType.OIL),1);
         this.backpack.addToInventory(new Good(GoodsType.WHEAT_FLOUR),1);
         this.backpack.addToInventory(new Good(GoodsType.WEDDING_RING),1);
-        this.backpack.addToInventory(new Good(GoodsType.BOUQUET),1);
+     //   this.backpack.addToInventory(new Good(GoodsType.BOUQUET),1);
         this.backpack.addToInventory(new Good(GoodsType.APPLE_SAPLING),1);
         this.backpack.addToInventory(new Good(GoodsType.CORN_SEEDS),1);
         this.backpack.addToInventory(new Good(GoodsType.CRANBERRY_SEEDS),1);
@@ -376,6 +376,7 @@ public class User {
     }
 
     public Position getPosition() {
+        if (position.getY() > 40 && isInVillage) position.setY(40);
         return this.position;
     }
 

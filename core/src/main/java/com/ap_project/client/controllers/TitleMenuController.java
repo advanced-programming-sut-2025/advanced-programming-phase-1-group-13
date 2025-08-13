@@ -43,5 +43,6 @@ public class TitleMenuController {
         // TODO: remove later
         App.addUser(new User("dorsa", "2", "dor", "dorsa@gmail.com", Gender.WOMAN));
         App.addUser(new User("farrokhi", "2", "farrokh", "farrokhi@gmail.com", Gender.MAN));
+        App.addUser(new User("arvin", "2", "arv", "arvin@gmail.com", Gender.MAN));
     }
 }
