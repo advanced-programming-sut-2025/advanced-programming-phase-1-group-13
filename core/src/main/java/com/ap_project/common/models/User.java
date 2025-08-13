@@ -23,14 +23,8 @@ import java.util.*;
 import static com.ap_project.client.controllers.login.LoginController.hashSha256;
 
 /*
-scarecrow
-thor
-greenhouse
-farmbuilding
-go inside
-collect product
-
- */
+scoreboard
+*/
 
 public class User {
     private String username;
@@ -137,18 +131,25 @@ public class User {
         this.backpack.addToInventory(new Ingredient(IngredientType.CHEESE), 10);
         this.backpack.addToInventory(new Ingredient(IngredientType.TOMATO), 10);
         this.backpack.addToInventory(new FishingRod(ToolMaterial.BASIC), 1);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.WOOL, Quality.NORMAL, null), 10);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.COW_MILK, Quality.NORMAL, null), 10);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.CHICKEN_EGG, Quality.NORMAL, null), 10);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.RABBIT_FOOT, Quality.NORMAL, null), 10);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.DUCK_EGG, Quality.NORMAL, null), 10);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.GOAT_MILK, Quality.NORMAL, null), 10);
-        this.backpack.addToInventory(new AnimalProduct(AnimalProductType.DINOSAUR_EGG, Quality.NORMAL, null), 10);
+
         this.backpack.addToInventory(new Axe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Hoe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new WateringCan(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Pickaxe(ToolMaterial.BASIC), 1);
         this.backpack.addToInventory(new Scythe(ToolMaterial.BASIC), 1);
+
+        for (AnimalProductType type : AnimalProductType.values()) {
+            System.out.println(this.backpack.addToInventory(new AnimalProduct(type, Quality.NORMAL, null), 10));
+        }
+
+        for (AnimalProductType type : AnimalProductType.values()) {
+            System.out.println(this.backpack.addToInventory(new AnimalProduct(type, Quality.NORMAL, null), 10));
+        }
+
+        for (GoodsType type : GoodsType.values()) {
+            System.out.println(this.backpack.addToInventory(new Good(type), 10));
+        }
+
         this.backpack.addToInventory(new Good(GoodsType.BOUQUET), 1);
         this.backpack.addToInventory(new Good(GoodsType.SUGAR), 1);
         this.backpack.addToInventory(new Good(GoodsType.OIL), 1);

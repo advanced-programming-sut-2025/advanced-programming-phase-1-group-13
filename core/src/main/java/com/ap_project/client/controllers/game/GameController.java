@@ -1003,9 +1003,9 @@ public class GameController {
     }
 
     public Result buildGreenhouse() {
-        if (!canBuildGreenhouse()) {
-            return new Result(false, "You don't have enough resources or a greenhouse already exists!");
-        }
+        // if (!canBuildGreenhouse()) {
+        //    return new Result(false, "You don't have enough resources or a greenhouse already exists!");
+        //}
         App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().activateGreenhouse();
         return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }

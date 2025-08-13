@@ -11,6 +11,7 @@ public class Backpack extends Inventory {
     public Backpack(BackpackType type) {
         super(type.getCapacity(), type.isUnlimited());
         this.type = type;
+        this.isCapacityUnlimited = true; // TODO: remove later
     }
 
     public BackpackType getType() {
