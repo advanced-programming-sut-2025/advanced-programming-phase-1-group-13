@@ -16,6 +16,7 @@ import com.ap_project.common.models.enums.types.*;
 
 import com.ap_project.client.controllers.pregame.LobbyMenuController;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.IOException;
@@ -114,8 +115,8 @@ public class Main extends Game {
         Main.getMain().setScreen(new PreGameMenuView(new PreGameMenuController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
-    public static void goToScoreboard() {
-        Main.getMain().setScreen(new ScoreboardView(new ScoreboardController(), GameAssetManager.getGameAssetManager().getSkin()));
+    public static void goToScoreboard(Screen screen) {
+        Main.getMain().setScreen(new ScoreboardView(screen, new ScoreboardController(), GameAssetManager.getGameAssetManager().getSkin()));
     }
 
     public static void goToNewGameMenu() {

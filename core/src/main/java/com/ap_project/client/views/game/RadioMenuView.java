@@ -156,15 +156,15 @@ public class RadioMenuView implements Screen {
             musicSelectBox.setSelected("None");
 
             musicSelectBox.setPosition(
-                window.getX() + (window.getWidth() - musicSelectBox.getWidth()) / 2,
-                window.getY() + window.getHeight() / 2 + 30
+                window.getX() + ((window.getWidth() - musicSelectBox.getWidth()) / 2 )- 60,
+                window.getY() + window.getHeight() / 2 -10
             );
             musicSelectBox.setWidth(500);
 
             stage.addActor(musicSelectBox);
 
             playButton.setPosition(
-                window.getX() + (window.getWidth() / 2) - playButton.getWidth() - 10,
+                window.getX() + (window.getWidth() / 2) - playButton.getWidth() - 180,
                 window.getY() + window.getHeight() / 2 - 40
             );
 

@@ -110,6 +110,7 @@ public class GameClient {
                                     handleServerMessage(message);
                                 } catch (Exception e) {
                                     System.out.println("[Client] Error parsing JSON: " + e.getMessage());
+                                    e.printStackTrace();
                                 }
 
                                 jsonBuffer.setLength(0);
@@ -133,14 +134,10 @@ public class GameClient {
             case LOGIN_SUCCESS: {
                 System.out.println(message.getBody());
                 String username = message.getFromBody("username");
-                String password = message.getFromBody("password");
-                String nickname = message.getFromBody("nickname");
-                String email = message.getFromBody("email");
-                Gender gender = Gender.valueOf(message.getFromBody("gender"));
                 Gdx.app.postRunnable(() -> {
                     if (getMain().getScreen() instanceof LoginMenuView) {
                         LoginMenuView loginMenuView = (LoginMenuView) getMain().getScreen();
-                        loginMenuView.getController().handleLoginSuccess(new User(username, password, nickname, email, gender));
+                        loginMenuView.getController().handleLoginSuccess(App.getUserByUsername(username));
                     }
                 });
                 break;
@@ -165,15 +162,6 @@ public class GameClient {
                 break;
             }
 
-            case ERROR: {
-                String errorMsg = message.<String>getFromBody("data");
-                if (lobbyMenuController != null) {
-                    System.out.println("[Client] Error: " + errorMsg);
-                    lobbyMenuController.showError(errorMsg);
-                }
-                break;
-            }
-
             case LOBBY_CREATED: {
                 String createdLobbyId = message.<String>getFromBody("data");
                 System.out.println("[Client] Lobby created successfully. ID: " + createdLobbyId);
@@ -187,7 +175,7 @@ public class GameClient {
             }
 
             case LOBBY_INFO: {
-                String lobbyInfoString = message.<String>getFromBody("data");
+                String lobbyInfoString = message.getFromBody("data");
                 System.out.println("[Client] Received lobby info: " + lobbyInfoString);
                 if (lobbyMenuController != null) {
                     Gdx.app.postRunnable(() -> lobbyMenuController.openLobbyRoomView(lobbyInfoString));
@@ -195,9 +183,32 @@ public class GameClient {
                 break;
             }
 
+            case UPDATE_SCOREBOARD_INFO: {
+                HashMap<String, Object> scoreboardInfo = new HashMap<>();
+                scoreboardInfo.put("username", App.getLoggedIn().getUsername());
+                scoreboardInfo.put("money", String.valueOf(App.getLoggedIn().getBalance()));
+                scoreboardInfo.put("quests", String.valueOf(App.getLoggedIn().getNumberOfQuests()));
+                scoreboardInfo.put("skill", String.valueOf(App.getLoggedIn().getTotalSkills()));
+
+                sendMessage(JSONUtils.toJson(new Message(scoreboardInfo, MessageType.SCOREBOARD_INFO_FROM_CLIENT)));
+
+                break;
+            }
+
+            case SCOREBOARD_INFO: {
+                String username = message.getFromBody("username");
+                double money = message.getFromBody("money");
+
+                User user = App.getUserByUsername(username);
+                if (user == null) user = new User(username, "1", username, "", Gender.RATHER_NOT_SAY);
+
+                user.setBalance(money);
+            }
+
             case USERS_INFO: {
                 ArrayList<String> usersInfo = message.getFromBody("data");
                 System.out.println("[Client] Received users info: " + usersInfo);
+                if (usersInfo == null) return;
                 Gdx.app.postRunnable(() -> goToUsersMenu(usersInfo));
                 break;
             }
@@ -208,7 +219,7 @@ public class GameClient {
 
                 Gdx.app.postRunnable(() -> {
                     try {
-                        for (int i = 1; i <= 4; i++) {
+                        for (int i = 0; i <= 3; i++) {
                             String playerKey = "player" + i;
                             if (bodyMap.containsKey(playerKey)) {
                                 Map<String, Object> playerData = (Map<String, Object>) bodyMap.get(playerKey);
@@ -228,7 +239,6 @@ public class GameClient {
                                 players.add(player);
                             }
                         }
-
                         Game game = new Game(players, (String) bodyMap.get("id"), false);
                         for (User user : players) {
                             user.setActiveGame(game);
@@ -316,6 +326,15 @@ public class GameClient {
                     }
                 } else {
                     Gdx.app.postRunnable(() -> goToVotingMenu(gameView));
+                }
+                break;
+            }
+
+            case ERROR: {
+                String errorMsg = message.<String>getFromBody("data");
+                if (lobbyMenuController != null) {
+                    System.out.println("[Client] Error: " + errorMsg);
+                    lobbyMenuController.showError(errorMsg);
                 }
                 break;
             }

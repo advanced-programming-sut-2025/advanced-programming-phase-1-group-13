@@ -467,6 +467,10 @@ public class User {
         return privateChats.get(username);
     }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public HashMap<String, Boolean> getUnreadPrivateMessagesMap() {
         return hasUnreadPrivateMessages;
     }
