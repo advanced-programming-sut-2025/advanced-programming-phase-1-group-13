@@ -301,6 +301,7 @@ public class Game {
                         Crop randomCrop = player.getFarm().getPlantedCrops().remove(lastIndex);
                         Position crowPosition = new Position(randomCrop.getPosition());
                         crows.add(crowPosition);
+                        System.out.println("Crow attack at: " + crowPosition);
                     }
                 }
             }
@@ -315,7 +316,6 @@ public class Game {
         for (Tree tree : App.getLoggedIn().getFarm().getPlantedTrees()) {
             tree.incrementDaySinceLastHarvest();
             tree.incrementDayInStage();
-            System.out.println("STAGE: " + tree.getDayInStage() + "/7 in stage" + tree.getStage() + " - day since last harvest:" + tree.getDaySinceLastHarvest());
         }
 
         return new Result(true, message.toString());

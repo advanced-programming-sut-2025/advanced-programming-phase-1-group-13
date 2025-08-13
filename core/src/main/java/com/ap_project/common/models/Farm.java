@@ -533,7 +533,9 @@ public class Farm {
             if (!animal.hasBeenFedToday()) {
                 animal.changeFriendship(-20);
                 message.append(animal.getName()).append(" was not fed today.\n");
-            } else if (animal.getFriendshipLevel() >= 100) {
+            }
+
+            if (animal.getFriendshipLevel() >= 100) {
                 animal.produceProduct();
                 message.append(animal.getName()).append(" produced some products today.\n");
             }

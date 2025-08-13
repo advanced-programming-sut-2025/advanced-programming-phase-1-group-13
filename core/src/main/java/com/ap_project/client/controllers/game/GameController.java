@@ -1003,9 +1003,9 @@ public class GameController {
     }
 
     public Result buildGreenhouse() {
-        if (!canBuildGreenhouse()) {
-            return new Result(false, "You don't have enough resources or a greenhouse already exists!");
-        }
+        // if (!canBuildGreenhouse()) {
+        //    return new Result(false, "You don't have enough resources or a greenhouse already exists!");
+        //}
         App.getCurrentGame().getPlayerByUsername(App.getLoggedIn().getUsername()).getFarm().activateGreenhouse();
         return new Result(true, "Greenhouse built successfully! You can now enter and use it.");
     }
@@ -2097,27 +2097,27 @@ public class GameController {
             " must be at least 2 to hug them.");
     }
 
-    public Result giveFlowerToUser(String username, String flowerName) {
+    public Result giveFlowerToUser(String username, Item flower) {
         Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
             return new Result(false, "User not found.");
         }
-
-        FlowerType flowerType = FlowerType.getFlowerTypeByName(flowerName);
-        if (flowerType == null) {
-            return new Result(false, "Flower not found.");
-        }
+//
+//        FlowerType flowerType = FlowerType.getFlowerTypeByName(flowerName);
+//        if (flowerType == null) {
+//            return new Result(false, "Flower not found.");
+//        }
 
         User player = App.getLoggedIn();
-        if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
-            return new Result(false, "You must be standing next to " + username +
-                " to give them a flower");
-        }
+//        if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
+//            return new Result(false, "You must be standing next to " + username +
+//                " to give them a flower");
+//        }
 
-        CropType cropType = CropType.getCropTypeByName(flowerName);
-        assert cropType != null;
-        Crop flower = new Crop(cropType);
+//        CropType cropType = CropType.getCropTypeByName(flowerName);
+//        assert cropType != null;
+//        Crop flower = new Crop(cropType);
         Result result = player.getBackpack().removeFromInventory(flower, 1);
         if (!result.success) {
             return result;
@@ -2128,8 +2128,10 @@ public class GameController {
             return result;
         }
 
-        if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
-            game.changeFriendship(player, targetPlayer, 50);
+        if (player.getSpouse() != null) {
+            if (player.getSpouse().equals(targetPlayer) && player.hasInteractedToday(targetPlayer)) {
+                game.changeFriendship(player, targetPlayer, 50);
+            }
         }
         if (game.getUserFriendship(player, targetPlayer).getLevel().equals(FriendshipLevel.CLOSE_FRIEND)
             && !player.hasHuggedToday(targetPlayer)) {
@@ -2137,11 +2139,11 @@ public class GameController {
         }
         player.setHasHuggedToday(targetPlayer, true);
         targetPlayer.setHasHuggedToday(player, true);
-        return new Result(true, "You gave " + username + " a " + flowerName +
+        return new Result(true, "You gave " + username + " a " + flower.getName() +
             ". Your friendship level is now " + game.getUserFriendship(player, targetPlayer).toString() + ".");
     }
 
-    public Result askMarriage(String username, String ringStr) {
+    public Result askMarriage(String username) {
         Game game = App.getCurrentGame();
         User targetPlayer = game.getPlayerByUsername(username);
         if (targetPlayer == null) {
@@ -2149,7 +2151,7 @@ public class GameController {
         }
 
         User player = App.getLoggedIn();
-        if (areClose(player.getPosition(), targetPlayer.getPosition())) {
+//        if (areClose(player.getPosition(), targetPlayer.getPosition())) {
             if (!player.getGender().equals(targetPlayer.getGender())) {
                 HashMap<Item, Integer> items = player.getBackpack().getItems();
                 if (items.get(new Good(GoodsType.WEDDING_RING)) == 0) {
@@ -2160,8 +2162,8 @@ public class GameController {
             }
             return new Result(false,
                 "You are not allowed to marry a person of the same gender in this game.");
-        }
-        return new Result(false, "You must stand next to " + username + " to propose to them.");
+//        }
+       // ret/urn new Result(false, "You must stand next to " + username + " to propose to them.");
     }
 
     public Result respondToMarriageRequest(String acceptanceStr, String username) {

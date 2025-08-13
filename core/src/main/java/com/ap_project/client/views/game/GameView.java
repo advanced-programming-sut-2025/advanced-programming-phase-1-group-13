@@ -278,10 +278,14 @@ public abstract class GameView implements Screen, InputProcessor {
             Texture frame = lightningAnimation.getKeyFrame(lightningStateTime, false);
             lightningImage.setDrawable(new Image(frame).getDrawable());
 
-            lightningImage.setPosition(
-                lightningX - frame.getWidth() / 2f,
-                lightningY - frame.getHeight() / 2f
-            );
+            Main.getBatch().begin();
+            scale = 1;
+            draw(frame, new Position(lightningX, lightningY));
+            scale = 4.400316f;
+            Main.getBatch().end();
+
+            lightningImage.setPosition(originPosition.getX() * TILE_SIZE, 5 * TILE_SIZE);
+            System.out.println(lightningImage.getX() + ", " + lightningImage.getY());
 
             if (!hasTriggeredLightningTransition) {
                 hasTriggeredLightningTransition = true;
@@ -974,7 +978,7 @@ public abstract class GameView implements Screen, InputProcessor {
 
     public void setLightningPosition(Position position) {
         this.lightningX = position.getX();
-        this.lightningY = position.getY() + (int) lightningImage.getHeight() / 2;
+        this.lightningY = position.getY();
         this.isLightningActive = true;
         this.lightningStateTime = 0f;
 
@@ -987,10 +991,11 @@ public abstract class GameView implements Screen, InputProcessor {
         lightningImage.setVisible(true);
 
         lightningImage.setPosition(
-            lightningX - firstFrame.getWidth() / 2f,
-            Gdx.graphics.getHeight() - lightningY - firstFrame.getHeight() / 2f
+            100 + lightningX - firstFrame.getWidth() / 2f,
+            lightningY
         );
 
+        System.out.println("lightning at" + lightningImage.getX() + ", " + lightningImage.getY());
         stage.addActor(lightningImage);
     }
 

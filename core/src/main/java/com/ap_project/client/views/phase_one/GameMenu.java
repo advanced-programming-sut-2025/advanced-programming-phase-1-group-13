@@ -259,12 +259,12 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameCommands.FLOWER.getMatcher(inputLine)) != null) {
             System.out.println(controller.giveFlowerToUser(
                     matcher.group("username"),
-                    matcher.group("flowerName")
+                null
             ));
         } else if ((matcher = GameCommands.ASK_MARRIAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.askMarriage(
-                    matcher.group("username"),
-                    matcher.group("ring")));
+                    matcher.group("username")));
+                  //  matcher.group("ring")));
         } else if ((matcher = GameCommands.RESPONSE_MARRIAGE.getMatcher(inputLine)) != null) {
             System.out.println(controller.respondToMarriageRequest(
                     matcher.group("response"),
