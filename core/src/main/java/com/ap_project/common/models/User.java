@@ -8,6 +8,7 @@ import com.ap_project.common.models.enums.SkillLevel;
 import com.ap_project.common.models.enums.environment.Direction;
 import com.ap_project.common.models.enums.environment.Time;
 import com.ap_project.common.models.enums.types.*;
+import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.inventory.Backpack;
 import com.ap_project.common.models.tools.*;
 import com.ap_project.common.models.trade.Trade;
@@ -20,6 +21,16 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.ap_project.client.controllers.login.LoginController.hashSha256;
+
+/*
+scarecrow
+thor
+greenhouse
+farmbuilding
+go inside
+collect product
+
+ */
 
 public class User {
     private String username;
@@ -144,6 +155,60 @@ public class User {
         this.backpack.addToInventory(new Good(GoodsType.WHEAT_FLOUR), 1);
         this.backpack.addToInventory(new Good(GoodsType.WEDDING_RING), 1);
         this.backpack.addToInventory(new Good(GoodsType.CAULIFLOWER_SEEDS), 1);
+        this.backpack.addToInventory(new Crop(CropType.AMARANTH),1);
+        this.backpack.addToInventory(new Crop(CropType.ANCIENT_FRUIT),1);
+        this.backpack.addToInventory(new Crop(CropType.BLUEBERRY),1);
+        this.backpack.addToInventory(new Crop(CropType.BLUE_JAZZ),1);
+        this.backpack.addToInventory(new Crop(CropType.BROCCOLI),1);
+        this.backpack.addToInventory(new Crop(CropType.CORN),1);
+        this.backpack.addToInventory(new Crop(CropType.TULIP),1);
+        this.backpack.addToInventory(new Crop(CropType.MELON),1);
+        this.backpack.addToInventory(new Crop(CropType.SUMMER_SQUASH),1);
+        this.backpack.addToInventory(new Crop(CropType.YAM),1);
+        this.backpack.addToInventory(new Good(GoodsType.OIL),1);
+        this.backpack.addToInventory(new Good(GoodsType.WHEAT_FLOUR),1);
+        this.backpack.addToInventory(new Good(GoodsType.WEDDING_RING),1);
+        this.backpack.addToInventory(new Good(GoodsType.BOUQUET),1);
+        this.backpack.addToInventory(new Good(GoodsType.APPLE_SAPLING),1);
+        this.backpack.addToInventory(new Good(GoodsType.CORN_SEEDS),1);
+        this.backpack.addToInventory(new Good(GoodsType.CRANBERRY_SEEDS),1);
+        this.backpack.addToInventory(new Good(GoodsType.FAIRY_SEEDS),1);
+        this.backpack.addToInventory(new Good(GoodsType.WOOD),1);
+        this.backpack.addToInventory(new Good(GoodsType.SUGAR),1);
+        this.backpack.addToInventory(new Good(GoodsType.BEAN_STARTER),1);
+        this.backpack.addToInventory(new Good(GoodsType.GRASS_STARTER_RECIPE),1);
+        this.backpack.addToInventory(new Good(GoodsType.HASHBROWNS_RECIPE),1);
+        this.backpack.addToInventory(new Good(GoodsType.HAY),1);
+        this.backpack.addToInventory(new Food(FoodType.COOKIE),1);
+        this.backpack.addToInventory(new Food(FoodType.SALAD),1);
+        this.backpack.addToInventory(new Food(FoodType.TORTILLA),1);
+        this.backpack.addToInventory(new Food(FoodType.PIZZA),1);
+        this.backpack.addToInventory(new Food(FoodType.RED_PLATE),1);
+        this.backpack.addToInventory(new Food(FoodType.VEGETABLE_MEDLEY),1);
+        this.backpack.addToInventory(new Food(FoodType.TRIPLE_SHOT_ESPRESSO),1);
+        this.backpack.addToInventory(new Food(FoodType.SEAFOAM_PUDDING),1);
+        this.backpack.addToInventory(new Food(FoodType.DISH_O_THE_SEA),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.CHEESE),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.TOMATO),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.APRICOT),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.PARSNIP),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.IRON_BAR),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.COAL),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.COPPER_ORE),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.EGGPLANT),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.CARROT),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.DANDELION),1);
+        this.backpack.addToInventory(new Ingredient(IngredientType.MAHOGANY_SEED),1);
+
+
+
+
+
+
+
+
+
+
 
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
