@@ -1339,11 +1339,11 @@ public class GameController {
             return new Result(false, "Animal not found.");
         }
 
-        if (animal.getPosition() != null) {
-            if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 5) {
-                return new Result(false, "Animal can't move more than 5 tiles at once.");
-            }
-        }
+//        if (animal.getPosition() != null) {
+//            if (abs(pow(animal.getPosition().getX() - newPosition.getX(), 2) + pow(animal.getPosition().getY() - newPosition.getY(), 2)) > 50) {
+//                return new Result(false, "Animal can't move more than 50 tiles at once.");
+//            }
+//        }
 
         FarmBuilding farmBuildingInNewPosition = farm.getFarmBuildingByPosition(newPosition);
         if (animal.isOutside()) {

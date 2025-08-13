@@ -34,10 +34,26 @@ public class Farm {
         this.plantedTrees = new ArrayList<>();
         this.trees = new ArrayList<>();
         this.farmBuildings = new ArrayList<>();
+        // TODO: remove later
+        farmBuildings.add(new AnimalLivingSpace(FarmBuildingType.BARN, new Position(60, 10)));
+        AnimalLivingSpace barn = (AnimalLivingSpace) farmBuildings.get(0);
+        barn.addAnimal(new Animal("Gav", AnimalType.COW, barn));
+        barn.addAnimal(new Animal("Morgh", AnimalType.CHICKEN, barn));
+        barn.addAnimal(new Animal("Khook", AnimalType.PIG, barn));
+        barn.addAnimal(new Animal("Goosfand", AnimalType.SHEEP, barn));
+        barn.addAnimal(new Animal("Ordak", AnimalType.DUCK, barn));
+        barn.addAnimal(new Animal("Boz", AnimalType.GOAT, barn));
+        barn.addAnimal(new Animal("Khargoosh", AnimalType.RABBIT, barn));
+        barn.addAnimal(new Animal("Dino", AnimalType.DINOSAUR, barn));
+        for (Animal animal : barn.getAnimals()) {
+            animal.setOutside(true);
+            animal.setPosition(new Position(random.nextInt(10) + 60, random.nextInt(10) + 15));
+        }
         this.shippingBins = new ArrayList<>();
         shippingBins.add(new ShippingBin(FarmBuildingType.SHIPPING_BIN, new Position(73, 3)));
         this.crafts = new ArrayList<>();
         this.artisans = new ArrayList<>();
+        this.artisans.add(new Artisan(ArtisanType.LOOM, new Position(55, 2))); // TODO: remove later
         this.mapNumber = mapNumberToFollow;
         this.stones = new ArrayList<>();
         this.foragingCrops = new ArrayList<>();
@@ -46,6 +62,29 @@ public class Farm {
         this.quarry = new Quarry();
         this.farmTiles = new ArrayList<>();
         this.crows = new ArrayList<>();
+
+
+        for (CropType cropType : CropType.values()) {
+            try {
+                Crop crop = new Crop(cropType, new Position(random.nextInt(width), random.nextInt(height)));
+                crop.setStage((new Random()).nextInt(cropType.getNumberOfStages()) + 1);
+                plantedCrops.add(crop);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        for (CropType cropType : CropType.values()) {
+            for (int i = 1; i <= cropType.getNumberOfStages() ; i++) {
+                Crop crop = new Crop(cropType, new Position(random.nextInt(width), random.nextInt(height)));
+                crop.setStage((new Random()).nextInt(cropType.getNumberOfStages()) + 1);
+                plantedCrops.add(crop);
+                if (crop.getStage() == cropType.getNumberOfStages()) {
+                    if (crop.isCanBecomeGiant()) crop.setGiant(true);
+                }
+            }
+        }
 
         generateBaseMapTiles();
         generateFixedElements();
