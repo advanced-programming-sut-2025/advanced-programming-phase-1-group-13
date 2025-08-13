@@ -161,7 +161,7 @@ public class ClientHandler implements Runnable {
             case CHOSE_MAP: {
                 String username = (String) body.get("username");
                 String id = (String) body.get("id");
-                Integer mapNumber = Integer.parseInt((String) body.get("mapNumber"));
+                int mapNumber = Integer.parseInt((String) body.get("mapNumber"));
 
                 Game game = getGameById(id);
                 if (game == null) {
@@ -178,6 +178,106 @@ public class ClientHandler implements Runnable {
                 if (haveAllPlayersChosenMap) {
                     Message error = new Message(body, MessageType.GO_TO_GAME);
                     sendMessage(JSONUtils.toJson(error));
+                }
+
+                break;
+            }
+
+            case START_TERMINATE_VOTE: {
+                String id = (String) body.get("id");
+                Lobby lobby = lobbies.get(id);
+                if (lobby == null) {
+                    sendError("Invalid lobby ID: " + id);
+                    return;
+                }
+                sendMessageToAllInLobby(lobby, JSONUtils.toJson(new Message(body, MessageType.ASK_TERMINATE_VOTE)));
+
+                break;
+            }
+
+            case VOTE_FOR_TERMINATE: {
+                String id = (String) body.get("id");
+                Lobby lobby = lobbies.get(id);
+                Game game = getGameById(id);
+                if (game == null) {
+                    sendError("Invalid game ID: " + id);
+                    return;
+                }
+
+                String username = (String) body.get("username");
+                Boolean vote = Boolean.valueOf((String) body.get("vote"));
+
+                boolean haveAllPlayersVoted = true;
+                for (User user : game.getVotes().keySet()) {
+                    if (user.getUsername().equals(username)) game.getVotes().put(user, vote);
+                    if (game.getVotes().get(user) == null) haveAllPlayersVoted = false;
+                }
+
+                if (haveAllPlayersVoted) {
+                    int numberOfPositiveVotes = 0;
+                    for (User user : game.getVotes().keySet()) {
+                        if (game.getVotes().get(user) == true) numberOfPositiveVotes++;
+                    }
+
+                    body.put("conclusion", numberOfPositiveVotes > game.getPlayers().size() / 2 ? "true" : "false");
+                    message = new Message(body, MessageType.FINISH_TERMINATE_VOTE);
+                    sendMessageToAllInLobby(lobby, JSONUtils.toJson(message));
+
+                    game.getVotes().clear();
+                    for (User user : game.getPlayers()) {
+                        game.getVotes().put(user, null);
+                    }
+                }
+
+                break;
+            }
+
+            case START_KICK_VOTE: {
+                String id = (String) body.get("id");
+                Lobby lobby = lobbies.get(id);
+                if (lobby == null) {
+                    sendError("Invalid lobby ID: " + id);
+                    return;
+                }
+                String username = (String) body.get("username");
+                body.put("username", username);
+                sendMessageToAllInLobby(lobby, JSONUtils.toJson(new Message(body, MessageType.ASK_KICK_VOTE)));
+
+                break;
+            }
+
+            case VOTE_FOR_KICK: {
+                String id = (String) body.get("id");
+                Lobby lobby = lobbies.get(id);
+                Game game = getGameById(id);
+                if (game == null) {
+                    sendError("Invalid game ID: " + id);
+                    return;
+                }
+
+                String username = (String) body.get("username");
+                Boolean vote = Boolean.valueOf((String) body.get("vote"));
+
+                boolean haveAllPlayersVoted = true;
+                for (User user : game.getVotes().keySet()) {
+                    if (user.getUsername().equals(username)) game.getVotes().put(user, vote);
+                    if (game.getVotes().get(user) == null) haveAllPlayersVoted = false;
+                }
+
+                if (haveAllPlayersVoted) {
+                    int numberOfPositiveVotes = 0;
+                    for (User user : game.getVotes().keySet()) {
+                        if (game.getVotes().get(user) == true) numberOfPositiveVotes++;
+                    }
+
+                    body.put("conclusion", numberOfPositiveVotes > game.getPlayers().size() / 2 ? "true" : "false");
+                    message = new Message(body, MessageType.FINISH_KICK_VOTE);
+                    sendMessageToAllInLobby(lobby, JSONUtils.toJson(message));
+
+                    game.getVotes().clear();
+                    for (User user : game.getPlayers()) {
+                        game.getVotes().put(user, null);
+                    }
                 }
 
                 break;
@@ -437,8 +537,6 @@ public class ClientHandler implements Runnable {
     }
 
     private void sendMessageToAllInLobby(Lobby lobby, String message) {
-
-        System.out.println("LINE 439 BEFORE THE EXCEPTION");
         for (ClientHandler client : lobby.getPlayers()) {
             client.sendMessage(message);
         }

@@ -29,6 +29,7 @@ public class Game {
     private final ArrayList<Trade> trades;
     private HashMap<User, HashMap<User, HashMap<String, Boolean>>> talkHistory;
     private String publicChat;
+    private HashMap<User, Boolean> votes;
 
     public Game(ArrayList<User> players, String id, boolean isServerSide) {
         this.id = id;
@@ -113,7 +114,10 @@ public class Game {
         this.npcFriendships = new HashMap<>();
         this.trades = new ArrayList<>();
 
+        this.votes = new HashMap<>();
         for (User player : this.players) {
+            votes.put(player, null);
+
             HashMap<User, Friendship> playerFriendMap = new HashMap<>();
             for (User other : this.players) {
                 if (!player.equals(other)) {
@@ -442,5 +446,9 @@ public class Game {
             }
         }
         return null;
+    }
+
+    public HashMap<User, Boolean> getVotes() {
+        return votes;
     }
 }

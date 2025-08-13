@@ -1,6 +1,10 @@
 package com.ap_project.client.views.game;
 
+import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -13,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.HashMap;
+
 import static com.ap_project.Main.*;
 
 public class TerminateMenuView implements Screen {
@@ -23,7 +29,7 @@ public class TerminateMenuView implements Screen {
     private final Label titleLabel;
     private final GameView gameView;
 
-    public TerminateMenuView(Skin skin,GameView gameView) {
+    public TerminateMenuView(Skin skin, GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getToolMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2f;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2f;
@@ -47,10 +53,8 @@ public class TerminateMenuView implements Screen {
         addOptionButtons();
     }
 
-
-
     private void addTitleLabel() {
-        float titleX = window.getX() + (window.getWidth() - titleLabel.getWidth()) / 2f-50;
+        float titleX = window.getX() + (window.getWidth() - titleLabel.getWidth()) / 2f - 50;
         float titleY = window.getY() + window.getHeight() - 230;
         titleLabel.setPosition(titleX, titleY);
         titleLabel.setFontScale(1.5f);
@@ -69,16 +73,24 @@ public class TerminateMenuView implements Screen {
         yesButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("YES clicked");
-                goToVotingMenu(gameView);
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", App.getLoggedIn().getActiveGame().getId());
+                body.put("vote", "true");
+                body.put("username", App.getLoggedIn().getUsername());
+                Message message = new Message(body, MessageType.VOTE_FOR_TERMINATE);
+                getClient().sendMessage(JSONUtils.toJson(message));
             }
         });
 
         noButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("NO clicked");
-                goToVotingMenu(gameView);
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", App.getLoggedIn().getActiveGame().getId());
+                body.put("vote", "false");
+                body.put("username", App.getLoggedIn().getUsername());
+                Message message = new Message(body, MessageType.VOTE_FOR_TERMINATE);
+                getClient().sendMessage(JSONUtils.toJson(message));
             }
         });
 
@@ -99,11 +111,24 @@ public class TerminateMenuView implements Screen {
         stage.getViewport().update(width, height, true);
     }
 
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public GameView getGameView() {
+        return gameView;
     }
 }

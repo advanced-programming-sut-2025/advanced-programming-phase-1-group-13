@@ -132,7 +132,6 @@ public class MultiplayerChooseMapMenuView implements Screen {
             Message message = new Message(body, MessageType.CHOSE_MAP);
             getClient().sendMessage(JSONUtils.toJson(message));
         }
-        chooseButton.setChecked(false);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

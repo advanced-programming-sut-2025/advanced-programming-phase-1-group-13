@@ -27,7 +27,6 @@ public class GameServer {
         users.add(new User("farrokhi", "2", "farrokh", "farrokhi@gmail.com", Gender.MAN));
         users.add(new User("selma", "2", "sel", "selma@gmail.com", Gender.WOMAN));
 
-
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("[Server] GameServer running on port " + PORT);
 

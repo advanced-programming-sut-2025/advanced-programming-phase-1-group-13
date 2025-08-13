@@ -29,5 +29,9 @@ public class TitleMenuController {
 
     public void setView(TitleMenuView view) {
         this.view = view;
+
+        // TODO: remove later
+        App.addUser(new User("dorsa", "2", "dor", "dorsa@gmail.com", Gender.WOMAN));
+        App.addUser(new User("farrokhi", "2", "farrokh", "farrokhi@gmail.com", Gender.MAN));
     }
 }

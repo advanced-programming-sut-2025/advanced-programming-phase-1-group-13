@@ -4,6 +4,9 @@ import com.ap_project.Main;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.User;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -17,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.HashMap;
+
 import static com.ap_project.Main.*;
 
 public class VotingMenuView implements Screen, InputProcessor {
@@ -24,8 +29,6 @@ public class VotingMenuView implements Screen, InputProcessor {
     private final Image window;
     private final Image closeButton;
     private final GameView gameView;
-
-
     private Skin skin;
     private SelectBox<String> playerSelectBox;
     private TextButton kickButton;
@@ -40,7 +43,6 @@ public class VotingMenuView implements Screen, InputProcessor {
         this.skin = GameAssetManager.getGameAssetManager().getSkin();
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
     }
-
 
     @Override
     public void show() {
@@ -68,8 +70,11 @@ public class VotingMenuView implements Screen, InputProcessor {
         kickButton.addListener(e -> {
             if (kickButton.isPressed()) {
                 String selected = playerSelectBox.getSelected();
-                System.out.println("Kicking: " + selected);
-                goToKickMenu(gameView);
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", App.getCurrentGame().getId());
+                body.put("username", selected);
+                Message message = new Message(body, MessageType.START_KICK_VOTE);
+                getClient().sendMessage(JSONUtils.toJson(message));
                 return true;
             }
             return false;
@@ -78,9 +83,10 @@ public class VotingMenuView implements Screen, InputProcessor {
         forceTerminateButton = new TextButton("Force Terminate", skin);
         forceTerminateButton.addListener(e -> {
             if (forceTerminateButton.isPressed()) {
-                String selected = playerSelectBox.getSelected();
-                System.out.println("Force Terminating: " + selected);
-                goToTerminateMenu(gameView);
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", App.getCurrentGame().getId());
+                Message message = new Message(body, MessageType.START_TERMINATE_VOTE);
+                getClient().sendMessage(JSONUtils.toJson(message));
                 return true;
             }
             return false;
@@ -139,37 +145,49 @@ public class VotingMenuView implements Screen, InputProcessor {
     public boolean keyDown(int keycode) {
         return false;
     }
+
     @Override
     public boolean keyUp(int keycode) {
         return false;
     }
+
     @Override
     public boolean keyTyped(char character) {
         return false;
     }
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         return false;
     }
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
     }
+
     @Override
     public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
         return false;
     }
+
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
+
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
     }
+
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+
+    public GameView getGameView() {
+        return gameView;
     }
 
     public void addCloseButton() {
