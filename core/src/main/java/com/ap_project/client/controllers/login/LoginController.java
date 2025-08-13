@@ -50,7 +50,6 @@ public class LoginController {
 
     public void handleLoginSuccess(User user) {
         waitingForResponse = false;
-        System.out.println(user);
         App.setLoggedIn(user);
         goToMainMenu();
     }

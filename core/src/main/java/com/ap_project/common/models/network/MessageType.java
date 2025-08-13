@@ -34,5 +34,6 @@ public enum MessageType {
     VOTE_FOR_KICK,
     FINISH_KICK_VOTE,
     ASK_MARRIAGE,
-    EXIT
+    SEND_GIFT,
+    RECEIVE_GIFT, EXIT
 }

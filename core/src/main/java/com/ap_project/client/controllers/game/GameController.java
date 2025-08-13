@@ -1970,9 +1970,9 @@ public class GameController {
         }
 
         User player = App.getLoggedIn();
-        if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
-            return new Result(false, "You must be close to " + username + " to give them a gift.");
-        }
+//        if (!areClose(player.getPosition(), targetPlayer.getPosition())) {
+//            return new Result(false, "You must be close to " + username + " to give them a gift.");
+//        }
 
         Item item = player.getBackpack().getItemFromInventoryByName(itemName);
         if (item == null) {

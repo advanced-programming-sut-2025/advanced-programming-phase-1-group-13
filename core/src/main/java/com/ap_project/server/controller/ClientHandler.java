@@ -311,6 +311,20 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
+            case SEND_GIFT: {
+                String sender = (String) body.get("sender");
+                String receiver = (String) body.get("receiver");
+                String item = (String) body.get("item");
+
+                body.put("sender", sender);
+                body.put("receiver", receiver);
+
+                if (user.getUsername().equals(receiver)) {
+                    sendMessage(JSONUtils.toJson(new Message(body, MessageType.RECEIVE_GIFT)));
+                }
+                break;
+            }
+
             default:
                 sendError("Unknown command: " + command);
                 break;
