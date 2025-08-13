@@ -94,7 +94,7 @@ public class ProposeMenuView implements Screen {
                 body.put("id", App.getLoggedIn().getActiveGame().getId());
                 body.put("vote", "true");
                 body.put("username", App.getLoggedIn().getUsername());
-                Message message = new Message(body, MessageType.ASK_MARRIAGE);
+                Message message = new Message(body, MessageType.ANSWER_MARRIAGE);
                 getClient().sendMessage(JSONUtils.toJson(message));
             }
         });
@@ -106,7 +106,7 @@ public class ProposeMenuView implements Screen {
                 body.put("id", App.getLoggedIn().getActiveGame().getId());
                 body.put("vote", "false");
                 body.put("username", App.getLoggedIn().getUsername());
-                Message message = new Message(body, MessageType.ASK_MARRIAGE);
+                Message message = new Message(body, MessageType.ANSWER_MARRIAGE);
                 getClient().sendMessage(JSONUtils.toJson(message));
             }
         });

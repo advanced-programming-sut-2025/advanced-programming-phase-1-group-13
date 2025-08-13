@@ -6,6 +6,9 @@ import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.GameMenuType;
 import com.ap_project.common.models.enums.types.GoodsType;
 import com.ap_project.common.models.enums.types.NPCType;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -17,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.ap_project.Main.*;
 
@@ -274,14 +278,18 @@ public class VillageView extends GameView {
                 }
 
                 if (clickedOnTexture(screenX, screenY,proposeButton, proposePosition)) {
-                    //todo
-                    System.out.println("Propose button clicked");
                     Result result = controller.askMarriage(playerWithMenu.getUsername());
                     if (!result.success) {
                         errorMessageLabel.setText(result.message);
                         return true;
                     }
                     goToProposeMenu(this, App.getLoggedIn().getUsername(),playerWithMenu.getUsername());
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("id", App.getCurrentGame().getId());
+                    body.put("sender", App.getLoggedIn().getUsername());
+                    body.put("receiver", playerWithMenu.getUsername());
+                    Message message = new Message(body, MessageType.START_PROPOSE);
+                    getClient().sendMessage(JSONUtils.toJson(message));
                     return true;
                 }
 

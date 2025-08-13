@@ -10,21 +10,21 @@ import com.ap_project.common.models.enums.environment.Time;
 import com.ap_project.common.models.enums.types.*;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.inventory.Backpack;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
 import com.ap_project.common.models.tools.*;
 import com.ap_project.common.models.trade.Trade;
 import com.ap_project.common.models.trade.TradeWithItem;
 import com.ap_project.common.models.trade.TradeWithMoney;
+import com.ap_project.common.utils.JSONUtils;
 import com.google.gson.GsonBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import static com.ap_project.Main.getClient;
 import static com.ap_project.client.controllers.login.LoginController.hashSha256;
-
-/*
-scoreboard
-*/
 
 public class User {
     private String username;
@@ -755,6 +755,9 @@ public class User {
 
     public void setInVillage(boolean inVillage) {
         isInVillage = inVillage;
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("username", username);
+        getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.GO_TO_VILLAGE)));
     }
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {

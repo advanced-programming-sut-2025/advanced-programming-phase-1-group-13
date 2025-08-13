@@ -4,10 +4,7 @@ import com.ap_project.Main;
 import com.ap_project.client.controllers.game.GameController;
 import com.ap_project.client.views.game.*;
 import com.ap_project.client.views.login.LoginMenuView;
-import com.ap_project.common.models.App;
-import com.ap_project.common.models.Game;
-import com.ap_project.common.models.GameAssetManager;
-import com.ap_project.common.models.User;
+import com.ap_project.common.models.*;
 import com.ap_project.common.models.enums.types.Gender;
 import com.ap_project.common.models.network.Message;
 import com.ap_project.common.models.network.MessageType;
@@ -327,6 +324,39 @@ public class GameClient {
                 } else {
                     Gdx.app.postRunnable(() -> goToVotingMenu(gameView));
                 }
+                break;
+            }
+
+            case UPDATE_PLAYERS_IN_VILLAGE: {
+                String username = message.getFromBody("username");
+                User targetUser = App.getUserByUsername(username);
+                if (targetUser == null) {
+                    System.out.println("[Client] Error: User not found: " + username);
+                    return;
+                }
+
+                targetUser.setInVillage(true);
+                targetUser.setPosition(new Position(55, 45));
+
+                break;
+            }
+
+            case ASK_MARRIAGE: {
+                GameView gameView;
+                if (getMain().getScreen() instanceof VotingMenuView) {
+                    gameView = ((VotingMenuView) getMain().getScreen()).getGameView();
+                } else {
+                    gameView = null;
+                }
+
+                String sender = message.getFromBody("sender");
+                String receiver = message.getFromBody("receiver");
+
+                if (App.getLoggedIn().getUsername().equals(sender) ||
+                App.getLoggedIn().getUsername().equals(receiver)) {
+                    Gdx.app.postRunnable(() -> goToProposeMenu(gameView, sender, receiver));
+                }
+
                 break;
             }
 

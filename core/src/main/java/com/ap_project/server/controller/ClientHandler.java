@@ -311,6 +311,32 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
+            case START_PROPOSE: {
+                String id = (String) body.get("id");
+                Lobby lobby = lobbies.get(id);
+                if (lobby == null) {
+                    sendError("Invalid lobby ID: " + id);
+                    return;
+                }
+
+                String sender = (String) body.get("sender");
+                String receiver = (String) body.get("receiver");
+
+                body.put("username", sender);
+                body.put("receiver", receiver);
+
+                sendMessageToAllInLobby(lobby, JSONUtils.toJson(new Message(body, MessageType.ASK_MARRIAGE)));
+
+                break;
+            }
+
+            case GO_TO_VILLAGE: {
+                String username = (String) body.get("username");
+                body.put("username", username);
+                sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.UPDATE_PLAYERS_IN_VILLAGE)));
+                break;
+            }
+
             default:
                 sendError("Unknown command: " + command);
                 break;
