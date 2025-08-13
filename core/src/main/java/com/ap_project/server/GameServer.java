@@ -23,6 +23,8 @@ public class GameServer {
 
 
     public static void main(String[] args) {
+//        DatabaseHelper.initializeDatabase();
+
         // TODO: remove later
         users.add(new User("arvin", "2", "arv", "arvin@gmail.com", Gender.MAN));
         users.add(new User("dorsa", "2", "dor", "dorsa@gmail.com", Gender.WOMAN));
@@ -62,4 +64,12 @@ public class GameServer {
         }
         return null;
     }
+
+//    public static User getUserByUsername(String username) {
+//        return DatabaseHelper.getUserByUsername(username);
+//    }
+
+//    public static Game getGameById(String id) {
+//        return DatabaseHelper.loadGame(id);
+//    }
 }

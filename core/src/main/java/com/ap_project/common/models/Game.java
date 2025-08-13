@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game {
     private final String id;
@@ -390,7 +391,6 @@ public class Game {
                 friendshipPoints = 799;
             }
             npcFriendships.get(player).put(npc, friendshipPoints);
-            //saveGameState();
         }
     }
 
@@ -406,31 +406,31 @@ public class Game {
         Friendship friendship = getUserFriendship(user1, user2);
         if (friendship != null) {
             friendship.setLevel(friendshipLevel);
-            //saveGameState();
         }
     }
 
-    private void saveGameState() {
-        Gson gson = new GsonBuilder()
-            .setExclusionStrategies(new ExclusionStrategy() {
-                @Override
-                public boolean shouldSkipField(FieldAttributes f) {
-                    return f.getName().equals("activeGame");
-                }
-
-                @Override
-                public boolean shouldSkipClass(Class<?> clazz) {
-                    return false;
-                }
-            })
-            .setPrettyPrinting()
-            .create();
-
-        try (FileWriter writer = new FileWriter("games.json")) {
-            writer.write(gson.toJson(App.getGames()));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public HashMap<String, Object> getGameData() {
+//        HashMap<String, Object> gameData = new HashMap<>();
+//
+//        gameData.put("id", this.id);
+//
+//        gameData.put("playerFarms", this.players.stream()
+//            .collect(Collectors.toMap(
+//                User::getUsername,
+//                user -> user.getFarm()
+//            )));
+//
+//        gameData.put("activeQuests", this.quests.stream()
+//            .filter(quest -> !quest.isFinished())
+//            .collect(Collectors.toList()));
+//
+//        gameData.put("completedQuests", this.quests.stream()
+//            .filter(Quest::isFinished)
+//            .collect(Collectors.toList()));
+//
+//
+//        return gameData;
+        return null;
     }
 
     public void sendMessage(User sender, User receiver, String message) {

@@ -139,15 +139,15 @@ public class User {
         this.backpack.addToInventory(new Scythe(ToolMaterial.BASIC), 1);
 
         for (AnimalProductType type : AnimalProductType.values()) {
-            System.out.println(this.backpack.addToInventory(new AnimalProduct(type, Quality.NORMAL, null), 10));
+            this.backpack.addToInventory(new AnimalProduct(type, Quality.NORMAL, null), 10);
         }
 
         for (AnimalProductType type : AnimalProductType.values()) {
-            System.out.println(this.backpack.addToInventory(new AnimalProduct(type, Quality.NORMAL, null), 10));
+            this.backpack.addToInventory(new AnimalProduct(type, Quality.NORMAL, null), 10);
         }
 
         for (GoodsType type : GoodsType.values()) {
-            System.out.println(this.backpack.addToInventory(new Good(type), 1));
+            this.backpack.addToInventory(new Good(type), 1);
         }
 
         //this.backpack.addToInventory(new Good(GoodsType.BOUQUET), 1);
@@ -200,16 +200,6 @@ public class User {
         this.backpack.addToInventory(new Ingredient(IngredientType.CARROT),1);
         this.backpack.addToInventory(new Ingredient(IngredientType.DANDELION),1);
         this.backpack.addToInventory(new Ingredient(IngredientType.MAHOGANY_SEED),1);
-
-
-
-
-
-
-
-
-
-
 
         this.skillLevels = new HashMap<>();
         this.skillLevels.put(Skill.FARMING, SkillLevel.LEVEL_ONE);
@@ -555,7 +545,6 @@ public class User {
     public void changeBalance(double amount) {
         this.balance += amount;
         spentMoney += amount;
-        // saveUsersToJson();
     }
 
     public void setEnergy(int energyAmount) {
@@ -564,7 +553,6 @@ public class User {
         } else {
             this.energy = energyAmount;
         }
-        // saveUsersToJson();
     }
 
     public void decreaseEnergyBy(int amount) {
@@ -674,6 +662,122 @@ public class User {
         this.gifts.add(gift);
     }
 
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
+    }
+
+    public void setWoodCount(int woodCount) {
+        this.woodCount = woodCount;
+    }
+
+    public void setStoneCount(int stoneCount) {
+        this.stoneCount = stoneCount;
+    }
+
+    public void setCurrentFoodBuff(FoodBuff currentFoodBuff) {
+        this.currentFoodBuff = currentFoodBuff;
+    }
+
+    public void setBuffRelatedSkill(Skill buffRelatedSkill) {
+        this.buffRelatedSkill = buffRelatedSkill;
+    }
+
+    public void setHoursLeftTillBuffVanishes(Integer hoursLeftTillBuffVanishes) {
+        this.hoursLeftTillBuffVanishes = hoursLeftTillBuffVanishes;
+    }
+
+    public void setSkillLevels(HashMap<Skill, SkillLevel> skillLevels) {
+        this.skillLevels = skillLevels;
+    }
+
+    public void setSkillPoints(HashMap<Skill, Integer> skillPoints) {
+        this.skillPoints = skillPoints;
+    }
+
+    public void setLearntCraftRecipes(ArrayList<CraftRecipe> learntCraftRecipes) {
+        this.learntCraftRecipes = learntCraftRecipes;
+    }
+
+    public void setLearntCookingRecipes(ArrayList<CookingRecipe> learntCookingRecipes) {
+        this.learntCookingRecipes = learntCookingRecipes;
+    }
+
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
+    }
+
+    public void setGifts(ArrayList<Gift> gifts) {
+        this.gifts = gifts;
+    }
+
+    public void setSpentMoney(double spentMoney) {
+        this.spentMoney = spentMoney;
+    }
+
+    public void setNumberOfGames(int numberOfGames) {
+        this.numberOfGames = numberOfGames;
+    }
+
+    public void setHasTalkedToToday(HashMap<User, Boolean> hasTalkedToToday) {
+        this.hasTalkedToToday = hasTalkedToToday;
+    }
+
+    public void setExchangedGiftToday(HashMap<User, Boolean> exchangedGiftToday) {
+        this.exchangedGiftToday = exchangedGiftToday;
+    }
+
+    public void setHasHuggedToday(HashMap<User, Boolean> hasHuggedToday) {
+        this.hasHuggedToday = hasHuggedToday;
+    }
+
+    public void setExchangedFlowerToday(HashMap<User, Boolean> exchangedFlowerToday) {
+        this.exchangedFlowerToday = exchangedFlowerToday;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+
+    public HashMap<SecurityQuestion, String> getqAndA() {
+        return qAndA;
+    }
+
+    public String getTaggedInPublicChat() {
+        return taggedInPublicChat;
+    }
+
+    public HashMap<String, String> getPrivateChats() {
+        return privateChats;
+    }
+
+    public HashMap<String, Boolean> getHasUnreadPrivateMessages() {
+        return hasUnreadPrivateMessages;
+    }
+
+    public void setMarriageRequests(ArrayList<User> marriageRequests) {
+        this.marriageRequests = marriageRequests;
+    }
+
+    public void setDefaultEmojis(ArrayList<Integer> defaultEmojis) {
+        this.defaultEmojis = defaultEmojis;
+    }
+
+    public void setDefaultReactions(ArrayList<ReactionMessage> defaultReactions) {
+        this.defaultReactions = defaultReactions;
+    }
+
+    public void setMusic(ArrayList<String> music) {
+        this.music = music;
+    }
+
+    public void setPrivateChats(HashMap<String, String> privateChats) {
+        this.privateChats = privateChats;
+    }
+
+    public void setHasUnreadPrivateMessages(HashMap<String, Boolean> hasUnreadPrivateMessages) {
+        this.hasUnreadPrivateMessages = hasUnreadPrivateMessages;
+    }
+
     public Time getRejectionTime() {
         return rejectionTime;
     }
@@ -758,12 +862,11 @@ public class User {
         isInVillage = inVillage;
         HashMap<String, Object> body = new HashMap<>();
         body.put("username", username);
-        getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.GO_TO_VILLAGE)));
+        if (getClient() != null) getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.GO_TO_VILLAGE)));
     }
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {
         this.qAndA.put(securityQuestion, answer);
-        // saveUsersToJson();
     }
 
     public Gift getGiftById(int id) {
@@ -862,7 +965,6 @@ public class User {
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(App.getUsers()));
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 }
