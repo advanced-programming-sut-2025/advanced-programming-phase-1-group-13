@@ -292,7 +292,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
 </details>
 
@@ -303,7 +303,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
 </details>
 
@@ -314,7 +314,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
 </details>
 
@@ -325,7 +325,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
 </details>
 
@@ -336,7 +336,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
 </details>
 
@@ -347,7 +347,42 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
+  </div>
+</details>
+
+
+<details>
+  <summary>حیوانات</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+
+<details>
+  <summary>فرآوری</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>داد و ستد</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
   </div>
 </details>
 
@@ -361,7 +396,87 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>ماهی</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>تعاملات</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>NPC</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>حیوانات</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+
+<details>
+  <summary>داد و ستد</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+
+<details>
+  <summary>منوها</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
+  </div>
+</details>
+
+
+<details>
+  <summary>فروشگاه</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
   </div>
 </details>
 
@@ -375,7 +490,18 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
+  </div>
+</details>
+
+<details>
+  <summary>چت</summary>
+
+  <div dir="ltr" align='right'>
+
+1. [ ] شروع نشده
+2. [ ] در حال انجام
+3. [x] تمام شده
   </div>
 </details>
 
@@ -389,7 +515,7 @@
 
 1. [ ] شروع نشده
 2. [ ] در حال انجام
-3. [ ] تمام شده
+3. [x] تمام شده
   </div>
 </details>
 
