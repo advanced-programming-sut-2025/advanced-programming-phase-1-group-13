@@ -29,9 +29,11 @@ public class ProposeMenuView implements Screen {
     private final Label titleLabel;
     private final GameView gameView;
     private final String username;
+    private final String receiver;
 
     public ProposeMenuView(Skin skin, GameView gameView, String username, String proposalReceiver) {
         this.username = username;
+        this.receiver = proposalReceiver;
 
         this.window = new Image(GameAssetManager.getGameAssetManager().getToolMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2f;
@@ -45,14 +47,7 @@ public class ProposeMenuView implements Screen {
 
         if (App.getLoggedIn().getUsername().equals(username)) {
             this.titleLabel = new Label("Wait for " + proposalReceiver+" to answer.", skin);
-            HashMap<String, Object> body = new HashMap<>();
-            body.put("id", App.getLoggedIn().getActiveGame().getId());
-            body.put("vote", "false");
-            body.put("username", App.getLoggedIn().getUsername());
-            Message message = new Message(body, MessageType.VOTE_FOR_KICK);
-
             Label result = new Label("", skin);
-            getClient().sendMessage(JSONUtils.toJson(message));
         } else {
             this.titleLabel = new Label("Will You Marry " + username + "? <3", skin);
         }
@@ -91,9 +86,9 @@ public class ProposeMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 HashMap<String, Object> body = new HashMap<>();
-                body.put("id", App.getLoggedIn().getActiveGame().getId());
-                body.put("vote", "true");
-                body.put("username", App.getLoggedIn().getUsername());
+                body.put("sender", username);
+                body.put("response", "true");
+                body.put("receiver", receiver);
                 Message message = new Message(body, MessageType.ANSWER_MARRIAGE);
                 getClient().sendMessage(JSONUtils.toJson(message));
             }
@@ -103,9 +98,9 @@ public class ProposeMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 HashMap<String, Object> body = new HashMap<>();
-                body.put("id", App.getLoggedIn().getActiveGame().getId());
-                body.put("vote", "false");
-                body.put("username", App.getLoggedIn().getUsername());
+                body.put("sender", username);
+                body.put("response", "true");
+                body.put("receiver", receiver);
                 Message message = new Message(body, MessageType.ANSWER_MARRIAGE);
                 getClient().sendMessage(JSONUtils.toJson(message));
             }

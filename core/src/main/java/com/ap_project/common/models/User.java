@@ -366,6 +366,7 @@ public class User {
     }
 
     public Position getPosition() {
+        if (position == null) position = new Position(0, 0);
         if (position.getY() > 40 && isInVillage) position.setY(40);
 
         return this.position;
@@ -860,9 +861,6 @@ public class User {
 
     public void setInVillage(boolean inVillage) {
         isInVillage = inVillage;
-        HashMap<String, Object> body = new HashMap<>();
-        body.put("username", username);
-        if (getClient() != null) getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.GO_TO_VILLAGE)));
     }
 
     public void addQAndA(SecurityQuestion securityQuestion, String answer) {

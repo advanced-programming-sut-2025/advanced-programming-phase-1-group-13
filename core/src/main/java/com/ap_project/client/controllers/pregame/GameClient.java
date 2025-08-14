@@ -88,7 +88,7 @@ public class GameClient {
                     jsonBuffer.append(character);
 
                     if (character == '"' && (jsonBuffer.length() == 1 ||
-                        jsonBuffer.charAt(jsonBuffer.length()-2) != '\\')) {
+                        jsonBuffer.charAt(jsonBuffer.length() - 2) != '\\')) {
                         inQuotes = !inQuotes;
                     }
 
@@ -336,7 +336,7 @@ public class GameClient {
                 }
 
                 targetUser.setInVillage(true);
-                targetUser.setPosition(new Position(55, 45));
+                targetUser.setPosition(new Position(37, 40));
 
                 break;
             }
@@ -353,8 +353,92 @@ public class GameClient {
                 String receiver = message.getFromBody("receiver");
 
                 if (App.getLoggedIn().getUsername().equals(sender) ||
-                App.getLoggedIn().getUsername().equals(receiver)) {
+                    App.getLoggedIn().getUsername().equals(receiver)) {
                     Gdx.app.postRunnable(() -> goToProposeMenu(gameView, sender, receiver));
+                }
+
+                break;
+            }
+
+            case FINISH_PROPOSAL: {
+                String sender = message.getFromBody("sender");
+                String receiver = message.getFromBody("receiver");
+                boolean result = Boolean.parseBoolean(message.getFromBody("result"));
+
+                if (App.getLoggedIn().getUsername().equals(receiver)) {
+                    GameController controller = new GameController();
+                    System.out.println(controller.respondToMarriageRequest(String.valueOf(result), sender));
+                    Gdx.app.postRunnable(() -> {
+                        GameView villageView = new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin());
+                        villageView.errorMessageLabel.setText(result ?
+                            "You accepted " + sender + "'s marriage proposal. Congratulations! :)" :
+                            "You rejected " + sender + "'s marriage proposal."
+                        );
+                        goToGame(villageView);
+                    });
+                }
+
+                if (App.getLoggedIn().getUsername().equals(sender)) {
+                    Gdx.app.postRunnable(() -> {
+                        GameView villageView = new VillageView(new GameController(), GameAssetManager.getGameAssetManager().getSkin());
+                        villageView.errorMessageLabel.setText(result ?
+                            receiver + " accepted your marriage proposal. Congratulations! :)" :
+                            receiver + " rejected your marriage proposal."
+                        );
+                        goToGame(villageView);
+                    });
+                }
+
+                break;
+            }
+
+            case GIVE_FLOWER: {
+                VillageView villageView;
+                if (Main.getMain().getScreen() instanceof VillageView) {
+                    villageView = (VillageView) Main.getMain().getScreen();
+                } else {
+                    return;
+                }
+
+                String receiver = message.getFromBody("receiver");
+                System.out.println("LOGGED IN: " + App.getLoggedIn().getUsername() + ", RECEIVER: " + receiver);
+                if (App.getLoggedIn().getUsername().equals(receiver)) {
+                    Gdx.app.postRunnable(() -> {
+                        villageView.errorMessageLabel.setText("You received flowers.");
+                        villageView.setPlayerWithFlower(App.getLoggedIn());
+                        Main.getMain().setScreen(villageView);
+                    });
+                }
+
+                break;
+            }
+
+            case RECEIVE_GIFT: {
+                VillageView villageView;
+                if (Main.getMain().getScreen() instanceof VillageView) {
+                    villageView = (VillageView) Main.getMain().getScreen();
+                } else {
+                    return;
+                }
+
+                String receiver = message.getFromBody("receiver");
+                String sender = message.getFromBody("sender");
+                String item = message.getFromBody("item");
+
+                System.out.println("LOGGED IN: " + App.getLoggedIn().getUsername() + ", RECEIVER: " + receiver + ", SENDER: " + sender + ", ITEM: " + item);
+                if (App.getLoggedIn().getUsername().equals(receiver)) {
+                    Gdx.app.postRunnable(() -> {
+                        App.getLoggedIn().getBackpack().addToInventory(Item.getItemByItemName(item), 1);
+                        villageView.errorMessageLabel.setText("You received " + item + " from " + sender + ".");
+                        Main.getMain().setScreen(villageView);
+                    });
+                }
+
+                if (App.getLoggedIn().getUsername().equals(sender)) {
+                    Gdx.app.postRunnable(() -> {
+                        villageView.errorMessageLabel.setText("You gave " + item + " to " + receiver + ".");
+                        Main.getMain().setScreen(villageView);
+                    });
                 }
 
                 break;
