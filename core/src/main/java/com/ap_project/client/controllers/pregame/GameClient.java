@@ -444,6 +444,30 @@ public class GameClient {
                 break;
             }
 
+            case REQUEST_RADIO: {
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("username", App.getLoggedIn().getUsername());
+                List<String> musicPaths = App.getLoggedIn().getMusic();
+                for (int i = 0; i < musicPaths.size(); i++) {
+                    body.put("path" + (i + 1), musicPaths.get(i));
+                }
+                sendMessage(JSONUtils.toJson(new Message(body, MessageType.RADIO_INFO)));
+                break;
+            }
+
+            case RADIO_INFO: {
+                ArrayList<String> music = new ArrayList<>();
+                HashMap<String, Object> body = message.getBody();
+                for (int i = 1; body.containsKey("path" + i); i++) {
+                    music.add((String) body.get("path" + i));
+                }
+
+                User user = App.getUserByUsername(message.getFromBody("username"));
+                if (user == null) return;
+                user.setMusic(music);
+                break;
+            }
+
             case ERROR: {
                 String errorMsg = message.<String>getFromBody("data");
                 if (lobbyMenuController != null) {
