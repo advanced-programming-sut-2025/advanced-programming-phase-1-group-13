@@ -89,7 +89,7 @@ public abstract class GameView implements Screen, InputProcessor {
     protected float reactionTimer;
     protected Image speechBubble;
     protected Actor reaction;
-    protected final Label errorMessageLabel;
+    public final Label errorMessageLabel;
 
     public GameView(GameController controller, Skin skin) {
         this.tileMarkerTexture = GameAssetManager.getGameAssetManager().getWhiteScreen();

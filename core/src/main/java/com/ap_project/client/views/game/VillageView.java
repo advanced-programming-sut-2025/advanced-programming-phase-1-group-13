@@ -55,6 +55,10 @@ public class VillageView extends GameView {
     public VillageView(GameController controller, Skin skin) {
         super(controller, skin);
 
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("username", App.getLoggedIn().getUsername());
+        if (getClient() != null) getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.GO_TO_VILLAGE)));
+
         this.background = GameAssetManager.getGameAssetManager().getVillage(App.getCurrentGame().getGameState().getTime().getSeason());
 
         this.shopTextures = new ArrayList<>();
@@ -144,12 +148,14 @@ public class VillageView extends GameView {
         }
 
         scale = 1;
-        for (int i = 0; i < otherPlayersTextures.size(); i++) {
+        int playerIndex = 0;
+        for (int i = 0; i < App.getCurrentGame().getPlayers().size(); i++) {
             User player = App.getCurrentGame().getPlayers().get(i);
             if (player.equals(App.getLoggedIn())) continue;
 
             if (player.isInVillage()) {
-                draw(otherPlayersTextures.get(i), player.getPosition());
+                draw(otherPlayersTextures.get(playerIndex), player.getPosition());
+                playerIndex++;
             }
 
             float temp = scale;
@@ -240,6 +246,7 @@ public class VillageView extends GameView {
                     }
                 }
             }
+
             if (button == Input.Buttons.RIGHT) {
                 for (int i = 0; i < otherPlayersTextures.size(); i++) {
                     User user = App.getCurrentGame().getPlayers().get(i);
@@ -248,6 +255,8 @@ public class VillageView extends GameView {
                         playerOptions = GameAssetManager.getGameAssetManager().getThreeOptions();
                         playerWithMenu = user;
                         return true;
+                    } else {
+                        System.out.println("didn't right click on other player");
                     }
                 }
             }
@@ -271,7 +280,9 @@ public class VillageView extends GameView {
                 npcOptions = null;
                 show();
             }
+
             if (playerOptions != null) {
+                scale = 1;
                 if (clickedOnTexture(screenX, screenY, hugButton, hugPosition)) {
                     //todo
                     System.out.println("hug button clicked");
@@ -297,6 +308,10 @@ public class VillageView extends GameView {
                 if (clickedOnTexture(screenX, screenY, giveFlowerButton, giveFlowerPosition)) {
                     Result result = controller.giveFlowerToUser(playerWithMenu.getUsername(), new Good(GoodsType.BOUQUET));
                     if (result.success) {
+                        HashMap<String, Object> body = new HashMap<>();
+                        body.put("receiver", playerWithMenu.getUsername());
+                        Message message = new Message(body, MessageType.GIVE_FLOWER);
+                        getClient().sendMessage(JSONUtils.toJson(message));
                         playerWithFlower = playerWithMenu;
                         return true;
                     }
@@ -322,6 +337,42 @@ public class VillageView extends GameView {
             goToGiftPlayerMenu(this);
             return true;
         }
+
+        if (keycode == Input.Keys.Y) {
+            for (User user : App.getCurrentGame().getPlayers()) {
+                if (!user.equals(App.getLoggedIn())) playerWithMenu = user;
+            }
+            Result result = controller.askMarriage(playerWithMenu.getUsername());
+            if (!result.success) {
+                errorMessageLabel.setText(result.message);
+                return true;
+            }
+            goToProposeMenu(this, App.getLoggedIn().getUsername(),playerWithMenu.getUsername());
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", App.getCurrentGame().getId());
+            body.put("sender", App.getLoggedIn().getUsername());
+            body.put("receiver", playerWithMenu.getUsername());
+            Message message = new Message(body, MessageType.START_PROPOSE);
+            getClient().sendMessage(JSONUtils.toJson(message));
+            return true;
+        }
+
+        if (keycode == Input.Keys.U) {
+            for (User user : App.getCurrentGame().getPlayers()) {
+                if (!user.equals(App.getLoggedIn())) playerWithMenu = user;
+            }
+            Result result = controller.giveFlowerToUser(playerWithMenu.getUsername(), new Good(GoodsType.BOUQUET));
+//            if (result.success) {
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("receiver", playerWithMenu.getUsername());
+                Message message = new Message(body, MessageType.GIVE_FLOWER);
+                getClient().sendMessage(JSONUtils.toJson(message));
+                playerWithFlower = playerWithMenu;
+//                return true;
+//            }
+            errorMessageLabel.setText(result.message);
+        }
+
         return false;
     }
 

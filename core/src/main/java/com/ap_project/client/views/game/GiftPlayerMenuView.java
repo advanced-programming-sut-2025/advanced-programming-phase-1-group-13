@@ -46,7 +46,7 @@ public class GiftPlayerMenuView implements Screen, InputProcessor {
         this.itemImages = new ArrayList<>();
         for (Item item : items) {
             itemImages.add(new Image(GameAssetManager.getGameAssetManager().getTextureByItem(item)));
-            if (itemImages.size()>35){
+            if (itemImages.size() > 35) {
                 break;
             }
         }
@@ -234,5 +234,9 @@ public class GiftPlayerMenuView implements Screen, InputProcessor {
 
     public TextButton getSubmitButton() {
         return submitButton;
+    }
+
+    public VillageView getVillageView() {
+        return villageView;
     }
 }

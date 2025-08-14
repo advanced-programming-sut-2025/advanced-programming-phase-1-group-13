@@ -178,7 +178,7 @@ public class ClientHandler implements Runnable {
                 body.put("money", money);
                 sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.SCOREBOARD_INFO)));
 
-                break;  // <-- Add this missing break
+                break;
             }
 
             case START_GAME: {
@@ -337,6 +337,30 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
+            case ANSWER_MARRIAGE: {
+                String sender = (String) body.get("sender");
+                String receiver = (String) body.get("receiver");
+                String response = (String) body.get("response");
+
+                body = new HashMap<>();
+                body.put("sender", sender);
+                body.put("receiver", receiver);
+                body.put("response", response);
+
+                sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.FINISH_PROPOSAL)));
+                break;
+            }
+
+            case GIVE_FLOWER: {
+                String receiver = (String) body.get("receiver");
+
+                body = new HashMap<>();
+                body.put("receiver", receiver);
+
+                sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.GIVE_FLOWER)));
+                break;
+            }
+
             case SEND_GIFT: {
                 String sender = (String) body.get("sender");
                 String receiver = (String) body.get("receiver");
@@ -344,10 +368,9 @@ public class ClientHandler implements Runnable {
 
                 body.put("sender", sender);
                 body.put("receiver", receiver);
+                body.put("item", item);
 
-                if (user.getUsername().equals(receiver)) {
-                    sendMessage(JSONUtils.toJson(new Message(body, MessageType.RECEIVE_GIFT)));
-                }
+                sendMessageToAll(JSONUtils.toJson(new Message(body, MessageType.RECEIVE_GIFT)));
                 break;
             }
 
