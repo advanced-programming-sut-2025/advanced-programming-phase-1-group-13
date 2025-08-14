@@ -10,6 +10,8 @@ import com.ap_project.common.models.network.Message;
 import com.ap_project.common.models.network.MessageType;
 import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.*;
 import java.net.Socket;
@@ -466,6 +468,51 @@ public class GameClient {
                 if (user == null) return;
                 user.setMusic(music);
                 break;
+            }
+
+            case START_TRADE: {
+                GameView gameView;
+                if (Main.getMain().getScreen() instanceof GameView) {
+                    gameView = (GameView) Main.getMain().getScreen();
+                } else {
+                    return;
+                }
+
+                String receiver = message.getFromBody("receiver");
+                String sender = message.getFromBody("sender");
+                if (App.getLoggedIn().getUsername().equals(receiver)) {
+                    Gdx.app.postRunnable(() -> {
+                        goToAskForTradeMenu(gameView, sender);
+                    });
+                }
+                break;
+            }
+
+            case ANSWER_TRADE_REQUEST: {
+                TradeMenuView tradeMenuView;
+                if (Main.getMain().getScreen() instanceof TradeMenuView) {
+                    tradeMenuView = (TradeMenuView) Main.getMain().getScreen();
+                } else {
+                    return;
+                }
+
+                String sender = message.getFromBody("sender");
+                String receiver = message.getFromBody("receiver");
+                Boolean response = Boolean.parseBoolean(message.getFromBody("response"));
+
+                if (App.getLoggedIn().getUsername().equals(sender)) {
+                    if (response) {
+                        Gdx.app.postRunnable(() -> {
+                            tradeMenuView.getErrorMessageLabel().setColor(Color.GREEN);
+                            tradeMenuView.getErrorMessageLabel().setText(receiver + " accepted your trade.");
+                        });
+                    } else {
+                        Gdx.app.postRunnable(() -> {
+                            tradeMenuView.getErrorMessageLabel().setColor(Color.RED);
+                            tradeMenuView.getErrorMessageLabel().setText(receiver + " rejected your trade.");
+                        });
+                    }
+                }
             }
 
             case ERROR: {

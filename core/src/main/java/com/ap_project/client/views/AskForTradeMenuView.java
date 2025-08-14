@@ -1,5 +1,6 @@
 package com.ap_project.client.views;
 
+import com.ap_project.Main;
 import com.ap_project.client.views.game.GameView;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
@@ -29,8 +30,10 @@ public class AskForTradeMenuView implements Screen {
     private final TextButton noButton;
     private final Label titleLabel;
     private final GameView gameView;
+    private final String sender;
 
-    public AskForTradeMenuView(Skin skin, GameView gameView) {
+    public AskForTradeMenuView(Skin skin, GameView gameView, String sender) {
+        this.sender = sender;
         this.window = new Image(GameAssetManager.getGameAssetManager().getToolMenu());
         float windowX = (Gdx.graphics.getWidth() - window.getWidth()) / 2f;
         float windowY = (Gdx.graphics.getHeight() - window.getHeight()) / 2f;
@@ -40,7 +43,7 @@ public class AskForTradeMenuView implements Screen {
         this.noButton = new TextButton("No", skin);
         this.gameView = gameView;
 
-        this.titleLabel = new Label(App.getLoggedIn().getUsername() + "is asking you to trade, do you accept?", skin);
+        this.titleLabel = new Label(sender + " is asking you to trade, do you accept?", skin);
         titleLabel.setColor(Color.BLACK);
     }
 
@@ -75,11 +78,12 @@ public class AskForTradeMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 HashMap<String, Object> body = new HashMap<>();
-                body.put("id", App.getLoggedIn().getActiveGame().getId());
+                body.put("sender", sender);
+                body.put("receiver", App.getLoggedIn().getUsername());
                 body.put("response", "true");
-                body.put("username", App.getLoggedIn().getUsername());
                 Message message = new Message(body, MessageType.ANSWER_TRADE_REQUEST);
                 getClient().sendMessage(JSONUtils.toJson(message));
+                Main.getMain().setScreen(gameView);
             }
         });
 
@@ -87,11 +91,12 @@ public class AskForTradeMenuView implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 HashMap<String, Object> body = new HashMap<>();
-                body.put("id", App.getLoggedIn().getActiveGame().getId());
+                body.put("sender", sender);
+                body.put("receiver", App.getLoggedIn().getUsername());
                 body.put("response", "false");
-                body.put("username", App.getLoggedIn().getUsername());
                 Message message = new Message(body, MessageType.ANSWER_TRADE_REQUEST);
                 getClient().sendMessage(JSONUtils.toJson(message));
+                Main.getMain().setScreen(gameView);
             }
         });
 

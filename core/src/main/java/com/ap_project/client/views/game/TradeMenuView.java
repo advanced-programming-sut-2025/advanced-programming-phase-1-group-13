@@ -6,6 +6,9 @@ import com.ap_project.client.controllers.game.TradeController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
 import com.ap_project.common.models.User;
+import com.ap_project.common.models.network.Message;
+import com.ap_project.common.models.network.MessageType;
+import com.ap_project.common.utils.JSONUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -16,7 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.HashMap;
+
 import static com.ap_project.Main.getBatch;
+import static com.ap_project.Main.getClient;
 
 public class TradeMenuView implements Screen, InputProcessor {
     private Stage stage;
@@ -27,6 +33,9 @@ public class TradeMenuView implements Screen, InputProcessor {
     private Skin skin;
     private TextButton startTradeButton;
     private TextButton tradingHistoryButton;
+    private TextButton chooseButton;
+    private SelectBox<String> playerSelectBox;
+    private final Label errorMessageLabel;
 
     public TradeMenuView(GameView gameView) {
         this.gameView = gameView;
@@ -37,6 +46,11 @@ public class TradeMenuView implements Screen, InputProcessor {
         this.skin = GameAssetManager.getGameAssetManager().getSkin();
         this.closeButton = new Image(GameAssetManager.getGameAssetManager().getCloseButton());
         this.controller = new TradeController();
+        chooseButton = new TextButton("Choose Player", skin);
+
+        this.errorMessageLabel = new Label("", GameAssetManager.getGameAssetManager().getSkin());
+        errorMessageLabel.setColor(Color.RED);
+        errorMessageLabel.setPosition(10, Gdx.graphics.getHeight() - 20);
     }
 
     @Override
@@ -45,13 +59,12 @@ public class TradeMenuView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(window);
-
+        stage.addActor(errorMessageLabel);
         layoutUI();
         addCloseButton();
     }
 
     private void layoutUI() {
-
         startTradeButton = new TextButton("Start Trade", skin);
         startTradeButton.addListener(e -> {
             if (startTradeButton.isPressed()) {
@@ -61,30 +74,38 @@ public class TradeMenuView implements Screen, InputProcessor {
                 title.setColor(Color.BLACK);
                 title.setPosition(
                     Gdx.graphics.getWidth() / 2f + -388,
-                    Gdx.graphics.getHeight() / 2f +20
+                    Gdx.graphics.getHeight() / 2f + 20
                 );
                 stage.addActor(title);
 
-                SelectBox<String> players = new SelectBox<>(skin);
-                players.setWidth(380);
+                playerSelectBox = new SelectBox<>(skin);
+                playerSelectBox.setWidth(380);
                 Array<String> options = new Array<>();
                 for (User player : App.getCurrentGame().getPlayers()) {
                     if (player.equals(App.getLoggedIn())) continue;
                     options.add(player.getUsername());
                 }
-                players.setItems(options);
-                players.setPosition(
-                    Gdx.graphics.getWidth() / 2f +10,
+                playerSelectBox.setItems(options);
+                playerSelectBox.setPosition(
+                    Gdx.graphics.getWidth() / 2f + 10,
                     Gdx.graphics.getHeight() / 2f
                 );
-                stage.addActor(players);
+                stage.addActor(playerSelectBox);
 
-                TextButton chooseButton = new TextButton("Choose Player", skin);
                 chooseButton.setPosition(
                     Gdx.graphics.getWidth() / 2f,
                     Gdx.graphics.getHeight() / 2f - 150
                 );
                 stage.addActor(chooseButton);
+            }
+            return false;
+        });
+        chooseButton.addListener(e -> {
+            if (chooseButton.isPressed()) {
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("sender", App.getLoggedIn());
+                body.put("receiver", playerSelectBox.getSelected());
+                getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.START_TRADE)));
             }
             return false;
         });
@@ -123,6 +144,14 @@ public class TradeMenuView implements Screen, InputProcessor {
         getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("sender", App.getLoggedIn().getUsername());
+            body.put("receiver", playerSelectBox.getSelected());
+            getClient().sendMessage(JSONUtils.toJson(new Message(body, MessageType.START_TRADE)));
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Main.getMain().setScreen(gameView);
         }
@@ -203,5 +232,13 @@ public class TradeMenuView implements Screen, InputProcessor {
         closeButton.setSize(closeButton.getWidth(), closeButton.getHeight());
 
         stage.addActor(closeButton);
+    }
+
+    public GameView getGameView() {
+        return gameView;
+    }
+
+    public Label getErrorMessageLabel() {
+        return errorMessageLabel;
     }
 }

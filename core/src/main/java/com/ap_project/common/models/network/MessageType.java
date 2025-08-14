@@ -45,5 +45,6 @@ public enum MessageType {
     REQUEST_RADIO,
     RADIO_INFO,
     ANSWER_TRADE_REQUEST,
+    START_TRADE,
     EXIT
 }

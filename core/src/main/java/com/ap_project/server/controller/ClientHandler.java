@@ -385,7 +385,11 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
-            case RADIO_INFO: {
+            case RADIO_INFO:
+
+            case START_TRADE:
+
+            case ANSWER_TRADE_REQUEST: {
                 sendMessageToAll(JSONUtils.toJson(message));
                 break;
             }
