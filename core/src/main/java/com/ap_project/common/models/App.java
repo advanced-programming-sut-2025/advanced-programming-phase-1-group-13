@@ -12,6 +12,10 @@ public class App {
     private static Game currentGame = null;
     private static Shop currentShop = null;
 
+//    static {
+//        DatabaseHelper.initializeDatabase();
+//    }
+
     public static Menu getCurrentMenu() {
         return currentMenu;
     }
@@ -64,15 +68,7 @@ public class App {
 
     public static void addUser(User user) {
         App.users.add(user);
-
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        String json = gson.toJson(users);
-//
-//        try (FileWriter writer = new FileWriter("users.json")) {
-//            writer.write(json);
-//        } catch (IOException e) {
-//            e.printStackTrace(); // Handle errors
-//        }
+        // DatabaseHelper.addUser(user);
     }
 
     public static ArrayList<Game> getGames() {
@@ -118,4 +114,38 @@ public class App {
         }
         return null;
     }
+
+
+//    public static ArrayList<User> getUsers() {
+//      return DatabaseHelper.getAllUsers();
+//    }
+//
+//    public static User getUserByUsername(String username) {
+//        return DatabaseHelper.getUserByUsername(username);
+//    }
+//
+//    public static User getUserByEmail(String email) {
+//        return DatabaseHelper.getUserByEmail(email);
+//    }
+//
+//
+//    public static void addGame(Game game) {
+//        if (game == null) {
+//            throw new IllegalArgumentException("Game cannot be null");
+//        }
+//
+//        DatabaseHelper.saveGame(game);
+//
+//        for (User player : game.getPlayers()) {
+//            try {
+//                player.setActiveGame(game);
+//                DatabaseHelper.updateUser(player);
+//            } catch (Exception e) {
+//                System.err.println("Failed to update player " + player.getUsername() +
+//                    ": " + e.getMessage());
+//            }
+//        }
+//
+//        System.out.println("Game " + game.getId() + " added successfully");
+//    }
 }
