@@ -374,6 +374,22 @@ public class ClientHandler implements Runnable {
                 break;
             }
 
+            case REQUEST_RADIO: {
+                String username = (String) body.get("username");
+
+                for (ClientHandler client : clients) {
+                    if (client.getUser().getUsername().equals(username)) {
+                        sendMessage(JSONUtils.toJson(new Message(body, MessageType.REQUEST_RADIO)));
+                    }
+                }
+                break;
+            }
+
+            case RADIO_INFO: {
+                sendMessageToAll(JSONUtils.toJson(message));
+                break;
+            }
+
             default:
                 sendError("Unknown command: " + command);
                 break;
