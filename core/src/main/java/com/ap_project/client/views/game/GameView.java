@@ -610,6 +610,10 @@ public abstract class GameView implements Screen, InputProcessor {
             goToJournal(this);
         }
 
+        if(keycode == Input.Keys.N) {
+            goToGroupQuest(this);
+        }
+
         if (keycode == Input.Keys.R) {
             goToReactionMenu(this);
         }

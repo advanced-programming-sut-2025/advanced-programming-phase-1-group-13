@@ -23,7 +23,7 @@ public class NPCVillage {
         addShop(ShopType.CARPENTER_SHOP, new Position(60, 8), 16, 9);
         addShop(ShopType.FISH_SHOP, new Position(30, 42), 9, 7);
         addShop(ShopType.MARNIE_RANCH, new Position(10, 35), 22, 10);
-        addShop(ShopType.THE_STARDROP_SALOON, new Position(55, 41), 6, 7);
+        addShop(ShopType.THE_STARDROP_SALOON, new Position(80, 41), 6, 7);
     }
 
     private void initializeVillageTiles() {

@@ -8,15 +8,8 @@ import com.ap_project.common.models.enums.types.ShopType;
 import com.ap_project.common.models.farming.Crop;
 import com.ap_project.common.models.farming.Tree;
 import com.ap_project.common.models.trade.Trade;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Game {
     private final String id;
@@ -25,6 +18,8 @@ public class Game {
     private final GameState gameState;
     private final ArrayList<NPC> npcs;
     private final ArrayList<Quest> quests;
+    private final ArrayList<GroupQuest> groupquests;
+
     private final HashMap<User, HashMap<User, Friendship>> userFriendships;
     private final HashMap<User, HashMap<NPC, Integer>> npcFriendships;
     private final ArrayList<Trade> trades;
@@ -49,6 +44,11 @@ public class Game {
         }
 
         this.quests = new ArrayList<>();
+        this.groupquests = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            groupquests.add(new GroupQuest(i + 1, this));
+        }
+
         int questId = 1;
 
         Map<NPCType, List<Quest>> npcQuestMap = new LinkedHashMap<>();
@@ -177,6 +177,11 @@ public class Game {
     public ArrayList<Quest> getQuests() {
         return quests;
     }
+    public ArrayList<GroupQuest> getGroupQuests() {
+        return groupquests;
+    }
+
+
 
     public HashMap<User, HashMap<User, HashMap<String, Boolean>>> getTalkHistory() {
         return talkHistory;
@@ -344,6 +349,15 @@ public class Game {
         for (Quest quest : this.quests) {
             if (quest.getId() == id) {
                 return quest;
+            }
+        }
+        return null;
+    }
+
+    public GroupQuest getGroupQuestById(int id) {
+        for (GroupQuest groupQuest : this.groupquests) {
+            if (groupQuest.getId() == id) {
+                return groupQuest;
             }
         }
         return null;

@@ -4,6 +4,7 @@ import com.ap_project.Main;
 import com.ap_project.client.controllers.game.RadioController;
 import com.ap_project.common.models.App;
 import com.ap_project.common.models.GameAssetManager;
+import com.ap_project.common.models.User;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -27,6 +28,12 @@ public class RadioMenuView implements Screen {
     private final TextButton playButton;
     private final GameView gameView;
     private final RadioController controller;
+    private final SelectBox<String> playerSelectBox;
+    private final TextButton submitButton;
+    private String username;
+
+
+
 
     public RadioMenuView(GameView gameView) {
         this.window = new Image(GameAssetManager.getGameAssetManager().getRadioMenu());
@@ -44,9 +51,13 @@ public class RadioMenuView implements Screen {
         this.musicSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
         this.uploadButton = new TextButton("Upload", GameAssetManager.getGameAssetManager().getSkin());
         this.playButton = new TextButton("Play", GameAssetManager.getGameAssetManager().getSkin());
+        this.submitButton = new TextButton("Submit", GameAssetManager.getGameAssetManager().getSkin());
+        this.playerSelectBox = new SelectBox<>(GameAssetManager.getGameAssetManager().getSkin());
+
 
         this.gameView = gameView;
         this.controller = new RadioController();
+
     }
 
     @Override
@@ -59,9 +70,10 @@ public class RadioMenuView implements Screen {
         radioTitle.setFontScale(1.5f);
         radioTitle.setColor(Color.BLACK);
         radioTitle.setPosition(
-            window.getX() + (window.getWidth() - radioTitle.getWidth()) / 2,
+            window.getX() - 10 + (window.getWidth() - radioTitle.getWidth()) / 2,
             window.getY() + window.getHeight() - 100
         );
+        radioTitle.setScale(1.3f);
         stage.addActor(radioTitle);
 
         uploadButton.setPosition(
@@ -69,6 +81,20 @@ public class RadioMenuView implements Screen {
             window.getY() + 20
         );
         stage.addActor(uploadButton);
+        Array<String> options = new Array<>();
+        for (User player : App.getCurrentGame().getPlayers()) {
+            if (player.equals(App.getLoggedIn())) continue;
+            options.add(player.getUsername());
+        }
+        username = options.get(0);
+        playerSelectBox.setItems(options);
+        playerSelectBox.setPosition(610, 550);
+        playerSelectBox.setWidth(400f);
+        submitButton.setPosition(1028, 530);
+
+        stage.addActor(playerSelectBox);
+        stage.addActor(submitButton);
+        submitButton.setChecked(false);
 
         updateMusicList();
     }
@@ -89,6 +115,16 @@ public class RadioMenuView implements Screen {
             });
             uploadButton.setChecked(false);
         }
+
+//
+//        if (Gdx.input.getInputProcessor().equals(stage)) {
+//            if (submitButton.isChecked()) {
+//                username = playerSelectBox.getSelected();
+//                Gdx.input.setInputProcessor(this);
+//            }
+//            submitButton.setChecked(false);
+//        }
+
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -124,7 +160,7 @@ public class RadioMenuView implements Screen {
         Array<Actor> toRemove = new Array<>();
 
         for (Actor actor : actors) {
-            if (actor != window && actor != radioTitle && actor != uploadButton) {
+            if (actor != window && actor != radioTitle && actor != uploadButton && actor != submitButton && actor != playerSelectBox) {
                 toRemove.add(actor);
             }
         }
@@ -138,7 +174,7 @@ public class RadioMenuView implements Screen {
             noMusic.setColor(Color.BLACK);
             noMusic.setPosition(
                 window.getX() + (window.getWidth() - noMusic.getWidth()) / 2,
-                window.getY() + window.getHeight() / 2
+                window.getY() + window.getHeight() / 2 - 60
             );
             stage.addActor(noMusic);
         } else {
@@ -171,4 +207,8 @@ public class RadioMenuView implements Screen {
             stage.addActor(playButton);
         }
     }
+    public TextButton getSubmitButton() {
+        return submitButton;
+    }
 }
+

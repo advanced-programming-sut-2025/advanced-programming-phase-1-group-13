@@ -321,9 +321,18 @@ public class GameAssetManager {
         return new Texture(Gdx.files.internal("Images/Journal/Journal.png"));
     }
 
+    public Texture getGroupQuest(){
+        return new Texture(Gdx.files.internal("Images/Menu/GroupQuest.png"));
+    }
+
     public Texture getQuest(int id) {
         return new Texture(Gdx.files.internal("Images/Journal/Quest" + id + ".png"));
     }
+
+    public Texture getGroupQuest(int id) {
+        return new Texture(Gdx.files.internal("Images/Journal/GroupQuest" + id + ".png"));
+    }
+
 
     public Texture getRedCheckedBox() {
         return new Texture(Gdx.files.internal("Images/Journal/RedCheckedBox.png"));

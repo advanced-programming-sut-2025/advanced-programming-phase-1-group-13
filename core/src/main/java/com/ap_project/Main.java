@@ -151,6 +151,11 @@ public class Main extends Game {
         Main.getMain().setScreen(new JournalView(gameView));
     }
 
+    public static void goToGroupQuest(GameView gameView) {
+        Main.getMain().setScreen(new GroupQuestView(gameView));
+    }
+
+
     public static void goToReactionMenu(GameView gameView) {
         Main.getMain().setScreen(new ReactionMenuView(gameView));
     }

@@ -237,6 +237,9 @@ public class RefrigeratorMenuView implements Screen, InputProcessor {
         itemImages = new ArrayList<>();
         for (Item item : items) {
             itemImages.add(new Image(GameAssetManager.getGameAssetManager().getTextureByItem(item)));
+            if(itemImages.size() > 35){
+                break;
+            }
         }
 
         for (int i = 0; i < itemImages.size(); i++) {
