@@ -1,13 +1,13 @@
 package com.ap_project.common.models.enums.environment;
 
 public enum Weekday {
-    MERCDAY("Mercday"),
-    VENDAY("Venday"),
-    EARTHDAY("Earthday"),
-    MARSADY("Marsady"),
-    JUPYDAY("Jupyday"),
-    URANDAY("Uranday"),
-    NEPDAY("Nepday"),;
+    SATURDAY("Saturday"),
+    SUNDAY("Sunday"),
+    MONDAY("Monday"),
+    TUESDAY("Tuesday"),
+    WEDNESDAY("Wednesday"),
+    THURSDAY("Thursday"),
+    FRIDAY("Friday"),;
 
     private final String name;
 

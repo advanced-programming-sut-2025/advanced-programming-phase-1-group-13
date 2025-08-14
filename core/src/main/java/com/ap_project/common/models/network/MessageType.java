@@ -42,5 +42,6 @@ public enum MessageType {
     GIVE_FLOWER,
     SEND_GIFT,
     RECEIVE_GIFT,
+    ANSWER_TRADE_REQUEST,
     EXIT
 }

@@ -24,7 +24,7 @@ public class Time {
         this.year = 1;
         this.season = Season.SPRING;
         this.dayInSeason = 1;
-        this.weekday = Weekday.MERCDAY;
+        this.weekday = Weekday.WEDNESDAY;
         this.hour = 9;
     }
 

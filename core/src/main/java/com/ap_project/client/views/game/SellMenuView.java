@@ -252,6 +252,9 @@ public class SellMenuView implements Screen, InputProcessor {
         float startY = window.getY() + window.getHeight() - 400;
 
         for (int i = 0; i < itemImages.size(); i++) {
+            if(i>35){
+                break;
+            }
             int row = i / columns;
             Image image = itemImages.get(i);
             image.setSize(50, 55);
@@ -260,6 +263,7 @@ public class SellMenuView implements Screen, InputProcessor {
             image.setPosition(x, y);
 
             stage.addActor(image);
+
         }
     }
 }

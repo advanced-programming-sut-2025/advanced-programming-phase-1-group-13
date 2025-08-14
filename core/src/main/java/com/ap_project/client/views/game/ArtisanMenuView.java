@@ -255,6 +255,7 @@ public class ArtisanMenuView implements Screen, InputProcessor {
         int count = 0;
         HashMap<Item, Integer> items = App.getLoggedIn().getBackpack().getItems();
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+            if(count>35){break;}
             int row = count / 12;
 
             Image itemImage = new Image(GameAssetManager.getGameAssetManager().getTextureByItem(entry.getKey()));
